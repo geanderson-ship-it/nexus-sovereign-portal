@@ -1,0 +1,65 @@
+{
+  "es-ES": {
+    "maga.live.intro": "Sincronización de élite establecida. Magadot Live en plena operación. ¿Cómo puedo elevar tu estrategia, Comandante?",
+    "maga.live.exit": "Entendido. Terminando mi presencia vocal. ¡Hasta pronto, Comandante!",
+    "maga.live.unstable": "Sincronía inestable. ¿Puedes repetir?",
+    "maga.live.connect": "CONECTAR",
+    "maga.live.listening": "OYENDO",
+    "maga.live.processing": "PROCESANDO",
+    "maga.live.speaking": "HABLANDO"
+  },
+  "de-DE": {
+    "maga.live.intro": "Elite-Synchronisation etabliert. Magadot Live im vollen Betrieb. Wie kann ich Ihre Strategie verbessern, Kommandant?",
+    "maga.live.exit": "Verstanden. Beende meine stimmliche Präsenz. Bis bald, Kommandant!",
+    "maga.live.unstable": "Instabile Synchronisation. Können Sie das wiederholen?",
+    "maga.live.connect": "VERBINDEN",
+    "maga.live.listening": "HÖREN",
+    "maga.live.processing": "VERARBEITUNG",
+    "maga.live.speaking": "SPRECHEN"
+  },
+  "fr-FR": {
+    "maga.live.intro": "Synchronisation d'élite établie. Magadot Live en pleine opération. Comment puis-je élever votre stratégie, Commandant ?",
+    "maga.live.exit": "Compris. Fin de ma présence vocale. À bientôt, Commandant !",
+    "maga.live.unstable": "Synchronisation instable. Pouvez-vous répéter ?",
+    "maga.live.connect": "CONNECTER",
+    "maga.live.listening": "ÉCOUTE",
+    "maga.live.processing": "TRAITEMENT",
+    "maga.live.speaking": "PARLE"
+  },
+  "ja-JP": {
+    "maga.live.intro": "エリート同期が確立されました。Magadot Live が完全に動作しています。司令官、どのように戦略を向上させましょうか？",
+    "maga.live.exit": "了解しました。音声プレゼンスを終了します。またお会いしましょう、司令官！",
+    "maga.live.unstable": "同期が不安定です。もう一度言っていただけますか？",
+    "maga.live.connect": "接続する",
+    "maga.live.listening": "リスニング",
+    "maga.live.processing": "処理中",
+    "maga.live.speaking": "スピーキング"
+  },
+  "zh-CN": {
+    "maga.live.intro": "精英同步已建立。Magadot Live 全面运行。指挥官，我该如何提升您的战略？",
+    "maga.live.exit": "明白。结束我的语音存在。指挥官，再见！",
+    "maga.live.unstable": "同步不稳定。您能重复一遍吗？",
+    "maga.live.connect": "连接",
+    "maga.live.listening": "正在听",
+    "maga.live.processing": "处理中",
+    "maga.live.speaking": "正在说话"
+  },
+  "ar-AE": {
+    "maga.live.intro": "تم تأسيس المزامنة النخبوية. ماجا دوت لايف في حالة تشغيل كاملة. كيف يمكنني تحسين استراتيجيتك، أيها القائد؟",
+    "maga.live.exit": "فهمت. إنهاء وجودي الصوتي. نراك قريباً، أيها القائد!",
+    "maga.live.unstable": "مزامنة غير مستقرة. هل يمكنك التكرار؟",
+    "maga.live.connect": "اتصال",
+    "maga.live.listening": "جارٍ الاستماع",
+    "maga.live.processing": "جارٍ المعالجة",
+    "maga.live.speaking": "جارٍ التحدث"
+  },
+  "ru-RU": {
+    "maga.live.intro": "Элитная синхронизация установлена. Magadot Live в полной работе. Командир, как я могу улучшить вашу стратегию?",
+    "maga.live.exit": "Понятно. Завершаю голосовое присутствие. До встречи, командир!",
+    "maga.live.unstable": "Нестабильная синхронизация. Можете повторить?",
+    "maga.live.connect": "ПОДКЛЮЧИТЬСЯ",
+    "maga.live.listening": "СЛУШАЮ",
+    "maga.live.processing": "ОБРАБОТКА",
+    "maga.live.speaking": "ГОВОРЮ"
+  }
+}

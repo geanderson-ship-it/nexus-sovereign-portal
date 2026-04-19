@@ -1,0 +1,234 @@
+{
+  "courses.preparando-equipes-intermediario.header.title": "De la Centralización a la Multiplicación de Talentos",
+  "courses.preparando-equipes-intermediario.header.desc": "¿Se aleja de su empresa por 15 días y todo se detiene? Si la respuesta es sí, usted no es un líder, es un operario de lujo. En el Curso 3, nuestro objetivo es romper sus cadenas de la centralización.",
+  "courses.preparando-equipes-intermediario.intro.title": "Ingeniería del Desempeño: El Fin de la Sobrecarga",
+  "courses.preparando-equipes-intermediario.intro.welcome.title": "🎙️ El Fin de la Sobrecarga",
+  "courses.preparando-equipes-intermediario.intro.welcome.dante": "Sea bienvenido al próximo nivel de su evolución. Yo soy Dante. Déjeme hacerle una pregunta directa: si se aleja de su empresa por 15 días, ¿todo se detiene? Si la respuesta es sí, usted no es un líder, es un operario de lujo. En el Curso 3, nuestro objetivo es romper sus cadenas de la centralización. El Acero aquí es la Ingeniería del Desempeño. Le enseñaré a mapear talentos con frialdad técnica y a crear procesos de delegación que no admitan fallos.",
+  "courses.preparando-equipes-intermediario.intro.welcome.djeny": "¡Hola! Yo soy Djeny. Dante le mostrará cómo soltar las riendas, y yo le enseñaré a Sostener a las Personas. Convertirse en un Líder Entrenador exige la Seda de la mentoría. No basta con dar órdenes; es preciso despertar el 'sentido de dueño'. Le mostraré cómo usar la escucha activa y la retroalimentación real para transformar subordinados en socios de negocio. Su mayor legado no será lo que hizo, sino a quién formó.",
+  "courses.preparando-equipes-intermediario.intro.method.title": "🏛️ La Filosofía Nexus: Formar para Liberar",
+  "courses.preparando-equipes-intermediario.intro.method.dante": "Nexus Intelligence cree que un líder de élite se mide por la autonomía de su equipo. Usamos el Acero de la Ética para evaluar competencias y la Confianza técnica para dar poder de decisión.",
+  "courses.preparando-equipes-intermediario.intro.method.djeny": "Y usamos la Seda del Respeto para entender el tiempo de maduración de cada talento y la Humanidad para apoyar el error que genera aprendizaje. Nuestros pilares continúan siendo su Norte: Humanidad, Respeto, Ética y Confianza.",
+  "courses.preparando-equipes-intermediario.intro.pro.title": "🚀 El Mapa de la Jornada",
+  "courses.preparando-equipes-intermediario.intro.pro.dante": "En este entrenamiento, vamos desde el mapeo frío de quién realmente entrega, hasta la creación de una máquina de resultados que funciona sola. Vamos a descentralizar el poder sin perder el control de la gobernanza.",
+  "courses.preparando-equipes-intermediario.intro.pro.djeny": "Hablaremos de propósito, de compromiso profundo y de cómo ser el mentor que le hubiera gustado tener al inicio de su carrera. Aprenderá a inspirar por el ejemplo y a entrenar por la conexión.",
+  "courses.preparando-equipes-intermediario.intro.cta.title": "🎬 El Compromiso Nexus",
+  "courses.preparando-equipes-intermediario.intro.cta.dante": "Prepárese para dejar de ser el cuello de botella de su operación. El tiempo de 'hacer por todos' terminó.",
+  "courses.preparando-equipes-intermediario.intro.cta.djeny": "Es hora de empezar a multiplicar. Su equipo está esperando al entrenador que existe en usted.",
+  "courses.preparando-equipes-intermediario.intro.cta.final": "Bienvenido al Líder Entrenador de Élite. Vamos al Módulo 1.",
+  "courses.preparando-equipes-intermediario.modules.stage.dante": "Este módulo tiene dos lecciones. Inicie con la visión estratégica de Dante.",
+  "courses.preparando-equipes-intermediario.closing.title": "Cierre Oficial de la Ruta Nexus Entrenamiento",
+  "courses.preparando-equipes-intermediario.closing.dante1": "Usted ha completado los tres cursos: Liderazgo Esencial, Leadership PRO y Líder Entrenador de Élite. Usted ahora posee el Acero de la estrategia y del desempeño.",
+  "courses.preparando-equipes-intermediario.closing.djeny1": "Y usted domina la Seda de la comunicación y de la mentoría humana. Ha recorrido el camino de Nexus Intelligence.",
+  "courses.preparando-equipes-intermediario.closing.dante2": "Nuestros cuatro pilares — Humanidad, Respeito, Ética y Confianza — son ahora la brújula de su vida profesional.",
+  "courses.preparando-equipes-intermediario.closing.djeny2": "Nosotros somos Nexus. El conocimiento ha sido entregado. El entrenamiento terminó. Ahora... comience a liderar.",
+  "courses.preparando-equipes-intermediario.closing.final": "¡Felicidades, Líder de Élite! Nos vemos en la cima.",
+  "courses.preparando-equipes-intermediario.mentoria.title": "BONO EXCLUSIVO: ACCESO TOTAL",
+  "courses.preparando-equipes-intermediario.mentoria.bonus": "MENTORÍA INTELIGENTE NEXUS (DANTE & DJENY)",
+  "courses.preparando-equipes-intermediario.mentoria.attention": "Su Consultoría Particular de Personas: Al asegurar este curso en la modalidad de acceso total, usted desbloquea a Dante y Djeny para darle soporte en la transición.",
+  "courses.preparando-equipes-intermediario.mentoria.item1.title": "La Herramienta del Líder",
+  "courses.preparando-equipes-intermediario.mentoria.item1.desc": "Use a Djeny para el trabajo que más consume su tiempo: montar Planes de Desarrollo Individual (PDI) para su equipo, mientras Dante asegura que los resultados no decaigan.",
+  "courses.preparando-equipes-intermediario.mentoria.item2.title": "Posgrado (El Plus)",
+  "courses.preparando-equipes-intermediario.mentoria.item2.desc": "Su acceso se extiende por 180 días tras la conclusión. Es como tener un consultor sénior en el bolsillo mientras implanta la nueva cultura en su empresa.",
+  "courses.preparando-equipes-intermediario.data": [
+    {
+      "module": "MÓDULO 1",
+      "title": "Mapeo de Talentos – La Ingeniería del Equipo",
+      "danteLesson": [
+        {
+          "point": "El Líder que No Mide, No Gestiona",
+          "explanation": "Hola. Yo soy Dante. Comenzamos ahora el curso que le liberará de la operación. Pero preste atención: no puede entrenar lo que no conoce. El líder amateur entrena a todos igual; el líder de élite hace un Diagnóstico de Precisión. El Acero aquí es la Frialdad Analítica. Para transformar subordinados en sucesores, usted necesita dejar de mirar a quién le 'cae bien' y empezar a mirar a quién 'entrega'. El pilar de la Ética exige que su evaluación se base en hechos, no en afinidad."
+        },
+        {
+          "point": "La Herramienta: Matriz 9-Box Nexus",
+          "explanation": "En esta lección, vamos a dibujar el mapa de su ejército.\n\nEl Talento de Oro: Alto desempeño y alto potencial. Este es su sucesor inmediato.\n\nEl Especialista Sólido: Entrega todo, pero no quiere liderar. Respételo, él es su base.\n\nEl Punto de Interrogación: Tiene potencial, pero no entrega. ¿El problema es la motivación o su liderazgo?\n\nEl Enigma: Ni entrega, ni quiere crecer. Aquí, el Acero exige la 'poda' ética para proteger al equipo.\nMapear es el primer paso para dejar de cargar al equipo en su espalda."
+        },
+        {
+          "point": "Identificando el GAP (Cuello de Botella) Técnico",
+          "explanation": "¿Dónde se rompe su equipo si usted es atropellado mañana? Si la respuesta es 'en todo', usted ha fallado en la Madurez Profesional. El mapeo sirve para identificar qué competencias técnicas solo usted tiene y comenzar el proceso de transferencia inmediata. El líder entrenador de élite trabaja para volverse técnicamente innecesario en el día a día."
+        },
+        {
+          "point": "Ejercicio Práctico: El Rayo X del Equipo",
+          "explanation": "Su tarea: Tome la lista de su equipo y coloque a cada uno en un cuadrante de la matriz 9-Box. Sea honesto. Mañana, usted mirará ese mapa y decidirá quién recibirá el 80% de su energía de entrenamiento. El tiempo es su recurso más escaso; no lo desperdicie con quien no quiere ser entrenado."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "Más Allá del Carnet: El Potencial Invisible",
+          "explanation": "¡Hola! Yo soy Djeny. Dante le dio la regla de acero, pero yo le voy a dar las lentes de seda. Muchas veces, su mejor sucesor está escondido tras una tarea repetitiva porque nadie nunca le preguntó qué sabe hacer realmente. El pilar de la Humanidad en Nexus significa ver a la persona más allá del cargo. Un líder entrenador es un buscador de talentos. Si usted mira a su equipo y solo ve 'mano de obra', nunca tendrá un sucesor, solo ayudantes cansados."
+        },
+        {
+          "point": "Escucha Nivel 3: La Entrevista de Descubrimiento",
+          "explanation": "¿Cómo descubrir el potencial de alguien? A través de la Escucha Nível 3. En lugar de hablar sobre las metas del mes, pregunte: '¿Qué hace con facilidad que a los demás les resulta difícil?'. Escuche las pausas, la emoción en el tono de voz cuando habla de un pasatiempo o de un proyecto antiguo. El Respeto por el individuo revela competencias que RR.HH. nunca mapeó. A veces, su operador de máquina tiene un alma de organizador logístico que usted está desperdiciando."
+        },
+        {
+          "point": "Alineando Propósitos (La Seda que Conecta)",
+          "explanation": "Nadie se convierte en un sucesor de élite solo por dinero. Se convierten en sucesores por Confianza y propósito. La seda aquí es mostrar al talento cómo su crecimiento ayuda a la empresa y cómo eso realiza su sueño. Cuando usted conecta el 'sueño de la persona' con la 'meta de la empresa', crea un sentido de dueño inquebrantable. El líder mentor no impone el camino; enciende la linterna para que el subordinado vea la carretera."
+        },
+        {
+          "point": "Ejercicio Práctico: La Conversación de 15 Minutos",
+          "explanation": "Mañana, elija a un subordinado que considere 'prometedor'. Llámelo para un café de 15 minutos. No hable de metas. Pregunte: 'Si pudieras elegir una nueva habilidad para aprender este año, ¿cuál sería?'. Solo escuche. Use la seda para abrir la puerta del desarrollo."
+        }
+      ]
+    },
+    {
+      "module": "MÓDULO 2",
+      "title": "El Arte de la Delegación y Retroalimentación Real",
+      "danteLesson": [
+        {
+          "point": "Delegar no es Abandonar",
+          "explanation": "Hola. Yo soy Dante. El mayor error del líder centralizador es creer que delegar es 'pasar el problema adelante'. Eso en realidad se llama 'delargar'. En Nexus, el Acero de la delegación exige un Contrato de Resultados. Usted no delega la tarea (el 'cómo'), delega la responsabilidad por el desenlace (el 'qué'). Si usted le dice a su subordinado exactamente qué tornillo apretar, usted sigue siendo el operario. Si usted le dice que la máquina necesita rodar sin paradas, está formando a un dueño."
+        },
+        {
+          "point": "La Matriz de Niveles de Autoridad Nexus",
+          "explanation": "Para cada tarea delegada, usted debe fijar el nivel de autoridad técnica basado en la Madurez Profesional del subordinado:\n\nNivel 1 (Investigación): 'Investigue el problema, tráigame las opciones y yo decido'.\n\nNivel 2 (Recomendación): 'Analice y dígame qué opción prefiere, yo apruebo'.\n\nNivel 3 (Decisión): 'Decida e infórmeme qué hizo inmediatamente'.\n\nNivel 4 (Autonomía): 'Resuelva y cuénteme en el informe semanal'.\nEl Acero aquí es la Claridad. Sin saber su nivel, el subordinado se queda paralizado por miedo a errar o sobrepasa el límite de la Ética."
+        },
+        {
+          "point": "Puntos de Control y Rendición de Cuentas (Accountability)",
+          "explanation": "El líder entrenador no vigila, audita. Establezca hitos: 'Juan, no te voy a cobrar todos los días, pero cada miércoles a las 10h revisamos el indicador X'. Esto crea la Confianza de que el proceso está bajo control sin asfixiar al talento. Si el plazo no se cumple, el Acero exige el cobro inmediato sobre lo acordado. El pilar del Respeto comienza con el cumplimiento de lo pactado."
+        },
+        {
+          "point": "Ejercicio Prático: El Contrato de 1 Página",
+          "explanation": "Su tarea: Elija una tarea que hoy centraliza. Escriba en una página: El Resultado Esperado, el Plazo Final y el Nivel de Autoridad que va a dar. Mañana, entregue esto a un subordinado y... no interfiera hasta el primer punto de control."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "Feedback: El Espejo de la Evolución",
+          "explanation": "¡Hola! Yo soy Djeny. Si Dante le dio el contrato, yo le voy a dar el alma del crecimiento: el Feedback. En el modelo Leader Coach, el feedback no es un regaño; es un regalo para la carrera del otro. La Seda aquí es la sensibilidad de entender que, al señalar una falla, usted está lidiando con la vulnerabilidad de alguien. El pilar de la Humanidad dice: ataque el proceso con el acero, pero acoja a la persona con la seda. Si el colaborador sale de la conversación sintiéndose humillado, usted no lo entrenó, lo hirió."
+        },
+        {
+          "point": "Escucha Nivel 3 en el Feedback: El Diagnóstico del Error",
+          "explanation": "Antes de hablar, escuche. Use la Escucha Nivel 3. Pregunte: '¿Cómo evalúas tu entrega de este proyecto?'. Muchas veces, el colaborador ya sabe dónde falló. Cuando él mismo identifica la falla, el aprendizaje es 10 veces más rápido. Su papel es ser o espejo que refleja su potencial. El Respeto por la percepción del otro construye un puente de Confianza que permite correcciones profundas sin resistencia."
+        },
+        {
+          "point": "El Método SCI: Situación, Comportamiento e Impacto",
+          "explanation": "Para ser una Mentora de Talentos, su feedback debe ser específico:\n\nSituación: 'En la reunión de ayer con el cliente...'\n\nComportamento: '...interrumpiste el habla del director tres veces'.\n\nImpacto: 'Esto pasó una imagen de desorganización del equipo'.\nTermine siempre con una pregunta de seda: '¿Cómo podemos garantizar que esto sea diferente en la próxima?'. Usted transfiere la responsabilidad del crecimiento a él, actuando como una guía, no como una verdugo."
+        },
+        {
+          "point": "Ejercicio Prático: El Feedback de Reconocimiento y Ajuste",
+          "explanation": "Mañana, usted hará una sesión de feedback de 15 minutos con un subordinado. Use 5 minutos para reconocer un punto fuerte (Seda) y 10 minutos para alinear un punto de mejora técnica (Acero). Registre cómo reaccionó la persona al ser tratada como alguien en desarrollo, y no como alguien siendo cobrado."
+        }
+      ]
+    },
+    {
+      "module": "MÓDULO 3",
+      "title": "Compromiso y Sentido de Dueño",
+      "danteLesson": [
+        {
+          "point": "El Mito del \"Empleado Desmotivado\"",
+          "explanation": "Hola. Yo soy Dante. Vamos a dejar de romantizar el compromiso. Nadie se despierta por la mañana 'comprometido' por una hoja de Excel. El compromiso de élite nace de la Claridad de Reglas. El empleado solo tiene 'sentido de dueño' cuando entiende que su éxito está directamente atado al éxito del proceso. El Acero aquí es la Justicia Técnica. Si el bueno y el malo ganan el mismo elogio y el mismo bono, usted está entrenando a su equipo para la mediocridad."
+        },
+        {
+          "point": "El Contrato de Dueño (Acero en la Responsabilidad)",
+          "explanation": "¿Cómo el líder entrenador crea un dueño? Dándole un territorio para gobernar.\n\nDefinición de Fronteras: 'Esta línea de producción es suya. El costo es suyo, el desperdicio es suyo'.\n\nAutonomía con Cobro: 'Usted tiene libertad para ajustar la máquina, pero el indicador X no puede caer'.\n\nConsecuencia Real: El pilar de la Ética exige que el mérito sea visible. Si actuó como dueño, debe cosechar como dueño. Si actuó como alquilado, debe ser corregido como tal. Esto es Madurez Profesional."
+        },
+        {
+          "point": "La Gestión por el \"Porqué\" Técnico",
+          "explanation": "El compromiso sin gritos exige que explique la lógica tras la meta. El líder de élite no dice 'hazlo porque yo lo mando'. Dice 'hazlo porque esto reduce el retrabajo en un 12% y garantiza nuestra cuota de mercado'. Cuando el subordinado entiende el mecanismo, deja de seguir órdenes y pasa a gestionar el resultado. La Confianza técnica es el combustible del dueño."
+        },
+        {
+          "point": "Ejercicio Prático: El Acuerdo de Autogestión",
+          "explanation": "Su tarea: Elija a un subordinado y dele la 'llave' de un pequeño proceso. Diga: 'A partir de hoy, usted decide cómo se hará esto, siempre que se mantenga el resultado Y. Solo intervengo si usted me lo pide'. Observe si crece o si retrocede. Los dueños aman la libertad; los ayudantes tienen miedo de ella."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "El Sentimento de \"Formar Parte\"",
+          "explanation": "¡Hola! Hablemos de Seda. Dante le dio la estructura del contrato, pero yo le voy a dar la liga que mantiene ese contrato vivo: el Pertenencia. El ser humano solo cuida lo que siente que é 'suyo'. Si su subordinado siente que es solo un número desechable, nunca tendrá sentido de dueño. El pilar de la Humanidad en Nexus dice que el compromiso es emocional. La seda es hacer que el colaborador sienta que la victoria de la empresa es la victoria de su familia."
+        },
+        {
+          "point": "Escucha Nivel 3: ¿Qué brilla en sus ojos?",
+          "explanation": "¿Qué compromete a su equipo? Para algunos, es el Respeto público. Para otros, es la seguridad de un feedback constante. Use la Escucha Nivel 3. Si quiere que actúe como dueño, necesita oír sus ideas como si fueran las de un socio. Cuando un subordinado da una sugerencia y usted la implementa dándole el crédito a él, acaba de 'comprar' su compromiso para los próximos seis meses. La seda es el reconocimiento que alimenta el alma."
+        },
+        {
+          "point": "El Poder del Elogio Estratégico (Seda en la Valoración)",
+          "explanation": "Un líder entrenador de élite sabe que el elogio es una herramienta de entrenamiento. No elogie a la 'persona', elogie el 'comportamiento de dueño'. 'Juan, vi que limpiaste la mesa sin que nadie lo pidiera. Esto es postura de quien cuida lo que es nuestro'. Esto refuerza la identidad de dueño. El pilar de la Confianza se fortalece cuando el subordinado percibe que usted nota su esfuerzo invisible. Comprometer sin gritos es usar la seda para involucrar al equipo en el propósito."
+        },
+        {
+          "point": "Ejercicio Prático: El Reconocimiento Público",
+          "explanation": "Mañana, usted identificará un comportamiento de 'sentido de dueño' en alguien de su equipo y elogiará esa acción específica delante de al menos una persona más. Sea sincero y use el pilar del Respeto. Sienta el impacto en la postura de esa persona a lo largo del día."
+        }
+      ]
+    },
+    {
+      "module": "MÓDULO 4",
+      "title": "Descentralizando el Poder – Autonomía con Responsabilidad",
+      "danteLesson": [
+        {
+          "point": "Autonomía no es Anarquía",
+          "explanation": "Hola. Yo soy Dante. Muchos líderes tienen pavor de descentralizar porque creen que el equipo hará lo que quiera. Eso es falta de Acero. Autonomía sin proceso es anarquía. La autonomía de élite es dar al subordinado la libertad de decidir dentro de un carril de seguridad. El pilar de la Ética en Nexus dice que usted solo da autonomía a quien probó competencia y carácter. No suelta el mando de un avión en manos de un alumno el primer día. Suelta por capas."
+        },
+        {
+          "point": "La Escalera de la Autonomía Nexus (Acero en los Límites)",
+          "explanation": "Para cada sucesor que mapeó en el Módulo 1, debe aplicar los Niveles de Autonomía:\n\nNivel 1 (Investigación): 'Tráigame la solución, yo firmo'.\n\nNivel 2 (Recomendación): 'Analice y dígame qué opción prefiere, yo apruebo'.\n\nNivel 3 (Decisión): 'Decida e infórmeme qué hizo inmediatamente'.\n\nNivel 4 (Autonomía): 'Resuelva y cuénteme a final de mes'.\nEl Acero aquí es la Madurez Profesional. Si dio autonomía y el subordinado erró, no le quita la autonomía en la primera falla; analiza si el error fue de proceso o de negligencia. El líder PRO gestiona el riesgo, no a la persona."
+        },
+        {
+          "point": "El Costo del Error como Inversión",
+          "explanation": "Entrenar a un sucesor cuesta caro. Él va a errar, y su error costará tiempo o dinero. El líder entrenador ve ese costo como 'mensualidad de la facultad' del subordinado. Si no tolera el erro en el aprendizaje, nunca tendrá un sucesor, tendrá solo un esclavo de su 'sí'. La Confianza técnica se construye en la corrección fría del error, nunca en el grito."
+        },
+        {
+          "point": "Ejercicio Prático: El Mapa de Jurisdicción",
+          "explanation": "Su tarea: Liste 3 decisiones que hoy pasan por usted y que podrían ser tomadas por su mano derecha. Defina el límite financiero u operativo (el 'Acero') para esas decisiones y comuníqueselo mañana. 'A partir de hoy, esto es contigo'."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "El Duelo del Líder Centralizador",
+          "explanation": "¡Hola! Hablemos de Seda. Descentralizar duele en el ego del líder. ¿Sabe ese placer de ser o 'héroe' que resuelve todo? Para el Líder Entrenador de Élite, ese placer tiene que morir. La seda aquí es su capacidad de ver al otro brillar y aceptar que su forma de hacer puede ser diferente a la suya — y está bien. El pilar de la Humanidad exige que dé espacio al estilo del otro. Si exige que sea un 'clon' suyo, no está entrenando a un líder, está criando a un robot."
+        },
+        {
+          "point": "Escucha Nivel 3: Identificando o Miedo de Decidir",
+          "explanation": "Muchas veces, usted da autonomía y el subordinado se bloquea. Use la Escucha Nivel 3. ¿Tiene miedo de fallar? ¿Tiene miedo de ser juzgado por los colegas? La seda es el aliento. 'Confío en tu juicio. Si sale mal, lo resolvemos juntos'. Este soporte crea la Seguridad Psicológica necesaria para que el talento florezca. El pilar del Respeto se muestra cuando no lo 'fríe' ante un error honesto en el proceso de autonomía."
+        },
+        {
+          "point": "La Presencia Invisible (Mentoría de Seda)",
+          "explanation": "Descentralizar no es desaparecer. Es estar disponible sin ser invasiva. Es la técnica de la 'Puerta Entreabierta'. El subordinado sabe que tiene el poder, pero siente que usted es la red de protección. El pilar de la Confianza es bidireccional: usted confía en que él hará lo mejor, y él confía en que usted no vai 'quitar la alfombra' si algo oscila. Liderazgo PRO es ser el viento bajo las alas del equipo, no el peso sobre ellas."
+        },
+        {
+          "point": "Ejercicio Prático: El Feedback de Aliento",
+          "explanation": "Mañana, tras delegar aquella decisión que Dante sugirió, le dirá a su subordinado: 'Te elegí a ti para esto porque vi X e Y de talento en ti. Estoy aquí si me necesitas, pero la pelota es tuya'. Sienta el peso que sale de su espalda y la motivación que entra en su pecho."
+        }
+      ]
+    },
+    {
+      "module": "MÓDULO 5",
+      "title": "Máquina de Resultados – Desempeño Sostenible",
+      "danteLesson": [
+        {
+          "point": "La Prueba Final: Su Ausencia",
+          "explanation": "Hola. Yo soy Dante. Llegamos al final de nuestro entrenamiento técnico. El indicador de que se ha convertido en un Entrenador de Élite no es cuánto trabaja, sino qué tan bien funcionan las cosas cuando no está en la sala. El Acero aquí es la Sistematización. Si el conocimiento está solo en su cabeza, usted es un prisionero de su propia competencia. Si el conocimiento está en el proceso y en las personas, usted es un maestro de la Madurez Profesional."
+        },
+        {
+          "point": "El Ritual de Sucesión (Acero en el Pase de Testigo)",
+          "explanation": "La sucesión no ocurre por ósmosis. Exige un protocolo Nexus:\n\nValidación Técnica: El sucesor probó que domina los KPIs (Ética).\n\nAnuncio Público: El líder comunica al equipo y a los pares: 'A partir de hoy, la última palabra sobre X es de Juan'. Si no avisa al grupo, el grupo seguirá llamándole.\n\nMonitoreo Pasivo: Usted se convierte en un auditor de lujo. Interviene solo si el pilar de la Ética o de la Seguridad se ve amenazado."
+        },
+        {
+          "point": "Construyendo el Próximo Escalón (Su Futuro)",
+          "explanation": "¿Por qué entrenar a un sucesor? Para que pueda ser promovido o enfocar-se en nuevos negocios (como los de Nexus). El líder que no forma sucesor, no sale del lugar. El Acero de su carrera depende de su capacidad de dejar sustitutos mejores que usted. Esto es pura estrategia de carrera. La Confianza de la junta en usted se duplica cuando ven que creó una máquina que no depende de usted."
+        },
+        {
+          "point": "Ejercicio Prático: El Manual de Transición",
+          "explanation": "Su tarea: Escriba un documento de 3 párrafos para su sucesor (o para quien mapeó en el Módulo 1) diciendo: 'Lo que espero de ti en esta función en los próximos 90 días'. Entregue y pida que él diseñe el plan de acción. La pelota ahora es suya."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "La Alegría de Ser Superado",
+          "explanation": "¡Hola! Yo soy Djeny. Vamos a cerrar con la Seda más noble: la generosidad. El Líder Entrenador de Élite siente un orgullo genuino cuando ve a su subordinado brillando más que él. El pilar de la Humanidad se realiza aquí. Si siente celos del éxito de su sucesor, aún no es un entrenador, es un competidor. La seda es la capacidad de aplaudir de pie la obra que ayudó a construir. El Respeto que su sucesor tendrá por usted será eterno si es la persona que le abrió la puerta."
+        },
+        {
+          "point": "Escucha Nivel 3: El Feedback de Despedida de la Operación",
+          "explanation": "Haga una última reunión individual. Use la Escucha Nivel 3. Pregunte: '¿Qué fue lo que hice que más te ayudó a crecer?'. Las respuestas le darán la receta para entrenar al siguiente. La seda es mantener el vínculo de Confianza incluso cuando la jerarquía cambia. El líder mentor nunca deja de ser una referencia moral (Ética) para quien entrenó. Usted deja de ser el jefe para ser el consejero."
+        },
+        {
+          "point": "El Ciclo Infinito del Desarrollo",
+          "explanation": "Ensene a su sucesor a ser un entrenador también. La cultura Nexus solo se mantiene viva si cada persona que sube, tira de otra. Su legado no es la ganancia del año pasado; son las carreras que impulsó. Use la seda para suavizar la transición y garantizar que el pilar de la Humanidad siga siendo el corazón del equipo. El Liderazgo PRO es sobre amor al desarrollo humano."
+        },
+        {
+          "point": "Ejercicio Prático: La Carta de Reconocimiento",
+          "explanation": "Hoy, escribirá un mensaje para su equipo o para su sucesor: 'Gracias por aceptar el desafío de crecer conmigo. Confío en vosotros para llevar nuestra excelencia adelante'. Agradezca por la jornada. El ciclo cierra con gratitud."
+        }
+      ]
+    }
+  ]
+}

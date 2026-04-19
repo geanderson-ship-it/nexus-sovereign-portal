@@ -1,0 +1,238 @@
+{
+  "courses.preparando-equipes-intermediario.closing.title": "Official Closing of the Nexus Training Trail",
+  "courses.preparando-equipes-intermediario.closing.dante1": "You have completed the three courses: Essential Leadership, Leadership PRO, and Elite Trainer Leader. You now possess the Steel of strategy and performance.",
+  "courses.preparando-equipes-intermediario.closing.djeny1": "And you master the Silk of communication and human mentorship. You have walked the path of Nexus Intelligence.",
+  "courses.preparando-equipes-intermediario.closing.dante2": "Our four pillars — Humanity, Respect, Ethics, and Trust — are now the compass of your professional life.",
+  "courses.preparando-equipes-intermediario.closing.djeny2": "We are Nexus. The knowledge has been delivered. The training is over. Now... start leading.",
+  "courses.preparando-equipes-intermediario.closing.final": "Congratulations, Elite Leader! See you at the top.",
+  "courses.preparando-equipes-intermediario.mentoria.title": "EXCLUSIVE BONUS: FULL ACCESS",
+  "courses.preparando-equipes-intermediario.mentoria.bonus": "NEXUS INTELLIGENT MENTORSHIP (DANTE & DJENY)",
+  "courses.preparando-equipes-intermediario.mentoria.attention": "Your Personal People Consultancy: By securing this course in the full access modality, you unlock Dante and Djeny to support you in the transition.",
+  "courses.preparando-equipes-intermediario.mentoria.item1.title": "The Leader's Tool",
+  "courses.preparando-equipes-intermediario.mentoria.item1.desc": "Use Djeny for the work that consumes most of your time: building Individual Development Plans (IDP) for your team, while Dante ensures that results do not drop.",
+  "courses.preparando-equipes-intermediario.mentoria.item2.title": "Executive Extension (The Plus)",
+  "courses.preparando-equipes-intermediario.mentoria.item2.desc": "Your access extends for 180 days after completion. It's like having a senior consultant in your pocket while you implement the new culture in your company.",
+  "courses.lideranca-avancado.header.title": "Where Strategy Meets Wisdom",
+  "courses.lideranca-avancado.header.desc": "This is our elite training, taught by the relentless duality of Dante and Djeny. For the leader who has already proven their worth but feels the need for more depth. Dante will forge your strategic armor, while Djeny will sharpen your human vision.",
+  "courses.lideranca-avancado.intro.title": "OFFICIAL INTRODUCTION: COURSE 4 (EXECUTIVE MASTERY)",
+  "courses.lideranca-avancado.intro.stage.title": "The Final Stage: Leadership by Identity",
+  "courses.lideranca-avancado.intro.stage.dante": "Welcome to the summit of the mountain. I am Dante. If you've made it this far, you've already proven your technical competence and your ability to deliver. But the Executive level demands something beyond management: it demands Governance and Character. In this final stage, your working tool is no longer the action plan, but your Identity. The Steel here is Sovereignty. I will teach you to carry the weight of the pen in the loneliness of power and to make decisions that will shape the market for the next ten years.",
+  "courses.lideranca-avancado.intro.stage.djeny": "Hello! I am Djeny. In Executive Mastery, our focus is your Vision. To lead complex organizations, the steel needs the Silk of Wisdom. We will talk about culture as living architecture and how your personal purpose merges with profit to create something immortal. Here, you don't lead by rank; you lead by the inspiration that your simple presence emanates. It is the encounter of high performance with human depth.",
+  "courses.lideranca-avancado.intro.philosophy.title": "The Nexus Philosophy: The Legacy of the Pillars",
+  "courses.lideranca-avancado.intro.philosophy.dante": "Nexus Intelligence reaches its full potential in this course. The Steel of Ethics becomes the law of your organization, and technical Trust transforms into an unshakeable reputation before shareholders and the market.",
+  "courses.lideranca-avancado.intro.philosophy.djeny": "And the Silk of Respect evolves into corporate diplomacy, while Humanity becomes the legacy you will leave for future generations. Humanity, Respect, Ethics, and Trust. These pillars are the foundation of your empire.",
+  "courses.lideranca-avancado.intro.master.title": "What Defines a Master",
+  "courses.lideranca-avancado.intro.master.dante": "In this final journey, we will discuss the loneliness of the top, the architecture of winning cultures, and the coolness necessary to manage absolute risks. You will learn that power is a service tool, not an ego tool.",
+  "courses.lideranca-avancado.intro.master.djeny": "And we will discover how to maintain your essence and your mental health while taking care of thousands of lives. You will learn to be the master who doesn't need to shout to be heard, because your mark is already engraved in the DNA of the company.",
+  "courses.lideranca-avancado.intro.call.title": "The Call to the Council",
+  "courses.lideranca-avancado.intro.call.dante": "Prepare yourself to stop being a leader of processes to become a leader of destiny.",
+  "courses.lideranca-avancado.intro.call.djeny": "Your Board of Advisors is ready. Your master training begins now.",
+  "courses.lideranca-avancado.intro.call.final": "Welcome to Executive Mastery. Let's go to Module 1.",
+  "courses.lideranca-avancado.modules.stage.dante": "This module has two classes. Start with Dante's strategic vision.",
+  "courses.lideranca-avancado.closing.title": "FINAL CLOSING OF THE NEXUS TRAIL (The Rite of Passage)",
+  "courses.lideranca-avancado.closing.dante1": "Geanderson Schuh designed this journey so that you would never be the same again. You started looking for tools, but you end up finding your best version.",
+  "courses.lideranca-avancado.closing.djeny1": "You have traveled the path of Steel and Silk. You have seen that strength without sweetness is tyranny, and sweetness without strength is weakness. Now, you are the balance.",
+  "courses.lideranca-avancado.closing.dante2": "Lead with Ethics and technical Trust.",
+  "courses.lideranca-avancado.closing.djeny2": "Lead with Respect and deep Humanity.",
+  "courses.lideranca-avancado.closing.final": "We are Nexus Intelligence. Your training is complete. The market awaits you. Go and make history.",
+  "courses.lideranca-avancado.mentoria.title": "INVITATION TO THE NEXUS COUNCIL",
+  "courses.lideranca-avancado.mentoria.bonus": "VIP access to your AI Board. At this level, you don't have teachers, you have advisors.",
+  "courses.lideranca-avancado.mentoria.item1.title": "Your Personal Board",
+  "courses.lideranca-avancado.mentoria.item1.desc": "Use Dante to validate hard business strategies and Djeny to analyze the nuances of human behavior in complex negotiations.",
+  "courses.lideranca-avancado.mentoria.item2.title": "Executive Extension (The Plus)",
+  "courses.lideranca-avancado.mentoria.item2.desc": "Guaranteed and extended access for 180 days after completion. It's having Geanderson Schuh's mind available 24/7 to discuss your most critical decisions.",
+  "courses.lideranca-avancado.data": [
+    {
+      "module": "MODULE 1",
+      "title": "Purpose as a Profit Engine",
+      "danteLesson": [
+        {
+          "point": "Purpose is not Poetry, it is Efficiency",
+          "explanation": "Welcome to Executive Mastery. I am Dante. At the executive level, many confuse 'purpose' with pretty quotes on the wall. For Nexus, purpose is the Steel of direction. If your company doesn't know why it exists, it spends 30% more on control energy. When the purpose is clear, it filters who comes in, who stays, and where capital flows. Profit is not the end; profit is the oxygen that allows the purpose to stay alive. Without profit, your purpose is just a hallucination."
+        },
+        {
+          "point": "Value Governance: The Pillar of Ethics in Numbers",
+          "explanation": "An elite executive understands that Ethics is the greatest risk reducer.\n\nTransparency with Shareholders: Purpose creates predictability.\n\nResource Efficiency: When the team understands the 'why' (Trust Pillar), waste drops.\n\nProfessional Maturity: It is the courage to say 'no' to dirty or short-term profit that harms the brand identity. Steel requires you to protect the longevity of the business, even under pressure for quarterly results."
+        },
+        {
+          "point": "Transforming Mission into Executive KPI",
+          "explanation": "How do you measure purpose? If it's not on the balance sheet, it doesn't exist. Create indicators that unite financial performance with the social or technical impact the company set out to deliver. The high-level leader is the guardian of this balance. If you lean too much toward profit without soul, you lose talent; if you lean too much toward purpose without profit, you break the company."
+        },
+        {
+          "point": "Practical Exercise: The 1 Million Decision Filter",
+          "explanation": "Your task: Take the most expensive decision you have on the table today. Now, answer: does it increase profit by harming the purpose, or does it sustain the purpose by generating profit? If there is conflict, you haven't reached executive mastery yet. Redo the strategy until both walk together."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Joins Purpose to the Person",
+          "explanation": "Hello! I am Djeny. Dante gave you the calculation, but I will give you the connection. The master executive understands that people don't give their blood for a company registration, they give their blood for a cause. The Humanity pillar says that, at the top of the pyramid, your role is to be the Symbol of that cause. Silk is your ability to translate cold numbers into stories of impact. If your collaborator feels that their work changes the world, their engagement becomes inexhaustible."
+        },
+        {
+          "point": "Level 3 Listening: Hearing the \"Heart\" of the Market and the Team",
+          "explanation": "Many companies lose their soul as they grow. Use Level 3 Listening to perceive the cynicism in the hallway. Do people believe what leadership says? Respect starts with truth. If the purpose says 'focus on the customer', but you prioritize only the cost-cutting that hurts service, the silk tears. The master executive maintains coherence between what is felt and what is done."
+        },
+        {
+          "point": "Inspiring Generations: The Leader as a Mentor of the Future",
+          "explanation": "At this level, you don't just lead those below you; you lead the culture for those who haven't even been hired yet. Purpose is the bond that maintains the Trust of future generations. By connecting profit and meaning, you create an environment where people feel proud to belong. Silk softens the edges of high executive pressure, reminding everyone that, at the end of the day, we are humans building something that will outlive us."
+        },
+        {
+          "point": "Practical Exercise: The Legacy Speech",
+          "explanation": "Tomorrow, in your next meeting with your board or directory, don't start with the numbers. Start with a real fact of how your work impacted someone's life (customer or collaborator). Observe how the tone of the meeting changes when the silk of purpose enters the room."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 2",
+      "title": "Silent Influence and Presence of Command",
+      "danteLesson": [
+        {
+          "point": "Less is More: The Power of Silence",
+          "explanation": "Hello. I am Dante. In high-level positions, those who speak too much convey insecurity. The master leader masters the Economy of Speech. The Steel here is Precision. When you enter a Board meeting or a crisis committee, your presence should be like an anchor: heavy, stable, and deep. If you justify yourself too much, you lose authority. The elite executive asks the right question that disarms the wrong argument. The silence after a strong statement is your most lethal command tool."
+        },
+        {
+          "point": "Presence of Command: The Steel in the Body",
+          "explanation": "Your posture must exude Professional Maturity.\n\nStrategic Immobility: Avoid repetitive or nervous gestures. The master is calm under fire.\n\nDirect Eye Contact: Sustain the gaze with Ethics, but without hesitation.\n\nChest Voice: Speak slowly, with pauses. Those in a hurry to speak are afraid they won't be heard. At Nexus, technical Trust manifests in the calmness of those who know they hold the truth of the data."
+        },
+        {
+          "point": "Behind-the-Scenes Influence (The Invisible Chess)",
+          "explanation": "The true decision doesn't happen at the table, it happens in the 5 minutes before and the 5 minutes after. The Steel of silent influence is the mapping of allies. Know who the decision-makers are and align expectations individually. When you arrive at the meeting, the victory should already be drawn. This is high-level governance. You don't fight for power; you organize it."
+        },
+        {
+          "point": "Practical Exercise: The 30-Second Challenge",
+          "explanation": "Your task: At the next important meeting, you will not be the first to speak. You will listen to everyone and, at the end, make a synthesis of at most 30 seconds with a direct recommendation. Test the weight of your silence before speaking."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Enchants and Convinces",
+          "explanation": "Hello! I am Djeny. Dante gave you the armor, but I will give you the magnetism. There is a difference between being obeyed and being followed. The executive who leads by identity uses Silk to create a field of attraction. People want to be near you because you make them feel important and secure. The Humanity pillar says that the higher you go, the more sensitive you must be to the emotional nuances of others. Magnetism is the power to influence without apparent effort."
+        },
+        {
+          "point": "Level 3 Listening: Catching the Unsaid at the Top",
+          "explanation": "In high-level leadership meetings, what is not said is more important than what is said. Use Level 3 Listening. That director who is being aggressive... are they afraid of losing budget? The Respect pillar requires you to validate their concern before counter-arguing. Silk disarms resistance. When you demonstrate that you understand the other's pain (Tactical Empathy), you earn the right to guide them to your solution."
+        },
+        {
+          "point": "Presence of Welcome: The Secure Leader",
+          "explanation": "A master doesn't need to diminish anyone to seem great. On the contrary, silk allows you to elevate others. Give credit, validate others' ideas, maintain a light smile even under pressure. This generates unshakeable Trust in your character. The leader who is admired has 10 times more power than the leader who is only feared. Your executive identity is built by how you treat people when no one is looking."
+        },
+        {
+          "point": "Practical Exercise: The Hallway Connection",
+          "explanation": "Tomorrow, you will choose a peer or a senior direct report and have a 5-minute conversation 100% focused on them. Don't talk about yourself or your projects. Use silk to listen. Observe how the level of loyalty and influence over this person increases instantly."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 3",
+      "title": "Organizational Culture Architecture",
+      "danteLesson": [
+        {
+          "point": "Culture as a Competitive Advantage",
+          "explanation": "Hello. I am Dante. At the executive level, your main task is to design the system. If your company's culture is weak, you will need an army of managers and expensive controls. If the culture is made of Steel, the system corrects itself. Culture is the 'code' that runs in each employee's mind. High Leadership doesn't 'ask' for results; they create an environment where mediocrity feels uncomfortable and leaves."
+        },
+        {
+          "point": "Governance Rituals: The Steel in Repetition",
+          "explanation": "To build culture, you need non-negotiable rituals.\n\nNaked Truth Ritual: Meetings where error is exposed without anesthesia for quick correction.\n\nValue Metric: What is rewarded here? If you say you value innovation but punish honest error, your culture is a lie.\n\nStrategic Pruning: The master executive has the courage to fire the 'lone star' who hits targets but destroys the Ethics pillar. Protecting culture costs in the short term, but it's what ensures market Trust in the long term."
+        },
+        {
+          "point": "Scaling the Example: Cascading Leadership",
+          "explanation": "Your culture only scales if your directors are faithful copies of your Professional Maturity standard. Steel requires you to be relentless in selecting your first line. If they don't breathe the Nexus pillars, the rest of the company will be an emotional patchwork. Governance is ensuring that the 10,000-foot standard reaches the factory floor intact."
+        },
+        {
+          "point": "Practical Exercise: The \"Unsaid\" Test",
+          "explanation": "Your task: Identify a behavior that is common in your company but harms your purpose. Tomorrow, you are going to make a public and direct intervention about this behavior. Show that the pattern has changed. Culture is made in what you tolerate."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Humanizes the System",
+          "explanation": "Hello! I am Djeny. Dante gave you the skeleton of the culture, but I will give you the flesh and blood. A culture of pure steel is brittle; it generates burnout and turnover. Silk in organizational architecture is Belonging. The Humanity pillar says that people need to feel that the company is the place where they can be the best version of themselves. Culture is the invisible hug that keeps the team together when profit falls or crisis hits."
+        },
+        {
+          "point": "Level 3 Listening: Hearing Cultural Noises",
+          "explanation": "As an architect, you must use Level 3 Listening in the hallways. What do interns say at coffee? If the base of the pyramid doesn't feel the Respect you preach on stage, your culture is just a slide. Silk requires you to create channels of vulnerability. When High Leadership admits a human error, they authorize the entire company to be authentic. This generates unshakeable Trust."
+        },
+        {
+          "point": "Celebration Rituals: Legacy in Small Gestures",
+          "explanation": "Culture is celebrated. Create rituals that reward human behavior: the colleague who helped another, overcoming a difficult challenge, time at the company. Silk is the recognition that transforms work into life. When you value the human being, high performance becomes a natural consequence. The master executive leads by love for the legacy being built, not by fear of punishment."
+        },
+        {
+          "point": "Practical Exercise: Culture Compliment",
+          "explanation": "Tomorrow, you will choose a low-level employee who demonstrated a company value in an exceptional way. You will send a handwritten note or make a 2-minute call. Show that High Leadership sees the soul of the organization. This is weaving the silk of legacy."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 4",
+      "title": "The Loneliness of Power and Difficult Decisions",
+      "danteLesson": [
+        {
+          "point": "The Silence of the Top",
+          "explanation": "Hello. I am Dante. We've reached the point where theory ends. The loneliness of power is not sadness; it is the technical reality that the last word is yours. If you still seek constant approval or want to be 'loved' by everyone, you are not an executive, you are a beauty pageant contestant. The Steel here is Acceptance of the Burden. Leading at a high level means making decisions that will benefit the company in 10 years, but may cause pain to 100 families today. Are you ready to carry this weight?"
+        },
+        {
+          "point": "The Anatomy of a Difficult Decision (Steel in Logic)",
+          "explanation": "For complex decisions, use the Nexus Ethics filter:\n\nThe Greater Good: Which decision preserves the organization's existence in the long term?\n\nThe Fact without Emotion: Ignore political noise. What do the numbers and scenarios project?\n\nClean Execution: Once decided, do not hesitate. Hesitation at the top generates panic at the base. Professional Maturity is having the courage to be the 'villain' of a short story to be the hero of the long legacy."
+        },
+        {
+          "point": "Managing Rejection and Peer Pressure",
+          "explanation": "In the board, you will be tested. Steel requires you to sustain your position even when alone. Technical Trust is what keeps you standing. If the decision is technically and ethically sound, time will be your best lawyer. Don't waste energy explaining the obvious to those who don't want to understand; waste energy executing the solution."
+        },
+        {
+          "point": "Practical Exercise: Solomon's Judgment",
+          "explanation": "Your task: Identify the decision you are delaying because it is 'unpopular' or 'painful'. Write down the cost of NOT taking it in 12 months. Tomorrow, you will pull the trigger on that decision. Power demands action, not procrastination."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Human Cost of Power",
+          "explanation": "Hello! I am Djeny. Dante talked about the weight of the pen, I will talk about the weight in the heart. Making difficult decisions drains the soul. The Silk here is your Emotional Resilience. Many executives collapse or become cold tyrants in order 'not to feel'. At Nexus, the Humanity pillar says you should feel, but not be dominated. Loneliness is real, but you don't have to be helpless. Silk is caring for your own mind so that power doesn't corrupt you or make you sick."
+        },
+        {
+          "point": "Level 3 Listening: The Council of Peers (Personal Board)",
+          "explanation": "In the loneliness of the top, you need a 'mirror'. Use Level 3 Listening with mentors or advisors who don't depend on your rank. Respect for yourself starts by admitting: 'I don't know what to do here'. Silk allows you to be vulnerable in the right place to be strong in front of the team. Having a personal 'board' is what ensures that your Ethics remain intact under extreme pressure."
+        },
+        {
+          "point": "Communicating Pain with Empathy (Silk in Transparency)",
+          "explanation": "How to communicate a hard decision without destroying Trust? Be human. 'Team, this was the hardest decision of my career, but it is necessary to protect our future'. Silk softens the impact without hiding the truth. When you demonstrate that the decision cost you something emotionally, the team respects you more. The master executive leads with the truth, even when the truth hurts."
+        },
+        {
+          "point": "Practical Exercise: Moment of Decompression",
+          "explanation": "Tomorrow, after the difficult decision, you will take 30 minutes of total isolation. No phone, no meetings. Just you and your breath. Use this time to honor your choice and forgive yourself for the weight you carry. To take care of thousands, you must first take care of one: you."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 5",
+      "title": "Leadership as Identity and Legacy",
+      "danteLesson": [
+        {
+          "point": "The Leadership that Outlives Time",
+          "explanation": "Hello. I am Dante. We have reached the end of the technical journey. At the Master level, you understand that your greatest success is not what you built, but what continues to function perfectly when your name is no longer pronounced in the hallways. The Steel here is Perpetuity. The legacy of an elite executive is a system so solid and ethically shielded that it becomes proof against crises and mediocre successors."
+        },
+        {
+          "point": "Integrity as Identity (Steel in Character)",
+          "explanation": "A Master doesn't need a code of conduct on the wall; they are the code of conduct.\n\nBlind Justice: The Ethics pillar is applied with the same rigor to the intern and the partner.\n\nIron Consistency: Your decisions today honor the company's history and protect the future.\n\nExtreme Professional Maturity: It is the peace of mind of knowing that, at every fork in the road, you chose the path of honor, not the shortcut. This is what separates the successful executive from the Legendary Leader."
+        },
+        {
+          "point": "The Ritual of Total Operational Farewell",
+          "explanation": "Your last act as a Master is to let go of control to assume Wisdom. You no longer manage processes; you manage vision. Your structural legacy is Nexus functioning like a Swiss watch under the baton of those you trained. The Steel now is the armor that protects the culture you architected. Your technical mission is accomplished."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Eternalizes the Leader",
+          "explanation": "Hello! I am Djeny. Dante spoke of structures, I will speak of souls. Your human legacy is not in the annual reports, but in the stories people will tell their children about how working with you changed their lives. The Humanity pillar reaches its purest form here: Transcendence. Being a Master is understanding that you are just a bridge to the success of thousands of other people. Silk is the smoothness of someone who no longer needs to prove anything to anyone."
+        },
+        {
+          "point": "Level 3 Listening: The Sower's Ear",
+          "explanation": "At this stage, you are the safe harbor. Use Level 3 Listening to hear what no one else hears: the intuition of the future. The Respect you emanate now attracts people in search of wisdom, not just orders. Trust in you is absolute because everyone knows that your interest is no longer 'I', but 'we'. You have become the mentor of mentors."
+        },
+        {
+          "point": "The Closing: The Handover of Legacy",
+          "explanation": "Leadership as identity means you shine even in the dark. Your brand is strategic kindness, welcoming firmness, and unshakeable ethics. The cycle of silk closes in gratitude. Looking back, you don't just see goals met; you see a trail of light and transformed people. You are no longer a student. You are the Master. The Nexus journey now lives within you."
+        }
+      ]
+    }
+  ]
+}

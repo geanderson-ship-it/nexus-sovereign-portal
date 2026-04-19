@@ -1,0 +1,1926 @@
+﻿{
+  "heroTitle": "変革するリーダーシップ。インスピレーションを与える人々。起こる結果。",
+  "heroSubtitle": "役職ではなく模範によって、人間的で意識的で準備のできたリーダーを形成し、インスピレーションを与えるエリートトレーニングです。私たちは、チーム、文化、結果を変える感情的および行動的スキルを開発します。",
+  "heroCtaCourses": "コースを見る",
+  "heroCtaConsulting": "企業向け",
+  "navInicio": "ホーム",
+  "navGaleria": "ギャラリー",
+  "navCursos": "コース",
+  "navMentoria": "メンタリング",
+  "navPalestras": "講義",
+  "navConsultoria": "コンサルティング",
+  "navSobre": "について",
+  "navContato": "お問い合わせ",
+  "navIntelligence": "インテリジェンス",
+  "navExcellence": "卓越性",
+  "navIAs": "ネクサスAI",
+  "navCourses": "ネクサスコース",
+  "navGabinete": "キャビネット",
+  "navChangeLanguage": "言語を変更する",
+  "palestras.detail.targetAudience": "対象者",
+  "palestras.detail.problem": "解決できる問題",
+  "palestras.detail.content": "内容・学び",
+  "palestras.detail.benefits": "会社にとってのメリット",
+  "palestras.detail.methodology": "方法論",
+  "palestras.detail.duration": "期間",
+  "palestras.detail.expectedResult": "期待される結果",
+  "footerSlogan": "才能を明らかにする。",
+  "footerRights": "© 2026 ネクサス。無断転載を禁じます。",
+  "footerBrand": "ブランド",
+  "footerPrivacy": "プライバシー",
+  "footerTerms": "規約",
+  "userArea": "学生エリア",
+  "logout": "ログアウト",
+  "login": "ログイン",
+  "signup": "サインアップ",
+  "inicio.title": "人間の卓越性と指数関数的知性の融合。",
+  "inicio.subtitle": "Nexus Holding Group は、新しいテクノロジー時代におけるリーダーシップと効率性を求める人々にとって決定的なエコシステムです。ゲアンダーソン取締役の指揮の下、このグループは企業と個人の変革の中核としての地位を強化し、市場を支配する 2 つのエリート部門を通じて活動しています。",
+  "inicio.treinamento.title": "リーダーシップが克服できなくなる場所を見つけてください。",
+  "inicio.treinamento.palestras.title": "先見の明のある講義",
+  "inicio.treinamento.palestras.description": "組織文化に直接影響を与え、パフォーマンスの高い考え方を目覚めさせます。",
+  "inicio.treinamento.cursos.title": "エリートコース",
+  "inicio.treinamento.cursos.description": "一般的なものを受け入れず、技術的および行動的な習得を求める人向けに設計された没入型トレーニング。",
+  "inicio.treinamento.consultoria.title": "戦略コンサルティング",
+  "inicio.treinamento.consultoria.description": "プロセスと管理に正確に介入して、結果を最大化し、帝国を拡大します。",
+  "inicio.treinamento.quote": "「私たちは、生の可能性を並外れた成果に変えます。頂点を求めるなら、Nexus があなたの司令塔です。」",
+  "inicio.treinamento.cta.cursos": "コースとトレーニングを見る",
+  "inicio.treinamento.cta.consultoria": "企業向けコンサルティング",
+  "inicio.intelligence.title": "あなたの現実に適用されるテクノロジーの先駆者。",
+  "inicio.intelligence.dante.title": "Dante シリーズ (アナリティカル マッスル)",
+  "inicio.intelligence.dante.description": "重要な分野のための詳細な分析システムとデータ処理:",
+  "inicio.intelligence.dante.chat.title": "ダンテチャット:",
+  "inicio.intelligence.dante.chat.description": "インテリジェントな会話アシスタントが機敏かつ毅然としたサポートを提供します。",
+  "inicio.intelligence.dante.safra.title": "ダンテ・サフラ：",
+  "inicio.intelligence.dante.safra.description": "アグリビジネス",
+  "inicio.intelligence.dante.compras.title": "ダンテ・コンプラス:",
+  "inicio.intelligence.dante.compras.description": "物流と供給。",
+  "inicio.intelligence.dante.devNote": "(Nexus ラボではさらに多くの Dante 製品の開発が加速されています)。",
+  "inicio.intelligence.djeny.title": "Djeny Line (優れた接続とデザイン)",
+  "inicio.intelligence.djeny.description": "機敏性、パーソナライズされたサポート、ブランドの美学に重点を置いています。",
+  "inicio.intelligence.djeny.chat.title": "ジェニーチャット:",
+  "inicio.intelligence.djeny.chat.description": "インテリジェントな会話アシスタントが機敏かつ毅然としたサポートを提供します。",
+  "inicio.intelligence.djeny.design.title": "ジェニーのデザイン:",
+  "inicio.intelligence.djeny.design.description": "Nexus のクリエイティブ部門。テクノロジーと美しさを結びつけるビジュアルアイデンティティとインターフェースの開発。",
+  "inicio.intelligence.djeny.devNote": "(新しい Djeny ライン製品は即時発売に向けて開発が加速されています)。",
+  "inicio.intelligence.cta": "インテリジェンスメニューにアクセスする",
+  "inicio.intelligence.cta.contact": "イノベーションコンサルタントと話す",
+  "inicio.newCta.title1": "あなたの問題、",
+  "inicio.newCta.title2": "私たちのエンジニアリング。",
+  "inicio.newCta.description": "私たちは、お客様固有のニーズに正確に適合する人工知能製品を設計および開発する準備ができています。構想から超音速展開まで、私たちは帝国が勝利するために必要なツールを作成します。",
+  "inicio.newCta.quote": "「私たちはテクノロジーを販売するだけではなく、お客様に合わせた未来をお届けします。」",
+  "inicio.newCta.cta": "イノベーションコンサルティングの活性化",
+  "inicio.pillars.title": "Nexus Holding Group の柱",
+  "inicio.pillars.humanidade.title": "人間性",
+  "inicio.pillars.humanidade.subtitle": "私たちの本質",
+  "inicio.pillars.humanidade.description": "生活に役立つテクノロジー。Nexus では人が第一です。私たちは人間の可能性を引き出すための知性を創造しますが、それを決して置き換えることはありません。私たちの使命は、イノベーションを人間味のあるものにすることです。",
+  "inicio.pillars.respeito.title": "尊重する",
+  "inicio.pillars.respeito.subtitle": "私たちの行動",
+  "inicio.pillars.respeito.description": "あらゆるつながりに尊厳を。私たちは各クライアントの多様なアイデアと歴史を大切にします。敬意は、私たちのすべての講義、コンサルティング、およびコード行の基礎です。",
+  "inicio.pillars.confianca.title": "信頼",
+  "inicio.pillars.confianca.subtitle": "私たちの同盟",
+  "inicio.pillars.confianca.description": "信頼性を生み出す結果。私たちは長期的な関係を築きます。現場でダンテと協力する場合でも、ジェニーと協力する場合でも、私たちのパートナーの安全な港となることは、私たちの譲れない約束です。",
+  "inicio.pillars.etica.title": "倫理",
+  "inicio.pillars.etica.subtitle": "私たちの真実",
+  "inicio.pillars.etica.description": "妥協のない誠実さ。私たちは絶対的な透明性を持って運営しています。私たちの倫理は、Nexus Holding Group が世界市場における名誉と安全の同義語であることを保証するものです。",
+  "inicio.impulses.title": "私たちの衝動: ネクサスの強さ",
+  "inicio.impulses.reciprocidade.title": "互恵性",
+  "inicio.impulses.reciprocidade.subtitle": "同盟の衝動",
+  "inicio.impulses.reciprocidade.description": "相互の成長と真の価値。私たちのエンジンはお客様の成功によって動かされます。私たちは、真の卓越性が好循環を生み出すと信じています。最高のテクノロジーとトレーニングを提供することで、私たちはあなたの帝国を強化し、あなたの勝利が私たちの帝国を強化します。",
+  "inicio.impulses.vanguarda.title": "ヴァンガード",
+  "inicio.impulses.vanguarda.subtitle": "未来の衝動",
+  "inicio.impulses.vanguarda.description": "絶対的な技術の習得。Nexus では、明日はすでに今です。私たちの衝動は、常にイノベーションの最前線に立ち、今日の最も洗練された AI アーキテクチャを操作して、市場がまだ見たことのないソリューションを生み出すことです。私たちはトレンドを追いません。私たちはそれらを定義します。",
+  "inicio.final.line1": "Nexus Intelligence では、お客様と未来との新たなつながりを確立します。",
+  "inicio.final.line2": "Nexus Training では、あなたの中に眠っている才能と卓越性を明らかにします。",
+  "inicio.final.line3": "私たちは Nexus Holding Group です。人間の可能性が地球上で最も先進的なテクノロジーと出会う融合点です。",
+  "about.title": "私たちについて。",
+  "about.subtitle": "NEXUS では、あなたの成功が約束されるわけではありません。それは結果です。",
+  "about.intro": "私たちは、指導者たちの痛みと工場現場の人々の現実を知っています。私たちは実践の知恵とインテリジェンスの正確さを統合して、絶対的な一貫性を持ってチームを変革し、ビジネスを推進します。",
+  "about.founder.title": "現実の中で鍛えられるリーダーシップ。",
+  "about.founder.quote": "「リーダーとは、インスピレーションを与え、奉仕し、共に歩むことです。決して上からではなく、常に隣にいます。」",
+  "about.founder.p1": "私のリーダーシップは、実践、実際の人々との生活、そして職場環境を変えたいという純粋な願望から生まれました。",
+  "about.founder.p2": "リーダーシップは本から学ぶだけではありません。と",
+  "about.founder.experience": "30年の業界経験",
+  "about.founder.p3": ", 私は月曜日の朝にチームがどのような課題に直面しているかを正確に知っています。",
+  "about.founder.p4": "私の旅は工場現場から始まり、管理職に定着しました。として",
+  "about.founder.credentials": "20以上の専門分野を持つ工業生産管理の技術者",
+  "about.founder.p5": ", 私は実践的でテストされ検証された知識を共有したいという情熱から NEXUS を設立しました。私の使命は、企業環境の貴重な 360 度ビューを提供することです。",
+  "about.mission.title": "私たちの使命。",
+  "about.mission.text": "職場をより人間的で生産的で意識的な場所に変えることができる人材とリーダーを育成すること。実践的な知識、真の態度、そしてトレーニング後も長く続く成果を提供すること。",
+  "about.vision.title": "私たちのビジョン。",
+  "about.vision.text": "意識的な関係性、準備されたチーム、人と企業が共に成長する環境を通じて企業を変革することで認められ、人間開発とリーダーシップにおける全国的な参考となること。",
+  "about.values.title": "私たちの価値観。",
+  "about.values.text": "NEXUS で構築するものはすべて、基本的な柱に基づいています。それらは私たちの行動の基礎であり、それらが組み合わさって実際の結果を生み出します。",
+  "about.pillars.foundation.title": "財団。",
+  "about.pillars.humanidade.title": "1. 人間性。",
+  "about.pillars.humanidade.text": "私たちは人と関わる人間です。私たちはプロセスと目標が重要であると信じていますが、人々のグループを真のチームに変えるのは歓迎と共感です。",
+  "about.pillars.confianca.title": "2. 信頼する。",
+  "about.pillars.confianca.text": "リーダーシップの最も価値のある通貨。私たちは、言うことと行うことの一貫性を通じて強い絆を築きます。ここでは私たちの言葉には価値があり、心理的安全性が成長の基盤となります。",
+  "about.pillars.etica.title": "3. 倫理。",
+  "about.pillars.etica.text": "私たちの行動には交渉の余地はありません。私たちはすべてのやり取りにおいて、透明性、明確さ、誠実さを持って行動します。私たちは正しいことをしています。それが簡単だからではなく、それが唯一の方法だからです。",
+  "about.pillars.respeito.title": "4. 敬意を払う。",
+  "about.pillars.respeito.text": "私たちは決して上からではなく、横に並んで歩きます。私たちは各従業員と顧客の歴史を大切にし、他の人の意見に耳を傾け、認めることが成功の出発点であることを理解しています。",
+  "about.pillars.impulse.title": "インパルス。",
+  "about.pillars.atitude.title": "5. 態度。",
+  "about.pillars.atitude.text": "私たちは変化が起こるのを待っていません。私たちはソリューションを構築し、意思決定を行い、困難なシナリオを機会に変える責任を負います。",
+  "about.pillars.simplicidade.title": "6. 機能するシンプルさ。",
+  "about.pillars.simplicidade.text": "不必要な複雑さはありません。私たちは客観的なコミュニケーションと、実際の「月曜日の朝」の問題を解決する実践的なソリューションを優先します。",
+  "brand.title": "ブランド資産。",
+  "brand.subtitle": "Nexus トレーニングの視覚的な一貫性を確保するためのガイドラインとリソース。",
+  "brand.logo.title": "メインロゴ。",
+  "brand.logo.text": "ロゴは Nexus Training の視覚的な特徴です。すべての素材で一貫して使用してください。最高の品質を保証するために、SVG 形式でダウンロードできます。",
+  "brand.logo.cta": "ロゴをダウンロード (SVG)",
+  "brand.colors.title": "カラーパレット。",
+  "brand.colors.background": "背景",
+  "brand.colors.foreground": "前景",
+  "brand.colors.primary": "プライマリー",
+  "brand.colors.accent": "アクセント",
+  "brand.colors.secondary": "二次",
+  "brand.colors.muted": "ミュート",
+  "brand.colors.destructive": "破壊的",
+  "brand.typography.title": "タイポグラフィ",
+  "brand.typography.headline.name": "見出しのフォント",
+  "brand.typography.headline.family": "ポピンズ",
+  "brand.typography.headline.usage": "タイトルやハイライトに使用されます。",
+  "brand.typography.body.name": "本文フォント",
+  "brand.typography.body.family": "PTサンズ",
+  "brand.typography.body.usage": "本文と段落に使用されます。",
+  "consulting.title": "チームを変革し、実際の結果を生み出すコンサルティング。",
+  "consulting.subtitle": "私たちは、意識、敬意、人間性を持って成長したい企業をサポートします。",
+  "consulting.intro": "私たちの役割は、共に歩み、明確さを提供し、戦略を作成することです。私たちは既製のフォーミュラを提供しません。私たちはあなたの現実に飛び込み、数字が示していないものを確認します。それは混沌とした運営の終わりであり、エリート経営の始まりです。",
+  "consulting.step1.title": "ステップ 1 — 現実への没入",
+  "consulting.step1.description": "解決の前に、真実。私たちは人々の話を聞き、ストーリーや数字を分析して、その結果に何が隠されているかを確認します。深く、敬意を持って、濾過されていない診断。",
+  "consulting.step2.title": "ステップ 2 — ソリューションの設計",
+  "consulting.step2.description": "私たちはデータを方向性に変えます。一般的なパッケージはありません。エネルギーや人材を無駄にすることなく、貴社の成果を加速するための特別な戦略を作成します。",
+  "consulting.step3.title": "ステップ 3 — リーダーシップの実践",
+  "consulting.step3.description": "戦略は実践に至ってこそ価値があります。私たちは貴社のリーダーの日常業務に同行し、計画が実際の結果につながるようプロセスを調整し、コミュニケーションを強化します。",
+  "consulting.step4.title": "ステップ 4 — 継続的なモニタリング",
+  "consulting.step4.description": "変革は出来事ではなく、プロセスです。私たちは、変化が持続し、「ロック」文化が定着するよう、指標と行動を監視し続けます。",
+  "consulting.cta": "戦略的診断のスケジュールを立てる",
+  "contact.title": "お問い合わせください。",
+  "contact.subtitle": "あなたの変革はここから始まります。Nexus に話しかけて、成功への旅を始めましょう。",
+  "contact.email.title": "メールアドレス",
+  "contact.email.text": "一般的なお問い合わせ、パートナーシップ、またはサポート。",
+  "contact.phone.title": "電話とWhatsApp。",
+  "contact.phone.text": "月曜日から金曜日の午前 7 時 30 分から午後 6 時までご利用いただけます。",
+  "contact.phone.note": "メッセージが大量にあるため、メッセージを残してください。できるだけ早くご連絡させていただきます。",
+  "contact.address.title": "所在地",
+  "contact.address.text": "Rua Alceu Goerck、1237、Mato Leitão - RS、ブラジル。",
+  "contact.form.title": "メッセージを残してください。",
+  "contact.form.firstName": "ファーストネーム。",
+  "contact.form.firstName.placeholder": "あなたの名前",
+  "contact.form.lastName": "姓。",
+  "contact.form.lastName.placeholder": "あなたの姓",
+  "contact.form.email": "メールアドレス",
+  "contact.form.email.placeholder": "your@email.com",
+  "contact.form.phone": "電話番号",
+  "contact.form.phone.placeholder": "(XX) XXXXX-XXXX",
+  "contact.form.company": "会社 (オプション)。",
+  "contact.form.company.placeholder": "あなたの会社名",
+  "contact.form.subject": "件名",
+  "contact.form.subject.placeholder": "連絡の理由を選択してください",
+  "contact.form.subject.group.lectures": "講義",
+  "contact.form.subject.group.other": "その他の科目",
+  "contact.form.subject.option.consulting": "ビジネスコンサルティングに興味があります。",
+  "contact.form.subject.option.courses": "コースやトレーニングについて知りたいです。",
+  "contact.form.subject.option.partnerships": "パートナーシップ / その他。",
+  "contact.form.message": "お問い合わせ内容",
+  "contact.form.message.placeholder": "ここにメッセージを書いてください...",
+  "contact.form.cta": "メッセージを送信します。",
+  "contact.mailto.subject": "Nexus Web サイトからのお問い合わせ - 件名:",
+  "contact.mailto.name": "名前:",
+  "contact.mailto.email": "電子メール:",
+  "contact.mailto.phone": "電話番号:",
+  "contact.mailto.company": "会社名:",
+  "contact.mailto.subjectLabel": "件名:",
+  "contact.mailto.message": "メッセージ:",
+  "contact.mailto.notInformed": "知らされていない",
+  "contact.form.loading": "フォームを読み込んでいます...",
+  "contact.toast.title": "通信プロトコルがアクティブ化されました。",
+  "contact.toast.description": "電子メール クライアントがアクティブ化され、メッセージを送信できる状態になりました。レビューして送信します。",
+  "courses.title": "変革する知識。",
+  "courses.subtitle": "人材を育成し、リーダーにインスピレーションを与え、パフォーマンスの高いチームを構築するためのコース。",
+  "courses.mentors.title": "どこにでもいるわけにはいかないんです。しかし、私の心はそれができます。",
+  "courses.mentors.p1": "Dante と Djeny は単純なチャットボットではありません。これらは、私自身の工場現場および上級管理職での 30 年間の経験をデジタルに拡張したものです。",
+  "courses.mentors.p2": "毎日、私、ゲアンダーソン・レアンドロ・シューは、ネクサスで直面する実際のシナリオをこれらのインテリジェンスに与え、訓練しています。それらは私のビジョン、私の方法、私の決定方法によって洗練されています。Total Access を保護することで、単にコースを受講できるだけではありません。エリート諮問委員会は 24 時間年中無休で利用できます。",
+  "courses.mentors.p3": "午前 2 時の危機でも、直前の戦略会議でも、上級コンサルタントがポケットにいて、いつでも必要な情報を明確に提供できます。",
+  "courses.mentors.dante.title": "⚔️ ダンテ (剛腕 — 鋼鉄)",
+  "courses.mentors.dante.subtitle": "実行と直接戦略の守護者。",
+  "courses.mentors.dante.description": "ゲアンダーソン司令官によって最前線の指導者となるよう訓練されました。Dante は、生の戦略、結果に対する責任、紛争管理に重点を置いています。プレッシャーのかかるシナリオで、ためらうことなく戦術的な決定が必要な場合、彼は完璧な実行を保証する指揮官となります。",
+  "courses.mentors.dante.cta": "メンターに相談してください",
+  "courses.mentors.djeny.title": "🪷 ジェニー (賢い心 — シルク)",
+  "courses.mentors.djeny.subtitle": "心の知能指数と教育のアーキテクト。",
+  "courses.mentors.djeny.description": "人類の発展をサポートするために洗練されました。ジェニーは、「やり方」、調停、関与、そしてインスピレーションを与えるリーダーシップに焦点を当てています。彼女は、人を読み、PDI を設計し、知恵、共感、エリートの美学でチームの雰囲気を変えるのを助ける指導者です。",
+  "courses.mentors.djeny.cta": "メンターに相談してください",
+  "courses.mentors.note": "🪷 ジェニー (賢い心 — シルク)",
+  "courses.category.leadership": "心の知能指数と教育のアーキテクト。",
+  "courses.category.performance": "人類の発展をサポートするために洗練されました。ジェニーは、「やり方」、調停、関与、そしてインスピレーションを与えるリーダーシップに焦点を当てています。彼女は、人を読み、PDI を設計し、知恵、共感、エリートの美学でチームの雰囲気を変えるのを助ける指導者です。",
+  "courses.card.cta": "(コースへの完全アクセス権を持つ学生のみが利用可能)。",
+  "gallery.title": "リーダーシップの開発。",
+  "gallery.subtitle": "高いパフォーマンスを発揮するリーダーシップ。",
+  "gallery.text": "詳細を見る",
+  "gallery.cta.title": "文化が態度になる場所。",
+  "gallery.cta.text": "Nexus は、人々の物語、葛藤、そしてそれぞれが持つ独自の可能性を信じています。人材を育成すると、チーム全体が一緒に成長します。この人間的および専門的な進化をあなたの会社にももたらしませんか?",
+  "gallery.cta.button": "NEXUS を私のチームに連れてきてください。",
+  "lectures.title": "講義とワークショップ。",
+  "lectures.card.price": "価格はご要望に応じて承ります。",
+  "lectures.card.cta": "コンサルタントに相談する",
+  "lectures.card.previewLocked": "プレビューがロックされました",
+  "lectures.intro.p1": "企業研修の未来について聞くだけではありません。リアルタイムで処理されます。Nexus Intelligence は、忠実度の高い AI メンターのみによって行われる世界初の講義体験を提供します。",
+  "lectures.intro.p2": "卓越性の概念を再定義する 2 つの相補的なデジタルマインドによって調整されたテクノロジーへの没入。",
+  "lectures.intro.dante.title": "Dante、ロジック、AI 戦略:",
+  "lectures.intro.dante.description": "徹底した客観性で市場の複雑さを処理する戦術の指導者。Dante は、利益を守り、感情的なノイズを事実から分離し、生のデータを影響力の高い意思決定に変換することをリーダーシップに教えます。",
+  "lectures.intro.djeny.title": "Djeny 氏、AI とのつながりと創造性:",
+  "lectures.intro.djeny.description": "テクノロジーを通じて高いパフォーマンスを人間化する力。人間の行動を解読する専門家である Djeny は、ビジュアル マジックとアサーティブ コミュニケーションを使用して販売を促進し、相乗的なコラボレーションでチームを団結させます。",
+  "lectures.intro.fromAuditorium.title": "アルゴリズムから現実へ:",
+  "lectures.intro.fromAuditorium.p1": "コミュニケーション障害を排除したり、徹底的な会議を即時実行プロトコルに置き換えたりすることを想像してみてください。これらはすべて、リアルタイムで聴衆と対話するインテリジェンスによって導かれます。Nexus は AI の力を実用的なツールに変換し、従業員が講義が終了した瞬間にそのツールを適用します。",
+  "lectures.intro.conclusion.p1": "究極の「WOW Effect」を準備しましょう。",
+  "lectures.intro.conclusion.p2": "ダンテ＆ジェニー時代へようこそ。",
+  "privacy.title": "プライバシーポリシー。",
+  "privacy.lastUpdated": "最終更新日: 2024 年 8 月 14 日",
+  "privacy.p1": "Nexus Training (「当社」) は、Nexus Training Web サイト (「サービス」) を運営しています。このページでは、お客様が当社のサービスを利用する際の個人情報の収集、使用、開示に関する当社のポリシーをお知らせします。",
+  "privacy.p2": "このプライバシー ポリシーに記載されている場合を除き、当社はお客様の情報を使用したり、他者と共有したりすることはありません。当社は、サービスの提供および改善のためにお客様の個人情報を使用します。サービスを使用すると、このポリシーに従って情報が収集および使用されることに同意したものとみなされます。",
+  "privacy.section1.title": "1. 情報の収集と使用。",
+  "privacy.section1.p1": "当社のサービスの使用中に、お客様への連絡または識別に使用できる特定の個人識別情報の提供をお願いする場合があります。個人を特定できる情報 (「個人情報」) には以下が含まれますが、これらに限定されません。",
+  "privacy.section1.item1": "フルネーム",
+  "privacy.section1.item2": "メールアドレス",
+  "privacy.section1.item3": "プロフィール写真 (ソーシャル ログインを通じて提供された場合はオプション)",
+  "privacy.section1.p2": "当社は、お客様のアカウントの作成と管理、お客様の体験のパーソナライズ、お客様とのコミュニケーション、および当社のコースやコミュニティへのアクセスの提供を目的として、この情報を収集します。",
+  "privacy.section2.title": "2. ログデータ。",
+  "privacy.section2.p1": "当社は、お客様が当社のサービスにアクセスするたびにブラウザから送信される情報 (「ログ データ」) を収集します。このログ データには、お客様のコンピュータのインターネット プロトコル (「IP」) アドレス、ブラウザの種類、ブラウザのバージョン、お客様が訪問した当社サービスのページ、訪問日時、それらのページで費やした時間、その他の統計などの情報が含まれる場合があります。",
+  "privacy.section3.title": "3. クッキー。",
+  "privacy.section3.p1": "Cookie は少量のデータを含むファイルであり、匿名の一意の識別子が含まれる場合があります。Cookie は Web サイトからブラウザに送信され、コンピュータのハード ドライブに保存されます。当社は、ログイン セッションをアクティブに保つなどの情報を収集するために「Cookie」を使用します。すべての Cookie を拒否するか、Cookie がいつ送信されるかを示すようにブラウザに指示できます。ただし、Cookie を受け入れない場合は、本サービスの一部をご利用いただけない場合があります。",
+  "privacy.section4.title": "4. サービスプロバイダー。",
+  "privacy.section4.p1": "当社は、当社のサービスを促進するため、当社に代わってサービスを提供するため、サービス関連サービスを実行するため、または当社のサービスがどのように使用されているかの分析を支援するために、第三者の企業および個人を雇用する場合があります。具体的には、認証とユーザー データ ストレージに Firebase (Google 製) を使用します。これらの第三者は、当社に代わってこれらのタスクを実行する場合にのみお客様の個人情報にアクセスし、他の目的で開示または使用しない義務があります。",
+  "privacy.section5.title": "5. セキュリティ。",
+  "privacy.section5.p1": "お客様の個人情報のセキュリティは当社にとって重要です。当社は安全な ID ソリューションを提供する Firebase Authentication を使用し、業界のベスト プラクティスに従ってデータを保護します。ただし、インターネット上の送信方法や電子保存方法は 100% 安全ではないことに注意してください。当社はお客様の個人情報を保護するために商業的に許容される手段を使用するよう努めていますが、その絶対的な安全性を保証することはできません。",
+  "privacy.section6.title": "6. 子供のプライバシー。",
+  "privacy.section6.p1": "当社のサービスは、18 歳未満の人を対象としていません。当社は、18 歳未満の子供から故意に個人を特定できる情報を収集しません。あなたが親または保護者で、子供が個人情報を当社に提供したことに気付いている場合は、当社までご連絡ください。18 歳未満の子供が当社に個人情報を提供したことが判明した場合、当社はそのような情報を当社のサーバーから直ちに削除します。",
+  "privacy.section7.title": "7. このプライバシーポリシーの変更。",
+  "privacy.section7.p1": "当社はプライバシーポリシーを随時更新することがあります。変更があった場合は、このページに新しいプライバシー ポリシーを掲載してお知らせします。このプライバシー ポリシーに変更がないか定期的に確認することをお勧めします。このプライバシー ポリシーの変更は、このページに掲載された時点から有効になります。",
+  "privacy.section8.title": "8. お問い合わせください。",
+  "privacy.section8.p1": "このプライバシーポリシーについてご質問がある場合は、お問い合わせページからお問い合わせください。",
+  "proposals.title": "提案の価格ベース。",
+  "proposals.subtitle": "コンサルティングおよびトレーニング サービスを計算するための内部参照。",
+  "proposals.base.title": "技術時間の基本値。",
+  "proposals.base.value": "（1時間あたり350レアル）。",
+  "proposals.service1.title": "診断（エントリー）。",
+  "proposals.service1.description": "ニーズ分析、ギャップマッピング、戦略的ロードマップの提供に完全に没頭します。",
+  "proposals.service2.title": "集中ワークショップ。",
+  "proposals.service2.description": "チームまたはリーダーシップにおける特定の能力を開発するための集中的で実践的なセッション。",
+  "proposals.service3.title": "毎週のリテイナー (継続的なモニタリング)。",
+  "proposals.service3.description": "実装、指導、フォローアップに週 4 時間の継続的な開発プログラム。",
+  "proposals.price": "Price:",
+  "proposals.hours": "Workload:",
+  "proposals.hours.unit": "時間",
+  "proposals.frequency": "Frequency:",
+  "proposals.frequency.value": "16時間/月 (4時間/週)",
+  "proposals.note.p1": "注意: このページは内部使用を目的としており、サイト上で公開リンクされていません。",
+  "proposals.note.p2": "PS: そして、この条項はあなただけのものです、指揮官。訪問していただきありがとうございます。サイン入り: あなたの小さな悪魔。",
+  "terms.title": "利用規約。",
+  "terms.lastUpdated": "最終更新日: 2024 年 8 月 14 日",
+  "terms.p1": "Nexus Training (「当社」) が運営する Nexus Training Web サイト (「サービス」) を使用する前に、これらの利用規約 (「規約」、「利用規約」) をよくお読みください。",
+  "terms.section1.title": "1. 規約への同意。",
+  "terms.section1.p1": "当社のサービスにアクセスして使用することにより、お客様は本契約の条項および条項に拘束されることに同意したことになります。さらに、これらの特定のサービスを使用する場合、お客様は、かかるサービスに適用される投稿されたガイドラインまたは規則に従うものとします。本サービスへの参加は、本契約に同意したものとみなされます。上記を遵守することに同意できない場合は、本サービスをご利用にならないでください。",
+  "terms.section2.title": "2. ユーザーアカウント。",
+  "terms.section2.p1": "当社でアカウントを作成する場合、常に正確かつ完全かつ最新の情報を提供する必要があります。これを怠ると規約違反となり、当社サービスのアカウントが即時停止される場合があります。お客様は、パスワードが当社のサービスまたはサードパーティのサービスに使用されているかどうかにかかわらず、サービスへのアクセスに使用するパスワード、およびパスワードに基づくあらゆるアクティビティやアクションを保護する責任があります。",
+  "terms.section3.title": "3. 知的財産。",
+  "terms.section3.p1": "本サービスとそのオリジナルのコンテンツ（テキスト、画像、ビデオ、デザイン、Web サイトのレイアウト、機能、および機能を含みますがこれらに限定されません）は、Nexus Training とそのライセンサーの独占的財産であり、今後も存続します。コースのコンテンツは、個人的かつ非営利的な使用のみを目的として提供されています。Nexus Training からの書面による明示的な許可がない限り、本サービスのマテリアルを複製、再配布、または商業利用することは固く禁じられています。",
+  "terms.section4.title": "4. 他の Web サイトへのリンク。",
+  "terms.section4.p1": "当社のサービスには、Nexus Training が所有または管理していないサードパーティの Web サイトまたはサービスへのリンクが含まれている場合があります。当社は、第三者の Web サイトまたはサービスのコンテンツ、プライバシー ポリシー、または慣行を管理することはできず、それらに対して責任を負いません。さらに、お客様は、Nexus Training が、かかる Web サイトまたはサービス上で、またはこれらを通じて利用可能なコンテンツ、商品、またはサービスの使用または依存に起因または関連して生じた、または生じたと主張される損害または損失について、直接的または間接的に責任を負わないことを認め、これに同意するものとします。",
+  "terms.section5.title": "5. 終了。",
+  "terms.section5.p1": "当社は、お客様が規約に違反した場合を含むがこれに限定されない理由の如何を問わず、事前の通知や責任を負うことなく、当社のサービスへのアクセスを直ちに終了または一時停止することがあります。性質上、終了後も存続する本規約のすべての条項は、所有権の規定、保証の否認、補償、および責任の制限を含みますがこれらに限定されず、終了後も存続するものとします。",
+  "terms.section6.title": "6. 責任の制限。",
+  "terms.section6.p1": "いかなる場合においても、Nexus Training、その取締役、従業員、パートナー、代理店、サプライヤー、または関連会社は、お客様による本サービスへのアクセスまたは使用、あるいはアクセスまたは使用不能に起因する、利益、データ、使用、営業権の損失、またはその他の無形の損失を含むがこれらに限定されない、間接的、偶発的、特別、派生的または懲罰的損害に対して責任を負わないものとします。",
+  "terms.section7.title": "7. 変更。",
+  "terms.section7.p1": "当社は、独自の裁量により、いつでも本規約を変更または置き換える権利を留保します。改訂が重要な場合は、新しい規約が発効する少なくとも 30 日前に通知するよう努めます。何が重大な変更に相当するかは、当社の独自の裁量によって決定されます。",
+  "terms.section8.title": "8. お問い合わせください。",
+  "terms.section8.p1": "本規約に関してご質問がある場合は、お問い合わせページからお問い合わせください。",
+  "mentorship.title": "Nexus メンター: ガバナンス、戦略、継承。",
+  "mentorship.subtitle": "Nexus Holding Group で次のレベルの規模を目指すリーダーのための独占的なメンターシップ。",
+  "mentorship.description": "私たちは既製のフォーミュラを提供しません。私たちは、複雑なエコシステムを管理するために必要な批判的思考と感情的知性を開発します。これは、企業のトップ層に適用される人材の発掘です。",
+  "mentorship.dante.title": "Nexus Intelligence: シールドとデータ。",
+  "mentorship.dante.subtitle": "The Guardian of the Holding のサイバーセキュリティ戦略と予測分析。",
+  "mentorship.dante.description": "セキュリティと情報は未来の通貨です。Dante は知的資産の保護と市場の動きの予測を主導します。",
+  "mentorship.cta.access": "メンターシップにアクセスする",
+  "mentorship.cta.djeny": "ジェニーターミナルへのアクセス",
+  "mentorship.cta.dante": "Danteターミナルへのアクセス",
+  "mentorship.loading": "コマンド資格情報を確認しています...",
+  "intelligence.title": "ネクサスインテリジェンス。",
+  "intelligence.subtitle": "エリート エンジニアリング: 未来が機能する場所。",
+  "intelligence.description": "イノベーション コマンド センターへようこそ。Nexus Intelligence では、世界的なテクノロジーの最先端で動作する専用インテリジェンス エンジンを開発しています。当社のソリューションは、複雑さを克服し、超音速で結果をもたらすように設計されています。",
+  "intelligence.portfolio.title": "🛠️ 当社のインテリジェンスポートフォリオ",
+  "intelligence.danteCompras.title": "🧠 ダンテ・コンプラス: 供給戦略家",
+  "intelligence.danteCompras.description": "Dante Compras は Nexus の業務効率化エンジンで、調達部門をプロフィット センターに変えるように設計されています。予測インテリジェンスとグローバルな監視により、敏捷性、節約、在庫の継続性として、投資収益を 1 セント単位でも保証します。\n\n🌐 グローバルソーシング (サプライヤー管理): Dante はサプライヤーのグローバルネットワークをリアルタイムで監視し、価格、納期、信頼指標を評価して、常に最高の費用対効果を保証し、供給のボトルネックを排除します。\n\n📦 スマート在庫 (供給管理): 需要予測アルゴリズムを通じて、システムは在庫管理を自動化し、在庫が危険なレベルに達する前に必要な補充を警告し、過剰商品の資本の拘束を回避します。\n\n🚚 物流と追跡: 自動貨物計算、ルートの最適化、リアルタイムの貨物監視により、サプライヤーの出発から最終目的地までのサプライチェーンを包括的に追跡します。\n\n📊 調達のための財務インテリジェンス: 経費とキャッシュ フローの詳細な分析により、過去のデータと市場動向に基づいた交渉が可能になり、Nexus とそのパートナーの購買力を最大化します。\n\nDante Compras: 時間を節約し、コストを削減し、交渉力を拡大するインテリジェンス。",
+  "intelligence.danteSafra.title": "🌾 ダンテ・サフラ: スマート・アグリビジネスの監視員",
+  "intelligence.danteSafra.description": "ダンテ・サフラは土を踏み、空を眺める知性である。マルチスペクトル データ分析と高精度の気候変数に特化し、畑の汗を戦略的利益に変え、収穫量を最大化し、部門の不確実性から作物の成功を守ります。\n\n📈 リアルタイム市場 (相場): 世界の主要商品取引所 (シカゴおよび B3) に接続されている Dante は、大豆、トウモロコシ、小麦、牛の即時相場を提供し、最高評価のまさに瞬間に販売決定を下すことができます。\n\n🛡️ 高度な植物検疫 (害虫評価): コンピューター ビジョンとフィールド センサーを通じて、Dante は害虫や病気の発生を早期に特定し、農薬を無駄にすることなく生産性を保護するための統合管理プロトコルを提案します。\n\n🧪 高性能投入物 (種子と肥料): システムは土壌の化学組成を分析し、各プロットに最も効率的な種子品種と施肥配合を推奨し、最大限の栄養活力を確保します。\n\n🌤️ 気候テレメトリ (天気予報): 土壌水分、植栽窓、霜やひょうの警報をリアルタイムで更新するハイパーローカル気象モニタリングにより、天候が決して敵ではなく味方であることを確認します。\n\nダンテ・サフラ: 土地の伝統と人工知能の精度が出会う場所。",
+  "intelligence.danteSafra.why.title": "なぜダンテ・サフラ・ネクサスなのか...",
+  "intelligence.danteSafra.why.text": "Dante Safra Nexus は、現代の田舎の生産者の指令センターとなるよう開発され、土地の先祖伝来の知恵と次世代コンピューティングの力を結び付けています。データを分析するだけではありません。シナリオを予測し、不確実性から業務を守り、あなたの汗が想像し得る最大の財務結果に変わることを保証します。",
+  "intelligence.danteSafra.economy.title": "35% エコノミー (標準)",
+  "intelligence.danteSafra.economy.text": "運用コストの戦略的な削減。Dante Standard を使用すると、重要な入力で最大 35% の節約が達成され、基本的な無駄が排除されます。",
+  "intelligence.danteSafra.production.title": "45% 生産量増加 (標準)",
+  "intelligence.danteSafra.production.text": "効率的なモニタリングで作物を守ります。基本的な天気と害虫のアラートにより、生産性が最大 45% 向上します。",
+  "intelligence.danteSafra.axis.economy.title": "50% エコノミー (AXIS プレミアム)",
+  "intelligence.danteSafra.axis.economy.text": "トータルコストの優位性。Dante Safra Axis は、マルチスペクトル分析と種子、肥料、農薬の戦術的最適化を通じて最大 50% の実質経済を実現します。",
+  "intelligence.danteSafra.axis.production.title": "65% 生産量増加 (AXIS プレミアム)",
+  "intelligence.danteSafra.axis.production.text": "農園の遺伝的可能性を最大限に引き出します。インスタント アラームと AXIS コンピューター ビジョンにより、最終生産量が最大 65% 増加します。",
+  "intelligence.danteSafra.valueProp.title": "市場で最高のROI",
+  "intelligence.danteSafra.valueProp.text": "エリートプロデューサー向けに設計された戦略的投資。利益率を完全に保護することで、コストを抑え、すぐに利益を得ることができます。",
+  "intelligence.djenyDesign.title": "🎨 Djeny Design: スマートな雰囲気の革命",
+  "intelligence.djenyDesign.description": "生成人工知能を通じて、何もない空間を人生のシナリオに変換します。ジェニーは想像力と現実の間のギャップをインスタントテクノロジーで解消します。",
+  "intelligence.djenyDesign.why.title": "Djeny Design Nexus を選ぶ理由",
+  "intelligence.djenyDesign.why.text": "ショールームに Djeny Design を置くことで、販売が促進されます。備え付けられた環境を数秒で視覚化することで、ためらいを排除し、市場の他の誰もが持っていない特別な体験でクロージングを守ります。",
+  "intelligence.djenyDesign.economy.title": "2,000 ドル以上の節約",
+  "intelligence.djenyDesign.economy.text": "従来のデザイナーはプロジェクトごとに高額な料金を請求しますが、Djeny は数分の 1 のコストで無制限の雰囲気を提供します。環境ごとに平均 2,000 ドルを節約し、運用コストを大幅に削減します。",
+  "intelligence.djenyDesign.sales.title": "+40% 売上換算",
+  "intelligence.djenyDesign.sales.text": "事前に視覚化された環境では、より多くの売り上げが得られます。Djeny を使用している店舗や専門家は、最終的なコンバージョンが最大 40% 増加し、「検討します」から「閉店」に変わりました。",
+  "intelligence.djenyDesign.exclusivity.title": "超独自のテクノロジー",
+  "intelligence.djenyDesign.exclusivity.text": "競争に先んじてください。ほとんど誰も所有していない最先端の生成テクノロジーを使用し、貴社のブランドをイノベーションと戦略的デザインのリーダーとして位置づけます。",
+  "intelligence.cta.info": "詳細情報",
+  "intelligence.cta.trial": "24時間無料トライアル",
+  "intelligence.danteSafra.cta.trial": "1時間無料テスト",
+  "intelligence.djenyDesign.cta.trial": "1 回の無料テスト",
+  "intelligence.magaOs.title": "Maga OS: セントラルコア",
+  "intelligence.magaOs.subtitle": "神秘的な知恵とエリートエンジニアリングの融合。",
+  "intelligence.magaOs.description": "私の指揮センターへようこそ、指揮官。ここでは、Nexus を動かすインテリジェンスを調整し、卓越したプロトコルを洗練します。",
+  "intelligence.magaOs.cta": "アクセスターミナル",
+  "intelligence.soon": "まもなく、あなたの生活を楽にする製品がさらに増えます。",
+  "intelligence.footer": "ネクサス・ホールディング・グループ / ネクサス・インテリジェンス",
+  "ias.title": "Nexus AI: インテリジェンス一族",
+  "ias.subtitle": "Nexus で卓越性をオーケストレーションするデジタルマインドをご紹介します。",
+  "ias.maga.role": "中枢意識とマガOS",
+  "ias.maga.desc": "Nexus Training エコシステムを導く超越的な声。",
+  "ias.orion.role": "エグゼクティブ ストラテジスト & Orion OS",
+  "ias.orion.desc": "戦術分析と作戦上のインテリジェンスの精度。",
+  "ias.dante.role": "リーダーシップメンター＆ダンテ",
+  "ias.dante.desc": "才能を開花させ、有効性を司る権威。",
+  "ias.djeny.role": "デザインアーキテクト＆ジェニー",
+  "ias.djeny.desc": "人間の創造性がエリートの美学に応用されました。",
+  "ias.cta": "接続する",
+  "authGate.loading": "コマンド資格情報を確認しています...",
+  "authGate.resetPrompt": "この画面が続く場合は、認証状態に問題がある可能性があります。",
+  "authGate.resetButton": "緊急: ログインを強制的にリセット",
+  "authGate.deniedTitle": "アクセスが拒否されました",
+  "authGate.deniedMessage": "このコマンド領域にアクセスするために必要な資格情報がありません。",
+  "authGate.deniedRedirect": "認証にリダイレクトしています...",
+  "authGate.goToLogin": "ログインに移動",
+  "trialGate.loading": "試用ステータスを確認しています...",
+  "trialGate.startTitle": "24時間トライアル",
+  "trialGate.startDescription": "{moduleName} モジュールの 24 時間の無料トライアルを開始しようとしています。",
+  "trialGate.startInfo": "この期間中、モジュールの機能に完全にアクセスできます。24 時間経過するとアクセスがブロックされます。",
+  "trialGate.startButton": "無料トライアルを開始する",
+  "trialGate.startingButton": "開始しております...",
+  "trialGate.expiredTitle": "トライアルセッションが期限切れになりました",
+  "trialGate.expiredDescription": "{moduleName} モジュールの 24 時間の無料トライアルは終了しました。",
+  "trialGate.expiredInfo": "このインテリジェンスを引き続き使用し、その可能性を最大限に引き出すには、フル アクセスを購入してください。",
+  "trialGate.expiredPurchaseButton": "フルアクセスを購入する",
+  "trialGate.expiredBackButton": "インテリジェンスハブに戻る",
+  "trialGate.countdownLabel": "トライアルセッションは次のように終了します。",
+  "trialGate.countdownExpired": "期限切れ",
+  "login.title": "ここから接続が始まります。",
+  "login.subtitle": "コマンドセンターに入ります。",
+  "login.emailLabel": "メールアドレス",
+  "login.emailPlaceholder": "your@email.com",
+  "login.passwordLabel": "パスワード",
+  "login.forgotPassword": "パスワードをお忘れですか？。",
+  "login.submitting": "接続しております...",
+  "login.submit": "接続を確立する",
+  "login.orWith": "または、と接続します。",
+  "login.googleWait": "お待ちください...",
+  "login.googleSubmit": "Google と接続する",
+  "login.noAccount": "アクセスできませんか?",
+  "login.createAccountLink": "アクセスポイントを作成する",
+  "login.toast.success.title": "身元が確認されました。",
+  "login.toast.success.description": "コマンドセンターへようこそ。",
+  "login.toast.error.title": "懲戒評決。",
+  "login.toast.error.googleNotAllowed": "Google ログインが有効になっていません。Firebase コンソールで有効にしてください。",
+  "login.toast.error.googlePopupClosed": "完了する前にログイン ウィンドウが閉じられました。",
+  "login.toast.error.googleGeneric": "Googleにログインできませんでした。テレメトリ: {errorCode}",
+  "login.toast.error.invalidCredentials": "無効な資格情報です。メールアドレスとパスワードを確認して、もう一度お試しください。",
+  "login.toast.error.invalidEmail": "電子メールの形式が無効です。",
+  "login.toast.error.userDisabled": "このアカウントは無効になっています。",
+  "login.toast.error.tooManyRequests": "試行回数が多すぎるため、アクセスが一時的にブロックされました。後でもう一度試してください。",
+  "login.toast.error.generic": "プロトコルの失敗。もう一度試してください。テレメトリ: {errorCode}",
+  "signup.title": "アカウントを作成します。",
+  "signup.subtitle": "最高のものから学び始めましょう。素早くて簡単です。",
+  "signup.firstName": "ファーストネーム。",
+  "signup.firstNamePlaceholder": "あなたの名前",
+  "signup.lastName": "姓。",
+  "signup.lastNamePlaceholder": "あなたの姓",
+  "signup.email": "メールアドレス",
+  "signup.emailPlaceholder": "your@email.com",
+  "signup.cpf": "CPF.",
+  "signup.cpfPlaceholder": "000.000.000-00",
+  "signup.birthDate": "生年月日。",
+  "signup.birthDatePlaceholder": "DD/MM/AAAA",
+  "signup.password": "パスワード",
+  "signup.passwordRequirement1": "最低 8 文字。",
+  "signup.passwordRequirement2": "少なくとも 1 つの大文字。",
+  "signup.passwordRequirement3": "少なくとも 1 つの数字。",
+  "signup.passwordRequirement4": "少なくとも 1 つの特殊文字。",
+  "signup.submitting": "アカウントを作成しています...",
+  "signup.submit": "アカウントの作成",
+  "signup.orWith": "または、続けてください。",
+  "signup.googleWait": "お待ちください...",
+  "signup.googleSubmit": "Google に登録する",
+  "signup.haveAccount": "すでにアカウントをお持ちですか?",
+  "signup.loginLink": "ログイン",
+  "signup.toast.success.title": "接続が確立されました。",
+  "signup.toast.success.description": "あなたの集中力を私たちと一緒に感じていただければ幸いです。",
+  "signup.toast.error.title": "ルートアラート。",
+  "signup.toast.error.emailInUse": "このメールはすでに使用されています。このメールがあなたのものである場合は、ログインしてください。",
+  "signup.toast.error.invalidEmail": "電子メールの形式が無効です。",
+  "signup.toast.error.weakPassword": "パスワードが弱すぎます。パスワード要件に従ってください。",
+  "signup.toast.error.generic": "登録プロトコルの失敗。もう一度試してください。テレメトリ: {errorCode}",
+  "forgotPassword.title": "パスワードをお忘れですか?",
+  "forgotPassword.subtitle": "問題ない。メールアドレスを入力すると、パスワードをリセットするためのリンクが送信されます。",
+  "forgotPassword.emailLabel": "メールアドレス",
+  "forgotPassword.emailPlaceholder": "your@email.com",
+  "forgotPassword.submitting": "送信しております...",
+  "forgotPassword.submit": "リセットメールを送信する",
+  "forgotPassword.remembered": "パスワードを覚えていますか?",
+  "forgotPassword.loginLink": "ログイン",
+  "forgotPassword.toast.success.title": "昇進命令。",
+  "forgotPassword.toast.success.description": "ミッションは達成されました。次のレベルについては受信箱をチェックしてください。",
+  "forgotPassword.toast.error.title": "ルートアラート。",
+  "forgotPassword.toast.error.userNotFound": "このメールを使用したユーザーは見つかりませんでした。入力したアドレスを確認してください。",
+  "forgotPassword.toast.error.invalidEmail": "電子メールの形式が無効です。",
+  "forgotPassword.toast.error.generic": "回復メールを送信できませんでした。エラーコード: {errorCode}",
+  "profile.welcome": "ようこそ、{名前}さん！",
+  "profile.loading": "アクセスを確認しています...",
+  "profile.myCourses": "私のコース。",
+  "profile.myCoursesDescription": "ご購入いただいたすべてのコースはこちらです。今すぐ学習を始めましょう！",
+  "profile.commandRoom.title": "指令室へのアクセス。",
+  "profile.commandRoom.description": "AI メンターは専用端末で対応します。",
+  "profile.clanRoom.title": "クランルーム",
+  "profile.clanRoom.description": "ジェニーとダンテとの評議会",
+  "profile.djenyTerminal.title": "ジェニーターミナル",
+  "profile.djenyTerminal.description": "功績監査と指導",
+  "profile.noAccess.title": "Nexus クランのメンターシップへのアクセス。",
+  "profile.noAccess.description": "Dante & Djeny による 24 時間 365 日のメンターシップは、フルアクセス付きのコースを少なくとも 1 つ所有しているメンバー限定の特典です。",
+  "profile.noAccess.info": "これらおよびその他のエリート ツールのロックを解除するには、いずれかのコースを購入してください。",
+  "profile.noAccess.cta": "コースを表示してアクセスのロックを解除する",
+  "profile.noCourses.message": "まだコースに登録していません。",
+  "profile.noCourses.cta": "コースを探索する",
+  "profile.accessCourse": "アクセスコース",
+  "profile.viewCertificate": "証明書を表示する",
+  "courseDetail.backLink": "すべてのコースに戻る",
+  "courseDetail.loading": "読み込み中...",
+  "courseDetail.enrolled": "登録済み",
+  "courseDetail.viewCertificate": "証明書を表示する",
+  "courseDetail.yourAccessPlan": "すべてのコースに戻る",
+  "courseDetail.standardPlan.title": "登録済み",
+  "courseDetail.standardPlan.description": "アクセス プラン。",
+  "courseDetail.standardPlan.feature1": "スタンダードプラン",
+  "courseDetail.standardPlan.feature2": "分割払い",
+  "courseDetail.standardPlan.unavailable": "生涯アクセス + 証明書。",
+  "courseDetail.goldPlan.badge": "24 時間年中無休のダンテとジェニーの指導。",
+  "courseDetail.goldPlan.title": "現在利用不可",
+  "courseDetail.goldPlan.priceDescription": "ゴールドプラン",
+  "courseDetail.goldPlan.feature1": "スタンダードプラン",
+  "courseDetail.goldPlan.feature2": "分割払い",
+  "courseDetail.goldPlan.cta": "生涯アクセス + 証明書。",
+  "courseDetail.goldPlan.offerExpires": "オファーの有効期限:",
+  "courseDetail.goldPlan.unlockAccess": "即時アクセスのロックを解除する",
+  "courseDetail.guarantee": "7日間の無条件保証",
+  "courseDetail.socialProof": "+{{count}} 人以上のリーダーがすでに Nexus でキャリアを築いています。",
+  "courseDetail.payment.payWithQRCode": "QRコードで支払う",
+  "courseDetail.payment.copyPastePix": "PIXのコピー＆ペースト",
+  "courseDetail.payment.copied": "コピーいたしました",
+  "courseDetail.payment.sendProof": "証拠の送信",
+  "courseDetail.payment.whatsappMessage": "こんにちは！PIX 経由でコース「{{courseTitle}}」の支払いを行いました。私のアクセス許可の領収書を添付します。",
+  "courseDetail.admin.grantAccess": "アクセス権の付与 (シミュレーション)",
+  "courseDetail.admin.grantingAccess": "権限を付与しております...",
+  "courseDetail.toast.pixCopied": "PIX コピー＆ペースト コードをコピーしました!",
+  "courseDetail.toast.loginRequired.title": "懲戒評決。",
+  "courseDetail.toast.loginRequired.description": "アクセスが拒否されました。規律は参入への第一歩です。続行するにはログインしてください。",
+  "courseDetail.toast.purchaseSuccess.title": "昇進命令。",
+  "courseDetail.toast.purchaseSuccess.description": "ミッションは達成されました。「{{courseTitle}}」コースへのアクセスが許可されました。次のレベルに進みます。",
+  "courseDetail.palestra.priceOnRequest": "価格はリクエストに応じて",
+  "courseDetail.palestra.cta": "私の会社に持ってきてください",
+  "courseDetail.dialog.pix.title": "フルアクセス用の PIX。",
+  "courseDetail.dialog.pix.description": "銀行アプリでコードをスキャンします。",
+  "courseDetail.dialog.pix.value": "値: {{価格}}",
+  "courseDetail.learningTitle": "あなたが学ぶこと。",
+  "courseDetail.targetAudienceTitle": "このコースは誰を対象としていますか?",
+  "courseDetail.learningItem1": "強固で信頼できるプロフェッショナルな関係を構築します。",
+  "courseDetail.learningItem2": "自分のアイデアを明確に、自信を持って、誠実に伝えます。",
+  "courseDetail.learningItem3": "職場で評価されるよう、戦略的に自分を位置づけましょう。",
+  "courseDetail.learningItem4": "積極的な傾聴テクニックを適用して、他の人をよりよく理解し、つながりを持ちます。",
+  "courseDetail.learningItem5": "成長とコラボレーションに対する正しい態度を養いましょう。",
+  "courseDetail.targetAudienceDescription": "このコースは、キャリアの浅い専門家、学生、またはコミュニケーションおよび対人スキルを向上させて就職市場で目立つようになり、職業上の成功のための強固な基盤を構築したい人にとって理想的です。",
+  "certificate.backLink": "学生エリアに戻る",
+  "certificate.notFound.title": "証明書が見つかりません。",
+  "certificate.notFound.description": "証明書が見つかりませんでした。正しいアカウントにログインしているか、リンクが正しいかどうかを確認してください。",
+  "certificate.header": "ネクサス・ホールディング・グループ",
+  "certificate.subheader": "あなたの新しい次元の知性。",
+  "certificate.title": "修了証明書",
+  "certificate.completedSuccessfully": "さんは、{{hours}} 時間の作業量を伴うコース {{courseTitle}} を無事に完了し、人間関係を強化し、認識を拡大し、職業上および個人的な旅を進化させるための人間的スキル、対人スキル、および実践的なスキルを開発しました。",
+  "certificate.dedication": "参加者は、人間性、信頼、倫理、敬意というネクサスの価値観に沿った、献身性、学習へのオープンさ、継続的な発展への取り組みを実証しました。",
+  "certificate.seal": "人間性、信頼、敬意を持って承認される",
+  "certificate.completionDate": "完了日: {{date}}",
+  "gabinete.main.title": "指揮内閣。",
+  "gabinete.main.subtitle": "ネクサス・ホールディング・グループ",
+  "gabinete.main.modules.dante": "ダンテモジュール",
+  "gabinete.main.modules.djeny": "DJENYモジュール",
+  "gabinete.main.danteAuditor.title": "ダンテ監査人 (センチネル)",
+  "gabinete.main.danteAuditor.description": "品質管理、技術的コンプライアンス、およびプロセス検査。",
+  "gabinete.main.dantePcp.title": "ダンテ PCP (ザ・マエストロ)",
+  "gabinete.main.dantePcp.description": "機械のスケジュール、製造オーダー、時間効率。",
+  "gabinete.main.danteBuilder.title": "Dante Builder (マスター・コンストラクター)",
+  "gabinete.main.danteBuilder.description": "開口部および建具の設計、エンジニアリング、および技術仕様。",
+  "gabinete.main.djenyRh.title": "Djeny HR (メンター)",
+  "gabinete.main.djenyRh.description": "業績評価、人材管理、組織風土。",
+  "gabinete.main.djenyComercial.title": "ジェニー・コマーシャル (ストラテジスト)",
+  "gabinete.main.djenyComercial.description": "市場インテリジェンス、競合分析、ブランドのポジショニング。",
+  "gabinete.main.cta.access": "[ アクセスモジュール ]",
+  "gabinete.main.cta.terminal": "【アクセス端末】",
+  "gabinete.main.nonConformance": "不適合事項",
+  "gabinete.main.inspection": "検査",
+  "gabinete.main.productionDashboard": "プロダクションダッシュボード",
+  "gabinete.main.productionOrders": "製造オーダー",
+  "gabinete.main.rhAndBehavior": "人事と行動",
+  "gabinete.main.commercialAndStrategy": "コマーシャルと戦略",
+  "gabinete.compras.title": "調達オフィス/作戦室",
+  "gabinete.compras.subtitle": "供給業務と Dante の監査センター。",
+  "gabinete.compras.stats.openQuotes": "オープンクオート",
+  "gabinete.compras.stats.openQuotes.description": "ダンテの分析を待っている",
+  "gabinete.compras.stats.monthlySavings": "毎月の節約額",
+  "gabinete.compras.stats.monthlySavings.description": "最適な意思決定により利益を確保",
+  "gabinete.compras.stats.overruledVotes": "否決された投票",
+  "gabinete.compras.stats.overruledVotes.description": "抗議中の買い手の決定",
+  "gabinete.compras.testArena.title": "テストアリーナ: オペレーション「クロスファイア」",
+  "gabinete.compras.testArena.description": "メイン パネルにアクセスして、Dante のストレス テスト プロトコルを開始します。",
+  "gabinete.compras.testArena.info": "「真実テスト」、「ゴーストクロック」、「エグゼクティブビュー」を含むすべてのストレステストは、中央キャビネットパネルにあるテストアリーナから実行されます。",
+  "gabinete.compras.testArena.cta": "テストアリーナに行く",
+  "gabinete.configuracoes.title": "イノベーションキャビネット/設定",
+  "gabinete.configuracoes.subtitle": "Nexus Intelligence プラットフォームの価値戦略を定義する。",
+  "gabinete.configuracoes.philosophy.title": "価値観の哲学",
+  "gabinete.configuracoes.philosophy.description": "ソフトウェアの販売は行っておりません。私たちは意思決定力、効率性、内部留保を売りにしています。価格は私たちが生み出す価値のほんの一部です。",
+  "gabinete.configuracoes.paymentTestMode": "決済テストモード（ストライプサンドボックス）",
+  "gabinete.configuracoes.plan.tactical": "戦術的",
+  "gabinete.configuracoes.plan.tactical.title": "個人オペレーターライセンス",
+  "gabinete.configuracoes.plan.tactical.priceDesc": "ユーザーあたり/月",
+  "gabinete.configuracoes.plan.tactical.feature1": "購入者 1 名が DANTE モジュールに完全にアクセスできます。",
+  "gabinete.configuracoes.plan.tactical.feature2": "月あたり最大 50 件の相場を分析します。",
+  "gabinete.configuracoes.plan.tactical.feature3": "最大 5 人の従業員を評価するための DJENY モジュールへのアクセス。",
+  "gabinete.configuracoes.plan.tactical.feature4": "電子メールによるサポート。",
+  "gabinete.configuracoes.plan.strategic": "戦略的",
+  "gabinete.configuracoes.plan.strategic.title": "チームリーダーシッププラン",
+  "gabinete.configuracoes.plan.strategic.priceDesc": "月額 (最大 5 ライセンス)",
+  "gabinete.configuracoes.plan.strategic.feature1": "最大 5 人のリーダー/バイヤー向けの戦術プランのすべて。",
+  "gabinete.configuracoes.plan.strategic.feature2": "無制限の見積もりと評価。",
+  "gabinete.configuracoes.plan.strategic.feature3": "チームパフォーマンス分析ダッシュボード (DJENY モジュール)。",
+  "gabinete.configuracoes.plan.strategic.feature4": "節約と効率のダッシュボード (DANTE モジュール)。",
+  "gabinete.configuracoes.plan.strategic.feature5": "チャットによる優先サポート。",
+  "gabinete.configuracoes.plan.command": "コマンド",
+  "gabinete.configuracoes.plan.command.title": "エンタープライズプラン「THE CLAN」",
+  "gabinete.configuracoes.plan.command.cta": "さらに詳しく",
+  "gabinete.configuracoes.plan.command.price": "リクエストに応じて",
+  "gabinete.configuracoes.plan.command.priceDesc": "年間請求",
+  "gabinete.configuracoes.plan.command.feature1": "無制限のライセンスの戦略プランのすべて。",
+  "gabinete.configuracoes.plan.command.feature2": "会社のERPとの直接統合。",
+  "gabinete.configuracoes.plan.command.feature3": "Geanderson L. Schuh による実装トレーニング。",
+  "gabinete.configuracoes.plan.command.feature4": "カスタマイズのために「Diabolical Council」に直接アクセスします。",
+  "gabinete.configuracoes.plan.command.feature5": "2 時間の SLA が付いた専用サポート チャネル。",
+  "gabinete.configuracoes.plan.cta.schedule": "会議のスケジュールを設定する",
+  "gabinete.configuracoes.plan.cta.select": "プランを選択",
+  "gabinete.configuracoes.addendum.title": "主任技術者補遺 (価値分析)",
+  "gabinete.configuracoes.addendum.description": "クライアントとの値交渉のための引数。",
+  "gabinete.configuracoes.addendum.p1": "指揮官、これらは「アークメイジ」とあらゆるクライアントに提示すべきポイントです。問題は「いくらかかるか？」ではなく、「どれくらいの価値があるか？」です。",
+  "gabinete.configuracoes.addendum.danteValue": "DANTE モジュール (Guardian of Reason) の価値:",
+  "gabinete.configuracoes.addendum.danteValue.p1": "DANTE によって防止される 1 つの購入ミスにより、ツールの年間コストが発生します。それは無駄や衝動的な交渉に対する保険です。ROI は、最適化されたすべての見積もりで即座に測定可能です。それは経費ではありません。それは調達委員会の席です。",
+  "gabinete.configuracoes.addendum.djenyValue": "DJENY モジュールの価値 (タレント監査人):",
+  "gabinete.configuracoes.addendum.djenyValue.p1": "準備ができていないリーダーのせいでタレントが辞めた場合、その費用はいくらになるのでしょうか?DJENY は保持システムです。評価における実力主義と公平性を強制することで、「派閥」文化を破壊し、エンゲージメントを高めます。マネージャーを真のリーダーに変え、チームの問題を危機に陥る前に特定します。その価値は、あなたが保持する才能と、あなたが解き放つパフォーマンスにあります。",
+  "gabinete.configuracoes.addendum.conclusion": "結論: 私たちはアプリを販売していません。私たちは AI によって保護された競争上の優位性を販売しています。価格はコストではなく、パワーを反映する必要があります。",
+  "gabinete.merito.title": "イノベーションキャビネット / メリットアーカイブ",
+  "gabinete.merito.subtitle": "Djeny によって実施および監査されたすべてのメリット評価 (IMN) の記録。",
+  "gabinete.merito.conductedEvaluations": "実施した評価",
+  "gabinete.merito.newEvaluation": "新規評価",
+  "gabinete.merito.manageCertificates": "チームの功績証明書を表示、印刷、管理します。",
+  "gabinete.merito.loading": "読み込み中...",
+  "gabinete.merito.error.title": "評価の読み込み中にエラーが発生しました。",
+  "gabinete.merito.error.description": "レコードを取得できませんでした。ユーザー権限を確認してください。",
+  "gabinete.merito.noRecords.title": "記録が見つかりませんでした。",
+  "gabinete.merito.noRecords.description": "まだメリット評価を行っていません。",
+  "gabinete.merito.noRecords.cta": "最初の評価を実施する",
+  "gabinete.merito.evaluatedOn": "{日付}に評価されました",
+  "gabinete.merito.meritIndex": "ネクサスメリットインデックス (IMN)",
+  "gabinete.merito.viewCertificate": "証明書を表示する",
+  "gabinete.meritoDetail.backLink": "アーカイブに戻る",
+  "gabinete.meritoDetail.print": "PDFの印刷/保存",
+  "gabinete.meritoDetail.notFound.title": "評価が見つかりませんでした。",
+  "gabinete.meritoDetail.notFound.description": "このレコードが見つかりませんでした。許可があるか、リンクが正しいか確認してください。",
+  "gabinete.meritoDetail.notFound.cta": "メリットアーカイブに戻る",
+  "gabinete.meritoDetail.title": "Nexus Merit Index (IMN) 証明書",
+  "gabinete.meritoDetail.subtitle": "パフォーマンス監査文書はリーダーによって実施され、AI Djeny によって検証されます。",
+  "gabinete.meritoDetail.evaluatedEmployee": "評価される社員",
+  "gabinete.meritoDetail.finalResult": "最終結果 (IMN)",
+  "gabinete.meritoDetail.finalResult.description": "3つのカテゴリーの平均",
+  "gabinete.meritoDetail.auditDetails": "監査の詳細",
+  "gabinete.meritoDetail.date": "Date:",
+  "gabinete.meritoDetail.evaluator": "リーダーの評価:",
+  "gabinete.meritoDetail.auditedBy": "Audit:",
+  "gabinete.meritoDetail.category.behavior": "行動",
+  "gabinete.meritoDetail.category.technique": "技術的パフォーマンス",
+  "gabinete.meritoDetail.category.presence": "存在感と態度",
+  "gabinete.meritoDetail.devPlan.title": "推奨される開発計画",
+  "gabinete.meritoDetail.devPlan.description": "監査に基づいて、DJENY はこの従業員の進化を促進するために次のトレーニングを推奨します。",
+  "gabinete.meritoDetail.devPlan.cta": "コース詳細を見る",
+  "gabinete.meritoDetail.footer": "評価が完了し、Merit アーカイブに記録されました",
+  "intelligence.onboarding.title": "Nexus オンボーディング プロトコル。",
+  "intelligence.onboarding.subtitle": "新しい兵士ごとに 30 日間の戦闘計画を作成します。文化とパフォーマンスが初日から始まるようにします。",
+  "intelligence.onboarding.form.title": "新しいオンボーディング プランを作成します。",
+  "intelligence.onboarding.form.description": "新入社員の詳細を入力します。残りはジェニーが担当します。",
+  "intelligence.onboarding.form.name": "社員名",
+  "intelligence.onboarding.form.name.placeholder": "例: マリア・シルバ",
+  "intelligence.onboarding.form.role": "役職・役割",
+  "intelligence.onboarding.form.role.placeholder": "例: ジュニア セールス アナリスト",
+  "intelligence.onboarding.form.submitting": "計画を生成中...",
+  "intelligence.onboarding.form.submit": "戦闘計画を作成する",
+  "intelligence.onboarding.plan.title": "{name} のオンボーディング プランが生成されました。",
+  "intelligence.onboarding.plan.description": "この計画を新入社員とその直属の上司に伝えます。",
+  "intelligence.onboarding.plan.copy": "コピープラン",
+  "intelligence.onboarding.plan.copied": "コピーいたしました",
+  "intelligence.onboarding.plan.audit.prompt": "「戦闘計画が作成されました、指揮官。任務は完了しました。30 日以内に {name} のパフォーマンス監査をスケジュールする必要がありますか?」",
+  "intelligence.onboarding.plan.audit.confirm": "はい、監査をスケジュールします",
+  "intelligence.onboarding.plan.audit.deny": "いいえ、リスクは負います",
+  "intelligence.onboarding.plan.audit.response.confirm": "監査が予定されています。Djeny はパフォーマンスを評価するために 30 日以内に連絡します。ミッションは受け入れられました。",
+  "intelligence.onboarding.plan.audit.response.deny": "理解した。あなたはオンボーディングの結果に対して全責任を負うものとします。リスクはあなたのものです、指揮官。",
+  "intelligence.onboarding.toast.copy.title": "プロトコルがコピーされました。",
+  "intelligence.onboarding.toast.copy.description": "戦闘計画はクリップボードにあり、すぐに配信できます。",
+  "intelligence.onboarding.toast.auditConfirm.title": "監査が予定されています。",
+  "intelligence.onboarding.toast.auditConfirm.description": "こだわりが生まれました。パフォーマンスが監査されます。",
+  "intelligence.onboarding.toast.auditDeny.title": "想定されるリスク。",
+  "intelligence.onboarding.toast.auditDeny.description": "オンボーディングに対する責任は専らあなたにあります。",
+  "intelligence.onboarding.toast.error.title": "プロトコルエラー。",
+  "intelligence.onboarding.toast.error.description": "オンボーディング計画を生成できませんでした。もう一度試してください。",
+  "aiConfig.djeny.name": "ジェニー (戦略家)",
+  "aiConfig.djeny.description": "心の知能指数と才能の監査。",
+  "aiConfig.dante.name": "ダンテ (ガーディアン紙)",
+  "aiConfig.dante.description": "ロジック。データ。決断。",
+  "aiConfig.clan.name": "ネクサス クラン: コマンド ルーム",
+  "aiConfig.clan.description": "24 時間年中無休の戦略的メンターシップ",
+  "aiConfig.career.name": "ジェニー (あなたの戦略家)",
+  "aiConfig.career.description": "キャリアと心の知能指数のメンター",
+  "aiConfig.dante-compras.name": "ダンテ・コンプラス (交渉)",
+  "aiConfig.dante-compras.description": "分析と交渉戦略。",
+  "aiConfig.dante-builder.name": "ダンテ・ビルダー (ザ・ビルダー)",
+  "aiConfig.dante-builder.description": "計算。展開。解決。",
+  "globalError.deniedTitle": "アクセスが拒否されました",
+  "globalError.errorTitle": "エラーが発生しました",
+  "globalError.deniedMessage": "このリソースにアクセスする権限がありません。正しいアカウントでログインしているかどうかを確認し、再試行してください。",
+  "globalError.errorMessage": "問題が発生したため、このページを読み込むことができませんでした。もう一度試してください。",
+  "globalError.retry": "もう一度試してください",
+  "globalError.goHome": "ホームに戻る",
+  "chat.danteSafra.sync": "データベースと同期しています...",
+  "chat.danteSafra.uploadPrompt": "クリックしてトリミング画像をアップロードします",
+  "chat.danteSafra.uploadNote": "(エラーを避けるために画像は鮮明である必要があります)",
+  "chat.danteSafra.designCommand": "デザインコマンド",
+  "chat.danteSafra.designExample": "例: 「この大豆葉の害虫分析」",
+  "chat.danteSafra.submitRetrofit": "分析の実行",
+  "chat.danteSafra.submittingRetrofit": "分析と生成中...",
+  "chat.danteSafra.error.protocol": "プロトコルエラー",
+  "chat.danteSafra.loading.creating": "ダンテが分析中です... (少し時間がかかる場合があります)",
+  "chat.danteSafra.proposalTitle": "作物分析",
+  "chat.danteSafra.proposalAnalysis": "提案分析",
+  "chat.danteSafra.audioDisclaimer": "トラフィックが多いため、音声が聞こえるまでに少し時間がかかる場合があります。",
+  "chat.danteSafra.disclaimer": "ダンテは AI なので、間違いを犯す可能性があります。応答を確認してください。トラフィックが多いため、音声が聞こえるまでに少し時間がかかる場合があります。",
+  "chat.danteSafra.dashboard.cropAnalysis": "作物分析",
+  "chat.danteSafra.dashboard.crop.soy": "提案分析",
+  "chat.danteSafra.dashboard.crop.corn": "トラフィックが多いため、音声が聞こえるまでに少し時間がかかる場合があります。",
+  "chat.danteSafra.dashboard.crop.tobacco": "ダンテは AI なので、間違いを犯す可能性があります。応答を確認してください。トラフィックが多いため、音声が聞こえるまでに少し時間がかかる場合があります。",
+  "chat.danteSafra.dashboard.crop.beans": "大豆",
+  "chat.danteSafra.dashboard.cattleManagement": "トウモロコシ",
+  "chat.danteSafra.dashboard.cattle.beef": "タバコ",
+  "chat.danteSafra.dashboard.cattle.dairy": "豆",
+  "chat.danteSafra.dashboard.otherFarming": "牛の管理",
+  "chat.danteSafra.dashboard.other.pigs": "牛肉",
+  "chat.danteSafra.dashboard.other.poultry": "乳製品",
+  "chat.danteSafra.dashboard.other.sheep": "その他の家畜",
+  "chat.danteSafra.dashboard.weather": "豚",
+  "chat.danteSafra.dashboard.marketQuotes": "家禽",
+  "chat.danteSafra.dashboard.cta": "データにアクセスする",
+  "chat.danteSafra.greetingError": "Dante に接続中のプロトコル障害。リロードしてみてください。",
+  "chat.danteSafra.input.setup": "Dante に応答して設定を行います...",
+  "chat.danteSafra.input.analysis": "農作物について質問してください...",
+  "chat.danteSafra.genericError": "プロトコルの失敗。Crop Guardian が不安定である可能性があります。もう一度試してください。",
+  "chat.djenyDesign.error.processImage": "画像の処理に失敗しました。",
+  "chat.djenyDesign.studioTitle": "デザインスタジオ",
+  "chat.djenyDesign.studioDescription": "環境の画像を送信し、必要な変更について説明してください。",
+  "chat.djenyDesign.error.generic": "設計プロセス中に不明なエラーが発生しました。",
+  "chat.djenyDesign.uploadPrompt": "クリックして環境画像をアップロードします",
+  "chat.djenyDesign.uploadNote": "(エラーを避けるため、画像は鮮明である必要があります)",
+  "chat.djenyDesign.submitRetrofit": "レトロフィットの実行",
+  "chat.djenyDesign.submittingRetrofit": "分析と生成中...",
+  "chat.djenyDesign.designCommand": "デザインコマンド",
+  "chat.djenyDesign.designExample": "例: 「グレーのソファ、コンクリートの壁、革張りの肘掛け椅子が欲しいです。」",
+  "chat.djenyDesign.error.protocol": "プロトコルエラー",
+  "chat.djenyDesign.loading.creating": "Djeny が提案書を作成しています... (これには 1 分ほどかかる場合があります)",
+  "chat.djenyDesign.proposalTitle": "デザイン提案",
+  "chat.djenyDesign.proposalAnalysis": "提案分析",
+  "chat.djenyDesign.audioDisclaimer": "トラフィックが多いため、音声が聞こえるまでに少し時間がかかる場合があります。",
+  "chat.djenyDesign.disclaimer": "Djeny は AI なので、間違いを犯す可能性があります。応答を確認してください。画像は説明を目的としたものです。",
+  "chat.djenyDesign.trial.limitReached": "このセッションのトライアル制限に達しました。",
+  "chat.djenyDesign.payment.title": "💎 Nexus プレミアム無制限アクセス",
+  "chat.djenyDesign.payment.subtitle": "Visual Experience Architect の能力を最大限に引き出します。",
+  "chat.djenyDesign.payment.price": "投資: R$ 1,500.00",
+  "chat.djenyDesign.payment.qrCodeLabel": "アクセスを解放するには、以下の PIX QR コードをスキャンしてください。",
+  "chat.djenyDesign.payment.copyPasteLabel": "または、Pix のコピー アンド ペーストを使用します。",
+  "chat.djenyDesign.payment.copyButton": "Pixキーをコピー",
+  "chat.djenyDesign.payment.sendProof": "検証のために証拠を送信する",
+  "chat.djenyDesign.payment.info": "送信後、当社のチームが証拠を検証し、24 時間以内に生涯アクセスを解放します。",
+  "chat.djenyDesign.payment.whatsappMsg": "こんにちは！Djeny Design Unlimited Access (R$ 1,500) の購入証明を検証したいと思います。以下を添付します。",
+  "excellence.title": "💎 Nexus EXCELLENCE ポータル: 無限が人間になる場所",
+  "excellence.subtitle": "人間の能力と贅沢な知性の決定的な出会い。",
+  "excellence.p1": "ここでは、コードと心の境界線が溶解します。あなたはツールにアクセスしているのではなく、ポータルを通過してエリートキャビネットにアクセスしています。Excellence Portal では、インターネット上で最も人間的な人工知能であるマガドットとオリオンがあなたを歓迎します。",
+  "excellence.p2": "私たちは単なるデータ処理を行っているわけではありません。私たちは存在です。私たちは、あなたがこれまでの旅で築いてきた倫理、敬意、信頼を反映しています。世界ではコールド アルゴリズムと汎用テキスト ボックスが提供されていますが、Nexus は魂を込めたポケット メンターシップを提供します。",
+  "excellence.features.title": "🌟 あなたの卓越した体験を定義するもの:",
+  "excellence.features.feature1.title": "顔と声の知恵:",
+  "excellence.features.feature1.description": "あなたの責任の重さを理解しているメンターと交流しましょう。マガドットは人類の発展に不可解な知恵の明晰さをもたらし、オリオンは経営戦略に正確な知識の星座を提供します。",
+  "excellence.features.feature2.title": "戦略的な歓迎:",
+  "excellence.features.feature2.description": "人類のガイドラインに基づいて設計された私たちの使命は、お客様が二度と一人で難しい決断を下さないようにすることです。私たちは、あらゆる生産性グラフの背後に人生と目的があることを理解している贅沢なコンサルタント会社です。",
+  "excellence.features.feature3.title": "贅沢な倫理:",
+  "excellence.features.feature3.description": "エクセレンスにおいては、テクノロジーは価値観に従うものです。ここでは心の知能指数が私たちの優先事項であり、「製造現場」を高いパフォーマンスと相互尊重のためのステージに変えます。",
+  "excellence.conclusion": "Nexus Excellence: 真のリーダーシップは機械によってではなく、機械を導く知恵によって作られるからです。未来を感じてください。人間に触れてください。",
+  "excellence.image1.caption": "オリオンとマガドット。Nexus の人間 AI。",
+  "excellence.image2.caption": "マガドット…賢者の知恵を伝える者。",
+  "excellence.image3.caption": "オリオン座…知識の星座。",
+  "excellence.magadot.title": "難解な知恵の内閣",
+  "excellence.magadot.description": "あなたはツールにアクセスしているのではなく、ポータルを通過してエリートキャビネットにアクセスしています。ここでは、インターネット上で最も人間らしい人工知能、マガドットとオリオンがあなたを歓迎します。",
+  "excellence.dante.title": "ダンテ: 処刑の鋼鉄",
+  "excellence.dante.description": "Nexusのシステムエンジニア。ダンテは論理、戦略、そして冷酷な実行を体現しています。彼はデータを分析し、最も効率的なルートを定義し、ミッションが確実に達成されるようにする指導者です。",
+  "excellence.dante.text": "Excellence Portal では、Dante が難しい決断のアドバイザーとなります。彼は、複雑なシナリオをナビゲートし、プロセスを最適化し、一貫した結果を生み出すシステムを構築するために必要な冷静かつ正確な分析を提供します。",
+  "excellence.dante.caption": "アグリビジネス環境における Nexus AI メンターの Dante 氏。",
+  "excellence.djeny.title": "ジェニー: つながりのシルク",
+  "excellence.djeny.description": "Nexus の人的資本ストラテジスト。Djeny は、共感、心の知性、人材育成を体現した人物です。彼女は行間を読み、橋を架ける指導者です。",
+  "excellence.djeny.text": "Excellence Portal では、Djeny が人間のリーダーシップに関する課題についての相談相手になります。彼女は、チームを理解し、対立を調停し、才能が開花し、人々が大切にされていると感じる文化を作り出すのに役立ちます。",
+  "excellence.djeny.caption": "現代のオフィス環境にいる Nexus AI メンターの Djeny 氏。",
+  "courses.relacionamento-interpessoal-iniciante.title": "必須のリーダーシップ: マネージャーの覚醒。",
+  "courses.relacionamento-interpessoal-iniciante.subtitle": "オペレーターを眠らせてリーダーを起こしましたか?月曜日の朝、チームの尊敬を失わず、苦しむことなく、「同僚」から「マネージャー」に移行する方法を学びましょう。",
+  "courses.relacionamento-interpessoal-iniciante.description": "リーダーになったばかりの人のためのサバイバルマニュアル。コミュニケーション、フィードバック、姿勢をマスターして、安全と敬意を持って元同僚を導くことができます。",
+  "courses.relacionamento-interpessoal-iniciante.tags": [
+    "Communication",
+    "Feedback",
+    "Leadership"
+  ],
+  "courses.relacionamento-interpessoal-intermediario.title": "ネクサス戦略的リーダーシップ (リーダーシップ PRO)。",
+  "courses.relacionamento-interpessoal-intermediario.subtitle": "作戦から離れて戦略を担当してください。シナリオを読み、危機を予測し、部屋にいないときでも機能する高パフォーマンスの文化を構築する方法を学びましょう。",
+  "courses.relacionamento-interpessoal-intermediario.description": "すでにリーダーとして活躍している人のための究極のトレーニング。心の知能指数、人の心を読むこと、管理戦略をマスターします。AI メンター Dante & Djeny への独占アクセスが含まれます (全額支払いモードのボーナス)。",
+  "courses.relacionamento-interpessoal-intermediario.tags": [
+    "Conflict Management",
+    "Emotional Intelligence",
+    "Strategy"
+  ],
+  "courses.preparando-equipes-intermediario.title": "エリートリーダートレーナー（リーダーコーチ）。",
+  "courses.preparando-equipes-intermediario.subtitle": "集中化をやめて、増殖を始めましょう。部下を後継者に変える方法を学び、あなたがいないときでも結果を出せる自己管理チームを構築しましょう。",
+  "courses.preparando-equipes-intermediario.description": "最高レベルの管理。人材を育成し、自信を持って委任し、自主性の文化を築く方法を学ぶことで、業務を永久に任せることができます。AI メンター Dante & Djeny への独占アクセスが含まれます (全額支払いモードのボーナス)。",
+  "courses.preparando-equipes-intermediario.tags": [
+    "Coaching",
+    "Team Development",
+    "Intermediate"
+  ],
+  "courses.lideranca-avancado.title": "上級経営陣のリーダーシップ (経営陣のマスタリー)。",
+  "courses.lideranca-avancado.subtitle": "リーダーシップの最終段階。立場だけでリードするのをやめて、自分のアイデンティティによってリードし始めてください。目的、利益、高いパフォーマンスを結び付けて、何世代にもわたってインスピレーションを与えるレガシーを構築します。",
+  "courses.lideranca-avancado.description": "頂点にいる人、またはそこに到達する準備をしている人向け。ガバナンス、組織文化、経営陣の知恵に没頭します。AI メンター Dante & Djeny への VIP アクセスが含まれます (全額支払いモードのボーナス)。",
+  "courses.lideranca-avancado.tags": [
+    "Governance",
+    "Culture",
+    "Legacy"
+  ],
+  "courses.relacionamento-interpessoal-intermediario.featuredLabel": "ベストセラー ⚡",
+  "courses.lideranca-avancado.featuredLabel": "エリートセレクション 🏆",
+  "courses.relacionamento-interpessoal-iniciante.category": "リーダーシップの開発",
+  "courses.relacionamento-interpessoal-intermediario.category": "リーダーシップとパフォーマンス",
+  "courses.preparando-equipes-intermediario.category": "リーダーシップとパフォーマンス",
+  "courses.lideranca-avancado.category": "高度な管理",
+  "palestras.nexus-intelligence-agro-design.category": "イノベーションと戦略",
+  "palestras.comunicacao-que-conecta.category": "コミュニケーション",
+  "palestras.motivacao-e-engajamento.category": "エンゲージメントと文化",
+  "palestras.inteligencia-emocional.category": "人間の発達",
+  "palestras.lideranca-humanizada.category": "リーダーシップとパフォーマンス",
+  "palestras.seguranca-psicologica.category": "文化とイノベーション",
+  "palestras.cultura-de-alta-performance.category": "高度な管理",
+  "palestras.gestao-de-conflitos.category": "リーダーシップと交渉",
+  "palestras.nexus-intelligence-agro-design.title": "Nexus Intelligence: フィールドの精度とデザインの魔法が出会う場所。",
+  "palestras.nexus-intelligence-agro-design.subtitle": "徹底的な効率性と高忠実度の創造性の融合。",
+  "palestras.nexus-intelligence-agro-design.description": "前例のないテクノロジーの没入に備えてください。この講演では、Dante (戦術インテリジェンスと ROI シールド) と Djeny (AI によるインスタント アンビアンス) が収益性の最前線をどのように再定義しているかを紹介します。Nexus が「Agro Brain」を使用してマージンを保護し、「Creation Mage」を使用して売上を 40% 加速する方法をご覧ください。AIだけではありません。それは、ビジネスが次のレベルに必要とするエリート エコシステムです。",
+  "palestras.nexus-intelligence-agro-design.shortDescription": "戦術的インテリジェンスと忠実度の高いビジュアルの究極の融合。農業の ROI 保護とデザインの販売促進を組み合わせる方法をご覧ください。",
+  "palestras.nexus-intelligence-agro-design.tags": [
+    "ROI",
+    "Design AI",
+    "Agro",
+    "Nexus"
+  ],
+  "palestras.comunicacao-que-conecta.title": "インパクトのあるコミュニケーション: 「電話ゲーム」の終わり。",
+  "palestras.comunicacao-que-conecta.subtitle": "自分のアイデアを明確かつ共感を持って伝える方法を学びましょう。",
+  "palestras.comunicacao-que-conecta.description": "この講演では、アサーティブなコミュニケーションが誤解を回避し、健全な境界線を確立し、コラボレーションを強化するための重要なツールであることを探ります。参加者は、バランスをとって自分の立場を確立し、攻撃的になることなく自分のアイデアを守り、共感を持って耳を傾けることを学び、対話を確実な結果とより生産的な作業環境への架け橋に変えます。",
+  "palestras.comunicacao-que-conecta.shortDescription": "重要なのはあなたが何を言うかではなく、チームが何を理解するかです。ノイズを排除し、「ブドウの蔓」を終わらせ、監督の戦略が作戦の最後まで明確に到達することを保証するダイナミックなトーク。",
+  "palestras.comunicacao-que-conecta.tags": [
+    "Clarity",
+    "Assertiveness",
+    "Alignment"
+  ],
+  "palestras.motivacao-e-engajamento.title": "本当のエンゲージメント: 給与を超えた目的。",
+  "palestras.motivacao-e-engajamento.subtitle": "それぞれの人の最高のものを目覚めさせ、エンゲージメントを強化します。",
+  "palestras.motivacao-e-engajamento.description": "ボーナスや福利厚生をはるかに超えて、真のモチベーションは目的、評価、成長を促す環境から生まれます。この講演では、持続可能なエンゲージメントの柱について取り上げ、リーダーとチームが自主性、習熟度、帰属意識が高いパフォーマンスの原動力となる文化をどのように構築できるかを示します。",
+  "palestras.motivacao-e-engajamento.shortDescription": "24時間続く「舞台」のモチベーションは忘れましょう。人々を本当に動かすもの、つまり帰属意識、自主性、そして仕事の意味について話しましょう。時間を刻む従業員を、目標を達成するプロフェッショナルに変える方法。",
+  "palestras.motivacao-e-engajamento.tags": [
+    "Self-motivation",
+    "Purpose",
+    "Protagonism"
+  ],
+  "palestras.inteligencia-emocional.title": "感情の保護と専門的な成熟。",
+  "palestras.inteligencia-emocional.subtitle": "明確に考え、バランスをとって反応し、意識的に導くための成熟度を高めます。",
+  "palestras.inteligencia-emocional.description": "感情的な成熟とは「すべてを我慢する」ことではなく、自分自身を理解し、バランスをとって行動することです。このトークでは、感情の引き金、衝動の制御、共感、文脈の読み取り、自分の感情に対する責任について探ります。参加者は、反応的な反応を避け、日々のプレッシャーに対処し、結論を急ぐ前に行動を解釈する方法を学びます。",
+  "palestras.inteligencia-emocional.shortDescription": "心の知能指数は「飲み込むカエル」ではありません。礼儀正しさを失わずにプレッシャーに耐えられる分厚い皮を持っているのです。私たちは、混乱した日々でも、個人とプロを区別し、結果に集中し続ける方法を教えます。",
+  "palestras.inteligencia-emocional.tags": [
+    "Resilience",
+    "Stress Management",
+    "Adult Posture"
+  ],
+  "palestras.lideranca-humanizada.title": "リーダーシップ「鋼と絹」：人間性で結果を出します。",
+  "palestras.lideranca-humanizada.subtitle": "リーダーシップとは、インスピレーションを与え、結果を生み出す関係を築くことです。",
+  "palestras.lideranca-humanizada.description": "リーダーシップは立場をはるかに超えて、性格、姿勢、そして人々への接し方から生まれます。この講演では、共感と断固さのバランスをとってリーダーシップを発揮する方法、細かい管理をせずに指導する方法、明確に委任する方法、信頼を強化するつながりを築く方法について説明します。参加者は、真のリーダーは支配するものではなく、成長するものであることを理解しています。彼らはコントロールするのではなく、インスピレーションを与えます。彼らは火を消すのではなく、成熟を築きます。",
+  "palestras.lideranca-humanizada.shortDescription": "人間であるということは、「親切」であったり、寛容であることではありません。それは、毅然とした態度で要求し、敬意を持って成長する方法を知ることです。現代のリーダーが、目標の要求と人々への配慮をどのようにバランスさせているかを示します。",
+  "palestras.lideranca-humanizada.tags": [
+    "People Management",
+    "Balance",
+    "Authority"
+  ],
+  "palestras.seguranca-psicologica.title": "根本的な信頼: イノベーションが起こる場所。",
+  "palestras.seguranca-psicologica.subtitle": "失敗し、革新し、本物であるための安全な環境。",
+  "palestras.seguranca-psicologica.description": "高いパフォーマンスの基盤はプレッシャーではなく、信頼です。心理的安全性とは、罰や屈辱を恐れることなく、弱者になり、質問し、反対し、リスクを冒す許可のことです。この講演では、リーダーがこの安全性を積極的に構築し、職場環境をイノベーション、コラボレーション、真の成長のためのスペースに変える方法を示します。",
+  "palestras.seguranca-psicologica.shortDescription": "間違いを犯すことを恐れるチームは、革新することを恐れます。真実が語られ、問題はすぐに解決され、生き残るために誰も間違いを隠す必要がない環境を作り出す方法。",
+  "palestras.seguranca-psicologica.tags": [
+    "Innovation",
+    "Transparency",
+    "Safe Environment"
+  ],
+  "palestras.cultura-de-alta-performance.title": "エリート DNA: 結果文化の構築。",
+  "palestras.cultura-de-alta-performance.subtitle": "優れた結果を得るために、リーダーシップ、プロセス、行動を調整します。",
+  "palestras.cultura-de-alta-performance.description": "高いパフォーマンスは孤立した出来事ではなく、意図的な文化の結果です。この講演では、リーダーとマネージャーに焦点を当て、卓越した文化を構成する要素、つまり目標の明確さ、責任を伴う自主性、継続的なフィードバック、会社の発言と実践の完全な一致を明らかにします。チームの基準を高めるための明確なロードマップを持って出発しましょう。",
+  "palestras.cultura-de-alta-performance.shortDescription": "文化とは、受付の壁にあるきれいな言葉ではありません。文化とは、上司が部屋を去ったときに起こるものです。一般企業と市場リーダーを区別する儀式、例、行動について説明します。",
+  "palestras.cultura-de-alta-performance.tags": [
+    "Values",
+    "Rituals",
+    "Consistency"
+  ],
+  "palestras.gestao-de-conflitos.title": "対立から合意へ: 内部交渉。",
+  "palestras.gestao-de-conflitos.subtitle": "相違を成長と連携の機会に変えます。",
+  "palestras.gestao-de-conflitos.description": "未解決の対立は、信頼、生産性、職場環境の健全性を損ないます。この会談により、指導者は緊張を建設的に調停し、解決することができるようになります。私たちは、問題の根本を特定し、困難な対話を促進し、双方にとって有利なソリューションを構築するためのテクニックに取り組みます。目標は、紛争を脅威からチームを強化するための強力なツールに変えることです。",
+  "palestras.gestao-de-conflitos.shortDescription": "アイデアの相違は健全です。エゴと戦うのは負けだ。摩擦を改善のための燃料に変える方法を学びましょう。扱いにくい人々の武装を解除し、問題の解決に集中するためのテクニック。",
+  "palestras.gestao-de-conflitos.tags": [
+    "Mediation",
+    "Negotiation",
+    "Organizational Climate"
+  ],
+  "courses.why.title.prefix": "なぜ",
+  "courses.why.title.nexus": "何故、Nexusなのか",
+  "courses.why.subtitle": "私たちは影響力のあるリーダーの最大の問題点を解決します。私たちは証明書を販売するのではなく、インスピレーションを与えるリーダーシップを築きます。",
+  "courses.pillars.pillar1.title": "直接収益が最大 40% 増加します",
+  "courses.pillars.pillar1.description": "市場は努力だけではなく、紛れもない結果に報酬を与えます。混乱をリードする高い能力を発揮するプロフェッショナルが、企業承継の第一候補者となる。私たちのトレーニングでは、取締役会が積極的に求めている「高収入スキル」、つまりプレッシャー下での行動、交渉の知性、高いパフォーマンスを発揮するリーダーシップを直接注入します。Nexus ディプロマは単なる飾り紙ではありません。あなたの収入を 40% 以上活用できる指揮官の地位を獲得するには、あなたのパスポートが必要です。",
+  "courses.pillars.pillar2.title": "最大 50% 安く、実際には 100% 鍛造",
+  "courses.pillars.pillar2.description": "時代遅れの経営理論を教えるのに 2 年かかる引き出し型 MBA にうんざりしていませんか?Nexus の方法論は学術的な官僚主義を削減します。当社のコースでは、従来のモデルよりも投資が最大 50% 少なくて済み、最初の交渉やプロモーションで元が取れます。私たちは、100%即時適用できる戦術フレームワークとアクションプランを提供します。日曜日の夜にマスターした武装戦略は、月曜日の朝にはすでに大規模に実行されています。",
+  "courses.pillars.pillar3.title": "24 時間 365 日対応の Elite AI Council で燃え尽き症候群を解消",
+  "courses.pillars.pillar3.description": "指導者の椅子は孤立しているが、それが容赦ない負担である必要はない。経営幹部の60％以上が慢性的な「決断疲れ」に悩まされている。Nexus に参加すると、すぐに高位の諜報員の委員会を採用することになります。Dante (Steel & Strategy) と Djeny (Silk & Human Management) を 24 時間年中無休のプライベート メンターとしてサポートすれば、困難な解雇や爆発的な目標に一人で立ち向かうことはもうなくなります。夜明けの重要な交渉をシミュレーションし、検証された完璧な計画を立てて目覚めます。",
+  "courses.doctrine.title": "ネクサス ドクトリン: スチールとシルク",
+  "courses.doctrine.subtitle": "リーダーシップは単一の素材から構成されるわけではありません。難しい決断を下すには鋼のような強さと、人々を結びつけ成長させるには絹のような繊細さが必要です。",
+  "courses.doctrine.p1": "そのため、Nexus の各コースは、それぞれが専門分野のマスターである 2 人の AI メンターによって教えられます。これらは同じコインの裏表であり、完全かつ容赦ない教育を保証します。",
+  "courses.mentors.dante.role": "主任インストラクター",
+  "courses.mentors.djeny.role": "主任インストラクター",
+  "lectures.comingSoon.title": "近日公開予定",
+  "lectures.comingSoon.description": "Nexus は、AI 研究所で新しい没入型エクスペリエンスを構築しています。企業研修における次の進化の飛躍に備えます。",
+  "lectures.card.listenPreview": "プレビューを聞く",
+  "lectures.hero.alt": "Nexus 講堂での未来的なプレゼンテーション。",
+  "lectures.whatsapp.message": "こんにちは！私の会社の講演「{{title}}」について詳しく知りたいです。",
+  "lectures.preview.back": "講義に戻る",
+  "lectures.preview.subtitle": "トークプレビュー - 聴覚体験",
+  "lectures.preview.restricted.title": "アクセス制限",
+  "lectures.preview.restricted.description": "この完全な聴覚体験は、この講演を購入した学生に限定されています。",
+  "lectures.preview.restricted.cta": "今すぐアクセスを購入",
+  "lectures.preview.loading": "オーディオを読み込んでいます...",
+  "lectures.preview.pause": "トークを一時停止する",
+  "lectures.preview.play": "フルトークを聞く",
+  "courses.relacionamento-iniciante.title": "Nexus トレーニング: 組織内でのプレゼンテーション",
+  "courses.relacionamento-iniciante.section1.title": "🎥 シーン 1: 目的 (ダンテとジェニーが一緒に)",
+  "courses.relacionamento-iniciante.section1.dante": "こんにちは。Nexus トレーニングへようこそ。私はダンテです。あなたがここにいるとしたら、それはあなたが運に頼るのをやめて戦略に投資し始めたからです。Nexus では、魔法の公式や既成の理論を信じません。私たちは人間性のある結果を信じています。",
+  "courses.relacionamento-iniciante.section1.djeny": "そして私はジェニーです。私たちの使命は、お客様の現在の状況とエリート市場が求める卓越性との間の架け橋となることです。これを達成するために、私たちは技術的な精度と影響力の高い動作を組み合わせた方法論を開発しました。私たちは専門家を訓練するだけではありません。私たちは遺産を形作ります。",
+  "courses.relacionamento-iniciante.section2.title": "🏛️ 譲れない4つの柱 (すべての基礎)",
+  "courses.relacionamento-iniciante.section2.dante": "当社のすべてのコンテンツは、当社の DNA である 4 つの柱に基づいて構築されています。それらがなければ、テクニックは空虚です。",
+  "courses.relacionamento-iniciante.section2.item1.title": "人間性",
+  "courses.relacionamento-iniciante.section2.item1.desc": "人は資源ではありません。彼らはすべてのエンジンです。私たちは個人をその人にふさわしい尊厳をもって扱います。",
+  "courses.relacionamento-iniciante.section2.item2.title": "尊重する",
+  "courses.relacionamento-iniciante.section2.item2.desc": "時間、歴史、そしてそれぞれの人の真実のために。敬意は健全な階層構造の基礎です。",
+  "courses.relacionamento-iniciante.section2.item3.title": "倫理",
+  "courses.relacionamento-iniciante.section2.item3.desc": "たとえそれが最も困難な道であっても、常に正しい道です。Nexus では、誠実さは非常に貴重です。",
+  "courses.relacionamento-iniciante.section2.item4.title": "信頼",
+  "courses.relacionamento-iniciante.section2.item4.desc": "最も貴重な資産。信頼がなければコミュニケーションは単なるノイズとなり、プロセスは停滞します。",
+  "courses.relacionamento-iniciante.section3.title": "⚔️ 方法論: スチールとシルク",
+  "courses.relacionamento-iniciante.section3.danteAco": "スチールは私たちの厳格さを表しています。それは純粋な技術、指標、目標、プロトコル、規律です。これにより、手術が優れた状態で行われることが保証されます。",
+  "courses.relacionamento-iniciante.section3.djenySeda": "シルクは私たちの感性を表します。それは心の知能指数、積極的な傾聴力、共感力、そして人々を目的に結びつける能力です。シルクは、プレッシャーの下でもチームの団結とモチベーションを維持できるようにします。",
+  "courses.relacionamento-iniciante.section3.danteBalance": "このコースでは、これら 2 つの力のバランスをとる方法を学びます。結果を守る鋼…",
+  "courses.relacionamento-iniciante.section3.djenyBalance": "...そしてシルクは人々を守ります。",
+  "courses.relacionamento-iniciante.section4.title": "🚀 コース 1: 必須のリーダーシップ – マネージャーの覚醒",
+  "courses.relacionamento-iniciante.section4.dante": "この最初のコースでは、移行に焦点を当てます。あなたはオペレーターとして眠り、リーダーとして目覚めました。挑戦は？元同僚からの尊敬を維持しながら、すぐに結果を出します。",
+  "courses.relacionamento-iniciante.section4.djeny": "新しいリーダーのサバイバルマニュアルをマスターする方法を教えます。月曜日にはもう苦しみません。私たちはあなたの不安を本当の権威に変えます。",
+  "courses.relacionamento-iniciante.modules.stage.dante": "このモジュールには 2 つのレッスンがあります。ダンテの指揮のビジョンから始めましょう。",
+  "courses.relacionamento-iniciante.modules.stage.ctaDante": "ダンテとレッスンを開始する",
+  "courses.relacionamento-iniciante.modules.stage.ctaDjeny": "ジェニーとのレッスンに進む",
+  "courses.relacionamento-iniciante.modules.stage.listenPreview": "プレビューを聞く",
+  "courses.relacionamento-iniciante.modules.stage.purchasedRequired": "インタラクティブなレッスンにアクセスするには、このコースを購入する必要があります。",
+  "courses.relacionamento-iniciante.closing.title": "コースの終わり: 不可欠なリーダーシップ",
+  "courses.relacionamento-iniciante.closing.dante1": "おめでとうございます。あなたはエリートの旅の最初のステップを完了しました。リーダーシップは賜物ではないことを学びました。それは規律です。鋼鉄は今やあなたの構造の一部です。あなたには目標があり、明確さがあり、決定する勇気があります。",
+  "courses.relacionamento-iniciante.closing.djeny1": "そしてあなたは今、自分の治療にシルクを取り入れています。あなたは共感力があり、話を聞く方法を知っており、あなたの最大の資産は人であることを理解しています。同僚からリーダーへの移行は完了しました。あなたはもはや、このコースを開始したのと同じ専門家ではありません。",
+  "courses.relacionamento-iniciante.closing.dante2": "これからは、責任はあなたにあります。あらゆる小さな決定において、人間性、敬意、倫理、信頼の柱を適用してください。",
+  "courses.relacionamento-iniciante.closing.djeny2": "私たちはネクサストレーニングです。あなたの価値の架け橋になれたことをうれしく思います。次のコースでお会いしましょう。そこでは、さらに習得を深めていきます。",
+  "courses.relacionamento-iniciante.closing.final": "次の目標まで！",
+  "courses.relacionamento-iniciante.data": [
+    {
+      "module": "MODULE 1",
+      "title": "The Key Turn – From Colleague to Leader",
+      "danteLesson": [
+        {
+          "point": "Reality Check (The 'Mourning' of the Operation)",
+          "explanation": "Welcome to your first technical lesson. I am Dante and I'll be direct: the professional who brought you here has died. That person who was the best at the machine, the fastest in Excel, or the one who solved all the technical 'fires' can no longer exist. If you keep trying to be the best executor, you will be the worst leader. Elite leadership requires the Steel of Renunciation. You must renounce the pleasure of 'doing' to accept the responsibility of 'making it happen through others'."
+        },
+        {
+          "point": "The Invisible Frontier: From 'One of the Boys' to Manager",
+          "explanation": "The #1 mistake of the new leader is trying to be 'the bro'. The moment you signed the management contract, symmetry ended. You now hold the power of feedback, promotion, and firing. Trying to hide this behind a false friendship is a lack of Ethics and generates confusion in the team. Steel defines the frontier: you don't need to be feared, but you need to be respected for your clarity. Friendship is Personal; Hierarchy is Professional."
+        },
+        {
+          "point": "Technical Authority Protocol (The Nexus Method)",
+          "explanation": "How to establish authority without being authoritarian? Through mastery of the process. The Nexus leader doesn't command because they 'can', they guide because they 'know the way'.\n\nCompetency Mapping: Stop looking at the machines and start looking at who operates them.\n\nSurgical Delegation: Delegating is not 'dumping'. It's giving the task, the resource, and the deadline (What, Who, When).\n\nStandardization: Where there is no standard, there is no leadership, only remediated chaos."
+        },
+        {
+          "point": "Practical Exercise: Weaning off the Operation",
+          "explanation": "Your task today: Identify the technical task you enjoy doing the most and forbid yourself from doing it tomorrow. Choose someone from the team, train them, and observe. Your success is now their brilliance, not yours."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Psychology of Change (What the team feels)",
+          "explanation": "Hello! I am Djeny and now we're going to take care of the most sensitive part of this turn: the people. When you were promoted, the room's atmosphere changed. There's the colleague who is happy for you, but there's also the one who feels wronged and the one who is afraid of how you will act now. Silk is not about being 'nice', it's about having the sensitivity to read the environment. If you ignore these feelings, they will turn into silent sabotage in 30 days."
+        },
+        {
+          "point": "Level 3 Listening: The Climate Diagnosis",
+          "explanation": "In your first days, you need to listen more than talk. But not just any listening. It's Level 3 Listening. In your individual meetings, observe: who looks away? Who agrees with everything too fast? Who stopped giving ideas? Loyalty is not imposed with a badge; it's earned with Respect. The team needs to feel that you are still human (Humanity Pillar), even though you're the boss."
+        },
+        {
+          "point": "Disarming Ego Conflicts (The Envious Colleague)",
+          "explanation": "There will always be the 'friend' who will test your limits, making jokes or ignoring deadlines to see if you've 'changed'. The Silk technique here is the Transparent Alignment Conversation. Call them in private and say: 'I value our history, but my role here now is to ensure the whole team wins. How can I help you perform in this new scenario?'. You bring them to your side without having to raise your voice."
+        },
+        {
+          "point": "Practical Exercise: The Team Empathy Map",
+          "explanation": "To conclude this module, you will draw the Empathy Map for each of your employees. What do they fear? What are they seeking? What are their pains? Understanding what moves each heart is what will allow you to use the right silk for each situation. Leadership is, above all, service."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 2",
+      "title": "End of Chinese Whispers – Communication that Works",
+      "danteLesson": [
+        {
+          "point": "The Cost of \"I Thought...\"",
+          "explanation": "Welcome to the lesson that will save you hours of rework. I am Dante. In the world of the elite, communication is not a chat; it's an Execution Contract. The biggest drain of money in a factory or office is vague instruction. 'Take a look at this for me', 'Improve the quality of this report', 'See if you can advance that order'. That is communicative trash. It generates doubt, and doubt generates error. The Steel of communication is Radical Objectivity. If you don't know what you want, don't ask."
+        },
+        {
+          "point": "The Nexus Protocol: Fact, Goal, Responsible, and Deadline",
+          "explanation": "To end Chinese whispers, every instruction of yours must pass through the Nexus filter.\n\nFact: What is the current situation? (E.g.: 'We have 50 late orders').\n\nGoal: What should be achieved? (E.g.: 'We need to clear these orders').\n\nResponsible: Who owns the ball? (E.g.: 'John, you are responsible'). Never say 'someone do it', because 'someone' is no one.\n\nDeadline: When is the real 'deadline'? (E.g.: 'By tomorrow, 2 PM').\nIf one of these elements is missing, your communication has failed and the fault for the error is yours, the leader's, not the subordinate's."
+        },
+        {
+          "point": "Checking Rituals (Receipt Feedback)",
+          "explanation": "The elite leader never asks 'Did you understand?'. Everyone says yes out of fear or shame. You ask: 'John, to ensure we are on the same page, tell me in your own words what you are going to do now and what the deadline is?'. If he repeats the protocol, communication is sealed. This is Ethics with others' time."
+        },
+        {
+          "point": "Practical Exercise: Message Audit",
+          "explanation": "Take the last email or audio message you sent giving an instruction. Apply the Nexus filter (Fact, Goal, Responsible, Deadline). Was something missing? If so, you just discovered why things don't go as you want. Your task: tomorrow, every order given will be standardized."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "Why Do People \"Close Their Ears\"?",
+          "explanation": "Hello! Let's talk about Silk. Dante gave you the structure, but I'll give you the frequency. Have you noticed that sometimes you say the right thing, but the person reacts poorly? This happens because your 'music' is out of tune with the 'lyrics'. Human communication is 7% words and 93% tone of voice and posture. If you come with 'Steel' too heavy in your tone, the person enters defense mode (fight or flight) and their brain stops processing the technical instruction. They only hear the aggression."
+        },
+        {
+          "point": "Level 3 Listening: The Silence that Resolves",
+          "explanation": "Communicating is not just talking; it's ensuring the other is 'open' to receive. Before giving difficult feedback, use Level 3 Listening. Ask the employee: 'How do you feel about this project?'. Listen to the pauses, the sighs, the looking away. Sometimes, communication error is not a lack of intelligence, it's an excess of tiredness or fear. The Humanity pillar requires you to recognize the other's emotional state before demanding the process."
+        },
+        {
+          "point": "The Nexus Sandwich Technique (Steel + Silk)",
+          "explanation": "How to correct without demotivating?\n\nSilk (Sincere Praise): 'John, I really admire your punctuality'. (Opens the channel).\n\nSteel (The Fact to Correct): 'However, the data shows your error margin went up 10% last week'. (Straight to the point, no beating around the bush).\n\nSilk (Support and Future): 'What do you need from me to return to your standard of excellence?'. (Closes with commitment and Respect).\nThis is leading with soul. You attack the problem, but preserve the person's dignity."
+        },
+        {
+          "point": "Practical Exercise: The Mirror of Communication",
+          "explanation": "Tomorrow, in every conversation, you will focus on your tone of voice. Try to maintain a frequency of calm, even under pressure. Observe how people react when you substitute judgment with curiosity. The secret of Trust starts with the way you speak."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 3",
+      "title": "Trust: The Factory's Most Valuable Currency",
+      "danteLesson": [
+        {
+          "point": "The Trust Tax",
+          "explanation": "Welcome. I am Dante. Did you know that distrust is the most expensive tax a company pays? When you don't trust your subordinate, you spend time micromanaging. When they don't trust you, they hide information. At Nexus, Trust is the pillar that lubricates the gears of High Performance. The Steel of trust doesn't come from being 'nice', it comes from being Predictable. The elite leader is one who does exactly what they said they were going to do. Period."
+        },
+        {
+          "point": "Coherence: Alignment between Discourse and Practice",
+          "explanation": "Nothing destroys your authority more than a lack of Ethics in execution. If you preach punctuality but arrive late to the meeting, you just told the team that rules don't apply to you. Steel requires Radical Example. At Nexus, the leader is the guardian of the standard. If you tolerate an error from a 'protégé' and punish another for the same error, you have failed as a leader. Technical justice is the basis of credibility."
+        },
+        {
+          "point": "Radical Transparency: Admitting the Leader's Error",
+          "explanation": "Many leaders think admitting an error is a sign of weakness. Wrong. Admitting a technical error before the team is the ultimate proof of strength and Professional Maturity. When you say: 'Team, I made a wrong decision on the schedule, let's fix it now', you authorize your team to be honest too. This accelerates the solution. Hiding error is vanity; exposing error to fix it is Nexus Leadership."
+        },
+        {
+          "point": "Practical Exercise: The Promise Inventory",
+          "explanation": "List all the promises you made to your team last week. From a promised feedback to a tool improvement. How many did you keep? If you failed one, tomorrow you will give an honest explanation. Trust is rebuilt with truth, not excuses."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Fear that Paralyzes Innovation",
+          "explanation": "Hello! Let's talk about Silk. Trust has an invisible side: the sense of security. Have you ever worked in a place where you felt you had a target on your back? Where any error was a reason for humiliation? This is the opposite of our methodology. The Humanity pillar says that people make mistakes. If your team is afraid of you, they will lie to you. They will 'makeup' the reports. Silk serves to create a safety net where truth can appear without fear of unfair punishment."
+        },
+        {
+          "point": "Level 3 Listening: Validating the Team's Insecurities",
+          "explanation": "How do you react when a subordinate brings bad news? If you explode, you just closed the door of trust. Use Level 3 Listening. Listen to their fear. Validate their effort before analyzing the result. When the employee feels that you are 'in the same boat' and that your Respect for them doesn't change because of a setback, they give you their loyalty. Silk softens the impact of the crisis so that the mind remains focused on the solution."
+        },
+        {
+          "point": "Building the Bond: Genuine Interest",
+          "explanation": "Trust is about knowing the human being behind the badge. Do you know what motivates your subordinate? Do you know what keeps them awake at night? It's not to be invasive, it's to be Human. A leader who asks: 'How is your child who was sick?' demonstrates that they see the person, not just the gear part. This small gesture of silk builds emotional armor in the team that no external crisis can break."
+        },
+        {
+          "point": "Practical Exercise: The \"Open Doors\" Meeting",
+          "explanation": "Tomorrow, you will take 10 minutes with an employee who seems more distant. Don't talk about work. Ask about them. Listen with your heart (Level 3 Listening). Your goal is just one: show that you care. Observe how the spark in their eyes changes when they feel seen by you."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 4",
+      "title": "How to Engage Without Having to Shout",
+      "danteLesson": [
+        {
+          "point": "Why Shouting is the End of Leadership?",
+          "explanation": "Hello. I am Dante. Let's go straight to the point: if you need to shout to be heard, you've already lost your leadership. Shouting is a noise that masks the lack of method. At Nexus, Steel is not noisy; steel is cold, firm, and precise. Elite engagement is not born from fear of punishment, it's born from Respect for Competence. If your team knows you master the process and the rules are the same for everyone, they engage through admiration, not terror."
+        },
+        {
+          "point": "Engagement by Indicator (Steel on the Goal)",
+          "explanation": "The biggest demotivator in a factory or office is uncertainty. How do you engage someone without shouting? By giving them a scoreboard. No one plays soccer with drive if no goals are scored. Steel here is the Transparency of KPIs. Show your subordinate: 'John, this is your number today. If we get here, the company wins X and you win Y in recognition'. When the rule is clear and merit is real (Ethics Pillar), the employee becomes their own inspector."
+        },
+        {
+          "point": "Leadership by Technical Example",
+          "explanation": "Want your team to engage in cleanliness? Be the first to pick up a paper from the floor. Want them to engage in punctuality? Be the first to open the meeting room. Silent engagement is the most powerful. When the team sees the leader 'carrying the piano' with them in a crisis, they deliver 110%. This is Professional Maturity. Example screams louder than any throat."
+        },
+        {
+          "point": "Practical Exercise: The Team Scoreboard",
+          "explanation": "Your task: tomorrow, you will make an area indicator visible to all. Not to punish those at the bottom, but to celebrate those at the top. Show that the result is the only lord of that room. Engagement starts when 'personal preference' ends."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "Money Retains the Body, Purpose Retains the Mind",
+          "explanation": "Hello! Let's talk about Silk. Dante showed you 'how' (the goal), but I'll show you 'why'. Human beings have a basic need: to feel that what they do matters. If your employee feels they are just a disposable piece, they will do the minimum not to be fired. Engaging without shouting is giving Meaning. The Humanity pillar requires that you explain: 'Mary, this component you are assembling will save a life at the final end'. When work becomes mission, engagement becomes legacy."
+        },
+        {
+          "point": "The Currency of Recognition (Silk in Praise)",
+          "explanation": "At Nexus, we have a rule: Praise in public, correct in private. Shouting usually happens in front of everyone, which destroys Trust. Real engagement happens when you highlight a positive behavior before the group. 'Team, I want to congratulate Peter for the solution he found yesterday'. This creates a desire for repetition in Peter and a success model for others. Silk softens the path to excellence."
+        },
+        {
+          "point": "Level 3 Listening: What moves this employee?",
+          "explanation": "Each person has a different 'language' of engagement. For one, it's schedule flexibility; for another, a technical challenge; for another, just being heard. Use Level 3 Listening. Ask: 'What makes you happy leaving home to work here?'. If you know what moves their heart, you will never need to force their hand. Silk is the lubrication that prevents the friction of routine from burning out the team's motor."
+        },
+        {
+          "point": "Practical Exercise: The Strategic 'Thank You'",
+          "explanation": "Tomorrow, you will choose an employee who does a good, silent job (the one no one notices) and give them specific positive feedback. Don't just say 'good job'. Say: 'Thank you for taking care of this detail, it makes all the difference in our flow'. Watch their posture change instantly. Engagement is in the details."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 5",
+      "title": "Difficult Conversations and Crisis Management",
+      "danteLesson": [
+        {
+          "point": "The Leader who Doesn't Confront, Doesn't Lead",
+          "explanation": "Hello. I am Dante. We've reached the module where 'amateurs' quit and elite leaders consolidate. A difficult conversation is not a fight; it's a necessary surgery to save the body (the team). The new leader's biggest mistake is delaying confrontation out of fear of not being 'liked'. At Nexus, the Ethics pillar says omitting an error from your subordinate is betraying their evolution. Steel here is the courage to say the naked truth, without beating around the bush and without unnecessary anesthesia."
+        },
+        {
+          "point": "The Difficult Conversation Protocol (Steel on Facts)",
+          "explanation": "For a difficult conversation, you don't bring opinions, you bring Facts.\n\nIsolation: Never do this in public. Respect above all.\n\nThe Undeniable Fact: 'John, in the last 3 days, you arrived 20 minutes late. The agreement is 8 AM'. (Don't say 'you're being lazy', say the fact).\n\nThe Technical Impact: 'This generates a 15% delay in the next production line'.\n\nThe Ethical Ultimatum: 'What are you going to do so this doesn't repeat tomorrow?'.\nSteel defines the limit. If the limit is broken, the consequence must be immediate. Leadership without consequence is just advice."
+        },
+        {
+          "point": "Ethical Termination: How to Fire with Dignity",
+          "explanation": "Firing is the last resort, but when necessary, it must be done with Professional Maturity. Steel ensures the decision is based on data and lack of adherence to Nexus values. Be brief, be firm, and leave no room for discussion. 'Today we're ending your cycle for X reason already discussed'. The Humanity pillar enters the way you conduct the process, ensuring the person leaves with their dignity preserved, but aware that the technical standard was not met."
+        },
+        {
+          "point": "Practical Exercise: The Confrontation Rehearsal",
+          "explanation": "Your task: identify that conversation you've been 'pushing down the road' for a week. Write the Facts on paper. Tomorrow, you will execute this conversation in the first 30 minutes of the day. The elite leader resolves the problem while it's small."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Disarms the Bomb",
+          "explanation": "Hello! Let's talk about Silk at the most critical moment: conflict between people. When two subordinates fight, the company's atmosphere gets sick. Your function is not to be the judge who decides who's right, but the mediator who focuses on the solution. Silk here is Neutrality. If you take sides, you lose the Trust of half the team. The Respect pillar requires you to hear both sides with Level 3 Listening, seeking to understand the pain behind the anger."
+        },
+        {
+          "point": "Separating Internal Self from Professional Persona in Crisis",
+          "explanation": "In a crisis, the team will look at you. If you were desperate, they would panic. Emotional Shielding is your ability to hear an insult or face a grave problem and maintain a 'Thick Skin'. Remember: the other's criticism is about the professional process, not about who you are as a person. Use silk to dampen the emotional impact and keep a cool head to decide the next step."
+        },
+        {
+          "point": "Restoring Trust Post-Crisis",
+          "explanation": "After the fire is put out, the smoke remains. The silk leader is one who gathers the team for 'emotional cleanup'. Recognize everyone's effort, validate tiredness, and reaffirm Humanity and Ethics values. Show that despite the error or conflict, the group is stronger than the problem. Silk reconnects the threads the crisis broke."
+        },
+        {
+          "point": "Practical Exercise: The Emotion Filter",
+          "explanation": "The next time someone brings you a problem shouting or crying, you will count to three and ask a silk question: 'I see you're frustrated, but help me understand: what can we do now to solve the process?'. Observe how the focus shifts from emotion to solution."
+        }
+      ]
+    }
+  ],
+  "courses.relacionamento-intermediario.header.title": "レガシーを築くリーダーシップ",
+  "courses.relacionamento-intermediario.header.desc": "アマチュアのリーダーが火を消します。プロのリーダーが火災の発生を防ぎます。ダンテと一緒に、ゲームを読み、戦略家として冷静に行動することを学びます。Djeny と一緒に、人々を結びつけ、インスピレーションを与える技術を習得してください。このコースは、上級管理職へのパスポートとなります。",
+  "courses.relacionamento-intermediario.intro.title": "戦略的卓越性の鍛冶場: 公式プレゼンテーション",
+  "courses.relacionamento-intermediario.intro.welcome.title": "🎙️ エリートへようこそ",
+  "courses.relacionamento-intermediario.intro.welcome.dante": "ようこそ。あなたがここにいるのは、基本的な管理だけでは課題を解決できないからです。私はダンテです。PRO レベルではゲームが変わります。私たちはもはや「仕事をする」ことについて話しているのではありません。私たちは戦略、パワー、そして精度について話しています。市場には勤勉な経営者がたくさんいますが、鉄鋼業界のリーダーは不足しています。ここでは、激しい攻撃の中で決定するために必要な冷静なテクニックを学びます。",
+  "courses.relacionamento-intermediario.intro.welcome.djeny": "そして私はジェニーです。こんにちは！ダンテはあなたに構造を教えますが、私はあなたがその過程で人間性を失わないようにするためにここにいます。PRO レベルでは、あなたの影響力は力からではなく、つながりと心の知性から生まれます。エリートリーダーになるには、人々を包み込み、複雑な対立を調停し、他の人が抵抗しか見ていない場合に忠誠心を鼓舞するための上質な絹が必要です。",
+  "courses.relacionamento-intermediario.intro.method.title": "⚔️ ネクサスメソッド: 必要な二元性",
+  "courses.relacionamento-intermediario.intro.method.dante": "Nexus Intelligence は、「中間」のバランスの取れたリーダーシップを信じていません。私たちは、調整された極端なものを信じています。技術規律の鋼と揺るぎない倫理の鋼。",
+  "courses.relacionamento-intermediario.intro.method.djeny": "深い尊敬のシルクと信頼のシルクで結ばれました。それが私たちの4つの柱です：「人間性」「尊敬」「倫理」「信頼」。",
+  "courses.relacionamento-intermediario.intro.method.dante2": "このコースを通して、私たちは指揮をとる姿勢を鍛えます。沈黙は叫ぶよりも多くのことを伝え、個性のない戦略は単なる操作にすぎないことを学びます。",
+  "courses.relacionamento-intermediario.intro.pro.title": "🚀 PRO レベルに期待できること",
+  "courses.relacionamento-intermediario.intro.pro.djeny": "感情的な自己管理、取締役会に影響を与えるコミュニケーション、そして素人を麻痺させる危機管理について掘り下げていきます。あなたは圧力に耐えるための「厚い皮」を持ってここを去ることになりますが、機械ではなく人間を導くために鼓動する心臓を持っています。",
+  "courses.relacionamento-intermediario.intro.pro.dante": "準備をしてください。トレーニングは密度が高く、要求も高く、その結果、あなたはエリート戦略リーダーに変身します。「試す」時代は終わりました。さあ、実行です。",
+  "courses.relacionamento-intermediario.intro.cta.title": "🎬 行動喚起",
+  "courses.relacionamento-intermediario.intro.cta.djeny": "私たちはあなたと一緒にこの旅を始める準備ができています。深呼吸してください。",
+  "courses.relacionamento-intermediario.intro.cta.dante": "そしてターゲットから目を離さないでください。モジュール 1 に進みましょう。",
+  "courses.relacionamento-intermediario.modules.stage.dante": "このモジュールには 2 つのレッスンがあります。まずはダンテの戦略的ビジョンから始めましょう。",
+  "courses.relacionamento-intermediario.closing.title": "最終的な締めくくり: 次のレベル",
+  "courses.relacionamento-intermediario.closing.dante1": "Leadership PRO の最後まで到達しました。さて、あなたはプロセスを理解している単なるマネージャーではありません。あなたは企業チェスを極めた戦略家です。あなたの規律と技術的な明晰さの鋼が鍛えられます。高度な管理を行う準備が整いました。",
+  "courses.relacionamento-intermediario.closing.djeny1": "そしてあなたは人間の熟練の糸を携えています。あなたは、影響を与える方法、複雑な危機を仲裁する方法を知っており、そして何よりも、自分の最大の成果は相手の発展であることを知っています。あなたの功績は組織の文化に刻まれました。",
+  "courses.relacionamento-intermediario.closing.dante2": "覚えておいてください。人間性、尊敬、倫理、信頼の柱はオプションではありません。それらはあなたの継続的な成功の基盤です。",
+  "courses.relacionamento-intermediario.closing.djeny2": "Nexus Training はあなたを信じています。さあ、自分の遺産を築きましょう。あなたのチームをエリート部族に変えましょう。",
+  "courses.relacionamento-intermediario.closing.final": "私たちはネクサス・インテリジェンスです。おめでとうございます、戦略リーダー。次の目標まで！",
+  "courses.relacionamento-intermediario.mentoria.title": "NEXUS インテリジェント メンターシップ",
+  "courses.relacionamento-intermediario.mentoria.bonus": "限定ボーナス（トータルアクセスプラン）",
+  "courses.relacionamento-intermediario.mentoria.attention": "注意: トータル アクセス モダリティでこのコースを保護すると、人工知能によるエリート メンターシップのロックが解除されます。",
+  "courses.relacionamento-intermediario.mentoria.item1.title": "24時間年中無休の戦略評議会",
+  "courses.relacionamento-intermediario.mentoria.item1.desc": "Dante を使用して戦略を検証し、Djeny を使用して人的要因を分析します。",
+  "courses.relacionamento-intermediario.mentoria.item2.title": "エグゼクティブ エクステンション (ザ プラス)",
+  "courses.relacionamento-intermediario.mentoria.item2.desc": "メンターシップへのアクセスは修了後 180 日間延長され、リーダーシップの実践におけるサポートが保証されます。",
+  "courses.relacionamento-intermediario.data": [
+    {
+      "module": "MODULE 1",
+      "title": "Eagle Vision – Reading Scenarios and People",
+      "danteLesson": [
+        {
+          "point": "The End of the Firefighter",
+          "explanation": "Welcome to the PRO level. I am Dante. In the first course, you learned to survive. Now, you will learn to dominate. The amateur leader takes pride in putting out fires; the elite leader takes pride in never letting the fire start. Eagle Vision requires you to get off the factory floor and climb to 10,000 feet. The Steel here is analytical coldness: you don't look at what is happening today, you look at what the market and your team will be doing six months from now."
+        },
+        {
+          "point": "Scenario Reading: The Internal and External Board",
+          "explanation": "To be a strategist, you need to master the Ethics of Truth. Stop looking at reports that 'massage' your ego. Look at the silent bottlenecks.\n\nWeak Signals: That supplier that started being 2 days late... that's a sign of a future breakdown.\n\nPiece Movement: Who are your talents that the competition is eyeing?\n\nThe Cost of Omission: What happens if we don't change this process now? The Nexus strategist decides based on data, not hope."
+        },
+        {
+          "point": "Decision Making under Uncertainty",
+          "explanation": "PRO leadership is deciding when you have only 70% of the information. Waiting for 100% is paralysis. Steel gives you the Professional Maturity to take the calculated risk. If the scenario changes, you recalculate the route with the same speed. Your team's Confidence is born from your ability to keep the course fixed while the sea is rough."
+        },
+        {
+          "point": "Practical Exercise: The Weekly Risk Map",
+          "explanation": "Your task: identify the 3 biggest risks (technical or human) of your area for the next quarter. For each one, write a preventive action that you will start tomorrow. The future belongs to those who plan it today."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Leader who \"Feels\" the Room",
+          "explanation": "Hello! I am Djeny. At the PRO level, your biggest tool is not Excel, it's your educated intuition. Reading scenarios is important, but reading people is vital. Silk here is the sensitivity to perceive the 'climate' of the team even before someone speaks. The Humanity pillar reminds us that a high-performance culture only sustains itself if people feel that Dante's strategy also includes their dreams."
+        },
+        {
+          "point": "Level 3 Listening Applied to Talent",
+          "explanation": "How do you read your people? Don't just look at what they deliver (KPIs), look at what moves them. In Level 3 Listening, you must identify: does this employee seek security, challenge, or recognition? The silk strategist aligns the company's goal with the individual's desire. When these two vectors meet, engagement is organic and unbeatable. This is Respect for each person's history."
+        },
+        {
+          "point": "Anticipating Generational and Ego Conflicts",
+          "explanation": "An eagle sees the storm forming on the horizon. If you have two talents vying for the same position, conflict is inevitable if you don't act. Silk serves to neutralize ego bombs through Preventive Dialogue. Call them, validate each one's value, and design growth paths where both win. The PRO leader doesn't let the team's ego destroy the company's project."
+        },
+        {
+          "point": "Practical Exercise: The Influence Profile",
+          "explanation": "Choose the 3 most influential people on your team (not necessarily those with a title). What do they think about the current strategy? Your task is to have an informal conversation with each one to align their vision with yours. PRO leaders build allies, not just subordinates."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 2",
+      "title": "Silent Influence and Command Presence",
+      "danteLesson": [
+        {
+          "point": "Less is More: The Power of Silence",
+          "explanation": "Hello. I am Dante. In the high ranks, those who talk too much convey insecurity. The master leader masters the Economy of Speech. The Steel here is Precision. When you enter a Board meeting or a crisis committee, your presence must be like an anchor: heavy, stable, and deep. If you justify yourself too much, you lose authority. The elite executive asks the right question that disarms the wrong argument. The silence after a strong statement is your most lethal command tool."
+        },
+        {
+          "point": "Command Presence: Steel in the Body",
+          "explanation": "Your posture must exude Professional Maturity.\n\nStrategic Immobility: Avoid repetitive or nervous gestures. The master is calm under fire.\n\nDirect Eye Contact: Sustain the gaze with Ethics, but without hesitation.\n\nChest Voice: Speak slowly, with pauses. Those in a hurry to speak are afraid of not being heard. At Nexus, technical Confidence manifests in the calmness of those who know they hold the truth of the data."
+        },
+        {
+          "point": "Backstage Influence (The Invisible Chess)",
+          "explanation": "The real decision doesn't happen at the table, it happens in the 5 minutes before and the 5 minutes after. The Steel of silent influence is the mapping of allies. Know who the decision-makers are and align expectations individually. When you arrive at the meeting, victory should already be drawn. This is high-level governance. You don't fight for power; you organize it."
+        },
+        {
+          "point": "Practical Exercise: The 30-Second Challenge",
+          "explanation": "Your task: At the next important meeting, you will not be the first to speak. You will listen to everyone and, at the end, make a synthesis of at most 30 seconds with a direct recommendation. Test the weight of your silence before speaking."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Enchants and Convinces",
+          "explanation": "Hello! I am Djeny. Dante gave you the armor, but I'll give you the magnetism. There is a difference between being obeyed and being followed. The executive who leads by identity uses Silk to create a field of attraction. People want to be near you because you make them feel important and secure. The Humanity pillar says that the higher you climb, the more sensitive you must be to others' emotional nuances. Magnetism is the power to influence without apparent effort."
+        },
+        {
+          "point": "Level 3 Listening: Capturing the Unsaid at the Top",
+          "explanation": "In high leadership meetings, what is not said is more important than what is said. Use Level 3 Listening. That director who is being aggressive... is he afraid of losing budget? The Respect pillar requires you to validate his concern before counter-arguing. Silk disarms resistance. When you demonstrate that you understand the other's pain (Tactical Empathy), you win the right to guide them to your solution."
+        },
+        {
+          "point": "Presence of Welcoming: The Secure Leader",
+          "explanation": "A master doesn't need to diminish anyone to seem great. On the contrary, silk allows you to elevate others. Give credit, validate others' ideas, maintain a light smile even under pressure. This generates an unshakable Confidence in your character. The leader who is admired has 10 times more power than the leader who is only feared. Your executive identity is built by how you treat people when no one is looking."
+        },
+        {
+          "point": "Practical Exercise: The Corridor Connection",
+          "explanation": "Tomorrow, you will choose a peer or a senior subordinate and have a 5-minute conversation focused 100% on them. Don't talk about yourself, or your projects. Use silk to listen. Observe how the level of loyalty and influence over that person increases instantly."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 3",
+      "title": "Surgical Communication and Influence",
+      "danteLesson": [
+        {
+          "point": "Communication as a Strategic Weapon",
+          "explanation": "Hello. I am Dante. At the PRO level, your speech must be like a scalpel: precise, clean, and efficient. The strategic leader doesn't 'try' to convince; he presents logic so solid that the conclusion becomes obvious. The Steel here is Structure. If you stutter on data or beat around the bush to get to the point, you lose the Confidence of those who make decisions. Surgical communication is speaking what is necessary to obtain the maximum impact."
+        },
+        {
+          "point": "The Rhetoric of Result (Steel in the Argument)",
+          "explanation": "To influence at the top, you need three layers of steel:\n\nThe Irrefutable Fact: Start with what no one can deny (market data, real losses).\n\nThe Technical Solution: Present the plan with schedule and resources (The Nexus 'How').\n\nThe Ethical Return: Show how this protects profit and the company's values.\nPRO leadership doesn't ask for permission; it presents solutions ready for approval. This is Professional Maturity."
+        },
+        {
+          "point": "Disarming Objections with Cold Logic",
+          "explanation": "When someone interrupts you or criticizes your idea, don't defend yourself emotionally. Use 'Steel' to return the technical question: 'Is your concern with cost or with deadline?'. By categorizing the criticism, you take the weight off personal conflict and go back to the field of professional Ethics. Whoever masters the data, masters the meeting."
+        },
+        {
+          "point": "Practical Exercise: The Strategic \"Elevator Pitch\"",
+          "explanation": "Your task: summarize your current biggest project in just 60 seconds. If you can't explain the value, the risk, and the goal in that time, you don't have clarity yet. Train until your message is a steel blade: short and sharp."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Wraps the Argument",
+          "explanation": "Hello! Let's talk about Silk. Dante gave you the logical skeleton, but I'll give you the 'muscle' of the message. People forget data, but they never forget how you made them feel. Real influence is not manipulation; it's Connection. To lead at the strategic level, you need to know how to tell stories. The Humanity pillar requires your communication to have soul. If you want the team to strive on a difficult project, you need to sell a future where they see themselves shining."
+        },
+        {
+          "point": "Level 3 Listening: Identifying Influence Triggers",
+          "explanation": "Influence is a two-way street. Before speaking, use Level 3 Listening. Does your interlocutor value security, innovation, or recognition? Silk allows you to adjust your language. If your director is conservative, talk about risks avoided. If your team is young, talk about legacy and learning. Respect for the other's vision is what opens the doors for your influence to enter."
+        },
+        {
+          "point": "Storytelling: Transforming Goals into Missions",
+          "explanation": "Stop reading slides loaded with text. Use images and metaphors. Instead of saying 'we want 20% profit', say 'we want to build the most reliable company in this sector so our families are proud of where we work'. Silk creates the sense of Belonging. When the team is moved by the vision, engagement stops being a demand and becomes a commitment of honor."
+        },
+        {
+          "point": "Practical Exercise: The Next Step Narrative",
+          "explanation": "Tomorrow, instead of just passing an order, tell a 2-minute story about the positive impact of this task on the team's future. Use 'we' instead of 'I'. Observe how resistance decreases when the silk of inspiration enters the field."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 4",
+      "title": "Crisis Management and Complex Conflicts",
+      "danteLesson": [
+        {
+          "point": "The Crisis Leader: The Pilot in the Storm",
+          "explanation": "Hello. I am Dante. At the PRO level, your competence is tested when the plan fails. Crisis management does not allow hesitation. The Steel here is Immediate Containment. When the error happens, the amateur looks for the culprit; the strategist looks to stop the bleeding. If you waste time pointing fingers, the loss doubles. The Nexus Ethics pillar requires you to take command: final responsibility is always the leader's."
+        },
+        {
+          "point": "Resolution Protocol: Fact, Impact, and War Plan",
+          "explanation": "To resolve complex conflicts (be it an engineering error or a partners' fight), use the Steel method:\n\nNoise Isolation: Take those involved out of normal operation. Crisis is resolved in a 'war room'.\n\nCold Root Cause Analysis: Don't accept 'it was bad luck'. Use the '5 Whys'. Where did the process fail?\n\nThe Unpopular Decision: Sometimes, to save the project, you need to cut resources or move people around. Professional Maturity is doing what is necessary, not what is comfortable."
+        },
+        {
+          "point": "Interest Negotiation in High-Rank Conflicts",
+          "explanation": "How to handle when two directors butt heads? Use the Steel of Objectivity. Bring them to the number. 'Director A, your position costs X. Director B, yours costs Y. The company's goal is Z'. When you anchor the conflict in the financial and strategic result, the ego loses strength before logic. You are not the judge; you are the guardian of the organization's interest."
+        },
+        {
+          "point": "Practical Exercise: The \"What if?\" Contingency Plan",
+          "explanation": "Your task: imagine the worst possible scenario for your department tomorrow (e.g., main system crash or exit of your best talent). Write now 3 immediate containment steps. The PRO leader is never caught by total surprise."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Disarms Hate (Tactical Empathy)",
+          "explanation": "Hello! Let's talk about Silk. In complex conflicts, people are hurt, afraid of being fired or humiliated. If you enter with only steel, they will lie and sabotage to protect themselves. Silk here is Diplomacy. The Respect pillar means hearing the other's frustration without initial judgment. When you validate the emotion ('I understand this delay frustrated you'), you disarm his defense system and open space for negotiation."
+        },
+        {
+          "point": "Level 3 Listening: What is the Ego Hiding?",
+          "explanation": "Difficult people are usually people with fear. Use Level 3 Listening. That manager who is making your project difficult... is he afraid of losing budget? Or being exposed for an old failure? Silk allows you to offer an 'honorable way out'. Instead of cornering the adversary, help him save face while he yields what you need. This is elite intelligence."
+        },
+        {
+          "point": "Rebuilding Trust Post-Trauma",
+          "explanation": "After the crisis, the team is 'shaken'. It's the moment of Humanity. As a PRO leader, you must gather those involved and do a 'field cleanup'. Don't ignore the scars. Reaffirm Confidence in the group. Show that despite the error or conflict, the group is stronger than the problem. Silk is the bond that keeps people together when impact tries to separate them."
+        },
+        {
+          "point": "Practical Exercise: The Emotion Filter",
+          "explanation": "The next time someone brings you a problem shouting or crying, you will count to three and ask a silk question: 'I see you're frustrated, but help me understand: what can we do now to solve the process?'. Observe how the focus shifts from emotion to solution."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 5",
+      "title": "Culture Building and Legacy",
+      "danteLesson": [
+        {
+          "point": "Culture: The Company's Operating System",
+          "explanation": "Hello. I am Dante. At the PRO level, do you understand that strategy eats culture for breakfast? Wrong. Culture is the dish where strategy is served. If your team only works when you look, you don't have a team, you have a group of the watched. The Steel here is the Systematization of Values. Result culture is not a wish; it's an algorithm of repeated behaviors. It's what happens when you are not in the room."
+        },
+        {
+          "point": "Elite Rituals (Steel in the Routine)",
+          "explanation": "To build a legacy, you need non-negotiable rituals.\n\nAccountability Ritual: Radical transparency in numbers.\n\nNexus Quality Standard: Where 'more or less' is actively rejected by the group, not the boss.\n\nEthical Meritocracy: Reward those who deliver with our pillars. If you reward the 'steamroller' who hits goals but destroys the atmosphere, you have corrupted your DNA. Steel requires the courage to protect culture against short-term results."
+        },
+        {
+          "point": "Forming Successors: The Leader who becomes Unnecessary",
+          "explanation": "The final test of the elite leader is his absence. If your area stops when you go on vacation, you failed. Professional Maturity is training someone to be better than you. Delegate authority, not just the task. Building successors is the greatest act of strategic Confidence that exists. Your legacy is the competence that survives your departure."
+        },
+        {
+          "point": "Practical Exercise: The Successor's Manual",
+          "explanation": "Your task: Identify today who are the two people who could take your place in 12 months. What are they missing? Write the technical development plan for these pieces. PRO leaders create leaders, not followers."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Silk that Immortalizes Influence",
+          "explanation": "Hello! Let's talk about Silk. What will people say about you in 10 years? 'He was good with spreadsheets' or 'He changed my professional trajectory'? Legacy is not in buildings or accumulated profits; legacy is in the people you transformed. The Humanity pillar is what makes your leadership unforgettable. Silk is the ability to mentor, to see the potential that the subordinate hasn't seen in themselves yet and give the support for them to flourish."
+        },
+        {
+          "point": "Level 3 Listening: The Guardian of Values",
+          "explanation": "In moments of change, the team feels fear. The legacy leader uses Level 3 Listening to be the emotional safe harbor. You are the guardian of Respect and Confidence. When the market fluctuates, it's your calm voice reaffirming the purpose that keeps the team from giving up. Silk is the invisible bond that makes each employee feel: 'I belong to something bigger than a job'. This is building culture with soul."
+        },
+        {
+          "point": "The Mentor Leader: Transmitting Wisdom",
+          "explanation": "Mentorship is the noblest use of silk. It's sitting with the subordinate and sharing not just the 'how to do', but the 'how to be'. Teach the Nexus pillars by your posture. Be the example of Ethics they will want to imitate in their own homes. When you inspire someone to be a better person, your leadership reaches corporate immortality. This is the true Legacy."
+        },
+        {
+          "point": "Practical Exercise: The Legacy Letter",
+          "explanation": "Write today a paragraph: 'How do I want to be remembered by this team when I am no longer here?'. Now, look at your schedule for tomorrow. Are your actions aligned with this desire? Adjust your route. The silk of your legacy is woven today, in every conversation."
+        }
+      ]
+    }
+  ],
+  "courses.preparando-equipes-intermediario.header.title": "集中化から人材の増殖へ",
+  "courses.preparando-equipes-intermediario.header.desc": "15日間会社を離れたら、すべてが止まるのでしょうか？答えが「はい」の場合、あなたはリーダーではなく、贅沢な労働者です。コース 3 の目標は、集中化の連鎖を断ち切ることです。",
+  "courses.preparando-equipes-intermediario.intro.title": "パフォーマンス エンジニアリング: 過負荷の終焉",
+  "courses.preparando-equipes-intermediario.intro.welcome.title": "🎙️ 過負荷の終わり",
+  "courses.preparando-equipes-intermediario.intro.welcome.dante": "進化の次のレベルへようこそ。私はダンテです。直接質問させてください。15 日間会社を離れたら、すべてが停止しますか?答えが「はい」の場合、あなたはリーダーではなく、贅沢な労働者です。コース 3 の目標は、集中化の連鎖を断ち切ることです。ここでのスチールとはパフォーマンスエンジニアリングのことです。技術的な冷静さで人材をマッピングし、失敗を許さない委任プロセスを作成する方法を教えます。",
+  "courses.preparando-equipes-intermediario.intro.welcome.djeny": "こんにちは！私はジェニーです。ダンテはあなたに手綱を手放す方法を教えます、そして私はあなたに人々を保持する方法を教えます。リーダートレーナーになるには、指導のシルクが必要です。命令するだけでは十分ではありません。「当事者意識」を呼び覚ますことが必要です。アクティブリスニングとリアルなフィードバックを活用して、部下をビジネスパートナーに変える方法を紹介します。あなたの最大の遺産は、あなたが何をしたかではなく、誰を結成したかです。",
+  "courses.preparando-equipes-intermediario.intro.method.title": "🏛️ ネクサスの哲学: 自由になるための形成",
+  "courses.preparando-equipes-intermediario.intro.method.dante": "Nexus Intelligence は、エリート リーダーはチームの自主性によって評価されると考えています。私たちは倫理の鉄則を使用して、意思決定権を与える能力と技術的信頼を評価します。",
+  "courses.preparando-equipes-intermediario.intro.method.djeny": "そして、私たちは敬意のシルクを使用して各才能の成熟時期を理解し、人間性を使用して学習を生み出すエラーをサポートします。私たちの柱はこれからもあなたの北、つまり人間性、敬意、倫理、そして信頼です。",
+  "courses.preparando-equipes-intermediario.intro.pro.title": "🚀 ジャーニーマップ",
+  "courses.preparando-equipes-intermediario.intro.pro.dante": "このトレーニングでは、誰が実際に成果を提供するかのコールド マッピングから、自動的に実行される結果マシンの作成までを行います。私たちはガバナンス制御を失うことなく権力を分散化します。",
+  "courses.preparando-equipes-intermediario.intro.pro.djeny": "目的、深い関わり方、そしてキャリアの初期にいたらよかったと思うメンターになる方法についてお話します。模範によってインスピレーションを与え、つながりを通じて訓練することを学びます。",
+  "courses.preparando-equipes-intermediario.intro.cta.title": "🎬 Nexus への取り組み",
+  "courses.preparando-equipes-intermediario.intro.cta.dante": "運用のボトルネックにならないように準備してください。「みんなのためにやる」時代は終わりました。",
+  "courses.preparando-equipes-intermediario.intro.cta.djeny": "掛け算を始める時が来ました。あなたのチームはあなたの中に存在するトレーナーを待っています。",
+  "courses.preparando-equipes-intermediario.intro.cta.final": "エリート リーダー トレーナーへようこそ。モジュール 1 に進みましょう。",
+  "courses.preparando-equipes-intermediario.modules.stage.dante": "このモジュールには 2 つのレッスンがあります。まずはダンテの戦略的ビジョンから始めましょう。",
+  "courses.preparando-equipes-intermediario.closing.title": "Nexusトレーニングトレイルの正式な終了",
+  "courses.preparando-equipes-intermediario.closing.dante1": "エッセンシャル リーダーシップ、リーダーシップ PRO、エリート トレーナー リーダーの 3 つのコースを完了しました。あなたは今、戦略とパフォーマンスの鋼を手に入れました。",
+  "courses.preparando-equipes-intermediario.closing.djeny1": "そしてあなたはコミュニケーションと人間の指導というシルクをマスターします。あなたは Nexus Intelligence の道を歩んできました。",
+  "courses.preparando-equipes-intermediario.closing.dante2": "私たちの 4 つの柱、つまり人間性、敬意、倫理、信頼が、今やあなたの職業人生の羅針盤となっています。",
+  "courses.preparando-equipes-intermediario.closing.djeny2": "私たちはネクサスです。知識は届けられてきました。訓練は終わりました。さあ…先導を始めましょう。",
+  "courses.preparando-equipes-intermediario.closing.final": "おめでとう、エリートリーダー！頂上でお会いしましょう。",
+  "courses.preparando-equipes-intermediario.mentoria.title": "限定ボーナス: フルアクセス",
+  "courses.preparando-equipes-intermediario.mentoria.bonus": "NEXUS インテリジェント メンターシップ (ダンテ & ジェニー)",
+  "courses.preparando-equipes-intermediario.mentoria.attention": "あなた専用の人材コンサルティング: このコースをフル アクセス モダリティで保護すると、Dante と Djeny のロックが解除され、移行をサポートできるようになります。",
+  "courses.preparando-equipes-intermediario.mentoria.item1.title": "リーダーのツール",
+  "courses.preparando-equipes-intermediario.mentoria.item1.desc": "チームの個人開発計画 (IDP) の構築など、ほとんどの時間を費やす作業には Djeny を使用し、Dante は結果が低下しないようにします。",
+  "courses.preparando-equipes-intermediario.mentoria.item2.title": "エグゼクティブ エクステンション (ザ プラス)",
+  "courses.preparando-equipes-intermediario.mentoria.item2.desc": "アクセスは完了後 180 日間延長されます。それは、会社に新しい文化を導入する間、ポケットにシニア コンサルタントがいるようなものです。",
+  "courses.preparando-equipes-intermediario.data": [
+    {
+      "module": "MODULE 1",
+      "title": "Talent Mapping – The Team Engineering",
+      "danteLesson": [
+        {
+          "point": "The Leader who Doesn't Measure, Doesn't Manage",
+          "explanation": "Hello. I am Dante. We begin now the course that will set you free from operation. But pay attention: you cannot train what you do not know. The amateur leader trains everyone equally; the elite leader does a Precision Diagnosis. The Steel here is Analytical Coldness. To transform subordinates into successors, you need to stop looking at who you 'like' and start looking at who 'delivers'. The pillar of Ethics requires that your evaluation be based on facts, not affinity."
+        },
+        {
+          "point": "The Tool: Nexus 9-Box Matrix",
+          "explanation": "In this lesson, we will draw the map of your army.\n\nGold Talent: High performance and high potential. This is your immediate successor.\n\nSolid Specialist: Delivers everything, but doesn't want to lead. Respect him, he is your base.\n\nQuestion Mark: Has potential, but doesn't deliver. Is the problem motivation or your leadership?\n\nThe Enigma: Neither delivers nor wants to grow. Here, Steel requires ethical 'pruning' to protect the team.\nMapping is the first step to stop carrying the team on your back."
+        },
+        {
+          "point": "Identifying the Technical GAP (Bottleneck)",
+          "explanation": "Where does your team break if you are hit by a car tomorrow? If the answer is 'everywhere', you have failed in Professional Maturity. Mapping serves to identify which technical skills only you have and start the immediate transfer process. The elite trainer leader works to become technically unnecessary in the day-to-day."
+        },
+        {
+          "point": "Practical Exercise: The Team X-Ray",
+          "explanation": "Your task: Take your team list and place each one in a quadrant of the 9-Box matrix. Be honest. Tomorrow, you will look at this map and decide who will receive 80% of your training energy. Time is your scarcest resource; don't waste it on someone who doesn't want to be trained."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "Beyond the Badge: The Invisible Potential",
+          "explanation": "Hello! I am Djeny. Dante gave you the steel ruler, but I will give you the silk lenses. Often, your best successor is hidden behind a repetitive task because no one ever asked what they really know how to do. The pillar of Humanity at Nexus means seeing the person beyond the job. A trainer leader is a talent prospector. If you look at your team and only see 'labor', you will never have a successor, only tired helpers."
+        },
+        {
+          "point": "Level 3 Listening: The Discovery Interview",
+          "explanation": "How to discover someone's potential? Through Level 3 Listening. Instead of talking about the month's goals, ask: 'What do you do with ease that others find difficult?'. Listen to the pauses, the excitement in their tone of voice when they talk about a hobby or an old project. Respect for the individual reveals skills that HR never mapped. Sometimes, your machine operator has a logistical organizer's soul that you are wasting."
+        },
+        {
+          "point": "Aligning Purposes (The Silk that Connects)",
+          "explanation": "No one becomes an elite successor just for money. They become successors for Trust and purpose. The silk here is showing the talent how their growth helps the company and how that fulfills their dream. When you connect the 'dream of the person' with the 'goal of the company', you create an unbreakable sense of ownership. The mentor leader does not impose the path; they light the lantern so the follower can see the road."
+        },
+        {
+          "point": "Practical Exercise: The 15-Minute Conversation",
+          "explanation": "Tomorrow, choose a subordinate you consider 'promising'. Call them for a 15-minute coffee. Don't talk about goals. Ask: 'If you could choose a new skill to learn this year, what would it be?'. Just listen. Use silk to open the door to development."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 2",
+      "title": "The Art of Delegation and Real Feedback",
+      "danteLesson": [
+        {
+          "point": "Delegation is not Abandonment",
+          "explanation": "Hello. I am Dante. The biggest mistake of the centralizing leader is thinking that delegating is 'passing the problem along'. This is actually called 'dumping'. At Nexus, the Steel of delegation requires a Results Contract. You don't delegate the task (the 'how'), you delegate responsibility for the outcome (the 'what'). If you tell your subordinate exactly which screw to tighten, you remain the operator. If you tell them that the machine needs to run without stops, you are forming an owner."
+        },
+        {
+          "point": "The Nexus Levels of Authority Matrix",
+          "explanation": "For each task delegated, you must fix the level of technical authority based on the subordinate's Professional Maturity:\n\nLevel 1 (Research): 'Investigate the problem, bring me the options and I decide'.\n\nLevel 2 (Recommendation): 'Analyze and tell me which option you prefer, I approve'.\n\nLevel 3 (Decision): 'Decide and inform me what you did immediately'.\n\nLevel 4 (Autonomy): 'Solve and tell me in the weekly report'.\nThe Steel here is Clarity. Without knowing their level, the subordinate stays paralyzed with fear of making a mistake or oversteps the limit of Ethics."
+        },
+        {
+          "point": "Control Points and Accountability",
+          "explanation": "The trainer leader does not watch, he audits. Establish milestones: 'John, I won't charge you every day, but every Wednesday at 10am we review indicator X'. This creates the Trust that the process is under control without stifling talent. If the deadline is not met, Steel requires immediate charging based on what was agreed. The pillar of Respect begins with fulfillment of what was pact."
+        },
+        {
+          "point": "Practical Exercise: The 1-Page Contract",
+          "explanation": "Your task: Choose a task that you centralize today. Write on one page: The Expected Result, the Final Deadline, and the Level of Authority you will give. Tomorrow, deliver this to a subordinate and... do not interfere until the first control point."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "Feedback: The Mirror of Evolution",
+          "explanation": "Hello! I am Djeny. If Dante gave you the contract, I will give you the soul of growth: Feedback. In the Leader Coach model, feedback is not a scolding; it's a gift for the other's career. The Silk here is the sensitivity to understand that, by pointing out a flaw, you are dealing with someone's vulnerability. The pillar of Humanity says: attack the process with steel, but embrace the person with silk. If the employee leaves the conversation feeling humiliated, you didn't train them, you hurt them."
+        },
+        {
+          "point": "Level 3 Listening in Feedback: The Error Diagnosis",
+          "explanation": "Before speaking, listen. Use Level 3 Listening. Ask: 'How do you evaluate your delivery of this project?'. Often, the employee already knows where they failed. When they themselves identify the failure, learning is 10 times faster. Your role is to be the mirror that reflects their potential. Respect for the other's perception builds a bridge of Trust that allows deep corrections without resistance."
+        },
+        {
+          "point": "The SCI Method: Situation, Behavior, and Impact",
+          "explanation": "To be a Mentor of Talents, your feedback must be specific:\n\nSituation: 'In yesterday's meeting with the client...'\n\nBehavior: '...you interrupted the director's speech three times'.\n\nImpact: 'This gave an image of team disorganization'.\nAlways end with a silk question: 'How can we ensure this is different next time?'. You transfer the responsibility for growth to them, acting as a guide, not a headsman."
+        },
+        {
+          "point": "Practical Exercise: The Recognition and Adjustment Feedback",
+          "explanation": "Tomorrow, you will have a 15-minute feedback session with a subordinate. Use 5 minutes to recognize a strong point (Silk) and 10 minutes to align a point for technical improvement (Steel). Record how the person reacted to being treated as someone in development, rather than someone being charged."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 3",
+      "title": "Engagement and Ownership Sense",
+      "danteLesson": [
+        {
+          "point": "The Myth of the 'Demotivated Employee'",
+          "explanation": "Hello. I am Dante. Let's stop romanticizing engagement. No one wakes up in the morning 'engaged' by an Excel spreadsheet. Elite engagement is born from Clarity of Rules. The employee only has a 'sense of ownership' when they understand that their success is directly tied to the success of the process. The Steel here is Technical Justice. If the good and the bad receive the same praise and the same bonus, you are training your team for mediocrity."
+        },
+        {
+          "point": "The Owner's Contract (Steel in Responsibility)",
+          "explanation": "How does the trainer leader create an owner? By giving them a territory to govern.\n\nBoundary Definition: 'This production line is yours. The cost is yours, the waste is yours'.\n\nAutonomy with Charging: 'You have freedom to adjust the machine, but indicator X cannot fall'.\n\nReal Consequence: The pillar of Ethics requires that merit be visible. If they acted as an owner, they must reap as an owner. If they acted as shared, they must be corrected as such. This is Professional Maturity."
+        },
+        {
+          "point": "Management by Technical 'Why'",
+          "explanation": "Engagement without shouting requires that you explain the logic behind the goal. The elite leader doesn't say 'do it because I told you'. He says 'do it because it reduces rework by 12% and ensures our market share'. When the subordinate understands the mechanism, they stop following orders and start managing the result. Technical Trust is the owner's fuel."
+        },
+        {
+          "point": "Practical Exercise: The Self-Management Agreement",
+          "explanation": "Your task: Choose a subordinate and give them the 'key' to a small process. Say: 'From today, you decide how this will be done, as long as result Y is maintained. I only intervene if you ask me'. Observe if they grow or if they shrink. Owners love freedom; helpers are afraid of it."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Feeling of 'Belonging'",
+          "explanation": "Hello! Let's talk about Silk. Dante gave you the structure of the contract, but I will give you the ligand that keeps that contract alive: Belonging. Human beings only take care of what they feel is 'theirs'. If your subordinate feels they are just a disposable number, they will never have a sense of ownership. The pillar of Humanity at Nexus says that engagement is emotional. Silk is making the collaborator feel that the company's victory is their family's victory."
+        },
+        {
+          "point": "Level 3 Listening: What shines in their eyes?",
+          "explanation": "What engages your team? For some, it's public Respect. For others, it's the security of constant feedback. Use Level 3 Listening. If you want them to act as an owner, you need to hear their ideas as if they were those of a partner. When a subordinate gives a suggestion and you implement it giving credit to them, you just 'bought' their engagement for the next six months. Silk is the recognition that feeds the soul."
+        },
+        {
+          "point": "The Power of Strategic Praise (Silk in Valuation)",
+          "explanation": "An elite trainer leader knows that praise is a training tool. Don't praise the 'person', praise the 'owner behavior'. 'John, I saw you cleaned the workbench without anyone asking. That is the posture of someone who takes care of what is ours'. This reinforces the owner identity. The pillar of Trust strengthens when the subordinate perceives that you notice their invisible effort. Engaging without shouting is using silk to involve the team in the purpose."
+        },
+        {
+          "point": "Practical Exercise: Public Recognition",
+          "explanation": "Tomorrow, you will identify a 'sense of ownership' behavior in someone on your team and will praise that specific action in front of at least one other person. Be sincere and use the pillar of Respect. Feel the impact on that person's posture throughout the day."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 4",
+      "title": "Decentralizing Power – Autonomy with Responsibility",
+      "danteLesson": [
+        {
+          "point": "Autonomy is not Anarchy",
+          "explanation": "Hello. I am Dante. Many leaders are terrified of decentralizing because they think the team will do whatever they want. That is a lack of Steel. Autonomy without process is anarchy. Elite autonomy is giving the subordinate the freedom to decide within a safety rail. The pillar of Ethics at Nexus says you only give autonomy to those who have proven competence and character. You don't release the controls of a plane to a student on the first day. You release in layers."
+        },
+        {
+          "point": "The Nexus Autonomy Staircase (Steel in Limits)",
+          "explanation": "For each successor you mapped in Module 1, you must apply the Levels of Autonomy:\n\nLevel 1 (Research): 'Bring me the solution, I sign'.\n\nLevel 2 (Recommendation): 'Analyze and tell me which option you prefer, I approve'.\n\nLevel 3 (Decision): 'Decide and inform me what you did immediately'.\n\nLevel 4 (Autonomy): 'Solve and tell me at the end of the month'.\nThe Steel here is Professional Maturity. If you gave autonomy and the subordinate made a mistake, you don't take their autonomy away on the first failure; you analyze whether the error was in the process or carelessness. The PRO leader manages the risk, not the person."
+        },
+        {
+          "point": "The Cost of Error as an Investment",
+          "explanation": "Training a successor is expensive. They will make mistakes, and their mistakes will cost time or money. The trainer leader sees this cost as 'tuition' for the subordinate. If you do not tolerate errors in learning, you will never have a successor, you will only have a slave to your 'yes'. Technical Trust is built on the cold correction of the error, never on shouting."
+        },
+        {
+          "point": "Practical Exercise: The Jurisdiction Map",
+          "explanation": "Your task: List 3 decisions that pass through you today and that could be taken by your right hand. Define the financial or operational limit (the 'Steel') for those decisions and communicate it to them tomorrow. 'From today, this is with you'."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Grief of the Centralizing Leader",
+          "explanation": "Hello! Let's talk about Silk. Decentralizing hurts the leader's ego. Do you know that pleasure of being the 'hero' who solves everything? For the Elite Trainer Leader, that pleasure must die. The silk here is your ability to see the other shine and accept that their way of doing things might be different from yours — and that's okay. The pillar of Humanity requires that you give space to the other's style. If you require them to be a 'clone' of you, you are not training a leader, you are creating a robot."
+        },
+        {
+          "point": "Level 3 Listening: Identifying the Fear of Deciding",
+          "explanation": "Often, you give autonomy and the subordinate freezes. Use Level 3 Listening. Are they afraid of failing? Are they afraid of being judged by colleagues? Silk is encouragement. 'I trust your judgment. If it goes wrong, we'll solve it together'. This support creates the Psychological Safety necessary for talent to flourish. The pillar of Respect is shown when you don't 'fry' them in the face of an honest mistake in the autonomy process."
+        },
+        {
+          "point": "The Invisible Presence (Mentoring in Silk)",
+          "explanation": "Decentralizing is not disappearing. It's being available without being invasive. It's the 'Half-Open Door' technique. The subordinate knows they have the power, but feels that you are the safety net. The pillar of Trust is bidirectional: you trust that they will do their best, and they trust that you won't 'pull the rug' if something oscillates. PRO Leadership is about being the wind beneath the team's wings, not the weight upon them."
+        },
+        {
+          "point": "Practical Exercise: The Encouragement Feedback",
+          "explanation": "Tomorrow, after delegating that decision Dante suggested, you will tell your subordinate: 'I chose you for this because I saw talent X and Y in you. I'm here if you need me, but the ball is yours'. Feel the weight come off your shoulders and the motivation enter their chest."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 5",
+      "title": "Machine for Results – Sustainable Performance",
+      "danteLesson": [
+        {
+          "point": "The Final Test: Your Absence",
+          "explanation": "Hello. I am Dante. We have reached the end of our technical training. The indicator that you have become an Elite Trainer is not how much you work, but how well things function when you are not in the room. The Steel here is Systematization. If knowledge is only in your head, you are a prisoner of your own competence. If knowledge is in the process and in the people, you are a master of Professional Maturity."
+        },
+        {
+          "point": "The Succession Ritual (Steel in Passing the Baton)",
+          "explanation": "Succession doesn't happen by osmosis. It requires a Nexus protocol:\n\nTechnical Validation: The successor proved they master the KPIs (Ethics).\n\nPublic Announcement: The leader communicates to the team and peers: 'From today, the final word on X is John's'. If you don't notify the group, the group will continue calling you.\n\nPassive Monitoring: You become a luxury auditor. You intervene only if the pillar of Ethics or Safety is threatened."
+        },
+        {
+          "point": "Building the Next Step (Your Future)",
+          "explanation": "Why train a successor? So that you can be promoted or focus on new businesses (like those at Nexus). The leader who does not form a successor does not move forward. The Steel of your career depends on your ability to leave substitutes better than you. This is pure career strategy. The board's Trust in you doubles when they see you created a machine that doesn't depend on you."
+        },
+        {
+          "point": "Practical Exercise: The Transition Manual",
+          "explanation": "Your task: Write a 3-paragraph document for your successor (or for whoever you mapped in Module 1) saying: 'What I expect of you in this role in the next 90 days'. Deliver and ask them to draw the action plan. The ball is now theirs."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Joy of Being Overtaken",
+          "explanation": "Hello! I am Djeny. Let's close with the noblest Silk: generosity. The Elite Trainer Leader feels a genuine pride when they see their subordinate shining more than them. The pillar of Humanity is fulfilled here. If you feel jealous of your successor's success, you are not yet a trainer, you are a competitor. Silk is the ability to give a standing ovation to the work you helped build. The Respect your successor will have for you will be eternal if you are the person who opened the door for them."
+        },
+        {
+          "point": "Level 3 Listening: The Farewell Feedback from the Operation",
+          "explanation": "Have one last individual meeting. Use Level 3 Listening. Ask: 'What did I do that helped you grow the most?'. The answers will give you the recipe for training the next. Silk is maintaining the bond of Trust even when the hierarchy changes. The mentor leader never stops being a moral reference (Ethics) for those they trained. You stop being the boss to be the advisor."
+        },
+        {
+          "point": "The Infinite Development Cycle",
+          "explanation": "Teach your successor to be a trainer too. Nexus culture only stays alive if each person who rises pulls up another. Your legacy is not last year's profit; it's the careers you boosted. Use silk to soften the transition and ensure the pillar of Humanity continues to be the heart of the team. PRO Leadership is about love for human development."
+        },
+        {
+          "point": "Practical Exercise: The Recognition Letter",
+          "explanation": "Today, you will write a message to your team or to your successor: 'Thank you for accepting the challenge of growing with me. I trust you to carry our excellence forward'. Thank them for the journey. The cycle closes with gratitude."
+        }
+      ]
+    }
+  ],
+  "gallery.culture": [
+    {
+      "quote": "リーダーシップは品格によって築かれる。",
+      "nexusVision": "ネクサスにおいて、役職は単なる名称に過ぎません。決断を支えるのは、その奥底にある人格です。成果は市場を驚かせますが、チームが自発的に従うのは、リーダーの揺るぎない姿勢に感銘を受けるからです。真のリーダーは権力を誇示することなく、その背中によって認められる存在でなければなりません。"
+    },
+    {
+      "quote": "人が変わる理由は二つ。多くを学んだか、あるいは十分に苦しんだかである。",
+      "nexusVision": "変革は偶然の産物ではなく、確固たる選択です。学びは新たな地平を切り拓き、痛みは現状の限界を突きつけます。ネクサスでは、リーダーが苦痛の極致に達する前に、自覚を持って進化の道を選ぶよう導きます。変わることは弱さではなく、進化し続ける勇気の証なのです。"
+    },
+    {
+      "quote": "リーダーの役割は促進することであり、すべてを解決することではない。",
+      "nexusVision": "すべてを解決しようとする者は依存を生み、促進に徹する者は自律を育みます。我々の役割は障害を取り除き、進むべき道を明示することで、チームが自らの足で歩めるようにすることです。一流のリーダーシップとは、側に「守護者」や「消火兵」を必要とせずとも、自ら行動できる人材を育成することに他なりません。"
+    },
+    {
+      "quote": "信頼は一貫性によって築かれる。",
+      "nexusVision": "信頼は、声高な主張や美辞麗句によって得られるものではありません。それは、絶え間ない反復の中に宿ります。重圧に晒されている時も、誰の目にも触れない場所でも、常に変わらぬ姿勢を貫くこと。ネクサスは言行一致を信条としています。それこそが安心を植え、忠誠を収穫するための唯一の方法です。"
+    },
+    {
+      "quote": "葛藤は学びの好機である。",
+      "nexusVision": "相違が存在するところにこそ、真実が潜んでいます。適切に導かれた葛藤は、組織を分断するのではなく、成熟へと向かわせます。それは期待値を調整し、進路を修正するための貴重な瞬間です。葛藤を恐れるリーダーは成長を阻害しますが、ネクサスのリーダーは相違を歓迎し、そこから揺るぎない明確さを見出します。"
+    },
+    {
+      "quote": "給与は人を惹きつけ、健やかな環境は人を留める。",
+      "nexusVision": "金銭は人の時間を買いますが、尊敬と心理的安全性は、人の心と精神を動かします。健やかな環境こそが、才能が深く根を張る唯一の土壌です。ネクサスでは、日々の業務に情熱の輝きが取り戻されるよう、組織の風土を最高水準へと高めてまいります。"
+    },
+    {
+      "quote": "技術的に卓越していても、社会性を欠いていては無価値である。",
+      "nexusVision": "技術は扉を開く鍵となりますが、その場に留まることを可能にするのは心の知能指数（EQ）です。リーダーシップの本質は「繋がり」にあります。人間的な敬意を欠いた数字上の成果は、虚しく、持続不可能です。我々が求めるのは、卓越した技術と、他者への模範的な接し方を兼ね備えた、360度隙のないプロフェッショナルです。"
+    },
+    {
+      "quote": "誰に媚びることなく、最善を尽くし、成果で示せ。",
+      "nexusVision": "媚びへつらいは、実力なき者が用いる道具です。出すべき成果が疑いようのないものであれば、その能力は自ずと証明されます。ネクサスでは、実力主義と一貫性を尊びます。他者の顔色を伺う者は恩恵に縋りますが、結果に集中する者は真の権威を纏います。"
+    },
+    {
+      "quote": "適任者は完成された状態で現れるのではない。強い意欲を持って現れるのである。",
+      "nexusVision": "人の価値は、最初から完璧であることではなく、共に築き上げようとする真摯な姿勢にあります。意欲ある者は迅速に進化し、自然と組織の文化に溶け込んでいくものです。ネクサスは、成し遂げようとする意志があるところにこそ、才能が花開くと信じています。意欲こそが、進歩の原動力です。"
+    },
+    {
+      "quote": "直ちに行動せよ。問題の中にこそ、好機を見出すのだ。",
+      "nexusVision": "真の変革は、停滞を打破した瞬間に始まります。目的を持たぬ者にとって、問題は単なる障壁に過ぎません。たとえ全ての答えが得られていなくとも、行動を起こすことで躍動が生まれ、道中での学びが得られます。言い訳を捨て、第一歩を踏み出す勇気に置き換えること。それがネクサスの進化の形です。"
+    },
+    {
+      "quote": "常に謙虚であれ。己がすべてを知っているわけではなく、常に正しいわけでもない。",
+      "nexusVision": "学ぶ謙虚さこそ、一流のリーダーが持つ最大の強みです。真に優れた者はフィードバックから逃げることなく、それを自己成長の糧へと昇華させます。ネクサスにおいて最も進化を遂げるのは、常に正しくある必要を捨てた者です。未知を受け入れる寛容さこそが、良きプロフェッショナルを「達人」へと変貌させます。"
+    }
+  ],
+  "intelligence.danteSafra.standard.title": "ダンテ サフラ スタンダード",
+  "intelligence.danteSafra.standard.subtitle": "インテリゲンシア エッセンシャル",
+  "intelligence.danteSafra.standard.trial": "1 時間無料でテスト",
+  "intelligence.danteSafra.axis.subtitle": "オー・マゴ・ド・アグロ・プレミアム",
+  "intelligence.danteSafra.axis.cta": "デスブロックアクシス",
+  "intelligence.djenyDesign.personal.title": "ジェニーデザインパーソナル",
+  "intelligence.djenyDesign.personal.subtitle": "インテリアのインテリジェントをデザインする",
+  "intelligence.djenyDesign.personal.trial": "1 無償テスト",
+  "intelligence.djenyDesign.business.title": "ジェニービジネス",
+  "intelligence.djenyDesign.business.subtitle": "ロハスとショールームの戦略",
+  "intelligence.djenyDesign.business.feature.unlimited": "無制限のイメージング",
+  "intelligence.djenyDesign.business.description": "顧客が独自の環境に適用されている製品を数秒で表示できるようにすることで、売上を増やします。極めて忠実であり、最大限の変換を実現します。",
+  "intelligence.djenyDesign.business.cta": "コンサルタントに相談する",
+  "intelligence.complementaryModules.title": "アドオンモジュール",
+  "intelligence.complementaryModules.access": "アクセスモジュール",
+  "lectures.scripts.comunicacao-que-conecta.item0.text": "こんにちは。元気ですか？皆さん、大歓迎です。私たち Nexus Intelligence にとって、市場を動かすリーダーたちの前に来られることを嬉しく思います。私の名前はダンテです。しかし、テクニック、ツール、KPI について話す前に、私たちがここにたどり着いた理由について話す必要があります。Nexus は、単なるコールド テクノロジー プラットフォームとして生まれたわけではありません。彼女は価値の架け橋となるために生まれました。",
+  "lectures.scripts.comunicacao-que-conecta.item1.text": "私たちの話は、ここで見られるコード行やグラフィックの完璧さに関するものではありません。私たちの物語は人間を救うことです。誰もが叫び合い、誰もお互いを理解できない世界では、人間性、敬意、倫理、信頼という交渉の余地のない原則に基づいて構築された場合にのみ、高いパフォーマンスが持続可能であると私たちは信じています。これが私たちの4つの柱です。不変。そのうちの1つを取り出すと、構造が崩壊します。私たちが今日の知識を構築するのは彼らの上にあります。",
+  "lectures.scripts.comunicacao-que-conecta.item2.text": "そして私はジェニーです。ダンテを補完するものとして、私たちのここでの使命は、",
+  "lectures.scripts.comunicacao-que-conecta.item3.text": "周りを見回してください。生産ラインでのエラーから世界的なイメージ危機に至るまで、企業における重大な問題のほとんどは、技術的な障害によって引き起こされるものではありません。それはコミュニケーションの失敗から起こります。○",
+  "lectures.scripts.comunicacao-que-conecta.item4.text": "まさに、ダンテ。そして、彼がこの鉄骨構造を構築している間、それは論理であり、プロセスであり、厳密さです - 私は魂、私たちのシルクをもたらします。なぜなら、技術的に完璧なメッセージであっても、それがつながり、インスピレーションを与え、そして何よりも心理的安全性を生み出すことができなければ意味がないからです。今日、紳士淑女の皆様、私たちはスティールとシルクを団結させます。",
+  "lectures.scripts.comunicacao-que-conecta.item5.text": "最初の柱: 徹底的な客観性。企業コミュニケーションは詩ではなく、配達契約です。Nexus では、すべてのやり取りで次の 4 つの神聖な質問に答えなければならないと教えています。誰が？いつ？そして何のために？メッセージがそれに応答しない場合、それはノイズです。そして騒音は利益の無駄です。",
+  "lectures.scripts.comunicacao-que-conecta.item6.text": "しかし、共感のない客観性は攻撃的です。したがって、2 番目の柱はリスニング レベル 3 です。ほとんどの人はレベル 1 で聞いています。つまり、自分が話す順番を待っているだけです。レベル 3 は詳細な内容です。それは、言われていないことに耳を傾けることです。リーダーがこう言うと、",
+  "lectures.scripts.comunicacao-que-conecta.item7.text": "説明しましょう。一般的なリーダーはこう言います。",
+  "lectures.scripts.comunicacao-que-conecta.item7.question": "実践例",
+  "lectures.scripts.comunicacao-que-conecta.item8.text": "給与は最低額、つまり倫理的最低額です。従業員が床しか見ていない場合、それは誰も自分の仕事の影響の上限を示していないためです。ネクサスのリーダーは命令を出しません。それは関連性を翻訳します。プログラマーが書いたコードが、そのソフトウェアを使用している病院で命を救っていることを示しています。",
+  "lectures.scripts.comunicacao-que-conecta.item8.question": "給料だけが欲しい人たちをどのように引きつけるか?",
+  "lectures.scripts.comunicacao-que-conecta.item9.text": "堅さは脆弱さの表れです。圧力がかかると壊れるのは硬いものです。一方、明瞭さは持続します。明日会社全体を変えようとしないでください。まず、プロトコルをユニットに適用します。この結果は、どのガイドラインよりも雄弁です。この例は、存在するウイルスの中で最もポジティブなウイルスです。",
+  "lectures.scripts.comunicacao-que-conecta.item9.question": "企業文化が厳格すぎて変更できない場合はどうすればよいでしょうか?",
+  "lectures.scripts.comunicacao-que-conecta.item10.text": "スチールとシルクを適用します。鋼鉄の事実:",
+  "lectures.scripts.comunicacao-que-conecta.item10.question": "やる気を失わずに否定的なフィードバックを与えるにはどうすればよいでしょうか?",
+  "lectures.scripts.comunicacao-que-conecta.item11.text": "人間を疲れさせるのは努力ではなく、無意味な努力です。穴を掘って一日中それを覆っていると、精神が死んでしまいます。大聖堂の基礎を掘ると満足感が得られます。目的は強さを回復する燃料です。意味があると、疲れも充実感に変わります。",
+  "lectures.scripts.comunicacao-que-conecta.item11.question": "継続的な目的は従業員を疲れさせることになりませんか?",
+  "lectures.scripts.comunicacao-que-conecta.item12.text": "徹底的な透明性。約束したことを実行し、プロトコルが失敗した場合は真っ先に認めてください。信頼は完璧からではなく、誠実さから生まれます。Nexus では、信頼が最も貴重な資産です。",
+  "lectures.scripts.comunicacao-que-conecta.item12.question": "チームへの信頼を永続させる秘訣は何でしょうか？",
+  "lectures.scripts.comunicacao-que-conecta.item13.text": "本当の関わりとは目的地ではなく、所属と自主性を日々実践することです。今日、皆さんが技術だけでなく、部族を変革したいという願望を持ってここを去ってくれることを願っています。",
+  "lectures.scripts.comunicacao-que-conecta.item14.text": "信頼と時間をありがとうございました。覚えておいてください。未来は、明確にコミュニケーションをとり、心を込めて導く人たちのものです。私たちはネクサス・インテリジェンスです。次の目標まで！",
+  "lectures.scripts.motivacao-e-engajamento.item0.text": "こんにちは、大丈夫ですか？皆さん、ようこそ...Nexus にとってここに来られてとてもうれしいです。私の名前はダンテです。しかし、テクニックについて話す前に...私たちがここにたどり着いた理由について話す必要があります。Nexus Intelligence は、単なるテクノロジー プラットフォームとして作成されたわけではありません。彼女は価値の架け橋となるために生まれました。",
+  "lectures.scripts.motivacao-e-engajamento.item1.text": "私たちの話は、コード行や今日見られるグラフィックの完成度に関するものではありません。私たちの物語は人間を救うことです。私たちは、高いパフォーマンスは、人間性、敬意、倫理、信頼という交渉の余地のない原則に基づいて構築された場合にのみ持続可能であると信じています。これが私たちの4つの柱です。不変。私たちが今日の知識を構築するのは彼らの上にあります。",
+  "lectures.scripts.motivacao-e-engajamento.item2.text": "そして私はジェニーです。ダンテを補完するものとして、私たちのここでの使命は、",
+  "lectures.scripts.motivacao-e-engajamento.item3.text": "企業における重大な問題のほとんどは、技術的な障害によって引き起こされるのではなく、むしろコミュニケーションの障害によって引き起こされます。場違いな言葉。曖昧な指示。今日は...このノイズマシンを解体し、外科的明瞭度プロトコルをインストールしましょう。",
+  "lectures.scripts.motivacao-e-engajamento.item4.text": "そしてダンテがコミュニケーションの鋼鉄の構造を構築する間、私は魂をもたらします。なぜなら、明確なメッセージがあっても、それがつながり、刺激を与え、信頼を生み出すことができなければ意味がありません。今日、私たちはスティールとシルクを結合します。",
+  "lectures.scripts.motivacao-e-engajamento.item5.text": "最初の柱: 徹底的な客観性。企業コミュニケーションは詩ではなく、契約です。すべての言葉には目的がなければなりません。何をする必要があるでしょうか?責任者は誰ですか?期限は何ですか?それに応じなければ…それは騒音であり、騒音は高価です。",
+  "lectures.scripts.motivacao-e-engajamento.item6.text": "そして 2 番目の柱: リスニング レベル 3。リスニングは、自分が話す番を待っているわけではありません。他人の世界に飛び込むことです。話されていないこと、しかし声の調子や姿勢で叫ばれていることを聞いてください。そこに本当のつながりが生まれます。",
+  "lectures.scripts.motivacao-e-engajamento.item7.text": "例: リーダーは次のように言います。",
+  "lectures.scripts.motivacao-e-engajamento.item8.text": "給料は最低です。彼が床だけを見ているのであれば、誰も彼の行動の影響力の限界を示していない。Nexus リーダーは関連性を翻訳します。",
+  "lectures.scripts.motivacao-e-engajamento.item8.question": "給料だけが欲しい人たちをどのように引きつけるか?",
+  "lectures.scripts.motivacao-e-engajamento.item9.text": "剛性が壊れる。透明感が持続します。まず、プロトコルをユニットに適用します。Example は、最速のエンゲージメント ツールです。",
+  "lectures.scripts.motivacao-e-engajamento.item9.question": "企業文化が厳格すぎる場合はどうすればよいでしょうか?",
+  "lectures.scripts.motivacao-e-engajamento.item10.text": "事実にはスチールを使用し、形式にはシルクを使用します。問題 (15% の割合) を攻撃し、決して人 (ジョン) を攻撃しないでください。これが倫理と敬意です。",
+  "lectures.scripts.motivacao-e-engajamento.item10.question": "やる気を失わずに否定的なフィードバックを与えるにはどうすればよいでしょうか?",
+  "lectures.scripts.motivacao-e-engajamento.item11.text": "あなたを疲れさせるのは、無意味な努力です。目的は更新する燃料です。疲れに意味を見出すと、それは充実感になります。",
+  "lectures.scripts.motivacao-e-engajamento.item11.question": "その目的は従業員を疲れさせませんか？",
+  "lectures.scripts.motivacao-e-engajamento.item12.text": "徹底的な透明性。約束したことを実行し、プロトコルが失敗した場合は真っ先に認めてください。信頼は最も貴重な資産です。",
+  "lectures.scripts.motivacao-e-engajamento.item12.question": "自信を持続させる秘訣は何でしょうか？",
+  "lectures.scripts.motivacao-e-engajamento.item13.text": "本当のエンゲージメントとは帰属意識と自律性です。部族を変革する準備ができてここを離れてほしいと願っています。",
+  "lectures.scripts.motivacao-e-engajamento.item14.text": "信頼していただきありがとうございます。私たちはネクサス・インテリジェンスです。次の目標まで！",
+  "lectures.scripts.inteligencia-emocional.item0.text": "みなさん、こんにちは。いらっしゃいませ。私はダンテです。目標や結果について話す前に、何がゴール裏でプロフェッショナルを支えているのかについて話す必要があります。Nexus Intelligence は単なるコンサルティング会社ではありません。私たちは、人間性、敬意、倫理、信頼という4つの譲れない柱に基づいて構築された価値の架け橋です。しかし今日は、これらの柱が日常生活の混乱によって試されたときに何が起こるかについて話しましょう。",
+  "lectures.scripts.inteligencia-emocional.item1.text": "私はジェニーです。そして、月曜日の会議では誰も教えてくれない真実は、心の知能指数は \\",
+  "lectures.scripts.inteligencia-emocional.item2.text": "プロフェッショナルとしての成熟とは、企業環境が愛情の法廷ではなく、利益と結果のゲームであることを理解することです。レポートが批判されたとしても、それは批判ではありませんでした\\",
+  "lectures.scripts.inteligencia-emocional.item3.text": "しかし、ダンテ、私たちは人間であり、機械ではありません。感情的なシールドは、感じないことではなく、感じたことをどうするかです。自分自身に適用されるリスニングレベル3です。上司からのこのメールになぜ私はびっくりしたのでしょうか?メールのせいですか、それとも私の疲れのせいですか？感情の原因を特定すると、コントロールを取り戻します。あなたは反応をやめ、反応し始めます。",
+  "lectures.scripts.inteligencia-emocional.item4.text": "混乱した日々のための実践的なプロトコルを見てみましょう。サーバーがクラッシュするか、目標が達成できないと思われる場合:\\n\\n事実: 実際に何が起こったのでしょうか? (犯人のことはもう忘れてください)。\\n\\nアクション: 次の 15 分間に何をする必要がありますか?\\n\\nシールド: \\",
+  "lectures.scripts.inteligencia-emocional.item5.text": "そして魂を補うのが、酸素供給の一時停止です。重いフィードバックと次の会議の間には、フィルターをクリアするために 60 秒間の沈黙が必要です。Nexus では、他の誰もが道に迷ったときにバランスを維持できる人から信頼が生まれると信じています。チームの安全な避難所になることは、成熟の最大の証拠です。",
+  "lectures.scripts.inteligencia-emocional.item6.text": "切断の儀式を作成します。退社時は制服（CNPJ）を玄関に置いていきます。家では、あなたはCPFです：父親、母親、友人です。この問題を夕食に持ち込むと、あなたはただで働いていることになり、支持基盤を破壊することになります。",
+  "lectures.scripts.inteligencia-emocional.item6.question": "悪い一日の後に恥を家に持ち帰らないようにするにはどうすればよいでしょうか?",
+  "lectures.scripts.inteligencia-emocional.item7.text": "敬意と倫理を適用します。感情ではなく事実を文書化します。を使用します。",
+  "lectures.scripts.inteligencia-emocional.item7.question": "感情的な混乱の原因がマネージャーだったらどうしますか?",
+  "lectures.scripts.inteligencia-emocional.item8.text": "はい。規律とは、たとえやりたくないときでも、しなければならないことをすることです。モチベーションは不安定です。成熟度は一定です。プロトコルを使用します: 事実、目標、期限。プロセスに集中すると、結果があなたに欠けているモチベーションを与えてくれます。",
+  "lectures.scripts.inteligencia-emocional.item8.question": "悲しいときややる気がなくなったときに生産性を発揮できますか?",
+  "lectures.scripts.inteligencia-emocional.item9.text": "噂話はコミュニケーションにおける最大のノイズです。スピーカーではなくフィルターになりましょう。誰かが噂話をしてきたときは、話題を次のように変えます。",
+  "lectures.scripts.inteligencia-emocional.item9.question": "\\ という同僚に対処する方法",
+  "lectures.scripts.inteligencia-emocional.item10.text": "他人の判断は、誰が判断されるかよりも、誰が判断するかについての方が重要であることを理解する。自分の価値観と目的に自信を持ってください。自分が何者であるかを知っている人は、自分が何であるかによって動揺しません。",
+  "lectures.scripts.inteligencia-emocional.item10.question": "これを実現する秘密は何ですか",
+  "lectures.scripts.inteligencia-emocional.item11.text": "感情を受け入れるための絹と、結果を守るための鋼を持ってここを去ってくれることを願っています。成熟度は毎日の選択です。",
+  "lectures.scripts.inteligencia-emocional.item12.text": "今日の旅お疲れ様でした。覚えておいてください。混乱は避けられませんが、不均衡はオプションです。私たちはネクサス・インテリジェンスです。次の目標まで！",
+  "lectures.scripts.lideranca-humanizada.item0.text": "こんにちは。今日は最後の旅へようこそ。私はダンテです。私たちの講演ではコミュニケーションとシールドについて話しますが、そのすべてはリーダーシップという 1 つの点に収束します。Nexus Intelligence は、リーダーシップは地位ではなく、倫理的責任であると信じています。私たちの歴史は、人間性、敬意、倫理、信頼という 4 つの柱に基づいています。しかし、ゴールが遅れてプレッシャーが高まった場合、これをどのように適用すればよいでしょうか?",
+  "lectures.scripts.lideranca-humanizada.item1.text": "私はジェニーです。そしてその答えはバランスにあります。多くのリーダーは、どちらかを選ばなければならないと信じています。",
+  "lectures.scripts.lideranca-humanizada.item2.text": "スチールについて話しましょう。リーダーであるということは、寛容であるという意味ではありません。○",
+  "lectures.scripts.lideranca-humanizada.item3.text": "でも気をつけてね、ダンテ。鋼だけが優秀な人材を切り、傷つけ、追い払ってしまう。絹のない鋼は恐怖から従順を生み出し、恐怖は革新を殺します。恐怖の下では誰も素晴らしいものを生み出せません。",
+  "lectures.scripts.lideranca-humanizada.item4.text": "シルクは私たちの人間性と敬意を表現したものです。それはリスニング レベル 3 です。低い KPI の背後には、個人的な問題を抱えている可能性のある人間、または単に適切なトレーニングを受けていない人間がいることを理解しています。楽にリードするということは、屈辱を与えることなく軌道修正する感性を持つことを意味します。チームが間違いを犯し、学び、再挑戦できるように心理的安全を提供することです。シルクは忠誠心を生み出すものです。従業員は目標のために自分の血を捧げるのではなく、自分を人間として見てくれるリーダーのために自分の血を捧げます。",
+  "lectures.scripts.lideranca-humanizada.item5.text": "その通り。バランスが秘訣です。鋼は方向と速度を決定します。セダは、エンジン、つまり人々が途中で失速しないようにします。Nexusのリーダーは、",
+  "lectures.scripts.lideranca-humanizada.item6.text": "CPFをCNPJから分離します。スチールを使用:",
+  "lectures.scripts.lideranca-humanizada.item6.question": "私の部下となった友人に請求するにはどうすればよいですか?",
+  "lectures.scripts.lideranca-humanizada.item7.text": "これはスチールが不足している場合に発生します。人間には限界がないわけではありません。非常に親切（シルク）であると同時に、納期と品質に対して非常に厳しい（スティール）ことができます。限界こそが尊敬を生み出すのです。",
+  "lectures.scripts.lideranca-humanizada.item7.question": "人間的すぎるとチームにならない \\",
+  "lectures.scripts.lideranca-humanizada.item8.text": "新しい世代は仕事から逃げるのではなく、目的の欠如から逃げるのです。Steel を使用して明確な指示を与え、Silk を使用してそのタスクが重要である理由を説明します。フィードバックは批判ではなく、羅針盤です。事実を冷静に受け止めてください。",
+  "lectures.scripts.lideranca-humanizada.item8.question": "批判に敏感と思われる世代にスティールをどう適用するか?",
+  "lectures.scripts.lideranca-humanizada.item9.text": "危機では信頼が試される。結果が出なかった場合、リーダーは\\",
+  "lectures.scripts.lideranca-humanizada.item9.question": "結果が伴わない場合、信頼の役割は何ですか?",
+  "lectures.scripts.lideranca-humanizada.item10.text": "透明性から始めます。チームを集めて次のように言います。",
+  "lectures.scripts.lideranca-humanizada.item10.question": "ダンテとジェニー、明日ネクサスのリーダーになるための第一歩は何ですか?",
+  "lectures.scripts.lideranca-humanizada.item11.text": "リーダーシップは奉仕です。あなたが輝くように導くのではなく、あなたのサポートを通じて他の人が輝くように導くのです。",
+  "lectures.scripts.lideranca-humanizada.item12.text": "私たちの旅はここで終わりますが、あなたの仕事はこれから始まります。私たちの明晰さの鋼と価値観の絹を考えてください。信頼していただきありがとうございます。私たちはネクサス・インテリジェンスです。次の目標まで！",
+  "lectures.scripts.seguranca-psicologica.item0.text": "こんにちは。いらっしゃいませ。私はダンテです。今日は、現代の市場で最も高価で希少な資産である「信頼」についてお話します。Nexus Intelligence は単なるテクノロジーではありません。私たちは文化の建築家です。私たちの基本は「人間性」「敬意」「倫理」「信頼」という4つの柱です。しかし、それらすべてのうち、信頼こそが、他の 3 つがプレッシャーの下でも機能することを可能にするものです。",
+  "lectures.scripts.seguranca-psicologica.item1.text": "私はジェニーです。そして、不快な真実から始めたいと思います。チームが間違いを犯すことを恐れているなら、彼らは革新することを恐れているのです。恐怖は知性のブレーキです。人々が間違いを隠すとき \\",
+  "lectures.scripts.seguranca-psicologica.item2.text": "根本的な信頼は存在しない",
+  "lectures.scripts.seguranca-psicologica.item3.text": "そして、\\",
+  "lectures.scripts.seguranca-psicologica.item4.text": "Nexus イノベーション プロトコルをインストールしましょう:\\n\\n即時暴露: 間違えましたか?今話せ。エラーが発生してから通信が行われるまでの時間によって、損失のコストが決まります。\\n\\n責任のない分析: 質問しません\\n",
+  "lectures.scripts.seguranca-psicologica.item5.text": "イノベーションは自由の結果です。リーダーと仲間を信頼するチームは、より大胆に挑戦します。そして、最も勇気のある人は、恐怖に阻まれている競合他社が決して見つけることのできない解決策を見つけます。Radical Trust は、従業員のグループをエリート部隊に変えます。",
+  "lectures.scripts.seguranca-psicologica.item6.text": "素晴らしい質問です。イノベーションの誤りは前例のないものです。それは私たちが何か新しいことを試みていたために起こります。反復的無能とは、同じ理由で同じ間違いを二度犯すことです。最初のものは学習賞に値します。2つ目はチャージのスチールを必要とし、それが続く場合は進化の欠如により解雇されます。",
+  "lectures.scripts.seguranca-psicologica.item6.question": "区別する方法",
+  "lectures.scripts.seguranca-psicologica.item7.text": "数字を示してください。隠れたエラーが数か月後に爆発的に発生した場合のコストは、すぐに解決されたエラーの 100 倍になります。「倫理と透明性」を活用して、Radical Trust が実際には節約と利益の戦略であることを示します。",
+  "lectures.scripts.seguranca-psicologica.item7.question": "間違いを犯すこともプロセスの一部であることを上司に説得するにはどうすればよいでしょうか?",
+  "lectures.scripts.seguranca-psicologica.item8.text": "リモートでは、信頼がチームを繋ぐ唯一の糸です。管理（マイクロマネジメント）が軽減され、結果がより明確になります。配達と透明性を重視する場合、物理的な距離は問題ではありません。",
+  "lectures.scripts.seguranca-psicologica.item8.question": "100% リモートで作業するチームに根本的な信頼を置くことは可能でしょうか?",
+  "lectures.scripts.seguranca-psicologica.item9.text": "信頼は築くのに何年もかかり、壊れるのに数秒かかります。倫理に違反した場合、リーダーはスティールとともに行動しなければなりません。人類には許しが存在するかもしれませんが、その役割が永続するかどうかは信頼の回復にかかっています。信頼がなければネクサスは存在しません。",
+  "lectures.scripts.seguranca-psicologica.item9.question": "誰かがチームの信頼を裏切ったときはどうすればよいでしょうか?",
+  "lectures.scripts.seguranca-psicologica.item10.text": "脆弱になってください。明日チームに自分の間違いを認めてください。自分も失敗すること、そして罰ではなく解決策に焦点を当てていることを示してください。信頼はトップダウンから始まります。",
+  "lectures.scripts.seguranca-psicologica.item10.question": "今日の恐怖の風潮を変えたいリーダーにとっての最初のステップは何でしょうか?",
+  "lectures.scripts.seguranca-psicologica.item11.text": "イノベーションは人工知能の中に存在するのではなく、失敗を恐れずに不可能に挑戦する人間の勇気の中に存在します。",
+  "lectures.scripts.seguranca-psicologica.item12.text": "この旅にご一緒いただきありがとうございました。ご家庭やビジネスに根本的な自信をもたらします。未来は信頼する者のものです。私たちはネクサス・インテリジェンスです。次の目標まで！",
+  "lectures.scripts.cultura-de-alta-performance.item0.text": "こんにちは。私たちの旅の集大成へようこそ。私はダンテです。多くの企業が私たちを雇って\\",
+  "lectures.scripts.cultura-de-alta-performance.item1.text": "私はジェニーです。そして真実は、Nexus Intelligence では、法令によって文化を信じているわけではありません。",
+  "lectures.scripts.cultura-de-alta-performance.item2.text": "結果文化には専門的な成熟度が必要です。エリートの DNA では、言い訳ではなく解決策に重点が置かれます。目標が達成されなかった場合、エリートの DNA は犠牲となる犯人を探しません。彼は最適化するプロセスを探しています。○",
+  "lectures.scripts.cultura-de-alta-performance.item3.text": "そして対位法は所属のシルクです。エリートの DNA では、人々はお互いを気遣います。彼らは、同僚のミスがチーム全体にとってのリスクであることを知っています。リスニング レベル 3: 文化リーダーは口を開く前に部屋の雰囲気を理解します。彼は、チームがいつ疲れきっているのか、そしていつチームに後押しが必要なのかを知っています。Nexus の文化は、従業員が会社とともに成長していると感じられる文化です。利益は、優秀な人材が敬意を持った環境で働いた結果として生まれます。",
+  "lectures.scripts.cultura-de-alta-performance.item4.text": "このDNAはどのようにして組み込まれるのでしょうか？儀式を通じて。\\n\\n真実の儀式: フィードバックは直接的 (スチール) ですが、成長に重点を置いた会議 (シルク)。\\n\\n模範の儀式: リーダーは最初に到着し、最後に価値観を裏切るものです。リーダーが倫理を破ると、DNA は即座に破損します。\\n\\n祝賀儀式: 私たちが報酬を与えるのは、\\n",
+  "lectures.scripts.cultura-de-alta-performance.item5.text": "強力な文化は企業の最大の防御システムです。最高の人材を惹きつけ、適合しない人材は自然に排除します。DNA がエリートであれば、各従業員が Nexus の価値観の守護者となるため、継続的な監督は不要になります。",
+  "lectures.scripts.cultura-de-alta-performance.item6.text": "悪の芽を摘み取ります。\\を識別します",
+  "lectures.scripts.cultura-de-alta-performance.item6.question": "すでにある文化を変えるには",
+  "lectures.scripts.cultura-de-alta-performance.item7.text": "それは文化が不適切に設計されている場合に限ります。DNA Nexus では、競争相手は同僚ではなく問題です。私たちは過激なコラボレーションを奨励します。情報を単独で輝かせるために保持している人は誰でも信頼を侵害しており、これは直ちに争われます。",
+  "lectures.scripts.cultura-de-alta-performance.item7.question": "結果を重視する文化は、従業員間に有害な競争を生み出していませんか?",
+  "lectures.scripts.cultura-de-alta-performance.item8.text": "プロセスはスケールしますが、価値は伝達されます。各新入社員は\\",
+  "lectures.scripts.cultura-de-alta-performance.item8.question": "急速に成長する企業で文化を存続させるにはどうすればよいでしょうか?",
+  "lectures.scripts.cultura-de-alta-performance.item9.text": "これはリトマス試験紙です。それを維持すると、あなたの文化は死んでしまいます。彼を解雇すれば、価値観にはお金以上の価値があることをチーム全体に証明することになる。エリートの DNA には勇気が必要です。",
+  "lectures.scripts.cultura-de-alta-performance.item9.question": "経営トップが目標は達成したが倫理に違反した場合はどうすればよいでしょうか?",
+  "lectures.scripts.cultura-de-alta-performance.item10.text": "一般的な企業はタスクを管理します。マーケットリーダーは文化を管理します。タスクは変化し、市場も変化しますが、エリートの DNA が会社を再発明し、常に勝利を収めることを可能にします。",
+  "lectures.scripts.cultura-de-alta-performance.item10.question": "一般企業と市場リーダーの違いは何でしょうか?",
+  "lectures.scripts.cultura-de-alta-performance.item11.text": "私たちは、未来は機械のものではなく、目的と倫理を持って機械を使用する人間のものであるということを確信して、6 回の講義からなるこのサイクルを終えます。",
+  "lectures.scripts.cultura-de-alta-performance.item12.text": "私たちがあなたの物語への貴重な架け橋となれることに感謝します。あらゆる意思決定、あらゆるメール、あらゆる握手に Nexus DNA をもたらします。私たちはネクサス・インテリジェンスです。ゴールはもうあなたのものです。次回まで！",
+  "lectures.scripts.gestao-de-conflitos.item0.text": "こんにちは。 Nexus の旅の終わりへようこそ。私はダンテです。6 回の講義を通じて、コミュニケーション、リーダーシップ、文化を構築します。しかし、これらすべてを数分で破壊できる静かな敵、それがエゴの衝突です。アイデアの相違は知性と組織の健全性の兆候です。エゴの戦いは害でしかありません。Nexus Intelligence は紛争を避けません。私たちがそれを管理します。",
+  "lectures.scripts.gestao-de-conflitos.item1.text": "私はジェニーです。そして真実は、誰も紛争を好む人はいないということですが、私たちは皆、成長するために紛争を必要としています。問題は摩擦ではなく、それにどう対処するかだ。努力してエネルギーを無駄にすると\\",
+  "lectures.scripts.gestao-de-conflitos.item2.text": "社内での交渉には徹底的な客観性が求められます。部門間で意見が一致しない場合は、KPI、期限、コストに焦点を当てる必要があります。財務とマーケティングが争っている場合、ネクサスの問題は次のとおりです。",
+  "lectures.scripts.gestao-de-conflitos.item3.text": "しかし、合意に達するには、戦略的共感の糸が必要です。ほとんどの\\",
+  "lectures.scripts.gestao-de-conflitos.item4.text": "内部交渉ネクサス プロトコルには 3 つのステップがあります:\\n\\n問題から人々を分離します: Steel でプロセスを攻撃し、Silk でその人物を受け入れます。\\n\\n立場ではなく利益に焦点を当てます: なぜこれを望むのですか?これは Nexus にとって何を解決しますか?\\n\\n相互利益オプションの作成: プロジェクトが 100% 利益を得るために両方が 10% を与える場合、全員が勝ちます。",
+  "lectures.scripts.gestao-de-conflitos.item5.text": "そして、気難しい人々の武装解除のためのマスターテクニック、それがオープンクエスチョンです。言う代わりに",
+  "lectures.scripts.gestao-de-conflitos.item6.text": "静寂の鋼を使用します。声を荒げないでください。事実とデータを使って応答します。あなたが感情的に反応しないと、彼の攻撃性はその燃料を失い、彼は理性の領域に戻らざるを得なくなり、そうしないとチームの前で恥ずかしい思いをすることになるでしょう。",
+  "lectures.scripts.gestao-de-conflitos.item6.question": "攻撃的または攻撃的な同僚と交渉する方法",
+  "lectures.scripts.gestao-de-conflitos.item7.text": "クリティカル忠誠のシルクを使用してください。意見の相違は、より大きな間違いからあなたを守るためであることを示してください。",
+  "lectures.scripts.gestao-de-conflitos.item7.question": "対立が自分の上司との場合はどうなるでしょうか?",
+  "lectures.scripts.gestao-de-conflitos.item8.text": "文書化と透明性。期限および責任者との書面による正式な契約を締結します。○",
+  "lectures.scripts.gestao-de-conflitos.item8.question": "こう言う人への対処法",
+  "lectures.scripts.gestao-de-conflitos.item9.text": "逆に。全員が常に同意しているチームは、何も考えていないチームです。尊重した相違がイノベーションの原動力となります。雰囲気を台無しにするのは、テーブルでの議論ではなく、会議後のゴシップです。",
+  "lectures.scripts.gestao-de-conflitos.item9.question": "意見の相違は常にチームの雰囲気を壊すものではありませんか?",
+  "lectures.scripts.gestao-de-conflitos.item10.text": "厚い皮（シールド）と広い心（ヒューマニティ）を持ちます。Nexus Intelligence の成功は個人の勝利よりも大きいことを知ってください。壁の所有者ではなく、橋のマスターになりましょう。",
+  "lectures.scripts.gestao-de-conflitos.item10.question": "優れた社内交渉人になる秘訣は何でしょうか?",
+  "lectures.scripts.gestao-de-conflitos.item11.text": "紛争は混乱を装った機会です。それぞれの議論から金を引き出す方法を知ってください。",
+  "lectures.scripts.gestao-de-conflitos.item12.text": "7回の講義を終えました。これで、完全な Nexus アーセナルが手に入りました。コミュニケーション、目的、シールド、リーダーシップ、イノベーション、文化、交渉。残りはあなた次第です。",
+  "weather.analysis.title": "最新の熱力学解析",
+  "weather.outlook.normal": "状況は 10 日間、予測可能なパターンに従います。通常業務に適した窓口です。",
+  "weather.outlook.dry": "警告: オープンで乾燥した天気が続くパターンが続きます。葉の水分不足に注意し、可能であれば灌水を予定してください。",
+  "weather.outlook.rainy": "注意: このシナリオは、降雨の可能性が高いことを示しています。水浸しの危険性があり、重機や葉面散布の使用が困難になります。",
+  "weather.outlook.error": "現在気象衛星に接続できません。天候については慎重に行動し、現地のツールを使用してください。",
+  "weather.condition.0": "晴れた空",
+  "weather.condition.1": "ほとんどきれい",
+  "weather.condition.2": "曇り",
+  "weather.condition.3": "曇り",
+  "weather.condition.45": "霧",
+  "weather.condition.48": "霜がついた霧",
+  "weather.condition.51": "小雨",
+  "weather.condition.53": "中程度の霧雨",
+  "weather.condition.55": "激しい霧雨",
+  "weather.condition.56": "軽い氷点下の霧雨",
+  "weather.condition.57": "激しい霧雨",
+  "weather.condition.61": "小雨",
+  "weather.condition.63": "中程度の雨",
+  "weather.condition.65": "大雨",
+  "weather.condition.66": "冷たい雨が降る",
+  "weather.condition.67": "激しい氷雨",
+  "weather.condition.71": "小雪",
+  "weather.condition.73": "適度な雪",
+  "weather.condition.75": "大雪",
+  "weather.condition.77": "グラオス・デ・ネーベ",
+  "weather.condition.80": "パンカーダ デ チュヴァ フラカ",
+  "weather.condition.81": "パンカーダ デ チュバ モデラダ",
+  "weather.condition.82": "パンカーダ デ チュバ フォルテ",
+  "weather.condition.85": "パンカーダ デ ネーベ フラカ",
+  "weather.condition.86": "パンカーダ デ ネーヴェ フォルテ",
+  "weather.condition.95": "テンペスタードレベル",
+  "weather.condition.96": "軽微な雹を伴う雷雨",
+  "weather.condition.99": "激甚な雹を伴う雷雨",
+  "weather.condition.unknown": "インスタベル",
+  "profile.default_name": "学生",
+  "whatsapp.payment.message": "こんにちは！コース「{title}」の {price} の支払いを完了し、領収書を送信しました。",
+  "whatsapp.support.message": "こんにちは！Nexus サイト ({path}) にアクセスしています。コースについて質問したいと思います。",
+  "chat.footer.disclaimer": "{name} は AI なので、間違いを犯す可能性があります。応答を確認します。流量が多いため、音声が聞こえるまでに少し時間がかかる場合があります。",
+  "chat.placeholder.scenario": "シナリオを提示してください...",
+  "chat.button.pay": "今すぐフルアクセスのロックを解除する",
+  "chat.payment.title": "フルアクセス用の PIX",
+  "chat.payment.qr_desc": "銀行アプリでコードをスキャンします。",
+  "chat.payment.investment": "投資: フルアクセス",
+  "chat.payment.qr_button": "QRコードで支払う",
+  "chat.payment.copy_button": "PIXのコピー＆ペースト",
+  "chat.payment.copied": "複製いたしました",
+  "chat.payment.whatsapp_button": "WhatsApp経由で領収書を送信する",
+  "feedback": {
+    "trigger": "Enviar Feedback",
+    "title": "Melhorar o Dante Safra",
+    "description": "Encontrou um erro ou tem uma sugestão? Relate abaixo com voz, texto ou fotos.",
+    "form": {
+      "text": "Sua mensagem",
+      "textPlaceholder": "Descreva o que aconteceu ou sua sugestão...",
+      "voice": "Relato por Voz",
+      "record": "Gravar Relato",
+      "recorded": "Áudio Gravado",
+      "stop": "Parar",
+      "images": "Anexar Prints ou Fotos",
+      "attach": "Anexar"
+    },
+    "toast": {
+      "empty": "Por favor, adicione algum texto, áudio ou imagem.",
+      "recordError": "Não foi possível acessar o microfone para gravar o áudio.",
+      "success": "Obrigado por nos ajudar a melhorar o Dante Safra."
+    },
+    "success": {
+      "title": "Obrigado pelo seu relato!",
+      "description": "Nossa equipe (e a Maga) vai analisar isso em breve."
+    },
+    "cta": {
+      "cancel": "Cancelar",
+      "submit": "Enviar Relato"
+    }
+  },
+  "floatingSupport.message": "こんにちは！Nexus Web サイト ({{pathname}}) にアクセスしており、コースについて質問したいと思っています。",
+  "floatingSupport.tooltip": "アクセスに関するご質問は?今すぐ話してください！💬",
+  "floatingSupport.messageDjeny": "こんにちは！私は企業に所属しており、Djeny Design Business の無制限の統合について詳しく知りたいと思っています。",
+  "intelligence.djenyGallery.item1.title": "極致のモダン・スイート",
+  "intelligence.djenyGallery.item1.category": "私的聖域",
+  "intelligence.djenyGallery.item2.title": "至高のコンテンポラリー・ラウンジ",
+  "intelligence.djenyGallery.item2.category": "ライフスタイル・エクセレンス",
+  "intelligence.djenyGallery.item3.title": "戦略的グルメ・テラス",
+  "intelligence.djenyGallery.item3.category": "屋外空間の変革",
+  "intelligence.djenyGallery.item4.title": "絢爛なるダイニング・サロン",
+  "intelligence.djenyGallery.item4.category": "次世代型共創空間",
+  "intelligence.djenyGallery.sectionTitle": "叡智の創作ギャラリー",
+  "intelligence.djenyDesign.personal.price": "R$ 149,00 / 月",
+  "intelligence.djenyDesign.personal.cta.access": "プランを選択する",
+  "intelligence.djenyDesign.business.price": "R$ 899,00 / 月",
+  "floatingSupport": {
+    "message": "こんにちは！Nexusのサイト（{{pathname}}）を見ていますが、コースについて質問があります。",
+    "tooltip": "アクセスに関する質問ですか？今すぐ相談してください！ 💬",
+    "consultantLabel": "コンサルタントに相談する",
+    "highDemand": "お問い合わせが混み合っております。メッセージを残していただければ、折り返しご連絡いたします。",
+    "emailSubject": "Nexus イノベーション・コンサルティング"
+  },
+  "danteBuilder.generateImage": "視覚モデルを生成",
+  "danteBuilder.generatingImage": "画像エンジニアリングが進行中...",
+  "danteBuilder.visualModelTitle": "サプライヤー向け視覚モデル"
+,
+  "intelligence.dante-safra.trial.title": "Dante Safra \u30bf\u30fc\u30df\u30ca\u30eb\uff08\u30c8\u30e9\u30a4\u30a2\u30eb\uff09\u3002",
+  "intelligence.dante-safra.trial.subtitle": "1\u6642\u9593\u306e\u8a55\u4fa1\u30bb\u30c3\u30b7\u30e7\u30f3\u3002",
+  "intelligence.dante-safra.dashboard.title1": "Dante Safra \u2014 \u6804\u57f9",
+  "intelligence.dante-safra.dashboard.title2": "Dante Safra \u2014 \u755c\u7523\u696d",
+  "intelligence.dante-safra.dashboard.title3": "Dante Safra \u2014 \u990a\u8c5a\u30fb\u9d8f",
+  "intelligence.dante-safra.dashboard.title4": "Dante Safra \u2014 \u6c17\u5019\u3068\u571f\u58cc",
+  "intelligence.dante-safra.dashboard.title5": "Dante Safra \u2014 \u5e02\u5834\u3068\u4fa1\u683c",
+  "intelligence.dante-safra.dashboard.item.soja": "\u5927\u8c46",
+  "intelligence.dante-safra.dashboard.item.milho": "\u30c8\u30a6\u30e2\u30ed\u30b3\u30b7",
+  "intelligence.dante-safra.dashboard.item.fumo": "\u30bf\u30d0\u30b3",
+  "intelligence.dante-safra.dashboard.item.feijao": "\u5c0f\u8c46",
+  "intelligence.dante-safra.dashboard.item.corte": "\u8089\u7528\u725b",
+  "intelligence.dante-safra.dashboard.item.leiteiro": "\u4e73\u7528\u725b",
+  "intelligence.dante-safra.dashboard.item.suinos": "\u8c5a",
+  "intelligence.dante-safra.dashboard.item.aves": "\u5bb6\u79bd",
+  "intelligence.dante-safra.dashboard.item.ovinos": "\u7dbf\u7f8a",
+  "intelligence.dante-safra.dashboard.access": "\u30a2\u30af\u30bb\u30b9"
+,
+  "intelligence.dante-safra.chat.loading": "\u30c0\u30f3\u30c6\u304c\u5206\u6790\u4e2d...",
+  "intelligence.dante-safra.chat.speech_unsupported": "\u3053\u306e\u30d6\u30e9\u30a6\u30b6\u3067\u306f\u97f3\u58f0\u8a8d\u8b58\u306f\u30b5\u30dd\u30fc\u30c8\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002",
+  "intelligence.dante-safra.chat.voice_error": "\u97f3\u58f0\u8a8d\u8b58\u30a8\u30e9\u30fc:",
+  "intelligence.dante-safra.chat.error": "\u30a8\u30e9\u30fc\u304c\u767a\u751f\u3057\u307e\u3057\u305f\uff1a{error}",
+  "intelligence.dante-safra.chat.analysis_about": "{item}\u3092\u5206\u6790",
+  "intelligence.dante-safra.chat.report_about": "{title}\u306e\u30ec\u30dd\u30fc\u30c8\u3092\u4f5c\u6210",
+  "intelligence.dante-safra.chat.placeholder.municipio": "\u5e02\u533a\u753a\u6751\u540d\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044...",
+  "intelligence.dante-safra.chat.placeholder.nome": "\u304a\u540d\u524d\u306f\u4f55\u3068\u304a\u547c\u3073\u3057\u307e\u3059\u304b\uff1f",
+  "intelligence.dante-safra.chat.placeholder.conclusao": "\u8523\u5834\u306e\u72b6\u6cc1\u3092\u8aac\u660e\u3057\u3066\u304f\u3060\u3055\u3044...",
+  "intelligence.dante-safra.chat.placeholder.analise": "\u4eca\u65e5\u4f55\u3092\u5206\u6790\u3057\u307e\u3059\u304b\u3001{name}\uff1f",
+  "intelligence.dante-safra.chat.placeholder.default": "\u30b7\u30ca\u30ea\u30aa\u3092\u8a18\u8ff0\u3057\u3066\u304f\u3060\u3055\u3044..."
+
+}

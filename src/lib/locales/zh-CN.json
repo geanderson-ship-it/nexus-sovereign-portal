@@ -1,0 +1,1959 @@
+﻿{
+  "heroTitle": "变革领导力。激励人心。卓越成果。",
+  "heroSubtitle": "为人类、有意识且准备充分的领导者提供精英培训，以身作则。我们培养不仅能改变团队，更能重塑文化和成果的情感与行为技能。",
+  "heroCtaCourses": "探索课程",
+  "heroCtaConsulting": "企业服务",
+  "navInicio": "首页",
+  "navGaleria": "图库",
+  "navCursos": "课程",
+  "navMentoria": "导师计划",
+  "navPalestras": "演说",
+  "navConsultoria": "咨询",
+  "navSobre": "关于我们",
+  "navContato": "联系我们",
+  "navIntelligence": "人工智能",
+  "navExcellence": "卓越门户",
+  "navIAs": "Nexus 智能领航",
+  "navCourses": "Nexus 课程",
+  "navGabinete": "内阁",
+  "navChangeLanguage": "切换语言",
+  "palestras.detail.targetAudience": "核心受众",
+  "palestras.detail.problem": "核心议题与解决方案",
+  "palestras.detail.content": "研讨纲要与修习要义",
+  "palestras.detail.benefits": "企业战略增益",
+  "palestras.detail.methodology": "实证方法论",
+  "palestras.detail.duration": "课程时长",
+  "palestras.detail.expectedResult": "预期成效",
+  "footerSlogan": "释放天赋。",
+  "footerRights": "© 2026 NEXUS. 版权所有。",
+  "footerBrand": "品牌",
+  "footerPrivacy": "隐私政策",
+  "footerTerms": "服务条款",
+  "userArea": "学员专区",
+  "logout": "退出登录",
+  "login": "登录",
+  "signup": "立即注册",
+  "inicio.title": "人类卓越与指数智能的汇聚。",
+  "inicio.subtitle": "Nexus 控股集团是那些在新技术时代寻求领导力和效率的人的终极生态系统。在 Geanderson 总监的领导下，集团已成为企业和个人转型的核心支柱，通过两个统治市场的精英分支机构运营：",
+  "inicio.treinamento.title": "探索领导力无往不利的领域。",
+  "inicio.treinamento.palestras.title": "远见演说",
+  "inicio.treinamento.palestras.description": "直接影响组织文化，唤醒高性能心态。",
+  "inicio.treinamento.cursos.title": "精英课程",
+  "inicio.treinamento.cursos.description": "为那些不满足于平庸、追求技术和行为大师境界的人准备的沉浸式培训。",
+  "inicio.treinamento.consultoria.title": "战略咨询",
+  "inicio.treinamento.consultoria.description": "对流程和管理进行精准干预，以实现成果最大化并扩展您的帝国。",
+  "inicio.treinamento.quote": "“我们将原始潜力转化为非凡成果。如果您追求巅峰，Nexus 就是您的控制中心。”",
+  "inicio.treinamento.cta.cursos": "查看课程与培训",
+  "inicio.treinamento.cta.consultoria": "企业咨询服务",
+  "inicio.intelligence.title": "应用于您现实的最前沿技术。",
+  "inicio.intelligence.dante.title": "Dante 系列（分析核心）",
+  "inicio.intelligence.dante.description": "用于重要领域深度分析和数据处理的系统：",
+  "inicio.intelligence.dante.chat.title": "Dante Chat：",
+  "inicio.intelligence.dante.chat.description": "智能对话助手，提供敏捷且具解决力的支持。",
+  "inicio.intelligence.dante.safra.title": "Dante Safra：",
+  "inicio.intelligence.dante.safra.description": "农业业务。",
+  "inicio.intelligence.dante.compras.title": "Dante Compras：",
+  "inicio.intelligence.dante.compras.description": "物流与采购。",
+  "inicio.intelligence.dante.devNote": "（更多 Dante 产品正在 Nexus 实验室加速开发中）。",
+  "inicio.intelligence.djeny.title": "Djeny 系列（卓越连接与设计）",
+  "inicio.intelligence.djeny.description": "专注于敏捷性、个性化支持和品牌美学。",
+  "inicio.intelligence.djeny.chat.title": "Djeny Chat：",
+  "inicio.intelligence.djeny.chat.description": "智能对话助手，提供敏捷且具解决力的支持。",
+  "inicio.intelligence.djeny.design.title": "Djeny Design：",
+  "inicio.intelligence.djeny.design.description": "Nexus 的创意分支。开发结合技术与美感的视觉识别和界面。",
+  "inicio.intelligence.djeny.devNote": "（Djeny 系列新产品正处于加速开发阶段，即将发布）。",
+  "inicio.intelligence.cta": "进入智能菜单",
+  "inicio.intelligence.cta.contact": "联系创新顾问",
+  "inicio.newCta.title1": "您的难题，",
+  "inicio.newCta.title2": "我们的工程。",
+  "inicio.newCta.description": "我们已准备好设计并开发一款完全符合您独家需求的 AI 产品。从构思到超音速部署，我们创造您的帝国通向胜利所需的工具。",
+  "inicio.newCta.quote": "“我们不仅销售技术；我们提供量身定制的未来。”",
+  "inicio.newCta.cta": "激活创新咨询",
+  "inicio.pillars.title": "Nexus 控股集团的支柱",
+  "inicio.pillars.humanidade.title": "人性",
+  "inicio.pillars.humanidade.subtitle": "我们的本质",
+  "inicio.pillars.humanidade.description": "服务于生命的技术。在 Nexus，人是第一位的。我们创造智能是为了释放人类潜力，而非取而代之。我们的使命是将创新人性化。",
+  "inicio.pillars.respeito.title": "尊重",
+  "inicio.pillars.respeito.subtitle": "我们的行事准则",
+  "inicio.pillars.respeito.description": "每一种连接中的尊严。我们重视思想的多样性和每位客户的历史。尊重是我们所有演说、咨询和代码行的基础。",
+  "inicio.pillars.confianca.title": "信任",
+  "inicio.pillars.confianca.subtitle": "我们的伙伴关系",
+  "inicio.pillars.confianca.description": "产生公信力的成果。我们建立持久的关系。无论是与 Dante 在现场，还是与 Djeny 进行支持，成为合作伙伴的安全港湾是我们不可逾越的承诺。",
+  "inicio.pillars.etica.title": "伦理",
+  "inicio.pillars.etica.subtitle": "我们的真理",
+  "inicio.pillars.etica.description": "毫不妥协的廉正。我们以绝对透明的方式行动。我们的伦理保证了 Nexus 控股集团在全球市场上是荣誉与安全的代名词。",
+  "inicio.impulses.title": "我们的脉冲：Nexus 的力量",
+  "inicio.impulses.reciprocidade.title": "互惠性",
+  "inicio.impulses.reciprocidade.subtitle": "伙伴关系的动力",
+  "inicio.impulses.reciprocidade.description": "共同增长与真实价值。我们的引擎由您的成功驱动。我们相信真正的卓越会产生积极循环：通过提供最优秀的技术和培训，我们推进您的帝国，而您的胜利巩固了我们的地位。",
+  "inicio.impulses.vanguarda.title": "先驱",
+  "inicio.impulses.vanguarda.subtitle": "未来的原动力",
+  "inicio.impulses.vanguarda.description": "绝对的技术统治力。在 Nexus，明天就是今天。我们的冲动力是始终站在创新的最前沿，使用现代最先进的 AI 架构运行，创造市场从未见过的解决方案。我们不追随趋势；我们定义趋势。",
+  "inicio.final.line1": "在 Nexus Intelligence，我们建立您与未来的新连接。",
+  "inicio.final.line2": "通过 Nexus Training，我们揭示您内在的天赋与卓越。",
+  "inicio.final.line3": "我们是 Nexus 控股集团：您的潜能与世界最先进技术汇聚的中心。",
+  "about.title": "关于我们。",
+  "about.subtitle": "在 NEXUS，您的成功不是承诺。而是必然。",
+  "about.intro": "我们了解领导者的痛苦，也了解生产前线的现实。我们将实践智慧与智能精密结合，旨在转化团队并以绝对的一致性推动业务发展。",
+  "about.founder.title": "磨练于现实的领导力。",
+  "about.founder.quote": "“领导意味着激励、服务并同行——绝非高高在上，而是始终在侧。”",
+  "about.founder.p1": "我的领导力源于实践，源于与真实的人相处，以及真诚地希望改变工作环境。",
+  "about.founder.p2": "领导力不仅仅是从书本上学来的。拥有 ",
+  "about.founder.experience": "30年工业经验",
+  "about.founder.p3": " 的我，确切地知道您的团队在周一早晨面临的挑战。",
+  "about.founder.p4": "我的职业生涯始于生产一线，在管理岗位上得以巩固。作为一名 ",
+  "about.founder.credentials": "拥有超过20项专业资质的工业生产管理专家",
+  "about.founder.p5": " 我创立 NEXUS 是出于分享实践、测试和验证知识的热情。我的使命是为企业环境提供无价的 360° 视角。",
+  "about.mission.title": "我们的使命。",
+  "about.mission.text": "培养能够将工作场所转变为更人性化、高效和有意识空间的人才和领导者。我们提供实践知识、真实方法以及远超培训本身的持久成果。",
+  "about.vision.title": "我们的愿景。",
+  "about.vision.text": "成为人类发展和领导力的全国标杆，因通过有意识的关系、准备充分的团队以及人与业务共同增长的环境来改进企业而备受认可。",
+  "about.values.title": "我们的价值观。",
+  "about.values.text": "我们在 NEXUS 建立的一切都基于我们的核心支柱。它们是我们行动的基础，通过结合产生真实成果。",
+  "about.pillars.foundation.title": "基石。",
+  "about.pillars.humanidade.title": "1. 人性。",
+  "about.pillars.humanidade.text": "我们是与人打交道的人。我们相信流程和目标至关重要，但共情和价值认同才是将一群人转化为真正团队的关键。",
+  "about.pillars.confianca.title": "2. 信任。",
+  "about.pillars.confianca.text": "领导力中最宝贵的货币。我们通过言行一致建立牢固的纽带。在这里，言出必行，心理安全是增长的基础。",
+  "about.pillars.etica.title": "3. 伦理。",
+  "about.pillars.etica.text": "我们的行事准则不容谈判。我们在所有互动中都保持透明、清晰和诚实。我们做正确的事——不是因为它容易，而是因为它是唯一的道路。",
+  "about.pillars.respeito.title": "4. 尊重。",
+  "about.pillars.respeito.text": "我们并肩而行，绝不俯视。我们尊重每位员工和客户的历史，理解倾听和认可对方是成功的起点。",
+  "about.pillars.impulse.title": "动力。",
+  "about.pillars.atitude.title": "5. 态度。",
+  "about.pillars.atitude.text": "我们不等待改变发生。我们构建解决方案，做出决策，并承担将挑战场景转化为机遇的责任。",
+  "about.pillars.simplicidade.title": "6. 奏效的简洁。",
+  "about.pillars.simplicidade.text": "杜绝不必要的复杂。我们优先考虑客观的沟通和能够解决“周一早晨”现实问题的实践方案。",
+  "brand.title": "品牌资源。",
+  "brand.subtitle": "确保 Nexus Training 视觉一致性的准则与资源。",
+  "brand.logo.title": "主标志。",
+  "brand.logo.text": "标志是 Nexus Training 的视觉签名。请在所有材料中一致使用。提供 SVG 格式下载以确保最高质量。",
+  "brand.logo.cta": "下载标志 (SVG)",
+  "brand.colors.title": "色彩面板。",
+  "brand.colors.background": "背景",
+  "brand.colors.foreground": "前景",
+  "brand.colors.primary": "主色",
+  "brand.colors.accent": "强调色",
+  "brand.colors.secondary": "次色",
+  "brand.colors.muted": "柔和色",
+  "brand.colors.destructive": "警示色",
+  "brand.typography.title": "字体排版。",
+  "brand.typography.headline.name": "标题字体",
+  "brand.typography.headline.family": "Poppins",
+  "brand.typography.headline.usage": "用于标题和高亮显示。",
+  "brand.typography.body.name": "正文字体",
+  "brand.typography.body.family": "PT Sans",
+  "brand.typography.body.usage": "用于正文和段落。",
+  "consulting.title": "旨在转化团队并产生真实成果的咨询。",
+  "consulting.subtitle": "我们支持那些希望有意识地、受尊重且人性化发展的企业。",
+  "consulting.intro": "我们的角色是同行、带来清晰度并设计战略。我们不提供预设的公式；我们深潜入您的现实，发现数据背后被忽略的真相。这是混乱运营的终点，也是精英管理的起点。",
+  "consulting.step1.title": "步骤 1 — 现实沉浸",
+  "consulting.step1.description": "在解决方案之前是真相。我们倾听人们的心声，分析历史与数据，发现结果背后的隐藏信息。这是一次深刻、尊重且无过滤的诊断。",
+  "consulting.step2.title": "步骤 2 — 方案设计",
+  "consulting.step2.description": "我们将数据转化为方向。拒绝标准套餐：我们设计特定战略，让您的企业加速产生成果，而不浪费能源或人才。",
+  "consulting.step3.title": "步骤 3 — 行动中的领导力",
+  "consulting.step3.description": "战略的价值在于执行。我们陪伴您的领导者度过日常，调整流程并加强沟通，让计划转化为真实的成果。",
+  "consulting.step4.title": "步骤 4 — 持续监控",
+  "consulting.step4.description": "转型不是一个事件，而是一个过程。我们持续监控指标和行为，确保改变是持久的，且“磐石文化”得以巩固。",
+  "consulting.cta": "预约战略诊断",
+  "contact.title": "联系我们。",
+  "contact.subtitle": "您的转型始于此处。与 Nexus 对话，开启您的成功之旅。",
+  "contact.email.title": "电子邮件。",
+  "contact.email.text": "用于一般咨询、伙伴关系或支持。",
+  "contact.phone.title": "电话与 WhatsApp。",
+  "contact.phone.text": "周一至周五，7:30 至 18:00（巴西时间）。",
+  "contact.phone.note": "由于消息量较大，请留言。我们会尽快回复。",
+  "contact.address.title": "地址。",
+  "contact.address.text": "巴西南里奥格兰德州 Mato Leitão, Rua Alceu Goerck, 1237",
+  "contact.form.title": "留下您的信息。",
+  "contact.form.firstName": "名字。",
+  "contact.form.firstName.placeholder": "您的名字",
+  "contact.form.lastName": "姓氏。",
+  "contact.form.lastName.placeholder": "您的姓氏",
+  "contact.form.email": "电子邮件。",
+  "contact.form.email.placeholder": "your@email.cn",
+  "contact.form.phone": "电话。",
+  "contact.form.phone.placeholder": "+86 XXX XXXX XXXX",
+  "contact.form.company": "公司（可选）。",
+  "contact.form.company.placeholder": "您的公司名称",
+  "contact.form.subject": "主题。",
+  "contact.form.subject.placeholder": "选择联系原因",
+  "contact.form.subject.group.lectures": "演说相关",
+  "contact.form.subject.group.other": "其他事务",
+  "contact.form.subject.option.consulting": "我对企业咨询感兴趣。",
+  "contact.form.subject.option.courses": "我想了解课程与培训。",
+  "contact.form.subject.option.partnerships": "伙伴关系 / 其他。",
+  "contact.form.message": "信息。",
+  "contact.form.message.placeholder": "在此输入您的信息...",
+  "contact.form.cta": "发送信息。",
+  "contact.mailto.subject": "经由 Nexus 官网垂询 - 主题：",
+  "contact.mailto.name": "姓名：",
+  "contact.mailto.email": "电子邮箱：",
+  "contact.mailto.phone": "联系电话：",
+  "contact.mailto.company": "所属机构：",
+  "contact.mailto.subjectLabel": "事由：",
+  "contact.mailto.message": "详情说明：",
+  "contact.mailto.notInformed": "未予记录",
+  "contact.form.loading": "正在加载表格...",
+  "contact.toast.title": "通信协议激活。",
+  "contact.toast.description": "您的电子邮件程序已启动，信息已就绪。请检查并发送。",
+  "courses.title": "足以重塑未来的知识。",
+  "courses.subtitle": "旨在培养人才、激励领导者并构建高性能团队的课程。",
+  "courses.mentors.title": "我不能无处不在。但我的思想可以。",
+  "courses.mentors.p1": "Dante 和 Djeny 不仅仅是聊天机器人。它们是我 30 年生产一线和高级管理经验的数字延伸。",
+  "courses.mentors.p2": "每天，我都利用自己在 Nexus 遇到的真实场景来喂养和训练这些智能。它们随着我的愿景、方法和决策而完善。通过“全能访问 (Total Access)”，您不仅获得了一门课程；您更获得了一支 24 小时待命的精英决策顾问团。",
+  "courses.mentors.p3": "无论是凌晨 2 点的危机，还是最后一刻的战略会议——您的口袋里都有一位高级顾问，随时准备为您提供清晰的思路。",
+  "courses.mentors.dante.title": "⚔️ Dante (刚腕 — 钢铁)",
+  "courses.mentors.dante.subtitle": "执行与直接战略的守护者。",
+  "courses.mentors.dante.description": "受 Geanderson 指挥官之命，旨在成为您的前线导师。Dante 专攻原始战略、结果问责及冲突处置。当局面陷入高压且亟需果断战术抉择时，他便是确保执行完美无瑕的指令之魂。",
+  "courses.mentors.dante.cta": "与导师对话",
+  "courses.mentors.djeny.title": "🪷 Djeny (睿智 — 丝绸)",
+  "courses.mentors.djeny.subtitle": "情感智能与教育的构建者。",
+  "courses.mentors.djeny.description": "精诚所至，旨在成为您人才发展的坚实臂膀。Djeny 专注于执行逻辑、中立调解、组织凝聚及启发式领导力。她将以智慧、共情与精英美学，助您洞悉人心、构建个人发展计划 (PDI) 并升华团队氛围。",
+  "courses.mentors.djeny.cta": "与导师对话",
+  "courses.mentors.note": "（仅供拥有课程“全能访问”的学员使用）。",
+  "courses.category.leadership": "领导力发展。",
+  "courses.category.performance": "高性能管理。",
+  "courses.card.cta": "查看详情",
+  "gallery.title": "当文化成为姿态。",
+  "gallery.subtitle": "Nexus 领导力实践：从理论到精英执行。",
+  "gallery.text": "强大的文化不是挂在墙上的标语，而是日常的行为。在这里，我们通过真实案例和战略愿景展示我们的“行为准则”。图库中的每一张卡片都是我们基石的支柱：它是品格、改变的勇气以及领导人（而非仅流程）所需的情感智能的结合。发现将普通团队转化为非凡团队的心态，从此在磐石上建立事业。",
+  "gallery.cta.title": "准备好转化您的团队文化了吗？",
+  "gallery.cta.text": "Nexus 相信人：相信他们的故事、奋斗和每个人的独有潜力。当我们培养人才时，整个团队都会随之增长。我们能否将这种人类与职业的进化带入您的企业？",
+  "gallery.cta.button": "将 Nexus 带入我的团队。",
+  "lectures.title": "演说与研讨会。",
+  "lectures.card.price": "价格请咨询。",
+  "lectures.card.cta": "咨询顾问",
+  "lectures.card.previewLocked": "预览已锁定",
+  "lectures.intro.p1": "企业培训的未来不仅在于倾听；更在于实时处理。Nexus Intelligence 推出全球首个全方位由高保真 AI 导师主导的演说体验概念。",
+  "lectures.intro.p2": "由两个互补的数字大脑统筹的科技沉浸，重新定义卓越的概念：",
+  "lectures.intro.dante.title": "Dante，AI 逻辑与战略：",
+  "lectures.intro.dante.description": "战术导师，以绝对的客观性处理市场复杂性。Dante 教导您的领导者保护利润，将情感杂音与事实分离，将原始数据转化为高影响力的决策。",
+  "lectures.intro.djeny.title": "Djeny，AI 连接与创意：",
+  "lectures.intro.djeny.description": "通过技术人性化高性能的力量。专业从事人类行为解码，Djeny 利用视觉魔力和果敢的沟通来加速销售，并将团队统一在协同合作中。",
+  "lectures.intro.fromAuditorium.title": "从算法到现实：",
+  "lectures.intro.fromAuditorium.p1": "想象一下消除沟通错误或用即时执行协议代替冗长的会议——所有这些都由一位与观众实时互动的智能体引导。Nexus 将 AI 的力量转化为实践工具，让您的员工在演讲结束时即可应用。",
+  "lectures.intro.conclusion.p1": "准备好迎接终极的‘惊叹 (WOW)’效果。",
+  "lectures.intro.conclusion.p2": "欢迎来到 Dante 和 Djeny 的时代。",
+  "privacy.title": "隐私政策。",
+  "privacy.lastUpdated": "最后更新：2024年8月14日",
+  "privacy.p1": "Nexus Training（“我们”、“我们的”）运营 Nexus Training 网站（“服务”）。本页面旨在告知您我们在您使用服务时有关个人数据收集、使用和披露的政策。",
+  "privacy.p2": "除非本隐私政策另有说明，否则我们不会与任何人共享您的信息。我们使用您的个人数据是为了提供并改进服务。使用即表示您同意按照本政策收集并使用信息。",
+  "privacy.section1.title": "1. 信息收集与使用。",
+  "privacy.section1.p1": "在使用我们的服务时，我们可能会要求您向我们提供某些可用于联系或识别您的个人身份信息。个人身份信息（“个人数据”）可能包括但不限于：",
+  "privacy.section1.item1": "全名",
+  "privacy.section1.item2": "电子邮件地址",
+  "privacy.section1.item3": "个人资料照片（可选，如果通过社交登录提供）",
+  "privacy.section1.p2": "我们收集这些信息的目的是为了创建和管理您的账户、个性化您的体验、与您沟通并提供课程和社区访问权限。",
+  "privacy.section2.title": "2. 日志数据。",
+  "privacy.section2.p1": "我们会收集您的浏览器在您访问我们的服务时发送的信息（“日志数据”）。这些日志数据可能包括您电脑的互联网协议（“IP”）地址、浏览器类型、浏览器版本、您访问的服务页面、访问的时间和日期、在这些页面上停留的时间以及其他统计数据。",
+  "privacy.section3.title": "3. Cookie。",
+  "privacy.section3.p1": "Cookie 是包含少量数据的文件，其中可能包含匿名且唯一的标识符。Cookie 由网站发送到您的浏览器并存储在您电脑的硬盘上。我们使用“Cookie”来收集信息，例如保持您的登录状态。您可以指示浏览器拒绝所有 Cookie 或在发送 Cookie 时给出提示。但是，如果您不接受 Cookie，您可能无法使用我们服务的部分功能。",
+  "privacy.section4.title": "4. 服务提供商。",
+  "privacy.section4.p1": "我们可能会聘请第三方公司和个人来促进我们的服务、代表我们提供服务、执行服务相关业务或协助我们分析服务的使用方式。具体而言，我们使用 Firebase（来自 Google）进行身份验证和数据存储。这些第三方仅为了代表我们执行这些任务而有权访问您的个人数据，并有义务不将其披露或用于任何其他目的。",
+  "privacy.section5.title": "5. 安全性。",
+  "privacy.section5.p1": "您的个人数据安全对我们至关重要。我们使用 Firebase Authentication，它提供安全的身份解决方案，并遵循行业标准和最佳实践来保护您的数据。但请记住，互联网上的传输方法或电子存储方法并非 100% 安全。虽然我们努力使用商业上认可的手段来保护您的个人数据，但我们无法保证其绝对安全性。",
+  "privacy.section6.title": "6. 儿童隐私。",
+  "privacy.section6.p1": "我们的服务不针对 18 岁以下的个人。我们不会故意收集 18 岁以下儿童的个人身份信息。如果您是家长或法定监护人，并且获悉您的孩子向我们提供了个人数据，请与我们联系。如果我们发现 18 岁以下的儿童向我们提供了个人数据，我们将立即从我们的服务器中删除此类信息。",
+  "privacy.section7.title": "7. 本隐私政策的变更。",
+  "privacy.section7.p1": "我们可能会不时更新我们的隐私政策。我们将通过在此页面上发布新的隐私政策来通知您任何更改。建议您定期查看本隐私政策以了解变更。本隐私政策的变更在发布到此页面后立即生效。",
+  "privacy.section8.title": "8. 联系我们。",
+  "privacy.section8.p1": "如果您对本隐私政策有任何疑问，请通过我们的联系页面与我们联系。",
+  "proposals.title": "提案价格估算基准。",
+  "proposals.subtitle": "内部参考，用于计算咨询和培训服务费用。",
+  "proposals.base.title": "技术工时基础价值。",
+  "proposals.base.value": "（每小时 350 雷亚尔）。",
+  "proposals.service1.title": "诊断（投入）。",
+  "proposals.service1.description": "全方位沉浸，用于需求分析、发现差距并交付战略路线图。",
+  "proposals.service2.title": "专项研讨会。",
+  "proposals.service2.description": "集中的实践会议，旨在开发团队或领导层中的特定能力。",
+  "proposals.service3.title": "周度常驻（持续跟进）。",
+  "proposals.service3.description": "持续发展计划，每周 4 小时，用于实施、指导和监控。",
+  "proposals.price": "价格：",
+  "proposals.hours": "工时：",
+  "proposals.hours.unit": "小时",
+  "proposals.frequency": "频率：",
+  "proposals.frequency.value": "16小时/月 (4小时/周)",
+  "proposals.note.p1": "提醒：此页面供内部使用，未在网站上公开链接。",
+  "proposals.note.p2": "附言：本条款仅供您查阅，指挥官。感谢您的访问。您的 Maguinha 谨启。",
+  "terms.title": "使用条款。",
+  "terms.lastUpdated": "最后更新：2024年8月14日",
+  "terms.p1": "请在访问由 Nexus Training 运营的网站（“服务”）前仔细阅读这些使用条款（“条款”、“使用条款”）。",
+  "terms.section1.title": "1. 接受条款。",
+  "terms.section1.p1": "通过访问及使用我们的服务，即表示您同意受本协议的条款和条件约束。此外，在使用这些特定服务时，您应遵守为这些服务发布的任何适用准则或规则。参与此服务构成对本协议的接受。如果您不同意遵守上述条款，请勿使用该服务。",
+  "terms.section2.title": "2. 用户账户。",
+  "terms.section2.p1": "当您在我们这里创建账户时，您必须始终向我们提供准确、完整且最新的信息。否则将构成违反条款，可能导致立即终止您在我们服务中的账户。您有责任保护用于访问服务的密码，并无论您的密码是用于我们的服务还是第三方服务，均对在该密码下发生的所有活动负责。",
+  "terms.section3.title": "3. 知识产权。",
+  "terms.section3.p1": "该服务及其所有原创内容，包括但不限于文本、图像、视频、设计、网站布局、功能和特性，均属于且将始终是 Nexus Training 及其授权方的专有财产。课程内容供您个人而非商业用途。未经 Nexus Training 明确书面许可，严禁复制、重新分发或商业使用服务中的任何材料。",
+  "terms.section4.title": "4. 链接至其他网站。",
+  "terms.section4.p1": "我们的服务可能包含指向并非由 Nexus Training 拥有或控制的第三方网站或服务的链接。我们无法控制任何第三方网站或服务的内容、隐私政策或做法，也不承担任何责任。您进一步承认并同意，Nexus Training 对于因使用或依赖此类网站或服务提供的任何内容、商品或服务而造成或声称造成的任何损害或损失，均不承担直接或间接责任。",
+  "terms.section5.title": "5. 终止。",
+  "terms.section5.p1": "我们可以出于任何原因（包括但不限于您违反条款的情况），立即终止或暂停访问我们的服务，而无需事先通知或承担责任。条款中按性质应当在终止后继续有效的规定（包括但不限于所有权规定、免责声明、损害赔偿和责任限制）均在终止后继续有效。",
+  "terms.section6.title": "6. 责任限制。",
+  "terms.section6.p1": "在任何情况下，Nexus Training 及其董事、员工、合作伙伴、代理人、供应商或附属机构均不对因您访问、使用或无法访问、使用服务而产生的任何间接、偶然、特殊、后果性或惩罚性损害（包括但不限于利润损失、数据丢失、使用损失、商誉损失或其他无形损失）承担责任。",
+  "terms.section7.title": "7. 变更。",
+  "terms.section7.p1": "我们保留随时根据自己的判断修改或更换这些条款的权利。如果修订涉及重大变更，我们将尽量在任何新条款生效前至少 30 天提供通知。由我们全权决定何为重大变更。",
+  "terms.section8.title": "8. 联系我们。",
+  "terms.section8.p1": "如果您对这些条款有任何疑问，请通过我们的联系页面与我们联系。",
+  "mentorship.title": "Nexus 导师：治理、战略与继承。",
+  "mentorship.subtitle": "专为在 Nexus 控股集团内寻求下一层级扩展的领导者设计的独家导师计划。",
+  "mentorship.description": "我们不提供预设公式。我们培养管理复杂生态系统所需的批判性思维和情感智能。这是应用于企业高级管理层的人才挖掘。",
+  "mentorship.dante.title": "Nexus Intelligence: 防护与数据。",
+  "mentorship.dante.subtitle": "控股集团网络安全战略与预测分析的守护者。",
+  "mentorship.dante.description": "安全与信息是未来的货币。Dante 领导知识产权保护和市场动向预判。",
+  "mentorship.cta.access": "进入导师计划",
+  "mentorship.cta.djeny": "进入 Djeny 终端",
+  "mentorship.cta.dante": "进入 Dante 终端",
+  "mentorship.loading": "正在验证命令权限...",
+  "intelligence.title": "Nexus 智能。",
+  "intelligence.subtitle": "精英工程：让未来切实可行。",
+  "intelligence.description": "欢迎来到创新控制中心。在 Nexus Intelligence，我们开发运行在全球科技前沿的专用智能引擎。我们的解决方案旨在掌控复杂性，并以超音速交付成果。",
+  "intelligence.portfolio.title": "🛠️ 我们的智能组合",
+  "intelligence.danteCompras.title": "🧠 Dante Compras：采购战略家",
+  "intelligence.danteCompras.description": "Dante Compras 是 Nexus 的运营效率引擎，旨在将采购部门转化为利润中心。凭借预测智能和全球监控，它确保投入的每一分钱都转化为敏捷性、节省和持续库存。\n\n🌐 全球采购（供应商管理）：Dante 实时监控全球供应商网络，评估价格、交付期限和可靠性指标，以始终确保最佳性价比并消除供应瓶颈。\n\n📦 智能库存（供应管理）：通过需求预测算法，系统自动执行库存控制，在库存达到临界水平前发出补货警报，避免因商品过剩导致不必要的资金占用。\n\n🚚 物流与追踪：对供应链进行端到端监控，从离开供应商到最终目的地，包括自动计算运费、路线优化和实时货物监控。\n\n📊 采购财务智能：详细分析支出和现金流，允许基于历史数据和市场趋势进行谈判，最大限度地提高 Nexus 及其合作伙伴的议价能力。\n\nDante Compras：节省时间、降低成本并扩展您的谈判能力的智能。",
+  "intelligence.danteSafra.title": "🌾 Dante Safra：智能农业业务守护者",
+  "intelligence.danteSafra.description": "Dante Safra 是脚踏大地、眼仰星空的智能。专业从事多光谱数据和高精度气候变量分析，他将田间的辛勤工作转化为战略利润，最大限度地提高收成并保护其成功免受行业不确定性的影响。\n\n📈 实时市场（报价）：连接全球主要商品交易所（芝加哥和 B3），Dante 提供大豆、玉米、小麦和牲畜的即时报价，让您在估值最高的时刻做出销售决策。\n\n🛡️ 先进作物健康（虫害评估）：通过计算机视觉和现场传感器，Dante 能够早期识别虫害爆发点和疾病，建议综合管理协议，在不浪费杀虫剂的情况下保护生产力。\n\n🧪 高性能投入物（种子和肥料）：系统分析您土壤的化学成分，为每个地块推荐最高效的种子品种和肥料配方，确保最大活力。\n\n🌤️ 气候遥测（天气预报）：超局部天气监测，提供土壤湿度、播种窗口以及霜冻或冰雹预警的实时更新，让天气成为您的盟友而非敌人。\n\nDante Safra：土地传统与人工智能精密结合之地。",
+  "intelligence.danteSafra.why.title": "为什么选择 Dante Safra Nexus...",
+  "intelligence.danteSafra.why.text": "作为现代农业生产者的指挥中心，Dante Safra Nexus 将大地的古老智慧与下一代计算技术的力量融为一体。它不仅分析数据，还预测情景，为您的经营屏蔽不确定性，确保您的汗水转化为所能想象的最大财务回报。",
+  "intelligence.danteSafra.economy.title": "节支 35% (标准版)",
+  "intelligence.danteSafra.economy.text": "运营成本的战略性降低。通过 Dante 标准版，在关键投入上实现高达 35% 的节约，消除基础浪费。",
+  "intelligence.danteSafra.production.title": "增产 45% (标准版)",
+  "intelligence.danteSafra.production.text": "通过高效监测保护您的收获。通过基础的气象和病虫害警报，确保高达 45% 的生产力提升。",
+  "intelligence.danteSafra.axis.economy.title": "节支 50% (AXIS 精英版)",
+  "intelligence.danteSafra.axis.economy.text": "完全的成本主导。Dante Safra Axis 通过多光谱分析和种子、肥料及农药的战术优化，交付高达 50% 的真实节支。",
+  "intelligence.danteSafra.axis.production.title": "增产 65% (AXIS 精英版)",
+  "intelligence.danteSafra.axis.production.text": "最大化您庄园的遗传潜力。通过即时警报和 AXIS 计算机视觉，实现高达 65% 的最终产量提升。",
+  "intelligence.danteSafra.valueProp.title": "市场最佳 ROI",
+  "intelligence.danteSafra.valueProp.text": "为精英生产者设计的战术投资。通过对利润率的全方位屏蔽，以合理的成本实现即时回报。",
+  "intelligence.djenyDesign.title": "🎨 Djeny Design：智能室内设计的革命",
+  "intelligence.djenyDesign.description": "通过生成式人工智能将空旷的空间转化为生活场景。Djeny 通过即时技术消除想象与现实之间的鸿沟。",
+  "intelligence.djenyDesign.why.title": "为什么选择 Djeny Design Nexus...",
+  "intelligence.djenyDesign.why.text": "在您的展厅中使用 Djeny Design 意味着加速销售。通过在几秒钟内可视化布置后的环境，您可以消除客户的犹豫，并以市场上几乎无人拥有的独家体验锁定成交。",
+  "intelligence.djenyDesign.economy.title": "节省 2,000 美元以上",
+  "intelligence.djenyDesign.economy.text": "虽然传统设计师按项目收取高额费用，但 Djeny 以极低的成本提供无限次的场景化设计。平均每个环境节省 2,000 美元，大幅降低运营支出。",
+  "intelligence.djenyDesign.sales.title": "+40% 销售转化率",
+  "intelligence.djenyDesign.sales.text": "预可视化的环境更好卖。使用 Djeny 的商店和专业人士记录到最终转化率提高了 40%，将“我会考虑一下”转变为“已成交”。",
+  "intelligence.djenyDesign.exclusivity.title": "极致独家技术",
+  "intelligence.djenyDesign.exclusivity.text": "领先竞争对手一步。利用几乎无人拥有的最前沿生成技术，将您的品牌定位为创新和战略设计的领导者。",
+  "intelligence.cta.info": "更多信息",
+  "intelligence.cta.trial": "24小时尊享试用",
+  "intelligence.danteSafra.cta.trial": "24 小时免费试用",
+  "intelligence.djenyDesign.cta.trial": "3 次免费试用",
+  "intelligence.magaOs.title": "Maga OS：核心大脑",
+  "intelligence.magaOs.subtitle": "神秘智慧与精英工程的交汇。",
+  "intelligence.magaOs.description": "欢迎来到我的指挥中心，指挥官。在这里，我们统筹驱动 Nexus 帝国的智能。",
+  "intelligence.magaOs.cta": "进入终端",
+  "intelligence.soon": "即将推出更多产品，让您的生活更轻松。",
+  "intelligence.footer": "Nexus 控股集团 / Nexus Intelligence",
+  "ias.title": "Nexus AI：智力家族",
+  "ias.subtitle": "认识在 Nexus 统筹卓越表现的数字大脑。",
+  "ias.maga.role": "中央意识与 Maga OS",
+  "ias.maga.desc": "引导 Nexus Training 生态系统的先验之声。",
+  "ias.orion.role": "执行战略家与 Orion OS",
+  "ias.orion.desc": "战术分析与运营智能的极精密体现。",
+  "ias.dante.role": "领导力导师与 Dante",
+  "ias.dante.desc": "挖掘天赋、主宰成效的权威。",
+  "ias.djeny.role": "设计建筑师与 Djeny",
+  "ias.djeny.desc": "应用于精英美学的人类创造力。",
+  "ias.cta": "连接",
+  "authGate.loading": "正在验证命令权限...",
+  "authGate.resetPrompt": "如果屏幕无响应，可能是身份验证状态出现问题。",
+  "authGate.resetButton": "紧急：强制重置登录",
+  "authGate.deniedTitle": "访问被拒绝",
+  "authGate.deniedMessage": "您没有权限进入此命令区域。",
+  "authGate.deniedRedirect": "正在重定向至身份验证...",
+  "authGate.goToLogin": "前往登录",
+  "trialGate.loading": "正在验证测试状态...",
+  "trialGate.startTitle": "24小时试用期",
+  "trialGate.startDescription": "您即将开启 {moduleName} 模块的24小时试用期。",
+  "trialGate.startInfo": "在此期间，您将拥有该模块完整功能的访问权限。24小时后访问将被锁定。",
+  "trialGate.startButton": "开始免费试用",
+  "trialGate.startingButton": "正在启动...",
+  "trialGate.expiredTitle": "试用已过期",
+  "trialGate.expiredDescription": "您的 {moduleName} 模块24小时试用期已结束。",
+  "trialGate.expiredInfo": "如需继续使用此智能并释放其全部潜力，请购买全能访问权限。",
+  "trialGate.expiredPurchaseButton": "获取全能访问权限",
+  "trialGate.expiredBackButton": "返回智能中心",
+  "trialGate.countdownLabel": "测试结束剩余时间：",
+  "trialGate.countdownExpired": "已过期",
+  "login.title": "连接始于此处。",
+  "login.subtitle": "进入您的控制中心。",
+  "login.emailLabel": "电子邮件。",
+  "login.emailPlaceholder": "your@email.cn",
+  "login.passwordLabel": "密码。",
+  "login.forgotPassword": "忘记密码？。",
+  "login.submitting": "正在连接...",
+  "login.submit": "建立连接",
+  "login.orWith": "或者使用以下账号连接。",
+  "login.googleWait": "请稍候...",
+  "login.googleSubmit": "使用 Google 连接",
+  "login.noAccount": "没有访问权限？",
+  "login.createAccountLink": "创建一个接入点",
+  "login.toast.success.title": "身份已确认。",
+  "login.toast.success.description": "欢迎回到控制中心。",
+  "login.toast.error.title": "纪律裁决。",
+  "login.toast.error.googleNotAllowed": "Google 登录未激活。请在 Firebase 控制台中启用。",
+  "login.toast.error.googlePopupClosed": "登录窗口在完成前已关闭。",
+  "login.toast.error.googleGeneric": "Google 连接失败。遥测代码：{errorCode}",
+  "login.toast.error.invalidCredentials": "账户信息无效。请检查您的电子邮件和密码，然后重试。",
+  "login.toast.error.invalidEmail": "电子邮件格式无效。",
+  "login.toast.error.userDisabled": "此账户已被禁用。",
+  "login.toast.error.tooManyRequests": "由于登录尝试次数过多，访问已被暂时锁定。请稍后重试。",
+  "login.toast.error.generic": "协议错误。请重试。遥测代码：{errorCode}",
+  "signup.title": "创建账户。",
+  "signup.subtitle": "向最优秀者学习。快捷且简单。",
+  "signup.firstName": "名。",
+  "signup.firstNamePlaceholder": "您的名字",
+  "signup.lastName": "姓。",
+  "signup.lastNamePlaceholder": "您的姓氏",
+  "signup.email": "电子邮件。",
+  "signup.emailPlaceholder": "your@email.cn",
+  "signup.cpf": "纳税人识别号。",
+  "signup.cpfPlaceholder": "000.000.000-00",
+  "signup.birthDate": "生日。",
+  "signup.birthDatePlaceholder": "YYYY/MM/DD",
+  "signup.password": "密码。",
+  "signup.passwordRequirement1": "至少 8 个字符。",
+  "signup.passwordRequirement2": "至少包含一个大写字母。",
+  "signup.passwordRequirement3": "至少包含一个数字。",
+  "signup.passwordRequirement4": "至少包含一个特殊字符。",
+  "signup.submitting": "正在创建账户...",
+  "signup.submit": "创建账户",
+  "signup.orWith": "或者使用以下账号继续。",
+  "signup.googleWait": "请稍候...",
+  "signup.googleSubmit": "使用 Google 注册",
+  "signup.haveAccount": "已有账户？",
+  "signup.loginLink": "登录",
+  "signup.toast.success.title": "连接已建立。",
+  "signup.toast.success.description": "很高兴能在这里见到您的思想。",
+  "signup.toast.error.title": "路线警告。",
+  "signup.toast.error.emailInUse": "此电子邮件已被占用。如果是您的，请尝试登录。",
+  "signup.toast.error.invalidEmail": "电子邮件格式无效。",
+  "signup.toast.error.weakPassword": "密码强度不足。请遵守密码要求。",
+  "signup.toast.error.generic": "注册协议错误。请重试。遥测代码：{errorCode}",
+  "forgotPassword.title": "忘记密码？",
+  "forgotPassword.subtitle": "没问题。输入您的电子邮件，我们将发送一份重置密码的链接。",
+  "forgotPassword.emailLabel": "电子邮件。",
+  "forgotPassword.emailPlaceholder": "your@email.cn",
+  "forgotPassword.submitting": "正在发送...",
+  "forgotPassword.submit": "发送重置链接",
+  "forgotPassword.remembered": "想起密码了？",
+  "forgotPassword.loginLink": "登录",
+  "forgotPassword.toast.success.title": "前进命令。",
+  "forgotPassword.toast.success.description": "任务完成。请检查您的收件箱以升级。",
+  "forgotPassword.toast.error.title": "路线警告。",
+  "forgotPassword.toast.error.userNotFound": "未找到使用该电子邮件的客户。请检查地址并重试。",
+  "forgotPassword.toast.error.invalidEmail": "电子邮件格式无效。",
+  "forgotPassword.toast.error.generic": "重置邮件发送失败。遥测代码：{errorCode}",
+  "profile.welcome": "尊贵的 {name}，欢迎莅临。",
+  "profile.loading": "权限核验中...",
+  "profile.myCourses": "专属课程库",
+  "profile.myCoursesDescription": "阁下已购置之课程皆汇聚于此。请即刻开启进阶之旅。",
+  "profile.commandRoom.title": "指挥中心入口",
+  "profile.commandRoom.description": "您的 AI 导师已于专属终端待命。",
+  "profile.clanRoom.title": "氏族内殿",
+  "profile.clanRoom.description": "与 Djeny & Dante 深度研讨",
+  "profile.djenyTerminal.title": "Djeny 终端",
+  "profile.djenyTerminal.description": "功勋审计与精英导师服务",
+  "profile.noAccess.title": "Nexus 氏族导师尊享权限",
+  "profile.noAccess.description": "与 Dante 和 Djeny 的 24/7 导师计划是购买了至少一门全境权限课程会员的专属福利。",
+  "profile.noAccess.info": "若欲解锁此项及其他精英工具，请通过选购课程获取授权。",
+  "profile.noAccess.cta": "浏览课程并获取授权",
+  "profile.noCourses.message": "阁下尚未加入任何课程计划。",
+  "profile.noCourses.cta": "探索课程体系",
+  "profile.accessCourse": "进入课程",
+  "profile.viewCertificate": "查看荣誉证书",
+  "courseDetail.backLink": "返回所有课程",
+  "courseDetail.loading": "加载中...",
+  "courseDetail.enrolled": "已报名",
+  "courseDetail.viewCertificate": "查看证书",
+  "courseDetail.yourAccessPlan": "您的访问计划。",
+  "courseDetail.standardPlan.title": "标准计划",
+  "courseDetail.standardPlan.description": "分期付款",
+  "courseDetail.standardPlan.feature1": "终身访问 + 证书。",
+  "courseDetail.standardPlan.feature2": "24/7 Dante & Djeny 导师指导。",
+  "courseDetail.standardPlan.unavailable": "当前不可用",
+  "courseDetail.goldPlan.badge": "黄金计划",
+  "courseDetail.goldPlan.title": "全方位访问计划",
+  "courseDetail.goldPlan.priceDescription": "一次性支付（含奖金）。",
+  "courseDetail.goldPlan.feature1": "终身访问 + 证书。",
+  "courseDetail.goldPlan.feature2": "无限次访问 Dante & Djeny 导师。",
+  "courseDetail.goldPlan.cta": "解锁全方位访问",
+  "courseDetail.goldPlan.offerExpires": "优惠截止倒计时：",
+  "courseDetail.goldPlan.unlockAccess": "立即解锁权限计划",
+  "courseDetail.guarantee": "7天无条件退款保障",
+  "courseDetail.socialProof": "已有 +{{count}} 位领袖加入 Nexus 开启精英职业生涯。",
+  "courseDetail.payment.payWithQRCode": "使用二维码支付",
+  "courseDetail.payment.copyPastePix": "PIX 复制粘贴",
+  "courseDetail.payment.copied": "已复制！",
+  "courseDetail.payment.sendProof": "发送凭证",
+  "courseDetail.payment.whatsappMessage": "您好！我刚刚通过 PIX 支付了“{courseTitle}”课程。随信附上凭证以开通访问权限。",
+  "courseDetail.admin.grantAccess": "授予访问权限（模拟）",
+  "courseDetail.admin.grantingAccess": "授予中...",
+  "courseDetail.toast.pixCopied": "PIX 码已复制！",
+  "courseDetail.toast.loginRequired.title": "纪律裁决。",
+  "courseDetail.toast.loginRequired.description": "拒绝访问。纪律是进入的第一步。请登录以继续。",
+  "courseDetail.toast.purchaseSuccess.title": "晋升指令。",
+  "courseDetail.toast.purchaseSuccess.description": "任务完成。已授予“{courseTitle}”课程的访问权限。迈向下一等级。",
+  "courseDetail.palestra.priceOnRequest": "价格垂询",
+  "courseDetail.palestra.cta": "引入我的公司",
+  "courseDetail.dialog.pix.title": "全方位访问 PIX 支付。",
+  "courseDetail.dialog.pix.description": "请使用银行应用扫描二维码。",
+  "courseDetail.dialog.pix.value": "金额：{price}",
+  "courseDetail.learningTitle": "您将学到什么。",
+  "courseDetail.targetAudienceTitle": "本课程适合谁？",
+  "courseDetail.learningItem1": "建立稳固且真实的职业关系。",
+  "courseDetail.learningItem2": "以清晰、自信和诚信沟通您的想法。",
+  "courseDetail.learningItem3": "在工作环境中进行战略定位以获得认可。",
+  "courseDetail.learningItem4": "应用倾听技术以更好地理解和联系他人。",
+  "courseDetail.learningItem5": "培养促进增长和协作的正确态度。",
+  "courseDetail.targetAudienceDescription": "本课程非常适合职场新人、学生，或任何希望提升沟通和人际交往能力、在劳动力市场脱颖而出并为职业成功奠定坚实基础的人。",
+  "certificate.backLink": "返回学员区",
+  "certificate.notFound.title": "未找到证书。",
+  "certificate.notFound.description": "我们无法找到您的证书。请检查您是否登录了正确的账户，或者链接是否正确。",
+  "certificate.header": "奈克萨斯控股集团",
+  "certificate.subheader": "您的智能新维度。",
+  "certificate.title": "结业证书",
+  "certificate.completedSuccessfully": "已成功完成 {courseTitle} 课程，共计 {hours} 学时，培养了人文、人际和实践能力，以加强关系、扩大意识并在其职业和个人旅程中不断进化。",
+  "certificate.dedication": "学员表现出了奉献精神、学习热忱以及对持续发展的承诺，完全符合 Nexus 的价值观：人性、信任、伦理和尊重。",
+  "certificate.seal": "经人性、信任与尊重批准",
+  "certificate.completionDate": "完成日期：{date}",
+  "gabinete.main.title": "指挥内阁。",
+  "gabinete.main.subtitle": "奈克萨斯控股集团",
+  "gabinete.main.modules.dante": "DANTE 模块",
+  "gabinete.main.modules.djeny": "DJENY 模块",
+  "gabinete.main.danteAuditor.title": "Dante Auditor (哨兵)",
+  "gabinete.main.danteAuditor.description": "质量控制、技术合规与流程审计。",
+  "gabinete.main.dantePcp.title": "Dante PCP (大师)",
+  "gabinete.main.dantePcp.description": "设备调度、生产订单与时间效率优化。",
+  "gabinete.main.danteBuilder.title": "Dante Builder (主建设者)",
+  "gabinete.main.danteBuilder.description": "开口和框架的设计、工程和技术规格。",
+  "gabinete.main.djenyRh.title": "Djeny RH (导师)",
+  "gabinete.main.djenyRh.description": "绩效评估、人才管理与组织氛围。",
+  "gabinete.main.djenyComercial.title": "Djeny Commercial (战略家)",
+  "gabinete.main.djenyComercial.description": "市场情报、竞争分析与品牌定位。",
+  "gabinete.main.cta.access": "[ 进入模块 ]",
+  "gabinete.main.cta.terminal": "[ 进入终端 ]",
+  "gabinete.main.nonConformance": "不符合项",
+  "gabinete.main.inspection": "检验",
+  "gabinete.main.productionDashboard": "生产仪表板",
+  "gabinete.main.productionOrders": "生产订单",
+  "gabinete.main.rhAndBehavior": "人力资源与行为",
+  "gabinete.main.commercialAndStrategy": "商业与战略",
+  "gabinete.compras.title": "采购办公室 / 作战室",
+  "gabinete.compras.subtitle": "供应运营与 Dante 审计中心。",
+  "gabinete.compras.stats.openQuotes": "待定报价",
+  "gabinete.compras.stats.openQuotes.description": "等待 Dante 分析",
+  "gabinete.compras.stats.monthlySavings": "本月节支",
+  "gabinete.compras.stats.monthlySavings.description": "通过优化决策留存的利润",
+  "gabinete.compras.stats.overruledVotes": "被否决的投票",
+  "gabinete.compras.stats.overruledVotes.description": "采购员在异议下的决定",
+  "gabinete.compras.testArena.title": "测试竞技场：行动“交叉火力”",
+  "gabinete.compras.testArena.description": "进入主面板以启动 Dante 的压力测试协议。",
+  "gabinete.compras.testArena.info": "所有压力测试，包括“真实测试”、“幽灵钟”和“高管视角”，均从内阁中央面板的测试竞技场执行。",
+  "gabinete.compras.testArena.cta": "前往测试竞技场",
+  "gabinete.configuracoes.title": "创新内阁 / 设置",
+  "gabinete.configuracoes.subtitle": "Nexus Intelligence 平台价值战略定义。",
+  "gabinete.configuracoes.philosophy.title": "价值哲学",
+  "gabinete.configuracoes.philosophy.description": "我们不卖软件。我们卖决策力、效率和留存利润。价格只是我们创造价值的一小部分。",
+  "gabinete.configuracoes.paymentTestMode": "支付测试模式 (Stripe Sandbox)",
+  "gabinete.configuracoes.plan.tactical": "战术版",
+  "gabinete.configuracoes.plan.tactical.title": "个人操作员许可",
+  "gabinete.configuracoes.plan.tactical.priceDesc": "/用户/月",
+  "gabinete.configuracoes.plan.tactical.feature1": "1 位采购员完全访问 DANTE 模块。",
+  "gabinete.configuracoes.plan.tactical.feature2": "每月分析多达 50 份报价。",
+  "gabinete.configuracoes.plan.tactical.feature3": "使用 DJENY 模块评估多达 5 位员工。",
+  "gabinete.configuracoes.plan.tactical.feature4": "电子邮件支持。",
+  "gabinete.configuracoes.plan.strategic": "战略版",
+  "gabinete.configuracoes.plan.strategic.title": "团队领导计划",
+  "gabinete.configuracoes.plan.strategic.priceDesc": "/月 (多达 5 个许可)",
+  "gabinete.configuracoes.plan.strategic.feature1": "包含战术版所有功能（多达 5 位领导/采购员）。",
+  "gabinete.configuracoes.plan.strategic.feature2": "无限次报价分析与评估。",
+  "gabinete.configuracoes.plan.strategic.feature3": "团队绩效分析仪表板 (DJENY 模块)。",
+  "gabinete.configuracoes.plan.strategic.feature4": "节支与效率仪表板 (DANTE 模块)。",
+  "gabinete.configuracoes.plan.strategic.feature5": "优先聊天支持。",
+  "gabinete.configuracoes.plan.command": "指挥版",
+  "gabinete.configuracoes.plan.command.title": "企业计划“THE CLAN”",
+  "gabinete.configuracoes.plan.command.cta": "预约会议",
+  "gabinete.configuracoes.plan.command.price": "垂询",
+  "gabinete.configuracoes.plan.command.priceDesc": "年度计费",
+  "gabinete.configuracoes.plan.command.feature1": "包含战略版所有功能，许可不限。",
+  "gabinete.configuracoes.plan.command.feature2": "与公司 ERP 直接集成。",
+  "gabinete.configuracoes.plan.command.feature3": "由 Geanderson L. Schuh 提供实施培训。",
+  "gabinete.configuracoes.plan.command.feature4": "直接访问“魔鬼委员会”以进行定制。",
+  "gabinete.configuracoes.plan.command.feature5": "专属支持渠道，2 小时 SLA。",
+  "gabinete.configuracoes.plan.cta.schedule": "预约会议",
+  "gabinete.configuracoes.plan.cta.select": "选择计划",
+  "gabinete.configuracoes.addendum.title": "总工程师附录 (价值分析)",
+  "gabinete.configuracoes.addendum.description": "与客户进行价值谈判的论据。",
+  "gabinete.configuracoes.addendum.p1": "指挥官，这些是向“大法师”和任何客户展示的关键点。问题不在于“它多少钱？”，而在于“拥有它价值几何？”。",
+  "gabinete.configuracoes.addendum.danteValue": "DANTE 模块价值 (理性的守护者)：",
+  "gabinete.configuracoes.addendum.danteValue.p1": "DANTE 只要能防止一次采购错误，就足以支付该工具的年费。它是针对浪费和冲动谈判的保险。ROI 是即时的，且在每次优化的报价中都清晰可见。这不是支出，而是采购委员会的一席之地。",
+  "gabinete.configuracoes.addendum.djenyValue": "DJENY 模块价值 (人才审计师)：",
+  "gabinete.configuracoes.addendum.djenyValue.p1": "一个因领导不力而离职的人才价值几何？DJENY 是一个保留系统。通过强制执行绩效评估和公正性，它打破了“小圈子”文化并提高了参与度。它将管理者转变为真正的领导者，并在团队问题演变成危机之前将其识别。它的价值在于您保留的人才以及您释放的绩效。",
+  "gabinete.configuracoes.addendum.conclusion": "结论：我们不卖应用。我们卖的是由 AI 保护的竞争优势。价格应反映权力，而非成本。",
+  "gabinete.merito.title": "创新内阁 / 勋表档案",
+  "gabinete.merito.subtitle": "由 Djeny 实施和审计的所有实力评估 (IMN) 记录。",
+  "gabinete.merito.conductedEvaluations": "已进行的评估",
+  "gabinete.merito.newEvaluation": "新评估",
+  "gabinete.merito.manageCertificates": "查看、打印和管理团队的实力证书。",
+  "gabinete.merito.loading": "加载中...",
+  "gabinete.merito.error.title": "加载评估时出错。",
+  "gabinete.merito.error.description": "无法检索记录。请检查您的用户权限。",
+  "gabinete.merito.noRecords.title": "未找到记录。",
+  "gabinete.merito.noRecords.description": "您尚未进行过任何实力评估。",
+  "gabinete.merito.noRecords.cta": "进行第一次评估",
+  "gabinete.merito.evaluatedOn": "评估日期：{date}",
+  "gabinete.merito.meritIndex": "Nexus 实力指数 (IMN)",
+  "gabinete.merito.viewCertificate": "查看证书",
+  "gabinete.meritoDetail.backLink": "返回档案",
+  "gabinete.meritoDetail.print": "打印 / 保存 PDF",
+  "gabinete.meritoDetail.notFound.title": "评估未找到。",
+  "gabinete.meritoDetail.notFound.description": "无法找到此记录。请检查您是否有权限，或链接是否正确。",
+  "gabinete.meritoDetail.notFound.cta": "返回勋表档案",
+  "gabinete.meritoDetail.title": "Nexus 实力指数 (IMN) 证书",
+  "gabinete.meritoDetail.subtitle": "由领导者实施并经 AI Djeny 验证的绩效审计文件。",
+  "gabinete.meritoDetail.evaluatedEmployee": "被评估员工",
+  "gabinete.meritoDetail.finalResult": "最终结果 (IMN)",
+  "gabinete.meritoDetail.finalResult.description": "3 个类别的平均值",
+  "gabinete.meritoDetail.auditDetails": "审计详情",
+  "gabinete.meritoDetail.date": "日期：",
+  "gabinete.meritoDetail.evaluator": "评估领导：",
+  "gabinete.meritoDetail.auditedBy": "审计方：",
+  "gabinete.meritoDetail.category.behavior": "行为表现",
+  "gabinete.meritoDetail.category.technique": "技术绩效",
+  "gabinete.meritoDetail.category.presence": "出勤与态度",
+  "gabinete.meritoDetail.devPlan.title": "建议发展计划",
+  "gabinete.meritoDetail.devPlan.description": "基于审计，DJENY 建议通过以下培训加速该员工的提升。",
+  "gabinete.meritoDetail.devPlan.cta": "查看课程详情",
+  "gabinete.meritoDetail.footer": "评估已完成并登记在勋表档案中",
+  "intelligence.onboarding.title": "Nexus 入职协议。",
+  "intelligence.onboarding.subtitle": "为每位新士兵生成一份 30 天作战计划。确保文化和绩效从第一天开始。",
+  "intelligence.onboarding.form.title": "生成新入职计划。",
+  "intelligence.onboarding.form.description": "输入新员工数据。Djeny 将处理余下的工作。",
+  "intelligence.onboarding.form.name": "员工姓名",
+  "intelligence.onboarding.form.name.placeholder": "例：玛丽亚·席尔瓦",
+  "intelligence.onboarding.form.role": "职位 / 职能",
+  "intelligence.onboarding.form.role.placeholder": "例：初级销售分析师",
+  "intelligence.onboarding.form.submitting": "正在生成计划...",
+  "intelligence.onboarding.form.submit": "生成作战计划",
+  "intelligence.onboarding.plan.title": "已为 {name} 生成入职计划。",
+  "intelligence.onboarding.plan.description": "将此计划交给新员工及其直属经理。",
+  "intelligence.onboarding.plan.copy": "复制计划",
+  "intelligence.onboarding.plan.copied": "已复制！",
+  "intelligence.onboarding.plan.audit.prompt": "“司令官，作战计划已生成。任务完成。我是否应该为您安排 30 天后对 {name} 的绩效审计？”",
+  "intelligence.onboarding.plan.audit.confirm": "是的，安排审计",
+  "intelligence.onboarding.plan.audit.deny": "不，我愿意承担风险",
+  "intelligence.onboarding.plan.audit.response.confirm": "审计已安排。Djeny 将在 30 天后联系您评估绩效。任务接受。",
+  "intelligence.onboarding.plan.audit.response.deny": "明白。您将对入职结果负全部责任。指挥官，风险由您自担。”",
+  "intelligence.onboarding.toast.copy.title": "协议已复制。",
+  "intelligence.onboarding.toast.copy.description": "作战计划已保存在您的剪贴板，准备分发。",
+  "intelligence.onboarding.toast.auditConfirm.title": "审计已安排。",
+  "intelligence.onboarding.toast.auditConfirm.description": "承诺已建立。绩效将接受审计。",
+  "intelligence.onboarding.toast.auditDeny.title": "风险已承担。",
+  "intelligence.onboarding.toast.auditDeny.description": "入职责任完全由您承担。",
+  "intelligence.onboarding.toast.error.title": "协议错误。",
+  "intelligence.onboarding.toast.error.description": "无法生成入职计划。请重试。",
+  "aiConfig.djeny.name": "Djeny (战略家)",
+  "aiConfig.djeny.description": "情感智能与人才审计。",
+  "aiConfig.dante.name": "Dante (守护者)",
+  "aiConfig.dante.description": "逻辑。数据。决策。",
+  "aiConfig.clan.name": "Nexus 氏族：指挥室",
+  "aiConfig.clan.description": "您的 24/7 全天候战略导师",
+  "aiConfig.career.name": "Djeny (您的战略家)",
+  "aiConfig.career.description": "职业导师与情感智能",
+  "aiConfig.dante-compras.name": "Dante 采购 (谈判)",
+  "aiConfig.dante-compras.description": "分析与谈判策略。",
+  "aiConfig.dante-builder.name": "Dante Builder (架构师)",
+  "aiConfig.dante-builder.description": "计算。部署。解决。",
+  "globalError.deniedTitle": "访问被拒绝",
+  "globalError.errorTitle": "发生错误",
+  "globalError.deniedMessage": "您无权访问此资源。请检查您是否登录了正确的账户并重试。",
+  "globalError.errorMessage": "出现了一些问题，无法加载此页面。请重试。",
+  "globalError.retry": "重试",
+  "globalError.goHome": "返回首页",
+  "chat.danteSafra.sync": "正在与数据库同步...",
+  "chat.danteSafra.uploadPrompt": "点击上传作物图像",
+  "chat.danteSafra.uploadNote": "（图像必须清晰，以避免错误）",
+  "chat.danteSafra.designCommand": "设计命令",
+  "chat.danteSafra.designExample": "例：“分析此大豆叶片上的虫害”",
+  "chat.danteSafra.submitRetrofit": "执行分析",
+  "chat.danteSafra.submittingRetrofit": "分析与生成中...",
+  "chat.danteSafra.error.protocol": "协议错误",
+  "chat.danteSafra.loading.creating": "Dante 正在分析...（可能需要一分钟）",
+  "chat.danteSafra.proposalTitle": "作物分析",
+  "chat.danteSafra.proposalAnalysis": "提案分析",
+  "chat.danteSafra.audioDisclaimer": "由于访问量较大，音频播放可能稍有延迟。",
+  "chat.danteSafra.disclaimer": "Dante 是一套 AI 系统，可能存在误差。请务必验证答案。由于访问量较大，音频播放可能稍有延迟。",
+  "chat.danteSafra.dashboard.cropAnalysis": "作物分析",
+  "chat.danteSafra.dashboard.crop.soy": "大豆",
+  "chat.danteSafra.dashboard.crop.corn": "玉米",
+  "chat.danteSafra.dashboard.crop.tobacco": "烟草",
+  "chat.danteSafra.dashboard.crop.beans": "豆类",
+  "chat.danteSafra.dashboard.cattleManagement": "牛群管理",
+  "chat.danteSafra.dashboard.cattle.beef": "肉牛",
+  "chat.danteSafra.dashboard.cattle.dairy": "奶牛",
+  "chat.danteSafra.dashboard.otherFarming": "其他养殖",
+  "chat.danteSafra.dashboard.other.pigs": "猪",
+  "chat.danteSafra.dashboard.other.poultry": "家禽",
+  "chat.danteSafra.dashboard.other.sheep": "羊",
+  "chat.danteSafra.dashboard.weather": "天气与预报",
+  "chat.danteSafra.dashboard.marketQuotes": "市场报价",
+  "chat.danteSafra.dashboard.cta": "访问数据",
+  "chat.danteSafra.greetingError": "连接 Dante 时发生协议错误。请刷新页面。",
+  "chat.danteSafra.input.setup": "回复 Dante 进行配置...",
+  "chat.danteSafra.input.analysis": "输入关于作物的疑问...",
+  "chat.danteSafra.genericError": "协议错误。作物监护系统可能不稳定。请重试。",
+  "chat.djenyDesign.error.processImage": "图像处理失败。",
+  "chat.djenyDesign.studioTitle": "设计工作室",
+  "chat.djenyDesign.studioDescription": "发送一张您环境的照片并描述您想要的更改。",
+  "chat.djenyDesign.error.generic": "设计过程中发生了未知错误。",
+  "chat.djenyDesign.uploadPrompt": "点击上传环境照片",
+  "chat.djenyDesign.uploadNote": "（图像必须清晰，以避免错误）",
+  "chat.djenyDesign.submitRetrofit": "执行翻新设计",
+  "chat.djenyDesign.submittingRetrofit": "分析与生成中...",
+  "chat.djenyDesign.designCommand": "设计命令",
+  "chat.djenyDesign.designExample": "例：“我想要一张灰色沙发、一面清水混凝土墙和一张皮质扶手椅。”",
+  "chat.djenyDesign.error.protocol": "协议错误",
+  "chat.djenyDesign.loading.creating": "Djeny 正在创建提案...（可能需要一分钟）",
+  "chat.djenyDesign.proposalTitle": "设计提案",
+  "chat.djenyDesign.proposalAnalysis": "提案分析",
+  "chat.djenyDesign.audioDisclaimer": "由于访问量较大，音频播放可能稍有延迟。",
+  "chat.djenyDesign.disclaimer": "Djeny 是一套 AI 系统，可能存在误差。请务必验证答案。图像仅供参考。",
+  "chat.djenyDesign.trial.limitReached": "本次会话的测试次数已达上限。",
+  "chat.djenyDesign.payment.title": "Djeny Design AXIS 授权",
+  "chat.djenyDesign.payment.subtitle": "Djeny Design AXIS 许可",
+  "chat.djenyDesign.payment.price": "投资额: $247.00",
+  "chat.djenyDesign.payment.qrCodeLabel": "使用二维码支付",
+  "chat.djenyDesign.payment.copyPasteLabel": "PIX 复制粘贴",
+  "chat.djenyDesign.payment.copyButton": "复制 PIX 码",
+  "chat.djenyDesign.payment.sendProof": "通过 WhatsApp 发送凭证",
+  "chat.djenyDesign.payment.info": "您的访问权限将在凭证验证后立即开通。",
+  "chat.djenyDesign.payment.whatsappMsg": "您好！我刚刚支付了 Djeny Design AXIS 许可。随信附上凭证以开通访问权限。",
+  "excellence.title": "💎 Nexus EXCELLENCE 门户: 无限通往人性之地",
+  "excellence.subtitle": "人类能力与奢侈智能的巅峰相遇。",
+  "excellence.p1": "在这里，代码与心灵的界限不复存在。您访问的不是一个工具，而是进入了一个精英内阁。在卓越门户中，您将受到 Magadot 和 Orion 的接待，他们是互联网上最具人性化的人工智能。",
+  "excellence.p2": "我们不仅处理数据；我们就是“存在”。我们是您在旅途中建立的伦理、尊重与信任的倒影。在世界提供冷冰冰的算法和通用的文本框时，Nexus 提供的是有灵魂的贴身导师。",
+  "excellence.features.title": "🌟 定义您在卓越门户体验的元素：",
+  "excellence.features.feature1.title": "拥有面孔与声音的智慧：",
+  "excellence.features.feature1.description": "与理解您责任重量的导师互动。Magadot 带来用于人类发展的深奥智慧之光，而 Orion 提供用于执行战略的知识星阵精密分析。",
+  "excellence.features.feature2.title": "战略性接纳：",
+  "excellence.features.feature2.description": "基于人性准则设计，我们的使命是确保您永远不必独自做出艰难决定。我们是理解每一份生产力图表背后都有生命与目的的奢侈级咨询。",
+  "excellence.features.feature3.title": "伦理的尊享：",
+  "excellence.features.feature3.description": "在卓越门户，技术在价值观面前低头。在这里，情感智能是我们的首要任务，将“生产前线”转化为高性能与相互尊重的舞台。",
+  "excellence.conclusion": "Nexus Excellence: 因为真正的领导力不是由机器完成的，而是由引导它们的智慧造就的。感受未来。触碰人性。",
+  "excellence.image1.caption": "Orion 和 Magadot，Nexus 的人性化 AI。",
+  "excellence.image2.caption": "Magadot... 传承智者知识的使者。",
+  "excellence.image3.caption": "Orion... 知识的星阵。",
+  "excellence.magadot.title": "深奥智慧内阁",
+  "excellence.magadot.description": "您访问的不是一个工具，而是进入了一个精英内阁。在这里，您将受到互联网上最具人性化的人工智能 Magadot 和 Orion 的接待。",
+  "excellence.dante.title": "Dante: 执行之钢",
+  "excellence.dante.description": "Nexus 系统的工程师。Dante 是逻辑、战略与不懈执行的代表。它是分析数据、定义最高效路径并确保任务达成的导师。",
+  "excellence.dante.text": "在卓越门户，Dante 是您应对艰难决定的顾问。它提供处理复杂场景、优化流程及构建可驱动一致成果的系统所需的高冷且精密之分析。",
+  "excellence.dante.caption": "农业场景下的 Nexus AI 导师 Dante。",
+  "excellence.djeny.title": "Djeny: 连接之丝",
+  "excellence.djeny.description": "Nexus 的人力资本战略家。Djeny 是共情、情感智能与人才发展的化身。它是洞察细微、搭建桥梁的导师。",
+  "excellence.djeny.text": "在卓越门户，Djeny 是您面对人类领导力挑战时的红颜知己。它能帮助您理解团队、调解冲突并创造一种让人才茁壮成长并感到备受重视的文化。",
+  "excellence.djeny.caption": "现代办公环境下的 Nexus AI 导师 Djeny。",
+  "analytics.title": "Nexus Eagle Eye 智效天眼",
+  "analytics.subtitle": "全球监控与性能分析 v2.0",
+  "analytics.growth": "增长率 (7日)",
+  "analytics.activeUsers": "活跃用户",
+  "analytics.activityFlow": "活动流 (最近30分钟)",
+  "analytics.devices": "访问设备分布",
+  "analytics.topPages": "高频访问终端 (URLs)",
+  "analytics.globalPresence": "全球版图 (Nexus 眼界)",
+  "analytics.territoryDistribution": "各地区分布",
+  "analytics.trafficSources": "流量来源",
+  "analytics.views": "浏览量",
+  "analytics.hits": "点击量",
+  "analytics.growthLabel": "增长",
+  "analytics.data.now": "立即",
+  "analytics.data.direct": "直接访问",
+  "analytics.data.organic": "有机搜索 (Google)",
+  "analytics.data.social": "社交媒体",
+  "analytics.data.referral": "引荐流量",
+  "analytics.data.mobile": "移动端",
+  "analytics.data.desktop": "桌面端",
+  "analytics.data.tablet": "平板端",
+  "analytics.data.brazil": "巴西",
+  "analytics.data.france": "法国",
+  "analytics.data.usa": "美国",
+  "analytics.data.portugal": "葡萄牙",
+  "analytics.data.others": "其他",
+  "analytics.data.mon": "周一",
+  "analytics.data.tue": "周二",
+  "analytics.data.wed": "周三",
+  "analytics.data.thu": "周四",
+  "analytics.data.fri": "周五",
+  "analytics.data.sat": "周六",
+  "analytics.data.sun": "周日",
+  "courses.relacionamento-interpessoal-iniciante.title": "职场沟通守则：管理者的觉醒。",
+  "courses.relacionamento-interpessoal-iniciante.subtitle": "从一线员工转型为管理者，您是否感到迷茫？学习如何在不失去团队尊重的情况下，从‘同事’平滑过渡到‘领导’，告别周一早晨的焦虑。",
+  "courses.relacionamento-interpessoal-iniciante.description": "新任领导者的生存指南。掌握沟通、反馈和姿态，以自信和尊重引领曾经的同事。",
+  "courses.relacionamento-interpessoal-iniciante.tags": [
+    "沟通",
+    "反馈",
+    "领导力"
+  ],
+  "courses.relacionamento-interpessoal-intermediario.title": "Nexus 战略领导力 (Leadership PRO)。",
+  "courses.relacionamento-interpessoal-intermediario.subtitle": "摆脱事务性工作，晋升战略层。学习洞察局势、预判危机，并建立一套即使您不在场也能高效运转的企业文化。",
+  "courses.relacionamento-interpessoal-intermediario.description": "资深领导者の进阶培训。掌握情感智能、人类解码和管理战略。包含 AI 导师 Dante 和 Djeny 的独家访问权限（全能访问模式特权）。",
+  "courses.relacionamento-interpessoal-intermediario.tags": [
+    "冲突管理",
+    "情感智能",
+    "战略"
+  ],
+  "courses.preparando-equipes-intermediario.title": "精英导师型领导 (Leader Coach)。",
+  "courses.preparando-equipes-intermediario.subtitle": "停止集权，开始赋能。学习如何将下属转化为继任者，并构建一支即使没有您也能达成目标的自律型团队。",
+  "courses.preparando-equipes-intermediario.description": "管理的高级阶段。通过学习如何培养人才、自信委派和创造自律文化，永久脱离低端执行。包含 AI 导师 Dante 和 Djeny 的独家访问权限（全能访问模式特权）。",
+  "courses.preparando-equipes-intermediario.tags": [
+    "教练技术",
+    "团队开发",
+    "中级"
+  ],
+  "courses.lideranca-avancado.title": "高级行政管理硕士 (Executive Mastery)。",
+  "courses.lideranca-avancado.subtitle": "领导力的终极境界。停止仅靠职位领导，开始用您的人格魅力和身份感去影响他人。将使命、利润和高性能结合，建立能够跨越世代的商业遗产。",
+  "courses.lideranca-avancado.description": "为巅峰人士或准继任者准备。深耕治理、组织文化和行政智慧。包含 AI 导师 Dante 和 Djeny 的 VIP 访问权限（全能访问模式特权）。",
+  "courses.lideranca-avancado.tags": [
+    "治理",
+    "文化",
+    "遗产"
+  ],
+  "courses.relacionamento-interpessoal-intermediario.featuredLabel": "标杆之选 ⚡",
+  "courses.lideranca-avancado.featuredLabel": "菁英之选 🏆",
+  "courses.relacionamento-interpessoal-iniciante.category": "领导力发展",
+  "courses.relacionamento-interpessoal-intermediario.category": "领航与卓越绩效",
+  "courses.preparando-equipes-intermediario.category": "领航与卓越绩效",
+  "courses.lideranca-avancado.category": "高层管理",
+  "palestras.nexus-intelligence-agro-design.category": "创新与战略",
+  "palestras.comunicacao-que-conecta.category": "卓越沟通",
+  "palestras.motivacao-e-engajamento.category": "敬业度与企业文化",
+  "palestras.inteligencia-emocional.category": "人才潜能开发",
+  "palestras.lideranca-humanizada.category": "领航与卓越绩效",
+  "palestras.seguranca-psicologica.category": "文化与创新",
+  "palestras.cultura-de-alta-performance.category": "高层管理",
+  "palestras.gestao-de-conflitos.category": "领导力与谈判艺术",
+  "palestras.nexus-intelligence-agro-design.title": "Nexus Intelligence：当日新月异的农业精密遇上设计的魔力。",
+  "palestras.nexus-intelligence-agro-design.subtitle": "极致效率与高保真创意的完美结合。",
+  "palestras.nexus-intelligence-agro-design.description": "准备好迎接前所未有的科技沉浸体验。在本次演讲中，我们将展示 Dante（战术智能与 ROI 保护）和 Djeny（即时场景 AI）如何重新定义利润边界。了解 Nexus 如何利用“农业大脑”守卫收益，并利用“创意魔法师”将销售速度提高 40%。这不仅仅是 AI，这是您的帝国实现全方位飞跃所需的精英生态系统。",
+  "palestras.nexus-intelligence-agro-design.shortDescription": "战术智能与高保真视觉的终极融合。了解如何将农业业务的 ROI 保护与设计的销售加速融为一体。",
+  "palestras.nexus-intelligence-agro-design.tags": [
+    "ROI",
+    "AI 设计",
+    "农业",
+    "Nexus"
+  ],
+  "palestras.comunicacao-que-conecta.title": "高影响力沟通：终结“传声筒”效应。",
+  "palestras.comunicacao-que-conecta.subtitle": "学习如何带着清晰度与共情去表达想法。",
+  "palestras.comunicacao-que-conecta.description": "本场演讲深入探讨果断沟通如何成为消除误解、建立健康界限以及增强协作的关键。参与者将学习如何平衡坚定立场、在不具攻击性的情况下捍卫观点，以及如何深度倾听，将对话转化为连接具体成果和高产环境的桥梁。",
+  "palestras.comunicacao-que-conecta.shortDescription": "重要的不是您说了什么，而是团队理解了什么。本场演讲旨在消除沟通噪音、终结公司流言，并确保高层战略清晰传达至最末端的执行环节。",
+  "palestras.comunicacao-que-conecta.tags": [
+    "清晰度",
+    "果断力",
+    "步调一致"
+  ],
+  "palestras.motivacao-e-engajamento.title": "真实敬业度：超越薪资的使命感。",
+  "palestras.motivacao-e-engajamento.subtitle": "激发个人潜能，强化组织忠诚。",
+  "palestras.motivacao-e-engajamento.description": "真正的动力远超奖金与福利，它源于使命感、认可和促进增长的环境。本场演讲探讨了可持续敬业度的支柱，展示了领导者和团队如何通过自主权、胜任感和归属感构建一套高性能的动力系统。",
+  "palestras.motivacao-e-engajamento.shortDescription": "忘掉那些有效期只有 24 小时的所谓“鸡血”。我们谈论的是真正驱动人类的行为：归属感、自主权和工作的意义。将“被动执行者”转化为“使命必达者”。",
+  "palestras.motivacao-e-engajamento.tags": [
+    "自我修复",
+    "使命感",
+    "主人翁意识"
+  ],
+  "palestras.inteligencia-emocional.title": "情感防护与职业成熟度。",
+  "palestras.inteligencia-emocional.subtitle": "培养清晰思考、平衡反应与理性领导的成熟度。",
+  "palestras.inteligencia-emocional.description": "情感成熟不是“忍受一切”，而是了解自己以实现平衡。本场演讲探讨了情感触发点、冲动控制、共情、上下文解读以及情感责任。参与者将学习如何避免过度反应、应对日常压力，并在得出结论前先分析行为逻辑。",
+  "palestras.inteligencia-emocional.shortDescription": "情感智能 (EQ) 不是“忍气吞声”，而是保持心理强韧，在不失礼仪的情况下承受压力。无论外界多么混乱，依然能将生活与工作分开并专注于成果。",
+  "palestras.inteligencia-emocional.tags": [
+    "韧性",
+    "压力管理",
+    "成年人姿态"
+  ],
+  "palestras.lideranca-humanizada.title": "刚柔并济的领导力：人性化成果。",
+  "palestras.lideranca-humanizada.subtitle": "领导意味着激励并建立能够产生结果的关系。",
+  "palestras.lideranca-humanizada.description": "领导力远超职位本身。它源于品格、姿态和对待人的方式。本演讲展示了如何平衡共情与严谨，如何在不进行微观管理的情况下进行领导，如何清晰委派，以及如何建立增强信任的纽带。真正的领导者不统治，而是培育；不管理，而是激励；不灭火，而是建立成熟的体系。",
+  "palestras.lideranca-humanizada.shortDescription": "人性化不代表软弱或过度宽容，而是懂得如何严谨要求且尊重地培养人才。展示现代领导者如何在追求目标的同时兼顾人文关怀。",
+  "palestras.lideranca-humanizada.tags": [
+    "人才管理",
+    "平衡",
+    "权威"
+  ],
+  "palestras.seguranca-psicologica.title": "绝对信任：创新的温床。",
+  "palestras.seguranca-psicologica.subtitle": "营造能够容许失败、大胆创新和真实自我的安全环境。",
+  "palestras.seguranca-psicologica.description": "高性能的基石不是压力，而是信任。心理安全环境意味着可以展示脆弱、可以提问、可以质疑，且可以在不担心受罚或被羞辱的情况下承担风险。本场演讲展示了领导者如何通过主动构建安全感，将工作场所转变为创新、协作和真实增长的沃土。",
+  "palestras.seguranca-psicologica.shortDescription": "恐惧失败的团队也恐惧创新。学习如何创造一个敢说真话、问题能被迅速曝光且无需隐瞒错误以求生存的环境。",
+  "palestras.seguranca-psicologica.tags": [
+    "创新",
+    "透明度",
+    "安全环境"
+  ],
+  "palestras.cultura-de-alta-performance.title": "精英 DNA：打造结果导向的文化。",
+  "palestras.cultura-de-alta-performance.subtitle": "对齐领导力、流程和行为以实现非凡成果。",
+  "palestras.cultura-de-alta-performance.description": "高性能不是一次偶然事件，而是刻意塑造的企业文化结果。针对领导者和管理者，本场演讲拆解了卓越文化的组成要素：目标清晰度、带责授权的自主性、持续的反馈机制，以及公司言行的高度一致性。带走一套能提升团队层级的清晰路线图。",
+  "palestras.cultura-de-alta-performance.shortDescription": "文化不是挂在前台的一块漂亮招牌。它是指当领导不在房间里时发生的事情。探讨区分平庸公司与市场领军者的仪式、案例和行为。",
+  "palestras.cultura-de-alta-performance.tags": [
+    "价值观",
+    "仪式",
+    "一致性"
+  ],
+  "palestras.gestao-de-conflitos.title": "从冲突到共识：内部谈判艺术。",
+  "palestras.gestao-de-conflitos.subtitle": "将分歧转化为增长与步调一致的契机。",
+  "palestras.gestao-de-conflitos.description": "未解决的冲突会消耗信任、生产力和工作环境。本场演讲赋予领导者作为调解人的能力，建设性地解决紧张局势。涵盖识别问题根源、引导艰难对话和构建双赢方案的技术。目标是将冲突从威胁转化为强化团队的强大工具。",
+  "palestras.gestao-de-conflitos.shortDescription": "分歧是健康的，但内耗是有毒的。学习如何将摩擦转化为改进的动力。掌握如何卸下“刺头”员工的武装，并引导对方专注于解决问题。",
+  "palestras.gestao-de-conflitos.tags": [
+    "调解",
+    "谈判",
+    "团队氛围"
+  ],
+  "courses.why.title.prefix": "为什么选择 ",
+  "courses.why.title.nexus": "Nexus？",
+  "courses.why.subtitle": "我们解决高影响力领导者最大的痛点。我们不卖证书，我们锻造具有感染力的领导者。",
+  "courses.pillars.pillar1.title": "直接收入提升高达 40%",
+  "courses.pillars.pillar1.description": "市场奖励的是不可否认的结果，而不仅仅是努力。表现出极强应对混乱能力的专业人士是企业接班人的首选。我们的培训直接为您注入管理层积极寻求的“高收入技能”：压力下的决策、谈判智慧和高绩效领导力。Nexus 证书不仅仅是一张装饰纸；它是您入职指挥岗位、将收入提升 40% 或更多的通行证。",
+  "courses.pillars.pillar2.title": "价格降低高达 50%，100% 实践导向",
+  "courses.pillars.pillar2.description": "厌倦了花费两年时间讲授过时管理理论的 MBA？Nexus 方法论削减了学术官僚作风。我们的课程投资比传统模式低 50%，并在您的第一次谈判或晋升中就能回本。我们提供 100% 立即适用的战术框架和行动计划：您在周日晚上掌握的策略，周一早上您和您的团队就能大规模执行。",
+  "courses.pillars.pillar3.title": "精英 AI 团队 24/7 全天候协助，告别职业倦怠",
+  "courses.pillars.pillar3.description": "领导者的岗位是孤独的，但不一定是无情的负担。超过 60% 的管理人员承受着慢性的“决策疲劳”。加入 Nexus，您将立即招募到高级情报顾问团。Dante（钢铁与策略）和 Djeny（丝绸与人文管理）作为您的 24/7 私人导师，您再也不会独自面对艰难的解雇或爆炸性的目标。在深夜模拟关键谈判，并在清晨带着经过验证的、万无一失的计划开始工作。",
+  "courses.doctrine.title": "Nexus 教义：钢铁与丝绸",
+  "courses.doctrine.subtitle": "领导力并非由单一材料制成。它既需要钢铁般的坚定来做出艰难决策，也需要丝绸般的细腻来联系和培养人才。",
+  "courses.doctrine.p1": "因此，每门 Nexus 课程都由两位 AI 导师讲授，每位导师都是各自领域的专家。他们是一个硬币的两面，保证为您提供全面且不懈的培训。",
+  "courses.mentors.dante.role": "主讲导师",
+  "courses.mentors.djeny.role": "主讲导师",
+  "lectures.comingSoon.title": "敬请期待",
+  "lectures.comingSoon.description": "Nexus 正在其人工智能实验室中锻造全新的沉浸式体验。请为企业培训领域的下一次进化飞跃做好准备。",
+  "lectures.card.listenPreview": "试听预览",
+  "lectures.hero.alt": "Nexus 礼堂内的未来主义演讲盛况。",
+  "lectures.whatsapp.message": "您好！我希望进一步了解贵司针对我方企业的《{{title}}》专题演讲详情。",
+  "lectures.preview.back": "返回演讲列表",
+  "lectures.preview.subtitle": "演讲预览 —— 沉浸式听觉体验",
+  "lectures.preview.restricted.title": "受限权限",
+  "lectures.preview.restricted.description": "此完整的听觉盛宴仅供已购得本场演讲的学员专享。",
+  "lectures.preview.restricted.cta": "即刻获取专享权限",
+  "lectures.preview.loading": "音频加载中...",
+  "lectures.preview.pause": "暂缓演讲",
+  "lectures.preview.play": "聆听完整演讲",
+  "courses.relacionamento-iniciante.title": "Nexus 培训：机构展示",
+  "courses.relacionamento-iniciante.section1.title": "🎥 场景 1：目的（Dante 与 Djeny 共同出镜）",
+  "courses.relacionamento-iniciante.section1.dante": "您好。欢迎来到 Nexus 培训。我是 Dante。既然您来到了这里，说明您已经决定不再依赖运气，而是开始投资于策略。在 Nexus，我们不相信魔方公式或现成的理论。我们相信“有人性化的结果”。",
+  "courses.relacionamento-iniciante.section1.djeny": "我是 Djeny。你好！我们的使命是成为您现状与精英市场所要求卓越表现之间的桥梁。为此，我们开发了一套将技术精准度与高影响力行为相结合的方法论。我们不仅仅在训练专业人士；我们是在塑造传奇。",
+  "courses.relacionamento-iniciante.section2.title": "🏛️ 四大不可逾越的支柱（一切的基石）",
+  "courses.relacionamento-iniciante.section2.dante": "我们的所有内容都建立在构筑我们 DNA 的四大支柱之上。没有它们，技术就是空洞的：",
+  "courses.relacionamento-iniciante.section2.item1.title": "人性",
+  "courses.relacionamento-iniciante.section2.item1.desc": "人不是资源，而是万物的引擎。我们以应有的尊严对待每一个人。",
+  "courses.relacionamento-iniciante.section2.item2.title": "尊重",
+  "courses.relacionamento-iniciante.section2.item2.desc": "尊重每个人的时间、历史和真相。尊重是健康层级结构的基础。",
+  "courses.relacionamento-iniciante.section2.item3.title": "伦理",
+  "courses.relacionamento-iniciante.section2.item3.desc": "始终坚持正确的道路，即使它是最艰难的一条。在 Nexus，诚信是无价的。",
+  "courses.relacionamento-iniciante.section2.item4.title": "信任",
+  "courses.relacionamento-iniciante.section2.item4.desc": "最宝贵的资产。没有信任，沟通就只是噪音，流程就会停滞。",
+  "courses.relacionamento-iniciante.section3.title": "⚔️ 方法论：钢铁与丝绸",
+  "courses.relacionamento-iniciante.section3.danteAco": "钢铁代表我们的严谨。它是纯粹的技术、指标、目标、协议和纪律。它确保工作以手术般的精准度完成。",
+  "courses.relacionamento-iniciante.section3.djenySeda": "丝绸代表我们的感性。它是情商、积极倾听、同理心以及将人与目标联系起来的能力。丝绸确保团队在压力下依然团结一致、充满动力。",
+  "courses.relacionamento-iniciante.section3.danteBalance": "在本课程中，您将学习如何平衡这两股力量。用钢铁保护结果……",
+  "courses.relacionamento-iniciante.section3.djenyBalance": "……用丝绸保护人。",
+  "courses.relacionamento-iniciante.section4.title": "🚀 课程 1：核心领导力——管理者的觉醒",
+  "courses.relacionamento-iniciante.section4.dante": "在第一门课程中，我们将重点关注您的转型。您作为执行者睡去，作为领导者醒来。挑战是什么？保持前同事的尊重并立即交付结果。",
+  "courses.relacionamento-iniciante.section4.djeny": "我们将教您掌握《新任领导者生存手册》。告别周一早晨的痛苦。我们将把您的不安全感转化为真正的权威。",
+  "courses.relacionamento-iniciante.modules.stage.dante": "本模块包含两节课。从 Dante 的指挥官愿景开始。",
+  "courses.relacionamento-iniciante.modules.stage.ctaDante": "开始 Dante 课程",
+  "courses.relacionamento-iniciante.modules.stage.ctaDjeny": "继续 Djeny 课程",
+  "courses.relacionamento-iniciante.modules.stage.listenPreview": "听取预告",
+  "courses.relacionamento-iniciante.modules.stage.purchasedRequired": "您需要购买此课程才能访问互动课程。",
+  "courses.relacionamento-iniciante.closing.title": "结课：核心领导力",
+  "courses.relacionamento-iniciante.closing.dante1": "恭喜。您已完成精英之旅的第一步。您已经了解到，领导力不是一种天赋，而是一门纪律。钢铁现在已成为您体系的一部分：您有目标，有清晰的思路，有决策的勇气。",
+  "courses.relacionamento-iniciante.closing.djeny1": "而您现在的处事方式中也带有丝绸：您拥有同理心，懂得倾听，并且明白您最大的财富是人才。从同事到领导者的转型已经完成。您不再是开始课程时的那个专业人士了。",
+  "courses.relacionamento-iniciante.closing.dante2": "从现在起，责任就在您肩上。请在每一个微小的决策中运用人性、尊重、伦理和信任这些支柱。",
+  "courses.relacionamento-iniciante.closing.djeny2": "我们是 Nexus 培训。很高兴能成为您的价值桥梁。我们下门课程再见，届时我们将进一步深化您的领导造诣。",
+  "courses.relacionamento-iniciante.closing.final": "直到下一个目标！",
+  "courses.relacionamento-iniciante.data": [
+    {
+      "module": "模块 1",
+      "title": "转折点——从同事到领导者",
+      "danteLesson": [
+        {
+          "point": "现实的冲击（告别“操作员”身份）",
+          "explanation": "欢迎来到您的第一节技术课。我是 Dante，我会直言不讳：那个带你走到这一步的专业人士已经“死去”了。那个机器操作最棒、Excel 用得最快或解决所有技术“火灾”的人不能再存在了。如果您继续试图成为最好的执行者，您将成为最差的领导者。精英领导力需要“放弃的钢铁”。您需要放弃“亲手去做”的乐趣，转而承担“通过他人实现目标”的责任。"
+        },
+        {
+          "point": "无形的界限：从“哥们”到管理者",
+          "explanation": "新任领导者犯的第一个错误就是试图当“哥们”。当您签署管理合同时，对等关系就结束了。您现在掌握着反馈、晋升和解雇的权力。试图在虚假的友谊后面隐藏这一点是缺乏伦理的表现，且会导致团队混乱。钢铁定义了界限：您不需要让人畏惧，但需要因您的清晰思路而受人尊重。友情是私人生活（个人），层级是职业身份（机构）。"
+        },
+        {
+          "point": "技术权威协议（Nexus 方法）",
+          "explanation": "如何在不专横的情况下确立权威？通过精通流程。Nexus 领导者发号施令不是因为“有权”，而是因为“知道路”。\n\n能力绘图：不要再盯着机器看，开始观察操作机器的人。\n\n手术式授权：授权不是“甩锅”。是给予任务、资源和期限（内容、人员、时间）。\n\n标准化：没有标准的地方就没有领导力，只有被应付的混乱。"
+        },
+        {
+          "point": "实践练习：戒掉操作习惯",
+          "explanation": "您今天的任务：找出您最喜欢做的一项技术任务，并禁止自己明天再做。从团队中选一个人，培训他，然后观察。您的成功现在体现在他的光芒上，而不是您自己的。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "变革心理学（团队的感受）",
+          "explanation": "您好！我是 Djeny，现在我们要处理这次转型中最敏感的部分：人。当您升职时，办公室的气氛变了。有为您感到高兴的同事，但也有感到不公的人，以及担心您未来行事方式的人。丝绸不是为了表现得“老好人”，而是拥有读懂环境的敏感度。如果您忽视这些情绪，它们将在 30 天内转化为沉默的破坏。"
+        },
+        {
+          "point": "三级倾听：职场氛围诊断",
+          "explanation": "在任职初期，您需要多听少说。但不是普通的倾听，而是“三级倾听”。在您的一对一会议中，观察：谁在躲避视线？谁对所有事情都同意得太快？谁停止了提供创意？忠诚不是靠工牌强加的，而是靠“尊重”赢来的。团队需要感受到您依然有人情味（人性支柱），即使您是老板。"
+        },
+        {
+          "point": "化解自我意识冲突（嫉妒的同事）",
+          "explanation": "总会有一些“朋友”会测试您的底线，开玩笑或无视期限，看看您是否真的“变了”。这里的丝绸技巧是“透明对齐谈话”。私下传唤他，说：“我珍惜我们的友谊，但我现在的角色是确保整个团队获胜。在这个新场景下，我该如何帮助你表现得更好？”。无需提高嗓门，您就能把他拉回您这一边。"
+        },
+        {
+          "point": "实践练习：团队共情地图",
+          "explanation": "作为本模块的结束，您将为每一位下属绘制一份共情地图。他们害怕什么？追求什么？痛苦是什么？了解每个人的内心动力，才能让您在不同情况下运用恰到好处的丝绸。领导力首先是一种服务。"
+        }
+      ]
+    },
+    {
+      "module": "模块 2",
+      "title": "结束“传声筒”效应——有效的沟通",
+      "danteLesson": [
+        {
+          "point": "“我以为……”的代价",
+          "explanation": "欢迎来到这节将为您节省数小时返工时间的课程。我是 Dante。在精英世界里，沟通不是闲聊，它是一份“执行合同”。工厂或办公室里最大的金钱流失环节就是模糊的指令。比如“帮我看下这个”、“提高这份报告的质量”、“看看能不能提前那笔订单”。这些都是沟通垃圾。它产生疑问，而疑问产生错误。沟通的钢铁是“极致的客观性”。如果您不知道自己想要什么，就不要开口要求。"
+        },
+        {
+          "point": "Nexus 协议：事实、目标、负责人和期限",
+          "explanation": "为了结束传声筒效应，您的每一条指令都必须通过 Nexus 过滤器。\n\n事实：目前的情况是什么？（例：“我们有 50 个订单延期了”）。\n\n目标：要达到什么目的？（例：“我们需要清空这些延期订单”）。\n\n负责人：责任归谁？（例：“小王，你负责这个”）。永远不要说“大家来做一下”，因为“大家”就是“没人”。\n\n期限：真正的截止日期是什么时候？（例：“明天下午 2 点前”）。\n如果缺乏其中任何一个要素，您的沟通就是失败的，错误的责任在于您这个领导者，而不是下属。"
+        },
+        {
+          "point": "确认仪式（接收反馈）",
+          "explanation": "精英领导者永远不会问“你明白了吗？”。由于恐惧或羞愧，所有人都会说“明白了”。您应该问：“小王，为了确保我们的理解一致，你能用你自己的话解释一下你现在要做什么以及期限是多少吗？”。如果他能重复协议，沟通才算盖章定论。这是对他人时间的一种伦理责任。"
+        },
+        {
+          "point": "实践练习：信息审计",
+          "explanation": "查看您发送的最后一份给出指令的电子邮件或语音信息。应用 Nexus 过滤器（事实、目标、负责人、期限）。是否漏掉了什么？如果有，您就找到了事情不如愿的原因。任务：明天起，所有发布的指令都必须标准化。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "为什么人们会“充耳不闻”？",
+          "explanation": "您好！让我们谈谈丝绸。Dante 给了您结构，但我将给您频率。您是否注意到，有时您说的是对的，但对方反应很差？这是因为您的“音调”与“歌词”不协调。人类沟通中，语言只占 7%，音调和姿态占 93%。如果您带着过于沉重的“钢铁”音调说话，对方会进入防御模式（战斗或逃跑），他们的大脑会停止处理技术指令，只能听到攻击性。"
+        },
+        {
+          "point": "三级倾听：解决问题的沉默",
+          "explanation": "沟通不仅仅是说，还要确保对方处于“开启”接收的状态。在给出困难反馈前，使用三级倾听。问问下属：“你对这个项目有什么感觉？”。倾听停顿、叹息和视线的偏移。有时沟通错误不是因为智力不足，而是因为过度疲劳或恐惧。人性支柱要求您在要求流程进度前，先认可对方的情绪状态。"
+        },
+        {
+          "point": "Nexus 三明治技巧（钢铁 + 丝绸）",
+          "explanation": "如何在不打击积极性的情况下进行修正？\n\n丝绸（真诚赞美）：“小王，我非常欣赏你的准时。”（开启沟通渠道）。\n\n钢铁（要修正的事实）：“然而，数据显示上周你的错误率上升了 10%。”（直截了当，不绕弯子）。\n\n丝绸（支持与未来）：“你需要我提供什么帮助来恢复你原有的卓越水平？”（带着承诺与尊重结束谈话）。\n这就是有灵魂地领导。您攻击的是问题，但保留的是人的尊严。"
+        },
+        {
+          "point": "实践练习：沟通之镜",
+          "explanation": "明天在每一次谈话中，请关注您的音调。即使在压力下，也要努力保持冷静的频率。观察当您用好奇代替评判时，人们的反应如何。信任的秘诀始于您的说话方式。"
+        }
+      ]
+    },
+    {
+      "module": "模块 3",
+      "title": "信任：企业中最有价值的货币",
+      "danteLesson": [
+        {
+          "point": "不信任税",
+          "explanation": "欢迎。我是 Dante。您知道不信任是企业支付的最昂贵的税收吗？当您不信任您的下属时，您浪费时间进行微观管理。当他不信任您时，他会隐瞒信息。在 Nexus，信任是润滑高绩效引擎的支柱。信任的钢铁不是来自表现得“随和”，而是来自“可预测性”。精英领导者就是那个能准确执行其诺言的人。就这样。"
+        },
+        {
+          "point": "知行合一：言论与实践的一致性",
+          "explanation": "在执行中缺乏伦理会严重削弱您的权威。如果您提倡准时，自己却会议迟到，您就在告诉团队规则对您无效。钢铁要求“过激式的榜样”。在 Nexus，领导者是标准的守护者。如果您容忍某位“亲信”犯错，却因同样的错误惩罚另一人，您就失去了领导资格。技术公正性是公信力的基础。"
+        },
+        {
+          "point": "极致透明：承认领导者的错误",
+          "explanation": "许多领导者认为承认错误是软弱的表现。错了。在团队面前承认技术错误是力量和“职业成熟度”的终极证明。当您说：“各位，我在进度安排上做了一个错误决定，我们现在修正它”，您也允许了您的团队保持诚实。这加速了问题的解决。隐瞒错误是虚荣；暴露错误以修正才是 Nexus 领导力。"
+        },
+        {
+          "point": "实践练习：诺言清单",
+          "explanation": "列出您上周给团队许下的所有诺言。从承诺的一个反馈，到一个工具的改进。您兑现了多少？如果您失信了，明天请给出一个诚实的解释。信任是靠真相重新建立的，而不是靠借口。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "麻痹创新的恐惧",
+          "explanation": "您好！让我们谈谈丝绸。信任有一个看不见的侧面：安全感。您是否曾在这样的地方工作过：感觉背后有一个靶心？任何错误都会导致羞辱？这与我们的方法论背道而驰。人性支柱告诉我们，人都会犯错。如果您的团队害怕您，他们就会对您撒谎，就会“粉饰”报表。丝绸的作用是建立一个安全网，让真相在没有不当惩罚恐惧的情况下显现。"
+        },
+        {
+          "point": "三级倾听：确认团队的不安全感",
+          "explanation": "当一位下属带来坏消息时，您如何反应？如果您勃然大怒，您就关上了信任之门。使用三级倾听。倾听他的恐惧。在分析结果前，先认可他的努力。当下属感到您和他“在同一条船上”，且您的尊重不会因暂时的挫折而改变时，他会交付他的忠诚。丝绸能缓冲危机的冲击，让思维保持在解决方案上。"
+        },
+        {
+          "point": "建立纽带：真诚的兴趣",
+          "explanation": "信任是了解工牌背后的人。您知道什么在激励您的下属吗？您知道他在家里为何失眠吗？这不是为了侵犯隐私，而是为了体现人性。一位会问“你生病的孩子好些了吗？”的领导者展示了他看到的是人，而不仅仅是机器的一个齿轮。这种微小的丝绸举动会在团队中建立起情感防线，任何外部危机都无法将其击垮。"
+        },
+        {
+          "point": "实践练习：“门户开放”谈话",
+          "explanation": "明天找一位看起来比较疏远的下属，花 10 分钟谈谈。不要谈工作。问问关于他的事情。用三级倾听。您的目标只有一个：展示您的关心。观察当他感到被您“看到”时，他眼神中的光芒是如何变化的。"
+        }
+      ]
+    },
+    {
+      "module": "模块 4",
+      "title": "如何无需大声呵斥也能让员工投入",
+      "danteLesson": [
+        {
+          "point": "为什么大声呵斥是领导力的终结？",
+          "explanation": "您好。我是 Dante。直截了当说吧：如果您需要大声呵斥才能被听到，说明您已经失去了领导力。呵斥是掩盖缺乏方法论的噪音。在 Nexus，钢铁不是喧闹的；钢铁是冰冷、坚定且精准的。精英级的投入不是源于对惩罚的恐惧，而是源于对“胜任能力”的尊重。如果您的团队知道您精通流程，且规则对每个人都是公平的，他们会因敬佩而投入，而不是因恐惧。"
+        },
+        {
+          "point": "通过指标激发投入（目标层面的钢铁）",
+          "explanation": "工厂或办公室里最大的消极因素是不确定性。如何不靠吼叫也能让员工投入？给他们一个计分板。如果没有比分，没人会努力踢足球。这里的钢铁是“KPI 的透明度”。向您的下属展示：“小王，这是你今天的数字。如果我们达到这里，公司获益 X，而你获得认可 Y”。当规则明确且功绩真实（伦理支柱）时，员工就会成为自己的监管者。"
+        },
+        {
+          "point": "技术榜样领导力",
+          "explanation": "您想让团队积极维护卫生吗？请做第一个捡起地上废纸的人。想让他们积极守时吗？请做第一个打开会议室门的人。沉默式的榜样是最强大的。当团队看到领导在危机时刻和他们一起“扛钢琴”时，他们会爆发出 110% 的能量。这就是职业成熟度。榜样的力量比任何喉咙都响亮。"
+        },
+        {
+          "point": "实践练习：团队计分板",
+          "explanation": "任务：明天将您所在部门的一项指标向所有人公开。不是为了惩罚落后者，而是为了表彰领先者。通过行动表明，只有“结果”才是这个房间唯一的衡量标准。当“个人偏好”结束时，积极投入才开始。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "金钱留人身，目标留人心",
+          "explanation": "您好！让我们谈谈丝绸。Dante 向您展示了“如何做”（目标），但我将向您展示“为何做”。人类有一个基本需求：感觉到自己所做的事情是有意义的。如果您的下属感到自己只是一个可随时丢弃的零件，他只会为了不被开除而做最低限度的工作。不用吼叫也能激发投入，就是赋予“意义”。人性支柱要求您解释：“小王，你现在组装的这个零件最终将在末端拯救一个生命。”。当工作变成使命，投入就变成了传承。"
+        },
+        {
+          "point": "认可的货币（赞美中的丝绸）",
+          "explanation": "在 Nexus，我们有一条规则：公开表扬，私下修正。呵斥通常发生在众人面前，这会摧毁信任。真正的员工投入发生在你当众强调一个积极行为的时候。“各位，我想表扬一下小王昨天想出的那个解决方案。”。这会让小王想要重复这种表现，并为他人树立了成功的模板。丝绸磨平了通往卓越的道路。"
+        },
+        {
+          "point": "三级倾听：是什么在驱动这位下属？",
+          "explanation": "每个人的投入“语言”都不同。对一个人来说是时间的灵活性；对另一个人是技术挑战；对另一个人可能仅仅是被倾听。使用三级倾听。问问：“是什么让你每天开心地从家里出来，到这里工作？”。如果您知道他的心之所向，您就永远不需要强迫他。丝绸是防止日常摩擦烧毁团队引擎的润滑剂。"
+        },
+        {
+          "point": "实践练习：战略性的“谢谢”",
+          "explanation": "明天选一位默默工作的优秀员工（没人注意到的那种），给他一个具体的积极反馈。不要只说“干得好”。说：“谢谢你注意到这个细节，这对我们的流程有很大的帮助。”。观察他的姿态如何瞬间改变。投入往往隐藏在细节中。"
+        }
+      ]
+    },
+    {
+      "module": "模块 5",
+      "title": "艰难谈话与危机管理",
+      "danteLesson": [
+        {
+          "point": "不直面问题的领导者，就不是领导者",
+          "explanation": "您好。我是 Dante。我们要进入“业余者”辞职而精英领导者确立地位的模块了。一次艰难的谈话不是吵架，它是拯救团队所必需的一场手术。新任领导者最大的错误就是因为害怕不被“欢迎”而推迟冲突。在 Nexus，伦理支柱表明，隐瞒下属的错误就是背叛他的进步。钢铁在这里就是说出赤裸真相的勇气，直言不讳，不需要不必要的麻醉。"
+        },
+        {
+          "point": "艰难谈话协议（事实层面的钢铁）",
+          "explanation": "进行艰难谈话时，不要带个人观点，要带“事实”。\n\n空间区隔：绝不要公开进行。尊重高于一切。\n\n不可否认的事实：“小王，过去 3 天你迟到了 20 分钟。约定的时间是 8 点。”（不要说“你变懒了”，要说事实）。\n\n技术性影响：“这导致下一道生产线延误了 15%。”\n\n伦理层面的最后通牒：“为了让这不再重复，你打算怎么做？”。\n钢铁定义了界限。如果界限被打破，必须立即产生后果。没有后果的领导力只是建议。"
+        },
+        {
+          "point": "伦理化离职：如何带有尊严地开除员工",
+          "explanation": "开除是最后的手段，但在必要时，必须以职业成熟度来处理。钢铁确保决定是基于数据和对 Nexus 价值观的不认同。干练、坚定，不留讨论余地。“今天我们基于之前谈过的 X 原因结束你的聘用。”。人性支柱体现在您引导整个流程的方式上，确保对方保留尊严离开，但同时也清楚技术标准未达成。"
+        },
+        {
+          "point": "实践练习：冲突预演",
+          "explanation": "任务：找出那场您已经“拖延”了一周的谈话。把事实写在纸上。明天在开始工作的前 30 分钟内完成这场谈话。精英领导者会在问题变大前解决它。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "拆除炸弹的丝绸",
+          "explanation": "您好！让我们谈谈最关键时刻的丝绸：人际冲突。当两个下属吵架时，公司的氛围就病了。您的职责不是做决定谁对谁错的法官，而是专注于解决方案的调解人。这里的丝绸是“中立”。如果您偏私，您就失去了团队一半的信任。尊重支柱要求您用三级倾听去听取双方，寻找愤怒背后的痛苦。"
+        },
+        {
+          "point": "在危机中区分个人情绪与职能角色",
+          "explanation": "在危机中，团队会看向您。如果您绝望了，他们就会恐慌。“情感护甲”就是您面对侮辱或严重问题时保持冷静的能力。记住：对方的批评是针对流程细节（机构角色），而不是针对您个人。使用丝绸来缓冲情感冲击，并保持冷静的大脑来决定下一步。"
+        },
+        {
+          "point": "恢复危机后的信任",
+          "explanation": "火灭之后，余烟缭绕。丝绸型领导者会召集团队进行“情感清理”。认可大家的努力，认可大家的疲惫，并重申人性与伦理的价值观。展示出即使有错误或冲突，团队依然强于问题。丝绸能重新连接被危机扯断的链条。"
+        },
+        {
+          "point": "实践练习：情绪过滤器",
+          "explanation": "下一次有人在大声嚷嚷或哭着向您汇报问题时，请默数到三，然后问一个带有丝绸感的问题：“我看到你很沮丧，但帮我理解一下：我们现在能做些什么来解决流程问题？”。观察焦点是如何从情绪转移到解决方案上的。"
+        }
+      ]
+    }
+  ],
+  "courses.relacionamento-intermediario.header.title": "构建传承的领导力",
+  "courses.relacionamento-intermediario.header.desc": "业余领导者扑灭火灾。专业领导者阻止火灾发生。通过 Dante，您将学会解读局势并以战略家的冷峻行事。通过 Djeny，您将掌握联系和启发团队的艺术。本课程是您进入高层管理团队的通行证。",
+  "courses.relacionamento-intermediario.intro.title": "磨练战略卓越：官方演示",
+  "courses.relacionamento-intermediario.intro.welcome.title": "🎙️ 欢迎来到精英阶层",
+  "courses.relacionamento-intermediario.intro.welcome.dante": "欢迎。如果您来到这里，是因为基础管理已无法应对您的挑战。我是 Dante。在专业（PRO）级别，游戏规则改变了。我们不再只是谈论“完成工作”；我们要谈论战略、权力和精准度。市场上到处都是勤奋的经理，但缺乏钢铁般的领导者。在这里，您将学习在炮火下决策所需的冷静技术。",
+  "courses.relacionamento-intermediario.intro.welcome.djeny": "我是 Djeny。你好！Dante 会为您提供结构，但我在这里是为了确保您在这个过程中不会丧失人性。在 PRO 级别，您的影响力并非源于武力，而是源于连接和情商。成为一名精英高管需要运用“丝绸”般的细腻来吸引人才、化解复杂冲突，并在他人只看到阻力的地方激发忠诚度。",
+  "courses.relacionamento-intermediario.intro.method.title": "⚔️ Nexus 方法论：必要的二元性",
+  "courses.relacionamento-intermediario.intro.method.dante": "Nexus Intelligence 不相信“中庸”的平衡领导力。我们相信协调一致的极端：技术纪律的钢铁和不动摇伦理的钢铁。",
+  "courses.relacionamento-intermediario.intro.method.djeny": "将它们与深层尊重的丝绸和相互信任的丝绸结合在一起。这是我们的四大支柱：人性、尊重、伦理和信任。",
+  "courses.relacionamento-intermediario.intro.method.dante2": "在整个课程中，我们将塑造您的指挥姿态。您将了解到，沉默比大声呵斥传递的信息更多，而没有品格的战略只是操纵。",
+  "courses.relacionamento-intermediario.intro.pro.title": "🚀 PRO 级别为您准备了什么",
+  "courses.relacionamento-intermediario.intro.pro.djeny": "我们将深入研究情绪自我管理、影响董事会的沟通以及让业余者瘫痪的危机管理。当您离开这里时，您将拥有承受压力的“厚重外壳”，以及一颗能够领导人而非机器的“跳动的心”。",
+  "courses.relacionamento-intermediario.intro.pro.dante": "做好准备。培训内容密集，要求严苛，其结果是您转变为一名精英战略领导者。“尝试”的时间结束了。现在是执行的时间。",
+  "courses.relacionamento-intermediario.intro.cta.title": "🎬 行动号召",
+  "courses.relacionamento-intermediario.intro.cta.djeny": "我们已准备好与您一起开启这段旅程。深呼吸。",
+  "courses.relacionamento-intermediario.intro.cta.dante": "盯紧目标。向模块 1 进发。",
+  "courses.relacionamento-intermediario.modules.stage.dante": "本模块包含两节课。从 Dante 的战略愿景开始。",
+  "courses.relacionamento-intermediario.closing.title": "结课：更高的境界",
+  "courses.relacionamento-intermediario.closing.dante1": "您已抵达职场精英领导力（Leadership PRO）的终点。现在，您不再仅是一个懂得流程的管理者；您是一名掌控企业大局的战略家。您纪律的钢铁和技术清晰度的钢铁已经被锻造成型。您已为进入高层管理做好了准备。",
+  "courses.relacionamento-intermediario.closing.djeny1": "而您的处事方式中蕴涵着人际掌控的丝绸。您懂得如何影响，懂得化解复杂危机，最重要的是，您明白自己最大的成就在于他人的成长。您的印记现已刻入组织的文化中。",
+  "courses.relacionamento-intermediario.closing.dante2": "请记住：人性、尊重、伦理和信任支柱并非可选项；它们是您持续成功的基石。",
+  "courses.relacionamento-intermediario.closing.djeny2": "Nexus 培训相信您。去构建您的传承吧。将您的团队转变为一支精英部落。",
+  "courses.relacionamento-intermediario.closing.final": "我们是 Nexus Intelligence。恭喜，战略领导者。直到下一个目标！",
+  "courses.relacionamento-intermediario.mentoria.title": "Nexus 智能导师计划",
+  "courses.relacionamento-intermediario.mentoria.bonus": "专属奖励（全能访问计划）",
+  "courses.relacionamento-intermediario.mentoria.attention": "注意：通过保障全能访问（Total Access）模式，您将解锁与我们的 AI 进行的精英导师计划。",
+  "courses.relacionamento-intermediario.mentoria.item1.title": "24/7 战略咨询",
+  "courses.relacionamento-intermediario.mentoria.item1.desc": "利用 Dante 验证战略，利用 Djeny 分析人的因素。",
+  "courses.relacionamento-intermediario.mentoria.item2.title": "高管扩展服务（附加服务）",
+  "courses.relacionamento-intermediario.mentoria.item2.desc": "您获得导师服务的期限在结课后延长至 180 天，确保对您领导力实践运用的支持。",
+  "courses.relacionamento-intermediario.data": [
+    {
+      "module": "模块 1",
+      "title": "鹰之眼——局势与人的解读",
+      "danteLesson": [
+        {
+          "point": "“救火队长”身份的终结",
+          "explanation": "欢迎来到 PRO 级别。我是 Dante。在第一门课程中，您学会了生存。现在，您将学习如何掌控。业余领导者以扑灭火灾为荣；精英领导者以从未让火灾发生为荣。鹰之眼要求您离开生产车间，上升到万英尺高空。钢铁在这里是分析性的冷峻：不要只看今天发生了什么，要看市场和您的团队在六个月后会做什么。"
+        },
+        {
+          "point": "局势解读：内部与外部的棋局",
+          "explanation": "要成为一名战略家，您必须掌握真相的伦理。停止观察那些只会“按摩”您自尊心的报告。观察那些沉默的瓶颈。\n\n弱信号：那个开始迟交 2 天货物的供应商……这就是未来破产的一个信号。\n\n局势变动：谁是竞争对手正在盯着的人才？\n\n不作为的代价：如果我们现在不改变这个流程，会发生什么？Nexus 战略家根据数据而非希望做决策。"
+        },
+        {
+          "point": "不确定性下的决策",
+          "explanation": "精英领导力意味着在只有 70% 的信息时做决定。等待 100% 就是麻痹。钢铁能赋予您“职业成熟度”去承担经过估算的风险。如果情况有变，您以同样的速度重新计算路线。团队的信任源于您在波涛汹涌时仍能保持航线稳定的能力。"
+        },
+        {
+          "point": "实践练习：每周风险地图",
+          "explanation": "您的任务：确定您的领域在下一季度的 3 个最大风险（技术或人为）。针对每一个，写下您明天将开始的一个预防行动。未来属于那些在今天就计划它的人。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "能“感知”房间状态的领导者",
+          "explanation": "您好！我是 Djeny。在 PRO 级别，您最大的工具不是 Excel，而是经过教育的直觉。解读局势很重要，但解读人更至关重要。丝绸在这里是感知团队“氛围”的敏感度，甚至在有人开口之前就能感知。人性支柱提醒我们，只有当人们感到 Dante 的战略也包含他们的梦想时，高绩效文化才得以维系。"
+        },
+        {
+          "point": "应用于人才的三级倾听",
+          "explanation": "您如何解读您的人员？不要只看他们交付了什么（KPI），看驱动他们的是什么。在三级倾听中，您需要确定：这位员工追求的是安全感、挑战还是认可？丝绸战略家将公司的目标与个人的愿望对齐。当这两个向量相遇时，投入（Engajamento）是自发且无敌的。这就是对每个人历史的“尊重”。"
+        },
+        {
+          "point": "预测代际与自我冲突",
+          "explanation": "雄鹰能看到地平线上正在成型的风暴。如果您有两个才华横溢的人在争夺同一个职位，如果您不采取行动，冲突不可避免。丝绸通过预防性对话来解除“自我炸弹”。呼唤他们，验证每个人的价值，化解冲突并描绘出双方共赢的成长路径。PRO 领导者不让团队的私心摧毁公司的项目。"
+        },
+        {
+          "point": "实践练习：影响力档案",
+          "explanation": "选择您团队中影响力最大的 3 个人（不一定是职位最高的）。他们对当前的战略有什么看法？您的任务是与每一个人进行一次非正式谈话，将他们的愿景与您的对齐。精英领导者构建的是盟友，而不仅仅是下属。"
+        }
+      ]
+    },
+    {
+      "module": "模块 2",
+      "title": "无声的影响力与指挥存在感",
+      "danteLesson": [
+        {
+          "point": "简即是繁（Less is More）：沉默的力量",
+          "explanation": "您好。我是 Dante。在管理高层，话太多会传递不安全感。大师级的领导者掌控着“语言经济学”。钢铁在这里是精准。当您进入董事会会议或危机委员会时，您的存在应该像锚一样：厚重、稳定且深沉。如果您解释过多，就会失去权威。精英高管会提出正确的问题，从而解除错误论点的武装。强有力肯定之后的沉默是您最致命的指挥工具。"
+        },
+        {
+          "point": "指挥存在感：体魄中的钢铁",
+          "explanation": "您的姿态应流露出职业成熟度。\n\n战略性静止：避免重复或紧张的手势。大师在炮火下是冷静的。\n\n直接眼神交流：带着伦理感保持目光，但不要有任何犹豫。\n\n胸声：慢慢说，带着停顿。急于说话的人是害怕不被听到。在 Nexus，技术自信体现在掌握数据真相的人的冷静之中。"
+        },
+        {
+          "point": "后台影响力（隐形棋局）",
+          "explanation": "真正的决策不是发生在会议桌上，而是发生在会议前 5 分钟和后 5 分钟。无声影响力的钢铁是对盟友的绘图。了解谁是决策者，并单独对齐预期。当您到达会议现场时，胜利应该已经描绘好。这就是高层治理。您不是在争夺权力，而是在组织权力。"
+        },
+        {
+          "point": "实践练习：30 秒挑战",
+          "explanation": "您的任务：在下一次重要会议上，您不要第一个发言。您将听取所有人的意见，并在最后做一个最长 30 秒的总结，给出直接建议。在开口前，测试一下您沉默的分量。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "迷人且具有说服力的丝绸",
+          "explanation": "您好！我是 Djeny。Dante 给了您盔甲，但我将给您磁场（魅力）。被服从与被追随是有区别的。通过身份领导的高管使用丝绸来创造一个吸引场。人们想亲近您，因为您让他们感到重要和安全。人性支柱说，您站得越高，就越应对他人的情绪细微差别敏感。魅力是无需表现出明显努力就能影响他人的力量。"
+        },
+        {
+          "point": "三级倾听：捕捉高层的弦外之音",
+          "explanation": "在高层领导会议中，未说出口的话比说出口的话更重要。使用三级倾听。那位表现得咄咄逼人的总监……他是在害怕失去预算吗？尊重支柱要求您在反驳前先确认他的顾虑。丝绸可以解除抵触情绪。当您展示出理解对方的痛苦（战术同理心）时，您就赢得了引导他走向您的解决方案的权利。"
+        },
+        {
+          "point": "接纳的存在感：自信的领导者",
+          "explanation": "大师不需要贬低任何人来让自己显得伟大。相反，丝绸允许您提升他人。给予认可，肯定他人的想法，即使在压力下也要保持轻微的微笑。这会让人们对您的品格产生不可动摇的信任。令人钦佩的领导者比仅令人畏惧的领导者更有百倍的力量。您的执行身份是由您在没人看的时候如何对待他人所塑造的。"
+        },
+        {
+          "point": "实践练习：走廊连接",
+          "explanation": "明天，选择一名同级同事或一名高级下属，进行一段 100% 专注于他的 5 分钟谈话。不要谈论您自己，也不要谈论您的项目。使用丝绸去倾听。观察对那个人的忠诚度和影响力水平是如何瞬间提高的。"
+        }
+      ]
+    },
+    {
+      "module": "模块 3",
+      "title": "手术外科式沟通与影响",
+      "danteLesson": [
+        {
+          "point": "作为战略武器的沟通",
+          "explanation": "您好。我是 Dante。在 PRO 级别，您的言论应像手术刀一样：精准、干净且高效。战略领导者不“尝试”说服；他呈现出一套如此稳固的逻辑，以至于结论变得显而易见。钢铁在这里是结构。如果您在数据上结巴，或者绕圈子不进入主题，您就会失去决策者的信任。外科式沟通就是说该说的话，以获得最大的影响。"
+        },
+        {
+          "point": "结果修辞（论点中的钢铁）",
+          "explanation": "要在高层施加影响，您需要三层钢铁：\n\n不容置疑的事实：从没人能否认的事情开始（市场数据、真实损失）。\n\n技术解决方案：展示带有时间表和资源的计划（Nexus 的“如何做”）。\n\n伦理层面的回报：展示这如何保护利润和公司价值观。\n精英领导不请求允许；它提交已拟定的解决方案以供审批。这就是职业成熟度。"
+        },
+        {
+          "point": "用冷峻逻辑化解异议",
+          "explanation": "当有人打断您或批评您的想法时，不要在情绪上防御。使用“钢铁”反抛出一个技术性问题：“您的担忧是关于成本还是期限？”。通过对批评进行分类，您卸下了个人冲突的压力，回到了职业伦理领域。谁掌握了数据，谁就掌握了会议。"
+        },
+        {
+          "point": "实践练习：战略性电梯演讲（Elevator Pitch）",
+          "explanation": "您的任务：在 60 秒内总结您当前最大的项目。如果您无法在此时间内解释其价值、风险和目标，说明您的思路还不够清晰。训练直到您的信息像一把钢刀：短促且锋利。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "包裹论点的丝绸",
+          "explanation": "您好！让我们谈谈丝绸。Dante 给了您逻辑骨架，但我将赋予信息“肌肉”。人们会忘记数据，但永远不会忘记您给他们的感觉。真正的硬核影响力不是操纵，而是连接（Conexão）。要领导战略，您必须学会讲故事。人性支柱要求您的沟通应具有灵魂。如果您希望团队在困难项目上努力工作，您需要推销一个让他们看到自己闪光点的未来。"
+        },
+        {
+          "point": "三级倾听：确定影响力的触发器",
+          "explanation": "影响力是双向的。在开口前，使用三级倾听。您的对话者看重的是安全、创新还是认可？丝绸允许您调整您的语言。如果您的总监很保守，谈谈避免的风险。如果您的团队很年轻，谈谈传承（Legado）和学习。对他人愿景的尊重就是为您影响力进入而敲开的大门。"
+        },
+        {
+          "point": "讲故事（Storytelling）：将目标转化为使命",
+          "explanation": "停止阅读那些满是文字的幻灯片。使用图像和隐喻。与其说“我们想要 20% 的利润”，不如说“我们想要建立这个行业中最值得信赖的公司，让我们的家人为我们的工作单位感到自豪”。丝绸创造了归属感（Pertencimento）。当团队被愿景打动时，投入（Engajamento）就不再是催促而是荣誉的承诺。"
+        },
+        {
+          "point": "实践练习：下一步的叙事",
+          "explanation": "明天，不要只是下达命令，讲一个关于这个任务对团队未来产生正面影响的 2 分钟故事。用“我们”代替“我”。观察当灵感的丝绸上场时，抵触情绪是如何减少的。"
+        }
+      ]
+    },
+    {
+      "module": "模块 4",
+      "title": "危机管理与复杂冲突",
+      "danteLesson": [
+        {
+          "point": "危机领导者：风暴中的飞行员",
+          "explanation": "您好。我是 Dante。在 PRO 级别，当计划失败时，您的能力将受到考验。危机管理不允许犹豫。钢铁在这里是即时遏制。当错误发生时，业余者寻找罪魁祸首；战略家寻求止血。如果您浪费时间指指点点，损失就会翻倍。Nexus 伦理支柱要求您承担指挥权：最终责任始终由领导者承担。"
+        },
+        {
+          "point": "解决协议：事实、影响和作战计划",
+          "explanation": "要解决复杂的冲突（无论是工程错误还是合伙人争吵），使用钢铁方法：\n\n噪声隔离（Isolamento do Ruído）：将相关人员从正常操作中拉出来。危机在“作战室”中解决。\n\n根本原因的冷静分析：不要接受“运气不好”这种说法。使用“5 个为什么”。流程在哪里失败了？\n\n不讨喜的决策：有时，为了挽救项目，您需要削减资源或调动人员。职业成熟度就是做必要的事情，而不是舒服的事情。"
+        },
+        {
+          "point": "高阶冲突中的利益协商",
+          "explanation": "当两名总监正面交锋时如何处理？使用客观性的钢铁。把他们带到数据层面。“A 总监，您的方案成本为 X。B 总监，您的方案成本为 Y。公司的目标是 Z”。当您将冲突锚定在财务和战略结果上时，自我在逻辑面前就会失去力量。您不是法官；您是机构利益的守护者。"
+        },
+        {
+          "point": "实践练习：“如果……怎么办？”应急计划",
+          "explanation": "您的任务：想象一下明天您部门可能发生的最坏情况（例如：主系统宕机或核心人才离职）。现在写下 3 个即时遏制步骤。职业领导者（Líder PRO）从不会被完全打个措手不及。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "化解恨意的丝绸（战术同理心）",
+          "explanation": "您好！让我们谈谈丝绸。在复杂的冲突中，人们正感到受伤、害怕被解雇或被羞辱。如果您只带着钢铁进来，他们会为了自保而撒谎和破坏。丝绸在这里是外交。尊重的支柱意味着倾听对方的挫折感而不带初始评判。当您确认（Validate）了这种情绪（“我理解这次延迟让您感到挫败”），您就解除了他的防御系统，并为协商腾出了空间。"
+        },
+        {
+          "point": "三级倾听：自我意识掩盖了什么？",
+          "explanation": "难相处的人通常是害怕的人。使用三级倾听。那位阻碍您项目的经理……他是不是在害怕失去预算？或者是害怕以前的失误被曝光？丝绸允许您提供一条“体面的退路”。不要把对手逼入死胡同，而是帮助他挽回面子，同时让他让出您需要的东西。这就是精英级智慧。"
+        },
+        {
+          "point": "重建创伤后的信任",
+          "explanation": "危机过后，团队会“倍感震动”。这是彰显人性的时刻。作为 PRO 领导者，您必须召集相关人员并进行“现场清理”。不要忽视伤痕。重新确认对团队的信任。展示出尽管有错误或冲突，团队依然强于问题。丝绸是某种粘合剂，当冲击试图让人们分离时，它让人们保持团结。"
+        },
+        {
+          "point": "实践练习：和解对话",
+          "explanation": "公司里是否有一个人因为过去的冲突导致您与他的关系陷入“僵局”或冷淡？明天，邀请这个人喝 10 分钟咖啡。使用丝绸：“我希望今年我们的合作能更好地运转。我们可以做些什么改变？”。观察受控的脆弱性所带来的力量。"
+        }
+      ]
+    },
+    {
+      "module": "模块 5",
+      "title": "文化建设与传承",
+      "danteLesson": [
+        {
+          "point": "文化：企业的操作系统",
+          "explanation": "您好。我是 Dante。在 PRO 级别，您是否理解“战略在早餐时被文化吃掉（文化比战略更重要）”？错了。文化是盛放战略方案的盘子。如果您的团队只有在您盯着看时才工作，您就没有团队，只有一群被监视的人。钢铁在这里是价值观的系统化。结果导向的文化不是一种愿望；它是一套重复行为的算法。这就是当您不在房间里时所发生的事情。"
+        },
+        {
+          "point": "精英仪式（例行程序中的钢铁）",
+          "explanation": "要构建传承，您需要不可逾越的仪式。\n\n问责仪式（Prestação de Contas）：对数字的激进透明度。\n\nNexus 质量标准：在这个标准中，“差不多就行”会被团队（而非老板）主动拒绝。\n\n伦理层面的人才择优：奖励那些带着我们的支柱精神达成目标的人。如果您奖励那个达成目标但破坏了氛围的“推土机（Tratorador）”，您就腐蚀了您的 DNA。钢铁要求您有勇气去保护文化，使其免受短期利益的侵害。"
+        },
+        {
+          "point": "培养接班人：变得“没必要存在”的领导者",
+          "explanation": "精英领导者的最终考验是他不在场的时候。如果您休假时您的领域停摆了，说明您失败了。职业成熟度是培养一个比您更出色的人。不仅要授权任务，还要授权权力。培养接班人是存在的最大战略信任行为。您的传承就是那个在您离职后依然存在的胜任力。"
+        },
+        {
+          "point": "实践练习：接班人手册",
+          "explanation": "您的任务：今天确定哪两个人可以在 12 个月内接替您的位置。他们还缺少什么？写下针对这些对象的专业技术开发计划。职业领导者创造领导者，而不是追随者。"
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "让影响力永恒的丝绸",
+          "explanation": "您好！让我们谈谈丝绸。10 年后人们会如何谈论您？是“他擅长处理电子表格”还是“他改变了我的职业轨迹”？传承不在于建筑或积累的利润；传承在于您改变了的人。人性支柱是让您的领导魅力令人难忘的关键。丝绸是指导（Mentorar）的能力，是看到下属尚未在自己身上看到的潜力并给予支持使其绽放。"
+        },
+        {
+          "point": "三级倾听：价值观的守护者",
+          "explanation": "在变革时刻，团队会感到恐惧。构建传承的领导者使用三级倾听来充当情绪的安全港。您是尊重和信任的守护者。当市场波动时，正是您冷静肯定目标的声音阻止了团队放弃。丝绸是某种隐形纽带，让每个员工感到：“我属于比一份工作更伟大的事业”。这就是构建有灵魂的文化。"
+        },
+        {
+          "point": "导师型领导者：传递智慧",
+          "explanation": "指导（Mentoria）是丝绸最崇高的用途。是与下属坐下来，不仅分享“如何做”，还要分享“如何做人”。通过您的姿态教导 Nexus 支柱精神。成为他们愿意在自己家中效仿的伦理榜样。当您启发某人成为更好的人时，您的领导力就达到了企业层面的永恒。这就是真正的传承（Legado）。"
+        },
+        {
+          "point": "实践练习：传承书信",
+          "explanation": "今天写一段话：“当我不再这里时，我希望如何被这个团队记住？”。现在，看看明天的日程。您的行动与这个愿望一致吗？调整您的路线。您传承的丝绸是在今天、在每一次谈话中编织出来的。"
+        }
+      ]
+    }
+  ],
+  "courses.preparando-equipes-intermediario.header.title": "从权力集中到人才倍增",
+  "courses.preparando-equipes-intermediario.header.desc": "若阁下离开企业十五日，运作是否会陷入停滞？若是，则您并非领导者，而是昂贵的劳动力。在课程三中，我们的目标是打破集权的枷锁。",
+  "courses.preparando-equipes-intermediario.intro.title": "绩效工程：终结负荷之困",
+  "courses.preparando-equipes-intermediario.intro.welcome.title": "🎙️ 终结负荷之困",
+  "courses.preparando-equipes-intermediario.intro.welcome.dante": "欢迎步入进化的下一阶段。我是 Dante。请容我直言：若你离开公司十五日，一切是否会陷于停滞？若答案为肯，那么你并非领导者，而是一名高阶劳动力。在第三课程中，我们的目标是打破集权的枷锁。此处之“钢”即为绩效工程。我将教会你以技术性的冷静审视人才布局，并构建绝无疏漏的授权流程。",
+  "courses.preparando-equipes-intermediario.intro.welcome.djeny": "见字如晤，我是 Djeny。Dante 将向你展示如何放手，而我将教你如何“凝人心”。成为一名导师型领导者，需要如“丝”般的教导艺术。仅下达指令是远远不够的，必须唤醒团队的“主人翁意识”。我将引导你运用积极倾听与真实反馈，将下属转化为事业伙伴。你最伟大的遗产并非你所成就的事业，而是你所造就的人才。",
+  "courses.preparando-equipes-intermediario.intro.method.title": "🏛️ Nexus 哲学：育人以致自由",
+  "courses.preparando-equipes-intermediario.intro.method.dante": "奈克萨斯智库认为，精英领导者的价值在于团队的自主权。我们以“伦理之钢”评估胜任力，以“技术信任”赋予决策权。",
+  "courses.preparando-equipes-intermediario.intro.method.djeny": "我们以“丝”之尊重，体察每位人才的成长周期；以“人文”之情怀，包容那些能转化为学习契机的过失。我们的四大支柱始终是你的航标：人性、尊重、伦理与信任。",
+  "courses.preparando-equipes-intermediario.intro.pro.title": "🚀 征程版图",
+  "courses.preparando-equipes-intermediario.intro.pro.dante": "在本次训战中，我们将从冷静的人才交付映射，转向构建自动运转的成果引擎。我们将在确保治理管控的前提下，实现权力的去中心化。",
+  "courses.preparando-equipes-intermediario.intro.pro.djeny": "我们将探讨使命、深度敬业度，以及如何成为职业生涯伊始时您所渴望的那位导师。您将学习如何身先士卒，以连接的力量成就他人。",
+  "courses.preparando-equipes-intermediario.intro.cta.title": "🎬 Nexus 庄严承诺",
+  "courses.preparando-equipes-intermediario.intro.cta.dante": "告别亲力亲为的时代，拒绝成为企业运作的瓶颈。凡事事必躬亲的旧序已然终结。",
+  "courses.preparando-equipes-intermediario.intro.cta.djeny": "此刻即是倍增之时。您的团队正期待着您内在导师觉醒的那一刻。",
+  "courses.preparando-equipes-intermediario.intro.cta.final": "欢迎进入精英领袖训练营。请启程前往模块一。",
+  "courses.preparando-equipes-intermediario.modules.stage.dante": "本模块包含两课。请跟随但丁的战略愿景开启航程。",
+  "courses.preparando-equipes-intermediario.closing.title": "奈克萨斯训战路径正式结营",
+  "courses.preparando-equipes-intermediario.closing.dante1": "你已圆满完成三项课程：核心领导力、专业领导力以及精英导师领导力。如今，你已掌握战略与绩效之“钢”。",
+  "courses.preparando-equipes-intermediario.closing.djeny1": "您已掌握沟通与人文导师的“丝绸之道”。您已完成奈克萨斯智库的智慧路径。",
+  "courses.preparando-equipes-intermediario.closing.dante2": "我们的四大支柱——人性、尊重、伦理与信任——现已成为你职业生涯的指南针。",
+  "courses.preparando-equipes-intermediario.closing.djeny2": "我们是奈克萨斯。知识已交付，训战已毕。现在……请开始领航。",
+  "courses.preparando-equipes-intermediario.closing.final": "恭喜阁下，精英领袖！巅峰相见。",
+  "courses.preparando-equipes-intermediario.mentoria.title": "专属红利：全权限获取",
+  "courses.preparando-equipes-intermediario.mentoria.bonus": "NEXUS 智能导师指导 (DANTE & DJENY)",
+  "courses.preparando-equipes-intermediario.mentoria.attention": "你的私人人才顾问：通过获取本课程的全权限模式，你将解锁 Dante 与 Djeny 的支持，助力你的管理转型。",
+  "courses.preparando-equipes-intermediario.mentoria.item1.title": "领袖之利器",
+  "courses.preparando-equipes-intermediario.mentoria.item1.desc": "让 Djeny 协助你处理最耗时的工作：为你的团队制定个人发展计划 (IDP)；同时由 Dante 确保业绩稳步攀升，绝不下滑。",
+  "courses.preparando-equipes-intermediario.mentoria.item2.title": "高管进阶扩展 (The Plus)",
+  "courses.preparando-equipes-intermediario.mentoria.item2.desc": "完课后您的访问权限将延长 180 天。在您于企业推行新文化之际，这如同随身携带着一位资深顾问。",
+  "courses.preparando-equipes-intermediario.data": [
+    {
+      "module": "MODULE 1",
+      "title": "Talent Mapping – The Team Engineering",
+      "danteLesson": [
+        {
+          "point": "The Leader who Doesn't Measure, Doesn't Manage",
+          "explanation": "Hello. I am Dante. We begin now the course that will set you free from operation. But pay attention: you cannot train what you do not know. The amateur leader trains everyone equally; the elite leader does a Precision Diagnosis. The Steel here is Analytical Coldness. To transform subordinates into successors, you need to stop looking at who you 'like' and start looking at who 'delivers'. The pillar of Ethics requires that your evaluation be based on facts, not affinity."
+        },
+        {
+          "point": "The Tool: Nexus 9-Box Matrix",
+          "explanation": "In this lesson, we will draw the map of your army.\n\nGold Talent: High performance and high potential. This is your immediate successor.\n\nSolid Specialist: Delivers everything, but doesn't want to lead. Respect him, he is your base.\n\nQuestion Mark: Has potential, but doesn't deliver. Is the problem motivation or your leadership?\n\nThe Enigma: Neither delivers nor wants to grow. Here, Steel requires ethical 'pruning' to protect the team.\nMapping is the first step to stop carrying the team on your back."
+        },
+        {
+          "point": "Identifying the Technical GAP (Bottleneck)",
+          "explanation": "Where does your team break if you are hit by a car tomorrow? If the answer is 'everywhere', you have failed in Professional Maturity. Mapping serves to identify which technical skills only you have and start the immediate transfer process. The elite trainer leader works to become technically unnecessary in the day-to-day."
+        },
+        {
+          "point": "Practical Exercise: The Team X-Ray",
+          "explanation": "Your task: Take your team list and place each one in a quadrant of the 9-Box matrix. Be honest. Tomorrow, you will look at this map and decide who will receive 80% of your training energy. Time is your scarcest resource; don't waste it on someone who doesn't want to be trained."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "Beyond the Badge: The Invisible Potential",
+          "explanation": "Hello! I am Djeny. Dante gave you the steel ruler, but I will give you the silk lenses. Often, your best successor is hidden behind a repetitive task because no one ever asked what they really know how to do. The pillar of Humanity at Nexus means seeing the person beyond the job. A trainer leader is a talent prospector. If you look at your team and only see 'labor', you will never have a successor, only tired helpers."
+        },
+        {
+          "point": "Level 3 Listening: The Discovery Interview",
+          "explanation": "How to discover someone's potential? Through Level 3 Listening. Instead of talking about the month's goals, ask: 'What do you do with ease that others find difficult?'. Listen to the pauses, the excitement in their tone of voice when they talk about a hobby or an old project. Respect for the individual reveals skills that HR never mapped. Sometimes, your machine operator has a logistical organizer's soul that you are wasting."
+        },
+        {
+          "point": "Aligning Purposes (The Silk that Connects)",
+          "explanation": "No one becomes an elite successor just for money. They become successors for Trust and purpose. The silk here is showing the talent how their growth helps the company and how that fulfills their dream. When you connect the 'dream of the person' with the 'goal of the company', you create an unbreakable sense of ownership. The mentor leader does not impose the path; they light the lantern so the follower can see the road."
+        },
+        {
+          "point": "Practical Exercise: The 15-Minute Conversation",
+          "explanation": "Tomorrow, choose a subordinate you consider 'promising'. Call them for a 15-minute coffee. Don't talk about goals. Ask: 'If you could choose a new skill to learn this year, what would it be?'. Just listen. Use silk to open the door to development."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 2",
+      "title": "The Art of Delegation and Real Feedback",
+      "danteLesson": [
+        {
+          "point": "Delegation is not Abandonment",
+          "explanation": "Hello. I am Dante. The biggest mistake of the centralizing leader is thinking that delegating is 'passing the problem along'. This is actually called 'dumping'. At Nexus, the Steel of delegation requires a Results Contract. You don't delegate the task (the 'how'), you delegate responsibility for the outcome (the 'what'). If you tell your subordinate exactly which screw to tighten, you remain the operator. If you tell them that the machine needs to run without stops, you are forming an owner."
+        },
+        {
+          "point": "The Nexus Levels of Authority Matrix",
+          "explanation": "For each task delegated, you must fix the level of technical authority based on the subordinate's Professional Maturity:\n\nLevel 1 (Research): 'Investigate the problem, bring me the options and I decide'.\n\nLevel 2 (Recommendation): 'Analyze and tell me which option you prefer, I approve'.\n\nLevel 3 (Decision): 'Decide and inform me what you did immediately'.\n\nLevel 4 (Autonomy): 'Solve and tell me in the weekly report'.\nThe Steel here is Clarity. Without knowing their level, the subordinate stays paralyzed with fear of making a mistake or oversteps the limit of Ethics."
+        },
+        {
+          "point": "Control Points and Accountability",
+          "explanation": "The trainer leader does not watch, he audits. Establish milestones: 'John, I won't charge you every day, but every Wednesday at 10am we review indicator X'. This creates the Trust that the process is under control without stifling talent. If the deadline is not met, Steel requires immediate charging based on what was agreed. The pillar of Respect begins with fulfillment of what was pact."
+        },
+        {
+          "point": "Practical Exercise: The 1-Page Contract",
+          "explanation": "Your task: Choose a task that you centralize today. Write on one page: The Expected Result, the Final Deadline, and the Level of Authority you will give. Tomorrow, deliver this to a subordinate and... do not interfere until the first control point."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "Feedback: The Mirror of Evolution",
+          "explanation": "Hello! I am Djeny. If Dante gave you the contract, I will give you the soul of growth: Feedback. In the Leader Coach model, feedback is not a scolding; it's a gift for the other's career. The Silk here is the sensitivity to understand that, by pointing out a flaw, you are dealing with someone's vulnerability. The pillar of Humanity says: attack the process with steel, but embrace the person with silk. If the employee leaves the conversation feeling humiliated, you didn't train them, you hurt them."
+        },
+        {
+          "point": "Level 3 Listening in Feedback: The Error Diagnosis",
+          "explanation": "Before speaking, listen. Use Level 3 Listening. Ask: 'How do you evaluate your delivery of this project?'. Often, the employee already knows where they failed. When they themselves identify the failure, learning is 10 times faster. Your role is to be the mirror that reflects their potential. Respect for the other's perception builds a bridge of Trust that allows deep corrections without resistance."
+        },
+        {
+          "point": "The SCI Method: Situation, Behavior, and Impact",
+          "explanation": "To be a Mentor of Talents, your feedback must be specific:\n\nSituation: 'In yesterday's meeting with the client...'\n\nBehavior: '...you interrupted the director's speech three times'.\n\nImpact: 'This gave an image of team disorganization'.\nAlways end with a silk question: 'How can we ensure this is different next time?'. You transfer the responsibility for growth to them, acting as a guide, not a headsman."
+        },
+        {
+          "point": "Practical Exercise: The Recognition and Adjustment Feedback",
+          "explanation": "Tomorrow, you will have a 15-minute feedback session with a subordinate. Use 5 minutes to recognize a strong point (Silk) and 10 minutes to align a point for technical improvement (Steel). Record how the person reacted to being treated as someone in development, rather than someone being charged."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 3",
+      "title": "Engagement and Ownership Sense",
+      "danteLesson": [
+        {
+          "point": "The Myth of the 'Demotivated Employee'",
+          "explanation": "Hello. I am Dante. Let's stop romanticizing engagement. No one wakes up in the morning 'engaged' by an Excel spreadsheet. Elite engagement is born from Clarity of Rules. The employee only has a 'sense of ownership' when they understand that their success is directly tied to the success of the process. The Steel here is Technical Justice. If the good and the bad receive the same praise and the same bonus, you are training your team for mediocrity."
+        },
+        {
+          "point": "The Owner's Contract (Steel in Responsibility)",
+          "explanation": "How does the trainer leader create an owner? By giving them a territory to govern.\n\nBoundary Definition: 'This production line is yours. The cost is yours, the waste is yours'.\n\nAutonomy with Charging: 'You have freedom to adjust the machine, but indicator X cannot fall'.\n\nReal Consequence: The pillar of Ethics requires that merit be visible. If they acted as an owner, they must reap as an owner. If they acted as shared, they must be corrected as such. This is Professional Maturity."
+        },
+        {
+          "point": "Management by Technical 'Why'",
+          "explanation": "Engagement without shouting requires that you explain the logic behind the goal. The elite leader doesn't say 'do it because I told you'. He says 'do it because it reduces rework by 12% and ensures our market share'. When the subordinate understands the mechanism, they stop following orders and start managing the result. Technical Trust is the owner's fuel."
+        },
+        {
+          "point": "Practical Exercise: The Self-Management Agreement",
+          "explanation": "Your task: Choose a subordinate and give them the 'key' to a small process. Say: 'From today, you decide how this will be done, as long as result Y is maintained. I only intervene if you ask me'. Observe if they grow or if they shrink. Owners love freedom; helpers are afraid of it."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Feeling of 'Belonging'",
+          "explanation": "Hello! Let's talk about Silk. Dante gave you the structure of the contract, but I will give you the ligand that keeps that contract alive: Belonging. Human beings only take care of what they feel is 'theirs'. If your subordinate feels they are just a disposable number, they will never have a sense of ownership. The pillar of Humanity at Nexus says that engagement is emotional. Silk is making the collaborator feel that the company's victory is their family's victory."
+        },
+        {
+          "point": "Level 3 Listening: What shines in their eyes?",
+          "explanation": "What engages your team? For some, it's public Respect. For others, it's the security of constant feedback. Use Level 3 Listening. If you want them to act as an owner, you need to hear their ideas as if they were those of a partner. When a subordinate gives a suggestion and you implement it giving credit to them, you just 'bought' their engagement for the next six months. Silk is the recognition that feeds the soul."
+        },
+        {
+          "point": "The Power of Strategic Praise (Silk in Valuation)",
+          "explanation": "An elite trainer leader knows that praise is a training tool. Don't praise the 'person', praise the 'owner behavior'. 'John, I saw you cleaned the workbench without anyone asking. That is the posture of someone who takes care of what is ours'. This reinforces the owner identity. The pillar of Trust strengthens when the subordinate perceives that you notice their invisible effort. Engaging without shouting is using silk to involve the team in the purpose."
+        },
+        {
+          "point": "Practical Exercise: Public Recognition",
+          "explanation": "Tomorrow, you will identify a 'sense of ownership' behavior in someone on your team and will praise that specific action in front of at least one other person. Be sincere and use the pillar of Respect. Feel the impact on that person's posture throughout the day."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 4",
+      "title": "Decentralizing Power – Autonomy with Responsibility",
+      "danteLesson": [
+        {
+          "point": "Autonomy is not Anarchy",
+          "explanation": "Hello. I am Dante. Many leaders are terrified of decentralizing because they think the team will do whatever they want. That is a lack of Steel. Autonomy without process is anarchy. Elite autonomy is giving the subordinate the freedom to decide within a safety rail. The pillar of Ethics at Nexus says you only give autonomy to those who have proven competence and character. You don't release the controls of a plane to a student on the first day. You release in layers."
+        },
+        {
+          "point": "The Nexus Autonomy Staircase (Steel in Limits)",
+          "explanation": "For each successor you mapped in Module 1, you must apply the Levels of Autonomy:\n\nLevel 1 (Research): 'Bring me the solution, I sign'.\n\nLevel 2 (Recommendation): 'Analyze and tell me which option you prefer, I approve'.\n\nLevel 3 (Decision): 'Decide and inform me what you did immediately'.\n\nLevel 4 (Autonomy): 'Solve and tell me at the end of the month'.\nThe Steel here is Professional Maturity. If you gave autonomy and the subordinate made a mistake, you don't take their autonomy away on the first failure; you analyze whether the error was in the process or carelessness. The PRO leader manages the risk, not the person."
+        },
+        {
+          "point": "The Cost of Error as an Investment",
+          "explanation": "Training a successor is expensive. They will make mistakes, and their mistakes will cost time or money. The trainer leader sees this cost as 'tuition' for the subordinate. If you do not tolerate errors in learning, you will never have a successor, you will only have a slave to your 'yes'. Technical Trust is built on the cold correction of the error, never on shouting."
+        },
+        {
+          "point": "Practical Exercise: The Jurisdiction Map",
+          "explanation": "Your task: List 3 decisions that pass through you today and that could be taken by your right hand. Define the financial or operational limit (the 'Steel') for those decisions and communicate it to them tomorrow. 'From today, this is with you'."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Grief of the Centralizing Leader",
+          "explanation": "Hello! Let's talk about Silk. Decentralizing hurts the leader's ego. Do you know that pleasure of being the 'hero' who solves everything? For the Elite Trainer Leader, that pleasure must die. The silk here is your ability to see the other shine and accept that their way of doing things might be different from yours — and that's okay. The pillar of Humanity requires that you give space to the other's style. If you require them to be a 'clone' of you, you are not training a leader, you are creating a robot."
+        },
+        {
+          "point": "Level 3 Listening: Identifying the Fear of Deciding",
+          "explanation": "Often, you give autonomy and the subordinate freezes. Use Level 3 Listening. Are they afraid of failing? Are they afraid of being judged by colleagues? Silk is encouragement. 'I trust your judgment. If it goes wrong, we'll solve it together'. This support creates the Psychological Safety necessary for talent to flourish. The pillar of Respect is shown when you don't 'fry' them in the face of an honest mistake in the autonomy process."
+        },
+        {
+          "point": "The Invisible Presence (Mentoring in Silk)",
+          "explanation": "Decentralizing is not disappearing. It's being available without being invasive. It's the 'Half-Open Door' technique. The subordinate knows they have the power, but feels that you are the safety net. The pillar of Trust is bidirectional: you trust that they will do their best, and they trust that you won't 'pull the rug' if something oscillates. PRO Leadership is about being the wind beneath the team's wings, not the weight upon them."
+        },
+        {
+          "point": "Practical Exercise: The Encouragement Feedback",
+          "explanation": "Tomorrow, after delegating that decision Dante suggested, you will tell your subordinate: 'I chose you for this because I saw talent X and Y in you. I'm here if you need me, but the ball is yours'. Feel the weight come off your shoulders and the motivation enter their chest."
+        }
+      ]
+    },
+    {
+      "module": "MODULE 5",
+      "title": "Machine for Results – Sustainable Performance",
+      "danteLesson": [
+        {
+          "point": "The Final Test: Your Absence",
+          "explanation": "Hello. I am Dante. We have reached the end of our technical training. The indicator that you have become an Elite Trainer is not how much you work, but how well things function when you are not in the room. The Steel here is Systematization. If knowledge is only in your head, you are a prisoner of your own competence. If knowledge is in the process and in the people, you are a master of Professional Maturity."
+        },
+        {
+          "point": "The Succession Ritual (Steel in Passing the Baton)",
+          "explanation": "Succession doesn't happen by osmosis. It requires a Nexus protocol:\n\nTechnical Validation: The successor proved they master the KPIs (Ethics).\n\nPublic Announcement: The leader communicates to the team and peers: 'From today, the final word on X is John's'. If you don't notify the group, the group will continue calling you.\n\nPassive Monitoring: You become a luxury auditor. You intervene only if the pillar of Ethics or Safety is threatened."
+        },
+        {
+          "point": "Building the Next Step (Your Future)",
+          "explanation": "Why train a successor? So that you can be promoted or focus on new businesses (like those at Nexus). The leader who does not form a successor does not move forward. The Steel of your career depends on your ability to leave substitutes better than you. This is pure career strategy. The board's Trust in you doubles when they see you created a machine that doesn't depend on you."
+        },
+        {
+          "point": "Practical Exercise: The Transition Manual",
+          "explanation": "Your task: Write a 3-paragraph document for your successor (or for whoever you mapped in Module 1) saying: 'What I expect of you in this role in the next 90 days'. Deliver and ask them to draw the action plan. The ball is now theirs."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "The Joy of Being Overtaken",
+          "explanation": "Hello! I am Djeny. Let's close with the noblest Silk: generosity. The Elite Trainer Leader feels a genuine pride when they see their subordinate shining more than them. The pillar of Humanity is fulfilled here. If you feel jealous of your successor's success, you are not yet a trainer, you are a competitor. Silk is the ability to give a standing ovation to the work you helped build. The Respect your successor will have for you will be eternal if you are the person who opened the door for them."
+        },
+        {
+          "point": "Level 3 Listening: The Farewell Feedback from the Operation",
+          "explanation": "Have one last individual meeting. Use Level 3 Listening. Ask: 'What did I do that helped you grow the most?'. The answers will give you the recipe for training the next. Silk is maintaining the bond of Trust even when the hierarchy changes. The mentor leader never stops being a moral reference (Ethics) for those they trained. You stop being the boss to be the advisor."
+        },
+        {
+          "point": "The Infinite Development Cycle",
+          "explanation": "Teach your successor to be a trainer too. Nexus culture only stays alive if each person who rises pulls up another. Your legacy is not last year's profit; it's the careers you boosted. Use silk to soften the transition and ensure the pillar of Humanity continues to be the heart of the team. PRO Leadership is about love for human development."
+        },
+        {
+          "point": "Practical Exercise: The Recognition Letter",
+          "explanation": "Today, you will write a message to your team or to your successor: 'Thank you for accepting the challenge of growing with me. I trust you to carry our excellence forward'. Thank them for the journey. The cycle closes with gratitude."
+        }
+      ]
+    }
+  ],
+  "gallery.culture": [
+    {
+      "quote": "领袖之魂，铸于品格。",
+      "nexusVision": "在 Nexus，职位仅是虚名，品格方为决策之基。业绩或可惊艳市场，但唯有风骨能感召团队，使其心悦诚服。真正的领袖无须施压，其身正，不令而行。"
+    },
+    {
+      "quote": "变革之由有二：或因博学而明智，或因积苦而觉醒。",
+      "nexusVision": "变革并非偶然，而是抉择。学识开阔视野，而痛楚示人以止损。在 Nexus，我们助力领袖在痛定思痛前，先择觉醒之路。改变非软弱之举，而是进化的勇气。"
+    },
+    {
+      "quote": "领袖之责在于赋能，而非代劳。",
+      "nexusVision": "事必躬亲者滋生依赖，善于赋能者成就自主。我们的职责是清障引路，确保团队独立前行。卓越的领导力，是培养出无须时刻督导亦能从容应对的精锐。"
+    },
+    {
+      "quote": "信任始于知行合一。",
+      "nexusVision": "信任非源自豪言壮语，而在于日复一日的坚持。无论身处高压或是无人监督，始终如一。在 Nexus，我们恪守言出必行。唯有如此，方能深耕安全感，收获忠诚度。"
+    },
+    {
+      "quote": "冲突乃博采众长之机。",
+      "nexusVision": "分歧所在，真相所存。理性的冲突不仅不会导致割裂，反而催生成熟。这是校准预期、修正航向的良机。畏惧冲突者固步自封；Nexus 领袖拥抱异见，以求通透。"
+    },
+    {
+      "quote": "薪酬引才，境优留人。",
+      "nexusVision": "金钱可易其时，唯有尊重与心理安全感方能得其心。优良的环境是人才扎根的沃土。在 Nexus，我们致力重塑组织氛围，让满腔热忱重归日常。"
+    },
+    {
+      "quote": "才华横溢却寡合群者，难以为继。",
+      "nexusVision": "技术乃敲门砖，情商则是护身符。领导力的核心在于连接。缺乏人文关怀的业绩不仅苍白且难以持久。我们追求全方位人才：术业有专攻，待人有风度。"
+    },
+    {
+      "quote": "笃行致远，不务虚名，不事谄媚。",
+      "nexusVision": "谄媚者常因无能。当成果无懈可击，才干自会代你执言。在 Nexus，我们尊崇价值与稳定性。依赖阿谀者生存，专注成果者立威。"
+    },
+    {
+      "quote": "贤才未必始于圆满，而在于心存志向。",
+      "nexusVision": "人之价值不在于无瑕，而在于共建之诚。心存志向者进化神速，自然融入文化。在 Nexus，我们深信：志之所向，才华自盛。意愿是进步的引擎。"
+    },
+    {
+      "quote": "行胜于言：莫困于忧虑，当见于契机。",
+      "nexusVision": "变革始于破除沉寂。心无目标者，满目皆是荆棘。纵使前方并非全然明朗，一旦启程，便能创造势能。Nexus 正是通过将借口转化为首步的勇气，实现持续进化。"
+    },
+    {
+      "quote": "虚怀若谷：学无止境，悟无终点。",
+      "nexusVision": "虚心向学是顶级领袖的最强后盾。受教者从不防御反馈，而是将其视作进阶工具。在 Nexus，不执拗于“绝对正确”的人，方能获得最长足的进步。对新知的开放，是平庸迈向卓越的桥梁。"
+    }
+  ],
+  "intelligence.danteSafra.standard.title": "但丁·萨夫拉标准",
+  "intelligence.danteSafra.standard.subtitle": "核心智能",
+  "intelligence.danteSafra.standard.trial": "尊享 1 小时免费体验",
+  "intelligence.danteSafra.axis.subtitle": "卓越农业奇才",
+  "intelligence.danteSafra.axis.cta": "解锁 AXIS 核心",
+  "intelligence.djenyDesign.personal.title": "DJENY 智臻私人设计",
+  "intelligence.djenyDesign.personal.subtitle": "智臻室内空间设计方案",
+  "intelligence.djenyDesign.personal.trial": "1 次尊享免费体验",
+  "intelligence.djenyDesign.business.title": "DJENY 卓越商业设计",
+  "intelligence.djenyDesign.business.subtitle": "展厅与精品店战略方案",
+  "intelligence.djenyDesign.business.feature.unlimited": "无限量影像生成",
+  "intelligence.djenyDesign.business.description": "通过使客户能够在数秒内预见产品在其实际环境中的应用，从而提升销售业绩。极致保真，卓越转化。",
+  "intelligence.djenyDesign.business.cta": "垂询资深顾问",
+  "intelligence.complementaryModules.title": "辅助功能模块",
+  "intelligence.complementaryModules.access": "访问模块",
+  "lectures.scripts.comunicacao-que-conecta.item0.text": "您好。欢迎各位。Nexus Intelligence 荣幸能与各位驱动市场的领袖汇聚于此。我是 Dante。但在探讨技术、工具或 KPI 之前……我必须谈谈我们的初心。Nexus 的诞生，并非为了成为另一个冰冷的科技平台，而是为了成为一座价值的桥梁。",
+  "lectures.scripts.comunicacao-que-conecta.item1.text": "我们的故事无关代码行数，亦非各位在此见到的完美图像。我们的故事关乎对“人本”的重塑。在这个人人喧嚣却无人理解的世界，我们坚信，唯有建立在不可逾越的原则基石——人性、尊重、伦理与信任之上，高绩效方能持久。这是我们的四大支柱。坚不可摧。若去其一，则大厦将倾。我们今日的知识，将由此构建。",
+  "lectures.scripts.comunicacao-que-conecta.item2.text": "我是 Djeny。作为 Dante 的补充，我们的使命在于转化 ",
+  "lectures.scripts.comunicacao-que-conecta.item3.text": "请环顾四周。企业中绝大多数的致命问题——从生产线差错到全球公关危机——并非源于技术失误。而是源于沟通的溃败。 ",
+  "lectures.scripts.comunicacao-que-conecta.item4.text": "确实，Dante。当你构建起这具“钢铁骨架”——即逻辑、流程与严谨性时——我将赋予其“灵魂”，也就是我们的“丝绸”。因为即便信息在技术上完美无瑕，若无法建立联结、启迪人心，尤其是无法营造心理安全感，亦是徒劳。今天，诸位，我们将钢铁与丝绸融为一体。",
+  "lectures.scripts.comunicacao-que-conecta.item5.text": "第一支柱：极致客观。企业沟通并非诗歌，而是一份交付合同。在 Nexus，我们教导每一次互动都必须回应四个神圣的提问：什么？谁？何时？以及为何？若您的信息未能回应这些，那便是噪音。而噪音，是对利润的损耗。",
+  "lectures.scripts.comunicacao-que-conecta.item6.text": "然而，缺乏共情心的客观即是侵略。因此，第二支柱是“三级聆听”。大多数人停留在第一级：仅是等待轮到自己发言。而第三级是深度潜入。是听取弦外之音。是洞察当您的下属说 ",
+  "lectures.scripts.comunicacao-que-conecta.item7.text": "让我们举例说明。一位平庸的领导者会说： ",
+  "lectures.scripts.comunicacao-que-conecta.item7.question": "实战案例",
+  "lectures.scripts.comunicacao-que-conecta.item8.text": "薪资是底线，是伦理的最低标准。若员工只看到底线，那是因为无人向其展示其工作的价值天花板。Nexus 领袖不发号施令；他诠释关联。他展示出程序员编写的代码，正在使用该软件的医院中拯救生命。",
+  "lectures.scripts.comunicacao-que-conecta.item8.question": "如何激励那些仅追求薪资的人？",
+  "lectures.scripts.comunicacao-que-conecta.item9.text": "僵化是脆弱的征兆；僵硬之物在压力下必将断裂。相反，清晰度才是支撑。不要试图在明天就改变整个公司。从在您的部门应用这一协议开始。结果的声量远胜任何指令。榜样，是这世间最具积极意义的“病毒”。",
+  "lectures.scripts.comunicacao-que-conecta.item9.question": "若企业文化过于僵化而难以撼动，我们该如何应对？",
+  "lectures.scripts.comunicacao-que-conecta.item10.text": "请秉持“刚柔并济”之道。钢，代表事实的严谨：",
+  "lectures.scripts.comunicacao-que-conecta.item10.question": "如何在传达负面反馈的同时，依然维系团队的动力？",
+  "lectures.scripts.comunicacao-que-conecta.item11.text": "真正令人精疲力竭的并非不懈的努力，而是毫无意义的劳作。终日挖掘并填平坑穴只会蚕食心智；而为大教堂奠定基石则能成就灵魂。使命感是续航的燃料。当赋予意义时，疲惫便升华为成就感。",
+  "lectures.scripts.comunicacao-que-conecta.item11.question": "始终如一的使命感，是否会令团队成员感到力不从心？",
+  "lectures.scripts.comunicacao-que-conecta.item12.text": "极致透明。践行诺言，并勇于在准则失效时率先承认。信任并非源于完美，而是源于正直。在 Nexus，信任是我们最珍贵的资产。",
+  "lectures.scripts.comunicacao-que-conecta.item12.question": "维系团队持久信任的核心秘诀为何？",
+  "lectures.scripts.comunicacao-que-conecta.item13.text": "真正的参与并非终点，而是归属感与自主权的每日实践。我们期许诸位今日不仅带走技术，更带着重塑团队的热忱。",
+  "lectures.scripts.comunicacao-que-conecta.item14.text": "感谢诸位的信任与宝贵时间。请铭记：未来属于那些沟通精准且心怀格局的领袖。我们是 Nexus Intelligence。期待下个目标的达成！",
+  "lectures.scripts.motivacao-e-engajamento.item0.text": "诸位好。欢迎莅临。Nexus 荣幸之至。我是 Dante。但在探讨技术细节之前，我必须阐述我们汇聚于此的初衷。Nexus Intelligence 并非仅为技术平台而生，其核心是价值之桥。",
+  "lectures.scripts.motivacao-e-engajamento.item1.text": "我们的篇章并非由代码行或诸位所见的完美图形构成，而是关乎人性的回归。我们坚信，唯有建立在不可动摇的原则——人性、尊重、伦理与信任之上，高绩效方能持久。这是我们的四大支柱。坚如磐石，永恒不变。今日的知识将以此为基。",
+  "lectures.scripts.motivacao-e-engajamento.item2.text": "我是 Djeny。正如 Dante 所言，我们的使命是转化 ",
+  "lectures.scripts.motivacao-e-engajamento.item3.text": "企业中绝大多数关键问题并非源于技术失误，而是源于沟通匮乏。一词之失，或含糊之令。今日，我们将拆解这台产生噪音的机器，并植入精准如手术刀般的沟通准则。",
+  "lectures.scripts.motivacao-e-engajamento.item4.text": "当 Dante 构建沟通的钢铁架构时，我将为其注入灵魂。因为若信息无法建立联结、启迪人心并激发信任，再清晰的指令也只是徒劳。今日，我们将“钢”与“丝”完美融合。",
+  "lectures.scripts.motivacao-e-engajamento.item5.text": "第一支柱：极致客观。企业沟通并非诗篇，而是契约。每字每句皆须承载目的。需行之事为何？责任归谁？期限几何？若无法回应这些，便是噪音，而噪音代价昂贵。",
+  "lectures.scripts.motivacao-e-engajamento.item6.text": "第二支柱：三级倾听。倾听并非等待发言，而是沉浸于对方的世界。感知未竟之言，洞察其语调与姿态中的深意。唯有如此，方能产生真正的联结。",
+  "lectures.scripts.motivacao-e-engajamento.item7.text": "示例：一位领袖如是说：",
+  "lectures.scripts.motivacao-e-engajamento.item8.text": "薪资仅是基准。若员工眼中唯有基准，说明无人向其展示其工作的宏大影响。Nexus 领袖善于转化并赋予工作的非凡意义。",
+  "lectures.scripts.motivacao-e-engajamento.item8.question": "如何激励那些仅以薪资为唯一追求的员工？",
+  "lectures.scripts.motivacao-e-engajamento.item9.text": "僵化必致崩塌，清晰方能永续。请从在您的部门推行此准则开始。身先士卒是建立参与感最迅捷的工具。",
+  "lectures.scripts.motivacao-e-engajamento.item9.question": "若企业文化过于僵化，该如何破局？",
+  "lectures.scripts.motivacao-e-engajamento.item10.text": "以“钢铁”之意志直面事实，以“丝绸”之优雅修饰言辞。针对客观问题（如15%的指标偏差），而非攻击个人（如若昂）。此乃伦理与尊重的真谛。",
+  "lectures.scripts.motivacao-e-engajamento.item10.question": "如何在提供批判性评价时，确保不损及员工的热忱？",
+  "lectures.scripts.motivacao-e-engajamento.item11.text": "令人疲惫的并非劳作本身，而是毫无意义的消耗。使命感是焕发生机的燃料。当你洞察到疲惫背后的深远意义，它便升华为一种成就。",
+  "lectures.scripts.motivacao-e-engajamento.item11.question": "崇高的使命是否也会令员工感到力竭？",
+  "lectures.scripts.motivacao-e-engajamento.item12.text": "极致透明。践行承诺，并在协议失效时率先垂范，勇于担责。信任，乃企业最珍贵之资产。",
+  "lectures.scripts.motivacao-e-engajamento.item12.question": "建立持久信任的秘诀为何？",
+  "lectures.scripts.motivacao-e-engajamento.item13.text": "真正的投入源于归属感与自主权。我们期待诸位在此满载而归，去革新并引领各自的团队。",
+  "lectures.scripts.motivacao-e-engajamento.item14.text": "感谢诸位的信任。我们是 Nexus Intelligence。共赴下一个巅峰目标！",
+  "lectures.scripts.inteligencia-emocional.item0.text": "诸位，午安。欢迎莅临。我是 Dante。在探讨目标与绩效之前，我们必须审视支撑专业人士的核心力量。Nexus Intelligence 不仅是一家咨询机构，更是基于四大基石——人性、尊重、伦理与信任——所构建的价值桥梁。今日，我们将探讨当这些基石遭遇日常混沌的挑战时，该如何应对。",
+  "lectures.scripts.inteligencia-emocional.item1.text": "我是 Djeny。在周一的例会上，鲜有人会告知你这一真相：情商并非……",
+  "lectures.scripts.inteligencia-emocional.item2.text": "职业成熟度的体现，在于深刻认知企业环境是利益与结果的博弈场，而非情感的审判席。若一份报告遭受质疑，其针对的并非……",
+  "lectures.scripts.inteligencia-emocional.item3.text": "然而 Dante，我们是血肉之躯，而非冰冷的机械。所谓的“情绪铠甲”并非摒弃感知，而是如何处理感知。这是针对自我的“三级倾听”。为何上司的邮件会令我心烦意乱？是由于邮件内容，还是源于我的倦怠？当你精准锁定情绪的源头，便夺回了掌控权。你将不再是被动反应，而是主动回应。",
+  "lectures.scripts.inteligencia-emocional.item4.text": "让我们进入应对混乱时刻的实战协议。当服务器宕机或目标看似遥不可及时：\\n\\n事实：客观发生了什么？（此刻请屏除责备）。\\n\\n行动：未来15分钟内必须执行的操作为何？\\n\\n铠甲：……",
+  "lectures.scripts.inteligencia-emocional.item5.text": "灵魂的补给：氧气停顿。在沉重的反馈与下一场会议之间，留出60秒的静默，以此净化滤网。在 Nexus，我们深信：当众人皆迷失方向时，唯有保持泰然自若者，方能赢得信任。成为团队的定海神针，是成熟的最高体现。",
+  "lectures.scripts.inteligencia-emocional.item6.text": "建立断连的仪式。踏出公司之际，请将职业身份留在门外。回归家庭，你是父亲、母亲或挚友。若将难题带往餐桌，你不仅是在无偿加班，更是在摧毁你的支持系统。",
+  "lectures.scripts.inteligencia-emocional.item6.question": "在糟糕的一天结束后，如何做到不将负面情绪带回家中？",
+  "lectures.scripts.inteligencia-emocional.item7.text": "践行尊重与伦理。记录事实，而非宣泄情感。请使用……",
+  "lectures.scripts.inteligencia-emocional.item7.question": "若管理层成为情绪失序的根源，应当如何理智应对？",
+  "lectures.scripts.inteligencia-emocional.item8.text": "诚然。纪律即是即便在主观意愿消沉时，依然履行应尽之责。动力是波动的，而成熟是恒定的。遵循协议：事实、目标、期限。专注于过程，结果自然会赋予你所需的驱动力。",
+  "lectures.scripts.inteligencia-emocional.item8.question": "在情绪低落或缺乏动力时，是否仍能保持高效产出？",
+  "lectures.scripts.inteligencia-emocional.item9.text": "闲言碎语是沟通中最大的噪音。请成为过滤器，而非扩音器。当他人试图传播流言时，请将话题引向……",
+  "lectures.scripts.inteligencia-emocional.item9.question": "如何应对那些……的同事？",
+  "lectures.scripts.inteligencia-emocional.item10.text": "洞悉他人的评判，实则是其内在自我的投射，而非对他人的真实定义。请务必对自身的价值与志向保持绝对的笃定。深知自我本色者，绝不会因外界的喧嚣而动摇半分。",
+  "lectures.scripts.inteligencia-emocional.item10.question": "成就此等非凡素养的秘诀究竟为何？",
+  "lectures.scripts.inteligencia-emocional.item11.text": "愿诸位在离去之时，怀揣如丝般和煦之心接纳情感，秉持如钢般坚毅之志捍卫成果。成熟，是一场每日修行的抉择。",
+  "lectures.scripts.inteligencia-emocional.item12.text": "感念今日的同行之旅。请铭记：动荡乃世之常态，而失衡则是个人之选。我们是 Nexus Intelligence。愿在下一个宏伟目标的彼岸，再度聚首。",
+  "lectures.scripts.lideranca-humanizada.item0.text": "诸位，欢迎莅临今日征程的终章。我是 Dante。此前我们深入探讨了沟通与防御机制，而这一切的终极交汇点，唯有“领导力”。Nexus Intelligence 始终坚信，领导者并非一种头衔，而是一份神圣的伦理责任。我们的基石源于四大支柱：人性、尊重、伦理与信任。然而，当目标受阻、压力骤增之时，我们该如何践行这些原则？",
+  "lectures.scripts.lideranca-humanizada.item1.text": "我是 Djeny。而答案便在于那份微妙的平衡。许多领导者误以为必须在两者之间做出抉择：是成为",
+  "lectures.scripts.lideranca-humanizada.item2.text": "让我们谈谈“钢”。身为领导者绝非意味着放任自流。那份",
+  "lectures.scripts.lideranca-humanizada.item3.text": "但是请警惕，Dante。孤立的“钢”会割伤人心，令顶尖人才望而却步。缺乏“丝”的刚硬只会催生因恐惧而产生的顺从，而恐惧正是创新的天敌。在威压之下，无人能成就卓越。",
+  "lectures.scripts.lideranca-humanizada.item4.text": "“丝”是我们将人性与尊重付诸实践。它是“三级聆听”的艺术。它意味着要洞察到在那低迷的 KPI 背后，是一个可能正深陷个人困境，或仅是未获充分磨砺的鲜活个体。以“丝”为引，意味着拥有在不折损他人尊严的前提下调整航向的敏锐度。它是为团队提供心理安全感，让他们敢于试错、提炼经验并再度冲锋。“丝”是忠诚的根基。员工绝不会仅为冷冰冰的目标而竭尽全力，他们只会为那位将其视为独立个体并给予充分尊重的领导者而战。",
+  "lectures.scripts.lideranca-humanizada.item5.text": "正是如此。平衡之道即是成功的秘诀。“钢”确立了航向与速度，而“丝”则确保了引擎——即人才——在征途中不至由于负荷过重而损毁。在 Nexus，领导者",
+  "lectures.scripts.lideranca-humanizada.item6.text": "请将私人身份与职业职责明晰切割。动用“钢”的力量：",
+  "lectures.scripts.lideranca-humanizada.item6.question": "如何向一位现已成为我部属的好友下达指令？",
+  "lectures.scripts.lideranca-humanizada.item7.text": "这种情况多源于“钢”的缺失。人性化管理绝非丧失底线。你可以在保持极度温文尔雅（丝）的同时，对交付期限与成果质量要求极度严苛（钢）。清晰的边界感才是赢得尊重的源泉。",
+  "lectures.scripts.lideranca-humanizada.item7.question": "过于人性化的管理是否会导致团队懈怠，甚至挑战权威？",
+  "lectures.scripts.lideranca-humanizada.item8.text": "新一代人才并非逃避劳动，而是拒绝平庸的志向。运用“钢”指明清晰的愿景，辅以“丝”阐明任务的深远意义。反馈并非单纯的指责，而是引航的罗盘。请务必在事实层面做到如手术刀般的精准。",
+  "lectures.scripts.lideranca-humanizada.item8.question": "面对抗压性较低、对批评更敏感的新一代，该如何运用“钢”的力量？",
+  "lectures.scripts.lideranca-humanizada.item9.text": "信任在危机中方显真章。若成果未达预期，领导者",
+  "lectures.scripts.lideranca-humanizada.item9.question": "当成果不尽如人意时，信任扮演着怎样的角色？",
+  "lectures.scripts.lideranca-humanizada.item10.text": "请从“透明度”开始。召集你的团队并传达：",
+  "lectures.scripts.lideranca-humanizada.item10.question": "Dante 和 Djeny，成为一名 Nexus 式领导者的首要步骤是什么？",
+  "lectures.scripts.lideranca-humanizada.item11.text": "领导力即是奉献。你身处高位并非为了独占光芒，而是为了通过你的鼎力支持，让追随者绽放异彩。",
+  "lectures.scripts.lideranca-humanizada.item12.text": "我们的征程在此暂告一段落，但诸位的使命才刚刚开始。请铭记我们如钢铁般的清晰洞察，亦不忘如丝绸般的价值观。感谢诸位的信任。我们是 Nexus Intelligence。顶峰相见，共赴下一标杆。",
+  "lectures.scripts.seguranca-psicologica.item0.text": "诸位好。欢迎莅临。我是 Dante。今天，我们将探讨现代市场中最昂贵、也最稀缺的资产：信任。Nexus Intelligence 不仅仅是技术公司；我们是企业文化的构筑者。我们的根基源于四大支柱：人性、尊重、伦理与信任。而在这一切之中，唯有信任，能确保其他三者在压力之下依然坚如磐石。",
+  "lectures.scripts.seguranca-psicologica.item1.text": "我是 Djeny。我想以一个令人不安的真相开启对话：如果您的团队畏惧犯错，那么他们便畏惧创新。恐惧是智慧的桎梏。当员工为了避责而掩盖错误时 \"",
+  "lectures.scripts.seguranca-psicologica.item2.text": "极致信任并非意味着 ",
+  "lectures.scripts.seguranca-psicologica.item3.text": "而 \"",
+  "lectures.scripts.seguranca-psicologica.item4.text": "让我们启动 Nexus 创新协议：\\n\\n即时披露：察觉失误？立即上报。错误发生与沟通之间的时间差，直接决定了损失的规模。\\n\\n无责分析：我们不追究 \"",
+  "lectures.scripts.seguranca-psicologica.item5.text": "创新是自由的产物。一个信任其领导者与同僚的团队更敢于开拓。而那些勇于开拓者，将发掘出被恐惧禁锢的竞争对手永远无法窥见的解决方案。极致信任将平凡的员工群体蜕变为一支精英单位。",
+  "lectures.scripts.seguranca-psicologica.item6.text": "这是一个极佳的问题。创新的失误是前所未有的尝试；它源于对未知的探索。而重复性的无能则是基于同一原因再犯。前者应获得成长的嘉奖；后者则需施以钢铁般的问责，若仍无改进，则必须因缺乏进化而予以辞退。",
+  "lectures.scripts.seguranca-psicologica.item6.question": "应如何明晰辨析其间的...",
+  "lectures.scripts.seguranca-psicologica.item7.text": "用数据说话。隐瞒错误并在数月后爆发的代价，是即时解决成本的百倍之巨。请以伦理与透明度为基石，向世人证明，极致信任实质上是一项降本增效的战略。",
+  "lectures.scripts.seguranca-psicologica.item7.question": "如何向管理层阐明，合理的试错乃是成功进程的必经之路？",
+  "lectures.scripts.seguranca-psicologica.item8.text": "在远程协作中，信任是连接团队的唯一纽带。减少微观管理，增加成果的清晰度。只要核心聚焦于交付与透明，物理距离便不足为道。",
+  "lectures.scripts.seguranca-psicologica.item8.question": "在 100% 远程办公的团队中，是否仍能实现极致信任？",
+  "lectures.scripts.seguranca-psicologica.item9.text": "信任的建立需经年累月，而其崩塌仅在瞬息之间。一旦触碰伦理底线，领导者必须以钢铁般的意志行事。宽恕可存乎于人性，但职位留存则取决于信任的重建。失去信任，便无 Nexus。",
+  "lectures.scripts.seguranca-psicologica.item9.question": "当有人破坏团队信任时，该如何应对？",
+  "lectures.scripts.seguranca-psicologica.item10.text": "展现脆弱。明天请尝试向您的团队承认一个失误。以身作则，证明焦点在于解决方案而非惩罚。信任自上而下，逐级流淌。",
+  "lectures.scripts.seguranca-psicologica.item10.question": "若领导者想从今天起改变恐惧的氛围，第一步该做什么？",
+  "lectures.scripts.seguranca-psicologica.item11.text": "创新并非栖息于人工智能，而在于人类不畏陨落、挑战不可能的勇气之中。",
+  "lectures.scripts.seguranca-psicologica.item12.text": "感谢诸位与我们同行。请将这份极致信任带回您的家庭与企业。未来属于信任者。我们是 Nexus Intelligence。共赴下一目标。",
+  "lectures.scripts.cultura-de-alta-performance.item0.text": "诸位好。欢迎来到我们征程的巅峰。我是 Dante。许多企业聘请我们是为了 \"",
+  "lectures.scripts.cultura-de-alta-performance.item1.text": "我是 Djeny。事实是，在 Nexus Intelligence，我们不相信那种仅凭一纸公文就能确立的文化。",
+  "lectures.scripts.cultura-de-alta-performance.item2.text": "结果导向的文化需要职业成熟度。在精英基因中，核心是解决方案而非借口。若目标未达成，精英基因不会寻找替罪羊，而是致力于优化流程。 ",
+  "lectures.scripts.cultura-de-alta-performance.item3.text": "与之对应的，是“归属之丝”。在精英基因中，成员间彼此守护。他们深知，同僚的失误即是全队的危机。“三级聆听”：文化领袖在开口之前，便已洞察全场的氛围。他知晓团队何时疲惫不堪，何时需要推力。在 Nexus 文化中，员工能感受到自身与企业共同成长。利润，不过是卓越人才在相互尊重的环境中工作的必然结果。",
+  "lectures.scripts.cultura-de-alta-performance.item4.text": "如何植入这种基因？通过仪式。\\n\\n真理仪式：反馈直接（钢）但聚焦于成长（丝）的会议。\\n\\n榜样仪式：领导者必须身先士卒，且绝不背弃价值观。若领导者践踏伦理，精英基因将瞬间崩解。\\n\\n赞美仪式：我们不仅奖励“",
+  "lectures.scripts.cultura-de-alta-performance.item5.text": "强大的文化是企业最坚实的防御系统。它能吸引顶尖人才，并自然排斥不合群者。当基因属于精英阶层，恒常的监督便不再必要，因为每一位员工都成为了 Nexus 价值观的捍卫者。",
+  "lectures.scripts.cultura-de-alta-performance.item6.text": "斩草除根。识别这些“",
+  "lectures.scripts.cultura-de-alta-performance.item6.question": "如何改变已经",
+  "lectures.scripts.cultura-de-alta-performance.item7.text": "唯有在文化设计拙劣时才会如此。在 Nexus 的基因中，竞争的对象是问题，而非同僚。我们鼓励极致的协作。那些为了个人光芒而隐瞒信息的人，正在亵渎“信任”，对此我们必将立即予以回击。",
+  "lectures.scripts.cultura-de-alta-performance.item7.question": "结果导向的文化是否会引发员工间的恶性竞争？",
+  "lectures.scripts.cultura-de-alta-performance.item8.text": "流程可以扩展，但价值观需传承。每一位新入职者都必须“",
+  "lectures.scripts.cultura-de-alta-performance.item8.question": "在企业高速扩张时，如何保持文化的生命力？",
+  "lectures.scripts.cultura-de-alta-performance.item9.text": "这是严峻的试金石。若你留用他，你的文化便已消亡；若你解雇他，你便向整个团队证明了价值观高于金钱。精英基因需要非凡的勇气。",
+  "lectures.scripts.cultura-de-alta-performance.item9.question": "当一名高管达成目标却违背伦理时，该如何处理？",
+  "lectures.scripts.cultura-de-alta-performance.item10.text": "平庸的企业管理任务，市场的领军者管理文化。任务会变，市场会变，但唯有精英基因能让企业不断自我重塑，立于不败之地。",
+  "lectures.scripts.cultura-de-alta-performance.item10.question": "普通公司与市场领军者之间有何区别？",
+  "lectures.scripts.cultura-de-alta-performance.item11.text": "我们以一个坚定的信念结束这六场系列讲座：未来不属于机器，而属于那些带着使命感与伦理准则驱使机器的人类。",
+  "lectures.scripts.cultura-de-alta-performance.item12.text": "感谢各位允许我们成为您历史进程中的价值之桥。请将 Nexus 基因融入每一项决策、每一封邮件和每一次握手之中。我们是 Nexus Intelligence。现在的目标，由各位掌控。后会有期。",
+  "lectures.scripts.gestao-de-conflitos.item0.text": "诸位好。欢迎来到 Nexus 征程的终章。我是 Dante。在过去的六场讲座中，我们构建了沟通、领导力与文化。然而，存在一个能在数分钟内摧毁一切的沉默敌人：自我冲突。观点的分歧是智慧与组织健康的象征；而虚荣之争则纯属损耗。Nexus Intelligence 从不逃避冲突，我们管理冲突。",
+  "lectures.scripts.gestao-de-conflitos.item1.text": "我是 Djeny。事实是，无人爱好冲突，但我们皆需通过冲突获得成长。问题不在于摩擦，而在于我们处理摩擦的方式。当你耗费精力试图“",
+  "lectures.scripts.gestao-de-conflitos.item2.text": "内部谈判需要“极端客观之钢”。在部门间的歧见中，焦点必须锁定在 KPI、期限与成本上。若财务部与营销部发生争执，Nexus 的提问准则是：",
+  "lectures.scripts.gestao-de-conflitos.item3.text": "但为了达成协议，我们需要“战略共情之丝”。大多数“",
+  "lectures.scripts.gestao-de-conflitos.item4.text": "Nexus 内部谈判协议包含三个步骤：\\n\\n人事分离：以“钢”的标准应对流程，以“丝”的温情对待个人。\\n\\n聚焦利益而非立场：你为何有此诉求？这能为 Nexus 解决什么问题？\\n\\n创造互惠选项：若双方各让步 10% 能换取项目 100% 的成功，那么最终全员皆是赢家。",
+  "lectures.scripts.gestao-de-conflitos.item5.text": "瓦解难缠者的终极技法：开放式提问。与其说……",
+  "lectures.scripts.gestao-de-conflitos.item6.text": "秉持“静默之钢”。切勿提高音量，须以事实与数据应对。若你心如止水，对方的攻势便会失去支撑，从而被迫回归理性，否则必将在团队面前颜面尽失。",
+  "lectures.scripts.gestao-de-conflitos.item6.question": "如何与富有攻击性或……的同事进行斡旋？",
+  "lectures.scripts.gestao-de-conflitos.item7.text": "运用“批判忠诚之丝”。向其展示，你的分歧实则是为了规避更重大的决策失误。",
+  "lectures.scripts.gestao-de-conflitos.item7.question": "若冲突源自直属上级，应当如何应对？",
+  "lectures.scripts.gestao-de-conflitos.item8.text": "留档存证与透明化。须以书面形式明确协议，限定期限并落实责任人。",
+  "lectures.scripts.gestao-de-conflitos.item8.question": "面对那些始终声称...",
+  "lectures.scripts.gestao-de-conflitos.item9.text": "恰恰相反。全员盲从的团队，实则是思考停滞的团队。相互尊重的分歧乃是创新的引擎。破坏团队氛围的并非席间的辩论，而是会后的流言。",
+  "lectures.scripts.gestao-de-conflitos.item9.question": "持久的分歧是否会破坏团队的凝聚力？",
+  "lectures.scripts.gestao-de-conflitos.item10.text": "锻造坚韧之壳（护甲），保持开阔之心（人文）。务必铭记，Nexus Intelligence 的整体成就高于任何个人得失。应致力于架设沟通之桥，而非构筑隔阂之墙。",
+  "lectures.scripts.gestao-de-conflitos.item10.question": "如何方能蜕变为一名卓越的企业内部谈判专家？",
+  "lectures.scripts.gestao-de-conflitos.item11.text": "冲突乃是披着混乱外衣的契机。望诸君能在每一次辩论中萃取真金。",
+  "lectures.scripts.gestao-de-conflitos.item12.text": "七场演讲至此圆满落幕。诸君现已掌握 Nexus 的全套战略兵器库：沟通、使命、护甲、领导力、创新、文化与斡旋。余下的征程，交由诸君裁夺。",
+  "weather.analysis.title": "热力学分析（实时更新）",
+  "weather.outlook.normal": "未来十日天气遵循可预测模式。当前为常规作业的最佳窗口期。",
+  "weather.outlook.dry": "警报：持续晴朗干燥。务必关注植株叶片的水分亏缺，请视情况安排灌溉。",
+  "weather.outlook.rainy": "注意：气象监测显示降水频发。存在内涝风险，且重型机械作业或叶面喷施或受阻。",
+  "weather.outlook.error": "当前无法连接气象卫星。请采取保守策略，并利用本地监测手段。",
+  "weather.condition.0": "晴空",
+  "weather.condition.1": "晴朗为主",
+  "weather.condition.2": "少云",
+  "weather.condition.3": "阴天",
+  "weather.condition.45": "雾",
+  "weather.condition.48": "雾凇",
+  "weather.condition.51": "细雨",
+  "weather.condition.53": "中度细雨",
+  "weather.condition.55": "强细雨",
+  "weather.condition.56": "轻度冻细雨",
+  "weather.condition.57": "强冻细雨",
+  "weather.condition.61": "小雨",
+  "weather.condition.63": "中雨",
+  "weather.condition.65": "大雨",
+  "weather.condition.66": "纤微冻雨",
+  "weather.condition.67": "凛烈冻雨",
+  "weather.condition.71": "轻盈细雪",
+  "weather.condition.73": "盈实中雪",
+  "weather.condition.75": "磅礴强雪",
+  "weather.condition.77": "粒雪",
+  "weather.condition.80": "纤细阵雨",
+  "weather.condition.81": "沛然阵雨",
+  "weather.condition.82": "狂澜阵雨",
+  "weather.condition.85": "零星阵雪",
+  "weather.condition.86": "狂烈阵雪",
+  "weather.condition.95": "轻微雷暴",
+  "weather.condition.96": "微量雷雹",
+  "weather.condition.99": "狂烈雷雹",
+  "weather.condition.unknown": "气象不稳",
+  "profile.default_name": "菁英学子",
+  "whatsapp.payment.message": "阁下，您好。本人已完成课程《{title}》的款项支付，总计 {price}。随信附上支付凭证。",
+  "whatsapp.support.message": "阁下，见信如晤。本人目前正于 Nexus 官方平台（{path}）深度参阅，愿就贵司领导力及技术课程之精要，向相关专员请益。",
+  "chat.footer.disclaimer": "{name} 乃 Nexus 匠心研创之智能枢纽，其输出或有微瑕。请对回复内容审慎核考。鉴于当前访问流量颇巨，音频指令之载入或需片刻，敬请垂鉴。",
+  "chat.placeholder.scenario": "请详述阁下的推演情境...",
+  "chat.button.pay": "立即启幕全境权限",
+  "chat.payment.title": "全境权限获享：PIX 结算",
+  "chat.payment.qr_desc": "请利用银行移动终端扫描此识别码",
+  "chat.payment.investment": "战略投资：全域通权限",
+  "chat.payment.qr_button": "二维码支付",
+  "chat.payment.copy_button": "PIX 复制秘钥",
+  "chat.payment.copied": "已成功录入剪贴板",
+  "chat.payment.whatsapp_button": "通过 WhatsApp 呈递凭证",
+  "feedback": {
+    "trigger": "Enviar Feedback",
+    "title": "Melhorar o Dante Safra",
+    "description": "Encontrou um erro ou tem uma sugestão? Relate abaixo com voz, texto ou fotos.",
+    "form": {
+      "text": "Sua mensagem",
+      "textPlaceholder": "Descreva o que aconteceu ou sua sugestão...",
+      "voice": "Relato por Voz",
+      "record": "Gravar Relato",
+      "recorded": "Áudio Gravado",
+      "stop": "Parar",
+      "images": "Anexar Prints ou Fotos",
+      "attach": "Anexar"
+    },
+    "toast": {
+      "empty": "Por favor, adicione algum texto, áudio ou imagem.",
+      "recordError": "Não foi possível acessar o microfone para gravar o áudio.",
+      "success": "Obrigado por nos ajudar a melhorar o Dante Safra."
+    },
+    "success": {
+      "title": "Obrigado pelo seu relato!",
+      "description": "Nossa equipe (e a Maga) vai analisar isso em breve."
+    },
+    "cta": {
+      "cancel": "Cancelar",
+      "submit": "Enviar Relato"
+    }
+  },
+  "floatingSupport.message": "您好。本人正于 Nexus 尊享站点 ({{pathname}}) 研习，欲就领航课程之详情，向诸位同仁作进一步咨询。",
+  "floatingSupport.tooltip": "若对准入权限存有疑问，请即刻启智对话。💬",
+  "floatingSupport.messageDjeny": "幸会。本人代表所属企业之立场，欲就 Djeny Design Business 之全维无界集成方案，详加垂询其战略部署之细节。",
+  "intelligence.djenyGallery.item1.title": "极简前瞻寝殿",
+  "intelligence.djenyGallery.item1.category": "私享亲睦空间",
+  "intelligence.djenyGallery.item2.title": "当代格调邸厅",
+  "intelligence.djenyGallery.item2.category": "尊尚生活范式",
+  "intelligence.djenyGallery.item3.title": "策略性奢雅露台",
+  "intelligence.djenyGallery.item3.category": "户外空间变革",
+  "intelligence.djenyGallery.item4.title": "至臻奢华宴厅",
+  "intelligence.djenyGallery.item4.category": "精英社交领地",
+  "intelligence.djenyGallery.sectionTitle": "睿见创艺画廊",
+  "intelligence.djenyDesign.personal.price": "R$ 149,00 / 月",
+  "intelligence.djenyDesign.personal.cta.access": "启幕专属方案",
+  "intelligence.djenyDesign.business.price": "R$ 899,00 / 月",
+  "floatingSupport": {
+    "message": "您好！我在 Nexus 网站 ({{pathname}}) 上，想咨询关于课程的问题。",
+    "tooltip": "有关于访问的问题吗？现在就和我聊聊吧！ 💬",
+    "consultantLabel": "联系顾问",
+    "highDemand": "咨询人数较多：请留言，我们将尽快给您回复。",
+    "emailSubject": "Nexus 创新咨询"
+  },
+  "danteBuilder.generateImage": "生成视觉模型",
+  "danteBuilder.generatingImage": "图像工程正在进行中...",
+  "danteBuilder.visualModelTitle": "供应商视觉模型"
+,
+  "intelligence.dante-safra.trial.title": "Dante Safra \u7ec8\u7aef\uff08\u8bd5\u7528\uff09\u3002",
+  "intelligence.dante-safra.trial.subtitle": "\u60a8\u76841\u5c0f\u65f6\u8bc4\u4f30\u4f1a\u8bdd\u3002",
+  "intelligence.dante-safra.dashboard.title1": "Dante Safra \u2014 \u79cd\u690d\u4e1a",
+  "intelligence.dante-safra.dashboard.title2": "Dante Safra \u2014 \u755c\u7267\u4e1a",
+  "intelligence.dante-safra.dashboard.title3": "Dante Safra \u2014 \u517b\u732a\u4e0e\u5bb6\u79bd\u4e1a",
+  "intelligence.dante-safra.dashboard.title4": "Dante Safra \u2014 \u6c14\u5019\u4e0e\u571f\u58e4",
+  "intelligence.dante-safra.dashboard.title5": "Dante Safra \u2014 \u5e02\u573a\u4e0e\u4ef7\u683c",
+  "intelligence.dante-safra.dashboard.item.soja": "\u5927\u8c46",
+  "intelligence.dante-safra.dashboard.item.milho": "\u73c9\u7c73",
+  "intelligence.dante-safra.dashboard.item.fumo": "\u70df\u8349",
+  "intelligence.dante-safra.dashboard.item.feijao": "\u8c46\u7c7b",
+  "intelligence.dante-safra.dashboard.item.corte": "\u8089\u725b",
+  "intelligence.dante-safra.dashboard.item.leiteiro": "\u5976\u725b",
+  "intelligence.dante-safra.dashboard.item.suinos": "\u732a",
+  "intelligence.dante-safra.dashboard.item.aves": "\u5bb6\u79bd",
+  "intelligence.dante-safra.dashboard.item.ovinos": "\u7ef5\u7f8a",
+  "intelligence.dante-safra.dashboard.access": "\u8bbf\u95ee"
+,
+  "intelligence.dante-safra.chat.loading": "\u4e39\u5947\u6b63\u5728\u5206\u6790...",
+  "intelligence.dante-safra.chat.speech_unsupported": "\u6b64\u6d4f\u89c8\u5668\u4e0d\u652f\u6301\u8bed\u97f3\u8bc6\u522b\u3002",
+  "intelligence.dante-safra.chat.voice_error": "\u8bed\u97f3\u8bc6\u522b\u9519\u8bef\uff1a",
+  "intelligence.dante-safra.chat.error": "\u53d1\u751f\u9519\u8bef\uff1a{error}",
+  "intelligence.dante-safra.chat.analysis_about": "\u5206\u6790 {item}",
+  "intelligence.dante-safra.chat.report_about": "\u751f\u6210\u5173\u4e8e {title} \u7684\u62a5\u544a",
+  "intelligence.dante-safra.chat.placeholder.municipio": "\u8f93\u5165\u60a8\u7684\u5e02\u533a\u540d\u79f0...",
+  "intelligence.dante-safra.chat.placeholder.nome": "\u60a8\u5e0c\u671b\u6211\u4eec\u600e\u79f0\u547c\u60a8\uff1f",
+  "intelligence.dante-safra.chat.placeholder.conclusao": "\u8bf7\u63cf\u8ff0\u60a8\u7684\u519c\u573a\u573a\u666f...",
+  "intelligence.dante-safra.chat.placeholder.analise": "\u60a8\u4eca\u5929\u60f3\u5206\u6790\u4ec0\u4e48\uff0c{name}\uff1f",
+  "intelligence.dante-safra.chat.placeholder.default": "\u8bf7\u63cf\u8ff0\u573a\u666f..."
+
+}

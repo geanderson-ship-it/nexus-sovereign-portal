@@ -1,0 +1,329 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user account on the SkillRise Academy platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user entity."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The user's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The user's last name."
+        },
+        "email": {
+          "type": "string",
+          "description": "The user's email address.",
+          "format": "email"
+        },
+        "cpf": {
+          "type": "string",
+          "description": "The user's CPF (Cadastro de Pessoas Físicas)."
+        },
+        "birthDate": {
+          "type": "string",
+          "description": "The user's date of birth.",
+          "format": "date"
+        },
+        "registrationDate": {
+          "type": "string",
+          "description": "The date and time the user registered.",
+          "format": "date-time"
+        },
+        "danteSafraSetup": {
+          "type": "object",
+          "description": "Stores setup information and property details for the Dante Safra module.",
+          "properties": {
+            "isComplete": {
+              "type": "boolean",
+              "description": "Whether the user has completed the Dante Safra setup."
+            },
+            "nickname": {
+              "type": "string",
+              "description": "The nickname the user chose during setup."
+            },
+            "tamanho": {
+              "type": "string",
+              "description": "Size of the user's property."
+            },
+            "culturas": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Crops cultivated by the user."
+            },
+            "animais": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Animals raised by the user."
+            },
+            "municipio": {
+              "type": "string",
+              "description": "The municipality of the user's property."
+            }
+          }
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email",
+        "cpf",
+        "birthDate",
+        "registrationDate"
+      ]
+    },
+    "Course": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Course",
+      "type": "object",
+      "description": "Represents a training course offered on the SkillRise Academy platform.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the course entity."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the course."
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of the course."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price of the course."
+        },
+        "duration": {
+          "type": "string",
+          "description": "The duration of the course (e.g., '2 hours', '1 week')."
+        },
+        "category": {
+          "type": "string",
+          "description": "The category of the course (e.g., 'Leadership', 'Team Management')."
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "price",
+        "duration",
+        "category"
+      ]
+    },
+    "Enrollment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Enrollment",
+      "type": "object",
+      "description": "Represents a user's enrollment in a course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the enrollment record."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Enrollment)"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to Course. (Relationship: Course 1:N Enrollment)"
+        },
+        "enrollmentDate": {
+          "type": "string",
+          "description": "The date and time the user enrolled in the course.",
+          "format": "date-time"
+        },
+        "completionDate": {
+          "type": "string",
+          "description": "The date and time the user completed the course. Null if not completed.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "courseId",
+        "enrollmentDate"
+      ]
+    },
+    "Review": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Review",
+      "type": "object",
+      "description": "Represents a user's review and rating of a course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the review."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to User. (Relationship: User 1:N Review)"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to Course. (Relationship: Course 1:N Review)"
+        },
+        "rating": {
+          "type": "number",
+          "description": "The rating given by the user (e.g., 1 to 5 stars)."
+        },
+        "comment": {
+          "type": "string",
+          "description": "The user's review comment."
+        },
+        "reviewDate": {
+          "type": "string",
+          "description": "The date and time the review was submitted.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "courseId",
+        "rating",
+        "comment",
+        "reviewDate"
+      ]
+    },
+    "Trial": {
+      "title": "Trial",
+      "type": "object",
+      "description": "Represents a user's trial period for a specific module.",
+      "properties": {
+        "moduleId": {
+          "type": "string",
+          "description": "The ID of the module being trialed (e.g., 'dante-safra')."
+        },
+        "startTime": {
+          "type": "string",
+          "description": "The ISO date and time when the trial period started.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "moduleId",
+        "startTime"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous",
+      "google.com"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profile data. Path-based ownership ensures only the user can access their own profile.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user, matching the Firebase Auth UID."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/courses/{courseId}",
+        "definition": {
+          "entityName": "Course",
+          "schema": {
+            "$ref": "#/backend/entities/Course"
+          },
+          "description": "Stores course information. Enables listing and filtering of courses.",
+          "params": [
+            {
+              "name": "courseId",
+              "description": "The unique identifier of the course."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/enrollments/{enrollmentId}",
+        "definition": {
+          "entityName": "Enrollment",
+          "schema": {
+            "$ref": "#/backend/entities/Enrollment"
+          },
+          "description": "Stores enrollment records for each user. Path-based ownership ensures only the user can access their own enrollments.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "enrollmentId",
+              "description": "The unique identifier of the enrollment record."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/courses/{courseId}/reviews/{reviewId}",
+        "definition": {
+          "entityName": "Review",
+          "schema": {
+            "$ref": "#/backend/entities/Review"
+          },
+          "description": "Stores reviews for each course. The userId is stored within the review document.",
+          "params": [
+            {
+              "name": "courseId",
+              "description": "The unique identifier of the course."
+            },
+            {
+              "name": "reviewId",
+              "description": "The unique identifier of the review."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/trials/{trialId}",
+        "definition": {
+          "entityName": "Trial",
+          "schema": {
+            "$ref": "#/backend/entities/Trial"
+          },
+          "description": "Stores trial period information for each user for specific modules. Path-based ownership ensures only the user can access their own trial data.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "trialId",
+              "description": "The unique identifier of the trial, usually the module name."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support SkillRise Academy's core features, focusing on user accounts, course listings, enrollments, and reviews. The structure prioritizes security, scalability, and ease of querying. It adheres to the principle of Authorization Independence by denormalizing authorization data where necessary to avoid costly and insecure `get()` calls in security rules.\n\n*   **Users:** User data is stored under `/users/{userId}`. This path-based ownership model simplifies security rules for user-specific data. It ensures only the authenticated user can access their own data.\n*   **Courses:** Courses are stored in a flat `/courses` collection. This allows for easy listing and filtering of courses, a key requirement.\n*   **Enrollments:** Enrollment records are nested under `/users/{userId}/enrollments/{enrollmentId}`. This structure establishes a clear ownership relationship, ensuring only the user can access their own enrollment data. The courseId is stored within the enrollment document, enabling efficient querying of a user's enrollments.\n*   **Reviews:** Reviews are stored under `/courses/{courseId}/reviews/{reviewId}`. This segregates reviews by course, facilitating easy aggregation of reviews for a given course. The userId is stored within the review document, enabling querying of all reviews by a user, if required. For Authorization Independence, the review document could denormalize the course 'members' map or owner, if reviews were limited to enrolled students only.\n\nThis structure ensures Authorization Independence by avoiding hierarchical authorization dependencies. Each document can be secured based on its own data, simplifying security rules and enabling atomic operations. The structure also supports the required QAPs (Rules Are Not Filters) by using structural segregation to ensure that list operations can be performed securely, without requiring complex filtering logic in the rules.\n"
+  }
+}

@@ -1,0 +1,83 @@
+﻿node.exe : Retrieving 
+projectÔÇª
+No linha:1 caractere:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo         
+     : NotSpecified: (Ret  
+  rieving projectÔÇª:Str   
+ ing) [], RemoteExcepti    
+on
+    + FullyQualifiedErrorI 
+   d : NativeCommandError
+ 
+Deploying geandersonleo-538
+3s-projects/site-novo
+Uploading 
+[--------------------] 
+(0.0B/231.1KB)
+Uploading 
+[=====---------------] 
+(62.8KB/231.1KB)
+Uploading 
+[==========----------] 
+(126.8KB/231.1KB)
+Uploading 
+[===============-----] 
+(174.8KB/231.1KB)
+Uploading 
+[====================] 
+(231.1KB/231.1KB)
+Inspect: https://vercel.com
+/geandersonleo-5383s-projec
+ts/site-novo/9AJY5qWnQwHFVp
+jyXXbpu9xPUVAB [5s]
+Production: https://site-no
+vo-ea47rchzp-geandersonleo-
+5383s-projects.vercel.app 
+[5s]
+Building...
+Building...
+Building: Running build in 
+Washington, D.C., USA 
+(East) ÔÇô iad1
+Building: Build machine 
+configuration: 2 cores, 8 
+GB
+Building: Retrieving list 
+of deployment files...
+Building: Downloading 702 
+deployment files...
+Building: Restored build 
+cache from previous 
+deployment (8wDJLJaBRrtFJVD
+asyi9f2U23cU5)
+Building: Warning: 
+Detected "engines": { 
+"node": ">=20" } in your 
+`package.json` that will 
+automatically upgrade when 
+a new major Node.js 
+Version is released. Learn 
+More: https://vercel.link/n
+ode-version
+Building: Running "vercel 
+build"
+Building: Vercel CLI 
+50.38.2
+Building: Warning: 
+Detected "engines": { 
+"node": ">=20" } in your 
+`package.json` that will 
+automatically upgrade when 
+a new major Node.js 
+Version is released. Learn 
+More: https://vercel.link/n
+ode-version
+Building: Installing 
+dependencies...

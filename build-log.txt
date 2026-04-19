@@ -1,0 +1,39 @@
+  ▲ Next.js 14.2.35
+  - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ ⚠ Compiled with warnings
+
+./node_modules/require-in-the-middle/index.js
+Critical dependency: require function is used in a way in which dependencies cannot be statically extracted
+
+Import trace for requested module:
+./node_modules/require-in-the-middle/index.js
+./node_modules/@opentelemetry/instrumentation/build/esm/platform/node/instrumentation.js
+./node_modules/@opentelemetry/instrumentation/build/esm/platform/node/index.js
+./node_modules/@opentelemetry/instrumentation/build/esm/platform/index.js
+./node_modules/@opentelemetry/instrumentation/build/esm/index.js
+./node_modules/@opentelemetry/sdk-node/build/src/sdk.js
+./node_modules/@opentelemetry/sdk-node/build/src/index.js
+./node_modules/@genkit-ai/core/lib/tracing/node-telemetry-provider.js
+./node_modules/@genkit-ai/core/lib/node.js
+./node_modules/genkit/lib/common.js
+./node_modules/genkit/lib/index.mjs
+./src/ai/genkit.ts
+./src/ai/flows/djeny-chat-flow.ts
+
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+Failed to compile.
+
+./src/ai/flows/career-chat-flow.ts:15:14
+Type error: Type 'ZodObject<{ userMessage: ZodString; }, "strip", ZodTypeAny, { userMessage: string; }, { userMessage: string; }>' is missing the following properties from type 'ZodType<any, any, any>': "~standard", "~validate"
+
+[0m [90m 13 |[39m [36mconst[39m careerChatPrompt [33m=[39m ai[33m.[39mdefinePrompt({[0m
+[0m [90m 14 |[39m     name[33m:[39m [32m'careerChatPrompt'[39m[33m,[39m[0m
+[0m[31m[1m>[22m[39m[90m 15 |[39m     input[33m:[39m { schema[33m:[39m [33mCareerChatInputSchema[39m }[33m,[39m[0m
+[0m [90m    |[39m              [31m[1m^[22m[39m[0m
+[0m [90m 16 |[39m     output[33m:[39m { schema[33m:[39m [33mCareerChatOutputSchema[39m }[33m,[39m[0m
+[0m [90m 17 |[39m     model[33m:[39m [32m'googleai/gemini-1.5-flash-preview'[39m[33m,[39m[0m
+[0m [90m 18 |[39m     prompt[33m:[39m [32m`Você é Djeny, a mentora e conselheira de carreira da Nexus Treinamento. Sua voz é calorosa, humana e encorajadora. Seu tom é o de uma psicóloga organizacional experiente: empática, mas com foco em ações práticas.[39m[0m
+Next.js build worker exited with code: 1 and signal: null

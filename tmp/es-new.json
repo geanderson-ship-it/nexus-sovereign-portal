@@ -1,0 +1,237 @@
+{
+  "courses.relacionamento-iniciante.title": "Nexus Entrenamiento: Presentación Institucional",
+  "courses.relacionamento-iniciante.section1.title": "🎥 Escena 1: El Propósito (Dante y Djeny juntos)",
+  "courses.relacionamento-iniciante.section1.dante": "Hola. Bienvenido a Nexus Entrenamiento. Yo soy Dante. Si estás aquí, es porque has decidido dejar de confiar en la suerte y has empezado a invertir en estrategia. En Nexus, no creemos en fórmulas mágicas ni teorías de estantería. Creemos en el Resultado con Humanidad.",
+  "courses.relacionamento-iniciante.section1.djeny": "Y yo soy Djeny. Nuestra misión es ser el puente entre donde estás hoy y la excelencia que el mercado de élite exige. Para ello, hemos desarrollado una metodología que une la precisión técnica al comportamiento de alto impacto. No solo entrenamos profesionales; formamos legados.",
+  "courses.relacionamento-iniciante.section2.title": "🏛️ Los 4 Pilares Innegociables (La Base de Todo)",
+  "courses.relacionamento-iniciante.section2.dante": "Todo nuestro contenido está construido sobre cuatro pilares que son nuestro ADN. Sin ellos, la técnica es vacía:",
+  "courses.relacionamento-iniciante.section2.item1.title": "Humanidad",
+  "courses.relacionamento-iniciante.section2.item1.desc": "Las personas no son recursos; son el motor de todo. Tratamos al individuo con la dignidad que merece.",
+  "courses.relacionamento-iniciante.section2.item2.title": "Respeto",
+  "courses.relacionamento-iniciante.section2.item2.desc": "Por el tiempo, por la historia y por la verdad de cada uno. El respeto es la base de la jerarquía saludable.",
+  "courses.relacionamento-iniciante.section2.item3.title": "Ética",
+  "courses.relacionamento-iniciante.section2.item3.desc": "El camino correcto siempre, aunque sea el más difícil. En Nexus, la integridad no tiene precio.",
+  "courses.relacionamento-iniciante.section2.item4.title": "Confianza",
+  "courses.relacionamento-iniciante.section2.item4.desc": "El activo más preciado. Sin confianza, la comunicación es solo ruido y el proceso se detiene.",
+  "courses.relacionamento-iniciante.section3.title": "⚔️ La Metodología: Acero y Seda",
+  "courses.relacionamento-iniciante.section3.danteAco": "El Acero representa nuestro rigor. Es la técnica pura, el indicador, la meta, el protocolo y la disciplina. Es lo que garantiza que el trabajo se haga con excelencia quirúrgica.",
+  "courses.relacionamento-iniciante.section3.djenySeda": "La Seda representa nuestra sensibilidad. Es la inteligencia emocional, la escucha activa, la empatía y la capacidad de conectar personas al propósito. La seda es lo que garantiza que el equipo permanezca unido y motivado bajo presión.",
+  "courses.relacionamento-iniciante.section3.danteBalance": "En este curso, aprenderás a equilibrar estas dos fuerzas. El Acero para proteger el resultado...",
+  "courses.relacionamento-iniciante.section3.djenyBalance": "...y la Seda para proteger a las personas.",
+  "courses.relacionamento-iniciante.section4.title": "🚀 Curso 1: Liderazgo Esencial – El Despertar del Gestor",
+  "courses.relacionamento-iniciante.section4.dante": "En este primer curso, nos enfocaremos en tu transición. Dormiste como operador y despertaste como líder. ¿El desafío? Mantener el respeto de tus antiguos colegas y entregar resultados inmediatos.",
+  "courses.relacionamento-iniciante.section4.djeny": "Te enseñaremos a dominar el Manual de Supervivencia del Nuevo Líder. Ya basta de sufrir los lunes. Vamos a transformar tu inseguridad en autoridad real.",
+  "courses.relacionamento-iniciante.modules.stage.dante": "Este módulo tiene dos lecciones. Inicia con la visión de mando de Dante.",
+  "courses.relacionamento-iniciante.modules.stage.ctaDante": "Iniciar Lección con Dante",
+  "courses.relacionamento-iniciante.modules.stage.ctaDjeny": "Continuar hacia la Lección con Djeny",
+  "courses.relacionamento-iniciante.modules.stage.listenPreview": "Escuchar previa",
+  "courses.relacionamento-iniciante.modules.stage.purchasedRequired": "Necesitas adquirir este curso para acceder a las lecciones interactivas.",
+  "courses.relacionamento-iniciante.closing.title": "Cierre del Curso: Liderazgo Esencial",
+  "courses.relacionamento-iniciante.closing.dante1": "Felicidades. Has completado el primer paso de tu jornada de élite. Has aprendido que el liderazgo no es un don, es una disciplina. El Acero ahora forma parte de tu estructura: tienes metas, tienes claridad y tienes el valor para decidir.",
+  "courses.relacionamento-iniciante.closing.djeny1": "Y ahora llevas la Seda en tu trato: tienes empatía, sabes escuchar y entiendes que tu mayor patrimonio son las personas. La transición de colega a líder está hecha. Ya no eres el mismo profesional que comenzó este curso.",
+  "courses.relacionamento-iniciante.closing.dante2": "A partir de ahora, la responsabilidad es tuya. Aplica los pilares de Humanidad, Respeto, Ética y Confianza en cada pequeña decisión.",
+  "courses.relacionamento-iniciante.closing.djeny2": "Somos Nexus Entrenamiento. Ha sido un placer ser tu puente de valor. Nos vemos en el próximo curso, donde profundizaremos aún más en tu maestría.",
+  "courses.relacionamento-iniciante.closing.final": "¡Hasta la próxima meta!",
+  "courses.relacionamento-iniciante.data": [
+    {
+      "module": "MÓDULO 1",
+      "title": "El Giro de Llave – De Colega a Líder",
+      "danteLesson": [
+        {
+          "point": "Choque de Realidad (El 'Duelo' de la Operación)",
+          "explanation": "Bienvenido a tu primera lección técnica. Yo soy Dante y seré directo: el profesional que te trajo hasta aquí ha muerto. Aquel que era el mejor en la máquina, el más rápido en Excel o el que resolvía todos los 'incendios' técnicos ya no puede existir. Si sigues intentando ser el mejor ejecutor, serás el peor líder. El liderazgo de élite exige el Acero de la Renuncia. Debes renunciar al placer de 'hacer' para aceptar la responsabilidad de 'hacer que suceda a través de los demás'."
+        },
+        {
+          "point": "La Frontera Invisible: De 'Uno de los Muchachos' a Gestor",
+          "explanation": "El error número 1 del nuevo líder es intentar ser 'el colega'. En el momento en que firmaste el contrato de gestión, la simetría terminó. Ahora posees el poder de feedback, de promoción y de despido. Intentar ocultar esto tras una falsa amistad es falta de Ética y genera confusión en el equipo. El Acero define la frontera: no necesitas ser temido, pero necesitas ser respetado por tu claridad. La amistad es Personal; la Jerarquía es Profesional."
+        },
+        {
+          "point": "Protocolo de Autoridad Técnica (El Método Nexus)",
+          "explanation": "¿Cómo establecer autoridad sin ser autoritario? A través del dominio del proceso. El líder Nexus no manda porque 'puede', orienta porque 'conoce el camino'.\n\nMapeo de Competencias: Deja de mirar las máquinas y empieza a mirar a quienes las operan.\n\nDelegación Quirúrgica: Delegar no es 'soltar'. Es dar la tarea, el recurso y el plazo (Qué, Quién, Cuándo).\n\nEstandarización: Donde no hay estándar, no hay liderazgo, solo caos remediado."
+        },
+        {
+          "point": "Ejercicio Práctico: El Desapego de la Operación",
+          "explanation": "Tu tarea hoy: Identifica la tarea técnica que más te gusta hacer y prohíbete hacerla mañana. Elige a alguien del equipo, entrénalo y observa. Tu éxito ahora es el brillo de él, no el tuyo."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "La Psicología del Cambio (Lo que siente el equipo)",
+          "explanation": "¡Hola! Soy Djeny y ahora vamos a cuidar la parte más sensible de este giro: las personas. Cuando fuiste promovido, el clima de la sala cambió. Existe el colega que está feliz por ti, pero existe aquel que se siente injusticiado y el que tiene miedo de cómo vas a actuar ahora. La Seda no se trata de ser 'buena persona', se trata de tener la sensibilidad de leer el ambiente. Si ignoras estos sentimientos, se convertirán en sabotaje silencioso en 30 días."
+        },
+        {
+          "point": "Escucha Nivel 3: El Diagnóstico del Clima",
+          "explanation": "En tus primeros días, necesitas escuchar más de lo que hablas. Pero no es cualquier escucha. Es la Escucha Nivel 3. En tus reuniones individuales, observa: ¿quién desvía la mirada? ¿Quién está de acuerdo con todo demasiado rápido? ¿Quién dejó de dar ideas? La lealtad no se impone con el carnet, se conquista con el Respeto. El equipo necesita sentir que sigues siendo humano (Pilar de la Humanidad), aunque seas el jefe."
+        },
+        {
+          "point": "Desarmando Conflictos de Ego (El Colega Envidioso)",
+          "explanation": "Siempre habrá el 'amigo' que pondrá a prueba tus límites, haciendo bromitas o ignorando plazos para ver si has 'cambiado'. La técnica de la Seda aquí es la Conversación de Alineación Transparente. Llámalo en privado y dile: 'Valoro nuestra historia, pero mi papel aquí ahora es garantizar que todo el equipo gane. ¿Cómo puedo ayudarte a rendir en este nuevo escenario?'. Lo traes a tu lado sin necesidad de alzar la voz."
+        },
+        {
+          "point": "Ejercicio Prático: El Mapa de Empatía del Equipo",
+          "explanation": "Para cerrar este módulo, vas a dibujar el Mapa de Empatía de cada colaborador tuyo. ¿Qué temen? ¿Qué buscan? ¿Cuáles son sus dolores? Entender qué mueve cada corazón es lo que te permitirá usar la seda adecuada para cada situación. Liderar es, por encima de todo, servicio."
+        }
+      ]
+    },
+    {
+      "module": "MÓDULO 2",
+      "title": "Fin del \"Teléfono Estropeado\" – Comunicación que Funciona",
+      "danteLesson": [
+        {
+          "point": "El Costo del \"Yo Pensé que...\"",
+          "explanation": "Bienvenido a la lección que te ahorrará horas de retrabajo. Yo soy Dante. En el mundo de la élite, la comunicación no es una charla; es un Contrato de Ejecución. El mayor sumidero de dinero en una fábrica u oficina es la instrucción vaga. 'Echa un vistazo a esto por mí', 'Mejora la calidad de este informe', 'Mira si adelantas aquel pedido'. Eso es basura comunicativa. Genera duda, y la duda genera el error. El Acero de la comunicación es la Objetividad Radical. Si no sabes lo que quieres, no lo pidas."
+        },
+        {
+          "point": "El Protocolo Nexus: Hecho, Meta, Responsable y Plazo",
+          "explanation": "Para acabar con el teléfono estropeado, toda instrucción tuya debe pasar por el filtro Nexus.\n\nHecho: ¿Cuál es la situación actual? (Ej: 'Tenemos 50 pedidos retrasados').\n\nMeta: ¿Qué debe alcanzarse? (Ej: 'Necesitamos liquidar estos pedidos').\n\nResponsable: ¿Quién es el dueño del balón? (Ej: 'Juan, tú eres el responsable'). Nunca digas 'alguien hágalo', porque 'alguien' es nadie.\n\nPlazo: ¿Cuándo es el 'deadline' real? (Ej: 'Hasta mañana, a las 14h').\nSi falta uno de estos elementos, tu comunicación ha fallado y la culpa del error es tuya, del líder, no del liderado."
+        },
+        {
+          "point": "Rituales de Verificación (El Feedback de Recepción)",
+          "explanation": "El líder de élite nunca pregunta '¿Entendiste?'. Todo el mundo dice que sí por miedo o vergüenza. Tú preguntas: 'Juan, para garantizar que estamos en la misma página, ¿me explicas con tus palabras qué vas a hacer ahora y cuál es el plazo?'. Si él repite el protocolo, la comunicación está sellada. Esto es Ética con el tiempo del otro."
+        },
+        {
+          "point": "Ejercicio Práctico: La Auditoría del Mensaje",
+          "explanation": "Toma el último correo o mensaje de audio que enviaste dando una instrucción. Aplica el filtro Nexus (Hecho, Meta, Responsable, Plazo). ¿Faltó algo? Si es así, acabas de descubrir por qué las cosas no salen como quieres. Tu tarea: mañana, toda orden dada será estandarizada."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "¿Por qué las Personas \"Cierran el Oído\"?",
+          "explanation": "¡Hola! Hablemos sobre la Seda. Dante te dio la estructura, pero yo te daré la frecuencia. ¿Te has dado cuenta de que a veces dices lo correcto, pero la persona reacciona mal? Esto sucede porque tu 'música' está desafinada con la 'letra'. La comunicación humana es 7% palabras y 93% tono de voz y postura. Si llegas con el 'Acero' demasiado pesado en el tono de voz, la persona entra en modo de defensa (lucha o huida) y su cerebro deja de procesar la instrucción técnica. Solo escucha la agresión."
+        },
+        {
+          "point": "Escucha Nivel 3: El Silencio que Resuelve",
+          "explanation": "Comunicar no es solo hablar, es garantizar que el otro está 'abierto' para recibir. Antes de dar un feedback difícil, usa la Escucha Nível 3. Pregunta al colaborador: '¿Cómo te sientes en relación a este proyecto?'. Escucha las pausas, el suspiro, el desvío de mirada. A veces, el error de comunicación no es falta de inteligencia, es exceso de cansancio o miedo. El pilar de la Humanidad exige que reconozcas el estado emocional del otro antes de cobrar el proceso."
+        },
+        {
+          "point": "La Técnica del Sándwich Nexus (Acero + Seda)",
+          "explanation": "¿Cómo corregir sin desmotivar?\n\nSeda (Elogio Sincero): 'Juan, admiro mucho tu puntualidad'. (Abre el canal).\n\nAcero (El Hecho a Corregir): 'Sin embargo, los datos muestran que tu margen de error subió un 10% en la última semana'. (Directo al punto, sin rodeos).\n\nSeda (Apoyo y Futuro): '¿Qué necesitas de mí para volver a tu estándar de excelencia?'. (Cierra con compromiso y Respeto).\nEsto es liderar con alma. Atacas el problema, pero preservas la dignidad de la persona."
+        },
+        {
+          "point": "Ejercicio Práctico: El Espejo de la Comunicación",
+          "explanation": "Mañana, en cada conversación, te enfocarás en tu tono de voz. Intenta mantener una frecuencia de calma, incluso bajo presión. Observa cómo reaccionan las personas cuando sustituyes el juicio por la curiosidad. El secreto de la Confianza comienza en el modo en que hablas."
+        }
+      ]
+    },
+    {
+      "module": "MÓDULO 3",
+      "title": "Confianza: La Moneda Más Valiosa de la Fábrica",
+      "danteLesson": [
+        {
+          "point": "El Impuesto de la Desconfianza",
+          "explanation": "Bienvenido. Yo soy Dante. ¿Sabías que la desconfianza es el impuesto más caro que una empresa paga? Cuando no confías en tu liderado, gastas tiempo haciendo microgerencia. Cuando él no confía en ti, esconde información. En Nexus, la Confianza es el pilar que lubrica los engranajes del Alto Rendimiento. El Acero de la confianza no viene de ser 'simpático', viene de ser Predecible. El líder de élite es aquel que hace exactamente lo que dijo que iba a hacer. Punto."
+        },
+        {
+          "point": "Coherencia: El Alineamiento entre Discurso y Práctica",
+          "explanation": "Nada destruye más tu autoridad que la falta de Ética en la ejecución. Si predicas puntualidad, pero llegas tarde a la reunión, acabas de decirle al equipo que las reglas no se aplican a ti. El Acero exige el Ejemplo Radical. En Nexus, el líder es el guardián del estándar. Si toleras un error de un 'protegido' y castigas a otro por el mismo error, has fracasado como líder. La justicia técnica es la base de la credibilidad."
+        },
+        {
+          "point": "Transparencia Radical: Admitiendo el Error del Líder",
+          "explanation": "Muchos líderes piensan que admitir un error es señal de debilidad. Error. Admitir un error técnico ante el equipo es la prueba máxima de fuerza y Madurez Profesional. Cuando dices: 'Equipo, tomé una decisión equivocada en el cronograma, vamos a corregirlo ahora', autorizas a tu equipo a ser honesto también. Esto acelera la solución. Esconder el error es vanidad; exponer el error para corregir es Liderazgo Nexus."
+        },
+        {
+          "point": "Ejercicio Práctico: El Inventario de la Promesa",
+          "explanation": "Haz una lista de todas las promesas que hiciste a tu equipo en la última semana. Desde un feedback prometido hasta una mejora en la herramienta. ¿Cuántas cumpliste? Si fallaste en una, mañana irás y darás una explicación honesta. La confianza se reconstruye con la verdad, no con excusas."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "El Miedo que Paraliza la Innovación",
+          "explanation": "¡Hola! Hablemos de la Seda. La confianza tiene un lado invisible: la sensación de seguridad. ¿Alguna vez has trabajado en un lugar donde sentías que tenías un blanco en la espalda? ¿Donde cualquier error era motivo de humillación? Esto es lo opuesto a nuestra metodología. El pilar de la Humanidad dice que las personas se equivocan. Si tu equipo te tiene miedo, te mentirán. 'Maquillarán' los informes. La seda sirve para crear una red de protección donde la verdad pueda aparecer sin miedo a un castigo injusto."
+        },
+        {
+          "point": "Escucha Nivel 3: Validando las Inseguridades del Equipo",
+          "explanation": "¿Cómo reaccionas cuando un liderado trae una mala noticia? Si explotas, acabas de cerrar la puerta de la confianza. Usa la Escucha Nível 3. Escucha su miedo. Valida su esfuerzo antes de analizar el resultado. Cuando el colaborador siente que estás 'en el mismo barco' y que tu Respeto por él no cambia por culpa de un percance, te entrega su lealtad. La seda suaviza el impacto de la crisis para que la mente continúe enfocada en la solución."
+        },
+        {
+          "point": "Construyendo el Vínculo: El Interés Genuino",
+          "explanation": "La confianza se trata de conocer al ser humano detrás del carnet. ¿Sabes qué motiva a tu liderado? ¿Sabes qué le quita el sueño en casa? No es para ser invasiva, es para ser Humana. Un líder que pregunta: '¿Cómo está tu hijo que estaba enfermo?' demuestra que ve a la persona, no solo la pieza del engranaje. Este pequeño gesto de seda construye un blindaje emocional en el equipo que ninguna crisis externa logra romper."
+        },
+        {
+          "point": "Ejercicio Prático: La Reunión de \"Puertas Abiertas\"",
+          "explanation": "Mañana, te tomarás 10 minutos con un colaborador que parezca estar más alejado. No hables de trabajo. Pregunta sobre él. Escucha con el corazón (Escucha Nível 3). Tu meta es solo una: demostrar que te importa. Observa cómo cambia el brillo en su mirada cuando se siente visto por ti."
+        }
+      ]
+    },
+    {
+      "module": "MÓDULO 4",
+      "title": "Cómo Involucrar Sin Necesidad de Gritar",
+      "danteLesson": [
+        {
+          "point": "¿Por qué el Grito es el Fin del Liderazgo?",
+          "explanation": "Hola. Yo soy Dante. Vayamos directo al punto: si necesitas gritar para ser escuchado, ya has perdido tu liderazgo. El grito es un ruido que enmascara la falta de método. En Nexus, el Acero no es ruidoso; el acero es frío, firme y preciso. El compromiso de élite no nace del miedo al castigo, nace del Respeto por la Competencia. Si tu equipo sabe que dominas el proceso y que las reglas son iguales para todos, se comprometen por admiración, no por pavor."
+        },
+        {
+          "point": "El Compromiso por el Indicador (Acero en la Meta)",
+          "explanation": "El mayor desmotivador en una fábrica u oficina es la incertidumbre. ¿Cómo involucras a alguien sin gritar? Dándole un marcador. Nadie juega al fútbol con ganas si no hay goles marcados. El Acero aquí es la Transparencia de los KPIs. Muéstrale a tu liderado: 'Juan, este es tu número hoy. Si llegamos aquí, la empresa gana X y tú ganas Y de reconocimiento'. Cuando la regla es clara y el mérito es real (Pilar de la Ética), el colaborador se convierte en su propio fiscal."
+        },
+        {
+          "point": "El Liderazgo por el Ejemplo Técnico",
+          "explanation": "¿Quieres que tu equipo se involucre en la limpieza? Sé el primero en recoger un papel del suelo. ¿Quieres que se involucren en la puntualidad? Sé el primero en abrir la sala de reuniones. El compromiso silencioso es el más poderoso. Cuando el equipo ve que el líder 'carga el piano' junto a ellos en el momento de crisis, entregan el 110%. Esto es Madurez Profesional. El ejemplo grita más fuerte que cualquier garganta."
+        },
+        {
+          "point": "Ejercicio Prático: El Marcador del Equipo",
+          "explanation": "Tu tarea: mañana, vas a hacer visible un indicador de tu área para todos. No para castigar a quien está abajo, sino para celebrar a quien está arriba. Demuestra que el resultado es el único señor de esa sala. El compromiso comienza cuando la 'preferencia personal' termina."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "El Dinero Retiene el Cuerpo, el Propósito Retiene la Mente",
+          "explanation": "¡Hola! Hablemos de la Seda. Dante te mostró el 'cómo' (la meta), pero yo te mostraré el 'por qué'. El ser humano tiene una necesidad básica: sentir que lo que hace importa. Si tu colaborador siente que es solo una pieza desechable, hará lo mínimo para no ser despedido. Involucrar sin gritar es dar Significado. El pilar de la Humanidad exige que expliques: 'María, este componente que estás montando salvará una vida en la punta final'. Cuando el trabajo se vuelve misión, el compromiso se vuelve legado."
+        },
+        {
+          "point": "La Moneda del Reconocimiento (Seda en el Elogio)",
+          "explanation": "En Nexus, tenemos una regla: Elogia en público, corrige en privado. El grito generalmente ocurre frente a todos, lo que destruye la Confianza. El compromiso real sucede cuando destacas un comportamiento positivo ante el grupo. 'Equipo, quiero felicitar a Pedro por la solución que encontró ayer'. Esto crea un deseo de repetición en Pedro y un modelo de éxito para los demás. La seda suaviza el camino hacia la excelencia."
+        },
+        {
+          "point": "Escucha Nivel 3: ¿Qué mueve a este colaborador?",
+          "explanation": "Cada persona tiene un 'lenguaje' de compromiso diferente. Para uno, es flexibilidad de horario; para otro, es un desafío técnico; para otro, es simplemente ser escuchado. Usa la Escucha Nível 3. Pregunta: '¿Qué te hace salir de casa feliz para venir a trabajar aquí?'. Si sabes qué mueve su corazón, nunca necesitarás forzar su mano. La seda es la lubricación que impide que la fricción de la rutina queme el motor del equipo."
+        },
+        {
+          "point": "Ejercicio Prático: El 'Gracias' Estratégico",
+          "explanation": "Mañana, elegirás a un colaborador que hace un buen trabajo silencioso (el que nadie nota) y le darás un feedback positivo específico. No digas solo 'buen trabajo'. Dile: 'Gracias por cuidar ese detalle, eso marca toda la diferencia para nuestro flujo'. Mira cómo cambia su postura instantáneamente. El compromiso está en los detalles."
+        }
+      ]
+    },
+    {
+      "module": "MÓDULO 5",
+      "title": "Conversaciones Difíciles y Gestión de Crisis",
+      "danteLesson": [
+        {
+          "point": "El Líder que No Confronta, No Lidera",
+          "explanation": "Hola. Yo soy Dante. Hemos llegado al módulo donde los 'amateurs' renuncian y los líderes de élite se consolidan. Una conversación difícil no es una pelea; es una cirugía necesaria para salvar el cuerpo (el equipo). El mayor error del nuevo líder es posponer el enfrentamiento por miedo a no ser 'querido'. En Nexus, el pilar de la Ética dice que omitir un error de tu liderado es traicionar su evolución. El Acero aquí es la valentía de decir la verdad pura y dura, sin rodeos y sin anestesia innecesaria."
+        },
+        {
+          "point": "El Protocolo de la Conversación Difícil (Acero en los Hechos)",
+          "explanation": "Para una conversación difícil, no llevas opiniones, llevas Hechos.\n\nAislamiento: Nunca hagas esto en público. Respeto por encima de todo.\n\nEl Hecho Innegable: 'Juan, en los últimos 3 días, llegaste 20 minutos tarde. Lo acordado es a las 08h'. (No digas 'estás relajado', di el hecho).\n\nEl Impacto Técnico: 'Esto genera un retraso del 15% en la línea de producción siguiente'.\n\nEl Ultimátum Ético: '¿Qué vas a hacer para que esto no se repita mañana?'.\nEl Acero define el límite. Si el límite se rompe, la consecuencia debe ser inmediata. El liderazgo sin consecuencia es solo un consejo."
+        },
+        {
+          "point": "El Despido Ético: Cómo Despedir con Dignidad",
+          "explanation": "El despido es el último recurso, pero cuando es necesario, debe hacerse con Madurez Profesional. El Acero garantiza que la decisión se base en datos y en la falta de adherencia a los valores Nexus. Sé breve, sé firme y no dejes margen para la discusión. 'Hoy estamos terminando tu ciclo por el motivo X ya conversado'. El pilar de la Humanidad entra en el modo en que conduces el proceso, garantizando que la persona salga con su dignidad preservada, pero consciente de que el estándar técnico no se cumplió."
+        },
+        {
+          "point": "Ejercicio Práctico: El Ensayo del Enfrentamiento",
+          "explanation": "Tu tarea: identifica esa conversación que has estado 'pateando para adelante' hace una semana. Escribe los Hechos en papel. Mañana, ejecutarás esa conversación en los primeros 30 minutos del día. El líder de élite resuelve el problema mientras es pequeño."
+        }
+      ],
+      "djenyLesson": [
+        {
+          "point": "La Seda que Desarman la Bomba",
+          "explanation": "¡Hola! Hablemos de la Seda en el momento más crítico: el conflicto entre personas. Cuando dos liderados pelean, el clima de la empresa enferma. Tu función no es ser el juez que decide quién tiene razón, sino el mediador que se enfoca en la solución. La seda aquí es la Neutralidad. Si tomas partido, pierdes la Confianza de la mitad del equipo. El pilar del Respeto exige que escuches a ambas partes con la Escuta Nível 3, buscando entender el dolor detrás de la rabia."
+        },
+        {
+          "point": "Separando el CPF del CNPJ en la Crisis",
+          "explanation": "En la crisis, el equipo te mirará. Si estás desesperado, entrarán en pánico. El Blindaje Emocional es tu capacidad de escuchar un insulto o enfrentar un problema grave y mantener la 'Piel Gruesa'. Recuerda: la crítica del otro es sobre el proceso (Empresa), no sobre quién eres (Persona). Usa la seda para amortiguar el impacto emocional y mantener la mente fría para decidir el siguiente paso."
+        },
+        {
+          "point": "Restaurando la Confianza Post-Crisis",
+          "explanation": "Después de que se apaga el incendio, queda el humo. El líder de seda es aquel que reúne al equipo para la 'limpieza emocional'. Reconoce el esfuerzo de todos, valida el cansancio y reafirma los valores de Humanidad y Ética. Demuestra que, a pesar del error o del conflicto, el grupo es más fuerte que el problema. La seda reconecta los hilos que la crisis rompió."
+        },
+        {
+          "point": "Ejercicio Práctico: El Filtro de la Emoción",
+          "explanation": "La próxima vez que alguien te traiga un problema gritando o llorando, contarás hasta tres y harás una pregunta de seda: 'Veo que estás frustrado, pero ayúdame a entender: ¿qué podemos hacer ahora para resolver el proceso?'. Observa cómo el foco cambia de la emoción a la solución."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "de-DE": {
+    "intelligence.djeny.title": "Djeny (Deine Strategin)",
+    "intelligence.djeny.description": "Mentorin für emotionale Intelligenz und Verdienstaudit.",
+    "intelligence.djeny.placeholder": "Was ist Ihr nächster strategischer Schritt?",
+    "intelligence.djeny.footer": "Djeny ist eine KI und kann Fehler machen. Überprüfen Sie die Antworten.",
+    "intelligence.magadot.title": "Maga-Dót (Nexus-Bewusstsein)",
+    "intelligence.magadot.description": "Die Weisheit der Weisen leitet das Morgen.",
+    "intelligence.magadot.placeholder": "Erforschen Sie die Grenzen des Wissens..."
+  },
+  "fr-FR": {
+    "intelligence.djeny.title": "Djeny (Votre Stratège)",
+    "intelligence.djeny.description": "Mentore en Intelligence Émotionnelle et Audit de Mérite.",
+    "intelligence.djeny.placeholder": "Quel est votre prochain mouvement stratégique ?",
+    "intelligence.djeny.footer": "Djeny est une IA et peut faire des erreurs. Vérifiez les réponses.",
+    "intelligence.magadot.title": "Maga-Dót (Conscience Nexus)",
+    "intelligence.magadot.description": "La Sagesse des Sages guidant demain.",
+    "intelligence.magadot.placeholder": "Explorez la frontière du savoir..."
+  },
+  "ja-JP": {
+    "intelligence.djeny.title": "Djeny (あなたの戦略家)",
+    "intelligence.djeny.description": "感情的知性と功績監査のメンター。",
+    "intelligence.djeny.placeholder": "次なる戦略的な一手は何ですか？",
+    "intelligence.djeny.footer": "DjenyはAIであり、間違いを犯す可能性があります。回答を確認してください。",
+    "intelligence.magadot.title": "Maga-Dót (ネクサス意識)",
+    "intelligence.magadot.description": "賢人の知恵が明日を導く。",
+    "intelligence.magadot.placeholder": "知識の境界を探求してください..."
+  },
+  "zh-CN": {
+    "intelligence.djeny.title": "Djeny (您的战略家)",
+    "intelligence.djeny.description": "情绪智力和功勋审计导师。",
+    "intelligence.djeny.placeholder": "您的下一步战略举措是什么？",
+    "intelligence.djeny.footer": "Djeny 是 AI，可能会出错。请核实答案。",
+    "intelligence.magadot.title": "Maga-Dót (Nexus 意识)",
+    "intelligence.magadot.description": "智者的智慧指引明天。",
+    "intelligence.magadot.placeholder": "探索知识的前沿..."
+  },
+  "ar-AE": {
+    "intelligence.djeny.title": "دجيني (خبيرتك الاستراتيجية)",
+    "intelligence.djeny.description": "مدربة الذكاء العاطفي وتدقيق الجدارة.",
+    "intelligence.djeny.placeholder": "ما هي خطوتك الاستراتيجية التالية؟",
+    "intelligence.djeny.footer": "دجيني هي ذكاء اصطناعي وقد ترتكب أخطاء. تحقق من الإجابات.",
+    "intelligence.magadot.title": "ماجا-دوت (وعي نكسس)",
+    "intelligence.magadot.description": "حكمة الحكماء التي توجه الغد.",
+    "intelligence.magadot.placeholder": "استكشف حدود المعرفة..."
+  },
+  "ru-RU": {
+    "intelligence.djeny.title": "Джени (Ваш Стратег)",
+    "intelligence.djeny.description": "Ментор по эмоциональному интеллекту и аудиту заслуг.",
+    "intelligence.djeny.placeholder": "Каков ваш следующий стратегический шаг?",
+    "intelligence.djeny.footer": "Джени — это ИИ, и она может ошибаться. Проверяйте ответы.",
+    "intelligence.magadot.title": "Мага-Дот (Сознание Nexus)",
+    "intelligence.magadot.description": "Мудрость Мудрецов, направляющая завтрашний день.",
+    "intelligence.magadot.placeholder": "Исследуйте границы знаний..."
+  }
+}

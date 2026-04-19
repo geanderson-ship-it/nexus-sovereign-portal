@@ -1,0 +1,17 @@
+.env
+.env.local
+.env.*
+node_modules/
+.next/
+out/
+# Archives and Large Files
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.pem
+backup.jpg
+parte_*
+.vercel
+[Forneça o caminho ABSOLUTO*
+[Forneça o caminho COMPLETO*

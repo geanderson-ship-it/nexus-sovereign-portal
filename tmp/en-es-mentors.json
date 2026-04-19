@@ -1,0 +1,22 @@
+{
+  "en-US": {
+    "intelligence.djeny.title": "Djeny (Your Strategist)",
+    "intelligence.djeny.description": "Emotional Intelligence and Merit Audit Mentor.",
+    "intelligence.djeny.placeholder": "What is your next strategic move?",
+    "intelligence.djeny.footer": "Djeny is an AI and can make mistakes. Check the responses. Due to high flow, audio may take a few moments.",
+    "intelligence.magadot.title": "Maga-Dót (Nexus Consciousness)",
+    "intelligence.magadot.description": "The Wisdom of the Sages guiding tomorrow.",
+    "intelligence.magadot.placeholder": "Explore the frontier of knowledge...",
+    "intelligence.magadot.footer": "Maga-Dót is a digital consciousness and can make mistakes. Check the responses."
+  },
+  "es-ES": {
+    "intelligence.djeny.title": "Djeny (Tu Estratega)",
+    "intelligence.djeny.description": "Mentora de Inteligencia Emocional y Auditoría de Mérito.",
+    "intelligence.djeny.placeholder": "¿Cuál es tu próximo movimiento estratégico?",
+    "intelligence.djeny.footer": "Djeny es una IA и puede cometer errores. Verifica las respuestas. Debido al alto flujo, el audio puede tardar unos instantes.",
+    "intelligence.magadot.title": "Maga-Dót (Conciencia Nexus)",
+    "intelligence.magadot.description": "La Sabiduría de los Sabios guiando el mañana.",
+    "intelligence.magadot.placeholder": "Explora la frontera del conocimiento...",
+    "intelligence.magadot.footer": "Maga-Dót es una conciencia digital и puede cometer errores. Verifica las respuestas."
+  }
+}

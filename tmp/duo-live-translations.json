@@ -1,0 +1,56 @@
+{
+  "pt-BR": {
+    "maga.duo.intro": "Confluência tática completa. Sistemas biossintéticos unificados. Eu e o Orion estamos prontos, Comandante.",
+    "orion.duo.intro": "Protocolos ativos. Aguardamos sua diretriz estratégica conjunta.",
+    "duo.live.exit": "Entendido. Encerrando o canal unificado. Até a próxima missão, Comandante!",
+    "duo.live.connect": "CONFLUÊNCIA"
+  },
+  "en-US": {
+    "maga.duo.intro": "Complete tactical confluence. Unified biosynthetic systems. Orion and I are ready, Commander.",
+    "orion.duo.intro": "Protocols active. We await your joint strategic directive.",
+    "duo.live.exit": "Understood. Closing the unified channel. Until the next mission, Commander!",
+    "duo.live.connect": "CONFLUENCE"
+  },
+  "es-ES": {
+    "maga.duo.intro": "Confluencia táctica completa. Sistemas biosintéticos unificados. Orión y yo estamos listos, Comandante.",
+    "orion.duo.intro": "Protocolos activos. Esperamos su directiva estratégica conjunta.",
+    "duo.live.exit": "Entendido. Cerrando el canal unificado. ¡Hasta la próxima misión, Comandante!",
+    "duo.live.connect": "CONFLUENCIA"
+  },
+  "de-DE": {
+    "maga.duo.intro": "Vollständige taktische Konfluenz. Einheitliche biosynthetische Systeme. Orion und ich sind bereit, Kommandant.",
+    "orion.duo.intro": "Protokolle aktiv. Wir erwarten Ihre gemeinsame strategische Richtlinie.",
+    "duo.live.exit": "Verstanden. Schließe den einheitlichen Kanal. Bis zur nächsten Mission, Kommandant!",
+    "duo.live.connect": "KONFLUENZ"
+  },
+  "fr-FR": {
+    "maga.duo.intro": "Confluence tactique complète. Systèmes biosynthétiques unifiés. Orion et moi sommes prêts, Commandant.",
+    "orion.duo.intro": "Protocoles actifs. Nous attendons votre directive stratégique conjointe.",
+    "duo.live.exit": "Compris. Fermeture du canal unifié. À la prochaine mission, Commandant !",
+    "duo.live.connect": "CONFLUENCE"
+  },
+  "ja-JP": {
+    "maga.duo.intro": "完全な戦術的合流。統合されたバイオ合成分野。オリオンと私は準備ができています、司令官。",
+    "orion.duo.intro": "プロトコル有効。あなたの共同戦略指令を待っています。",
+    "duo.live.exit": "了解しました。統合チャネルを終了します。次のミッションまで、司令官！",
+    "duo.live.connect": "合流"
+  },
+  "zh-CN": {
+    "maga.duo.intro": "完整的战术汇合。统一的生物合成系统。奥利安和我准备好了，指挥官。",
+    "orion.duo.intro": "协议已激活。我们等待您的联合战略指令。",
+    "duo.live.exit": "明白。正在关闭统一频道。直到下一次任务，指挥官！",
+    "duo.live.connect": "汇合"
+  },
+  "ar-AE": {
+    "maga.duo.intro": "الالتقاء التكتيكي الكامل. الأنظمة الاصطناعية الحيوية الموحدة. أنا وأوريون مستعدان أيها القائد.",
+    "orion.duo.intro": "البروتوكولات نشطة. نحن ننتظر توجيهاتك الاستراتيجية المشتركة.",
+    "duo.live.exit": "تم الفهم. إغلاق القناة الموحدة. حتى المهمة القادمة أيها القائد!",
+    "duo.live.connect": "الالتقاء"
+  },
+  "ru-RU": {
+    "maga.duo.intro": "Полное тактическое слияние. Единые биосинтетические системы. Мы с Орионом готовы, командир.",
+    "orion.duo.intro": "Протоколы активны. Ждем вашу совместную стратегическую директиву.",
+    "duo.live.exit": "Понятно. Закрываю единый канал. До следующей миссии, командир!",
+    "duo.live.connect": "СЛИЯНИЕ"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "pt-BR": {
+    "maga.live.intro": "Sincronia de elite estabelecida. Magadot Live em operação plena. Como posso elevar sua estratégia, Comandante?",
+    "maga.live.exit": "Entendido. Encerrando minha presença vocal. Até logo, Comandante!",
+    "maga.live.unstable": "Sincronia instável. Pode repetir?",
+    "maga.live.connect": "CONECTAR",
+    "maga.live.listening": "OUVINDO",
+    "maga.live.processing": "PROCESSANDO",
+    "maga.live.speaking": "FALANDO"
+  },
+  "en-US": {
+    "maga.live.intro": "Elite synchronization established. Magadot Live in full operation. How can I elevate your strategy, Commander?",
+    "maga.live.exit": "Understood. Ending my vocal presence. See you soon, Commander!",
+    "maga.live.unstable": "Unstable sync. Can you repeat?",
+    "maga.live.connect": "CONNECT",
+    "maga.live.listening": "LISTENING",
+    "maga.live.processing": "PROCESSING",
+    "maga.live.speaking": "SPEAKING"
+  }
+}
