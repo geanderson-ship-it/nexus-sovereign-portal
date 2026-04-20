@@ -1,9 +1,12 @@
-﻿
+
 import { genkit } from 'genkit';
 import { googleAI } from '@genkit-ai/google-genai';
 
 // VIX: Protocolo de "Injeção Forçada com Verificação" ativado.
-// A chave de API agora é lida da variável de ambiente GEMINI_API_KEY.
+if (!process.env.GOOGLE_GENAI_API_KEY && !process.env.GEMINI_API_KEY && process.env.NODE_ENV === 'production') {
+  console.warn("⚠️ [NEXUS COMPONENT] Warning: No AI API keys found. Build may be unstable if pre-rendering hits these components.");
+}
+
 export const ai = genkit({
   plugins: [
     googleAI(), // Remova configurações extras daqui se houver

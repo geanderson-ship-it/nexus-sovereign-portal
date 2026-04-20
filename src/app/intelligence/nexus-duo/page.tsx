@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { NexusDuoMode } from '@/components/maga/nexus-duo-mode';
 
 export default function NexusDuoPage() {

@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { OrionLiveMode } from '@/components/maga/orion-live-mode';
 
 export default function OrionLivePage() {
