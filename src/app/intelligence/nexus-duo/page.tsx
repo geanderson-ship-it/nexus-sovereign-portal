@@ -1,8 +1,9 @@
-'use client';
+import dynamic from 'next/dynamic';
 
-export const dynamic = 'force-dynamic';
-
-import { NexusDuoMode } from '@/components/maga/nexus-duo-mode';
+const NexusDuoMode = dynamic(
+  () => import('@/components/maga/nexus-duo-mode').then((mod) => mod.NexusDuoMode),
+  { ssr: false }
+);
 
 export default function NexusDuoPage() {
   return (

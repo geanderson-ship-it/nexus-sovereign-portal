@@ -1,8 +1,9 @@
-'use client';
+import dynamic from 'next/dynamic';
 
-export const dynamic = 'force-dynamic';
-
-import { MagaLiveMode } from '@/components/maga/maga-live-mode';
+const MagaLiveMode = dynamic(
+  () => import('@/components/maga/maga-live-mode').then((mod) => mod.MagaLiveMode),
+  { ssr: false }
+);
 
 export default function MagaLivePage() {
   return (

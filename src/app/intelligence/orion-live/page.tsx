@@ -1,8 +1,9 @@
-'use client';
+import dynamic from 'next/dynamic';
 
-export const dynamic = 'force-dynamic';
-
-import { OrionLiveMode } from '@/components/maga/orion-live-mode';
+const OrionLiveMode = dynamic(
+  () => import('@/components/maga/orion-live-mode').then((mod) => mod.OrionLiveMode),
+  { ssr: false }
+);
 
 export default function OrionLivePage() {
   return (
