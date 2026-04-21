@@ -1,215 +1,142 @@
 
 'use server';
 /**
- * @fileOverview Converts text to speech using a cloud-based AI model.
+ * @fileOverview Converts text to speech using Amazon Polly.
  *
- * - textToSpeech - a function that takes text and a voice profile and returns a WAV audio data URI and speech marks.
+ * - textToSpeech - a function that takes text and a voice profile and returns an MP3 audio data URI and speech marks.
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
-import { TextToSpeechInput, TextToSpeechInputSchema, TextToSpeechOutput, TextToSpeechOutputSchema, SpeechMark } from './text-to-speech-types';
+import { 
+  TextToSpeechInput, 
+  TextToSpeechInputSchema, 
+  TextToSpeechOutput, 
+  TextToSpeechOutputSchema 
+} from './text-to-speech-types';
+import { 
+  PollyClient, 
+  SynthesizeSpeechCommand, 
+  Engine, 
+  OutputFormat, 
+  SpeechMarkType 
+} from "@aws-sdk/client-polly";
 
-async function toWav(
-  pcmData: Buffer,
-  channels = 1,
-  rate = 24000,
-  sampleWidth = 2
-): Promise<string> {
-  // Dynamic import to ensure 'wav' is only ever loaded on the server.
-  const wav = await import('wav');
-  return new Promise((resolve, reject) => {
-    const writer = new wav.Writer({
-      channels,
-      sampleRate: rate,
-      bitDepth: sampleWidth * 8,
-    });
-
-    let bufs: any[] = [];
-    writer.on('error', reject);
-    writer.on('data', function (d) {
-      bufs.push(d);
-    });
-    writer.on('end', function () {
-      resolve(Buffer.concat(bufs).toString('base64'));
-    });
-
-    writer.write(pcmData);
-    writer.end();
-  });
-}
-
-// Function to split text into chunks without breaking sentences, respecting a character limit.
-function splitIntoChunks(text: string, maxLength: number): string[] {
-    if (!text) return [];
-
-    const chunks: string[] = [];
-    // Split the text into sentences. The regex includes the delimiter in the result.
-    const sentences = text.match(/[^.!?\n]+[.!?\n]*\s*/g) || [text];
-
-    let currentChunk = "";
-
-    for (const sentence of sentences) {
-        // Case 1: The sentence itself is longer than the max length.
-        if (sentence.length > maxLength) {
-            // If there's anything in currentChunk, push it first.
-            if (currentChunk.length > 0) {
-                chunks.push(currentChunk);
-            }
-            currentChunk = ""; // Reset chunk
-
-            // Now, split the oversized sentence.
-            let tempSentence = sentence;
-            while (tempSentence.length > maxLength) {
-                // Find the last space before the maxLength to avoid breaking words.
-                let splitPos = tempSentence.lastIndexOf(' ', maxLength);
-                // If no space is found, we have to hard-cut the word.
-                if (splitPos === -1) {
-                    splitPos = maxLength;
-                }
-                chunks.push(tempSentence.substring(0, splitPos));
-                tempSentence = tempSentence.substring(splitPos).trim();
-            }
-            // The remainder of the long sentence becomes the new currentChunk.
-            currentChunk = tempSentence;
-        } 
-        // Case 2: The sentence fits, but adding it would exceed the max length.
-        else if (currentChunk.length + sentence.length > maxLength) {
-            chunks.push(currentChunk);
-            currentChunk = sentence;
-        } 
-        // Case 3: The sentence fits and can be added to the current chunk.
-        else {
-            currentChunk += sentence;
-        }
-    }
-
-    // Don't forget the last chunk.
-    if (currentChunk.length > 0) {
-        chunks.push(currentChunk);
-    }
-
-    return chunks;
-}
-
-
+/**
+ * Motor de Fala Nexus v3.0 - Movido pela Amazon Polly
+ * Aproveita créditos AWS e oferece vozes Neural ultra-realistas.
+ */
 const textToSpeechFlow = ai.defineFlow(
   {
     name: 'textToSpeechFlow',
     inputSchema: TextToSpeechInputSchema,
     outputSchema: TextToSpeechOutputSchema,
   },
-  async ({ text, voice, locale }) => {
-    const MAX_CHARS = 4500; // Safety margin below the 5000 character limit
-    const textChunks = splitIntoChunks(text, MAX_CHARS);
+  async (input) => {
+    const { text, voice, locale } = input;
 
-    const modelConfig = {
-      model: 'googleai/gemini-2.5-flash-preview-tts',
-      config: {
-        responseModalities: ['AUDIO' as const],
-        safetySettings: [
-          { category: 'HARM_CATEGORY_HARASSMENT' as const, threshold: 'BLOCK_NONE' as const },
-          { category: 'HARM_CATEGORY_HATE_SPEECH' as const, threshold: 'BLOCK_NONE' as const },
-          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT' as const, threshold: 'BLOCK_NONE' as const },
-          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT' as const, threshold: 'BLOCK_NONE' as const },
-        ],
-        speechConfig: {
-          languageCode: locale || 'pt-BR',
-          voiceConfig: {
-            prebuiltVoiceConfig: { 
-              voiceName: (() => {
-                const voiceLower = voice.toLowerCase();
-                // Custom mappings for our personas
-                if (voiceLower === 'dante') return 'iapetus'; // Waz Addy style: Deep, survivalist authority
-                if (voiceLower === 'maga') return 'autonoe';
-                if (voiceLower === 'orion') return 'zubenelgenubi';
-                if (voiceLower === 'djeny') return 'aoede';
-                
-                // If the voice passed is already a valid prebuilt name, use it directly
-                return voice;
-              })()
-            },
-          },
-        },
+    // Configuração do Cliente Polly seguindo o protocolo AWS do Nexus
+    const pollyClient = new PollyClient({
+      region: process.env.AWS_REGION || 'us-east-1',
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
       },
+    });
+
+    // Mapeamento de Vozes Nexus -> AWS Polly (Neural)
+    const voiceMapping: Record<string, string> = {
+      // Magadot / Djeny
+      maga: 'Camila',
+      djeny: 'Camila',
+      autonoe: 'Camila',
+      aoede: 'Camila',
+      erinome: 'Camila',
+      
+      // Orion
+      orion: 'Ricardo',
+      zubenelgenubi: 'Ricardo',
+      charon: 'Ricardo',
+      
+      // Dante (Survivor Style)
+      dante: 'Thiago',
+      iapetus: 'Thiago'
     };
 
-    // Optimization: If there's only one chunk, process it directly without concatenation logic.
-    if (textChunks.length === 1) {
-      const chunk = textChunks[0];
-      if (!chunk.trim()) {
-        throw new Error('Nenhum dado de Ã¡udio foi gerado para o texto fornecido.');
-      }
+    // Fallback de vozes baseado no local se não houver mapeamento
+    const getVoiceId = (v: string, l: string) => {
+      const vLower = (v || '').toLowerCase();
+      const mapped = voiceMapping[vLower];
+      if (mapped) return mapped;
+      
+      // Fallback por Local
+      if (l && l.startsWith('pt')) return 'Camila';
+      if (l && l.startsWith('en')) return 'Joanna';
+      return 'Camila'; // Mestre Fallback
+    };
 
-      const { media } = await ai.generate({
-        ...modelConfig,
-        prompt: chunk,
+    const selectedVoiceId = getVoiceId(voice, locale || 'pt-BR');
+
+    try {
+      // 1. Sintetizar o Áudio (MP3)
+      const audioCommand = new SynthesizeSpeechCommand({
+        Engine: Engine.NEURAL,
+        Text: text,
+        OutputFormat: OutputFormat.MP3,
+        VoiceId: selectedVoiceId as any,
+        LanguageCode: (locale as any) || 'pt-BR',
       });
 
-      if (!media || !media.url) {
-        throw new Error('A resposta do modelo TTS para o pedaÃ§o de Ã¡udio veio vazia.');
+      const audioResponse = await pollyClient.send(audioCommand);
+      
+      if (!audioResponse.AudioStream) {
+        throw new Error("AWS Polly não retornou stream de áudio.");
       }
 
-      const audioBuffer = Buffer.from(media.url.substring(media.url.indexOf(',') + 1), 'base64');
-      const wavBase64 = await toWav(audioBuffer);
-      const speechMarks = ((media as any).speechMarks || []).map((mark: any) => ({
-        ...mark,
-        startOffset: (mark.startOffset || 0) * 1000 // Convert seconds to ms
-      }));
+      // Converter o stream para Buffer e depois para Data URI
+      const audioArray = await audioResponse.AudioStream.transformToUint8Array();
+      const audioBuffer = Buffer.from(audioArray);
+      const audioDataUri = `data:audio/mp3;base64,${audioBuffer.toString('base64')}`;
+
+      // 2. Sintetizar os Visemas (Speech Marks) para Lip-Sync
+      const marksCommand = new SynthesizeSpeechCommand({
+        Engine: Engine.NEURAL,
+        Text: text,
+        OutputFormat: OutputFormat.JSON,
+        SpeechMarkTypes: [SpeechMarkType.VISEME],
+        VoiceId: selectedVoiceId as any,
+        LanguageCode: (locale as any) || 'pt-BR',
+      });
+
+      const marksResponse = await pollyClient.send(marksCommand);
+
+      if (!marksResponse.AudioStream) {
+        throw new Error("AWS Polly não retornou stream de marcas de fala.");
+      }
+
+      // Polly retorna marcas como JSON linha por linha
+      const marksArray = await marksResponse.AudioStream.transformToUint8Array();
+      const marksString = new TextDecoder().decode(marksArray);
+      const speechMarks = marksString
+        .split('\n')
+        .filter(line => line.trim())
+        .map(line => {
+          const mark = JSON.parse(line);
+          return {
+            type: mark.type,
+            value: mark.value,
+            startOffset: mark.time
+          };
+        });
 
       return {
-        audioDataUri: 'data:audio/wav;base64,' + wavBase64,
-        speechMarks: speechMarks,
+        audioDataUri,
+        speechMarks
       };
+
+    } catch (error: any) {
+      console.error("VIX DIAGNOSTIC: Falha na síntese Amazon Polly.", error);
+      throw new Error(`Erro AWS Polly: ${error.message}`);
     }
-
-    // --- Multi-Chunk Logic for longer texts ---
-    const audioBuffers: Buffer[] = [];
-    const allSpeechMarks: SpeechMark[] = [];
-    let totalDurationMs = 0;
-
-    for (const chunk of textChunks) {
-      if (!chunk.trim()) continue;
-
-      const { media } = await ai.generate({
-        ...modelConfig,
-        prompt: chunk,
-      });
-
-      if (!media || !media.url) {
-        console.warn("VIX DIAGNOSTIC: Um pedaÃ§o de Ã¡udio veio vazio do modelo TTS. Pulando.");
-        continue;
-      }
-
-      const audioBuffer = Buffer.from(media.url.substring(media.url.indexOf(',') + 1), 'base64');
-      audioBuffers.push(audioBuffer);
-
-      const chunkSpeechMarks = ((media as any).speechMarks || []).map((mark: any) => ({
-        ...mark,
-        startOffset: (mark.startOffset || 0) * 1000 + totalDurationMs
-      }));
-      allSpeechMarks.push(...chunkSpeechMarks);
-
-      // Calculate duration of the current PCM chunk to offset the next set of speech marks.
-      const sampleRate = 24000;
-      const bytesPerSample = 2;
-      const channels = 1;
-      const numSamples = audioBuffer.length / (bytesPerSample * channels);
-      const chunkDurationMs = (numSamples / sampleRate) * 1000;
-      totalDurationMs += chunkDurationMs;
-    }
-
-    if (audioBuffers.length === 0) {
-      throw new Error('Nenhum dado de Ã¡udio foi gerado para o texto fornecido.');
-    }
-
-    const concatenatedPcm = Buffer.concat(audioBuffers as any);
-    const wavBase64 = await toWav(concatenatedPcm);
-
-    return {
-      audioDataUri: 'data:audio/wav;base64,' + wavBase64,
-      speechMarks: allSpeechMarks,
-    };
   }
 );
 
@@ -218,15 +145,7 @@ export async function textToSpeech(input: TextToSpeechInput): Promise<TextToSpee
     try {
         return await textToSpeechFlow(input);
     } catch(err: any) {
-        let telemetryMessage = `INVALID_ARGUMENT: ${err.message}`;
-        if (err.message && err.message.includes('429')) {
-            telemetryMessage = "Atingimos nosso limite de requisiÃ§Ãµes de Ã¡udio. Por favor, aguarde um minuto antes de tentar novamente.";
-        } else {
-            telemetryMessage = err.message;
-        }
-        console.error(`VIX DIAGNOSTIC: Falha no processamento de Ã¡udio.`, err);
-        // Rethrow a more generic error to the client to avoid leaking implementation details
-        throw new Error(telemetryMessage);
+        console.error(`VIX DIAGNOSTIC: Falha no processamento de áudio via Polly.`, err);
+        throw new Error(err.message || "Erro na síntese de voz.");
     }
 }
-
