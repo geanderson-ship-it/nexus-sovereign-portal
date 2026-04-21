@@ -58,8 +58,7 @@
     "tailwind-merge": "2.4.0",
     "tailwindcss-animate": "1.0.7",
     "three": "0.159.0",
-    "wav": "^1.0.2",
-    "zod": "^3.25.76"
+    "@aws-sdk/client-bedrock-runtime": "^3.0.0",
   },
   "devDependencies": {
     "@types/node": "20.14.10",
