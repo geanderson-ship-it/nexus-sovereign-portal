@@ -10,13 +10,13 @@ import { Metadata } from 'next';
 import GoogleAnalytics from '@/components/analytics/google-analytics';
 
 export const metadata: Metadata = {
-  title: 'Nexus Inteligência | A Nova Era da Tecnologia & IA',
-  description: 'Plataforma de cursos online, mentoria de IA e inteligência estratégica para acelerar sua carreira e negócios. Domine o futuro com a Nexus.',
-  keywords: 'inteligência artificial, cursos online, mentoria, dante safra, djeny rh, nexus, tecnologia advanced',
+  title: 'Nexus Inteligência | Hub para Evolução Humana & IA',
+  description: 'A convergência definitiva entre tecnologia avançada e essência humana. Mentoria, cursos e IA estratégica para acelerar sua jornada global.',
+  keywords: 'inteligência artificial, mentoria de elite, dante safra, magadot, orion, nexus, aws activate startup',
   openGraph: {
-    title: 'Nexus Inteligência | A Nova Era da Tecnologia & IA',
-    description: 'Transforme sua carreira com mentoria de IA e tecnologia de ponta.',
-    url: 'https://nexus-site-novo.vercel.app',
+    title: 'Nexus Inteligência | Hub para Evolução Humana & IA',
+    description: 'Transforme sua carreira com a inteligência da Nexus. Tecnologia de ponta, essência humana.',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     siteName: 'Nexus',
     images: [
       {
@@ -31,24 +31,24 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexus Inteligência | IA & Estratégia',
-    description: 'Acelere sua carreira com a inteligência da Nexus.',
+    title: 'Nexus Inteligência | IA & Evolução',
+    description: 'Acelere sua jornada com o cérebro da Nexus.',
     images: ['/nexus-hero-hologram.png'],
   },
   viewport: 'width=device-width, initial-scale=1',
   themeColor: '#0A0A0B',
   alternates: {
-    canonical: 'https://nexus-site-novo.vercel.app',
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     languages: {
-      'pt-BR': 'https://nexus-site-novo.vercel.app',
-      'en-US': 'https://nexus-site-novo.vercel.app/en',
-      'es-ES': 'https://nexus-site-novo.vercel.app/es',
-      'fr-FR': 'https://nexus-site-novo.vercel.app/fr',
-      'de-DE': 'https://nexus-site-novo.vercel.app/de',
-      'ja-JP': 'https://nexus-site-novo.vercel.app/ja',
-      'ru-RU': 'https://nexus-site-novo.vercel.app/ru',
-      'zh-CN': 'https://nexus-site-novo.vercel.app/zh',
-      'ar-AE': 'https://nexus-site-novo.vercel.app/ar',
+      'pt-BR': 'https://nexus.aws',
+      'en-US': 'https://nexus.aws/en',
+      'es-ES': 'https://nexus.aws/es',
+      'fr-FR': 'https://nexus.aws/fr',
+      'de-DE': 'https://nexus.aws/de',
+      'ja-JP': 'https://nexus.aws/ja',
+      'ru-RU': 'https://nexus.aws/ru',
+      'zh-CN': 'https://nexus.aws/zh',
+      'ar-AE': 'https://nexus.aws/ar',
     },
   },
 };

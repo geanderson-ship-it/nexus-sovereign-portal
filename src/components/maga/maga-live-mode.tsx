@@ -23,6 +23,8 @@ import { useRouter } from 'next/navigation';
 import { errorEmitter } from '@/hooks/use-nexus-audio';
 import * as gtag from '@/lib/gtag';
 import { useLocale } from '@/hooks/use-locale';
+import { useNexusLife } from '@/hooks/use-nexus-life';
+import { useGeminiLive } from '@/hooks/use-gemini-live';
 
 
 export function MagaLiveMode() {
@@ -43,42 +45,11 @@ export function MagaLiveMode() {
     }
   }, []);
 
-  // Audio & Live Multimodal (New Version)
-  const { 
-    startSession, 
-    stopSession, 
-    connectionState, 
-    isSpeaking, 
-    error: liveError 
-  } = useGeminiLive('maga', { isFirstTime });
+  // High-Performance Audio Reactivity
+  const audioLevel = useAudioLevel();
 
-  const audioLevelValue = useMotionValue(0);
-  const smoothAudioLevel = useSpring(audioLevelValue, { stiffness: 300, damping: 30 });
-  
-  // High-Performance Audio Reactivity (Zero Re-renders)
-  useEffect(() => {
-    const handler = (data: { level: number }) => {
-      audioLevelValue.set(data.level);
-    };
-    errorEmitter.on('audio-level-update', handler);
-    return () => errorEmitter.off('audio-level-update', handler);
-  }, [audioLevelValue]);
-
-  // Gestos de Concordância (Nods) - Humildade e Empatia
-  const [isNodding, setIsNodding] = useState(false);
-  
-  useEffect(() => {
-    if (connectionState === 'connected' && !isSpeaking) {
-      // Simular pequenos acenos de concordância enquanto o usuário fala (empatia)
-      const nodInterval = setInterval(() => {
-          if (Math.random() > 0.7) {
-              setIsNodding(true);
-              setTimeout(() => setIsNodding(false), 1200);
-          }
-      }, 5000);
-      return () => clearInterval(nodInterval);
-    }
-  }, [connectionState, isSpeaking]);
+  // Nexus Life Engine (Human Touch)
+  const { gazeX, gazeY, tiltX, tiltY, isBlinking } = useNexusLife();
 
   const initializeMaga = async () => {
     setIsInitialized(true);
@@ -162,7 +133,7 @@ export function MagaLiveMode() {
                <feDisplacementMap 
                 in="SourceGraphic" 
                 in2="noise" 
-                scale={isNodding || isSpeaking ? 8 : 0} 
+                scale={isSpeaking ? 8 : 0} 
                 yChannelSelector="G" 
               />
             </filter>
@@ -194,16 +165,17 @@ export function MagaLiveMode() {
             <motion.div
               initial={false}
               animate={{ 
-                x: [0.2, -0.2, 0.2],
-                y: isSpeaking ? [0, -3, 0] : [0.3, -0.3, 0.3], // Subtle nod while speaking or breathing
-                rotate: [0.05, -0.05, 0.05],
+                rotateX: tiltX,
+                rotateY: tiltY,
+                y: isSpeaking ? [0, -3, 0] : [0, 2, 0],
               }}
               transition={{
-                x: { duration: 15, repeat: Infinity, ease: "easeInOut" },
-                y: isSpeaking ? { duration: 0.8, repeat: Infinity, ease: "easeInOut" } : { duration: 18, repeat: Infinity, ease: "easeInOut" },
-                rotate: { duration: 25, repeat: Infinity, ease: "easeInOut" }
+                rotateX: { type: 'spring', stiffness: 50, damping: 20 },
+                rotateY: { type: 'spring', stiffness: 50, damping: 20 },
+                y: { duration: 4, repeat: Infinity, ease: 'easeInOut' }
               }}
               className="relative w-[560px] h-[560px] rounded-[80px] overflow-hidden border border-white/10 shadow-[0_0_80px_rgba(255,255,255,0.05)] bg-zinc-950 cursor-crosshair transition-all duration-1000"
+              style={{ perspective: 1000 }}
               onClick={handleAvatarClick}
             >
               {/* TIER-1: BASE STATIC FACE (Steady) */}
@@ -247,9 +219,10 @@ export function MagaLiveMode() {
                     zIndex: 21
                 }}
               >
-                <div 
+                <motion.div 
                   className="absolute inset-0"
                   style={{ filter: 'url(#maga-eye-smile-filter) url(#maga-soul-glow) url(#maga-blink-filter)' }}
+                  animate={{ x: gazeX, y: gazeY }}
                 >
                   <Image 
                       src="/maga-live-v2.png"
@@ -258,7 +231,7 @@ export function MagaLiveMode() {
                       className="object-cover brightness-110 saturate-[1.15]"
                       priority
                   />
-                </div>
+                </motion.div>
               </div>
               
               {/* Reactive Cinema Glow Overlay (Ambient aura) */}

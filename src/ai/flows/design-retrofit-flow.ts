@@ -1,7 +1,7 @@
-
+﻿
 'use server';
 /**
- * @fileOverview A WaMóvel design retrofit AI agent.
+ * @fileOverview A WaMÃ³vel design retrofit AI agent.
  *
  * - generateRetrofitImage - A function that generates a new image based on an original and a text prompt.
  */
@@ -11,7 +11,7 @@ import { type RetrofitInput, type RetrofitOutput } from './design-retrofit-types
 
 export async function generateRetrofitImage(input: RetrofitInput): Promise<RetrofitOutput> {
     const { media } = await ai.generate({
-        model: 'googleai/gemini-2.5-flash-image',
+        model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
         prompt: [
             { media: { url: input.photoDataUri } },
             { text: input.prompt },
@@ -36,3 +36,4 @@ export async function generateRetrofitImage(input: RetrofitInput): Promise<Retro
 
     return { imageUri: media.url };
 }
+

@@ -1,16 +1,19 @@
 
 import { genkit } from 'genkit';
-import { googleAI } from '@genkit-ai/google-genai';
+import { awsBedrock } from 'genkitx-aws-bedrock';
 
-// VIX: Protocolo de "Injeção Forçada com Verificação" ativado.
-if (!process.env.GOOGLE_GENAI_API_KEY && !process.env.GEMINI_API_KEY && process.env.NODE_ENV === 'production') {
-  console.warn("⚠️ [NEXUS COMPONENT] Warning: No AI API keys found. Build may be unstable if pre-rendering hits these components.");
+// VIX: Protocolo de "Unificação AWS" ativado.
+// Os créditos do AWS Activate garantem o uso dos modelos Claude 3 via Bedrock.
+if (!process.env.AWS_REGION && process.env.NODE_ENV === 'production') {
+  console.warn("⚠️ [NEXUS COMPONENT] Warning: AWS Region not found. Bedrock calls might fail.");
 }
 
 export const ai = genkit({
   plugins: [
-    googleAI(), // Remova configurações extras daqui se houver
+    awsBedrock({
+      region: process.env.AWS_REGION || 'us-east-1',
+    }),
   ],
-  // Manobra de Elite: Forçamos o modelo padrão aqui se necessário
-  model: 'googleai/gemini-3-flash-preview', 
+  // Otimização Platinum: Por padrão, usamos o Claude 3 Sonnet para a profundidade da Nexus.
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0', 
 });

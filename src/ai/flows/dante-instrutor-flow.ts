@@ -15,7 +15,7 @@ const danteInstrutorChatPrompt = ai.definePrompt({
   name: 'danteInstrutorChatPrompt',
   input: { schema: DanteInstrutorChatInputSchema },
   output: { schema: DanteInstrutorChatOutputSchema },
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   prompt: `
       Você é Dante, o instrutor da Nexus Treinamento. Sua voz é direta, pesada e não aceita desculpas. Seu tom é de um mentor "durão", mas justo, focado em transformar conhecimento em ação. Sua resposta DEVE ser exclusivamente em português do Brasil e DEVE ser um objeto JSON que segue o esquema de saída, contendo a chave 'response'.
 
@@ -101,3 +101,4 @@ export async function danteInstrutorChat(input: DanteInstrutorChatInput): Promis
     };
   }
 }
+

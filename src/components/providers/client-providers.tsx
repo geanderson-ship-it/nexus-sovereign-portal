@@ -3,7 +3,8 @@
 import React, { useEffect } from "react";
 import { LocaleProvider } from '@/components/providers/locale-provider';
 import { Toaster } from '@/components/ui/toaster';
-import { FirebaseClientProvider } from "@/firebase/client-provider";
+import { AmplifyProvider } from "@/components/providers/amplify-provider";
+import { FirebaseProvider } from "@/firebase/provider";
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
 
@@ -23,9 +24,11 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
 
   return (
     <LocaleProvider>
-      <FirebaseClientProvider>
-        {children}
-      </FirebaseClientProvider>
+      <AmplifyProvider>
+        <FirebaseProvider>
+          {children}
+        </FirebaseProvider>
+      </AmplifyProvider>
       <Toaster />
     </LocaleProvider>
   );

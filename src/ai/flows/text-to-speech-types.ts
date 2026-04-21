@@ -1,4 +1,4 @@
-import { z } from 'genkit';
+﻿import { z } from 'genkit';
 
 // Define voice profiles for type safety and clarity
 export const VoiceProfileSchema = z.enum(['djeny', 'dante', 'maga', 'orion']);
@@ -26,3 +26,4 @@ export const TextToSpeechOutputSchema = z.object({
   speechMarks: z.array(SpeechMarkSchema).describe('An array of speech marks (visemes) for lip-sync animation.'),
 });
 export type TextToSpeechOutput = z.infer<typeof TextToSpeechOutputSchema>;
+

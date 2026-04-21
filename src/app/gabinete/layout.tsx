@@ -10,11 +10,8 @@ export default function GabineteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // VIX: Protocolo de Ocultação Estratégica.
-  // O Gabinete é uma área de comando para desenvolvimento e não deve ser acessível em produção.
-  if (process.env.NODE_ENV === 'production') {
-    notFound();
-  }
+  /* VIX: Protocolo de Acesso Estratégico. 
+     O Gabinete é uma área de comando agora disponível para administradores em todos os ambientes. */
 
   return (
     <AuthGate adminOnly>

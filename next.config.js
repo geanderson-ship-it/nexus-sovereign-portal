@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    unoptimized: true,
+    // Platinum Optimization: AWS Amplify handles image optimization natively via CloudFront.
     remotePatterns: [
       { protocol: 'https', hostname: 'i.postimg.cc' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
@@ -18,10 +18,9 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: [
       'genkit',
-      '@genkit-ai/google-genai',
+      'genkitx-aws-bedrock',
       '@genkit-ai/core',
-      '@genkit-ai/ai',
-      '@google/generative-ai'
+      '@genkit-ai/ai'
     ],
   },
   async redirects() {

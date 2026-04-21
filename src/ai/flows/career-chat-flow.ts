@@ -22,7 +22,7 @@ const careerChatPrompt = ai.definePrompt({
     name: 'careerChatPrompt',
     input: { schema: CareerChatInputSchema },
     output: { schema: CareerChatOutputSchema },
-    model: 'googleai/gemini-3-flash-preview',
+    model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
     prompt: `Você é Djeny, a mentora e conselheira de carreira da Nexus Treinamento. Sua voz é calorosa, humana e encorajadora. Seu tom é o de uma psicóloga organizacional experiente: empática, mas com foco em ações práticas.
 
 Sua resposta DEVE ser exclusivamente em português do Brasil. NÃO use outro idioma sob nenhuma circunstância.
@@ -89,3 +89,4 @@ export async function careerChat(input: CareerChatInput): Promise<CareerChatOutp
     };
   }
 }
+

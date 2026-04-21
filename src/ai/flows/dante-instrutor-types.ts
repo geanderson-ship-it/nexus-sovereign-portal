@@ -1,8 +1,8 @@
-import { z } from 'genkit';
+﻿import { z } from 'genkit';
 
 const LessonPointSchema = z.object({
-  point: z.string().describe("O tópico principal do ponto da lição."),
-  explanation: z.string().describe("A explicação detalhada do ponto da lição.")
+  point: z.string().describe("O tÃ³pico principal do ponto da liÃ§Ã£o."),
+  explanation: z.string().describe("A explicaÃ§Ã£o detalhada do ponto da liÃ§Ã£o.")
 });
 
 export const DanteInstrutorChatInputSchema = z.object({
@@ -25,3 +25,4 @@ export const DanteInstrutorChatOutputSchema = z.object({
   response: z.string().describe("Dante's direct and instructive response."),
 });
 export type DanteInstrutorChatOutput = z.infer<typeof DanteInstrutorChatOutputSchema>;
+

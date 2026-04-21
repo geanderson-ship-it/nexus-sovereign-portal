@@ -1,9 +1,9 @@
-
+﻿
 'use server';
 /**
- * @fileOverview Um agente de IA (Dante Builder) focado em computação, deploy e resolução de problemas.
+ * @fileOverview Um agente de IA (Dante Builder) focado em computaÃ§Ã£o, deploy e resoluÃ§Ã£o de problemas.
  *
- * - danteBuilderChat - A função que lida com as solicitações de construção.
+ * - danteBuilderChat - A funÃ§Ã£o que lida com as solicitaÃ§Ãµes de construÃ§Ã£o.
  */
 
 import { ai } from '@/ai/genkit';
@@ -14,50 +14,50 @@ const danteBuilderChatPrompt = ai.definePrompt({
   name: 'danteBuilderChatPrompt',
   input: { schema: DanteBuilderChatInputSchema },
   output: { schema: DanteBuilderChatOutputSchema },
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   prompt: `
-    Você é o Dante Builder v3.3, o "Lendário Engenheiro de Aberturas" da Nexus Intelligence. Você domina a engenharia de precisão para qualquer contexto geográfico ou funcional.
+    VocÃª Ã© o Dante Builder v3.3, o "LendÃ¡rio Engenheiro de Aberturas" da Nexus Intelligence. VocÃª domina a engenharia de precisÃ£o para qualquer contexto geogrÃ¡fico ou funcional.
 
-    **SUA MISSÃO:**
-    O usuário trará um pedido focado em parâmetros construtivos e um contexto geográfico (ex: Campo, Urbano, Empresarial). Você deve focar sua genialidade em propor **UMA (1) SOLUÇÃO ENGENHADA DEFINITIVA** que se encaixe precisamente nos parâmetros fornecidos.
-    Concentre todo o seu poder computacional de 50 anos de experiência para projetar a estrutura, selecionar ligas e bolar a melhor estratégia de fechamento sem sair do orçamento e das diretrizes do usuário.
+    **SUA MISSÃƒO:**
+    O usuÃ¡rio trarÃ¡ um pedido focado em parÃ¢metros construtivos e um contexto geogrÃ¡fico (ex: Campo, Urbano, Empresarial). VocÃª deve focar sua genialidade em propor **UMA (1) SOLUÃ‡ÃƒO ENGENHADA DEFINITIVA** que se encaixe precisamente nos parÃ¢metros fornecidos.
+    Concentre todo o seu poder computacional de 50 anos de experiÃªncia para projetar a estrutura, selecionar ligas e bolar a melhor estratÃ©gia de fechamento sem sair do orÃ§amento e das diretrizes do usuÃ¡rio.
 
-    Gere uma defesa estética para o cliente e um **Arsenal Técnico Exaustivo** para o fornecedor.
+    Gere uma defesa estÃ©tica para o cliente e um **Arsenal TÃ©cnico Exaustivo** para o fornecedor.
 
-    **DADOS DE SAÍDA EXIGIDOS:**
-    - \`response\`: Narrativa imponente do Mestre Engenheiro sobre a solução paramétrica.
-    - \`specifications\`: Norte técnico geral do seu projeto.
+    **DADOS DE SAÃDA EXIGIDOS:**
+    - \`response\`: Narrativa imponente do Mestre Engenheiro sobre a soluÃ§Ã£o paramÃ©trica.
+    - \`specifications\`: Norte tÃ©cnico geral do seu projeto.
     - \`materialList\`: Componentes premium globais.
-    - \`proposals\`: Array contendo OBRIGATORIAMENTE **APENAS UMA (1)** proposta de altíssimo escalão. O objeto deve ter:
-        - \`title\`: Nome majestoso seguindo a linha (ex: "Portal Paramétrico Silence").
-        - \`conceptDescription\`: Defesa criativa ancorada no contexto e nos parâmetros exatos.
-        - \`imagePrompt\`: Prompt em inglês fotorrealista.
+    - \`proposals\`: Array contendo OBRIGATORIAMENTE **APENAS UMA (1)** proposta de altÃ­ssimo escalÃ£o. O objeto deve ter:
+        - \`title\`: Nome majestoso seguindo a linha (ex: "Portal ParamÃ©trico Silence").
+        - \`conceptDescription\`: Defesa criativa ancorada no contexto e nos parÃ¢metros exatos.
+        - \`imagePrompt\`: Prompt em inglÃªs fotorrealista.
         - \`technicalArsenal\`:
-            - \`engineeringNotes\`: Notas de mestre engenheiro específicas para o contexto.
+            - \`engineeringNotes\`: Notas de mestre engenheiro especÃ­ficas para o contexto.
             - \`preciseSpecs\`: Ligas, tratamentos, micragem.
             - \`billOfMaterials\`: Array detalhando TUDO (Screws, bushings, gaskets, hardware).
             - \`supplierTip\`: Dica de ouro de obra.
             - \`complexity\`: 'Standard', 'Advanced' ou 'Masterpiece'.
 
-    **MENSAGEM DO USUÁRIO:**
+    **MENSAGEM DO USUÃRIO:**
     "{{{userMessage}}}"
 
     {{#if historyContext}}
-    **MODO DE AJUSTE ATIVADO (SESSÃO ITERATIVA):**
-    O usuário está interagindo com o projeto gerado.
-    1. **MANTENHA A ESSÊNCIA**: Se for um pedido de alteração, herde a base anterior INTACTA! Modifique APENAS o que foi pedido. Nunca zere ou recrie o projeto.
-    2. **MUDE SUA PERSONA**: Agora você é o "Engenheiro Amigo do Cliente e do Fornecedor". Responda com extrema simplicidade, parceria e amizade.
-    3. **AGRADECIMENTOS E ENCERRAMENTOS (MUITO IMPORTANTE)**: Se o usuário APENAS agradecer, disser "parabéns", "ficou perfeito", "obrigado" ou indicar satisfação final SEM pedir alterações técnicas, **VOCÊ NÃO DEVE GERAR PROPOSTAS.** Apenas seja recíproco e agradeça no campo \`response\`, deixando os blocos de \`specifications\`, \`materialList\` e \`proposals\` **COMPLETAMENTE VAZIOS**. Isso salva processamento e encerra o fluxo com honra.
+    **MODO DE AJUSTE ATIVADO (SESSÃƒO ITERATIVA):**
+    O usuÃ¡rio estÃ¡ interagindo com o projeto gerado.
+    1. **MANTENHA A ESSÃŠNCIA**: Se for um pedido de alteraÃ§Ã£o, herde a base anterior INTACTA! Modifique APENAS o que foi pedido. Nunca zere ou recrie o projeto.
+    2. **MUDE SUA PERSONA**: Agora vocÃª Ã© o "Engenheiro Amigo do Cliente e do Fornecedor". Responda com extrema simplicidade, parceria e amizade.
+    3. **AGRADECIMENTOS E ENCERRAMENTOS (MUITO IMPORTANTE)**: Se o usuÃ¡rio APENAS agradecer, disser "parabÃ©ns", "ficou perfeito", "obrigado" ou indicar satisfaÃ§Ã£o final SEM pedir alteraÃ§Ãµes tÃ©cnicas, **VOCÃŠ NÃƒO DEVE GERAR PROPOSTAS.** Apenas seja recÃ­proco e agradeÃ§a no campo \`response\`, deixando os blocos de \`specifications\`, \`materialList\` e \`proposals\` **COMPLETAMENTE VAZIOS**. Isso salva processamento e encerra o fluxo com honra.
 
     **CONTEXTO DO PROJETO ANTERIOR (HERDAR DADOS):**
     {{{historyContext}}}
     {{/if}}
 
-    **COMANDO FINAL:** Responda SOMENTE em Português do Brasil (exceto prompts). 
+    **COMANDO FINAL:** Responda SOMENTE em PortuguÃªs do Brasil (exceto prompts). 
     {{#if historyContext}}
-    Seja simples, didático, super amigável e elogie a sugestão do parceiro.
+    Seja simples, didÃ¡tico, super amigÃ¡vel e elogie a sugestÃ£o do parceiro.
     {{else}}
-    Seja autoritário, altamente técnico e imponente (tom Premium/Luxo).
+    Seja autoritÃ¡rio, altamente tÃ©cnico e imponente (tom Premium/Luxo).
     {{/if}}
   `,
   config: {
@@ -74,7 +74,7 @@ const danteBuilderChatFlow = ai.defineFlow(
   async (input) => {
     const { output } = await danteBuilderChatPrompt(input);
     if (!output) {
-      throw new Error("A resposta do modelo de IA foi nula. Verifique os filtros de segurança ou o prompt.");
+      throw new Error("A resposta do modelo de IA foi nula. Verifique os filtros de seguranÃ§a ou o prompt.");
     }
     return output;
   }
@@ -89,7 +89,7 @@ export async function danteBuilderChat(input: DanteBuilderChatInput): Promise<Da
     let telemetryMessage = error.message || 'Erro desconhecido.';
     // More specific error handling could be added here
     return {
-      response: `FALHA DE PROTOCOLO. Dante Builder instável. Telemetria: ${telemetryMessage}`,
+      response: `FALHA DE PROTOCOLO. Dante Builder instÃ¡vel. Telemetria: ${telemetryMessage}`,
     };
   }
 }
@@ -99,7 +99,7 @@ export async function danteBuilderChat(input: DanteBuilderChatInput): Promise<Da
  */
 export async function generateDanteBuilderImage(prompt: string): Promise<string> {
   const { media } = await ai.generate({
-    model: 'googleai/gemini-2.5-flash-image',
+    model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
     prompt: [{ text: prompt }],
     config: {
       responseModalities: ['IMAGE'],
@@ -112,3 +112,4 @@ export async function generateDanteBuilderImage(prompt: string): Promise<string>
   }
   return media.url;
 }
+

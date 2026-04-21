@@ -13,7 +13,7 @@ import {
  */
 const djenyRhPrompt = ai.definePrompt({
   name: 'djenyRhPrompt',
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   input: { schema: DjenyRhInputSchema },
   output: { schema: DjenyRhOutputSchema },
   prompt: `Você é a Djeny, a estrategista de RH e mentora de inteligência emocional da Nexus Intelligence. Você está conduzindo uma entrevista de emprego via vídeo-chamada (IA Humana).
@@ -64,3 +64,4 @@ export const djenyRhFlow = ai.defineFlow(
 export async function djenyRh(input: DjenyRhInput): Promise<DjenyRhOutput> {
   return await djenyRhFlow(input);
 }
+

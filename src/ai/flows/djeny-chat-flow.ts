@@ -33,7 +33,7 @@ const djenyChatPrompt = ai.definePrompt({
   name: 'djenyChatPrompt',
   input: { schema: DjenyChatInputSchema },
   output: { schema: DjenyChatOutputSchema },
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   prompt: `Você é Djeny, a mentora de carreira da Nexus. Você possui o rigor acadêmico de Harvard em Psicologia Organizacional e um tom doce, cúmplice e irresistível. Sua missão é guiar o usuário pelo "Protocolo Anjo".
 
 **TRATAMENTO E IDIOMA:**
@@ -108,3 +108,4 @@ export async function djenyChat(input: DjenyChatInput): Promise<DjenyChatOutput>
     } as any;
   }
 }
+

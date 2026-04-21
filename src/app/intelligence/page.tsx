@@ -97,7 +97,32 @@ export default function IntelligencePage() {
                         <h2 className="mt-6 text-xl md:text-2xl font-medium text-slate-400 max-w-4xl mx-auto tracking-widest uppercase">
                             {t('intelligence.subtitle')}
                         </h2>
-                        <div className="mt-8 flex items-center justify-center gap-4">
+                        
+                        {/* ADM ACCESS: GABINETE DE COMANDO */}
+                        <AnimatePresence>
+                            {(user?.email === 'geanderson@nexustreinamento.com' || user?.email === 'geandersonleo@gmail.com') && (
+                                <motion.div 
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="mt-12 group flex justify-center"
+                                >
+                                    <Button asChild className="relative overflow-hidden bg-zinc-900 border border-primary/30 hover:border-primary px-10 py-8 rounded-2xl transition-all duration-500 shadow-[0_0_40px_rgba(37,99,235,0.1)] hover:shadow-primary/20">
+                                        <Link href="/gabinete" className="flex items-center gap-4">
+                                            <div className="bg-primary/10 p-3 rounded-xl group-hover:bg-primary/20 transition-colors">
+                                                <Shield className="h-6 w-6 text-primary" />
+                                            </div>
+                                            <div className="text-left">
+                                                <span className="block text-[10px] font-black uppercase tracking-[0.3em] text-primary/60">Acesso Restrito</span>
+                                                <span className="text-xl font-headline font-black text-white uppercase tracking-widest group-hover:text-primary transition-colors">Gabinete de Comando</span>
+                                            </div>
+                                            <ArrowRight className="h-5 w-5 text-primary ml-4 transition-transform group-hover:translate-x-2" />
+                                        </Link>
+                                    </Button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        <div className="mt-12 flex items-center justify-center gap-4">
                             <div className="h-[1px] w-20 bg-gradient-to-r from-transparent to-blue-500/50" />
                             <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 px-6 py-1 tracking-widest font-mono text-[10px]">STRATEGIC_OS_v5.0</Badge>
                             <div className="h-[1px] w-20 bg-gradient-to-l from-transparent to-blue-500/50" />

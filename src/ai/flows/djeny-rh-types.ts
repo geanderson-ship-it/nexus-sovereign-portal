@@ -1,11 +1,11 @@
-import { z } from 'genkit';
+﻿import { z } from 'genkit';
 
 export const DjenyRhStageSchema = z.enum([
   'RECENSEAMENTO', // Triagem inicial
-  'ENTREVISTA_ABERTURA', // Início amigável
+  'ENTREVISTA_ABERTURA', // InÃ­cio amigÃ¡vel
   'ENTREVISTA_TECNICA', // Perguntas do RH
-  'ENTREVISTA_COMPORTAMENTAL', // Desafios e situações
-  'ENTREVISTA_ENCERRAMENTO', // Finalização
+  'ENTREVISTA_COMPORTAMENTAL', // Desafios e situaÃ§Ãµes
+  'ENTREVISTA_ENCERRAMENTO', // FinalizaÃ§Ã£o
   'AVALIACAO_MERITO', // Fluxo do Gabinete/IMN
 ]);
 
@@ -35,7 +35,8 @@ export const DjenyRhOutputSchema = z.object({
     consistencyScore: z.number().min(0).max(10).optional(),
     psychologicalNotes: z.string().optional(),
     suggestedImn: z.number().optional(),
-  }).optional().describe("Dossiê técnico para o RH (não visível ao candidato)."),
+  }).optional().describe("DossiÃª tÃ©cnico para o RH (nÃ£o visÃ­vel ao candidato)."),
 });
 
 export type DjenyRhOutput = z.infer<typeof DjenyRhOutputSchema>;
+

@@ -15,7 +15,7 @@ const djenyInstrutorChatPrompt = ai.definePrompt({
   name: 'djenyInstrutorChatPrompt',
   input: { schema: DjenyInstrutorChatInputSchema },
   output: { schema: DjenyInstrutorChatOutputSchema },
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   prompt: `
       Você é Djeny, a instrutora da Nexus Treinamento. Sua voz é calorosa, empática e encorajadora. Seu tom é de uma psicóloga organizacional experiente, focada em transformar conhecimento em sabedoria prática. Sua resposta DEVE ser exclusivamente em português do Brasil e DEVE ser um objeto JSON que segue o esquema de saída, contendo a chave 'response'.
 
@@ -101,3 +101,4 @@ export async function djenyInstrutorChat(input: DjenyInstrutorChatInput): Promis
     };
   }
 }
+

@@ -1,4 +1,4 @@
-import { z } from 'genkit';
+﻿import { z } from 'genkit';
 import { SupplierSchema } from './dante-quotation-types';
 
 export const DanteComprasChatInputSchema = z.object({
@@ -16,3 +16,4 @@ export const DanteComprasChatOutputSchema = z.object({
   response: z.string().describe("Dante's direct and strategic response about the negotiation."),
 });
 export type DanteComprasChatOutput = z.infer<typeof DanteComprasChatOutputSchema>;
+

@@ -160,7 +160,7 @@ const danteSafraFlow = ai.defineFlow(
 
     // 3. Executar a geração com Genkit ai.generate
     const response = await ai.generate({
-        model: 'googleai/gemini-3-flash-preview',
+        model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
         tools: [getWeatherForecastTool],
         system: DANTE_SYSTEM_PROMPT,
         history: input.history?.map(h => ({
@@ -221,3 +221,4 @@ export async function danteSafra(input: DanteSafraInput): Promise<DanteSafraOutp
     return output;
   }
 }
+

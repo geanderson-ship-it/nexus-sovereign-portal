@@ -1,14 +1,14 @@
 import dynamic from 'next/dynamic';
 
-const NexusDuoMode = dynamic(
-  () => import('@/components/maga/nexus-duo-mode').then((mod) => mod.NexusDuoMode),
+const NexusDuoLive = dynamic(
+  () => import('@/components/maga/nexus-duo-live').then((mod) => mod.NexusDuoLive),
   { ssr: false }
 );
 
 export default function NexusDuoPage() {
   return (
     <main className="min-h-screen bg-black">
-      <NexusDuoMode />
+      <NexusDuoLive />
     </main>
   );
 }

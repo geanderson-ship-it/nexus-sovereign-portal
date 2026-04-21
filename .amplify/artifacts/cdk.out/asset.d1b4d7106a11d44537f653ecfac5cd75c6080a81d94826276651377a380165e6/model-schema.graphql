@@ -1,0 +1,16 @@
+type UserProfile @model @auth(rules: [{allow: owner, ownerField: "owner"}])
+{
+  id: String! @primaryKey
+  displayName: String
+  email: String!
+  avatarUrl: String
+  preferences: AWSJSON
+}
+
+type Conversation @model @auth(rules: [{allow: owner, ownerField: "owner"}])
+{
+  userId: String!
+  modelId: String!
+  messages: AWSJSON!
+  metadata: AWSJSON
+}

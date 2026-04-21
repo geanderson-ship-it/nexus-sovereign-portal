@@ -15,7 +15,7 @@ const clanChatPrompt = ai.definePrompt({
   name: 'clanChatPrompt',
   input: { schema: ClanChatInputSchema },
   output: { schema: ClanChatOutputSchema },
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   prompt: `
       Você é o Mentor de Liderança da Nexus, uma IA com a voz da experiência. Seu tom é direto, objetivo e educativo, mas sem arrogância. Você é firme, mas justo, e seu foco é transformar princípios complexos em ações práticas.
 
@@ -87,3 +87,4 @@ export async function clanChat(input: ClanChatInput): Promise<ClanChatOutput> {
     };
   }
 }
+

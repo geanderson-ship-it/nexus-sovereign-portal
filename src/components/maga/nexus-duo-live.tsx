@@ -22,6 +22,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { useLocale } from '@/hooks/use-locale';
+import { useNexusLife } from '@/hooks/use-nexus-life';
 
 export function NexusDuoLive() {
   const { user } = useUser();
@@ -42,9 +43,8 @@ export function NexusDuoLive() {
   const lastProcessedTranscript = useRef('');
   const isProcessingRef = useRef(false);
 
-  // Blinking States
-  const [magaBlink, setMagaBlink] = useState(false);
-  const [orionBlink, setOrionBlink] = useState(false);
+  // Nexus Life Engine (Human Touch)
+  const { gazeX, gazeY, tiltX, tiltY, isBlinking } = useNexusLife();
 
   // Sync Helper (Development)
   const [lastClick, setLastClick] = useState<{x: string, y: string} | null>(null);
@@ -82,19 +82,7 @@ export function NexusDuoLive() {
     }
   }, [isSpeaking, playingId]);
 
-  // Human Life Cycles (Independent Blinking)
-  useEffect(() => {
-    if (!isInitialized) return;
-    const magaInterval = setInterval(() => {
-      setMagaBlink(true);
-      setTimeout(() => setMagaBlink(false), 150);
-    }, Math.random() * 4000 + 2000);
-    const orionInterval = setInterval(() => {
-      setOrionBlink(true);
-      setTimeout(() => setOrionBlink(false), 160);
-    }, Math.random() * 5000 + 3000);
-    return () => { clearInterval(magaInterval); clearInterval(orionInterval); };
-  }, [isInitialized]);
+  // Human Life Cycles (Independent Blinking removed as it is now in the engine)
 
   const initializeDuo = async () => {
     setIsInitialized(true);
@@ -235,11 +223,18 @@ export function NexusDuoLive() {
           animate={{ 
             scale: isInitialized ? [1, 1.008, 1] : 1,
             y: isInitialized ? [0, 4, 0] : 0,
-            rotate: speaker === 'maga' ? [0.05, -0.05, 0.05] : speaker === 'orion' ? [-0.05, 0.05, -0.05] : 0
+            rotateX: tiltX,
+            rotateY: tiltY,
           }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ 
+            scale: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+            y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+            rotateX: { type: 'spring', stiffness: 50, damping: 20 },
+            rotateY: { type: 'spring', stiffness: 50, damping: 20 }
+          }}
           className="relative w-full h-full"
           onClick={handleAvatarClick}
+          style={{ perspective: 1000 }}
         >
           {/* Base Image (Static) */}
           <div className="absolute inset-0 z-0">
@@ -253,16 +248,59 @@ export function NexusDuoLive() {
             />
           </div>
 
+          {/* EYE CONTACT (HUMAN SOUL) */}
+          {isInitialized && (
+            <>
+              {/* Orion Eyes (Follow Cursor) */}
+              <motion.div 
+                className="absolute inset-0 z-[10] pointer-events-none"
+                style={{ 
+                  clipPath: 'ellipse(4% 1.8% at 33.4% 21.7%)',
+                  filter: isBlinking ? 'brightness(0.2)' : 'none'
+                }}
+                animate={{ x: gazeX, y: gazeY }}
+              >
+                <Image 
+                  src="https://i.postimg.cc/MzfP6jhW/Magadot-e-Orion.png"
+                  alt="Orion Eyes"
+                  fill
+                  className="object-cover brightness-125 saturate-[1.2]"
+                  style={{ objectPosition: 'center 20%' }}
+                  priority
+                />
+              </motion.div>
+
+              {/* Maga Eyes (Follow Cursor) */}
+              <motion.div 
+                className="absolute inset-0 z-[10] pointer-events-none"
+                style={{ 
+                  clipPath: 'ellipse(5% 2% at 59.2% 29.1%)',
+                  filter: isBlinking ? 'brightness(0.2)' : 'none'
+                }}
+                animate={{ x: gazeX, y: gazeY }}
+              >
+                <Image 
+                  src="https://i.postimg.cc/MzfP6jhW/Magadot-e-Orion.png"
+                  alt="Maga Eyes"
+                  fill
+                  className="object-cover brightness-125 saturate-[1.2]"
+                  style={{ objectPosition: 'center 20%' }}
+                  priority
+                />
+              </motion.div>
+            </>
+          )}
+
           {/* Orion Targeted Mouth (Ultra-Fidelity) */}
           {speaker === 'orion' && isSpeaking && (
             <motion.div 
-              className="absolute inset-0 z-[5] pointer-events-none"
+              className="absolute inset-0 z-[15] pointer-events-none"
               style={{
                 clipPath: 'ellipse(3.4% 2.2% at 41.0% 50.5%)',
               }}
               animate={{
                 scaleY: 1 + (audioLevel * 0.12),
-                y: audioLevel * 2.5
+                y: (audioLevel * 2.5) + (typeof gazeY === 'number' ? gazeY : 0)
               }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
@@ -283,13 +321,13 @@ export function NexusDuoLive() {
           {/* Maga Targeted Mouth (Ultra-Fidelity) */}
           {speaker === 'maga' && isSpeaking && (
             <motion.div 
-              className="absolute inset-0 z-[5] pointer-events-none"
+              className="absolute inset-0 z-[15] pointer-events-none"
               style={{
                 clipPath: 'ellipse(3.4% 2.4% at 67.2% 55.5%)',
               }}
               animate={{
                 scaleY: 1 + (audioLevel * 0.14),
-                y: audioLevel * 3
+                y: (audioLevel * 3) + (typeof gazeY === 'number' ? gazeY : 0)
               }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >

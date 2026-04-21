@@ -1,4 +1,4 @@
-
+﻿
 'use server';
 /**
  * @fileOverview Converts text to speech using a cloud-based AI model.
@@ -128,7 +128,7 @@ const textToSpeechFlow = ai.defineFlow(
     if (textChunks.length === 1) {
       const chunk = textChunks[0];
       if (!chunk.trim()) {
-        throw new Error('Nenhum dado de áudio foi gerado para o texto fornecido.');
+        throw new Error('Nenhum dado de Ã¡udio foi gerado para o texto fornecido.');
       }
 
       const { media } = await ai.generate({
@@ -137,7 +137,7 @@ const textToSpeechFlow = ai.defineFlow(
       });
 
       if (!media || !media.url) {
-        throw new Error('A resposta do modelo TTS para o pedaço de áudio veio vazia.');
+        throw new Error('A resposta do modelo TTS para o pedaÃ§o de Ã¡udio veio vazia.');
       }
 
       const audioBuffer = Buffer.from(media.url.substring(media.url.indexOf(',') + 1), 'base64');
@@ -167,7 +167,7 @@ const textToSpeechFlow = ai.defineFlow(
       });
 
       if (!media || !media.url) {
-        console.warn("VIX DIAGNOSTIC: Um pedaço de áudio veio vazio do modelo TTS. Pulando.");
+        console.warn("VIX DIAGNOSTIC: Um pedaÃ§o de Ã¡udio veio vazio do modelo TTS. Pulando.");
         continue;
       }
 
@@ -190,7 +190,7 @@ const textToSpeechFlow = ai.defineFlow(
     }
 
     if (audioBuffers.length === 0) {
-      throw new Error('Nenhum dado de áudio foi gerado para o texto fornecido.');
+      throw new Error('Nenhum dado de Ã¡udio foi gerado para o texto fornecido.');
     }
 
     const concatenatedPcm = Buffer.concat(audioBuffers as any);
@@ -210,12 +210,13 @@ export async function textToSpeech(input: TextToSpeechInput): Promise<TextToSpee
     } catch(err: any) {
         let telemetryMessage = `INVALID_ARGUMENT: ${err.message}`;
         if (err.message && err.message.includes('429')) {
-            telemetryMessage = "Atingimos nosso limite de requisições de áudio. Por favor, aguarde um minuto antes de tentar novamente.";
+            telemetryMessage = "Atingimos nosso limite de requisiÃ§Ãµes de Ã¡udio. Por favor, aguarde um minuto antes de tentar novamente.";
         } else {
             telemetryMessage = err.message;
         }
-        console.error(`VIX DIAGNOSTIC: Falha no processamento de áudio.`, err);
+        console.error(`VIX DIAGNOSTIC: Falha no processamento de Ã¡udio.`, err);
         // Rethrow a more generic error to the client to avoid leaking implementation details
         throw new Error(telemetryMessage);
     }
 }
+

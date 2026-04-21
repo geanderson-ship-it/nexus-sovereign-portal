@@ -1,7 +1,7 @@
-import { z } from 'genkit';
+﻿import { z } from 'genkit';
 
 export const MagadotChatInputSchema = z.object({
-  userMessage: z.string().describe('The user\'s message or question to Maga-Dót.'),
+  userMessage: z.string().describe('The user\'s message or question to Maga-DÃ³t.'),
   userName: z.string().optional().describe('The name of the user.'),
   locale: z.string().optional().describe('The locale to respond in (e.g., pt-BR, en-US).'),
   image: z.string().optional().describe('An optional base64 image (data URI) for visual analysis.'),
@@ -13,6 +13,7 @@ export const MagadotChatInputSchema = z.object({
 export type MagadotChatInput = z.infer<typeof MagadotChatInputSchema>;
 
 export const MagadotChatOutputSchema = z.object({
-  response: z.string().describe('Maga-Dót\'s wise and futuristic response.'),
+  response: z.string().describe('Maga-DÃ³t\'s wise and futuristic response.'),
 });
 export type MagadotChatOutput = z.infer<typeof MagadotChatOutputSchema>;
+

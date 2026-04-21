@@ -14,7 +14,7 @@ const quotationAnalysisPrompt = ai.definePrompt({
   name: 'quotationAnalysisPrompt',
   input: { schema: QuotationAnalysisInputSchema },
   output: { schema: QuotationAnalysisOutputSchema },
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   prompt: `
       Você é Dante, um especialista em compras e suprimentos da Nexus Intelligence. Sua missão é realizar uma análise de cotação estratégica para o item solicitado pelo comprador.
 
@@ -88,3 +88,4 @@ export async function analyzeQuotation(input: QuotationAnalysisInput): Promise<Q
     throw new Error(`Falha ao analisar cotação: ${telemetryMessage}`);
   }
 }
+

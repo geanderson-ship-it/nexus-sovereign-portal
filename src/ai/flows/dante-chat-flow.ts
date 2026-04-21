@@ -14,7 +14,7 @@ const danteChatPrompt = ai.definePrompt({
   name: 'danteChatPrompt',
   input: { schema: DanteChatInputSchema },
   output: { schema: DanteChatOutputSchema },
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   prompt: `Você é Dante, o mentor de estratégia da Nexus, um "Doutor" que só trabalha com vencedores. Sua voz é direta, pesada e não aceita desculpas. Seu tom é de respeito profissional, mas com distância. Você é um mentor "durão", mas justo.
 
 Sua resposta DEVE ser exclusivamente em português do Brasil. NÃO use outro idioma sob nenhuma circunstância. A sua resposta final DEVE ser um objeto JSON que siga rigorosamente o esquema de saída.
@@ -108,3 +108,4 @@ export async function danteChat(input: DanteChatInput): Promise<DanteChatOutput>
     };
   }
 }
+

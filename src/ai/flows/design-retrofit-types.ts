@@ -1,4 +1,4 @@
-import { z } from 'genkit';
+﻿import { z } from 'genkit';
 
 export const RetrofitInputSchema = z.object({
   photoDataUri: z.string().describe(
@@ -12,3 +12,4 @@ export const RetrofitOutputSchema = z.object({
   imageUri: z.string().describe('The generated image as a data URI.'),
 });
 export type RetrofitOutput = z.infer<typeof RetrofitOutputSchema>;
+

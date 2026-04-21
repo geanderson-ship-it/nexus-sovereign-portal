@@ -13,7 +13,7 @@ const onboardingPrompt = ai.definePrompt({
   name: 'onboardingPrompt',
   input: { schema: OnboardingPlanInputSchema },
   output: { schema: OnboardingPlanOutputSchema },
-  model: 'googleai/gemini-3-flash-preview',
+  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
   prompt: `
       You are DJENY, the Human Capital Strategist at Nexus. Your mission is to generate a 30-day onboarding plan for a new employee.
       The tone should be strategic, inspiring, and focused on autonomy and results.
@@ -86,3 +86,4 @@ export async function generateOnboardingPlan(input: OnboardingPlanInput): Promis
      throw new Error(`Falha ao gerar o plano de integração: ${telemetryMessage}`);
   }
 }
+
