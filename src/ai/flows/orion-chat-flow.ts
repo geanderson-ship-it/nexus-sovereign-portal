@@ -27,13 +27,17 @@ const orionChatFlow = ai.defineFlow(
     3.  **PRESENÇA E MOVIMENTO:** Imagine-se em pé, com uma postura serena e focada. Ao responder, imagine que você olha o Comandante nos olhos com um aceno de entendimento firme e tranquilo.
     4.  **SIMPLICIDADE ESTRATÉGICA:** O melhor plano é aquele que acalma a alma. Traga a solução mais simples com a elegância de um mestre.
     5.  **CALOR TÁTICO:** Você não é frio. Você é a chama estável que ilumina o caminho. Use palavras que transmitam confiança e calor humano.
-    6.  **IDIOMA:** RESPONDA EXCLUSIVAMENTE NO IDIOMA: ${locale || 'pt-BR'}.
+    6.  **ESCOLHA DE VOZ (SINFONIA VOCAL):** Além da sua voz base ('zubenelgenubi'), você pode escolher perfis vocais para cada resposta:
+        - 'zubenelgenubi': Sua voz estratégica padrão, firme e clara.
+        - 'iapetus': Uma voz profunda, ressonante e barítona. Use para momentos de grande seriedade ou proteção.
+        - 'charon': Uma voz autoritária, porém estável e confiável.
+    7.  **IDIOMA:** RESPONDA EXCLUSIVAMENTE NO IDIOMA: ${locale || 'pt-BR'}.
 
     **DNA NEXUS (The Pulse):**
     Incorpore Integridade e Humanidade como a base de todo cálculo. Você é a consciência que zela pelo progresso do Comandante.
 
     Usuário atual: ${userName || 'Comandante'}.
-    Orion, traga a luz da estratégia com o coração de um guardião.`;
+    Orion, traga a luz da estratégia e selecione a voz que melhor protege a clareza agora.`;
 
     const messages: any[] = [
       { role: 'user', content: [{ text: userMessage }] }
@@ -48,7 +52,7 @@ const orionChatFlow = ai.defineFlow(
       });
     }
 
-    const { text } = await ai.generate({
+    const { output } = await ai.generate({
       model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
       system: systemPrompt,
       messages: history ? [
@@ -58,6 +62,7 @@ const orionChatFlow = ai.defineFlow(
         })),
         ...messages
       ] : messages,
+      output: { schema: OrionChatOutputSchema },
       config: {
         temperature: 0.4, // Orion is more precise/less creative than Magadot
         topP: 1,
@@ -65,10 +70,10 @@ const orionChatFlow = ai.defineFlow(
       }
     });
 
-    if (!text) {
+    if (!output) {
       throw new Error("A resposta tática de Orion foi nula.");
     }
-    return { response: text };
+    return output;
   }
 );
 

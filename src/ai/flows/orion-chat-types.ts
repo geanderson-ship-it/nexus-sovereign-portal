@@ -1,4 +1,4 @@
-﻿import { z } from 'genkit';
+import { z } from 'genkit';
 
 export const OrionChatInputSchema = z.object({
   userMessage: z.string().describe('The user\'s message or strategic question to Orion.'),
@@ -14,6 +14,7 @@ export type OrionChatInput = z.infer<typeof OrionChatInputSchema>;
 
 export const OrionChatOutputSchema = z.object({
   response: z.string().describe('Orion\'s precise and executive tactical response.'),
+  voiceProfile: z.string().optional().describe('The vocal profile selected by Orion (e.g., zubenelgenubi, iapetus, charon).'),
 });
 export type OrionChatOutput = z.infer<typeof OrionChatOutputSchema>;
 

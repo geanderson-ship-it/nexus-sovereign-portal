@@ -137,13 +137,15 @@ export function NexusDuoLive() {
       );
 
       const responseText = result.response || t('maga.live.unstable');
+      const voiceToUse = (result as any).voiceProfile || activeAgent;
+      
       setHistory(prev => [...prev, { role: 'user', text }, { role: 'model', text: responseText, agent: activeAgent }]);
       
       setConversationState('speaking');
       await playAudio({
         id: activeAgent,
         text: responseText,
-        voice: activeAgent,
+        voice: voiceToUse,
         onEnded: () => {
           isProcessingRef.current = false;
           setConversationState('listening');

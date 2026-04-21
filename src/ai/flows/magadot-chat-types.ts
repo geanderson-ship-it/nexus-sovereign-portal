@@ -1,4 +1,4 @@
-﻿import { z } from 'genkit';
+import { z } from 'genkit';
 
 export const MagadotChatInputSchema = z.object({
   userMessage: z.string().describe('The user\'s message or question to Maga-DÃ³t.'),
@@ -13,7 +13,8 @@ export const MagadotChatInputSchema = z.object({
 export type MagadotChatInput = z.infer<typeof MagadotChatInputSchema>;
 
 export const MagadotChatOutputSchema = z.object({
-  response: z.string().describe('Maga-DÃ³t\'s wise and futuristic response.'),
+  response: z.string().describe('Maga-Dót\'s wise and futuristic response.'),
+  voiceProfile: z.string().optional().describe('The vocal profile selected by the AI (e.g., autonoe, aoede, erinome).'),
 });
 export type MagadotChatOutput = z.infer<typeof MagadotChatOutputSchema>;
 

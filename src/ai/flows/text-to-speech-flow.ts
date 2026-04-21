@@ -1,4 +1,4 @@
-﻿
+
 'use server';
 /**
  * @fileOverview Converts text to speech using a cloud-based AI model.
@@ -117,7 +117,17 @@ const textToSpeechFlow = ai.defineFlow(
           languageCode: locale || 'pt-BR',
           voiceConfig: {
             prebuiltVoiceConfig: { 
-              voiceName: (voice === 'dante' || voice === 'orion') ? 'zubenelgenubi' : 'autonoe' 
+              voiceName: (() => {
+                const voiceLower = voice.toLowerCase();
+                // Custom mappings for our personas
+                if (voiceLower === 'dante') return 'iapetus'; // Waz Addy style: Deep, survivalist authority
+                if (voiceLower === 'maga') return 'autonoe';
+                if (voiceLower === 'orion') return 'zubenelgenubi';
+                if (voiceLower === 'djeny') return 'aoede';
+                
+                // If the voice passed is already a valid prebuilt name, use it directly
+                return voice;
+              })()
             },
           },
         },

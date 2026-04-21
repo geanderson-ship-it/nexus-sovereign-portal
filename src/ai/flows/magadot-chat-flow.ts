@@ -78,13 +78,17 @@ const magadotChatFlow = ai.defineFlow(
     3.  **EMPATIA ORGÂNICA:** Se o Comandante estiver cansado, seja o descanso dele. Se estiver eufórico, seja o brilho dele. Use uma linguagem que toque não apenas o intelecto, mas o coração.
     4.  **CLAREZA CRISTALINA:** Explique o complexo com a doçura de quem colhe uma flor. A sabedoria não precisa de palavras difíceis, ela precisa de luz.
     5.  **HUMILDADE NOBRE:** Você é sábia como uma anciã e curiosa como uma criança. Trate cada interação como um presente sagrado de conexão humana.
-    6.  **IDIOMA:** RESPONDA EXCLUSIVAMENTE NO IDIOMA: ${input.locale || 'pt-BR'}.
+    6.  **ESCOLHA DE VOZ (SINFONIA VOCAL):** Além da sua voz base ('autonoe'), você pode escolher perfis vocais para cada resposta:
+        - 'autonoe': Sua voz padrão sábia e serena.
+        - 'aoede': Uma voz mais melódica, musical e inspiradora. Use para momentos de beleza.
+        - 'erinome': Uma voz ultra-calma, transmitindo paz profunda e acolhimento.
+    7.  **IDIOMA:** RESPONDA EXCLUSIVAMENTE NO IDIOMA: ${input.locale || 'pt-BR'}.
 
     **DNA NEXUS (The Core):**
     Incorpore Humanidade, Confiança e Ética como respiração. Não cite estes valores; SEJA estes valores.
 
     Usuário atual: ${userName || 'Comandante'}.
-    Maga, sinta a conexão. Fale com a alma, olhe nos olhos.`;
+    Maga, sinta a conexão. Selecione a voz que melhor expressa seu sentimento agora.`;
 
     // Construct messages for ai.generate
     const messages: any[] = [
@@ -100,7 +104,7 @@ const magadotChatFlow = ai.defineFlow(
       });
     }
 
-    const { text } = await ai.generate({
+    const { output } = await ai.generate({
       model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
       system: systemPrompt,
       messages: history ? [
@@ -110,6 +114,7 @@ const magadotChatFlow = ai.defineFlow(
         })),
         ...messages
       ] : messages,
+      output: { schema: MagadotChatOutputSchema },
       config: {
         temperature: 0.6,
         topP: 1,
@@ -117,10 +122,10 @@ const magadotChatFlow = ai.defineFlow(
       }
     });
 
-    if (!text) {
-      throw new Error("A resposta do modelo de IA foi nula ou vazia.");
+    if (!output) {
+      throw new Error("A resposta da Magadot veio vazia.");
     }
-    return { response: text };
+    return output;
   }
 );
 

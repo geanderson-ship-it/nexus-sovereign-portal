@@ -1,4 +1,4 @@
-﻿import { z } from 'genkit';
+import { z } from 'genkit';
 
 // Weather Schemas (moved from services/weather.ts)
 export const DailyForecastSchema = z.object({
@@ -53,10 +53,11 @@ export const PropertyDetailsSchema = z.object({
 export type PropertyDetails = z.infer<typeof PropertyDetailsSchema>;
 
 export const DanteSafraOutputSchema = z.object({
-  response: z.string().describe("A resposta tÃ©cnica e segura do Dante Safra."),
-  newNickname: z.string().optional().describe("O apelido validado e confirmado do usuÃ¡rio."),
-  nextStage: DanteConversationStageSchema.optional().describe("O prÃ³ximo estÃ¡gio do setup, se a conversa for de registro."),
-  propertyDetails: PropertyDetailsSchema.optional().describe("Detalhes da propriedade extraÃ­dos da mensagem do usuÃ¡rio durante o setup.")
+  response: z.string().describe("A resposta técnica e segura do Dante Safra."),
+  newNickname: z.string().optional().describe("O apelido validado e confirmado do usuário."),
+  nextStage: DanteConversationStageSchema.optional().describe("O próximo estágio do setup, se a conversa for de registro."),
+  propertyDetails: PropertyDetailsSchema.optional().describe("Detalhes da propriedade extraídos da mensagem do usuário durante o setup."),
+  voiceProfile: z.string().optional().describe("O perfil vocal selecionado (estilo Waz/Iapetus)."),
 });
 export type DanteSafraOutput = z.infer<typeof DanteSafraOutputSchema>;
 
