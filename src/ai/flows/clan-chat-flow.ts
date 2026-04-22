@@ -1,4 +1,4 @@
-﻿
+
 'use server';
 /**
  * @fileOverview Nexus AI Agent: A leadership assistant.
@@ -76,10 +76,10 @@ export async function clanChat(input: ClanChatInput): Promise<ClanChatOutput> {
     console.error("Error in clanChat:", error);
     
     let telemetryMessage = error.message || 'Erro desconhecido.';
-    if (error.message && error.message.includes('403 Forbidden')) {
-        telemetryMessage = 'Acesso negado pela API do Google (403 Forbidden). Verifique se a "Generative Language API" está ativada no seu Google Cloud Console e se a chave de API tem permissão para usá-la.';
+    if (error.message && error.message.includes('403')) {
+        telemetryMessage = 'Acesso negado (403 Forbidden). Verifique as permissões da IAM Role no AWS Amplify (bedrock:InvokeModel) ou se o acesso ao Claude 3 no AWS Bedrock foi ativado no console da AWS.';
     } else if (error.message && error.message.includes('SAFETY')) {
-        telemetryMessage = 'A resposta foi bloqueada pelos filtros de segurança do Google. Tente uma pergunta diferente.';
+        telemetryMessage = 'A resposta foi bloqueada pelos filtros de segurança. Tente uma pergunta diferente.';
     }
 
     return {

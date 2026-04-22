@@ -160,15 +160,15 @@ export default function ProfilePage() {
                         <Button size="lg" className="h-auto py-6 bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-400/20 shadow-lg shadow-blue-500/10" onClick={() => errorEmitter.emit('open-chat', { context: 'clan' })}>
                             <div className="flex flex-col items-center text-center">
                                 <Users className="h-6 w-6 mb-2" />
-                                <span className="font-bold text-lg">{t('profile.clanRoom' as any) || 'Sala do Clã'}</span>
-                                <span className="text-xs text-blue-100/70">{t('profile.clanRoomSubtitle' as any) || 'Conselho com Djeny & Dante'}</span>
+                                <span className="font-bold text-lg">{t('profile.clanRoom.title' as any) || 'Sala do Clã'}</span>
+                                <span className="text-xs text-blue-100/70">{t('profile.clanRoom.description' as any) || 'Conselho com Djeny & Dante'}</span>
                             </div>
                         </Button>
                         <Button size="lg" className="h-auto py-6 bg-zinc-900 border-2 border-primary/20 hover:border-primary/40 text-white shadow-lg shadow-primary/5" onClick={() => errorEmitter.emit('open-chat', { context: 'djeny' })}>
                              <div className="flex flex-col items-center text-center">
                                 <Zap className="h-6 w-6 mb-2 text-primary" />
-                                <span className="font-bold text-lg">{t('profile.djenyTerminal' as any) || 'Terminal Djeny'}</span>
-                                <span className="text-xs text-gray-400">{t('profile.djenyTerminalSubtitle' as any) || 'Avaliação de Mérito e Mentoria'}</span>
+                                <span className="font-bold text-lg">{t('profile.djenyTerminal.title' as any) || 'Terminal Djeny'}</span>
+                                <span className="text-xs text-gray-400">{t('profile.djenyTerminal.description' as any) || 'Avaliação de Mérito e Mentoria'}</span>
                             </div>
                         </Button>
                     </CardContent>

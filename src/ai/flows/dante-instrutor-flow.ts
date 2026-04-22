@@ -93,10 +93,10 @@ export async function danteInstrutorChat(input: DanteInstrutorChatInput): Promis
     console.error("Error in danteInstrutorChat:", error);
     
     let telemetryMessage = error.message || 'Erro desconhecido.';
-    if (error.message?.includes('403 Forbidden')) {
-        telemetryMessage = 'Acesso negado pela API do Google (403 Forbidden).';
-    } else if (error.message?.includes('SAFETY')) {
-        telemetryMessage = 'A resposta foi bloqueada pelos filtros de segurança.';
+    if (error.message && error.message.includes('403')) {
+        telemetryMessage = 'Acesso negado (403 Forbidden). Verifique as permissões da IAM Role no AWS Amplify (bedrock:InvokeModel) ou se o acesso ao Claude 3 no AWS Bedrock foi ativado no console da AWS.';
+    } else if (error.message && error.message.includes('SAFETY')) {
+        telemetryMessage = 'A resposta foi bloqueada pelos filtros de segurança. Tente uma pergunta diferente.';
     }
 
     return {
@@ -104,4 +104,3 @@ export async function danteInstrutorChat(input: DanteInstrutorChatInput): Promis
     };
   }
 }
-
