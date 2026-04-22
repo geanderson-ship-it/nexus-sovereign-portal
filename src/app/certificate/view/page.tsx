@@ -15,7 +15,6 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { NexusIntelligenceLogo } from '@/components/nexus-intelligence-logo';
 import { ADMIN_EMAILS } from '@/lib/constants';
 
 interface Purchase {
@@ -145,22 +144,8 @@ function CertificateContent() {
                     />
                 </div>
                 
-                <div className="relative z-10 flex flex-col items-center">
-                    <div className="text-center mb-6">
-                        <h2 className="text-4xl font-bold font-headline text-foreground">Nexus Holding Group</h2>
-                        <p className="text-2xl italic text-accent">A sua nova dimensão de inteligência.</p>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row justify-around items-center mb-8 w-full max-w-3xl gap-8">
-                        <div className="flex flex-col items-center text-center">
-                            <NexusIntelligenceLogo width={300} height={101}/>
-                        </div>
-                        <div className="flex flex-col items-center text-center">
-                            <Logo width={300} height={101} />
-                        </div>
-                    </div>
-
-                    <h1 className={cn("text-2xl font-bold tracking-tight uppercase text-accent mb-6", "font-headline")}>
+                <div className="relative z-10 flex flex-col items-center pt-64 md:pt-80">
+                    <h1 className={cn("text-2xl font-bold tracking-tight uppercase text-accent mb-6 drop-shadow-md", "font-headline")}>
                         Certificado de Conclusão
                     </h1>
 
