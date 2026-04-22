@@ -107,7 +107,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
 
   const isAdmin = useMemo(() => (user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false), [user?.email]);
   const isPurchased = useMemo(() => (purchases ? purchases.length > 0 : false) || isAdmin, [purchases, isAdmin]);
-  const purchaseId = useMemo(() => (isPurchased && purchases ? (purchases[0]?.id || 'admin-access') : null), [isPurchased, purchases]);
+  const purchaseId = useMemo(() => (isPurchased && purchases && purchases.length > 0 ? purchases[0].id : (isAdmin ? `admin-access-${course?.slug}` : null)), [isPurchased, purchases, isAdmin, course?.slug]);
   
     const pixPayload = useMemo(() => {
         if (!course || course.type === 'palestra') return '';

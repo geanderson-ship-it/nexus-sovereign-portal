@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { NexusIntelligenceLogo } from '@/components/nexus-intelligence-logo';
+import { ADMIN_EMAILS } from '@/lib/constants';
 
 interface Purchase {
   id: string;
@@ -79,13 +80,30 @@ function CertificateContent() {
   const searchParams = useSearchParams();
   const purchaseId = searchParams?.get('id') as string | undefined;
 
+  const isAdmin = useMemo(() => (user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false), [user?.email]);
+  const isAdminPreview = isAdmin && purchaseId?.startsWith('admin-access-');
+  const courseSlugFromAdmin = isAdminPreview ? purchaseId!.replace('admin-access-', '') : null;
+
+  const mockPurchase = useMemo<Purchase | null>(() => {
+      if (!isAdminPreview) return null;
+      return {
+          id: purchaseId!,
+          userId: user?.uid || '',
+          courseId: courseSlugFromAdmin || '',
+          purchaseDate: new Date().toISOString(),
+          price: 0
+      };
+  }, [isAdminPreview, purchaseId, user?.uid, courseSlugFromAdmin]);
+
 
   const purchaseDocRef = useMemoFirebase(() => {
-    if (!user?.uid || !purchaseId || !firestore) return null;
+    if (!user?.uid || !purchaseId || !firestore || isAdminPreview) return null;
     return doc(firestore, 'users', user.uid, 'purchases', purchaseId) as DocumentReference<Purchase>;
-  }, [firestore, user?.uid, purchaseId]);
+  }, [firestore, user?.uid, purchaseId, isAdminPreview]);
 
-  const { data: purchase, isLoading: purchaseLoading } = useDoc<Purchase>(purchaseDocRef);
+  const { data: fetchedPurchase, isLoading: purchaseLoading } = useDoc<Purchase>(purchaseDocRef);
+  
+  const purchase = isAdminPreview ? mockPurchase : fetchedPurchase;
 
   const course = useMemo(() => {
     if (!purchase) return null;
