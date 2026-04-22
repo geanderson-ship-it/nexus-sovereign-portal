@@ -35,13 +35,21 @@ const textToSpeechFlow = ai.defineFlow(
     const { text, voice, locale } = input;
 
     // Configuração do Cliente Polly seguindo o protocolo AWS do Nexus
-    const pollyClient = new PollyClient({
-      region: process.env.AWS_REGION || 'us-east-1',
-      credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
-      },
-    });
+    const pollyConfig: any = {
+      region: process.env.AWS_REGION || process.env.AMPLIFY_REGION || 'us-east-1',
+    };
+
+    const accessKeyId = process.env.AWS_ACCESS_KEY_ID || process.env.AMPLIFY_ACCESS_KEY_ID;
+    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || process.env.AMPLIFY_SECRET_ACCESS_KEY;
+
+    if (accessKeyId && secretAccessKey) {
+      pollyConfig.credentials = {
+        accessKeyId,
+        secretAccessKey,
+      };
+    }
+
+    const pollyClient = new PollyClient(pollyConfig);
 
     // Mapeamento de Vozes Nexus -> AWS Polly (Neural)
     const voiceMapping: Record<string, string> = {

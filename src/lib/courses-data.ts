@@ -113,55 +113,6 @@ export const individualCourses: Course[] = [
 
 export const palestras: Course[] = [
   {
-    slug: 'nexus-intelligence-agro-design',
-    title: 'Nexus Intelligence: Onde a Precisão do Campo encontra a Magia do Design.',
-    description: 'Prepare-se para uma imersão tecnológica sem precedentes. Nesta palestra, apresentamos como o Dante (Inteligência Tática e Blindagem de ROI) e a Djeny (Ambientação Instantânea via IA) estão redefinindo as fronteiras da lucratividade. Descubra como a Nexus utiliza o "Cérebro do Agro" para proteger suas margens e a "Maga da Criação" para acelerar suas vendas em 40%. Não é apenas IA; é o ecossistema de elite que seu negócio precisa para o próximo nível.',
-    shortDescription: 'A convergência definitiva entre Inteligência Tática e Alta Fidelidade Visual. Descubra como unir a proteção de ROI do Agro com a aceleração de vendas do Design.',
-    category: 'Inovação e Estratégia',
-    internalValue: 7000,
-    image: {
-        "src": "https://i.postimg.cc/bN72sB6r/Dante-e-Djeny-palestrantes.jpg",
-        "alt": "Dante e Djeny demonstrando a sinergia entre Agro e Design no palco.",
-        "hint": "Agro Design synergy"
-      },
-    tags: ['ROI', 'Design IA', 'Agro', 'Nexus'],
-    type: 'palestra' as const,
-    subtitle: 'A união entre a Eficiência Radical e a Criação de Alta Fidelidade.',
-    targetAudience: [
-        'Empresários e Diretores.',
-        'Produtores Rurais de Elite.',
-        'Lojistas e Arquitetos.',
-        'Equipes de Vendas e Estratégia.',
-    ],
-    problem: [
-        'Baixa conversão em showrooms.',
-        'Margens de lucro desprotegidas no campo.',
-        'Lentidão operacional em processos criativos.',
-    ],
-    content: [
-        'Sinergia Tática: Dante + Djeny.',
-        'Blindagem de ROI e Telemetria no Agronegócio.',
-        'Aceleração de Vendas com IA Generativa.',
-        'O Futuro da Gestão com o Ecossistema Nexus.',
-    ],
-    benefits: [
-        'Aumento imediato na percepção de valor pelo cliente.',
-        'Proteção estratégica da rentabilidade agrícola.',
-        'Diferenciação tecnológica imbatível no mercado.',
-    ],
-    methodology: 'Exposição tática e visual, com demonstrações em tempo real do ecossistema Nexus.',
-    duration: '1h30',
-    expectedResult: 'Líderes e empresários com uma visão clara de como aplicar a IA para blindar o lucro e explodir a conversão em vendas.',
-    originalPrice: 0,
-    discountedPrice: 0,
-    lessons: 0,
-    hasAIBonus: false,
-    speakers: [
-        { name: 'Dante', image: 'https://i.postimg.cc/Qx75CsSr/Dante-virtual-2.png', alt: 'Dante' },
-        { name: 'Djeny', image: 'https://i.postimg.cc/L8qWnJwF/Djeny-virtual-2.png', alt: 'Djeny' }
-    ]
-  },
-  {
     slug: 'comunicacao-que-conecta',
     title: 'Comunicação de Alto Impacto: O Fim do "Telefone sem Fio".',
     description: 'Nesta palestra, exploramos como a comunicação assertiva é a ferramenta chave para evitar mal-entendidos, estabelecer limites saudáveis e fortalecer a colaboração. Os participantes aprendem a se posicionar com equilíbrio, defender suas ideias sem agressividade e ouvir com empatia, transformando o diálogo em uma ponte para resultados sólidos e ambientes de trabalho mais produtivos.',
