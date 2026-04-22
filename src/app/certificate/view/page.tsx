@@ -135,14 +135,13 @@ function CertificateContent() {
             </div>
             <div className="rounded-2xl border-[6px] border-primary bg-background p-8 md:p-12 shadow-2xl text-center relative overflow-hidden select-none">
                 
-                <div className="absolute inset-0 flex items-center justify-center z-0 opacity-10 pointer-events-none">
+                <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
                     <Image
-                        src="https://i.postimg.cc/Kj1cPYH3/Combine-the-first-im.png"
-                        alt="Selo Nexus Holding Group"
-                        width={700}
-                        height={700}
-                        className="object-contain"
-                        data-ai-hint="nexus shield"
+                        src="https://i.postimg.cc/h4Qm1pwR/Certificado.png"
+                        alt="Fundo do Certificado Nexus"
+                        fill
+                        className="object-cover opacity-100"
+                        data-ai-hint="nexus certificate background"
                     />
                 </div>
                 
