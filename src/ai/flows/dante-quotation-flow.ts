@@ -1,4 +1,4 @@
-﻿
+
 'use server';
 /**
  * @fileOverview Um agente de IA (Dante) para análise e recomendação de cotações de compra.
@@ -48,12 +48,6 @@ const quotationAnalysisPrompt = ai.definePrompt({
     temperature: 0.4,
     topP: 1,
     maxOutputTokens: 8192,
-    safetySettings: [
-      { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-      { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
-    ],
   },
 });
 

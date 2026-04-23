@@ -59,12 +59,6 @@ const djenyInstrutorChatPrompt = ai.definePrompt({
     temperature: 0.6,
     topP: 1,
     maxOutputTokens: 8192,
-    safetySettings: [
-      { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
-      { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
-      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
-    ],
   },
 });
 
@@ -92,8 +86,6 @@ export async function djenyInstrutorChat(input: DjenyInstrutorChatInput): Promis
     let telemetryMessage = error.message || 'Erro desconhecido.';
     if (error.message && error.message.includes('403')) {
         telemetryMessage = 'Acesso negado (403 Forbidden). Verifique as permissões da IAM Role no AWS Amplify (bedrock:InvokeModel) ou se o acesso ao Claude 3 no AWS Bedrock foi ativado no console da AWS.';
-    } else if (error.message && error.message.includes('SAFETY')) {
-        telemetryMessage = 'A resposta foi bloqueada pelos filtros de segurança. Tente uma pergunta diferente.';
     }
 
     return {
