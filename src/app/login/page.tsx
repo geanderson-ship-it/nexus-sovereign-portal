@@ -6,11 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
-import {
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from 'firebase/auth';
+import { signIn, signInWithRedirect } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
@@ -19,10 +15,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Eye, EyeOff } from 'lucide-react';
-import { useAuth, useUser, useFirestore } from '@/firebase';
+import { useUser } from '@/firebase';
 import Image from 'next/image';
 import { ADMIN_EMAILS } from '@/lib/constants';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useLocale } from '@/hooks/use-locale';
 
 const loginSchema = z.object({
@@ -33,8 +28,6 @@ const loginSchema = z.object({
 
 export default function LoginPage() {
   const { t } = useLocale();
-  const auth = useAuth();
-  const firestore = useFirestore();
   const { user, isUserLoading: loading } = useUser();
   const router = useRouter();
   const { toast } = useToast();
@@ -64,52 +57,34 @@ export default function LoginPage() {
     setIsSubmitting(false);
   };
 
-  const handleGoogleSignIn = () => {
-    if (!auth || !firestore) return;
-    setIsSubmitting(true);
-    
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(async (result) => {
-        const userDocRef = doc(firestore, 'users', result.user.uid);
-        const userDoc = await getDoc(userDocRef);
-
-        if (!userDoc.exists()) {
-          const { displayName, email } = result.user;
-          const [firstName, ...lastNameParts] = displayName?.split(' ') || ['', ''];
-          const lastName = lastNameParts.join(' ');
-          
-          await setDoc(userDocRef, {
-              id: result.user.uid,
-              firstName: firstName || '',
-              lastName: lastName || '',
-              email: email,
-              registrationDate: new Date().toISOString(),
-          });
-        }
-        handleSuccessfulLogin();
-      })
-      .catch((error: any) => {
-        toast({
-          variant: 'destructive',
-          title: t('common.error' as any) || 'Erro',
-          description: error.message,
-        });
-        setIsSubmitting(false);
-      });
-  };
-
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    if (!auth) return;
+  const handleGoogleSignIn = async () => {
     setIsSubmitting(true);
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-      handleSuccessfulLogin();
+      await signInWithRedirect({ provider: 'Google' });
     } catch (error: any) {
       toast({
         variant: 'destructive',
         title: t('common.error' as any) || 'Erro',
-        description: error.message,
+        description: error.message || 'Falha ao conectar com o Google.',
+      });
+      setIsSubmitting(false);
+    }
+  };
+
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    setIsSubmitting(true);
+    try {
+      await signIn({ username: values.email, password: values.password });
+      handleSuccessfulLogin();
+    } catch (error: any) {
+      let errorMessage = error.message;
+      if (error.name === 'UserNotFoundException' || error.name === 'NotAuthorizedException') {
+         errorMessage = 'E-mail ou senha incorretos.';
+      }
+      toast({
+        variant: 'destructive',
+        title: t('common.error' as any) || 'Erro',
+        description: errorMessage,
       });
       setIsSubmitting(false);
     }

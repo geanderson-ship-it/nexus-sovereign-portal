@@ -13,15 +13,12 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import {
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  updateProfile,
-} from 'firebase/auth';
+import { signUp, confirmSignUp, signInWithRedirect, autoSignIn } from 'aws-amplify/auth';
+import { generateClient } from 'aws-amplify/data';
 import { Eye, EyeOff } from 'lucide-react';
-import { useAuth, useUser, useFirestore } from '@/firebase';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { useUser } from '@/firebase';
+
+const client = generateClient();
 
 const signupSchema = z.object({
   firstName: z.string().min(1, { message: 'O nome é obrigatório.' }),
@@ -39,13 +36,16 @@ const signupSchema = z.object({
 });
 
 export default function SignupPage() {
-    const auth = useAuth();
-    const firestore = useFirestore();
     const { user, isUserLoading: loading } = useUser();
     const router = useRouter();
     const { toast } = useToast();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    
+    const [verificationStep, setVerificationStep] = useState(false);
+    const [verificationCode, setVerificationCode] = useState('');
+    const [tempEmail, setTempEmail] = useState('');
+    const [tempFormData, setTempFormData] = useState<any>(null);
 
     const form = useForm<z.infer<typeof signupSchema>>({
         resolver: zodResolver(signupSchema),
@@ -74,108 +74,122 @@ export default function SignupPage() {
         setIsSubmitting(false);
     };
 
-    const handleGoogleSignIn = () => {
-        if (!auth || !firestore) return;
+    const handleGoogleSignIn = async () => {
         setIsSubmitting(true);
-        const provider = new GoogleAuthProvider();
-
-        signInWithPopup(auth, provider)
-            .then(async (result) => {
-                const userDocRef = doc(firestore, 'users', result.user.uid);
-                const userDoc = await getDoc(userDocRef);
-                if (!userDoc.exists()) {
-                    const { displayName, email } = result.user;
-                    const [firstName, ...lastNameParts] = displayName?.split(' ') || ['', ''];
-                    const lastName = lastNameParts.join(' ');
-                    
-                    await setDoc(userDocRef, {
-                        id: result.user.uid,
-                        firstName: firstName || '',
-                        lastName: lastName || '',
-                        email: email,
-                        registrationDate: new Date().toISOString(),
-                    });
-                }
-                handleSuccessfulLogin();
-            })
-            .catch((error: any) => {
-                let description = 'Ocorreu um erro desconhecido.';
-                switch (error.code) {
-                    case 'auth/operation-not-allowed':
-                        description = 'O login com Google não está ativado. Por favor, ative no Firebase Console.';
-                        break;
-                    case 'auth/popup-blocked':
-                        description = 'A janela de login foi bloqueada pelo navegador. Por favor, desative o bloqueador de pop-ups e tente novamente.';
-                        break;
-                    case 'auth/popup-closed-by-user':
-                        description = 'A janela de login foi fechada antes da conclusão.';
-                        break;
-                    default:
-                        description = `Não foi possível fazer login com o Google. Telemetria: ${error.code}`;
-                        break;
-                }
-                toast({
-                    variant: 'destructive',
-                    title: 'Alerta de Rota.',
-                    description: description,
-                });
-                setIsSubmitting(false);
+        try {
+            await signInWithRedirect({ provider: 'Google' });
+        } catch (error: any) {
+            toast({
+                variant: 'destructive',
+                title: 'Alerta de Rota.',
+                description: error.message || 'Falha ao conectar com o Google.',
             });
+            setIsSubmitting(false);
+        }
     };
     
     const onSubmit = async (values: z.infer<typeof signupSchema>) => {
-        if (!auth || !firestore) return;
-        
         setIsSubmitting(true);
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
-            
-            const displayName = `${values.firstName} ${values.lastName}`;
-            await updateProfile(userCredential.user, { displayName });
-
-            const user = userCredential.user;
-            const userDocRef = doc(firestore, 'users', user.uid);
-
-            const [day, month, year] = values.birthDate.split('/').map(Number);
-            const dateObject = new Date(year, month - 1, day);
-            const birthDateForFirestore = dateObject.toISOString().split('T')[0];
-
-            await setDoc(userDocRef, {
-                id: user.uid,
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: user.email,
-                cpf: values.cpf,
-                birthDate: birthDateForFirestore,
-                registrationDate: new Date().toISOString(),
+            const { isSignUpComplete, nextStep } = await signUp({
+                username: values.email,
+                password: values.password,
+                options: {
+                    userAttributes: {
+                        email: values.email,
+                    },
+                    autoSignIn: true,
+                }
             });
-
-            handleSuccessfulLogin();
+            
+            if (nextStep.signUpStep === 'CONFIRM_SIGN_UP') {
+                setTempEmail(values.email);
+                setTempFormData(values);
+                setVerificationStep(true);
+                toast({
+                    title: 'Verifique seu e-mail',
+                    description: 'Enviamos um código de confirmação para o seu e-mail.',
+                });
+            } else if (isSignUpComplete) {
+                await createProfileAndComplete(values.email, values);
+            }
         } catch (error: any) {
-            let errorMessage;
-            switch (error.code) {
-                case 'auth/email-already-in-use':
-                    errorMessage = 'Este e-mail já está em uso. Se este e-mail for seu, por favor, faça login.';
-                    break;
-                case 'auth/invalid-email':
-                    errorMessage = 'O formato do e-mail é inválido.';
-                    break;
-                case 'auth/weak-password':
-                    errorMessage = 'A senha é muito fraca. Por favor, siga os requisitos de senha.';
-                    break;
-                default:
-                    errorMessage = `Falha de protocolo no registro. Tente novamente. Telemetria: ${error.code}`;
-                    break;
+            let errorMessage = error.message;
+            if (error.name === 'UsernameExistsException') {
+                errorMessage = 'Este e-mail já está em uso. Por favor, faça login.';
+            } else if (error.name === 'InvalidPasswordException') {
+                errorMessage = 'A senha não atende aos requisitos de segurança.';
             }
             toast({
                 variant: 'destructive',
                 title: 'Alerta de Rota.',
                 description: errorMessage,
             });
+        } finally {
             setIsSubmitting(false);
         }
     };
     
+    const createProfileAndComplete = async (email: string, values: any) => {
+        try {
+            const [day, month, year] = values.birthDate.split('/').map(Number);
+            const dateObject = new Date(year, month - 1, day);
+            const birthDateForFirestore = dateObject.toISOString().split('T')[0];
+
+            // Criar registro no DynamoDB (AppSync)
+            // Pegamos o UUID gerado pelo Cognito na sessão autoSignIn ou deixamos o id ser preenchido dps.
+            // O ideal é passar o sub do usuário. Mas 'signIn' ou 'autoSignIn' precisa rodar primeiro.
+            await autoSignIn();
+            
+            // O ID é necessário pro schema AppSync UserProfile. Vamos tentar pegar o currentUser.
+            const { getCurrentUser } = await import('aws-amplify/auth');
+            const currentUser = await getCurrentUser();
+
+            await client.models.UserProfile.create({
+                id: currentUser.userId,
+                email: email,
+                displayName: `${values.firstName} ${values.lastName}`,
+                preferences: JSON.stringify({
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    cpf: values.cpf,
+                    birthDate: birthDateForFirestore,
+                    registrationDate: new Date().toISOString(),
+                }) as any
+            });
+
+            handleSuccessfulLogin();
+        } catch (error: any) {
+             toast({
+                variant: 'destructive',
+                title: 'Alerta de Rota.',
+                description: 'Conta criada, mas houve um erro ao configurar o perfil. Entre novamente.',
+            });
+            router.push('/login');
+        }
+    };
+
+    const onVerify = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        try {
+            const { isSignUpComplete } = await confirmSignUp({
+                username: tempEmail,
+                confirmationCode: verificationCode
+            });
+            
+            if (isSignUpComplete) {
+                await createProfileAndComplete(tempEmail, tempFormData);
+            }
+        } catch (error: any) {
+            toast({
+                variant: 'destructive',
+                title: 'Erro de Validação',
+                description: error.message || 'Código incorreto ou expirado.',
+            });
+            setIsSubmitting(false);
+        }
+    };
     if (loading || user) {
         return <div className="flex min-h-[calc(100vh-theme(spacing.14))] items-center justify-center">Carregando...</div>;
     }
@@ -187,12 +201,30 @@ export default function SignupPage() {
           <div className="mb-4 flex justify-center">
             <Logo width={200} height={67} />
           </div>
-          <CardTitle className="text-2xl">Crie sua conta.</CardTitle>
+          <CardTitle className="text-2xl">{verificationStep ? 'Confirme seu e-mail.' : 'Crie sua conta.'}</CardTitle>
           <CardDescription>
-            Comece a aprender com os melhores. É rápido e fácil.
+            {verificationStep ? 'Digite o código de 6 dígitos que enviamos.' : 'Comece a aprender com os melhores. É rápido e fácil.'}
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {verificationStep ? (
+              <form onSubmit={onVerify} className="space-y-4">
+                  <div className="space-y-2">
+                      <FormLabel>Código de Verificação</FormLabel>
+                      <Input 
+                          placeholder="000000" 
+                          value={verificationCode}
+                          onChange={(e) => setVerificationCode(e.target.value)}
+                          maxLength={6}
+                          required
+                      />
+                  </div>
+                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                      {isSubmitting ? 'Verificando...' : 'Confirmar e Entrar'}
+                  </Button>
+              </form>
+          ) : (
+          <>
           <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -341,6 +373,8 @@ export default function SignupPage() {
               Entrar
             </Link>
           </div>
+          </>
+          )}
         </CardContent>
       </Card>
     </div>
