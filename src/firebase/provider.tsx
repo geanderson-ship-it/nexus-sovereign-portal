@@ -33,17 +33,26 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     userError: null,
   });
 
-  const checkUser = useCallback(async () => {
-    try {
-      const user = await getCurrentUser();
-      const attributes = await fetchUserAttributes();
-      setAuthState({
-        user: { ...user, ...attributes, displayName: attributes.name || user.username },
-        isUserLoading: false,
-        userError: null
-      });
-    } catch (e) {
-      setAuthState({ user: null, isUserLoading: false, userError: null });
+  const checkUser = useCallback(async (retries = 4, delayMs = 300) => {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        const user = await getCurrentUser();
+        const attributes = await fetchUserAttributes();
+        setAuthState({
+          user: { ...user, ...attributes, displayName: attributes.name || user.username },
+          isUserLoading: false,
+          userError: null
+        });
+        return; // Sucesso — para aqui
+      } catch (e) {
+        if (attempt < retries) {
+          // Aguarda antes de tentar novamente (backoff progressivo)
+          await new Promise(resolve => setTimeout(resolve, delayMs * (attempt + 1)));
+        } else {
+          // Todas as tentativas esgotadas — sem usuário logado
+          setAuthState({ user: null, isUserLoading: false, userError: null });
+        }
+      }
     }
   }, []);
 
