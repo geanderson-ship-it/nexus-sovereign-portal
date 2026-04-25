@@ -51,10 +51,11 @@ export default function LoginPage() {
 
   const handleSuccessfulLogin = () => {
     toast({
-        title: t('contact.toast.title'),
+        title: t('login.toast.success.title'),
         description: t('login.toast.success.description'),
     });
     setIsSubmitting(false);
+    window.location.href = '/profile';
   };
 
   const handleGoogleSignIn = async () => {
@@ -79,7 +80,7 @@ export default function LoginPage() {
     } catch (error: any) {
       let errorMessage = error.message;
       if (error.name === 'UserNotFoundException' || error.name === 'NotAuthorizedException') {
-         errorMessage = 'E-mail ou senha incorretos.';
+         errorMessage = t('login.toast.error.invalidCredentials');
       }
       toast({
         variant: 'destructive',
@@ -111,9 +112,9 @@ export default function LoginPage() {
           <div className="mb-4 flex justify-center">
             <Logo width={200} height={67} />
           </div>
-          <CardTitle className="text-2xl">{t('login.title' as any) || 'A conexão começa aqui.'}</CardTitle>
+          <CardTitle className="text-2xl">{t('login.title')}</CardTitle>
           <CardDescription>
-            {t('login.description' as any) || 'Entre no seu centro de comando.'}
+            {t('login.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -124,9 +125,9 @@ export default function LoginPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('contact.form.email')}</FormLabel>
+                    <FormLabel>{t('login.emailLabel')}</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="seu@email.com" {...field} />
+                      <Input type="email" placeholder={t('login.emailPlaceholder')} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -138,9 +139,9 @@ export default function LoginPage() {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center justify-between">
-                      <FormLabel>{t('login.password' as any) || 'Senha.'}</FormLabel>
+                      <FormLabel>{t('login.passwordLabel')}</FormLabel>
                       <Link href="/forgot-password" className="text-sm text-primary hover:underline">
-                        {t('login.forgotPassword' as any) || 'Esqueceu a senha?'}
+                        {t('login.forgotPassword')}
                       </Link>
                     </div>
                     <div className="relative">
@@ -160,7 +161,7 @@ export default function LoginPage() {
                 )}
               />
               <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? (t('common.loading' as any) || 'Conectando...') : (t('login.cta' as any) || 'Estabelecer Conexão')}
+                {isSubmitting ? t('login.submitting') : t('login.submit')}
               </Button>
             </form>
           </Form>
@@ -170,17 +171,17 @@ export default function LoginPage() {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  {t('login.orConnectWith' as any) || 'Ou conecte-se com.'}
+                  {t('login.orWith')}
                 </span>
               </div>
             </div>
            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isSubmitting}>
-              {isSubmitting ? (t('common.loading' as any) || 'Aguarde...') : (t('login.googleCta' as any) || 'Conectar com Google')}
+              {isSubmitting ? t('login.googleWait') : t('login.googleSubmit')}
            </Button>
           <div className="mt-4 text-center text-sm">
-            {t('login.noAccount' as any) || 'Não tem um acesso?'} {' '}
+            {t('login.noAccount')} {' '}
             <Link href="/signup" className="text-primary hover:underline">
-              {t('login.signupCta' as any) || 'Criar um Ponto de Acesso'}
+              {t('login.createAccountLink')}
             </Link>
           </div>
         </CardContent>
