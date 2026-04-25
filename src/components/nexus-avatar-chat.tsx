@@ -39,7 +39,7 @@ import placeholderImages from '@/lib/placeholder-images.json';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query } from 'firebase/firestore';
 import { allCourses } from '@/lib/courses-data';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import * as gtag from '@/lib/gtag';
@@ -224,7 +224,7 @@ export function NexusAvatarChat() {
   }, [isOpen, user?.uid, firestore]);
 
   const { data: purchases, isLoading: purchasesLoading } = useCollection<{id: string, courseId: string}>(purchasesQuery);
-  const isAdmin = useMemo(() => user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false, [user?.email]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
   const hasAccessToMentoria = useMemo(() => (purchases?.length ?? 0) > 0 || isAdmin, [purchases, isAdmin]);
 
   // --- Core Actions ---

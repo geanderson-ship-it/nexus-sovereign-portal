@@ -20,7 +20,7 @@ import { signOut } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useUser, useAuth } from '@/firebase';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 import { useLocale } from '@/hooks/use-locale';
 
 function TextLogo({ slogan }: { slogan: string }) {
@@ -77,7 +77,7 @@ export function SiteHeader() {
     return initials.slice(0, 2).toUpperCase();
   }, [user?.displayName]);
 
-  const isAdmin = useMemo(() => user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false, [user?.email]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
   const mainNav = useMemo(() => [
     { title: t('navInicio'), href: '/' },

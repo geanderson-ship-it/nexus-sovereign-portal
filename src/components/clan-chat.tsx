@@ -32,7 +32,7 @@ import { collection, query } from 'firebase/firestore';
 import Link from 'next/link';
 import { allCourses } from '@/lib/courses-data';
 import Image from 'next/image';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 
 type Sender = 'user' | 'system';
@@ -94,7 +94,7 @@ export function ClanChat() {
     [purchases]
   );
   
-  const isAdmin = useMemo(() => user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false, [user]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
   const hasAccessToMentoria = useMemo(() => purchasedSlugs.length > 0 || isAdmin, [purchasedSlugs, isAdmin]);
   
   const slugsForAI = useMemo(() => {

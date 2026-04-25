@@ -3,29 +3,24 @@
 
 import React, { useMemo } from 'react';
 import { useUser, useAuth } from '@/firebase';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 import { Loader2, ShieldAlert } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import Link from 'next/link';
-import { signOut } from 'firebase/auth';
+import { signOut } from 'aws-amplify/auth';
 import { useLocale } from '@/hooks/use-locale';
 
 const LoadingScreen = ({ message }: { message: string }) => {
-    const auth = useAuth();
     const { t } = useLocale();
 
     const handleReset = async () => {
         console.log("Iniciando protocolo de reset forçado...");
-        if (auth) {
-            try {
-                await signOut(auth);
-                console.log("Sessão do Firebase encerrada com sucesso.");
-            } catch (e) {
-                console.error("Falha ao executar signOut durante o reset. Prosseguindo com a limpeza forçada:", e);
-            }
-        } else {
-            console.warn("Instância de autenticação do Firebase não disponível. Executando apenas limpeza de armazenamento.");
+        try {
+            await signOut();
+            console.log("Sessão da AWS encerrada com sucesso.");
+        } catch (e) {
+            console.error("Falha ao executar signOut durante o reset. Prosseguindo com a limpeza forçada:", e);
         }
 
         try {
@@ -94,7 +89,7 @@ interface AuthGateProps {
 export default function AuthGate({ children, adminOnly = false }: AuthGateProps) {
   const { user, isUserLoading } = useUser();
   const { t } = useLocale();
-  const isAdmin = useMemo(() => user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false, [user]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
   if (isUserLoading) {
     return <LoadingScreen message={t('authGate.loading')} />;

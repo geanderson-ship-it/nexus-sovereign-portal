@@ -13,7 +13,7 @@ import { allCourses, Course } from '@/lib/courses-data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Award, Users, Zap } from 'lucide-react';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { useLocale } from '@/hooks/use-locale';
@@ -65,7 +65,7 @@ export default function ProfilePage() {
     return courses;
   }, [purchases]);
   
-  const isAdmin = useMemo(() => user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false, [user]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
   const hasAccessToMentoria = useMemo(() => purchasedCourses.length > 0 || isAdmin, [purchasedCourses, isAdmin]);
 
 

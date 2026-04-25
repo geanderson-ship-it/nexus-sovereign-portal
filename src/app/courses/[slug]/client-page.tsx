@@ -19,7 +19,7 @@ import RelacionamentoIntermediarioContent from '@/components/course-content/rela
 import PreparandoEquipesIntermediarioContent from '@/components/course-content/preparando-equipes-intermediario';
 import LiderancaAvancadoContent from '@/components/course-content/lideranca-avancado';
 import PalestraDetail from '@/components/course-content/palestra-detail';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import placeholderImages from '@/lib/placeholder-images.json';
 import dynamic from 'next/dynamic';
@@ -105,7 +105,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
 
   const { data: purchases, isLoading: purchasesLoading } = useCollection<Purchase>(purchasesQuery);
 
-  const isAdmin = useMemo(() => (user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false), [user?.email]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
   const isPurchased = useMemo(() => (purchases ? purchases.length > 0 : false) || isAdmin, [purchases, isAdmin]);
   const purchaseId = useMemo(() => (isPurchased && purchases && purchases.length > 0 ? purchases[0].id : (isAdmin ? `admin-access-${course?.slug}` : null)), [isPurchased, purchases, isAdmin, course?.slug]);
   

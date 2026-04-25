@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 
 interface Purchase {
   id: string;
@@ -79,7 +79,7 @@ function CertificateContent() {
   const searchParams = useSearchParams();
   const purchaseId = searchParams?.get('id') as string | undefined;
 
-  const isAdmin = useMemo(() => (user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false), [user?.email]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
   const isAdminPreview = isAdmin && purchaseId?.startsWith('admin-access-');
   const courseSlugFromAdmin = isAdminPreview ? purchaseId!.replace('admin-access-', '') : null;
 

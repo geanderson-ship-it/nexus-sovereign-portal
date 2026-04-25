@@ -9,7 +9,7 @@ import { Loader2, ShieldAlert, Lock, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError } from '@/firebase/errors';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 import { useLocale } from '@/hooks/use-locale';
 import * as gtag from '@/lib/gtag';
 
@@ -74,7 +74,7 @@ export function TrialGate({ children, moduleId, moduleName, purchaseHref }: Tria
   }, [user]);
 
 
-  const isAdmin = useMemo(() => user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false, [user]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
   const trialDocRef = useMemoFirebase(() => {
     // Apenas crie a referência se o usuário não for um administrador, para evitar leituras desnecessárias no BD

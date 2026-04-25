@@ -16,7 +16,7 @@ import { Separator } from '@/components/ui/separator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import Image from 'next/image';
 import { getCourseBySlug } from '@/lib/courses-data';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 
 interface MeritIndex {
     id: string;
@@ -94,7 +94,7 @@ function MeritCertificateContent() {
 
     const { data: evaluation, isLoading: evaluationLoading } = useDoc<MeritIndex>(meritDocRef);
 
-    const isAdmin = useMemo(() => user?.email ? ADMIN_EMAILS.includes(user.email.toLowerCase()) : false, [user?.email]);
+    const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
     const recommendedCourse = useMemo(() => {
         if (!evaluation?.recommendedCourseSlug) return null;

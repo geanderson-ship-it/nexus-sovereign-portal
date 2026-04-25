@@ -24,7 +24,7 @@ import Image from 'next/image';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query } from 'firebase/firestore';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 
 
 type Sender = 'user' | 'system';
@@ -103,7 +103,7 @@ export function CareerAdvisorChat() {
 
   const { data: purchases, isLoading: purchasesLoading } = useCollection<Purchase>(purchasesQuery);
 
-  const hasAccessToMentoria = useMemo(() => (purchases ? purchases.length > 0 : false) || (user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false), [purchases, user]);
+  const hasAccessToMentoria = useMemo(() => (purchases ? purchases.length > 0 : false) || isAdminUser(user), [purchases, user]);
 
 
   // Audio and Speech Recognition State

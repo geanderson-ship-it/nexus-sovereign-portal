@@ -16,7 +16,7 @@ import { lectureScripts, LectureScriptItem } from '@/lib/lecture-scripts';
 import { useUser, useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { collection, query, where } from 'firebase/firestore';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 import { palestras as allPalestras } from '@/lib/courses-data';
 import { useLocale } from '@/hooks/use-locale';
 
@@ -40,7 +40,7 @@ export default function ClientPage({ params: routeParams }: { params: { slug: st
 
     const { data: purchases, isLoading: purchasesLoading } = useCollection<any>(purchasesQuery);
     
-    const isAdmin = user?.email ? ADMIN_EMAILS.includes(user.email) : false;
+    const isAdmin = isAdminUser(user);
     const isPurchased = (purchases ? purchases.length > 0 : false) || isAdmin;
 
     const { playAudio, stopAudio, isPlaying, isLoadingAudio, playingId } = useNexusAudio();

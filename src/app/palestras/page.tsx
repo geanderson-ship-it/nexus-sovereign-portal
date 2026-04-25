@@ -21,7 +21,7 @@ import { useUser, useFirestore, useMemoFirebase, useCollection } from '@/firebas
 import { collection, query } from 'firebase/firestore';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Lock, Sparkles } from 'lucide-react';
-import { ADMIN_EMAILS } from '@/lib/constants';
+import { isAdminUser } from '@/lib/constants';
 
 const WHATSAPP_NUMBER = '5551999799582';
 
@@ -37,7 +37,7 @@ export default function PalestrasPage() {
 
   const { data: purchases, isLoading: purchasesLoading } = useCollection<any>(purchasesQuery);
 
-  const isAdmin = useMemo(() => (user?.email ? ADMIN_EMAILS.includes(user.email.trim().toLowerCase()) : false), [user?.email]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
   const getIsPurchased = (slug: string) => {
     if (isAdmin) return true;
