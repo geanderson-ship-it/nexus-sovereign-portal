@@ -210,7 +210,7 @@ export default function SignupPage() {
           {verificationStep ? (
               <form onSubmit={onVerify} className="space-y-4">
                   <div className="space-y-2">
-                      <FormLabel>Código de Verificação</FormLabel>
+                      <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Código de Verificação</label>
                       <Input 
                           placeholder="000000" 
                           value={verificationCode}
