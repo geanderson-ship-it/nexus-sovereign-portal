@@ -1,8 +1,8 @@
 'use client';
 
-import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect } from 'react';
-import { Amplify } from 'aws-amplify';
+import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect, useCallback } from 'react';
 import { getCurrentUser, fetchUserAttributes } from 'aws-amplify/auth';
+import { Hub } from 'aws-amplify/utils';
 
 // Otimização Platinum: Este provider agora serve como uma ponte para a AWS.
 // Mantemos os nomes dos hooks para não quebrar os componentes existentes durante a unificação.
@@ -33,25 +33,47 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     userError: null,
   });
 
-  useEffect(() => {
-    async function checkUser() {
-      try {
-        const user = await getCurrentUser();
-        const attributes = await fetchUserAttributes();
-        setAuthState({
-          user: { ...user, ...attributes, displayName: attributes.name || user.username },
-          isUserLoading: false,
-          userError: null
-        });
-      } catch (e) {
-        setAuthState({ user: null, isUserLoading: false, userError: null });
-      }
+  const checkUser = useCallback(async () => {
+    try {
+      const user = await getCurrentUser();
+      const attributes = await fetchUserAttributes();
+      setAuthState({
+        user: { ...user, ...attributes, displayName: attributes.name || user.username },
+        isUserLoading: false,
+        userError: null
+      });
+    } catch (e) {
+      setAuthState({ user: null, isUserLoading: false, userError: null });
     }
-    checkUser();
   }, []);
 
+  useEffect(() => {
+    // Verificação inicial do estado de autenticação
+    checkUser();
+
+    // Escuta eventos de autenticação do Amplify em tempo real
+    // Isso garante que o estado seja atualizado imediatamente após signIn/signOut
+    const hubListener = Hub.listen('auth', ({ payload }) => {
+      switch (payload.event) {
+        case 'signedIn':
+        case 'autoSignIn':
+        case 'tokenRefresh':
+          checkUser();
+          break;
+        case 'signedOut':
+          setAuthState({ user: null, isUserLoading: false, userError: null });
+          break;
+        default:
+          break;
+      }
+    });
+
+    // Limpa o listener quando o componente é desmontado
+    return () => hubListener();
+  }, [checkUser]);
+
   const contextValue = useMemo((): FirebaseContextState => ({
-    areServicesAvailable: true, // Forçamos true para evitar erros de 'services not available'
+    areServicesAvailable: true,
     firebaseApp: null,
     firestore: null,
     auth: null,

@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
 import { signIn, signInWithRedirect } from 'aws-amplify/auth';
+import { Hub } from 'aws-amplify/utils';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
@@ -17,7 +18,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Eye, EyeOff } from 'lucide-react';
 import { useUser } from '@/firebase';
 import Image from 'next/image';
-import { ADMIN_EMAILS } from '@/lib/constants';
+
 import { useLocale } from '@/hooks/use-locale';
 
 const loginSchema = z.object({
@@ -37,7 +38,7 @@ export default function LoginPage() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: ADMIN_EMAILS[0],
+      email: '',
       password: '',
     },
   });
@@ -54,8 +55,20 @@ export default function LoginPage() {
         title: t('login.toast.success.title'),
         description: t('login.toast.success.description'),
     });
+    // Espera o Hub confirmar que a sessão foi estabelecida antes de redirecionar
+    // Isso evita o loop de redirecionamento causado por tokens ainda não persistidos
+    const unsubscribe = Hub.listen('auth', ({ payload }) => {
+      if (payload.event === 'signedIn' || payload.event === 'tokenRefresh') {
+        unsubscribe();
+        window.location.href = '/profile';
+      }
+    });
+    // Fallback: redireciona após 2s mesmo que o evento não dispare
+    setTimeout(() => {
+      unsubscribe();
+      window.location.href = '/profile';
+    }, 2000);
     setIsSubmitting(false);
-    window.location.href = '/profile';
   };
 
   const handleGoogleSignIn = async () => {
