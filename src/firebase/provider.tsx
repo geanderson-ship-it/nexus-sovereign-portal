@@ -1,18 +1,17 @@
 'use client';
 
 import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect, useCallback } from 'react';
-import { getCurrentUser, fetchUserAttributes } from 'aws-amplify/auth';
+import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
 
-// Otimização Platinum: Este provider agora serve como uma ponte para a AWS.
-// Mantemos os nomes dos hooks para não quebrar os componentes existentes durante a unificação.
+// Provider de autenticação — ponte para AWS Cognito via Amplify v6.
+// Usa fetchAuthSession (método canônico) em vez de getCurrentUser para máxima confiabilidade.
 
 export interface FirebaseContextState {
   areServicesAvailable: boolean;
-  user: any | null; // Mapeado para o usuário da AWS
+  user: any | null;
   isUserLoading: boolean;
   userError: Error | null;
-  // Membros legados do Firebase como null para compatibilidade de tipo
   firebaseApp: any | null;
   firestore: any | null;
   auth: any | null;
@@ -33,51 +32,50 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     userError: null,
   });
 
-  const checkUser = useCallback(async (retries = 4, delayMs = 300) => {
-    for (let attempt = 0; attempt <= retries; attempt++) {
-      try {
-        const user = await getCurrentUser();
-        const attributes = await fetchUserAttributes();
-        setAuthState({
-          user: { ...user, ...attributes, displayName: attributes.name || user.username },
-          isUserLoading: false,
-          userError: null
-        });
-        return; // Sucesso — para aqui
-      } catch (e) {
-        if (attempt < retries) {
-          // Aguarda antes de tentar novamente (backoff progressivo)
-          await new Promise(resolve => setTimeout(resolve, delayMs * (attempt + 1)));
-        } else {
-          // Todas as tentativas esgotadas — sem usuário logado
-          setAuthState({ user: null, isUserLoading: false, userError: null });
-        }
+  const checkUser = useCallback(async () => {
+    try {
+      // fetchAuthSession é o método mais confiável do Amplify v6 —
+      // gerencia refresh de token internamente e não falha por timing pós-signIn
+      const session = await fetchAuthSession();
+
+      if (!session?.tokens?.idToken) {
+        setAuthState({ user: null, isUserLoading: false, userError: null });
+        return;
       }
+
+      const attributes = await fetchUserAttributes();
+      const email = attributes.email || '';
+      const name = attributes.name || attributes.given_name || email.split('@')[0] || 'Usuário';
+
+      setAuthState({
+        user: {
+          email,
+          displayName: name,
+          username: email,
+          uid: attributes.sub,
+          signInDetails: { loginId: email },
+          ...attributes,
+        },
+        isUserLoading: false,
+        userError: null,
+      });
+    } catch {
+      setAuthState({ user: null, isUserLoading: false, userError: null });
     }
   }, []);
 
   useEffect(() => {
-    // Verificação inicial do estado de autenticação
     checkUser();
 
-    // Escuta eventos de autenticação do Amplify em tempo real
-    // Isso garante que o estado seja atualizado imediatamente após signIn/signOut
+    // Escuta signedIn e signedOut — exclui tokenRefresh para evitar re-checks que resetam o estado
     const hubListener = Hub.listen('auth', ({ payload }) => {
-      switch (payload.event) {
-        case 'signedIn':
-        case 'autoSignIn':
-        case 'tokenRefresh':
-          checkUser();
-          break;
-        case 'signedOut':
-          setAuthState({ user: null, isUserLoading: false, userError: null });
-          break;
-        default:
-          break;
+      if (payload.event === 'signedIn' || payload.event === 'autoSignIn') {
+        checkUser();
+      } else if (payload.event === 'signedOut') {
+        setAuthState({ user: null, isUserLoading: false, userError: null });
       }
     });
 
-    // Limpa o listener quando o componente é desmontado
     return () => hubListener();
   }, [checkUser]);
 
@@ -101,8 +99,6 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 export const useFirebase = (): any => {
   const context = useContext(FirebaseContext);
   if (context === undefined) {
-    // Retornamos um estado padrão seguro em vez de lançar erro para não quebrar o build do Next.js 
-    // durante a pré-renderização de páginas estáticas.
     return {
       user: null,
       isUserLoading: false,
