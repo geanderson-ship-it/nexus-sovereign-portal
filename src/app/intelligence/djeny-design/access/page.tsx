@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import * as gtag from '@/lib/gtag';
 
 const QrCode = dynamic(() => import('@/components/ui/qr-code').then(mod => mod.QrCode), {
   ssr: false,
@@ -25,6 +26,14 @@ export default function DjenyDesignAccessPage() {
   const [isPayloadCopied, setIsPayloadCopied] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState(899);
   const { toast } = useToast();
+
+  useEffect(() => {
+    gtag.event({
+      action: 'ai_interest',
+      category: 'conversion',
+      label: 'djeny_design_page',
+    });
+  }, []);
   
   const plans = [
     { id: 'personal', amount: 149, tier: 'Personal', label: 'Mensal', description: '3 imagens por dia', icon: User, color: 'pink' },
@@ -282,7 +291,17 @@ export default function DjenyDesignAccessPage() {
                          </Button>
                       </div>
                       
-                      <Button asChild className="w-full bg-pink-600 hover:bg-pink-500 h-14 rounded-xl shadow-xl">
+                      <Button 
+                        asChild 
+                        className="w-full bg-pink-600 hover:bg-pink-500 h-14 rounded-xl shadow-xl"
+                        onClick={() => {
+                          gtag.event({
+                            action: 'contact_click',
+                            category: 'engagement',
+                            label: 'whatsapp_receipt_djeny',
+                          });
+                        }}
+                      >
                         <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                           <MessageSquare className="mr-2 h-5 w-5" />
                           Enviar Comprovante de Ativação

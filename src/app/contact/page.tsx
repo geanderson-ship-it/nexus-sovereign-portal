@@ -22,6 +22,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { palestras } from '@/lib/courses-data';
 import { useLocale } from '@/hooks/use-locale';
+import * as gtag from '@/lib/gtag';
 
 // Componente interno que lida com a lógica da URL
 function ContactContent() {
@@ -56,6 +57,13 @@ function ContactContent() {
 ${data.message}`.trim();
 
     const whatsappLink = `https://wa.me/5551999799582?text=${encodeURIComponent(whatsappBody)}`;
+
+    // Track contact click
+    gtag.event({
+      action: 'contact_click',
+      category: 'engagement',
+      label: 'whatsapp_button',
+    });
 
     window.open(whatsappLink, '_blank');
     setSent(true);

@@ -11,6 +11,7 @@ import { useLocale } from '@/hooks/use-locale';
 import { useUser } from '@/firebase';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
+import * as gtag from '@/lib/gtag';
 
 export default function IntelligencePage() {
     const { t } = useLocale();
@@ -190,7 +191,17 @@ export default function IntelligencePage() {
                                                 <Link href="/intelligence/dante-safra/trial">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
                                         ) : (
-                                            <Button asChild className="bg-transparent text-emerald-400 border-2 border-emerald-500/50 hover:bg-emerald-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(16,185,129,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md">
+                                            <Button 
+                                                asChild 
+                                                className="bg-transparent text-emerald-400 border-2 border-emerald-500/50 hover:bg-emerald-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(16,185,129,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md"
+                                                onClick={() => {
+                                                    gtag.event({
+                                                        action: 'contact_click',
+                                                        category: 'engagement',
+                                                        label: 'consultant_dante_standard',
+                                                    });
+                                                }}
+                                            >
                                                 <Link href="/contact" target="_blank" rel="noopener noreferrer">FALAR COM UM CONSULTOR</Link>
                                             </Button>
                                         )}
@@ -276,7 +287,17 @@ export default function IntelligencePage() {
                                                 <Link href="/intelligence/dante-safra/access">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
                                         ) : (
-                                            <Button asChild className="bg-transparent text-emerald-400 border-2 border-emerald-500/50 hover:bg-emerald-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(16,185,129,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md">
+                                            <Button 
+                                                asChild 
+                                                className="bg-transparent text-emerald-400 border-2 border-emerald-500/50 hover:bg-emerald-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(16,185,129,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md"
+                                                onClick={() => {
+                                                    gtag.event({
+                                                        action: 'contact_click',
+                                                        category: 'engagement',
+                                                        label: 'consultant_dante_axis',
+                                                    });
+                                                }}
+                                            >
                                                 <Link href="/contact" target="_blank" rel="noopener noreferrer">FALAR COM UM CONSULTOR</Link>
                                             </Button>
                                         )}
@@ -419,7 +440,17 @@ export default function IntelligencePage() {
                                                 <Link href="/intelligence/djeny-design/trial">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
                                         ) : (
-                                            <Button asChild className="bg-transparent text-pink-400 border-2 border-pink-500/50 hover:bg-pink-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(219,39,119,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md">
+                                            <Button 
+                                                asChild 
+                                                className="bg-transparent text-pink-400 border-2 border-pink-500/50 hover:bg-pink-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(219,39,119,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md"
+                                                onClick={() => {
+                                                    gtag.event({
+                                                        action: 'contact_click',
+                                                        category: 'engagement',
+                                                        label: 'consultant_djeny_personal',
+                                                    });
+                                                }}
+                                            >
                                                 <Link href="/contact" target="_blank" rel="noopener noreferrer">FALAR COM UM CONSULTOR</Link>
                                             </Button>
                                         )}
@@ -484,7 +515,17 @@ export default function IntelligencePage() {
                                                 <Link href="/intelligence/djeny-design/access">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
                                         ) : (
-                                            <Button asChild className="bg-transparent text-pink-400 border-2 border-pink-500/50 hover:bg-pink-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(219,39,119,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md">
+                                            <Button 
+                                                asChild 
+                                                className="bg-transparent text-pink-400 border-2 border-pink-500/50 hover:bg-pink-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(219,39,119,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md"
+                                                onClick={() => {
+                                                    gtag.event({
+                                                        action: 'contact_click',
+                                                        category: 'engagement',
+                                                        label: 'consultant_djeny_business',
+                                                    });
+                                                }}
+                                            >
                                                 <Link href="/contact" target="_blank" rel="noopener noreferrer">FALAR COM UM CONSULTOR</Link>
                                             </Button>
                                         )}
@@ -606,7 +647,17 @@ export default function IntelligencePage() {
                                                 <Link href="/intelligence/dante-builder">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
                                         ) : (
-                                            <Button asChild className="bg-transparent text-cyan-400 border-2 border-cyan-500/50 hover:bg-cyan-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(34,211,238,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md">
+                                            <Button 
+                                                asChild 
+                                                className="bg-transparent text-cyan-400 border-2 border-cyan-500/50 hover:bg-cyan-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(34,211,238,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md"
+                                                onClick={() => {
+                                                    gtag.event({
+                                                        action: 'contact_click',
+                                                        category: 'engagement',
+                                                        label: 'consultant_dante_builder',
+                                                    });
+                                                }}
+                                            >
                                                 <Link href="/contact" target="_blank" rel="noopener noreferrer">FALAR COM UM CONSULTOR</Link>
                                             </Button>
                                         )}

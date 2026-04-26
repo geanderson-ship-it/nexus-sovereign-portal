@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import * as gtag from '@/lib/gtag';
 
 const QrCode = dynamic(() => import('@/components/ui/qr-code').then(mod => mod.QrCode), {
   ssr: false,
@@ -25,6 +26,14 @@ export default function DanteSafraAccessPage() {
   const [isPayloadCopied, setIsPayloadCopied] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState(1500);
   const { toast } = useToast();
+
+  useEffect(() => {
+    gtag.event({
+      action: 'ai_interest',
+      category: 'conversion',
+      label: 'dante_safra_page',
+    });
+  }, []);
   
   const plans = [
     { id: 'standard_monthly', amount: 99, tier: 'Standard', label: 'Mensal', description: 'Manutenção e Suporte' },
@@ -297,7 +306,17 @@ export default function DanteSafraAccessPage() {
                   </Button>
                 </div>
                 
-                <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-500 h-14 rounded-xl shadow-xl">
+                <Button 
+                  asChild 
+                  className="w-full bg-emerald-600 hover:bg-emerald-500 h-14 rounded-xl shadow-xl"
+                  onClick={() => {
+                    gtag.event({
+                      action: 'contact_click',
+                      category: 'engagement',
+                      label: 'whatsapp_receipt_dante',
+                    });
+                  }}
+                >
                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                     <MessageSquare className="mr-2 h-5 w-5" />
                     Enviar Comprovante de Ativação

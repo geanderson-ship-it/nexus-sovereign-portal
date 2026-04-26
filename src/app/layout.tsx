@@ -78,7 +78,7 @@ export default function RootLayout({
       style={{ colorScheme: 'dark' }}
     >
       <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-CS0X8XB173"
+        src="https://www.googletagmanager.com/gtag/js?id=G-WGDRHPK766"
         strategy="afterInteractive"
       />
       <Script id="google-analytics" strategy="afterInteractive">
@@ -87,7 +87,7 @@ export default function RootLayout({
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', 'G-CS0X8XB173');
+          gtag('config', 'G-WGDRHPK766');
         `}
       </Script>
       <Script id="json-ld" type="application/ld+json" strategy="afterInteractive">
