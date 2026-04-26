@@ -1,7 +1,7 @@
 'use client';
 
 import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect, useCallback } from 'react';
-import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
+import { fetchAuthSession, fetchUserAttributes, getCurrentUser } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
 
 // Provider de autenticação — ponte para AWS Cognito via Amplify v6.
@@ -34,8 +34,10 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const checkUser = useCallback(async () => {
     try {
-      // fetchAuthSession é o método mais confiável do Amplify v6 —
-      // gerencia refresh de token internamente e não falha por timing pós-signIn
+      // getCurrentUser é mais rápido para verificar se há uma sessão ativa
+      const { userId } = await getCurrentUser();
+      
+      // fetchAuthSession gerencia refresh de token internamente
       const session = await fetchAuthSession();
 
       if (!session?.tokens?.idToken) {
@@ -52,14 +54,15 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
           email,
           displayName: name,
           username: email,
-          uid: attributes.sub,
+          uid: userId || attributes.sub,
           signInDetails: { loginId: email },
           ...attributes,
         },
         isUserLoading: false,
         userError: null,
       });
-    } catch {
+    } catch (error) {
+      // Se falhar, limpamos o estado para não ficarmos em loop de carregamento
       setAuthState({ user: null, isUserLoading: false, userError: null });
     }
   }, []);
@@ -69,7 +72,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
     // Escuta signedIn e signedOut — exclui tokenRefresh para evitar re-checks que resetam o estado
     const hubListener = Hub.listen('auth', ({ payload }) => {
-      if (payload.event === 'signedIn' || payload.event === 'autoSignIn') {
+      if (payload.event === 'signedIn' || payload.event === 'autoSignIn' || payload.event === 'tokenRefresh') {
         checkUser();
       } else if (payload.event === 'signedOut') {
         setAuthState({ user: null, isUserLoading: false, userError: null });

@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { signOut } from 'firebase/auth';
+import { signOut } from 'aws-amplify/auth';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useUser, useAuth } from '@/firebase';
@@ -51,9 +51,8 @@ export function SiteHeader() {
   }, []);
 
   const handleLogout = async () => {
-    if (!auth) return;
     try {
-      await signOut(auth);
+      await signOut();
       toast({
         title: t('common.advanceOrder') || 'Ordem de Avanço.',
         description: t('common.logoutSuccess') || 'Missão cumprida. Desconectado com sucesso.',

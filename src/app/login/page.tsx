@@ -55,19 +55,9 @@ export default function LoginPage() {
         title: t('login.toast.success.title'),
         description: t('login.toast.success.description'),
     });
-    // Espera o Hub confirmar que a sessão foi estabelecida antes de redirecionar
-    // Isso evita o loop de redirecionamento causado por tokens ainda não persistidos
-    const unsubscribe = Hub.listen('auth', ({ payload }) => {
-      if (payload.event === 'signedIn' || payload.event === 'tokenRefresh') {
-        unsubscribe();
-        window.location.href = '/profile';
-      }
-    });
-    // Fallback: redireciona após 2s mesmo que o evento não dispare
-    setTimeout(() => {
-      unsubscribe();
-      window.location.href = '/profile';
-    }, 2000);
+    // Redireciona via Next.js router para manter o estado da aplicação
+    // O FirebaseProvider (Amplify bridge) detectará a mudança de estado via Hub e checkUser
+    router.push('/profile');
     setIsSubmitting(false);
   };
 
