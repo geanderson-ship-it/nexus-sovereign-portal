@@ -13,6 +13,8 @@ import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
+import { useUser } from '@/firebase';
+import { isAdminUser } from '@/lib/constants';
 import * as gtag from '@/lib/gtag';
 
 const QrCode = dynamic(() => import('@/components/ui/qr-code').then(mod => mod.QrCode), {
@@ -25,6 +27,8 @@ export default function DanteSafraAccessPage() {
   const [showQrModal, setShowQrModal] = useState(false);
   const [isPayloadCopied, setIsPayloadCopied] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState(1500);
+  const { user } = useUser();
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -104,7 +108,28 @@ export default function DanteSafraAccessPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-16">
+        {isAdmin && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="mb-12"
+          >
+            <Card className="bg-emerald-500/10 border-emerald-500/40 backdrop-blur-3xl rounded-[32px] p-10 text-center border-dashed border-2 shadow-[0_0_50px_rgba(16,185,129,0.2)]">
+              <div className="bg-emerald-500/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <ShieldCheck className="h-10 w-10 text-emerald-400" />
+              </div>
+              <h3 className="text-3xl font-black italic text-white uppercase tracking-tighter mb-4">Acesso de Comando Ativo</h3>
+              <p className="text-emerald-400 font-bold uppercase tracking-[0.3em] text-xs mb-8 opacity-80">Identificamos sua credencial de administrador Nexus</p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <Button asChild className="bg-emerald-600 text-white hover:bg-emerald-500 h-16 px-10 rounded-2xl font-black uppercase tracking-widest text-sm shadow-xl">
+                  <Link href="/intelligence/dante-safra/trial">Entrar no Terminal Trial</Link>
+                </Button>
+              </div>
+            </Card>
+          </motion.div>
+        )}
+
+        <div className={cn("grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-16", isAdmin && "opacity-40 grayscale pointer-events-none")}>
           {/* STANDARD TIER - ESSENTIAL ACCESS */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

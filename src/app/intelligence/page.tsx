@@ -11,6 +11,7 @@ import { useLocale } from '@/hooks/use-locale';
 import { useUser } from '@/firebase';
 import { Badge } from '@/components/ui/badge';
 import { motion, AnimatePresence } from 'framer-motion';
+import { isAdminUser } from '@/lib/constants';
 import * as gtag from '@/lib/gtag';
 
 export default function IntelligencePage() {
@@ -99,9 +100,8 @@ export default function IntelligencePage() {
                             {t('intelligence.subtitle')}
                         </h2>
                         
-                        {/* ADM ACCESS: GABINETE DE COMANDO */}
                         <AnimatePresence>
-                            {(user?.email === 'geanderson@nexustreinamento.com' || user?.email === 'geandersonleo@gmail.com') && (
+                            {isAdminUser(user) && (
                                 <motion.div 
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     animate={{ opacity: 1, scale: 1 }}
@@ -186,7 +186,7 @@ export default function IntelligencePage() {
                                     </div>
 
                                     <div className="flex justify-center w-full mt-8">
-                                        {user?.email === 'geanderson@nexustreinamento.com' ? (
+                                        {isAdminUser(user) ? (
                                             <Button asChild className="bg-emerald-600 text-white hover:bg-emerald-500 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg lg:text-xl shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all hover:scale-105 active:scale-95 w-full max-w-md border border-emerald-400/30">
                                                 <Link href="/intelligence/dante-safra/trial">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
@@ -282,7 +282,7 @@ export default function IntelligencePage() {
                                     </div>
 
                                     <div className="flex justify-center w-full mt-10">
-                                        {user?.email === 'geanderson@nexustreinamento.com' ? (
+                                        {isAdminUser(user) ? (
                                             <Button asChild className="bg-emerald-700 text-white hover:bg-emerald-600 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg lg:text-xl shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all hover:scale-105 active:scale-95 w-full max-w-md border border-emerald-400/30">
                                                 <Link href="/intelligence/dante-safra/access">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
@@ -435,7 +435,7 @@ export default function IntelligencePage() {
                                     </div>
 
                                     <div className="flex justify-center w-full mt-8">
-                                        {user?.email === 'geanderson@nexustreinamento.com' ? (
+                                        {isAdminUser(user) ? (
                                             <Button asChild className="bg-pink-600 text-white hover:bg-pink-500 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg lg:text-xl shadow-[0_0_40px_rgba(219,39,119,0.3)] transition-all hover:scale-105 active:scale-95 w-full max-w-md border border-pink-400/30">
                                                 <Link href="/intelligence/djeny-design/trial">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
@@ -510,7 +510,7 @@ export default function IntelligencePage() {
                                     </p>
 
                                     <div className="flex justify-center w-full mt-10">
-                                        {user?.email === 'geanderson@nexustreinamento.com' ? (
+                                        {isAdminUser(user) ? (
                                             <Button asChild className="bg-pink-700 text-white hover:bg-pink-600 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg lg:text-xl shadow-[0_0_40px_rgba(219,39,119,0.3)] transition-all hover:scale-105 active:scale-95 w-full max-w-md border border-pink-400/30">
                                                 <Link href="/intelligence/djeny-design/access">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>
@@ -642,7 +642,7 @@ export default function IntelligencePage() {
                                     </div>
 
                                     <div className="flex justify-center w-full mt-10">
-                                        {user?.email === 'geanderson@nexustreinamento.com' ? (
+                                        {isAdminUser(user) ? (
                                             <Button asChild className="bg-cyan-600 text-white hover:bg-cyan-500 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg lg:text-xl shadow-[0_0_40px_rgba(34,211,238,0.3)] transition-all hover:scale-105 active:scale-95 w-full max-w-md border border-cyan-400/30">
                                                 <Link href="/intelligence/dante-builder">{t('intelligence.complementaryModules.access')}</Link>
                                             </Button>

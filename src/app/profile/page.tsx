@@ -51,7 +51,23 @@ export default function ProfilePage() {
   
   const { data: purchases, isLoading: purchasesLoading } = useCollection<Purchase>(purchasesQuery);
 
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
+
   const purchasedCourses = useMemo((): PurchasedCourse[] => {
+    if (isAdmin) {
+      // For admins, simulate ownership of all courses
+      return allCourses
+        .filter(c => c.type === 'course')
+        .map(course => ({
+          id: `admin-${course.slug}`,
+          userId: user?.uid || 'admin',
+          courseId: course.slug,
+          purchaseDate: new Date().toISOString(),
+          price: course.discountedPrice,
+          courseDetails: course
+        }));
+    }
+
     if (!purchases) {
       return [];
     }
@@ -63,9 +79,8 @@ export default function ProfilePage() {
       }
     }
     return courses;
-  }, [purchases]);
+  }, [purchases, isAdmin, user?.uid]);
   
-  const isAdmin = useMemo(() => isAdminUser(user), [user]);
   const hasAccessToMentoria = useMemo(() => purchasedCourses.length > 0 || isAdmin, [purchasedCourses, isAdmin]);
 
 
