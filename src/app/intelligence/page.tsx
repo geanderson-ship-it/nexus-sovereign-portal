@@ -72,6 +72,15 @@ export default function IntelligencePage() {
                 src: 'https://i.postimg.cc/MK2qpjzh/Dante-Builder.png',
                 alt: 'Dante Builder Constructor',
             }
+        },
+        {
+            icon: ShoppingCart,
+            title: "Dante Compras",
+            href: "/intelligence/compras/access",
+            image: {
+                src: 'https://i.postimg.cc/k4Gk8YyP/dante-compras-hero.png',
+                alt: 'Dante Compras',
+            }
         }
     ];
 
@@ -655,6 +664,100 @@ export default function IntelligencePage() {
                                                         action: 'contact_click',
                                                         category: 'engagement',
                                                         label: 'consultant_dante_builder',
+                                                    });
+                                                }}
+                                            >
+                                                <Link href="/contact" target="_blank" rel="noopener noreferrer">FALAR COM UM CONSULTOR</Link>
+                                            </Button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* --- DANTE COMPRAS ECOSYSTEM --- */}
+                <div className="space-y-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="relative w-full max-w-6xl mx-auto rounded-[48px] overflow-hidden border border-blue-500/30 bg-slate-900/60 backdrop-blur-3xl shadow-[0_0_80px_rgba(37,99,235,0.1)] group"
+                    >
+                        <div className="flex flex-col lg:flex-row min-h-[600px]">
+                            <div className="lg:w-1/2 relative h-[400px] lg:h-auto overflow-hidden">
+                                <Image
+                                    src="https://i.postimg.cc/k4Gk8YyP/dante-compras-hero.png"
+                                    alt="Dante Compras"
+                                    fill
+                                    className="object-contain transition-transform duration-[2s] group-hover:scale-105 p-4"
+                                    priority
+                                />
+                                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950 to-transparent lg:hidden" />
+                                
+                                <div className="absolute top-8 left-8 flex flex-col gap-2">
+                                    <Badge className="bg-blue-600 text-white border-none px-4 py-1.5 text-[10px] font-black tracking-[0.2em] uppercase shadow-lg animate-pulse">SUPPLY_INTELLIGENCE_v2.0</Badge>
+                                    <div className="p-3 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl w-fit">
+                                        <ShoppingCart className="h-6 w-6 text-blue-400" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center relative">
+                                <div className="space-y-8 relative z-10">
+                                    <div>
+                                        <h2 className="text-4xl lg:text-7xl font-black text-white tracking-tighter uppercase leading-none italic">
+                                            DANTE <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8 text-shadow-glow">COMPRAS</span>
+                                        </h2>
+                                        <div className="mt-4 flex items-center gap-3">
+                                            <div className="h-[2px] w-12 bg-blue-500 shadow-[0_0_10px_rgba(37,99,235,0.5)]" />
+                                            <span className="text-[10px] font-bold text-blue-400 tracking-[0.4em] uppercase">IA de Intermediação e Auditoria de Suprimentos</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <p className="text-slate-300 leading-relaxed text-lg font-medium italic opacity-90 border-l-2 border-blue-500/30 pl-6">
+                                            "Transforme seu departamento de compras em um centro de lucro com auditoria em tempo real e inteligência de mercado."
+                                        </p>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="p-6 rounded-[32px] bg-blue-500/5 border border-blue-500/20 shadow-inner group/card hover:bg-blue-500/10 transition-all">
+                                            <div className="p-3 bg-blue-500/10 rounded-2xl w-fit mb-4">
+                                                <Database className="h-5 w-5 text-blue-400" />
+                                            </div>
+                                            <h4 className="text-white font-black uppercase tracking-widest text-[10px] mb-2">Auditoria de Preços</h4>
+                                            <div className="text-slate-400 text-xs leading-relaxed font-medium">
+                                                Dante analisa cada cotação e identifica o <strong className="text-blue-400 font-black">menor custo-benefício</strong> oculto em propostas complexas.
+                                            </div>
+                                        </div>
+
+                                        <div className="p-6 rounded-[32px] bg-blue-500/5 border border-blue-500/20 shadow-inner group/card hover:bg-blue-500/10 transition-all">
+                                            <div className="p-3 bg-blue-500/10 rounded-2xl w-fit mb-4">
+                                                <TrendingDown className="h-5 w-5 text-blue-400" />
+                                            </div>
+                                            <h4 className="text-white font-black uppercase tracking-widest text-[10px] mb-2">Economia Acumulada</h4>
+                                            <div className="text-slate-400 text-xs leading-relaxed font-medium">
+                                                Acompanhe em tempo real a <strong className="text-emerald-400 font-black">economia gerada</strong> por suas decisões estratégicas monitoradas pelo Dante.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-center w-full mt-10">
+                                        {isAdminUser(user) ? (
+                                            <Button asChild className="bg-blue-700 text-white hover:bg-blue-600 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg lg:text-xl shadow-[0_0_40px_rgba(37,99,235,0.3)] transition-all hover:scale-105 active:scale-95 w-full max-w-md border border-blue-400/30">
+                                                <Link href="/intelligence/compras/access">{t('intelligence.complementaryModules.access')}</Link>
+                                            </Button>
+                                        ) : (
+                                            <Button 
+                                                asChild 
+                                                className="bg-transparent text-blue-400 border-2 border-blue-500/50 hover:bg-blue-500/10 h-20 px-16 rounded-[2rem] font-black uppercase tracking-[0.3em] text-lg shadow-[0_0_40px_rgba(37,99,235,0.15)] transition-all hover:scale-105 active:scale-95 w-full max-w-md"
+                                                onClick={() => {
+                                                    gtag.event({
+                                                        action: 'contact_click',
+                                                        category: 'engagement',
+                                                        label: 'consultant_dante_compras',
                                                     });
                                                 }}
                                             >

@@ -37,7 +37,15 @@ export default function PalestrasPage() {
 
   const { data: purchases, isLoading: purchasesLoading } = useCollection<any>(purchasesQuery);
 
-  const isAdmin = useMemo(() => isAdminUser(user), [user]);
+  const isAdmin = useMemo(() => {
+    const result = isAdminUser(user);
+    if (user) {
+        console.log(`[Palestras] Admin check for ${user.email}: ${result}`);
+    }
+    return result;
+  }, [user]);
+
+  const isLoading = isUserLoading || (user && purchasesLoading);
 
   const getIsPurchased = (slug: string) => {
     if (isAdmin) return true;

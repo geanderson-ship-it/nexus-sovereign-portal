@@ -35,8 +35,9 @@ const textToSpeechFlow = ai.defineFlow(
     const { text, voice, locale } = input;
 
     // Configuração do Cliente Polly seguindo o protocolo AWS do Nexus
+    const region = process.env.AWS_REGION || process.env.AMPLIFY_REGION || 'us-east-1';
     const pollyConfig: any = {
-      region: process.env.AWS_REGION || process.env.AMPLIFY_REGION || 'us-east-1',
+      region,
     };
 
     const accessKeyId = process.env.AWS_ACCESS_KEY_ID || process.env.AMPLIFY_ACCESS_KEY_ID;
@@ -47,6 +48,8 @@ const textToSpeechFlow = ai.defineFlow(
         accessKeyId,
         secretAccessKey,
       };
+    } else {
+      console.log(`VIX DIAGNOSTIC: Usando credenciais padrão do ambiente (IAM Role) na região ${region}.`);
     }
 
     const pollyClient = new PollyClient(pollyConfig);
@@ -85,6 +88,10 @@ const textToSpeechFlow = ai.defineFlow(
     const selectedVoiceId = getVoiceId(voice, locale || 'pt-BR');
 
     try {
+      if (!text || text.trim().length === 0) {
+        throw new Error("O texto para síntese está vazio.");
+      }
+
       // 1. Sintetizar o Áudio (MP3)
       const audioCommand = new SynthesizeSpeechCommand({
         Engine: Engine.NEURAL,
@@ -128,23 +135,40 @@ const textToSpeechFlow = ai.defineFlow(
         .split('\n')
         .filter(line => line.trim())
         .map(line => {
-          const mark = JSON.parse(line);
-          return {
-            type: mark.type,
-            value: mark.value,
-            startOffset: mark.time
-          };
-        });
+          try {
+            const mark = JSON.parse(line);
+            return {
+              type: mark.type,
+              value: mark.value,
+              startOffset: mark.time
+            };
+          } catch (e) {
+            return null;
+          }
+        })
+        .filter(Boolean);
 
       return {
         audioDataUri,
-        speechMarks
+        speechMarks: speechMarks as any[]
       };
 
     } catch (error: any) {
-      console.error("VIX DIAGNOSTIC: Falha na síntese Amazon Polly.", error);
+      console.error("VIX DIAGNOSTIC: Falha na síntese Amazon Polly.", {
+        message: error.message,
+        code: error.code || error.name,
+        region: region,
+        hasCredentials: !!(accessKeyId && secretAccessKey)
+      });
+      
+      // Se for um erro de credenciais, damos uma mensagem mais clara para o administrador.
+      if (error.message?.includes('credentials') || error.name === 'CredentialsError') {
+        throw new Error("Erro de Autenticação AWS: O servidor não possui permissões para usar o Amazon Polly. Verifique as variáveis de ambiente no console da Amplify.");
+      }
+
       throw new Error(`Erro AWS Polly: ${error.message}`);
     }
+
   }
 );
 

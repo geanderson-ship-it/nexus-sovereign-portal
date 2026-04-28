@@ -42,4 +42,9 @@ export const lectureScripts: Record<string, LectureScriptItem[]> = {
     text: `lectures.scripts.gestao-de-conflitos.item${i}.text`,
     question: i >= 7 && i <= 11 ? `lectures.scripts.gestao-de-conflitos.item${i}.question` : undefined,
   })),
+  'nexus-intelligence-agro-design': Array.from({ length: 15 }).map((_, i) => ({
+    speaker: i % 2 === 0 ? 'dante' : 'djeny',
+    text: `lectures.scripts.nexus-intelligence-agro-design.item${i}.text`,
+    question: i >= 8 && i <= 12 ? `lectures.scripts.nexus-intelligence-agro-design.item${i}.question` : undefined,
+  })),
 };

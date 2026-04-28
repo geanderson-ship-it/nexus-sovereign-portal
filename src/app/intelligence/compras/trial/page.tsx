@@ -111,6 +111,7 @@ const chartConfig = {
 };
 
 function TrialContent() {
+    const [isMounted, setIsMounted] = React.useState(false);
     const [quotationDialogOpen, setQuotationDialogOpen] = React.useState(true);
     const [quotationItemName, setQuotationItemName] = React.useState('');
     const [quotationItemSpec, setQuotationItemSpec] = React.useState('');
@@ -126,6 +127,10 @@ function TrialContent() {
         recommended: string;
         costDifference: number;
       } | null>(null);
+
+    React.useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const handleQuotationDialogClose = () => {
         setAuditDecision(null);
@@ -525,6 +530,7 @@ function TrialContent() {
                             <CardTitle className="text-sm font-medium">Economia Diária (Últimos 7 dias).</CardTitle>
                             </CardHeader>
                             <CardContent>
+                            {isMounted ? (
                             <ChartContainer config={chartConfig} className="h-[200px] w-full">
                                 <BarChart data={dailyEconomy} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
@@ -534,6 +540,9 @@ function TrialContent() {
                                 <Bar dataKey="economy" fill="var(--color-economy)" radius={4} />
                                 </BarChart>
                             </ChartContainer>
+                            ) : (
+                                <div className="h-[200px] w-full bg-slate-800/20 animate-pulse rounded-lg" />
+                            )}
                             </CardContent>
                         </Card>
                         <Card className="bg-black/30 border-gray-700">
@@ -541,6 +550,7 @@ function TrialContent() {
                             <CardTitle className="text-sm font-medium">Acumulado Semanal (Últimas 4 semanas).</CardTitle>
                             </CardHeader>
                             <CardContent>
+                            {isMounted ? (
                             <ChartContainer config={chartConfig} className="h-[200px] w-full">
                                 <LineChart data={weeklyAccumulated} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
@@ -550,6 +560,9 @@ function TrialContent() {
                                 <Line type="monotone" dataKey="accumulated" stroke="var(--color-accumulated)" strokeWidth={2} dot={{ r: 4, fill: "var(--color-accumulated)" }} />
                                 </LineChart>
                             </ChartContainer>
+                            ) : (
+                                <div className="h-[200px] w-full bg-slate-800/20 animate-pulse rounded-lg" />
+                            )}
                             </CardContent>
                         </Card>
                         </div>
@@ -558,6 +571,7 @@ function TrialContent() {
                             <CardTitle className="text-sm font-medium">Acumulado Mensal (Últimos 6 meses).</CardTitle>
                         </CardHeader>
                         <CardContent>
+                            {isMounted ? (
                             <ChartContainer config={chartConfig} className="h-[250px] w-full">
                             <LineChart data={monthlyAccumulated} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
@@ -567,6 +581,9 @@ function TrialContent() {
                                 <Line type="monotone" dataKey="accumulated" stroke="var(--color-accumulated)" strokeWidth={2} dot={{ r: 4, fill: "var(--color-accumulated)" }} />
                             </LineChart>
                             </ChartContainer>
+                            ) : (
+                                <div className="h-[250px] w-full bg-slate-800/20 animate-pulse rounded-lg" />
+                            )}
                         </CardContent>
                         </Card>
                     </div>

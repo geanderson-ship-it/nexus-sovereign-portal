@@ -481,6 +481,52 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
         { name: 'Dante', image: 'https://i.postimg.cc/Qx75CsSr/Dante-virtual-2.png', alt: 'Dante' },
         { name: 'Djeny', image: 'https://i.postimg.cc/L8qWnJwF/Djeny-virtual-2.png', alt: 'Djeny' }
     ]
+  },
+  {
+    id: 'nexus-intelligence-agro-design',
+    slug: 'nexus-intelligence-agro-design',
+    title: 'Nexus Intelligence: Agro Design Business',
+    category: 'Inteligência Artificial',
+    internalValue: 5000,
+    image: {
+        "src": "https://i.postimg.cc/P5Rz3JJk/Palestra-futurista.png",
+        "alt": "Nexus Intelligence Agro Design",
+        "hint": "agro and design fusion"
+      },
+    tags: ['ROI', 'Design IA', 'Agro', 'Nexus'],
+    type: 'palestra' as const,
+    subtitle: 'A união entre a Eficiência Radical e a Criação de Alta Fidelidade.',
+    targetAudience: [
+        'Produtores rurais e gestores do agronegócio.',
+        'Empresas de arquitetura e design.',
+        'Investidores interessados em IA aplicada.',
+    ],
+    problem: [
+        'Baixo ROI em processos tradicionais.',
+        'Lentidão na criação visual de projetos.',
+        'Falta de dados preditivos para tomada de decisão no campo.',
+    ],
+    content: [
+        'Dante: Blindagem de ROI e Inteligência Tática.',
+        'Djeny: Ambientação Instantânea e Design de Alta Fidelidade.',
+        'Integração de ecossistemas para aceleração de vendas.',
+    ],
+    benefits: [
+        'Redução drástica de custos operacionais.',
+        'Aumento de até 40% na conversão de vendas via design.',
+        'Proteção de margens de lucro com análise de dados.',
+    ],
+    methodology: 'Imersão tecnológica Nexus, unindo o cérebro tático do agro com a magia visual do design.',
+    duration: '1h 30min',
+    expectedResult: 'Dominar o uso de IA para transformar eficiência técnica em lucro real e estética de luxo.',
+    originalPrice: 0,
+    discountedPrice: 0,
+    lessons: 0,
+    hasAIBonus: true,
+    speakers: [
+        { name: 'Dante', image: 'https://i.postimg.cc/Qx75CsSr/Dante-virtual-2.png', alt: 'Dante' },
+        { name: 'Djeny', image: 'https://i.postimg.cc/L8qWnJwF/Djeny-virtual-2.png', alt: 'Djeny' }
+    ]
   }
 ];
 
