@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './studio.module.css';
 import { AnnounceType } from '@/hooks/use-announcer';
+import { Reorder, useDragControls } from 'framer-motion';
+import { GripVertical } from 'lucide-react';
 
 export interface SequenceItem {
   id: string;
@@ -10,17 +12,21 @@ export interface SequenceItem {
   label?: string;
   text?: string;
   audioUrl?: string;
+  duration?: number; // Duration in seconds
   voiceOverride?: 'female' | 'male';
 }
 
 interface Props {
   onEnqueueSequence: (items: SequenceItem[]) => void;
+  existingQueue?: any[];
 }
 
-export default function SequenceBuilder({ onEnqueueSequence }: Props) {
+export default function SequenceBuilder({ onEnqueueSequence, existingQueue = [] }: Props) {
   const [items, setItems] = useState<SequenceItem[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [insertIndex, setInsertIndex] = useState<number | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const dragIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Form states for manual insertion
   const [type, setType] = useState<AnnounceType>('custom');
@@ -28,26 +34,110 @@ export default function SequenceBuilder({ onEnqueueSequence }: Props) {
   const [audioUrl, setAudioUrl] = useState('');
   const [voiceOverride, setVoiceOverride] = useState<'female' | 'male' | ''>('');
 
-  function handleDrop(e: React.DragEvent) {
-    e.preventDefault();
-    setIsDragging(false);
-    
-    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('audio/'));
-    
-    if (files.length === 0) return;
+  useEffect(() => {
+    const handleAddFile = async (e: any) => {
+      const file = e.detail as File;
+      const label = `🎧 ${file.name}`;
+      
+      if (isDuplicate(label)) {
+        const confirmed = window.confirm(`A faixa "${file.name}" já está programada. Deseja adicionar novamente?`);
+        if (!confirmed) return;
+      }
 
-    const newItems: SequenceItem[] = files.map(file => {
       const url = URL.createObjectURL(file);
-      return {
+      const duration = await getAudioDuration(url);
+      
+      const newItem: SequenceItem = {
         id: Math.random().toString(36).slice(2, 9),
         type: 'music',
         audioUrl: url,
-        label: `🎧 ${file.name}`,
+        duration,
+        label,
       };
-    });
 
-    // Append to the end
-    setItems(prev => [...prev, ...newItems]);
+      setItems(prev => [...prev, newItem]);
+    };
+
+    window.addEventListener('nexus-add-file', handleAddFile);
+    return () => window.removeEventListener('nexus-add-file', handleAddFile);
+  }, [items, existingQueue]); // Re-bind when state changes for isDuplicate closure
+
+  const normalizeLabel = (label: string) => {
+    // Remove icons and common prefixes to get the core name
+    return label
+      .replace(/^[🎧🎶📢⏰🌡️🌦️📡]\s*/, '') // Remove starting icons
+      .replace(/^(Música:|Vinheta:|Anúncio:)\s*/, '') // Remove prefixes
+      .trim()
+      .toLowerCase();
+  };
+
+  const isDuplicate = (label: string) => {
+    const target = normalizeLabel(label);
+    // Check in local items
+    const inTimeline = items.some(i => normalizeLabel(i.label) === target);
+    // Check in active queue
+    const inQueue = existingQueue.some(q => normalizeLabel(q.label) === target);
+    return inTimeline || inQueue;
+  };
+
+  const getAudioDuration = (url: string): Promise<number> => {
+    return new Promise((resolve) => {
+      const audio = new Audio(url);
+      audio.addEventListener('loadedmetadata', () => {
+        resolve(audio.duration);
+      });
+      audio.addEventListener('error', () => resolve(0));
+      // Safety timeout
+      setTimeout(() => resolve(0), 1000);
+    });
+  };
+
+  async function handleDrop(e: React.DragEvent) {
+    e.preventDefault();
+    setIsDragging(false);
+    
+    let files: File[] = Array.from(e.dataTransfer.files);
+    
+    // Check for internal drag from FileExplorer
+    if (files.length === 0 && (window as any).__nexus_dragging_file) {
+      files = [(window as any).__nexus_dragging_file];
+      (window as any).__nexus_dragging_file = null; // Clear after use
+    }
+    
+    const audioExtensions = ['.mp3', '.mpeg', '.mp4', '.m4a', '.wav', '.ogg', '.wma', '.aac', '.flac'];
+    const filteredFiles = files.filter(f => {
+      const extension = '.' + f.name.split('.').pop()?.toLowerCase();
+      return f.type.startsWith('audio/') || f.type.startsWith('video/') || audioExtensions.includes(extension);
+    });
+    
+    if (filteredFiles.length === 0) return;
+
+    const newItems: SequenceItem[] = [];
+    
+    for (const file of filteredFiles) {
+      const label = `🎧 ${file.name}`;
+      
+      // Check for duplicate
+      if (isDuplicate(label)) {
+        const confirmed = window.confirm(`A faixa "${file.name}" já está programada (na timeline ou no ar). Deseja adicionar novamente?`);
+        if (!confirmed) continue;
+      }
+
+      const url = URL.createObjectURL(file);
+      const duration = await getAudioDuration(url);
+      
+      newItems.push({
+        id: Math.random().toString(36).slice(2, 9),
+        type: 'music',
+        audioUrl: url,
+        duration,
+        label,
+      });
+    }
+
+    if (newItems.length > 0) {
+      setItems(prev => [...prev, ...newItems]);
+    }
   }
 
   function handleDragOver(e: React.DragEvent) {
@@ -70,16 +160,39 @@ export default function SequenceBuilder({ onEnqueueSequence }: Props) {
     return t;
   }
 
-  function insertManualItem() {
+  async function insertManualItem() {
     if (insertIndex === null) return;
+
+    let estimatedDuration = 5; // Default for jingles/manual
+    if (type === 'custom') {
+      const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
+      estimatedDuration = Math.max(3, wordCount * 0.5); // 0.5s per word, min 3s
+    } else if (['time', 'temp', 'forecast', 'station-id'].includes(type)) {
+      estimatedDuration = 7; // Average for automatic blocks
+    } else if (type === 'music' || type === 'jingle') {
+      if (audioUrl.startsWith('blob:')) {
+         estimatedDuration = await getAudioDuration(audioUrl);
+      } else {
+         estimatedDuration = 15; // Placeholder for remote URLs if duration unknown
+      }
+    }
+
+    const label = getLabelForType(type, text, audioUrl);
+
+    // Check for duplicate
+    if (isDuplicate(label)) {
+      const confirmed = window.confirm(`O bloco "${label}" já está programada (na timeline ou no ar). Deseja adicionar novamente?`);
+      if (!confirmed) return;
+    }
 
     const newItem: SequenceItem = {
       id: Math.random().toString(36).slice(2, 9),
       type,
       text: type === 'custom' ? text : undefined,
       audioUrl: (type === 'jingle' || type === 'music') ? audioUrl : undefined,
+      duration: estimatedDuration,
       voiceOverride: voiceOverride || undefined,
-      label: getLabelForType(type, text, audioUrl),
+      label,
     };
 
     setItems(prev => {
@@ -101,6 +214,37 @@ export default function SequenceBuilder({ onEnqueueSequence }: Props) {
     if (items.length === 0) return;
     onEnqueueSequence(items);
   }
+
+  // Auto-scroll logic during drag
+  const handleDragUpdate = (event: any, info: any) => {
+    const container = document.querySelector(`.${styles.centerCol}`);
+    if (!container) return;
+
+    const { y } = info.point;
+    const threshold = 150; // Distance from edge to start scrolling
+    const containerRect = container.getBoundingClientRect();
+
+    if (dragIntervalRef.current) clearInterval(dragIntervalRef.current);
+
+    const scrollSpeed = 15;
+
+    if (y < containerRect.top + threshold) {
+      dragIntervalRef.current = setInterval(() => {
+        container.scrollTop -= scrollSpeed;
+      }, 16);
+    } else if (y > containerRect.bottom - threshold) {
+      dragIntervalRef.current = setInterval(() => {
+        container.scrollTop += scrollSpeed;
+      }, 16);
+    }
+  };
+
+  const stopAutoScroll = () => {
+    if (dragIntervalRef.current) {
+      clearInterval(dragIntervalRef.current);
+      dragIntervalRef.current = null;
+    }
+  };
 
   return (
     <div className={styles.card}>
@@ -128,37 +272,63 @@ export default function SequenceBuilder({ onEnqueueSequence }: Props) {
         onClick={() => document.getElementById('file-upload')?.click()}
       >
         <span style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>
-          📥 Arraste dezenas de arquivos .mp3 aqui<br/>
+          📥 Arraste arquivos de áudio aqui<br/>
+          <span style={{ fontSize: '12px', opacity: 0.7 }}>(.mp3, .mp4, .wav, .wma, .mpeg, .m4a, etc)</span><br/>
           <span style={{ fontSize: '14px' }}>(ou clique para selecionar do PC)</span>
         </span>
         <input 
           id="file-upload" 
           type="file" 
           multiple 
-          accept="audio/*" 
+          accept=".mp3,.mpeg,.mp4,.m4a,.wav,.ogg,.wma,.aac,.flac,audio/*,video/mp4" 
           style={{ display: 'none' }} 
-          onChange={(e) => {
-             const files = Array.from(e.target.files || []);
-             if(files.length === 0) return;
-             const newItems: SequenceItem[] = files.map(file => ({
-                id: Math.random().toString(36).slice(2, 9),
-                type: 'music',
-                audioUrl: URL.createObjectURL(file),
-                label: `🎧 ${file.name}`,
-             }));
-             setItems(prev => [...prev, ...newItems]);
-             e.target.value = '';
+          onChange={async (e) => {
+              const audioExtensions = ['.mp3', '.mpeg', '.mp4', '.m4a', '.wav', '.ogg', '.wma', '.aac', '.flac'];
+              const files = Array.from(e.target.files || []).filter(f => {
+                 const extension = '.' + f.name.split('.').pop()?.toLowerCase();
+                 return f.type.startsWith('audio/') || f.type.startsWith('video/') || audioExtensions.includes(extension);
+              });
+              if(files.length === 0) return;
+
+              const newItems: SequenceItem[] = [];
+
+              for (const file of files) {
+                const label = `🎧 ${file.name}`;
+                if (isDuplicate(label)) {
+                  const confirmed = window.confirm(`A faixa "${file.name}" já está programada (na timeline ou no ar). Deseja adicionar novamente?`);
+                  if (!confirmed) continue;
+                }
+                const url = URL.createObjectURL(file);
+                const duration = await getAudioDuration(url);
+                newItems.push({
+                  id: Math.random().toString(36).slice(2, 9),
+                  type: 'music',
+                  audioUrl: url,
+                  duration,
+                  label,
+                });
+              }
+
+              if (newItems.length > 0) {
+                setItems(prev => [...prev, ...newItems]);
+              }
+              e.target.value = '';
           }} 
         />
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+      <Reorder.Group axis="y" values={items} onReorder={setItems} style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '5px' }}>
         {items.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '20px', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
             Nenhum arquivo na timeline.
           </div>
         ) : items.map((item, index) => (
-          <div key={item.id} style={{ display: 'flex', flexDirection: 'column' }}>
+          <Reorder.Item 
+            key={item.id} 
+            value={item}
+            onDrag={(e, info) => handleDragUpdate(e, info)}
+            onDragEnd={stopAutoScroll}
+          >
             
             {/* Botão de Inserção Acima do Bloco */}
             <div 
@@ -187,16 +357,43 @@ export default function SequenceBuilder({ onEnqueueSequence }: Props) {
             )}
 
             {/* Item do Bloco */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px', background: 'var(--bg)', borderRadius: '6px', borderLeft: `4px solid ${item.type === 'music' ? 'var(--blue)' : 'var(--accent)'}` }}>
-              <span style={{ wordBreak: 'break-word', paddingRight: '15px' }}>
-                <strong>{index + 1}.</strong> {item.label}
-                {item.voiceOverride && <span style={{ fontSize: '11px', marginLeft: '8px', color: 'var(--text-secondary)', background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>Voz Forçada: {item.voiceOverride === 'female' ? 'Camila' : 'Thiago'}</span>}
-              </span>
-              <button onClick={() => removeItem(index)} style={{ background: 'transparent', border: 'none', color: 'var(--red)', cursor: 'pointer', fontSize: '16px' }} title="Remover bloco">✕</button>
+            <div 
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center',
+                justifyContent: 'space-between', 
+                padding: '12px', 
+                background: 'var(--bg-card)', 
+                borderRadius: '8px', 
+                border: '1px solid var(--border)',
+                borderLeft: `4px solid ${item.type === 'music' ? '#3b82f6' : '#FDB813'}`,
+                cursor: 'grab'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
+                <GripVertical size={16} style={{ opacity: 0.3 }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', flex: 1 }}>
+                  <span style={{ wordBreak: 'break-word', paddingRight: '15px', fontSize: '14px' }}>
+                    <strong>{index + 1}.</strong> {item.label}
+                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '10px', color: 'var(--accent)', fontWeight: 'bold' }}>
+                      ⏱️ {Math.floor((item.duration || 0) / 60)}:{(Math.floor(item.duration || 0) % 60).toString().padStart(2, '0')}
+                    </span>
+                    {item.voiceOverride && (
+                      <span style={{ fontSize: '10px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.05)', padding: '1px 6px', borderRadius: '4px' }}>
+                        Voz: {item.voiceOverride === 'female' ? 'Camila' : 'Thiago'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <button onClick={() => removeItem(index)} style={{ background: 'transparent', border: 'none', color: 'var(--red)', cursor: 'pointer', fontSize: '16px', padding: '4px' }} title="Remover bloco">✕</button>
             </div>
 
-          </div>
+          </Reorder.Item>
         ))}
+      </Reorder.Group>
 
         {/* Botão de Inserção no Fim da Lista */}
         {items.length > 0 && (
@@ -225,7 +422,52 @@ export default function SequenceBuilder({ onEnqueueSequence }: Props) {
             )}
           </>
         )}
-      </div>
+
+      {/* Summary Box */}
+      {items.length > 0 && (
+        <div style={{ marginTop: '15px', padding: '15px', background: 'rgba(0,0,0,0.4)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '12px' }}>
+            <div>
+              <span style={{ color: 'var(--text-secondary)' }}>Músicas:</span>
+              <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#3b82f6' }}>
+                {(() => {
+                  const musicItems = items.filter(i => i.type === 'music');
+                  const total = musicItems.reduce((acc, i) => acc + (i.duration || 0), 0);
+                  return `${Math.floor(total / 60)}m ${Math.floor(total % 60)}s`;
+                })()}
+              </div>
+            </div>
+            <div>
+              <span style={{ color: 'var(--text-secondary)' }}>Intervenções/IA:</span>
+              <div style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--accent)' }}>
+                {(() => {
+                  const talkItems = items.filter(i => i.type !== 'music');
+                  const total = talkItems.reduce((acc, i) => acc + (i.duration || 0), 0);
+                  return `${Math.floor(total / 60)}m ${Math.floor(total % 60)}s`;
+                })()}
+              </div>
+            </div>
+          </div>
+          <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontWeight: 'bold', color: '#fff' }}>TEMPO TOTAL ESTIMADO:</span>
+            <div style={{ fontSize: '20px', fontWeight: '900', color: '#FDB813' }}>
+              {(() => {
+                let total = items.reduce((acc, i) => acc + (i.duration || 0), 0);
+                // Subtract 5s for each music-to-music transition (crossfade)
+                items.forEach((item, idx) => {
+                   if (idx > 0 && item.type === 'music' && items[idx-1].type === 'music') {
+                      total -= 5;
+                   }
+                });
+                return `${Math.floor(total / 60)}:${(Math.floor(total % 60)).toString().padStart(2, '0')}`;
+              })()}
+            </div>
+          </div>
+          <div style={{ fontSize: '9px', color: 'rgba(255,255,255,0.3)', marginTop: '5px', textAlign: 'right' }}>
+            *Considerando crossfade de 5s entre músicas
+          </div>
+        </div>
+      )}
 
       <button 
         onClick={handlePlaySequence}

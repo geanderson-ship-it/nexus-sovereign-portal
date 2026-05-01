@@ -1,7 +1,7 @@
 .layout {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 44px);
+  height: 100%;
   background: var(--bg-primary);
   overflow: hidden;
 }
@@ -90,7 +90,7 @@
 /* ─── Main Grid ─── */
 .main {
   display: grid;
-  grid-template-columns: 320px 1fr 380px;
+  grid-template-columns: 280px 1fr 380px;
   gap: 12px;
   padding: 12px;
   flex: 1;
@@ -101,8 +101,16 @@
 .leftCol {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   overflow: hidden;
+  height: 100%;
 }
 
 /* ─── Clock ─── */
@@ -315,12 +323,201 @@
   color: var(--accent-light);
 }
 
+/* ─── Compact Weather ─── */
+.miniWeatherRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.miniWeatherCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+  cursor: help;
+}
+
+.miniWeatherCard:hover {
+  border-color: var(--accent);
+  background: rgba(255,255,255,0.05);
+}
+
+.miniWeatherIcon {
+  font-size: 18px;
+}
+
+.miniWeatherInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.miniWeatherVal {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.miniWeatherLabel {
+  font-size: 8px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ─── File Explorer ─── */
+.explorerPanel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.explorerHeader {
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.loadFolderBtn {
+  background: #FDB813;
+  color: #000;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 15px rgba(253, 184, 19, 0.2);
+}
+
+.loadFolderBtn:hover {
+  background: #ffc439;
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(253, 184, 19, 0.4);
+}
+
+.explorerList {
+  flex: 1;
+  overflow-y: scroll;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scrollbar-gutter: stable;
+}
+
+.explorerEmpty {
+  padding: 30px 10px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.explorerItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  cursor: grab;
+}
+
+.explorerItem:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--border);
+}
+
+.explorerItemInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.explorerItemIcon {
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.explorerItemName {
+  font-size: 11px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.explorerAddBtn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: var(--text-primary);
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.explorerAddBtn:hover {
+  background: var(--green);
+  color: #000;
+}
+
+.manualTempBtn {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.manualTempBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* ─── Center Column ─── */
 .centerCol {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow-y: scroll;
+  padding-right: 4px;
+  scrollbar-gutter: stable;
 }
+
+/* The custom scrollbars are defined at the bottom of the file now */
+
 
 .card {
   background: var(--bg-card);
@@ -450,12 +647,13 @@
   transform: translateY(-1px);
 }
 
-/* ─── Right Column ─── */
 .rightCol {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  overflow: hidden;
+  gap: 10px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(253,184,19,0.4) transparent;
 }
 
 .panelHeader {
@@ -492,7 +690,9 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px;
-  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
 .queueEmpty {
@@ -505,7 +705,11 @@
 .queueList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  overflow-y: scroll;
+  height: 150px;
+  padding-right: 4px;
+  scrollbar-gutter: stable;
 }
 
 .queueItem {
@@ -544,8 +748,8 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px;
-  flex: 1;
-  overflow: hidden;
+  flex-shrink: 0;
+  min-height: 220px;
   display: flex;
   flex-direction: column;
 }
@@ -553,33 +757,64 @@
 .logList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  overflow-y: auto;
+  gap: 6px;
+  overflow-y: scroll;
   flex: 1;
+  padding-right: 4px;
+  scrollbar-gutter: stable;
 }
 
 .logItem {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 10px 12px;
-  background: var(--bg-secondary);
-  border-radius: var(--radius-sm);
-  border-left: 2px solid var(--accent);
-  animation: slideIn 0.2s ease;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 6px;
+  border-left: 3px solid var(--accent);
+  transition: background 0.2s;
+}
+
+.logItem:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.logItemHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logIcon {
+  font-size: 13px;
+  flex-shrink: 0;
 }
 
 .logTime {
-  font-size: 10px;
-  color: var(--accent-light);
+  font-size: 11px;
+  color: #FDB813;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
+  flex-shrink: 0;
+}
+
+.logBadge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+  margin-left: auto;
 }
 
 .logText {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.4;
+  padding-left: 19px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ─── Modal ─── */
@@ -714,4 +949,192 @@
 .saveBtn:hover {
   background: var(--accent-light);
   box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* ─── Master Control Deck / Player ─── */
+.playerCard {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 10px 30px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.tapeCounter {
+  background: #000;
+  border: 2px solid #222;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: inset 0 0 10px rgba(253, 184, 19, 0.1);
+}
+
+.tapeLabel {
+  font-size: 8px;
+  color: #666;
+  letter-spacing: 2px;
+  margin-bottom: 2px;
+}
+
+.tapeDigits {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  color: #FDB813;
+  text-shadow: 0 0 10px rgba(253, 184, 19, 0.5);
+  letter-spacing: 1px;
+}
+
+.nowPlayingInfo {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.nowPlayingLabel {
+  font-size: 11px;
+  color: #FDB813; /* Amarelo para combinar com a tarja */
+  white-space: nowrap;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.nowPlayingTitle {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.marqueeText {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 15s linear infinite;
+  text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+@keyframes marquee {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}
+
+.playerControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.playerBtn {
+  background: #1e40af; /* Azul Royal */
+  border: 3px solid #FDB813; /* Tarja Amarela */
+  color: #fff;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.playerBtn:hover:not(:disabled) {
+  background: #2563eb;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(253, 184, 19, 0.4);
+}
+
+.playerBtn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.playerBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: rgba(253, 184, 19, 0.3);
+  background: rgba(30, 64, 175, 0.4);
+}
+
+.playPauseBtn {
+  width: 64px;
+  height: 64px;
+  background: #1d4ed8;
+  border-width: 4px;
+}
+
+.playPauseBtn:hover:not(:disabled) {
+  background: #3b82f6;
+  border-color: #ffc947;
+}
+
+.progressBar {
+  height: 4px;
+  background: #222;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #FDB813;
+  width: 0%;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px rgba(253, 184, 19, 0.5);
+}
+
+.queueSubHeader {
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 1px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #222;
+  padding-bottom: 5px;
+}
+
+/* ─── Custom Scrollbars (Fila, Histórico, Explorador, Central, Direita) ─── */
+.queueList::-webkit-scrollbar,
+.logList::-webkit-scrollbar,
+.explorerList::-webkit-scrollbar,
+.centerCol::-webkit-scrollbar,
+.rightCol::-webkit-scrollbar {
+  width: 5px;
+}
+
+.queueList::-webkit-scrollbar-track,
+.logList::-webkit-scrollbar-track,
+.explorerList::-webkit-scrollbar-track,
+.centerCol::-webkit-scrollbar-track,
+.rightCol::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+.queueList::-webkit-scrollbar-thumb,
+.logList::-webkit-scrollbar-thumb,
+.explorerList::-webkit-scrollbar-thumb,
+.centerCol::-webkit-scrollbar-thumb,
+.rightCol::-webkit-scrollbar-thumb {
+  background: rgba(253, 184, 19, 0.4);
+  border-radius: 10px;
+}
+
+.queueList::-webkit-scrollbar-thumb:hover,
+.logList::-webkit-scrollbar-thumb:hover,
+.explorerList::-webkit-scrollbar-thumb:hover,
+.centerCol::-webkit-scrollbar-thumb:hover,
+.rightCol::-webkit-scrollbar-thumb:hover {
+  background: rgba(253, 184, 19, 0.75);
 }

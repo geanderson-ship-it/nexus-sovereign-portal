@@ -1,7 +1,16 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
-const API_KEY = process.env.OPENWEATHER_API_KEY;
+// Open-Meteo: 100% free, no API key needed
+// WMO Weather codes mapped to Portuguese descriptions
+const WMO_CODES: Record<number, string> = {
+  0: 'céu limpo', 1: 'predominantemente limpo', 2: 'parcialmente nublado', 3: 'nublado',
+  45: 'neblina', 48: 'neblina com geada',
+  51: 'garoa leve', 53: 'garoa moderada', 55: 'garoa intensa',
+  61: 'chuva leve', 63: 'chuva moderada', 65: 'chuva forte',
+  71: 'neve leve', 73: 'neve moderada', 75: 'neve forte',
+  80: 'pancadas de chuva', 81: 'chuva moderada', 82: 'chuva forte',
+  95: 'trovoada', 96: 'trovoada com granizo', 99: 'trovoada com granizo forte',
+};
 
 export interface CurrentWeather {
   temp: number;
@@ -20,63 +29,67 @@ export interface ForecastDay {
   rain_probability: number;
 }
 
+// Location config — Encantado, RS coordinates
+// If city name is provided, we still use these coords as default
+// Future improvement: use a geocoding API to convert city name to coords
+const LOCATIONS: Record<string, { lat: number; lon: number; name: string }> = {
+  default: { lat: -29.23, lon: -51.87, name: 'Encantado' },
+};
+
+function getLocation(city: string) {
+  // Always returns Encantado for now (or can be extended)
+  return LOCATIONS.default;
+}
+
 export async function getCurrentWeather(city: string): Promise<CurrentWeather> {
-  const res = await axios.get(`${BASE_URL}/weather`, {
+  const loc = getLocation(city);
+
+  const res = await axios.get('https://api.open-meteo.com/v1/forecast', {
     params: {
-      q: city,
-      appid: API_KEY,
-      units: 'metric',
-      lang: 'pt_br',
+      latitude: loc.lat,
+      longitude: loc.lon,
+      current: 'temperature_2m,apparent_temperature,relative_humidity_2m,weather_code',
+      timezone: 'America/Sao_Paulo',
     },
   });
 
+  const current = res.data.current;
+  const code = current.weather_code as number;
+
   return {
-    temp: Math.round(res.data.main.temp),
-    feels_like: Math.round(res.data.main.feels_like),
-    description: res.data.weather[0].description,
-    humidity: res.data.main.humidity,
-    city: res.data.name,
-    country: res.data.sys.country,
+    temp: Math.round(current.temperature_2m),
+    feels_like: Math.round(current.apparent_temperature),
+    description: WMO_CODES[code] || 'clima variável',
+    humidity: current.relative_humidity_2m,
+    city: loc.name,
+    country: 'BR',
   };
 }
 
 export async function getForecast(city: string): Promise<ForecastDay[]> {
-  const res = await axios.get(`${BASE_URL}/forecast`, {
+  const loc = getLocation(city);
+
+  const res = await axios.get('https://api.open-meteo.com/v1/forecast', {
     params: {
-      q: city,
-      appid: API_KEY,
-      units: 'metric',
-      lang: 'pt_br',
-      cnt: 8, // next 24h in 3h intervals
+      latitude: loc.lat,
+      longitude: loc.lon,
+      daily: 'temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max',
+      timezone: 'America/Sao_Paulo',
+      forecast_days: 4,
     },
   });
 
-  // Group by day and get min/max
-  const dayMap = new Map<string, ForecastDay>();
+  const daily = res.data.daily;
 
-  for (const item of res.data.list) {
-    const date = item.dt_txt.split(' ')[0];
-    const temp = Math.round(item.main.temp);
-    const rainProb = Math.round((item.pop || 0) * 100);
-
-    if (!dayMap.has(date)) {
-      dayMap.set(date, {
-        date,
-        min: temp,
-        max: temp,
-        description: item.weather[0].description,
-        rain_probability: rainProb,
-      });
-    } else {
-      const day = dayMap.get(date)!;
-      day.min = Math.min(day.min, temp);
-      day.max = Math.max(day.max, temp);
-      if (rainProb > day.rain_probability) {
-        day.rain_probability = rainProb;
-        day.description = item.weather[0].description;
-      }
-    }
-  }
-
-  return Array.from(dayMap.values()).slice(0, 3);
+  return daily.time.slice(1, 4).map((date: string, i: number) => {
+    const idx = i + 1;
+    const code = daily.weather_code[idx] as number;
+    return {
+      date,
+      min: Math.round(daily.temperature_2m_min[idx]),
+      max: Math.round(daily.temperature_2m_max[idx]),
+      description: WMO_CODES[code] || 'clima variável',
+      rain_probability: daily.precipitation_probability_max[idx] || 0,
+    };
+  });
 }

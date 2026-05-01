@@ -5,11 +5,12 @@ import styles from './studio.module.css';
 import { useAnnouncer, StationConfig, AnnounceType } from '@/hooks/use-announcer';
 import SequenceBuilder, { SequenceItem } from './sequence-builder';
 import Image from 'next/image';
+import { Play, Pause, SkipForward, SkipBack, Square } from 'lucide-react';
 
 const DEFAULT_STATION: StationConfig = {
   name: 'Rádio Encanto FM',
   frequency: '100.1 FM',
-  city: 'São Paulo',
+  city: '95960-000',
   slogan: 'O vale é 100',
   gender: 'female',
   manualTemp: null,
@@ -41,91 +42,110 @@ function Clock() {
   );
 }
 
-function WeatherWidget({ weather }: { weather: any }) {
-  if (!weather) return (
-    <div className={styles.weatherBlock}>
-      <div className={styles.weatherLoading}>Carregando clima...</div>
-    </div>
-  );
-
+function WeatherMini({ weather, manualTemp }: { weather: any; manualTemp: number | null }) {
+  const temp = manualTemp !== null ? manualTemp : (weather?.current?.temp || '--');
+  
   return (
-    <div className={styles.weatherBlock}>
-      <div className={styles.weatherCurrent}>
-        <span className={styles.weatherTemp}>{weather.current.temp}°C</span>
-        <div className={styles.weatherInfo}>
-          <span className={styles.weatherCity}>{weather.current.city}</span>
-          <span className={styles.weatherDesc}>{weather.current.description}</span>
-          <span className={styles.weatherHumidity}>💧 {weather.current.humidity}% umidade</span>
+    <div className={styles.miniWeatherRow}>
+      <div className={styles.miniWeatherCard} title="Temperatura Atual">
+        <span className={styles.miniWeatherIcon}>🌡️</span>
+        <div className={styles.miniWeatherInfo}>
+          <span className={styles.miniWeatherVal}>{temp}°C</span>
+          <span className={styles.miniWeatherLabel}>TERMÔMETRO</span>
         </div>
       </div>
-      <div className={styles.weatherForecast}>
-        {weather.forecast.map((day: any) => (
-          <div key={day.date} className={styles.forecastDay}>
-            <span className={styles.forecastDate}>
-              {new Date(day.date + 'T12:00:00').toLocaleDateString('pt-BR', { weekday: 'short' })}
-            </span>
-            <span className={styles.forecastDesc}>{day.description}</span>
-            <span className={styles.forecastRange}>{day.min}° / {day.max}°</span>
-            {day.rain_probability >= 30 && (
-              <span className={styles.forecastRain}>🌧 {day.rain_probability}%</span>
-            )}
-          </div>
-        ))}
+      <div className={styles.miniWeatherCard} title={weather?.current?.description || 'Clima'}>
+        <span className={styles.miniWeatherIcon}>🌦️</span>
+        <div className={styles.miniWeatherInfo}>
+          <span className={styles.miniWeatherVal}>{weather?.current?.humidity || '--'}%</span>
+          <span className={styles.miniWeatherLabel}>UMIDADE</span>
+        </div>
       </div>
     </div>
   );
 }
 
-function ThermometerWidget({ value, onChange }: { value: number | null; onChange: (v: number | null) => void }) {
-  const [input, setInput] = useState(value !== null ? String(value) : '');
+function FileExplorer() {
+  const [files, setFiles] = useState<File[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const raw = e.target.value;
-    setInput(raw);
-    const num = parseFloat(raw);
-    onChange(isNaN(num) ? null : num);
-  }
+  const handleFolderSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files || []);
+    const audioFiles = selectedFiles.filter(f => 
+      f.type.startsWith('audio/') || 
+      /\.(mp3|wav|ogg|m4a)$/i.test(f.name)
+    );
+    setFiles(audioFiles);
+  };
 
-  function handleClear() {
-    setInput('');
-    onChange(null);
-  }
+  const handleDragStart = (e: React.DragEvent, file: File) => {
+    // Store the file in a global-ish way that the SequenceBuilder can access
+    // because DataTransfer.files only works for external OS drops.
+    (window as any).__nexus_dragging_file = file;
+    e.dataTransfer.setData('application/nexus-internal-file', file.name);
+    e.dataTransfer.effectAllowed = 'copy';
+  };
 
   return (
-    <div className={styles.thermoBlock}>
-      <div className={styles.thermoHeader}>
-        <span>🌡️ Termômetro Local</span>
-        {value !== null && (
-          <button className={styles.thermoClear} onClick={handleClear} title="Usar OpenWeatherMap">
-            ✕ Limpar
-          </button>
+    <div className={styles.explorerPanel}>
+      <div className={styles.explorerHeader}>
+        <span>📂 Arquivos Locais</span>
+        <label className={styles.loadFolderBtn}>
+          Carregar Pasta
+          <input 
+            type="file" 
+            webkitdirectory="true" 
+            directory="true" 
+            multiple 
+            style={{ display: 'none' }} 
+            onChange={handleFolderSelect}
+          />
+        </label>
+      </div>
+      <div className={styles.explorerList}>
+        {files.length === 0 ? (
+          <div className={styles.explorerEmpty}>
+            Nenhuma pasta carregada.<br/>Clique em "Carregar Pasta" para indexar suas músicas.
+          </div>
+        ) : (
+          files.map((file, i) => (
+            <div 
+              key={i} 
+              className={styles.explorerItem}
+              draggable
+              onDragStart={(e) => handleDragStart(e, file)}
+            >
+              <div className={styles.explorerItemInfo}>
+                <span className={styles.explorerItemIcon}>🎵</span>
+                <span className={styles.explorerItemName}>{file.name}</span>
+              </div>
+              <button 
+                className={styles.explorerAddBtn}
+                onClick={() => {
+                  // Dispatch a custom event that StudioNexusPro can listen to
+                  const event = new CustomEvent('nexus-add-file', { detail: file });
+                  window.dispatchEvent(event);
+                }}
+              >
+                +
+              </button>
+            </div>
+          ))
         )}
-      </div>
-      <div className={styles.thermoRow}>
-        <input
-          id="manual-temp-input"
-          className={styles.thermoInput}
-          type="number"
-          step="0.1"
-          placeholder="Ex: 18.5"
-          value={input}
-          onChange={handleChange}
-        />
-        <span className={styles.thermoUnit}>°C</span>
-      </div>
-      <div className={styles.thermoHint}>
-        {value !== null
-          ? `✅ Usando termômetro local: ${value}°C`
-          : '🌐 Usando temperatura da internet'}
       </div>
     </div>
   );
 }
 
-function QueuePanel({ queue, isSpeaking, onStop }: {
+function QueuePanel({ queue, isSpeaking, onStop, playbackTime, playbackStatus, onTogglePause, onSkip, onRestart }: {
   queue: any[];
   isSpeaking: boolean;
   onStop: () => void;
+  playbackTime: { current: number; duration: number };
+  playbackStatus: 'playing' | 'paused' | 'stopped';
+  onTogglePause: () => void;
+  onSkip: () => void;
+  onRestart: () => void;
 }) {
   const statusColors: Record<string, string> = {
     pending: 'rgba(255, 255, 255, 0.4)',
@@ -134,27 +154,99 @@ function QueuePanel({ queue, isSpeaking, onStop }: {
     error: '#ef4444',
   };
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    const ms = Math.floor((seconds % 1) * 100);
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`;
+  };
+
+  const remainingTime = Math.max(0, playbackTime.duration - playbackTime.current);
+  const currentItem = queue.find(q => q.status === 'speaking');
+
   return (
     <div className={styles.queuePanel}>
       <div className={styles.panelHeader}>
-        <span>🎙️ Fila de Anúncios</span>
+        <span>🎙️ Master Control Deck</span>
         {isSpeaking && (
-          <button className={styles.stopBtn} onClick={onStop}>■ Parar</button>
+          <button className={styles.stopBtn} onClick={onStop} title="Parar tudo">■ Stop</button>
         )}
       </div>
+
+      {/* Now Playing Visualizer / Player */}
+      <div className={styles.playerCard}>
+        <div className={styles.tapeCounter}>
+          <div className={styles.tapeLabel}>REMAINING TIME</div>
+          <div className={styles.tapeDigits}>{formatTime(remainingTime)}</div>
+        </div>
+
+        <div className={styles.nowPlayingInfo}>
+          <div className={styles.nowPlayingLabel}>NOW ON AIR</div>
+          <div className={styles.nowPlayingTitle}>
+            {currentItem ? (
+              <span className={styles.marqueeText}>{currentItem.label}</span>
+            ) : (
+              <span style={{ opacity: 0.3, fontSize: '14px' }}>STANDBY - WAITING QUEUE</span>
+            )}
+          </div>
+        </div>
+
+        <div className={styles.playerControls}>
+          <button 
+            className={styles.playerBtn} 
+            onClick={onRestart} 
+            title="Reiniciar faixa"
+            style={{ opacity: isSpeaking ? 1 : 0.35 }}
+          >
+            <SkipBack size={24} fill="currentColor" />
+          </button>
+          
+          <button 
+            className={`${styles.playerBtn} ${styles.playPauseBtn}`} 
+            onClick={onTogglePause} 
+            title={playbackStatus === 'playing' ? 'Pausar' : 'Play'}
+            style={{ opacity: isSpeaking ? 1 : 0.35 }}
+          >
+            {playbackStatus === 'playing' ? (
+              <Pause size={32} fill="currentColor" />
+            ) : (
+              <Play size={32} fill="currentColor" />
+            )}
+          </button>
+ 
+          <button 
+            className={styles.playerBtn} 
+            onClick={onSkip}
+            title="Próxima faixa"
+            style={{ opacity: isSpeaking ? 1 : 0.35 }}
+          >
+            <SkipForward size={24} fill="currentColor" />
+          </button>
+        </div>
+
+        <div className={styles.progressBar}>
+           <div 
+             className={styles.progressFill} 
+             style={{ width: `${(playbackTime.current / (playbackTime.duration || 1)) * 100}%` }} 
+           />
+        </div>
+      </div>
+
+      <div className={styles.queueSubHeader}>PRÓXIMOS NA FILA</div>
+      
       {queue.length === 0 ? (
         <div className={styles.queueEmpty}>Nenhum anúncio na fila</div>
       ) : (
         <div className={styles.queueList}>
           {queue.map((item) => (
-            <div key={item.id} className={styles.queueItem}>
+            <div key={item.id} className={styles.queueItem} style={{ opacity: item.status === 'speaking' ? 1 : 0.6 }}>
               <span className={styles.queueDot} style={{ background: statusColors[item.status] }} />
               <span className={styles.queueLabel}>{item.label}</span>
               <span className={styles.queueStatus}>
-                {item.status === 'speaking' && '▶ falando...'}
-                {item.status === 'pending' && 'aguardando'}
-                {item.status === 'done' && '✓ concluído'}
-                {item.status === 'error' && '✗ erro'}
+                {item.status === 'speaking' && '▶ ON AIR'}
+                {item.status === 'pending' && 'WAITING'}
+                {item.status === 'done' && '✓ SENT'}
+                {item.status === 'error' && '✗ FAIL'}
               </span>
             </div>
           ))}
@@ -164,20 +256,61 @@ function QueuePanel({ queue, isSpeaking, onStop }: {
   );
 }
 
-function LogPanel({ log }: { log: any[] }) {
+function LogPanel({ log }: { log: Array<{ time: string; text: string; type: string }> }) {
+  const typeIcon: Record<string, string> = {
+    music:      '🎧',
+    jingle:     '🎶',
+    time:       '⏰',
+    temp:       '🌡️',
+    forecast:   '🌦️',
+    'station-id': '📡',
+    custom:     '📢',
+    'next-track': '🎵',
+  };
+
+  const typeColor: Record<string, string> = {
+    music:      '#3b82f6',
+    jingle:     '#a855f7',
+    time:       '#FDB813',
+    temp:       '#f97316',
+    forecast:   '#06b6d4',
+    'station-id': '#10b981',
+    custom:     '#ec4899',
+    'next-track': '#60a5fa',
+  };
+
   return (
     <div className={styles.logPanel}>
-      <div className={styles.panelHeader}>📋 Histórico</div>
+      <div className={styles.panelHeader}>
+        <span>📊 Histórico de Execução</span>
+        {log.length > 0 && (
+          <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: 'normal', textTransform: 'none', letterSpacing: 0 }}>
+            {log.length} item{log.length !== 1 ? 's' : ''}
+          </span>
+        )}
+      </div>
       {log.length === 0 ? (
-        <div className={styles.queueEmpty}>Nenhum anúncio realizado ainda</div>
+        <div className={styles.queueEmpty}>
+          📢 Nenhuma faixa executada ainda
+        </div>
       ) : (
         <div className={styles.logList}>
-          {log.map((entry, i) => (
-            <div key={i} className={styles.logItem}>
-              <span className={styles.logTime}>{entry.time}</span>
-              <span className={styles.logText}>{entry.text}</span>
-            </div>
-          ))}
+          {log.map((entry, i) => {
+            const icon = typeIcon[entry.type] || '🔹';
+            const color = typeColor[entry.type] || 'var(--accent)';
+            return (
+              <div key={i} className={styles.logItem} style={{ borderLeftColor: color }}>
+                <div className={styles.logItemHeader}>
+                  <span className={styles.logIcon}>{icon}</span>
+                  <span className={styles.logTime}>{entry.time}</span>
+                  <span className={styles.logBadge} style={{ background: color + '22', color }}>
+                    {entry.type?.toUpperCase()}
+                  </span>
+                </div>
+                <span className={styles.logText}>{entry.text}</span>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -191,8 +324,10 @@ export function StudioNexusPro() {
   const [tempStation, setTempStation] = useState<StationConfig>(DEFAULT_STATION);
   const [stationLogo, setStationLogo] = useState<string | null>(null);
   const [softwareLogo, setSoftwareLogo] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const savedStationLogo = localStorage.getItem('nexus_station_logo');
     if (savedStationLogo) setStationLogo(savedStationLogo);
     
@@ -225,7 +360,10 @@ export function StudioNexusPro() {
   }
 
   const activeStation: StationConfig = { ...station, manualTemp };
-  const { queue, weather, isSpeaking, log, enqueue, stop } = useAnnouncer(activeStation);
+  const { 
+    queue, weather, isSpeaking, log, enqueue, stop, 
+    playbackTime, playbackStatus, togglePause, skipNext, restartTrack 
+  } = useAnnouncer(activeStation);
 
   const quickButtons: Array<{ type: AnnounceType; label: string; color: string }> = [
     { type: 'time', label: '⏰ Hora Agora', color: '#3b82f6' },
@@ -249,6 +387,8 @@ export function StudioNexusPro() {
       });
     });
   }
+
+  if (!mounted) return null;
 
   return (
     <div className={styles.layout}>
@@ -357,12 +497,24 @@ export function StudioNexusPro() {
       <main className={styles.main}>
         <div className={styles.leftCol}>
           <Clock />
-          <ThermometerWidget value={manualTemp} onChange={setManualTemp} />
-          <WeatherWidget weather={weather} />
+          <WeatherMini weather={weather} manualTemp={manualTemp} />
+          <FileExplorer />
+          <button 
+            className={styles.manualTempBtn}
+            onClick={() => {
+              const val = window.prompt("Digite a temperatura local (°C):", manualTemp?.toString() || "");
+              if (val !== null) setManualTemp(val === "" ? null : parseFloat(val));
+            }}
+          >
+            🌡️ Ajustar Termômetro
+          </button>
         </div>
 
         <div className={styles.centerCol}>
-          <SequenceBuilder onEnqueueSequence={handleEnqueueSequence} />
+          <SequenceBuilder 
+            onEnqueueSequence={handleEnqueueSequence} 
+            existingQueue={queue}
+          />
           <div className={styles.card}>
             <div className={styles.cardTitle}>Anúncios Rápidos Soltos</div>
             <div className={styles.quickGrid}>
@@ -381,7 +533,16 @@ export function StudioNexusPro() {
         </div>
 
         <div className={styles.rightCol}>
-          <QueuePanel queue={queue} isSpeaking={isSpeaking} onStop={stop} />
+          <QueuePanel 
+            queue={queue} 
+            isSpeaking={isSpeaking} 
+            onStop={stop} 
+            playbackTime={playbackTime}
+            playbackStatus={playbackStatus}
+            onTogglePause={togglePause}
+            onSkip={skipNext}
+            onRestart={restartTrack}
+          />
           <LogPanel log={log} />
         </div>
       </main>

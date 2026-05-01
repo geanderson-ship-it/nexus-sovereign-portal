@@ -48,7 +48,7 @@ export default function StudioGabinetePage() {
          </Button>
       </div>
 
-      <div className="pt-11">
+      <div className="pt-11" style={{ height: 'calc(100vh - 44px)' }}>
         {viewMode === 'app' ? (
           <StudioNexusPro />
         ) : (
