@@ -98,8 +98,21 @@ import {
   Droplets,
   Pause,
   Cpu,
+  Github,
+  LayoutDashboard,
+  Code2,
+  GitBranch,
+  ChevronDown as ChevronDownIcon,
+  Plus,
+  Search
 } from 'lucide-react';
 import Link from 'next/link';
+import {
+  GabineteGithubHeader,
+  GabineteFileList,
+  GabineteReadme,
+  GabineteGithubSidebar
+} from '@/components/gabinete/github-style-gabinete';
 import {
   Collapsible,
   CollapsibleContent,
@@ -131,6 +144,7 @@ import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import placeholderImages from '@/lib/placeholder-images.json';
 import { errorEmitter } from '@/firebase/error-emitter';
 import { useSearchParams } from 'next/navigation';
+import { useLocale } from '@/hooks/use-locale';
 import { DjenyDesignModule } from '@/components/gabinete/djeny-design-module';
 import { AnalyticsDashboard } from '@/components/gabinete/analytics-dashboard';
 import { useUser, useFirestore } from '@/firebase';
@@ -179,12 +193,14 @@ export default function GabinetePage() {
   const { user } = useUser();
   const firestore = useFirestore();
   const searchParams = useSearchParams();
+  const { t } = useLocale();
   const [danteAuditorMenuOpen, setDanteAuditorMenuOpen] = React.useState(false);
   const [dantePcpMenuOpen, setDantePcpMenuOpen] = React.useState(false);
   const [djenyModaMenuOpen, setDjenyModaMenuOpen] = React.useState(false);
   const [djenyRhMenuOpen, setDjenyRhMenuOpen] = React.useState(false);
   const [djenyComercialMenuOpen, setDjenyComercialMenuOpen] = React.useState(false);
   const [danteSafraRegistered, setDanteSafraRegistered] = React.useState(false);
+  const [viewMode, setViewMode] = React.useState<'app' | 'git'>('app');
 
   React.useEffect(() => {
     async function checkDanteSafraStatus() {
@@ -206,7 +222,36 @@ export default function GabinetePage() {
   
 
   return (
-    <div className="space-y-8">
+    <div className="min-h-screen bg-[#080b10] text-[#f0f6fc] font-sans selection:bg-blue-500/30">
+      {/* View Toggle Bar */}
+      <div className="bg-zinc-900/50 border-b border-zinc-800 px-4 py-2 flex justify-end gap-2 fixed top-0 left-0 right-0 z-[100] backdrop-blur-sm">
+         <Button 
+           size="sm" 
+           variant={viewMode === 'app' ? 'default' : 'outline'}
+           onClick={() => setViewMode('app')}
+           className={cn(
+             "h-7 text-[10px] uppercase font-black tracking-widest gap-2 transition-all",
+             viewMode === 'app' ? "bg-amber-600 hover:bg-amber-500 text-white shadow-[0_0_15px_rgba(245,158,11,0.3)]" : "border-zinc-700 text-zinc-500 hover:text-white"
+           )}
+         >
+           <LayoutDashboard className="h-3 w-3" /> Dashboard Elite
+         </Button>
+         <Button 
+           size="sm" 
+           variant={viewMode === 'git' ? 'default' : 'outline'}
+           onClick={() => setViewMode('git')}
+           className={cn(
+             "h-7 text-[10px] uppercase font-black tracking-widest gap-2 transition-all",
+             viewMode === 'git' ? "bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]" : "border-zinc-700 text-zinc-500 hover:text-white"
+           )}
+         >
+           <Code2 className="h-3 w-3" /> Repository View
+         </Button>
+      </div>
+
+      <div className="pt-11">
+        {viewMode === 'app' ? (
+          <div className="p-8 max-w-[1600px] mx-auto space-y-8">
        <div className="text-center space-y-4 mb-12">
         <h1 className="text-4xl font-bold tracking-tighter text-white font-headline">
           Gabinete de Comando.
@@ -233,11 +278,11 @@ export default function GabinetePage() {
           COMANDO DE ELITE
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1600px] mx-auto">
           {/* Card 1: MAGA LIVE */}
           <Card className="group relative flex flex-col bg-zinc-950/40 border-2 border-blue-500/20 backdrop-blur-xl overflow-hidden hover:border-blue-500/60 transition-all duration-700 shadow-[0_0_40px_rgba(59,130,246,0.05)]">
             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative h-64 w-full">
+            <div className="relative h-48 w-full">
               <Image
                 src="/maga-avatar-premium.png"
                 alt="Maga Live"
@@ -245,23 +290,23 @@ export default function GabinetePage() {
                 className="object-contain transition-transform duration-1000 group-hover:scale-105"
               />
             </div>
-            <div className="p-6 relative z-10 text-center">
-              <CardHeader className="p-0 space-y-2">
-                <CardTitle className="font-headline text-2xl text-blue-300 tracking-wider">MAGA LIVE</CardTitle>
-                <CardDescription className="text-blue-100/60 font-mono text-xs uppercase tracking-widest">Sincronia Noética Ativa</CardDescription>
+            <div className="p-4 relative z-10 text-center">
+              <CardHeader className="p-0 space-y-1">
+                <CardTitle className="font-headline text-xl text-blue-300 tracking-wider">MAGA LIVE</CardTitle>
+                <CardDescription className="text-blue-100/60 font-mono text-[10px] uppercase tracking-widest">{t('gabinete.main.magaLive.status')}</CardDescription>
               </CardHeader>
-              <div className="mt-6">
-                <Button asChild className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold tracking-widest py-6 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                  <Link href="/intelligence/maga-live">[ CONEXÃO DIRETA ]</Link>
+              <div className="mt-4">
+                <Button asChild className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold tracking-widest py-4 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.3)] text-xs">
+                  <Link href="/intelligence/maga-live">{t('gabinete.main.magaLive.cta')}</Link>
                 </Button>
               </div>
             </div>
           </Card>
 
           {/* Card 2: NEXUS COMMAND (UNIFICADO) */}
-          <Card className="group relative flex flex-col bg-zinc-950/40 border-2 border-primary/20 backdrop-blur-xl overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_0_40px_rgba(234,179,8,0.05)] order-first md:order-none">
+          <Card className="group relative flex flex-col bg-zinc-950/40 border-2 border-primary/20 backdrop-blur-xl overflow-hidden hover:border-primary/60 transition-all duration-700 shadow-[0_0_40px_rgba(234,179,8,0.05)] order-first lg:order-none">
             <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative h-64 w-full">
+            <div className="relative h-48 w-full">
               <Image
                 src="https://i.postimg.cc/MzfP6jhW/Magadot-e-Orion.png"
                 alt="Nexus Command"
@@ -269,14 +314,14 @@ export default function GabinetePage() {
                 className="object-contain transition-transform duration-1000 group-hover:scale-110"
               />
             </div>
-            <div className="p-6 relative z-10 text-center">
-              <CardHeader className="p-0 space-y-2">
-                <CardTitle className="font-headline text-3xl text-primary tracking-widest">NEXUS COMMAND</CardTitle>
-                <CardDescription className="text-primary/60 font-mono text-xs uppercase tracking-[0.3em]">Comando Central Unificado</CardDescription>
+            <div className="p-4 relative z-10 text-center">
+              <CardHeader className="p-0 space-y-1">
+                <CardTitle className="font-headline text-2xl text-primary tracking-widest">NEXUS COMMAND</CardTitle>
+                <CardDescription className="text-primary/60 font-mono text-[10px] uppercase tracking-[0.3em]">{t('gabinete.main.nexusCommand.status')}</CardDescription>
               </CardHeader>
-              <div className="mt-6">
-                <Button asChild variant="outline" className="w-full border-primary/50 text-primary hover:bg-primary hover:text-black font-black tracking-widest py-6 rounded-xl text-lg">
-                   <Link href="/intelligence">ATIVAR CONFLUÊNCIA</Link>
+              <div className="mt-4">
+                <Button asChild variant="outline" className="w-full border-primary/50 text-primary hover:bg-primary hover:text-black font-black tracking-widest py-4 rounded-xl text-sm">
+                   <Link href="/intelligence">{t('gabinete.main.nexusCommand.cta')}</Link>
                 </Button>
               </div>
             </div>
@@ -285,7 +330,7 @@ export default function GabinetePage() {
           {/* Card 3: ORION LIVE */}
           <Card className="group relative flex flex-col bg-zinc-950/40 border-2 border-slate-500/20 backdrop-blur-xl overflow-hidden hover:border-slate-500/60 transition-all duration-700 shadow-[0_0_40px_rgba(255,255,255,0.03)]">
             <div className="absolute inset-0 bg-gradient-to-t from-slate-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative h-64 w-full">
+            <div className="relative h-48 w-full">
               <Image
                 src="/orion-avatar-premium.png"
                 alt="Orion Live"
@@ -293,24 +338,49 @@ export default function GabinetePage() {
                 className="object-contain grayscale-[30%] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
               />
             </div>
-            <div className="p-6 relative z-10 text-center">
-              <CardHeader className="p-0 space-y-2">
-                <CardTitle className="font-headline text-2xl text-slate-300 tracking-wider">ORION LIVE</CardTitle>
-                <CardDescription className="text-slate-400/60 font-mono text-xs uppercase tracking-widest">Prontidão Tática de Elite</CardDescription>
+            <div className="p-4 relative z-10 text-center">
+              <CardHeader className="p-0 space-y-1">
+                <CardTitle className="font-headline text-xl text-slate-300 tracking-wider">ORION LIVE</CardTitle>
+                <CardDescription className="text-slate-400/60 font-mono text-[10px] uppercase tracking-widest">{t('gabinete.main.orionLive.status')}</CardDescription>
               </CardHeader>
-              <div className="mt-6">
-                <Button asChild className="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold tracking-widest py-6 rounded-xl">
-                  <Link href="/intelligence/orion-live">[ COMANDO TÁTICO ]</Link>
+              <div className="mt-4">
+                <Button asChild className="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold tracking-widest py-4 rounded-xl text-xs">
+                  <Link href="/intelligence/orion-live">{t('gabinete.main.orionLive.cta')}</Link>
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          {/* Card 4: NEXUS STUDIO */}
+          <Card className="group relative flex flex-col bg-zinc-950/40 border-2 border-amber-500/20 backdrop-blur-xl overflow-hidden hover:border-amber-500/60 transition-all duration-700 shadow-[0_0_40px_rgba(245,158,11,0.05)]">
+            <div className="absolute inset-0 bg-gradient-to-t from-amber-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="relative h-48 w-full">
+              <Image
+                src="https://i.postimg.cc/t4nTCxJZ/Nexus-studio.png"
+                alt="Nexus Studio"
+                fill
+                className="object-contain transition-transform duration-1000 group-hover:scale-105"
+              />
+            </div>
+            <div className="p-4 relative z-10 text-center">
+              <CardHeader className="p-0 space-y-1">
+                <CardTitle className="font-headline text-xl text-amber-400 tracking-wider">NEXUS STUDIO</CardTitle>
+                <CardDescription className="text-amber-100/60 font-mono text-[10px] uppercase tracking-widest">{t('gabinete.main.nexusStudio.status')}</CardDescription>
+              </CardHeader>
+              <div className="mt-4">
+                <Button asChild className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold tracking-widest py-4 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.3)] text-xs">
+                  <Link href="/gabinete/studio">{t('gabinete.main.nexusStudio.cta')}</Link>
                 </Button>
               </div>
             </div>
           </Card>
         </div>
+
       </div>
 
       {/* Dante Modules */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold tracking-tighter text-emerald-400 font-headline text-center [text-shadow:0_0_12px_theme(colors.emerald.500)]">MÓDULOS DANTE</h2>
+        <h2 className="text-2xl font-bold tracking-tighter text-emerald-400 font-headline text-center [text-shadow:0_0_12px_theme(colors.emerald.500)]">{t('gabinete.main.danteModules')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 items-stretch max-w-4xl mx-auto">
           
             {/* Card 1: DANTE COMPRAS (O Negociador) */}
@@ -354,16 +424,16 @@ export default function GabinetePage() {
                     <div className="p-6 flex-grow">
                         <CardHeader className="p-0">
                             <CardTitle className="font-headline text-xl text-blue-300 flex items-center gap-3">
-                                <ShieldCheck className="h-6 w-6"/> Dante Auditor (O Sentinela)
+                                <ShieldCheck className="h-6 w-6"/> {t('gabinete.main.danteAuditor.title')}
                             </CardTitle>
                             <CardDescription className="text-gray-300 !mt-2">
-                              Controle de qualidade, conformidade técnica e inspeção de processos.
+                              {t('gabinete.main.danteAuditor.description')}
                             </CardDescription>
                         </CardHeader>
                     </div>
                     <div className="p-6 pt-0 mt-auto">
                         <CollapsibleTrigger asChild>
-                            <Button className="w-full font-bold tracking-widest bg-blue-600/80 hover:bg-blue-600 text-white">[ ACESSAR MÓDULO ]</Button>
+                            <Button className="w-full font-bold tracking-widest bg-blue-600/80 hover:bg-blue-600 text-white">{t('gabinete.main.cta.access')}</Button>
                         </CollapsibleTrigger>
                     </div>
                     <CollapsibleContent className="CollapsibleContent mt-auto">
@@ -372,7 +442,7 @@ export default function GabinetePage() {
                                   <DialogTrigger asChild>
                                       <Button variant="outline" className="flex-1 justify-center text-center gap-2 text-base p-4 border-blue-500/30 text-blue-300/90 hover:bg-blue-500/10 hover:text-blue-300">
                                           <FileX className="h-5 w-5 text-blue-400" />
-                                          <span>Não-Conformidade</span>
+                                          <span>{t('gabinete.main.nonConformance')}</span>
                                       </Button>
                                   </DialogTrigger>
                                   <DialogContent className="bg-black/80 backdrop-blur-md border-blue-500/50 text-white">
@@ -487,16 +557,16 @@ export default function GabinetePage() {
                 <div className="p-6 flex-grow">
                     <CardHeader className="p-0">
                         <CardTitle className="font-headline text-xl text-cyan-300 flex items-center gap-3">
-                            <Cpu className="h-6 w-6"/> Dante Builder (Mestre Construtor)
+                            <Cpu className="h-6 w-6"/> {t('gabinete.main.danteBuilder.title')}
                         </CardTitle>
                         <CardDescription className="text-gray-300 !mt-2">
-                            Design, Engenharia e Especificação Técnica de Aberturas e Esquadrias.
+                            {t('gabinete.main.danteBuilder.description')}
                         </CardDescription>
                     </CardHeader>
                 </div>
                 <div className="p-6 pt-0 mt-auto">
                     <Button asChild className="w-full font-bold tracking-widest bg-cyan-600/80 hover:bg-cyan-600 text-white">
-                        <Link href="/intelligence/dante-builder">[ ACESSAR TERMINAL ]</Link>
+                        <Link href="/intelligence/dante-builder">{t('gabinete.main.cta.terminal')}</Link>
                     </Button>
                 </div>
             </Card>
@@ -505,7 +575,7 @@ export default function GabinetePage() {
 
       {/* Djeny Modules */}
       <div className="space-y-6 mt-16">
-         <h2 className="text-2xl font-bold tracking-tighter text-amber-400 font-headline text-center [text-shadow:0_0_12px_theme(colors.amber.500)]">MÓDULOS DJENY</h2>
+         <h2 className="text-2xl font-bold tracking-tighter text-amber-400 font-headline text-center [text-shadow:0_0_12px_theme(colors.amber.500)]">{t('gabinete.main.djenyModules')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
 
              {/* Card 6: Djeny RH */}
@@ -522,16 +592,16 @@ export default function GabinetePage() {
                     <div className="p-6 flex-grow">
                         <CardHeader className="p-0">
                              <CardTitle className="font-headline text-xl text-purple-300 flex items-center gap-3">
-                                 <Award className="h-6 w-6"/> Djeny RH (A Mentora)
+                                 <Award className="h-6 w-6"/> {t('gabinete.main.djenyRh.title')}
                              </CardTitle>
                             <CardDescription className="text-gray-300 !mt-2">
-                               Avaliação de desempenho, gestão de talentos e clima organizacional.
+                               {t('gabinete.main.djenyRh.description')}
                             </CardDescription>
                         </CardHeader>
                     </div>
                     <div className="p-6 pt-0 mt-auto">
                         <CollapsibleTrigger asChild>
-                            <Button variant="outline" className="w-full font-bold tracking-widest border-purple-400 text-purple-300 hover:bg-purple-500/10 hover:text-purple-200">[ ACESSAR MÓDULO ]</Button>
+                            <Button variant="outline" className="w-full font-bold tracking-widest border-purple-400 text-purple-300 hover:bg-purple-500/10 hover:text-purple-200">{t('gabinete.main.cta.access')}</Button>
                         </CollapsibleTrigger>
                     </div>
                     <CollapsibleContent className="CollapsibleContent mt-auto">
@@ -573,7 +643,7 @@ export default function GabinetePage() {
                                         <DialogTrigger asChild>
                                             <Button variant="outline" className="w-full justify-start gap-3 text-base p-6 border-purple-400/30 text-purple-300/90 hover:bg-purple-400/10 hover:text-purple-300">
                                                 <BrainCircuit className="h-5 w-5 text-purple-400" />
-                                                <span>Módulo Liderança (360° Djeny)</span>
+                                                <span>{t('gabinete.main.dialog.recruitment')}</span>
                                             </Button>
                                         </DialogTrigger>
                                         <DialogContent className="bg-black/80 backdrop-blur-md border-purple-400/50 text-white max-w-2xl">
@@ -632,10 +702,10 @@ export default function GabinetePage() {
                     <div className="p-6 flex-grow">
                         <CardHeader className="p-0">
                              <CardTitle className="font-headline text-xl text-amber-300 flex items-center gap-3">
-                                 <Lightbulb className="h-6 w-6"/> Djeny Comercial (A Estrategista)
+                                 <Lightbulb className="h-6 w-6"/> {t('gabinete.main.djenyComercial.title')}
                              </CardTitle>
                             <CardDescription className="text-gray-300 !mt-2">
-                               Inteligência de mercado, análise competitiva e posicionamento de marca.
+                               {t('gabinete.main.djenyComercial.description')}
                             </CardDescription>
                         </CardHeader>
                     </div>
@@ -683,10 +753,10 @@ export default function GabinetePage() {
                     <div className="p-6 flex-grow">
                         <CardHeader className="p-0">
                             <CardTitle className="font-headline text-xl text-rose-300 flex items-center gap-3">
-                                <Shirt className="h-6 w-6"/> Djeny Modas (A Estilista)
+                                <Shirt className="h-6 w-6"/> {t('gabinete.main.djenyModas.title')}
                             </CardTitle>
                             <CardDescription className="text-gray-300 !mt-2">
-                               Curadoria de estilo, biotipo, vestibilidade e engenharia de tecidos.
+                               {t('gabinete.main.djenyModas.description')}
                             </CardDescription>
                         </CardHeader>
                     </div>
@@ -701,7 +771,7 @@ export default function GabinetePage() {
                                 <DialogTrigger asChild>
                                     <Button variant="outline" className="w-full justify-start gap-3 text-base p-4 border-rose-400/30 text-rose-300/90 hover:bg-rose-400/10 hover:text-rose-300">
                                         <PersonStanding className="h-5 w-5 text-rose-400" />
-                                        <span>Provador Digital (Corpo Humano)</span>
+                                        <span>{t('gabinete.main.dialog.digitalFitting')}</span>
                                     </Button>
                                 </DialogTrigger>
                                 <DialogContent className="bg-black/80 backdrop-blur-md border-rose-400/50 text-white max-w-2xl">
@@ -715,7 +785,7 @@ export default function GabinetePage() {
                                 <DialogTrigger asChild>
                                     <Button variant="outline" className="w-full justify-start gap-3 text-base p-4 border-rose-400/30 text-rose-300/90 hover:bg-rose-400/10 hover:text-rose-300">
                                         <Layers className="h-5 w-5 text-rose-400" />
-                                        <span>Gestão de Fibras (Tecidos)</span>
+                                        <span>{t('gabinete.main.dialog.fiberManagement')}</span>
                                     </Button>
                                 </DialogTrigger>
                                 <DialogContent className="bg-black/80 backdrop-blur-md border-rose-400/50 text-white max-w-2xl">
@@ -729,7 +799,7 @@ export default function GabinetePage() {
                                   <DialogTrigger asChild>
                                       <Button variant="outline" className="w-full justify-start gap-3 text-base p-4 border-rose-400/30 text-rose-300/90 hover:bg-rose-400/10 hover:text-rose-300">
                                           <Scissors className="h-5 w-5 text-rose-400" />
-                                          <span>Custos de Enfesto (Engenharia)</span>
+                                          <span>{t('gabinete.main.dialog.spreadCosts')}</span>
                                       </Button>
                                   </DialogTrigger>
                                   <DialogContent className="bg-black/80 backdrop-blur-md border-rose-400/50 text-white max-w-2xl">
@@ -743,7 +813,7 @@ export default function GabinetePage() {
                                   <DialogTrigger asChild>
                                       <Button variant="outline" className="w-full justify-start gap-3 text-base p-4 border-rose-400/30 text-rose-300/90 hover:bg-rose-400/10 hover:text-rose-300">
                                           <BookOpen className="h-5 w-5 text-rose-400" />
-                                          <span>Catálogo Autoral (Marketing)</span>
+                                          <span>{t('gabinete.main.dialog.marketingCatalog')}</span>
                                       </Button>
                                   </DialogTrigger>
                                   <DialogContent className="bg-black/80 backdrop-blur-md border-rose-400/50 text-white max-w-2xl">
@@ -760,6 +830,57 @@ export default function GabinetePage() {
 
         </div>
       </div>
+        </div>
+      ) : (
+        <div className="bg-[#0d1117] min-h-screen">
+          <GabineteGithubHeader />
+          <main className="container mx-auto py-8 px-4 md:px-8">
+            <div className="flex flex-col lg:flex-row gap-8">
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex rounded-md overflow-hidden border border-zinc-700 shadow-sm">
+                      <Button variant="ghost" size="sm" className="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 gap-2 border-r border-zinc-700 h-8 text-xs px-3">
+                        <GitBranch className="h-4 w-4 text-zinc-500" /> main
+                      </Button>
+                      <Button variant="ghost" size="sm" className="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 h-8 text-xs px-2">
+                        <ChevronDownIcon className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="relative flex-1 md:w-64">
+                      <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-500" />
+                      <input 
+                        type="text" 
+                        placeholder="Go to file" 
+                        className="w-full bg-zinc-950 border border-zinc-700 rounded-md py-1.5 pl-8 pr-3 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                      />
+                    </div>
+                    <Button size="sm" className="bg-green-600 hover:bg-green-500 text-white gap-2 h-8 text-xs px-3 font-bold">
+                      <Plus className="h-4 w-4" /> New Module
+                    </Button>
+                  </div>
+                </div>
+                <GabineteFileList />
+                <GabineteReadme />
+              </div>
+              <div className="w-full lg:w-72 space-y-8">
+                <GabineteGithubSidebar />
+              </div>
+            </div>
+          </main>
+          <footer className="border-t border-zinc-800 py-10 mt-20">
+            <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-zinc-500">
+              <div className="flex items-center gap-4">
+                 <Image src="/logo-nexus-shield.png" alt="Nexus Shield" width={24} height={24} className="opacity-50 grayscale" />
+                 <span>© 2026 Nexus Intelligence Group.</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      )}
+    </div>
     </div>
   );
 }

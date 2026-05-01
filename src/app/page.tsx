@@ -11,12 +11,58 @@ import { Logo } from '@/components/logo';
 import { useLocale } from '@/hooks/use-locale';
 
 import { motion } from 'framer-motion';
+import { 
+    Github, 
+    LayoutDashboard, 
+    Code2, 
+    GitBranch, 
+    ChevronDown, 
+    Plus, 
+    Search 
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import {
+    PortalGithubHeader,
+    PortalFileList,
+    PortalReadme,
+    PortalGithubSidebar
+} from '@/components/github-style-portal';
 
 export default function HomePage() {
     const { t } = useLocale();
+    const [viewMode, setViewMode] = React.useState<'app' | 'git'>('app');
 
     return (
-        <div className="text-foreground overflow-x-hidden">
+        <div className="min-h-screen bg-[#080b10] text-[#f0f6fc] font-sans selection:bg-blue-500/30">
+            {/* View Toggle Bar */}
+            <div className="bg-zinc-900/50 border-b border-zinc-800 px-4 py-2 flex justify-end gap-2 fixed top-0 left-0 right-0 z-[100] backdrop-blur-sm">
+                <Button 
+                    size="sm" 
+                    variant={viewMode === 'app' ? 'default' : 'outline'}
+                    onClick={() => setViewMode('app')}
+                    className={cn(
+                        "h-7 text-[10px] uppercase font-black tracking-widest gap-2 transition-all",
+                        viewMode === 'app' ? "bg-amber-600 hover:bg-amber-500 text-white shadow-[0_0_15px_rgba(245,158,11,0.3)]" : "border-zinc-700 text-zinc-500 hover:text-white"
+                    )}
+                >
+                    <LayoutDashboard className="h-3 w-3" /> Sovereign Portal
+                </Button>
+                <Button 
+                    size="sm" 
+                    variant={viewMode === 'git' ? 'default' : 'outline'}
+                    onClick={() => setViewMode('git')}
+                    className={cn(
+                        "h-7 text-[10px] uppercase font-black tracking-widest gap-2 transition-all",
+                        viewMode === 'git' ? "bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]" : "border-zinc-700 text-zinc-500 hover:text-white"
+                    )}
+                >
+                    <Code2 className="h-3 w-3" /> Repository View
+                </Button>
+            </div>
+
+            <div className="pt-11">
+                {viewMode === 'app' ? (
+                    <div className="text-foreground overflow-x-hidden">
             <section className="relative min-h-[90dvh] flex flex-col items-center justify-center pt-24 overflow-hidden">
                 <div className="container relative z-10">
                     <div className="flex flex-col items-center justify-center mb-0 w-full">
@@ -248,6 +294,57 @@ export default function HomePage() {
                     </div>
                  </div>
             </section>
+                    </div>
+                ) : (
+                    <div className="bg-[#0d1117] min-h-screen">
+                        <PortalGithubHeader />
+                        <main className="container mx-auto py-8 px-4 md:px-8">
+                            <div className="flex flex-col lg:flex-row gap-8">
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex rounded-md overflow-hidden border border-zinc-700 shadow-sm">
+                                                <Button variant="ghost" size="sm" className="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 gap-2 border-r border-zinc-700 h-8 text-xs px-3">
+                                                    <GitBranch className="h-4 w-4 text-zinc-500" /> main
+                                                </Button>
+                                                <Button variant="ghost" size="sm" className="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 h-8 text-xs px-2">
+                                                    <ChevronDown className="h-3 w-3" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="relative flex-1 md:w-64">
+                                                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-500" />
+                                                <input 
+                                                    type="text" 
+                                                    placeholder="Go to file" 
+                                                    className="w-full bg-zinc-950 border border-zinc-700 rounded-md py-1.5 pl-8 pr-3 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                                />
+                                            </div>
+                                            <Button size="sm" className="bg-green-600 hover:bg-green-500 text-white gap-2 h-8 text-xs px-3 font-bold">
+                                                <Plus className="h-4 w-4" /> New Feature
+                                            </Button>
+                                        </div>
+                                    </div>
+                                    <PortalFileList />
+                                    <PortalReadme />
+                                </div>
+                                <div className="w-full lg:w-72 space-y-8">
+                                    <PortalGithubSidebar />
+                                </div>
+                            </div>
+                        </main>
+                        <footer className="border-t border-zinc-800 py-10 mt-20">
+                            <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-zinc-500">
+                                <div className="flex items-center gap-4">
+                                    <Image src="https://i.postimg.cc/t4nTCxJZ/Nexus-studio.png" alt="Nexus Logo" width={24} height={24} className="opacity-50 grayscale" />
+                                    <span>© 2026 Nexus Holding Group. All rights reserved.</span>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
