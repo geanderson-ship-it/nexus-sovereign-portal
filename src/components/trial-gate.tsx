@@ -1,14 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { useUser, useFirestore, useMemoFirebase, useDoc } from '@/firebase';
-import { doc, setDoc, DocumentReference } from 'firebase/firestore';
+import { useUser } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Loader2, ShieldAlert, Lock, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 import { isAdminUser } from '@/lib/constants';
 import { useLocale } from '@/hooks/use-locale';
 import * as gtag from '@/lib/gtag';
@@ -56,7 +53,6 @@ const CountdownTimer = ({ expiryTime }: { expiryTime: number }) => {
 
 export function TrialGate({ children, moduleId, moduleName, purchaseHref }: TrialGateProps) {
   const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
   const [isStartingTrial, setIsStartingTrial] = useState(false);
   const { t } = useLocale();
 
@@ -76,16 +72,10 @@ export function TrialGate({ children, moduleId, moduleName, purchaseHref }: Tria
 
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
-  const trialDocRef = useMemoFirebase(() => {
-    // Apenas crie a referência se o usuário não for um administrador, para evitar leituras desnecessárias no BD
-    if (!user || !firestore || isAdmin) return null;
-    return doc(firestore, 'users', user.uid, 'trials', moduleId) as DocumentReference<Trial>;
-  }, [firestore, user, moduleId, isAdmin]);
-
-  const { data: trial, isLoading: isTrialLoading } = useDoc<Trial>(trialDocRef);
+  const [trial] = React.useState<Trial | null>(null);
+  const isTrialLoading = false;
 
   const handleStartTrial = async () => {
-    if (!trialDocRef) return;
     setIsStartingTrial(true);
 
     // Rastrear início do trial
@@ -96,21 +86,8 @@ export function TrialGate({ children, moduleId, moduleName, purchaseHref }: Tria
         value: moduleId === 'dante-safra' ? 100 : 50 // Valor simbólico para ROI
     });
 
-    const newTrial: Trial = {
-      moduleId: moduleId,
-      startTime: new Date().toISOString(),
-    };
-    
-    setDoc(trialDocRef, newTrial).catch(async (serverError) => {
-        const permissionError = new FirestorePermissionError({
-          path: trialDocRef.path,
-          operation: 'create',
-          requestResourceData: newTrial,
-        });
-        errorEmitter.emit('permission-error', permissionError);
-    }).finally(() => {
-        setIsStartingTrial(false);
-    });
+    // TODO: salvar trial via Amplify Data / DynamoDB
+    setIsStartingTrial(false);
   };
 
   if (isUserLoading) {

@@ -9,6 +9,12 @@ import Script from 'next/script';
 import { Metadata } from 'next';
 import GoogleAnalytics from '@/components/analytics/google-analytics';
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#0A0A0B',
+};
+
 export const metadata: Metadata = {
   title: 'Nexus Inteligência | Hub para Evolução Humana & IA',
   description: 'A convergência definitiva entre tecnologia avançada e essência humana. Mentoria, cursos e IA estratégica para acelerar sua jornada global.',
@@ -35,8 +41,6 @@ export const metadata: Metadata = {
     description: 'Acelere sua jornada com o cérebro da Nexus.',
     images: ['/nexus-hero-hologram.png'],
   },
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#0A0A0B',
   alternates: {
     canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     languages: {

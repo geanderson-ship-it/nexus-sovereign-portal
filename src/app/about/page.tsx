@@ -41,7 +41,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-0">
           <div className="relative aspect-video md:aspect-[21/9] w-full overflow-hidden rounded-xl border border-white/5 bg-zinc-950/30">
             <Image
-              src="https://i.postimg.cc/sD0SfyDf/palestras-nas-empresas.webp"
+              src="/Sobre/palestras-nas-empresas.webp"
               alt="Uma equipe colaborando sobre uma planta arquitetônica, simbolizando a união de prática e inteligência."
               fill
               sizes="100vw"

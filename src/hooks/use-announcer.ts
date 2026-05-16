@@ -47,6 +47,43 @@ function generateId() {
   return Math.random().toString(36).slice(2, 9);
 }
 
+// Dicionário Fonético para forçar a Polly (voz em português) a ler nomes estrangeiros corretamente
+const PRONUNCIATION_DICT: Record<string, string> = {
+  'Erasure': 'Irêijur',
+  'erasure': 'irêijur',
+  'A-ha': 'A-rrá',
+  'a-ha': 'a-rrá',
+  'Queen': 'Cuín',
+  'U2': 'Iu Tchu',
+  'Depeche Mode': 'Depéche Moud',
+  'Tears for Fears': 'Tíers for Fíers',
+  'Pet Shop Boys': 'Pét Chóp Bóis',
+  'New Order': 'Niu Órder',
+  'The Cure': 'Dê Quiúr',
+  'Madonna': 'Madôna',
+  'Michael Jackson': 'Maicou Jécson',
+  'Guns N Roses': 'Gâns en Rôuses',
+  'Bon Jovi': 'Bon Jóvi',
+  'Aerosmith': 'Érousmite',
+  'Nirvana': 'Nirvâna',
+  'Pearl Jam': 'Pãrl Djem',
+  'Red Hot Chili Peppers': 'Réd Rót Tchíli Pépers',
+  'Coldplay': 'Coud-plei',
+  'Revival': 'Rivaivol',
+  'revival': 'rivaivol',
+  'Creedence Clearwater Revival': 'Crídence Clíar-uóter Rivaivol',
+};
+
+function applyPronunciationCorrections(text: string): string {
+  let corrected = text;
+  // Substitui cada palavra do dicionário ignorando maiúsculas e minúsculas
+  for (const [wrong, right] of Object.entries(PRONUNCIATION_DICT)) {
+    const regex = new RegExp(`\\b${wrong}\\b`, 'gi');
+    corrected = corrected.replace(regex, right);
+  }
+  return corrected;
+}
+
 function getScheduleLabel(type: AnnounceType): string {
   const labels: Record<AnnounceType, string> = {
     'time': '⏰ Hora',
@@ -339,7 +376,10 @@ export function useAnnouncer(station: StationConfig) {
           pending.type,
           pending.text ? { text: pending.text } : undefined
         );
-        await speakText(text, pending.voiceOverride);
+        
+        // Aplica o filtro fonético antes de enviar para a AWS Polly
+        const spokenText = applyPronunciationCorrections(text);
+        await speakText(spokenText, pending.voiceOverride);
       }
 
       const now = new Date();

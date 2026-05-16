@@ -13,7 +13,7 @@ import { useGeminiLive } from '@/hooks/use-gemini-live';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
-import { errorEmitter } from '@/hooks/use-nexus-audio';
+import { eventEmitter } from '@/hooks/use-nexus-audio';
 
 export function NexusDuoMode() {
   const router = useRouter();
@@ -48,7 +48,7 @@ export function NexusDuoMode() {
       if (data.persona === 'maga') magaAudioLevel.set(data.level);
       else if (data.persona === 'orion') orionAudioLevel.set(data.level);
     };
-    errorEmitter.on('audio-level-update', audioHandler);
+    eventEmitter.on('audio-level-update', audioHandler);
 
     // Blinking Intervals
     const magaBlinkInt = setInterval(() => {
@@ -66,7 +66,7 @@ export function NexusDuoMode() {
     }, 5000);
 
     return () => {
-      errorEmitter.off('audio-level-update', audioHandler);
+      eventEmitter.off('audio-level-update', audioHandler);
       clearInterval(magaBlinkInt);
       clearInterval(orionBlinkInt);
     };
@@ -91,8 +91,8 @@ export function NexusDuoMode() {
   };
 
   // Displacement refs for mouth sync
-  const magaDisplacementRef = useRef<SVGFEFeatureSettingsElement>(null);
-  const orionDisplacementRef = useRef<SVGFEFeatureSettingsElement>(null);
+  const magaDisplacementRef = useRef<SVGFEDisplacementMapElement>(null);
+  const orionDisplacementRef = useRef<SVGFEDisplacementMapElement>(null);
 
   useEffect(() => {
     const unsubscribeMaga = smoothMagaLevel.on('change', (v) => {

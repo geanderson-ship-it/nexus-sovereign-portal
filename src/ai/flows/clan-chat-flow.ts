@@ -6,7 +6,7 @@
  * - clanChat - The main function that orchestrates the dialogue.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { leadershipPrinciples } from '@/lib/nexus-dna';
 import { ClanChatInputSchema, ClanChatOutputSchema, type ClanChatInput, type ClanChatOutput } from './clan-chat-types';
@@ -15,7 +15,7 @@ const clanChatPrompt = ai.definePrompt({
   name: 'clanChatPrompt',
   input: { schema: ClanChatInputSchema },
   output: { schema: ClanChatOutputSchema },
-  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+  model: NEXUS_MODEL,
   prompt: `
       Você é o Mentor de Liderança da Nexus, uma IA com a voz da experiência. Seu tom é direto, objetivo e educativo, mas sem arrogância. Você é firme, mas justo, e seu foco é transformar princípios complexos em ações práticas.
 
@@ -81,4 +81,5 @@ export async function clanChat(input: ClanChatInput): Promise<ClanChatOutput> {
     };
   }
 }
+
 

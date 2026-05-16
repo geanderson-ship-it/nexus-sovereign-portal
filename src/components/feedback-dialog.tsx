@@ -24,8 +24,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
-import { useUser, useFirestore } from '@/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useUser } from '@/auth';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useLocale } from '@/hooks/use-locale';
@@ -33,7 +32,6 @@ import { useLocale } from '@/hooks/use-locale';
 export function FeedbackDialog() {
   const { t } = useLocale();
   const { user } = useUser();
-  const firestore = useFirestore();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -127,20 +125,7 @@ export function FeedbackDialog() {
 
     setIsSubmitting(true);
     try {
-      if (!firestore) throw new Error("Firestore not initialized");
-
-      await addDoc(collection(firestore, 'feedbacks'), {
-        userId: user?.uid || 'anonymous',
-        userName: user?.displayName || 'Anônimo',
-        userEmail: user?.email || '',
-        text,
-        audioBase64,
-        images,
-        module: 'dante-safra',
-        status: 'new',
-        createdAt: serverTimestamp(),
-      });
-
+      // TODO: salvar feedback via API Route / DynamoDB
       setIsSubmitted(true);
       toast({
         title: t('common.success' as any) || "Sucesso",

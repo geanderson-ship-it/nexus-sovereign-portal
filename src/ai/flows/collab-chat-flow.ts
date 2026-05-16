@@ -1,4 +1,4 @@
-﻿
+
 'use server';
 /**
  * @fileOverview Nexus Collaborative Orchestrator.
@@ -30,7 +30,7 @@ const collabChatFlow = ai.defineFlow(
 
     // 2. Second Response: Orion (Strategic/Tactical Response to Magadot's idea)
     const orionResult = await orionChat({
-      userMessage: `Comandante enviou: "${userMessage}". \n\n Magadot propÃ´s: "${magaText}". \n\n Orion, forneÃ§a sua avaliaÃ§Ã£o tÃ¡tica e estratÃ©gica sobre essa proposta.`,
+      userMessage: `Comandante enviou: "${userMessage}". \n\n Magadot propôs: "${magaText}". \n\n Orion, forneça sua avaliação tática e estratégica sobre essa proposta.`,
       userName,
       history: history?.map(h => ({ role: h.role, text: h.text })) || []
     });
@@ -53,8 +53,8 @@ export async function collabChat(input: CollabChatInput): Promise<CollabChatOutp
     console.error("Error in collabChatFlow:", error);
     return {
       responses: [
-        { ai: 'maga', text: "Comandante, tive um pequeno desvio de frequÃªncia na nossa conexÃ£o dual..." },
-        { ai: 'orion', text: "Entendido, Comandante. O sistema de colaboraÃ§Ã£o estÃ¡ sendo reiniciado." }
+        { ai: 'maga', text: "Comandante, tive um pequeno desvio de frequência na nossa conexão dual..." },
+        { ai: 'orion', text: "Entendido, Comandante. O sistema de colaboração está sendo reiniciado." }
       ]
     };
   }

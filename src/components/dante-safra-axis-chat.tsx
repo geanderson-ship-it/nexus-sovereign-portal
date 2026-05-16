@@ -32,7 +32,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import { danteSafra } from '@/ai/flows/dante-safra-flow';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import { useRouter } from 'next/navigation';
 import { TacticalPulse } from './dante/tactical-pulse';
 import { TacticalMarketCard } from './dante/tactical-market-card';

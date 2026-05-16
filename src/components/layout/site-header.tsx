@@ -19,7 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { signOut } from 'aws-amplify/auth';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useUser, useAuth } from '@/firebase';
+import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { useLocale } from '@/hooks/use-locale';
 
@@ -40,7 +40,6 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, isUserLoading } = useUser();
-  const auth = useAuth();
   const router = useRouter();
   const { toast } = useToast();
   const { locale, setLocale, t } = useLocale();
@@ -85,9 +84,12 @@ export function SiteHeader() {
     { title: t('navGaleria'), href: '/gallery' },
     { title: t('navPalestras'), href: '/palestras' },
     { title: t('navConsultoria'), href: '/consulting' },
+    { title: t('navIntelligence'), href: '/intelligence' },
+    { title: 'Global', href: '/intelligence/global' },
+    { title: 'Empresas', href: '/nexus-empresas' },
     { title: t('navSobre'), href: '/about' },
     { title: t('navContato'), href: '/contact' },
-    { title: t('navIntelligence'), href: '/intelligence' },
+    { title: t('navSuporte'), href: '/suporte' },
   ], [t]);
 
   if (!isClient) return null;
@@ -109,6 +111,10 @@ export function SiteHeader() {
                   'transition-all duration-300',
                   item.href === '/intelligence' 
                     ? 'text-primary font-bold hover:text-primary/80 neon-text' 
+                    : item.href === '/intelligence/global'
+                    ? 'text-blue-500 font-bold hover:text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] uppercase tracking-wide'
+                    : item.href === '/nexus-empresas'
+                    ? 'text-[#00D4FF] font-bold hover:text-[#00D4FF]/80'
                     : pathname === item.href 
                       ? 'text-foreground font-semibold underline underline-offset-4 decoration-primary decoration-2' 
                       : 'text-foreground/60 hover:text-foreground'
@@ -216,20 +222,12 @@ export function SiteHeader() {
                 <Link 
                   href="/login" 
                   className={cn(
-                    buttonVariants({ variant: 'ghost', size: 'sm' }),
-                    'hover:bg-primary/10 transition-colors'
-                  )}
-                >
-                  {t('login')}
-                </Link>
-                <Link 
-                  href="/signup" 
-                  className={cn(
                     buttonVariants({ variant: 'default', size: 'sm' }),
                     'bg-primary hover:bg-primary/90 transition-all shadow-[0_0_15px_rgba(37,99,235,0.3)]'
                   )}
                 >
-                  {t('signup')}
+                  <UserIcon className="mr-2 h-4 w-4 hidden md:block" />
+                  {t('login')}
                 </Link>
               </div>
             )}
@@ -257,11 +255,13 @@ export function SiteHeader() {
                         onClick={() => setMobileMenuOpen(false)}
                         className={cn(
                           'flex items-center justify-between p-3 rounded-lg transition-all duration-200 group',
-                          item.href === '/intelligence'
-                            ? 'bg-primary/10 text-primary border border-primary/20'
-                            : pathname === item.href
-                              ? 'bg-accent/20 text-foreground font-semibold'
-                              : 'text-foreground/70 hover:bg-accent/10 hover:text-foreground'
+                          item.href === '/intelligence/global'
+                            ? 'bg-blue-500/10 text-blue-400 font-bold border border-blue-500/30'
+                            : item.href === '/intelligence'
+                              ? 'bg-primary/10 text-primary border border-primary/20'
+                              : pathname === item.href
+                                ? 'bg-accent/20 text-foreground font-semibold'
+                                : 'text-foreground/70 hover:bg-accent/10 hover:text-foreground'
                         )}
                       >
                         <span className="text-sm tracking-wide">{item.title}</span>
@@ -305,8 +305,10 @@ export function SiteHeader() {
                         </div>
                       ) : (
                         <div className="flex flex-col space-y-2">
-                          <Link href="/login" onClick={() => setMobileMenuOpen(false)} className={cn(buttonVariants({ variant: 'default', className: 'w-full' }))}>{t('login')}</Link>
-                          <Link href="/signup" onClick={() => setMobileMenuOpen(false)} className={cn(buttonVariants({ variant: 'outline', className: 'w-full' }))}>{t('signup')}</Link>
+                          <Link href="/login" onClick={() => setMobileMenuOpen(false)} className={cn(buttonVariants({ variant: 'default', className: 'w-full shadow-[0_0_15px_rgba(37,99,235,0.3)]' }))}>
+                            <UserIcon className="mr-2 h-4 w-4" />
+                            {t('login')}
+                          </Link>
                         </div>
                       )}
                   </div>

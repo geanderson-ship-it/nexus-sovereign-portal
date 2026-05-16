@@ -53,7 +53,7 @@ export default function ConsultingPage() {
 
        <div className="relative h-96 w-full max-w-5xl mx-auto my-12 rounded-lg overflow-hidden shadow-2xl">
         <Image
-          src="https://i.postimg.cc/hP8Wg3tg/empreendedores-felizes.webp"
+          src="/Consultoria/empreendedores-felizes.webp"
           alt="Empreendedores felizes e colaborando, representando o resultado da consultoria Nexus."
           fill
           sizes="100vw"

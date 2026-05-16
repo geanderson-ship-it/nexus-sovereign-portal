@@ -13,8 +13,7 @@ import { Volume2, Pause, Loader2, Play, ArrowLeft, BotMessageSquare, Lock } from
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { lectureScripts, LectureScriptItem } from '@/lib/lecture-scripts';
-import { useUser, useFirestore, useMemoFirebase, useCollection } from '@/firebase';
-import { collection, query, where } from 'firebase/firestore';
+import { useUser } from '@/auth';
 import { Skeleton } from '@/components/ui/skeleton';
 import { isAdminUser } from '@/lib/constants';
 import { palestras as allPalestras } from '@/lib/courses-data';
@@ -31,17 +30,10 @@ export default function ClientPage({ params: routeParams }: { params: { slug: st
     const lectureScript = lectureScripts[slug];
     
     const { user, isUserLoading } = useUser();
-    const firestore = useFirestore();
 
-    const purchasesQuery = useMemoFirebase(() => {
-        if (!user?.uid || !firestore) return null;
-        return query(collection(firestore, 'users', user.uid, 'purchases'), where('courseId', '==', slug));
-    }, [user?.uid, firestore, slug]);
-
-    const { data: purchases, isLoading: purchasesLoading } = useCollection<any>(purchasesQuery);
-    
     const isAdmin = isAdminUser(user);
-    const isPurchased = (purchases ? purchases.length > 0 : false) || isAdmin;
+    const isPurchased = isAdmin;
+    const purchasesLoading = false;
 
     const { playAudio, stopAudio, isPlaying, isLoadingAudio, playingId } = useNexusAudio();
     const [isPlaylistActive, setIsPlaylistActive] = useState(false);

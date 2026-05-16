@@ -10,16 +10,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
-import { useUser, useFirestore, useMemoFirebase, useCollection } from '@/firebase';
-import { collection, query, where, setDoc, doc } from 'firebase/firestore';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
+import { useUser } from '@/auth';
+import { isAdminUser } from '@/lib/constants';
 import RelacionamentoInicianteContent from '@/components/course-content/relacionamento-iniciante';
 import RelacionamentoIntermediarioContent from '@/components/course-content/relacionamento-intermediario';
 import PreparandoEquipesIntermediarioContent from '@/components/course-content/preparando-equipes-intermediario';
 import LiderancaAvancadoContent from '@/components/course-content/lideranca-avancado';
 import PalestraDetail from '@/components/course-content/palestra-detail';
-import { isAdminUser } from '@/lib/constants';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import placeholderImages from '@/lib/placeholder-images.json';
 import dynamic from 'next/dynamic';
@@ -73,7 +70,6 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
   const router = useRouter();
   const { toast } = useToast();
   const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [showPaymentPanel, setShowPaymentPanel] = useState(false);
@@ -98,16 +94,10 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
     return () => clearInterval(timer);
   }, []);
 
-  const purchasesQuery = useMemoFirebase(() => {
-    if (!user?.uid || !firestore) return null;
-    return query(collection(firestore, 'users', user.uid, 'purchases'), where('courseId', '==', params.slug));
-  }, [user?.uid, firestore, params.slug]);
-
-  const { data: purchases, isLoading: purchasesLoading } = useCollection<Purchase>(purchasesQuery);
-
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
-  const isPurchased = useMemo(() => (purchases ? purchases.length > 0 : false) || isAdmin, [purchases, isAdmin]);
-  const purchaseId = useMemo(() => (isPurchased && purchases && purchases.length > 0 ? purchases[0].id : (isAdmin ? `admin-access-${course?.slug}` : null)), [isPurchased, purchases, isAdmin, course?.slug]);
+  const isPurchased = isAdmin;
+  const purchaseId = isAdmin ? `admin-access-${course?.slug}` : null;
+  const purchasesLoading = false;
   
     const pixPayload = useMemo(() => {
         if (!course || course.type === 'palestra') return '';
@@ -140,39 +130,8 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
         router.push('/login');
         return;
     }
-
-    if (!firestore) return;
-
-    setIsSubmitting(true);
-    
-    const newPurchaseId = crypto.randomUUID();
-    const purchasesColRef = collection(firestore, 'users', user.uid, 'purchases');
-    const newPurchaseDocRef = doc(purchasesColRef, newPurchaseId);
-
-    const newPurchase: Purchase = {
-        id: newPurchaseId,
-        userId: user.uid,
-        courseId: course.slug,
-        purchaseDate: new Date().toISOString(),
-        price: course.discountedPrice,
-    };
-
-    setDoc(newPurchaseDocRef, newPurchase).then(() => {
-        toast({
-            title: t('courseDetail.toast.purchaseSuccess.title'),
-            description: t('courseDetail.toast.purchaseSuccess.description', { courseTitle: course.title }),
-        });
-    }).catch(async (serverError) => {
-        const permissionError = new FirestorePermissionError({
-          path: newPurchaseDocRef.path,
-          operation: 'create',
-          requestResourceData: newPurchase,
-        });
-
-        errorEmitter.emit('permission-error', permissionError);
-    }).finally(() => {
-        setIsSubmitting(false);
-    });
+    // TODO: implementar compra via Amplify/DynamoDB
+    setIsSubmitting(false);
   };
 
   const ContentComponent = courseContentComponents[course.slug];

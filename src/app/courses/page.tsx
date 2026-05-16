@@ -154,7 +154,7 @@ export default function CoursesPage() {
                         <div className="flex items-center gap-6">
                              <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-xl border-2 border-primary/50 group-hover:border-primary transition-all duration-700 shadow-2xl">
                                <Image 
-                                src="https://i.postimg.cc/0N4MbZm9/Instrutor-Dante.png" 
+                                src="/Nexus Cursos/Dante mentor.png" 
                                 alt="Prof. Dante" 
                                 fill 
                                 sizes="10rem" 
@@ -181,7 +181,7 @@ export default function CoursesPage() {
                         <div className="flex items-center gap-6">
                              <div className="relative h-40 w-40 shrink-0 overflow-hidden rounded-xl border-2 border-emerald-500/50 group-hover:border-emerald-500 transition-all duration-700 shadow-2xl">
                                <Image 
-                                src="https://i.postimg.cc/15zQjS2p/Instrutora-Djeny.png" 
+                                src="/Nexus Cursos/Djney mentora.png" 
                                 alt="Prof. Djeny" 
                                 fill 
                                 sizes="10rem" 

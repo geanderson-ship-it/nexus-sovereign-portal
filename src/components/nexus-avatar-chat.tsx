@@ -34,13 +34,12 @@ import type { DjenyInstrutorChatOutput } from '@/ai/flows/djeny-instrutor-types'
 import { type AIContext } from '@/lib/ai-contexts';
 import { intentKeywords, emotionKeywords } from '@/lib/intent-library';
 
-// Assets & Firebase
+// Assets
 import placeholderImages from '@/lib/placeholder-images.json';
-import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import { collection, query } from 'firebase/firestore';
+import { useUser } from '@/auth';
+import { eventEmitter } from '@/auth/event-emitter';
 import { allCourses } from '@/lib/courses-data';
 import { isAdminUser } from '@/lib/constants';
-import { errorEmitter } from '@/firebase/error-emitter';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import * as gtag from '@/lib/gtag';
 
@@ -78,7 +77,7 @@ const aiConfig: Record<AIContext, {
   dante: {
     name: 'Dante (O Guardião)',
     description: 'Lógica. Dados. Decisão.',
-    avatar: placeholderImages.dante.src,
+    avatar: 'https://i.postimg.cc/FF8yZyFQ/dante-safra.jpg',
     avatarAlt: placeholderImages.dante.alt,
     avatarFallback: 'D',
     borderColor: 'border-gray-500',
@@ -105,7 +104,7 @@ const aiConfig: Record<AIContext, {
   'dante-compras': {
     name: 'Dante Compras (Negociação)',
     description: 'Análise e estratégia de negociação.',
-    avatar: placeholderImages.dante.src,
+    avatar: 'https://i.postimg.cc/FF8yZyFQ/dante-safra.jpg',
     avatarAlt: placeholderImages.dante.alt,
     avatarFallback: 'D',
     borderColor: 'border-emerald-500',
@@ -160,7 +159,6 @@ export function NexusAvatarChat() {
   
   const pathname = usePathname();
   const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
   const { playAudio, stopAudio, isPlaying, isLoadingAudio, playingId, warmUpAudio } = useNexusAudio();
 
   // --- Logic Helpers ---
@@ -218,14 +216,9 @@ export function NexusAvatarChat() {
   }, [messages]);
 
   // --- Data Queries ---
-  const purchasesQuery = useMemoFirebase(() => {
-    if (!isOpen || !user?.uid || !firestore) return null;
-    return query(collection(firestore, 'users', user.uid, 'purchases'));
-  }, [isOpen, user?.uid, firestore]);
-
-  const { data: purchases, isLoading: purchasesLoading } = useCollection<{id: string, courseId: string}>(purchasesQuery);
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
-  const hasAccessToMentoria = useMemo(() => (purchases?.length ?? 0) > 0 || isAdmin, [purchases, isAdmin]);
+  const hasAccessToMentoria = useMemo(() => isAdmin || !!user, [isAdmin, user]);
+  const purchases: any[] = [];
 
   // --- Core Actions ---
   const addMessage = useCallback((sender: Sender, data: Message['data'], imageUri?: string) => {
@@ -351,11 +344,11 @@ export function NexusAvatarChat() {
 
   useEffect(() => {
     const handleOpenChat = (event: any) => openChatWithContext(event.context, event.data);
-    errorEmitter.on('open-chat', handleOpenChat);
-    return () => errorEmitter.off('open-chat', handleOpenChat);
+    eventEmitter.on('open-chat', handleOpenChat);
+    return () => eventEmitter.off('open-chat', handleOpenChat);
   }, [openChatWithContext]);
 
-  if (isUserLoading || purchasesLoading) return null;
+  if (isUserLoading) return null;
 
   return (
     <>

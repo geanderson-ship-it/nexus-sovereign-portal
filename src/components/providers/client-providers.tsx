@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { LocaleProvider } from '@/components/providers/locale-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { AmplifyProvider } from "@/components/providers/amplify-provider";
-import { FirebaseProvider } from "@/firebase/provider";
+import { AuthProvider } from "@/auth/provider";
 
 export function ClientProviders({ children }: { children: React.ReactNode }) {
 
@@ -14,20 +14,16 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
         e.stopImmediatePropagation();
       }
     };
-
     window.addEventListener('error', handleError, true);
-
-    return () => {
-      window.removeEventListener('error', handleError, true);
-    };
+    return () => window.removeEventListener('error', handleError, true);
   }, []);
 
   return (
     <LocaleProvider>
       <AmplifyProvider>
-        <FirebaseProvider>
+        <AuthProvider>
           {children}
-        </FirebaseProvider>
+        </AuthProvider>
       </AmplifyProvider>
       <Toaster />
     </LocaleProvider>

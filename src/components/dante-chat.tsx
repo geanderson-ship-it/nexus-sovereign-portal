@@ -19,7 +19,7 @@ import { cn, generatePixPayload } from '@/lib/utils';
 import { danteChat } from '@/ai/flows/dante-chat-flow';
 import type { DanteChatOutput, DanteConversationStage } from '@/ai/flows/dante-chat-types';
 import placeholderImages from '@/lib/placeholder-images.json';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import Image from 'next/image';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import { getCourseBySlug, type Course } from '@/lib/courses-data';

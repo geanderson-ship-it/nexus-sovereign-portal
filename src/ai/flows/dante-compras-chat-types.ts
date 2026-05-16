@@ -1,4 +1,4 @@
-﻿import { z } from 'genkit';
+import { z } from 'genkit';
 import { SupplierSchema } from './dante-quotation-types';
 
 export const DanteComprasChatInputSchema = z.object({

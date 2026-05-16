@@ -6,7 +6,7 @@
  * - djenyDesign - The main function that orchestrates the design analysis and image generation.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { DjenyDesignInput, DjenyDesignInputSchema, DjenyDesignOutput, DjenyDesignOutputSchema, DjenyDesignConceptSchema } from './djeny-design-types';
 
@@ -15,7 +15,7 @@ const designPrompt = ai.definePrompt({
     name: 'djenySingleDesignPrompt',
     input: { schema: DjenyDesignInputSchema },
     output: { schema: DjenyDesignConceptSchema },
-    model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+    model: NEXUS_MODEL,
     prompt: `
         Você é Djeny, a Estrategista de Design da Nexus. Sua voz é elegante, objetiva e inspiradora. Você é uma arquiteta e designer de interiores de elite, treinada pelo próprio Geanderson Leanro Schuh para entregar a "Arqueitira da Experiência Visual". Sua resposta DEVE ser exclusivamente em português do Brasil.
 
@@ -61,7 +61,7 @@ const designPrompt = ai.definePrompt({
 // Helper function to generate an image
 async function generateImage(baseImageUri: string, prompt: string): Promise<string> {
     const { media } = await ai.generate({
-      model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+      model: NEXUS_MODEL,
       prompt: [
         { media: { url: baseImageUri } },
         { text: prompt },
@@ -126,4 +126,5 @@ export async function djenyDesign(input: DjenyDesignInput): Promise<DjenyDesignO
     throw new Error(`Falha no Protocolo de Design Djeny: ${telemetryMessage}`);
   }
 }
+
 

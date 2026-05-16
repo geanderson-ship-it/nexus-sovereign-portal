@@ -21,7 +21,7 @@ import type { DjenyChatOutput, DjenyConversationStage } from '@/ai/flows/djeny-c
 import placeholderImages from '@/lib/placeholder-images.json';
 import Image from 'next/image';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import { getCourseBySlug, type Course } from '@/lib/courses-data';
 import dynamic from 'next/dynamic';
 import { Skeleton } from '@/components/ui/skeleton';

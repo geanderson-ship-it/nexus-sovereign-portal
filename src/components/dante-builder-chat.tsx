@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { danteBuilderChat, generateDanteBuilderImage } from '@/ai/flows/dante-builder-flow';
 import type { DanteBuilderChatOutput } from '@/ai/flows/dante-builder-types';
 import placeholderImages from '@/lib/placeholder-images.json';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import { useRouter } from 'next/navigation';
 import { useLocale } from '@/hooks/use-locale';
 import { Badge } from '@/components/ui/badge';
@@ -284,20 +284,11 @@ export default function DanteBuilderChat() {
       
       <div className="relative z-10 flex flex-col h-full text-white">
         <CardHeader className="flex flex-row items-center gap-4 bg-zinc-950/80 backdrop-blur-md border-b border-cyan-900/40 py-4">
-          <div className="relative">
-            <Avatar className="h-14 w-14 border-2 border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-                <AvatarImage src={placeholderImages['dante-builder'].src} alt="Dante Builder" />
-                <AvatarFallback className="bg-cyan-900 text-white font-bold">DB</AvatarFallback>
-            </Avatar>
-            <div className="absolute -bottom-1 -right-1 bg-cyan-500 rounded-full p-1 border-2 border-black">
-                <Hammer className="h-3 w-3 text-black" />
-            </div>
-          </div>
           <div className="flex-1">
             <CardTitle className="font-headline text-xl text-cyan-400 tracking-tight flex items-center gap-2 uppercase italic">
-                Dante Builder <span className="text-[10px] bg-cyan-400/20 px-2 py-0.5 rounded border border-cyan-500/30 not-italic tracking-widest text-white">CONTEXTUAL v3.3</span>
+                Nexus Projetos <span className="text-[10px] bg-cyan-400/20 px-2 py-0.5 rounded border border-cyan-500/30 not-italic tracking-widest text-white">CONTEXTUAL v3.3</span>
             </CardTitle>
-            <CardDescription className="text-gray-400 text-xs font-mono uppercase tracking-widest">Architectural Alchemist: Urbano • Empresarial • Campo</CardDescription>
+            <CardDescription className="text-gray-400 text-xs font-mono uppercase tracking-widest">Universal Engineer: Produtos • Estruturas • Equipamentos • Máquinas</CardDescription>
           </div>
           
           <div className="flex gap-2">
@@ -318,7 +309,7 @@ export default function DanteBuilderChat() {
                             <Ruler className="h-10 w-10 text-cyan-500" />
                          </div>
                          <h3 className="text-cyan-400 font-headline text-lg uppercase tracking-[0.3em]">Protocolo de Construção Ativo</h3>
-                         <p className="text-xs text-gray-400 max-w-sm">Me diga quais aberturas você precisa. Eu criarei 3 propostas de luxo com o arsenal técnico completo para seu fornecedor.</p>
+                         <p className="text-xs text-gray-400 max-w-sm">Me diga qual produto você precisa projetar. Eu criarei uma proposta técnica completa com arsenal de fabricação para seu fornecedor.</p>
                     </div>
                 )}
 
@@ -372,12 +363,16 @@ export default function DanteBuilderChat() {
                 <form onSubmit={handleFormSubmit} className="relative flex flex-col gap-3">
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2 px-1">
                         <Select value={builderParams.product} onValueChange={(v) => setBuilderParams({...builderParams, product: v})}>
-                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Produto" /></SelectTrigger>
+                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Categoria" /></SelectTrigger>
                             <SelectContent className="bg-zinc-950 border-cyan-900/50 text-gray-300">
-                                <SelectItem value="Porta">Porta</SelectItem>
-                                <SelectItem value="Janela">Janela</SelectItem>
-                                <SelectItem value="Fachada">Fachada</SelectItem>
-                                <SelectItem value="Divisória">Divisória</SelectItem>
+                                <SelectItem value="Abertura">Abertura</SelectItem>
+                                <SelectItem value="Estrutura">Estrutura</SelectItem>
+                                <SelectItem value="Móvel">Móvel</SelectItem>
+                                <SelectItem value="Máquina">Máquina</SelectItem>
+                                <SelectItem value="Dispositivo">Dispositivo</SelectItem>
+                                <SelectItem value="Equipamento">Equipamento</SelectItem>
+                                <SelectItem value="Peça">Peça</SelectItem>
+                                <SelectItem value="Outro">Outro</SelectItem>
                             </SelectContent>
                         </Select>
                         <div className="flex items-center justify-between bg-black/50 border border-cyan-900/50 rounded-md px-1.5 h-8 focus-within:ring-1 focus-within:ring-cyan-500/20">
@@ -431,60 +426,66 @@ export default function DanteBuilderChat() {
                             />
                         </div>
                         <Select value={builderParams.context} onValueChange={(v) => setBuilderParams({...builderParams, context: v})}>
-                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Contexto" /></SelectTrigger>
+                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Ambiente" /></SelectTrigger>
                             <SelectContent className="bg-zinc-950 border-cyan-900/50 text-gray-300">
-                                <SelectItem value="Urbano/Apt">Urbano</SelectItem>
-                                <SelectItem value="Rural/Campo">Campo</SelectItem>
-                                <SelectItem value="Empresarial">Empresa</SelectItem>
-                                <SelectItem value="Litoral">Litoral</SelectItem>
+                                <SelectItem value="Industrial">Industrial</SelectItem>
+                                <SelectItem value="Comercial">Comercial</SelectItem>
+                                <SelectItem value="Residencial">Residencial</SelectItem>
+                                <SelectItem value="Externo">Externo</SelectItem>
+                                <SelectItem value="Interno">Interno</SelectItem>
                             </SelectContent>
                         </Select>
                         <Select value={builderParams.color} onValueChange={(v) => setBuilderParams({...builderParams, color: v})}>
-                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Cor" /></SelectTrigger>
+                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Material" /></SelectTrigger>
                             <SelectContent className="bg-zinc-950 border-cyan-900/50 text-gray-300">
-                                <SelectItem value="Branca">Branca</SelectItem>
-                                <SelectItem value="Preta">Preta</SelectItem>
-                                <SelectItem value="Bronze">Bronze</SelectItem>
-                                <SelectItem value="Amadeirado">Amadeirado</SelectItem>
-                                <SelectItem value="Prata/Inox">Prata/Inox</SelectItem>
+                                <SelectItem value="Aço">Aço</SelectItem>
+                                <SelectItem value="Alumínio">Alumínio</SelectItem>
+                                <SelectItem value="Inox">Inox</SelectItem>
+                                <SelectItem value="Madeira">Madeira</SelectItem>
+                                <SelectItem value="Plástico">Plástico</SelectItem>
+                                <SelectItem value="Vidro">Vidro</SelectItem>
+                                <SelectItem value="Composto">Composto</SelectItem>
                             </SelectContent>
                         </Select>
                         <Select value={builderParams.glass} onValueChange={(v) => setBuilderParams({...builderParams, glass: v})}>
-                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Vidro" /></SelectTrigger>
+                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Acabam." /></SelectTrigger>
                             <SelectContent className="bg-zinc-950 border-cyan-900/50 text-gray-300">
-                                <SelectItem value="Sem Vidro">Sem Vidro</SelectItem>
-                                <SelectItem value="Temperado Incolor">Temp. Incolor</SelectItem>
-                                <SelectItem value="Laminado">Laminado</SelectItem>
-                                <SelectItem value="Refletivo">Refletivo</SelectItem>
-                                <SelectItem value="Canelado/Fumê">Fumê/Canel.</SelectItem>
+                                <SelectItem value="Polido">Polido</SelectItem>
+                                <SelectItem value="Fosco">Fosco</SelectItem>
+                                <SelectItem value="Escovado">Escovado</SelectItem>
+                                <SelectItem value="Pintado">Pintado</SelectItem>
+                                <SelectItem value="Anodizado">Anodizado</SelectItem>
+                                <SelectItem value="Galvanizado">Galvanizado</SelectItem>
                             </SelectContent>
                         </Select>
                         <Select value={builderParams.finish} onValueChange={(v) => setBuilderParams({...builderParams, finish: v})}>
-                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Acabam." /></SelectTrigger>
+                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Norma" /></SelectTrigger>
                             <SelectContent className="bg-zinc-950 border-cyan-900/50 text-gray-300">
-                                <SelectItem value="Fosco">Fosco</SelectItem>
-                                <SelectItem value="Brilhante">Brilhante</SelectItem>
-                                <SelectItem value="Acetinado">Acetinado</SelectItem>
+                                <SelectItem value="ABNT">ABNT</SelectItem>
+                                <SelectItem value="ISO">ISO</SelectItem>
+                                <SelectItem value="DIN">DIN</SelectItem>
+                                <SelectItem value="ASTM">ASTM</SelectItem>
+                                <SelectItem value="Custom">Custom</SelectItem>
                             </SelectContent>
                         </Select>
                         <Select value={builderParams.handle} onValueChange={(v) => setBuilderParams({...builderParams, handle: v})}>
-                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Puxador" /></SelectTrigger>
+                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Automação" /></SelectTrigger>
                             <SelectContent className="bg-zinc-950 border-cyan-900/50 text-gray-300">
-                                <SelectItem value="Aço Escovado">Aço Escov.</SelectItem>
-                                <SelectItem value="Inox Polido">Inox Pol.</SelectItem>
-                                <SelectItem value="Preto Fosco">Preto</SelectItem>
-                                <SelectItem value="Cava/Invisível">Cava/Invis.</SelectItem>
-                                <SelectItem value="Sem Puxador">Sem Puxador</SelectItem>
+                                <SelectItem value="Manual">Manual</SelectItem>
+                                <SelectItem value="Semi-Auto">Semi-Auto</SelectItem>
+                                <SelectItem value="Automático">Automático</SelectItem>
+                                <SelectItem value="IoT">IoT</SelectItem>
+                                <SelectItem value="N/A">N/A</SelectItem>
                             </SelectContent>
                         </Select>
                         <Select value={builderParams.lock} onValueChange={(v) => setBuilderParams({...builderParams, lock: v})}>
-                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Tranca" /></SelectTrigger>
+                            <SelectTrigger className="bg-black/50 border-cyan-900/50 text-[10px] uppercase tracking-widest text-cyan-400 h-8 px-2"><SelectValue placeholder="Certificação" /></SelectTrigger>
                             <SelectContent className="bg-zinc-950 border-cyan-900/50 text-gray-300">
-                                <SelectItem value="Biométrica">Biométrica</SelectItem>
-                                <SelectItem value="Multiponto">Multiponto</SelectItem>
-                                <SelectItem value="Chave Tetra">Tetra</SelectItem>
-                                <SelectItem value="Smart Lock">Smart Lock</SelectItem>
-                                <SelectItem value="Padrão">Padrão</SelectItem>
+                                <SelectItem value="CE">CE</SelectItem>
+                                <SelectItem value="Inmetro">Inmetro</SelectItem>
+                                <SelectItem value="UL">UL</SelectItem>
+                                <SelectItem value="RoHS">RoHS</SelectItem>
+                                <SelectItem value="N/A">N/A</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -494,7 +495,7 @@ export default function DanteBuilderChat() {
                             value={input}
                             onChange={e => setInput(e.target.value)}
                             onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleFormSubmit(e); } }}
-                            placeholder="Descreva observações secundárias do seu projeto..."
+                            placeholder="Descreva o produto que precisa projetar (ex: Porta de alumínio 2.10x0.90m, Estrutura metálica para galpão, Dispositivo IoT para monitoramento)..."
                             autoComplete="off"
                             disabled={isLoading}
                             rows={1}

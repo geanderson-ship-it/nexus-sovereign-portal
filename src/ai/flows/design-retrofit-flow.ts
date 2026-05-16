@@ -6,12 +6,12 @@
  * - generateRetrofitImage - A function that generates a new image based on an original and a text prompt.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { type RetrofitInput, type RetrofitOutput } from './design-retrofit-types';
 
 export async function generateRetrofitImage(input: RetrofitInput): Promise<RetrofitOutput> {
     const { media } = await ai.generate({
-        model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+        model: NEXUS_MODEL,
         prompt: [
             { media: { url: input.photoDataUri } },
             { text: input.prompt },
@@ -30,4 +30,5 @@ export async function generateRetrofitImage(input: RetrofitInput): Promise<Retro
 
     return { imageUri: media.url };
 }
+
 

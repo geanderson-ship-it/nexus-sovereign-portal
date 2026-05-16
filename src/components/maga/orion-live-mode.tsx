@@ -13,7 +13,7 @@ import {
   Target
 } from 'lucide-react';
 import { useNexusAudio, useAudioLevel } from '@/hooks/use-nexus-audio';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';

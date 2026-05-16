@@ -63,7 +63,7 @@ export function OrionOSModule() {
   const { playSpeech, isSpeaking } = useNexusAudio();
   const audioLevel = useAudioLevel();
 
-  const ORION_PIX_KEY = "00020126580014BR.GOV.BCB.PIX0114+55119999999995204000053031500.005802BR5915NexusOrionOS6009SaoPaulo62070503***6304ABCD";
+  const ORION_PIX_KEY = "+5551999799582";
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

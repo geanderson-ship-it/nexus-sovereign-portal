@@ -19,12 +19,12 @@ export function SiteFooter() {
                     {t('footerSlogan')}
                 </span>
             </div>
-          <div className="text-center text-sm leading-relaxed text-yellow-500 font-medium space-y-1">
+          <div className="text-center text-sm leading-relaxed text-yellow-400 font-bold drop-shadow-md space-y-1">
             <p>{t('footerRights')}</p>
             <p>CNPJ: 62.938.531/0001-87 | geanderson@nexustreinamento.com</p>
           </div>
         </div>
-        <div className="flex items-center gap-6 text-sm font-semibold text-yellow-500 pt-4 md:pt-0">
+        <div className="flex items-center gap-6 text-sm font-bold text-yellow-400 drop-shadow-md pt-4 md:pt-0">
           <Link href="/brand-assets" className="transition-colors hover:text-yellow-300">
             {t('footerBrand')}
           </Link>
@@ -55,7 +55,7 @@ export function SiteFooter() {
             </a>
             <a
                 href="mailto:geanderson@nexustreinamento.com"
-                className="transition-transform hover:scale-110 text-yellow-500 hover:text-yellow-300"
+                className="transition-transform hover:scale-110 text-yellow-400 drop-shadow-md hover:text-yellow-300"
             >
                 <Mail className="h-6 w-6" />
                 <span className="sr-only">E-mail</span>

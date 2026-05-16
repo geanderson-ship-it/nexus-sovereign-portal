@@ -15,6 +15,7 @@ export type OrionChatInput = z.infer<typeof OrionChatInputSchema>;
 export const OrionChatOutputSchema = z.object({
   response: z.string().describe('Orion\'s precise and executive tactical response.'),
   voiceProfile: z.string().optional().describe('The vocal profile selected by Orion (e.g., zubenelgenubi, iapetus, charon).'),
+  strategicInsight: z.string().optional().describe('A strategic insight related to the discussion.'),
 });
 export type OrionChatOutput = z.infer<typeof OrionChatOutputSchema>;
 

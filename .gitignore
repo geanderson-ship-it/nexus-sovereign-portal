@@ -13,3 +13,12 @@ out/
 backup.jpg
 parte_*
 .vercel
+
+# Debug and Temporary Files
+tsc_output.txt
+tsc_final.txt
+tsc_final_utf8.txt
+test-*.ts
+*.log
+.DS_Store
+Thumbs.db

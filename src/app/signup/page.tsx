@@ -16,7 +16,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { signUp, confirmSignUp, signInWithRedirect, autoSignIn } from 'aws-amplify/auth';
 import { generateClient } from 'aws-amplify/data';
 import { Eye, EyeOff } from 'lucide-react';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 
 const client = generateClient();
 
@@ -24,8 +24,6 @@ const signupSchema = z.object({
   firstName: z.string().min(1, { message: 'O nome é obrigatório.' }),
   lastName: z.string().min(1, { message: 'O sobrenome é obrigatório.' }),
   email: z.string().email({ message: 'Por favor, insira um e-mail válido.' }),
-  cpf: z.string().regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, { message: 'CPF inválido. Use o formato XXX.XXX.XXX-XX.' }),
-  birthDate: z.string().min(10, { message: 'Data inválida.' }).regex(/^\d{2}\/\d{2}\/\d{4}$/, { message: 'Use o formato DD/MM/AAAA.' }),
   password: z
     .string()
     .min(8, { message: 'A senha deve ter no mínimo 8 caracteres.' })
@@ -53,9 +51,7 @@ export default function SignupPage() {
             firstName: '',
             lastName: '',
             email: '',
-            cpf: '',
-            birthDate: '',
-            password: '',
+            password: ''
         },
     });
 
@@ -70,8 +66,9 @@ export default function SignupPage() {
             title: 'Conexão estabelecida.',
             description: 'É um prazer ter sua mente focada conosco.',
         });
-        // The useEffect hook will handle the redirect.
-        setIsSubmitting(false);
+        setTimeout(() => {
+            window.location.href = '/profile';
+        }, 500);
     };
 
     const handleGoogleSignIn = async () => {
@@ -97,6 +94,9 @@ export default function SignupPage() {
                 options: {
                     userAttributes: {
                         email: values.email,
+                        name: `${values.firstName} ${values.lastName}`,
+                        given_name: values.firstName,
+                        family_name: values.lastName,
                     },
                     autoSignIn: true,
                 }
@@ -132,16 +132,7 @@ export default function SignupPage() {
     
     const createProfileAndComplete = async (email: string, values: any) => {
         try {
-            const [day, month, year] = values.birthDate.split('/').map(Number);
-            const dateObject = new Date(year, month - 1, day);
-            const birthDateForFirestore = dateObject.toISOString().split('T')[0];
-
-            // Criar registro no DynamoDB (AppSync)
-            // Pegamos o UUID gerado pelo Cognito na sessão autoSignIn ou deixamos o id ser preenchido dps.
-            // O ideal é passar o sub do usuário. Mas 'signIn' ou 'autoSignIn' precisa rodar primeiro.
             await autoSignIn();
-            
-            // O ID é necessário pro schema AppSync UserProfile. Vamos tentar pegar o currentUser.
             const { getCurrentUser } = await import('aws-amplify/auth');
             const currentUser = await getCurrentUser();
 
@@ -152,15 +143,13 @@ export default function SignupPage() {
                 preferences: JSON.stringify({
                     firstName: values.firstName,
                     lastName: values.lastName,
-                    cpf: values.cpf,
-                    birthDate: birthDateForFirestore,
                     registrationDate: new Date().toISOString(),
                 }) as any
             });
 
             handleSuccessfulLogin();
         } catch (error: any) {
-             toast({
+            toast({
                 variant: 'destructive',
                 title: 'Alerta de Rota.',
                 description: 'Conta criada, mas houve um erro ao configurar o perfil. Entre novamente.',
@@ -268,59 +257,7 @@ export default function SignupPage() {
                           </FormItem>
                       )}
                   />
-                  <div className="grid grid-cols-2 gap-4">
-                     <FormField
-                        control={form.control}
-                        name="cpf"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>CPF.</FormLabel>
-                                <FormControl>
-                                    <Input 
-                                        placeholder="000.000.000-00" 
-                                        {...field}
-                                        onChange={(e) => {
-                                            const value = e.target.value;
-                                            const maskedValue = value
-                                                .replace(/\D/g, '')
-                                                .replace(/(\d{3})(\d)/, '$1.$2')
-                                                .replace(/(\d{3})(\d)/, '$1.$2')
-                                                .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-                                                .substring(0, 14);
-                                            field.onChange(maskedValue);
-                                        }}
-                                     />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                     <FormField
-                        control={form.control}
-                        name="birthDate"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Data de Nascimento.</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="DD/MM/AAAA"
-                                        {...field}
-                                        onChange={(e) => {
-                                            const value = e.target.value;
-                                            const maskedValue = value
-                                                .replace(/\D/g, '')
-                                                .replace(/(\d{2})(\d)/, '$1/$2')
-                                                .replace(/(\d{2})(\d)/, '$1/$2')
-                                                .substring(0, 10);
-                                            field.onChange(maskedValue);
-                                        }}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                  </div>
+
                   <FormField
                       control={form.control}
                       name="password"

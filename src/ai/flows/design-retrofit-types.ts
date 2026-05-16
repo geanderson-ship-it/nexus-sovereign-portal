@@ -1,4 +1,4 @@
-﻿import { z } from 'genkit';
+import { z } from 'genkit';
 
 export const RetrofitInputSchema = z.object({
   photoDataUri: z.string().describe(

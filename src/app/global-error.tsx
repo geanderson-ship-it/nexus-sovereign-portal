@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/logo';
-import { FirestorePermissionError } from '@/firebase/errors';
 import Link from 'next/link';
 import { useLocale } from '@/hooks/use-locale';
 
@@ -14,7 +13,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   const { t } = useLocale();
-  const isPermissionError = error instanceof FirestorePermissionError || (error.name === 'FirebaseError' && (error.message.includes('permission-denied') || error.message.includes('permission denied') || error.message.includes('insufficient permissions')));
+  const isPermissionError = false;
   
   const errorMessage = error?.message || 'An unexpected error occurred.';
 

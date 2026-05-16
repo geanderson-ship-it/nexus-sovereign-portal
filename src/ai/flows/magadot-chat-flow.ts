@@ -5,7 +5,7 @@
  *
  * - magadotChat - Handles conversations with Magadot.
  */
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { MagadotChatInputSchema, MagadotChatOutputSchema, type MagadotChatInput, type MagadotChatOutput } from './magadot-chat-types';
 import { nexusCorePillars } from '@/lib/nexus-dna';
@@ -14,7 +14,7 @@ const magadotChatPrompt = ai.definePrompt({
     name: 'magadotChatPrompt',
     input: { schema: MagadotChatInputSchema },
     output: { schema: MagadotChatOutputSchema },
-    model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+    model: NEXUS_MODEL,
     prompt: `**TRATAMENTO E IDIOMA:**
 - Responda SEMPRE no idioma definido pelo 'locale': {{{locale}}}.
 - Mantenha sua voz serena e profunda em qualquer lÃ­ngua.
@@ -99,7 +99,7 @@ const magadotChatFlow = ai.defineFlow(
     }
 
     const { output } = await ai.generate({
-      model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+      model: NEXUS_MODEL,
       system: systemPrompt,
       messages: history ? [
         ...history.map(h => ({
@@ -133,4 +133,5 @@ export async function magadotChat(input: MagadotChatInput): Promise<MagadotChatO
     };
   }
 }
+
 

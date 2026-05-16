@@ -1,0 +1,45 @@
+
+> nextn@0.1.0 build
+> next build --no-lint
+
+ ⚠ Linting is disabled.
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping validation of types
+   Collecting page data ...
+   Generating static pages (0/104) ...
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+   Generating static pages (26/104) 
+ ⨯ useSearchParams() should be wrapped in a suspense boundary at page "/intelligence/almoxarifado/modulo". Read more: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+    at i (c:\Users\geand\Gitclone\nexus-sovereign-portal\.next\server\chunks\9187.js:1:23939)
+    at c (c:\Users\geand\Gitclone\nexus-sovereign-portal\.next\server\chunks\9187.js:1:34922)
+    at S (c:\Users\geand\Gitclone\nexus-sovereign-portal\.next\server\app\intelligence\almoxarifado\modulo\page.js:1:5076)
+    at nj (c:\Users\geand\Gitclone\nexus-sovereign-portal\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:46252)
+    at nM (c:\Users\geand\Gitclone\nexus-sovereign-portal\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47572)
+    at nL (c:\Users\geand\Gitclone\nexus-sovereign-portal\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:64547)
+    at nI (c:\Users\geand\Gitclone\nexus-sovereign-portal\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47011)
+    at nM (c:\Users\geand\Gitclone\nexus-sovereign-portal\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47718)
+    at nM (c:\Users\geand\Gitclone\nexus-sovereign-portal\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:61547)
+    at nL (c:\Users\geand\Gitclone\nexus-sovereign-portal\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:64547)
+
+Error occurred prerendering page "/intelligence/almoxarifado/modulo". Read more: https://nextjs.org/docs/messages/prerender-error
+
+   Generating static pages (52/104) 
+   Generating static pages (78/104) 
+ ✓ Generating static pages (104/104)
+
+> Export encountered errors on following paths:
+	/intelligence/almoxarifado/modulo/page: /intelligence/almoxarifado/modulo

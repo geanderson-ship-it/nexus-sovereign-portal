@@ -1,4 +1,4 @@
-﻿import { z } from 'genkit';
+import { z } from 'genkit';
 
 export const DjenyDesignInputSchema = z.object({
   userMessage: z.string().describe("The user's design request or refinement."),
@@ -13,7 +13,7 @@ export const DjenyDesignOutputSchema = z.object({
 export type DjenyDesignOutput = z.infer<typeof DjenyDesignOutputSchema>;
 
 export const DjenyDesignConceptSchema = z.object({
-    description: z.string().describe('Uma descriÃ§Ã£o narrativa unificada. Comece descrevendo brevemente o ambiente atual e, em seguida, descreva a proposta de transformaÃ§Ã£o de forma eloquente e inspiradora, adequada para conversÃ£o de texto em fala.'),
+    description: z.string().describe('Uma descrição narrativa unificada. Comece descrevendo brevemente o ambiente atual e, em seguida, descreva a proposta de transformação de forma eloquente e inspiradora, adequada para conversão de texto em fala.'),
     imageGenPrompt: z.string().describe("A detailed and specific prompt for an image generation model to create the new design based on user input."),
 });
 export type DjenyDesignConcept = z.infer<typeof DjenyDesignConceptSchema>;

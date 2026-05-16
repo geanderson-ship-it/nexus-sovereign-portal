@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { useUser, useAuth } from '@/firebase';
+import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { Loader2, ShieldAlert } from 'lucide-react';
 import { useRouter } from 'next/navigation';

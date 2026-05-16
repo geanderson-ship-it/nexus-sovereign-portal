@@ -27,8 +27,7 @@ import { cn } from '@/lib/utils';
 import { clanChat } from '@/ai/flows/clan-chat-flow';
 import type { ClanChatOutput } from '@/ai/flows/clan-chat-types';
 import placeholderImages from '@/lib/placeholder-images.json';
-import { useUser, useFirestore, useMemoFirebase, useCollection } from '@/firebase';
-import { collection, query } from 'firebase/firestore';
+import { useUser } from '@/auth';
 import Link from 'next/link';
 import { allCourses } from '@/lib/courses-data';
 import Image from 'next/image';
@@ -62,7 +61,6 @@ const MessageContent = ({ msg }: { msg: Message }) => {
 
 export function ClanChat() {
   const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -81,28 +79,9 @@ export function ClanChat() {
     return initials.slice(0, 2).toUpperCase();
   }, [user]);
   
-  const purchasesQuery = useMemoFirebase(() => {
-    if (!user?.uid || !firestore) return null;
-    return query(collection(firestore, 'users', user.uid, 'purchases'));
-  }, [user?.uid, firestore]);
-
-  const { data: purchases, isLoading: purchasesLoading } =
-    useCollection<Purchase>(purchasesQuery);
-
-  const purchasedSlugs = useMemo(
-    () => purchases?.map((p) => p.courseId) ?? [],
-    [purchases]
-  );
-  
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
-  const hasAccessToMentoria = useMemo(() => purchasedSlugs.length > 0 || isAdmin, [purchasedSlugs, isAdmin]);
-  
-  const slugsForAI = useMemo(() => {
-    if (isAdmin) {
-        return allCourses.map(c => c.slug);
-    }
-    return purchasedSlugs;
-  }, [isAdmin, purchasedSlugs]);
+  const hasAccessToMentoria = useMemo(() => isAdmin || !!user, [isAdmin, user]);
+  const slugsForAI = useMemo(() => isAdmin ? allCourses.map(c => c.slug) : [], [isAdmin]);
 
   // Speech Recognition Setup
   useEffect(() => {
@@ -210,7 +189,7 @@ export function ClanChat() {
     }
   };
 
-   if (isUserLoading || purchasesLoading) {
+   if (isUserLoading) {
     return <div className="text-center"><Loader2 className="mx-auto h-12 w-12 animate-spin text-primary" /></div>;
   }
   

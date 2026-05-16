@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
-import { 
-  FileCode, 
-  GitBranch, 
-  Star, 
-  GitFork, 
-  Eye, 
-  BookOpen, 
-  Terminal, 
+import {
+  FileCode,
+  GitBranch,
+  Star,
+  GitFork,
+  Eye,
+  BookOpen,
+  Terminal,
   Search,
   ChevronDown,
   History,
@@ -88,8 +88,8 @@ function TabItem({ icon, label, active = false, count }: { icon: React.ReactNode
   return (
     <div className={cn(
       "flex items-center gap-2 px-4 py-3 text-sm cursor-pointer border-b-2 transition-all",
-      active 
-        ? "border-amber-500 text-white font-semibold" 
+      active
+        ? "border-amber-500 text-white font-semibold"
         : "border-transparent text-zinc-400 hover:bg-white/5 hover:text-zinc-200"
     )}>
       {icon}
@@ -154,10 +154,10 @@ export function GithubReadme() {
       </div>
       <div className="p-8 space-y-6 text-zinc-300">
         <div className="relative w-full aspect-[21/9] rounded-lg overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl">
-          <Image 
-            src="https://i.postimg.cc/t4nTCxJZ/Nexus-studio.png" 
-            alt="Nexus Intelligence Studio Cover" 
-            fill 
+          <Image
+            src="/Nexus Intelligence Studio/Nexus studio chumbo.png"
+            alt="Nexus Intelligence Studio Cover"
+            fill
             className="object-contain"
           />
         </div>
@@ -165,7 +165,7 @@ export function GithubReadme() {
         <div className="space-y-4">
           <h1 className="text-3xl font-bold font-headline text-white border-b border-zinc-800 pb-2">{t('gabinete.studio.readme.title')}</h1>
           <p className="text-lg text-zinc-400 italic">{t('gabinete.studio.readme.slogan')}</p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-amber-400 flex items-center gap-2">

@@ -1,4 +1,4 @@
-﻿import { z } from 'genkit';
+import { z } from 'genkit';
 
 export const CollabChatInputSchema = z.object({
   userMessage: z.string().describe('The user\'s message to the dual AI room.'),

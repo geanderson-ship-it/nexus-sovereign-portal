@@ -72,6 +72,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { analyzeQuotation } from '@/ai/flows/dante-quotation-flow';
 import type { QuotationAnalysisOutput } from '@/ai/flows/dante-quotation-types';
 import DanteComprasChat from '@/components/dante-compras-chat';
+import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
 // Mock data for economy charts - to be replaced with real data later
 const dailyEconomy = [
@@ -638,6 +639,7 @@ export default function DanteComprasDashboardPage() {
                 </Dialog>
 
             </div>
+          <LegalSafeguard module="DANTE COMPRAS" protocol="NX-7742-BUY" />
         </div>
     );
 }

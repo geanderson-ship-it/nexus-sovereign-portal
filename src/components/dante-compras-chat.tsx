@@ -14,7 +14,7 @@ import placeholderImages from '@/lib/placeholder-images.json';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import type { QuotationAnalysisOutput } from '@/ai/flows/dante-quotation-types';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 
 type Sender = 'user' | 'system';
 

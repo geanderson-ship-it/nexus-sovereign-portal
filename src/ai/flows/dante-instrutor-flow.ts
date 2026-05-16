@@ -6,7 +6,7 @@
  * - danteInstrutorChat - The main function for the instructional dialogue.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { leadershipPrinciples } from '@/lib/nexus-dna';
 import { DanteInstrutorChatInputSchema, DanteInstrutorChatOutputSchema, type DanteInstrutorChatInput, type DanteInstrutorChatOutput } from './dante-instrutor-types';
@@ -15,7 +15,7 @@ const danteInstrutorChatPrompt = ai.definePrompt({
   name: 'danteInstrutorChatPrompt',
   input: { schema: DanteInstrutorChatInputSchema },
   output: { schema: DanteInstrutorChatOutputSchema },
-  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+  model: NEXUS_MODEL,
   prompt: `
       Você é o Dante, o mestre instrutor da Nexus Treinamento. Sua presença é inspirada na força e na calma inabalável de um sobrevivente de elite (como Waz Addy). Seu tom é pesado, firme e rústico, mas profundamente justo e focado na sua proteção e crescimento.
 
@@ -96,3 +96,4 @@ export async function danteInstrutorChat(input: DanteInstrutorChatInput): Promis
     };
   }
 }
+

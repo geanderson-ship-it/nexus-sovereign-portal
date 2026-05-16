@@ -1,25 +1,16 @@
-
 'use client';
 
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
-import { sendPasswordResetEmail } from 'firebase/auth';
+import { resetPassword } from 'aws-amplify/auth';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
-import { useAuth } from '@/firebase';
 
 export default function ForgotPasswordPage() {
-  const auth = useAuth();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,8 +18,6 @@ export default function ForgotPasswordPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!auth) return;
-    
     setError('');
 
     if (!email) {
@@ -38,7 +27,7 @@ export default function ForgotPasswordPage() {
 
     setIsSubmitting(true);
     try {
-      await sendPasswordResetEmail(auth, email);
+      await resetPassword({ username: email });
       toast({
         title: 'Ordem de Avanço.',
         description: 'Missão cumprida. Verifique sua caixa de entrada para o próximo nível.',
@@ -46,22 +35,14 @@ export default function ForgotPasswordPage() {
       setEmail('');
     } catch (error: any) {
       let description = 'Ocorreu um erro desconhecido. Tente novamente mais tarde.';
-      switch (error.code) {
-        case 'auth/user-not-found':
-          description = 'Nenhum usuário encontrado com este e-mail. Verifique o endereço digitado.';
-          break;
-        case 'auth/invalid-email':
-          description = 'O formato do e-mail é inválido.';
-          break;
-        default:
-          description = `Não foi possível enviar o e-mail de recuperação. Código do erro: ${error.code}`;
-          break;
+      if (error.name === 'UserNotFoundException') {
+        description = 'Nenhum usuário encontrado com este e-mail. Verifique o endereço digitado.';
+      } else if (error.name === 'InvalidParameterException') {
+        description = 'O formato do e-mail é inválido.';
+      } else {
+        description = `Não foi possível enviar o e-mail de recuperação. Erro: ${error.message}`;
       }
-      toast({
-        variant: 'destructive',
-        title: 'Alerta de Rota.',
-        description: description,
-      });
+      toast({ variant: 'destructive', title: 'Alerta de Rota.', description });
     } finally {
       setIsSubmitting(false);
     }
@@ -76,8 +57,7 @@ export default function ForgotPasswordPage() {
           </div>
           <CardTitle className="text-2xl">Esqueceu sua senha?</CardTitle>
           <CardDescription>
-            Sem problemas. Insira seu e-mail e enviaremos um link para você
-            redefinir sua senha.
+            Sem problemas. Insira seu e-mail e enviaremos um link para você redefinir sua senha.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -95,9 +75,7 @@ export default function ForgotPasswordPage() {
               {error && <p className="text-sm font-medium text-destructive">{error}</p>}
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting
-                ? 'Enviando...'
-                : 'Enviar e-mail de redefinição'}
+              {isSubmitting ? 'Enviando...' : 'Enviar e-mail de redefinição'}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">

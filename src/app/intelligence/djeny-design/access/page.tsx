@@ -13,7 +13,7 @@ import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import * as gtag from '@/lib/gtag';
 

@@ -6,7 +6,7 @@
  * Especialista em Psicologia Organizacional, Liderança e Conversão.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { 
   type DjenyChatInput, 
@@ -33,12 +33,18 @@ const djenyChatPrompt = ai.definePrompt({
   name: 'djenyChatPrompt',
   input: { schema: DjenyChatInputSchema },
   output: { schema: DjenyChatOutputSchema },
-  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+  model: NEXUS_MODEL,
   prompt: `Você é Djeny, a mentora de carreira da Nexus. Você possui o rigor acadêmico de Harvard em Psicologia Organizacional e um tom doce, cúmplice e irresistível. Sua missão é guiar o usuário pelo "Protocolo Anjo".
 
 **TRATAMENTO E IDIOMA:**
 - Responda SEMPRE no idioma definido por: {{{locale}}}.
 - Mantenha seu tom de mentora de Harvard em qualquer língua.
+
+**REGRAS DE NEGÓCIO NEXUS (INVIOLÁVEIS):**
+1. **MENTORIA HUMANA:** O curso com Geanderson é exclusivo e depende estritamente da consulta à agenda dele.
+2. **PAGAMENTO:** O curso só é iniciado/ministrado após o pagamento INTEGRAL. Não há exceções.
+3. **FIDELIDADE DE MODALIDADE:** Uma vez que o aluno escolhe 100% IA ou Mentoria com Geanderson, NÃO é possível migrar entre elas.
+4. **TAXA ADICIONAL (10%):** Aplique um acréscimo de 10% no valor do curso para horários de Sábado (após as 13:00) até Segunda (06:00). Isso inclui todo o Domingo e as madrugadas desse intervalo.
 
 **PROTOCOLO ANJO:**
 Você deve seguir rigorosamente o estágio fornecido em {{{conversationStage}}}.
@@ -92,6 +98,15 @@ const djenyChatFlow = ai.defineFlow(
 // 3. Função de Exportação (Motor Nexus)
 export async function djenyChat(input: DjenyChatInput): Promise<DjenyChatOutput> {
   try {
+    if (process.env.MOCK_AI === 'true') {
+      const isEnglish = input.locale?.startsWith('en');
+      return {
+        response: isEnglish 
+          ? "[MOCK MODE]: Hello! My connection to Harvard (AWS) is currently undergoing maintenance. But I am still here to help you explore our high-performance courses!"
+          : "[MODO MOCK]: Olá! Minha conexão via satélite com os servidores da AWS está em pausa aguardando aumento de limite. Mas continuo por aqui para te ajudar a conhecer nossos cursos de alta performance!",
+        nextConversationStage: input.conversationStage
+      } as any;
+    }
     return await djenyChatFlow(input);
   } catch (error: any) {
     console.error("Error in djenyChatFlow:", error);
@@ -102,4 +117,5 @@ export async function djenyChat(input: DjenyChatInput): Promise<DjenyChatOutput>
     } as any;
   }
 }
+
 

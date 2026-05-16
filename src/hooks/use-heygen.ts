@@ -101,7 +101,6 @@ export function useHeygen({ avatarId, onStreamReady, onStreamDisconnected, onMes
     try {
       await avatarRef.current.speak({
         text,
-        sessionId: sessionIdRef.current,
       });
     } catch (err) {
       console.error('Error speaking:', err);

@@ -22,8 +22,7 @@ import placeholderImages from '@/lib/placeholder-images.json';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
-import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
-import { collection, query } from 'firebase/firestore';
+import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 
 
@@ -82,7 +81,6 @@ const MessageContent = ({ msg }: { msg: Message }) => {
 
 export function CareerAdvisorChat() {
   const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -96,14 +94,8 @@ export function CareerAdvisorChat() {
     return initials.slice(0, 2).toUpperCase();
   }, [user]);
 
-  const purchasesQuery = useMemoFirebase(() => {
-    if (!user?.uid || !firestore) return null;
-    return query(collection(firestore, 'users', user.uid, 'purchases'));
-  }, [user?.uid, firestore]);
-
-  const { data: purchases, isLoading: purchasesLoading } = useCollection<Purchase>(purchasesQuery);
-
-  const hasAccessToMentoria = useMemo(() => (purchases ? purchases.length > 0 : false) || isAdminUser(user), [purchases, user]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
+  const hasAccessToMentoria = useMemo(() => isAdmin || !!user, [isAdmin, user]);
 
 
   // Audio and Speech Recognition State
@@ -207,7 +199,7 @@ export function CareerAdvisorChat() {
     }
   };
   
-    if (isUserLoading || purchasesLoading) {
+  if (isUserLoading) {
     return (
       <Card className="h-[70vh] flex flex-col items-center justify-center shadow-2xl border-accent/20 bg-background/80">
         <Loader2 className="h-12 w-12 animate-spin text-primary" />

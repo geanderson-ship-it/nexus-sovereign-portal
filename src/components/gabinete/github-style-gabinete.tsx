@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import { 
-  FileText, 
-  Folder, 
-  BookOpen, 
-  Star, 
-  GitFork, 
-  Eye, 
+import {
+  FileText,
+  Folder,
+  BookOpen,
+  Star,
+  GitFork,
+  Eye,
   ChevronDown,
   Info,
   History,
@@ -23,14 +23,14 @@ export function GabineteGithubHeader() {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-xl">
-            <Image src="https://i.postimg.cc/t4nTCxJZ/Nexus-studio.png" alt="Nexus Logo" width={40} height={40} className="object-contain" />
+            <Image src="/Nexus Intelligence Studio/Nexus studio chumbo.png" alt="Nexus Logo" width={40} height={40} className="object-contain" />
             <span className="text-zinc-500">/</span>
             <span className="text-blue-400 hover:underline cursor-pointer">Nexus-Intelligence</span>
             <span className="text-zinc-500">/</span>
             <span className="font-bold hover:underline cursor-pointer">Gabinete-de-Comando</span>
             <span className="ml-2 px-2 py-0.5 text-xs border border-zinc-700 rounded-full text-zinc-500 font-medium">Public</span>
           </div>
-          
+
           <div className="flex items-center gap-2">
             <button className="flex items-center gap-2 px-3 py-1.5 bg-zinc-900 border border-zinc-700 rounded-md text-xs font-medium hover:bg-zinc-800 transition-colors">
               <Eye className="h-4 w-4" /> Watch <span className="px-1.5 bg-zinc-800 rounded-full text-[10px]">12</span> <ChevronDown className="h-3 w-3" />
@@ -90,7 +90,7 @@ export function GabineteFileList() {
           <span className="font-semibold text-zinc-300">44fea2e</span> 10 mins ago
         </div>
       </div>
-      
+
       <div className="divide-y divide-zinc-800">
         {files.map((file) => (
           <div key={file.name} className="flex items-center p-3 hover:bg-zinc-800/30 transition-colors group">
@@ -130,17 +130,17 @@ export function GabineteReadme() {
       </div>
       <div className="p-8 md:p-12 prose prose-invert max-w-none">
         <div className="flex items-center justify-center mb-8">
-            <Image 
-                src="https://i.postimg.cc/t4nTCxJZ/Nexus-studio.png" 
-                alt="Nexus Studio Logo" 
-                width={400} 
-                height={120} 
-                className="object-contain"
-            />
+          <Image
+            src="/Nexus Intelligence Studio/Nexus studio chumbo.png"
+            alt="Nexus Studio Logo"
+            width={400}
+            height={120}
+            className="object-contain"
+          />
         </div>
 
         <h1 className="text-3xl font-bold border-b border-zinc-800 pb-4 mb-6">Nexus Gabinete de Comando</h1>
-        
+
         <p className="text-zinc-400 mb-6 text-lg">
           Bem-vindo ao núcleo de operações da Nexus Holding Group. Este repositório centraliza toda a infraestrutura de inteligência artificial, broadcasting e gestão estratégica do ecossistema Nexus.
         </p>
@@ -171,7 +171,7 @@ export function GabineteReadme() {
           <span className="px-3 py-1 bg-zinc-800 border border-zinc-700 rounded-full text-xs">Tailwind CSS</span>
           <span className="px-3 py-1 bg-zinc-800 border border-zinc-700 rounded-full text-xs">AWS Polly</span>
           <span className="px-3 py-1 bg-zinc-800 border border-zinc-700 rounded-full text-xs">AWS Bedrock</span>
-          <span className="px-3 py-1 bg-zinc-800 border border-zinc-700 rounded-full text-xs">Firebase</span>
+          <span className="px-3 py-1 bg-zinc-800 border border-zinc-700 rounded-full text-xs">AWS DynamoDB</span>
         </div>
 
         <h2 className="text-2xl font-bold border-b border-zinc-800 pb-2 mb-4">Status do Sistema</h2>

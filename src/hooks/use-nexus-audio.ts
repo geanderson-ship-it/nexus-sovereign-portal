@@ -3,20 +3,19 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 import type { UseNexusAudioInput, TextToSpeechOutput, SpeechMark } from './use-nexus-audio-types';
-import { useToast } from './use-toast';
-import { errorEmitter } from '@/firebase/error-emitter';
+import { eventEmitter } from '@/auth/event-emitter';
 import { useLocale } from './use-locale';
 
-export { errorEmitter };
+export { eventEmitter };
 
 export function useAudioLevel() {
     const [level, setLevel] = useState(0);
     
     useEffect(() => {
         const handler = (data: { level: number }) => setLevel(data.level);
-        errorEmitter.on('audio-level-update', handler);
+        eventEmitter.on('audio-level-update', handler);
         return () => {
-            errorEmitter.off('audio-level-update', handler);
+            eventEmitter.off('audio-level-update', handler);
         };
     }, []);
     
@@ -45,7 +44,6 @@ export function useNexusAudio() {
     const [isLoading, setIsLoading] = useState(false);
     const [playingId, setPlayingId] = useState<string | number | null>(null);
     const [currentViseme, setCurrentViseme] = useState<SpeechMark | null>(null);
-    const { toast } = useToast();
     const { locale } = useLocale();
     
     const audioContextRef = useRef<AudioContext | null>(null);
@@ -58,7 +56,7 @@ export function useNexusAudio() {
 
     // This effect will broadcast viseme changes to any interested component.
     useEffect(() => {
-        errorEmitter.emit('viseme-update', { viseme: currentViseme });
+        eventEmitter.emit('viseme-update', { viseme: currentViseme });
     }, [currentViseme]);
 
     const getAudioContext = useCallback(() => {
@@ -86,7 +84,7 @@ export function useNexusAudio() {
             cancelAnimationFrame(animationFrameIdRef.current);
             animationFrameIdRef.current = null;
         }
-        errorEmitter.emit('audio-level-update', { level: 0 });
+        eventEmitter.emit('audio-level-update', { level: 0 });
 
         if (sourceRef.current) {
             try {
@@ -189,7 +187,7 @@ export function useNexusAudio() {
                 analyser.getByteFrequencyData(dataArray);
                 const average = dataArray.reduce((acc, val) => acc + val, 0) / bufferLength;
                 const volume = Math.min(1, (average / 140) ** 2);
-                errorEmitter.emit('audio-level-update', { level: volume });
+                eventEmitter.emit('audio-level-update', { level: volume });
             };
             draw();
 
@@ -213,16 +211,11 @@ export function useNexusAudio() {
         } catch (err: any) {
             if (!newAbortController.signal.aborted) {
                 console.error(`VIX DIAGNOSTIC: Falha no processamento de áudio.`, err);
-                toast({
-                    variant: 'destructive',
-                    title: 'Falha no Protocolo de Áudio',
-                    description: err.message || 'Não foi possível sintetizar a voz do mentor.',
-                });
                 stopAudio();
                 onEnded?.();
             }
         }
-    }, [stopAudio, getAudioContext, toast]);
+    }, [stopAudio, getAudioContext]);
 
 
     // Effect to unlock audio context and play queued audio on first user gesture.

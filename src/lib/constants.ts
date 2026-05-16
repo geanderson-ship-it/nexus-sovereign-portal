@@ -1,9 +1,7 @@
 
 export const ADMIN_EMAILS = [
-    'geanderson@nexustreinamento.com', 
-    'geanderson@nexustreinamento',
-    'geandersonleo@gmail.com', 
-    'geandersonleo@gmail'
+    'geanderson@nexustreinamento.com',
+    'geandersonleo@gmail.com',
 ];
 
 export const isAdminUser = (user: any): boolean => {

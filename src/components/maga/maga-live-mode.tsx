@@ -15,12 +15,12 @@ import {
 import { useNexusAudio, useAudioLevel } from '@/hooks/use-nexus-audio';
 import { useSpeechRecognition } from '@/hooks/use-speech-recognition';
 import { magadotChat } from '@/ai/flows/magadot-chat-flow';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
-import { errorEmitter } from '@/hooks/use-nexus-audio';
+import { eventEmitter } from '@/hooks/use-nexus-audio';
 import * as gtag from '@/lib/gtag';
 import { useLocale } from '@/hooks/use-locale';
 import { useNexusLife } from '@/hooks/use-nexus-life';
@@ -45,11 +45,34 @@ export function MagaLiveMode() {
     }
   }, []);
 
+  // Gemini Live Engine
+  const { 
+    startSession, 
+    stopSession, 
+    isSpeaking, 
+    connectionState,
+    error: liveError 
+  } = useGeminiLive('maga', { isFirstTime });
+
+  const [lastClick, setLastClick] = useState<{ x: number, y: number } | null>(null);
+  const displacementRef = useRef<SVGFEDisplacementMapElement>(null);
+
   // High-Performance Audio Reactivity
   const audioLevel = useAudioLevel();
+  const audioGlow = useTransform(useMotionValue(audioLevel), [0, 1], [0.05, 0.3]);
 
   // Nexus Life Engine (Human Touch)
   const { gazeX, gazeY, tiltX, tiltY, isBlinking } = useNexusLife();
+
+  const handleAvatarClick = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setLastClick({ x: Math.round(x), y: Math.round(y) });
+    
+    // Clear after delay
+    setTimeout(() => setLastClick(null), 3000);
+  };
 
   const initializeMaga = async () => {
     setIsInitialized(true);

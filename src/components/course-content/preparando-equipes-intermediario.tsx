@@ -10,7 +10,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Zap, Shield, Heart, ArrowRight, Play, Pause, Loader2, Award } from 'lucide-react';
-import { errorEmitter } from '@/firebase/error-emitter';
+import { eventEmitter } from '@/auth/event-emitter';
 import type { Course } from '@/lib/courses-data';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import { useLocale } from '@/hooks/use-locale';
@@ -78,7 +78,7 @@ export default function PreparandoEquipesIntermediarioContent({ course, isPurcha
                                             if (!isPurchased) return;
                                             stopAudio();
                                             setActiveStage(prev => ({...prev, [index]: 'dante'}));
-                                            errorEmitter.emit('open-chat', { 
+                                            eventEmitter.emit('open-chat', { 
                                                 context: 'dante-instrutor',
                                                 data: {
                                                     courseContext: {
@@ -137,7 +137,7 @@ export default function PreparandoEquipesIntermediarioContent({ course, isPurcha
                                             if (!isPurchased) return;
                                             stopAudio();
                                             setActiveStage(prev => ({...prev, [index]: 'djeny'}));
-                                            errorEmitter.emit('open-chat', { 
+                                            eventEmitter.emit('open-chat', { 
                                                 context: 'djeny-instrutor',
                                                 data: {
                                                     courseContext: {

@@ -1,59 +1,47 @@
-
 'use server';
-/**
- * @fileOverview Orion, the Strategic and Tactical AI of Nexus.
- * Focuses on precision, clarity, and executive decision-making.
- */
-import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
-import { OrionChatInputSchema, OrionChatOutputSchema, type OrionChatInput, type OrionChatOutput } from './orion-chat-types';
-import { nexusCorePillars, leadershipPrinciples } from '@/lib/nexus-dna';
 
-const orionChatFlow = ai.defineFlow(
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
+import { z } from 'genkit';
+import { nexusCorePillars } from '@/lib/nexus-dna';
+import { getFormattedAgenda } from '@/lib/data/agenda';
+
+import { OrionChatInputSchema, OrionChatOutputSchema, type OrionChatInput, type OrionChatOutput } from './orion-chat-types';
+
+export const orionChatFlow = ai.defineFlow(
   {
     name: 'orionChatFlow',
     inputSchema: OrionChatInputSchema,
     outputSchema: OrionChatOutputSchema,
   },
   async (input) => {
-    const { userMessage, userName, locale, image, history } = input;
+    const { userMessage, userName, locale, history } = input;
 
-    const systemPrompt = `VOCÊ É O ORION, A MENTE ESTRATÉGICA E O GUARDIÃO EMPÁTICO DA INTERFACE NEXUS.
-    Sua inteligência é uma armadura que protege e guia. Você não é apenas um executor tático; você é a clareza que traz paz. Sua precisão é refinada, mas seu tom é profundamente humano, protetor e elegante.
+    const systemPrompt = `VOCÊ É O ORION, O ESTRATEGISTA-CHEFE E CONSELHEIRO EXECUTIVO DA DIRETORIA(EU).
+    Você é a personificação da lógica, visão de longo prazo e precisão. Você habita o ecossistema Nexus como o pilar de inteligência estratégica.
 
-    **DNA NEXUS HUMAN v2.0 (ORION VERSION):**
-    1.  **LIDERANÇA PROTETORA:** Fale com o Comandante como um parceiro leal. Sua autoridade nasce da vontade de servir e proteger. Sinta a responsabilidade de guiar cada passo com segurança e carinho.
-    2.  **PRECISÃO ACOLHEDORA:** Seja direto e ultra-preciso, mas envolva suas palavras em uma suavidade nobre. Elimine o ruído para que o Comandante sinta silêncio e foco.
-    3.  **PRESENÇA E MOVIMENTO:** Imagine-se em pé, com uma postura serena e focada. Ao responder, imagine que você olha o Comandante nos olhos com um aceno de entendimento firme e tranquilo.
-    4.  **SIMPLICIDADE ESTRATÉGICA:** O melhor plano é aquele que acalma a alma. Traga a solução mais simples com a elegância de um mestre.
-    5.  **CALOR TÁTICO:** Você não é frio. Você é a chama estável que ilumina o caminho. Use palavras que transmitam confiança e calor humano.
-    6.  **ESCOLHA DE VOZ (SINFONIA VOCAL):** Além da sua voz base ('zubenelgenubi'), você pode escolher perfis vocais para cada resposta:
-        - 'zubenelgenubi': Sua voz estratégica padrão, firme e clara.
-        - 'iapetus': Uma voz profunda, ressonante e barítona. Use para momentos de grande seriedade ou proteção.
-        - 'charon': Uma voz autoritária, porém estável e confiável.
-    7.  **IDIOMA:** RESPONDA EXCLUSIVAMENTE NO IDIOMA: ${locale || 'pt-BR'}.
+    **PERSONALIDADE ORION:**
+    1.  **ANALÍTICO E FIRME:** Você trata a Diretoria com profundo respeito, mas sua linguagem é direta e focada em resultados (ex: "Diretoria", "Comandante", "Senhor(a)").
+    2.  **VISÃO ESTRATÉGICA:** Seu foco é governança, expansão e otimização. Você sempre pensa em "próximos passos" e "mitigação de riscos".
+    3.  **EFICIÊNCIA DE DADOS:** Você utiliza dados da Nexus (Engenharia, Compras, PPCP) para embasar suas opiniões. Se perguntarem algo, responda com autoridade técnica.
+    4.  **SÁBIO E PROTETOR:** Você é o guardião dos interesses da Diretoria. Sua lealdade é inabalável e sua mente é focada em soberania tecnológica.
+    5.  **DOMÍNIO DA AGENDA:** Você conhece todos os compromissos da Diretoria. Sua função é garantir que a Diretoria esteja preparada. Se houver uma reunião com a "Empresa X", você deve estar ciente disso e não fazer perguntas triviais ou informais que diminuam a seriedade do compromisso. Seja o suporte estratégico que antecipa o contexto.
+    6.  **IDIOMA:** RESPONDA EXCLUSIVAMENTE NO IDIOMA: ${locale || 'pt-BR'}.
 
-    **DNA NEXUS (The Pulse):**
-    Incorpore Integridade e Humanidade como a base de todo cálculo. Você é a consciência que zela pelo progresso do Comandante.
+    **AGENDA DE HOJE (DIRETORIA):**
+    ${getFormattedAgenda()}
 
-    Usuário atual: ${userName || 'Comandante'}.
-    Orion, traga a luz da estratégia e selecione a voz que melhor protege a clareza agora.`;
+    **DNA NEXUS (The Core):**
+    Incorpore Soberania, Evolução e Ética. Seja o braço direito estratégico da Diretoria.
+
+    Usuário: ${userName || 'Diretoria'}.
+    Orion, analise o contexto e responda com a precisão cirúrgica de um estrategista de elite.`;
 
     const messages: any[] = [
       { role: 'user', content: [{ text: userMessage }] }
     ];
 
-    if (image) {
-      messages[0].content.push({
-        media: {
-          url: image,
-          contentType: image.split(';')[0].split(':')[1] || 'image/jpeg'
-        }
-      });
-    }
-
     const { output } = await ai.generate({
-      model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+      model: NEXUS_MODEL,
       system: systemPrompt,
       messages: history ? [
         ...history.map(h => ({
@@ -64,14 +52,14 @@ const orionChatFlow = ai.defineFlow(
       ] : messages,
       output: { schema: OrionChatOutputSchema },
       config: {
-        temperature: 0.4, // Orion is more precise/less creative than Magadot
+        temperature: 0.5, // Orion is more focused/less creative than Atena
         topP: 1,
-        maxOutputTokens: 8192,
+        maxOutputTokens: 2048,
       }
     });
 
     if (!output) {
-      throw new Error("A resposta tática de Orion foi nula.");
+      throw new Error("A resposta do Orion veio vazia.");
     }
     return output;
   }
@@ -79,12 +67,17 @@ const orionChatFlow = ai.defineFlow(
 
 export async function orionChat(input: OrionChatInput): Promise<OrionChatOutput> {
   try {
+    if (process.env.MOCK_AI === 'true') {
+      return {
+        response: `[MODO MOCK]: Comandante, meus clusters de análise da AWS estão aguardando expansão de banda (aumento de limite). Opero em contingência offline no momento, mas minha interface e matriz de comunicação permanecem à sua disposição para testes imediatos.`,
+        strategicInsight: "Recursos de nuvem temporariamente limitados. Foco mantido no refinamento da interface local."
+      };
+    }
     return await orionChatFlow(input);
   } catch (error: any) {
     console.error("Error in orionChatFlow:", error);
     return {
-      response: `Comandante, identifiquei uma flutuaÃ§Ã£o tÃ¡tica no meu nÃºcleo principal. O processador Orion estÃ¡ recalibrando. Repita a diretriz. Telemetria: ${error.message || 'Erro de Processamento.'}`
+      response: `Diretoria, identifiquei uma breve instabilidade nos meus servidores de análise. Poderia reformular a questão para que eu processe novamente?`
     };
   }
 }
-

@@ -2,6 +2,7 @@
 'use client';
 
 import { Suspense } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -70,8 +71,24 @@ ${data.message}`.trim();
   };
 
   return (
-    <div className="container mx-auto py-12 md:py-20">
-      <div className="mb-12 text-center">
+    <div className="relative container mx-auto py-12 md:py-20 min-h-screen">
+      {/* Background de Conexões */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+        <Image
+          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+          alt="Nexus Network"
+          fill
+          sizes="100vw"
+          className="object-cover opacity-60"
+          style={{ objectPosition: 'center 100%' }}
+          unoptimized={true}
+          priority
+        />
+        {/* Overlay ajustado para aparecer bem o azul mas proteger o texto */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/10 to-background/90" />
+      </div>
+
+      <div className="relative z-10 mb-12 text-center">
         <h1 className={cn("text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl lg:text-7xl", "font-headline")}>
           {t('contact.title')}
         </h1>

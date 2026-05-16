@@ -35,13 +35,11 @@ const textToSpeechFlow = ai.defineFlow(
     const { text, voice, locale } = input;
 
     // Configuração do Cliente Polly seguindo o protocolo AWS do Nexus
-    const region = process.env.AWS_REGION || process.env.AMPLIFY_REGION || 'us-east-1';
-    const pollyConfig: any = {
-      region,
-    };
+    const region = process.env.NEXUS_REGION || process.env.AMPLIFY_REGION || 'us-east-1';
+    const pollyConfig: any = { region };
 
-    const accessKeyId = process.env.AWS_ACCESS_KEY_ID || process.env.AMPLIFY_ACCESS_KEY_ID;
-    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || process.env.AMPLIFY_SECRET_ACCESS_KEY;
+    const accessKeyId = process.env.NEXUS_ACCESS_KEY_ID || process.env.AMPLIFY_ACCESS_KEY_ID;
+    const secretAccessKey = process.env.NEXUS_SECRET_ACCESS_KEY || process.env.AMPLIFY_SECRET_ACCESS_KEY;
 
     if (accessKeyId && secretAccessKey) {
       pollyConfig.credentials = {
@@ -108,7 +106,7 @@ const textToSpeechFlow = ai.defineFlow(
       }
 
       // Converter o stream para Buffer e depois para Data URI
-      const audioArray = await audioResponse.AudioStream.transformToUint8Array();
+      const audioArray = await audioResponse.AudioStream.transformToByteArray();
       const audioBuffer = Buffer.from(audioArray);
       const audioDataUri = `data:audio/mp3;base64,${audioBuffer.toString('base64')}`;
 
@@ -129,7 +127,7 @@ const textToSpeechFlow = ai.defineFlow(
       }
 
       // Polly retorna marcas como JSON linha por linha
-      const marksArray = await marksResponse.AudioStream.transformToUint8Array();
+      const marksArray = await marksResponse.AudioStream.transformToByteArray();
       const marksString = new TextDecoder().decode(marksArray);
       const speechMarks = marksString
         .split('\n')

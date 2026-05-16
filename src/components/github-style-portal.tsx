@@ -229,7 +229,7 @@ export function PortalGithubSidebar() {
             <span className="text-blue-400 font-bold">READY</span>
           </div>
           <div className="flex items-center justify-between text-xs">
-            <span className="text-zinc-400">Firebase DB</span>
+            <span className="text-zinc-400">AWS DynamoDB</span>
             <span className="text-emerald-500 font-bold">SYNCED</span>
           </div>
         </div>

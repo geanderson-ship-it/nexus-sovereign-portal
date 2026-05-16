@@ -11,10 +11,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "^1.7.2",
     "@aws-sdk/client-bedrock-agent": "^3.1033.0",
     "@aws-sdk/client-bedrock-agent-runtime": "^3.1033.0",
-    "@aws-sdk/client-bedrock-runtime": "^3.1033.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.1045.0",
+    "@aws-sdk/client-dynamodb": "^3.1041.0",
     "@aws-sdk/client-polly": "^3.1033.0",
+    "@aws-sdk/lib-dynamodb": "^3.1041.0",
     "@genkit-ai/ai": "^1.29.0",
     "@genkit-ai/core": "^1.31.0",
     "@genkit-ai/google-genai": "^1.0.0",
@@ -51,7 +54,6 @@
     "clsx": "2.1.1",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "8.1.6",
-    "firebase": "11.5.0",
     "framer-motion": "^11.18.2",
     "genkit": "^1.0.1",
     "genkitx-aws-bedrock": "^1.17.0",

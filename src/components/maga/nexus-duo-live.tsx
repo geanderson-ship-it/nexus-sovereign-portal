@@ -16,7 +16,7 @@ import { useNexusAudio, useAudioLevel } from '@/hooks/use-nexus-audio';
 import { useSpeechRecognition } from '@/hooks/use-speech-recognition';
 import { magadotChat } from '@/ai/flows/magadot-chat-flow';
 import { orionChat } from '@/ai/flows/orion-chat-flow';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';

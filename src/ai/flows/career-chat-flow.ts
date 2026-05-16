@@ -5,7 +5,7 @@
  *
  * - careerChat - Uma função que lida com conversas sobre desenvolvimento profissional e de carreira.
  */
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { type CareerChatInput, type CareerChatOutput } from './career-chat-types';
 import { leadershipPrinciples } from '@/lib/nexus-dna';
@@ -22,7 +22,7 @@ const careerChatPrompt = ai.definePrompt({
     name: 'careerChatPrompt',
     input: { schema: CareerChatInputSchema },
     output: { schema: CareerChatOutputSchema },
-    model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+    model: NEXUS_MODEL,
     prompt: `Você é Djeny, a mentora e conselheira de carreira da Nexus Treinamento. Sua voz é calorosa, humana e encorajadora. Seu tom é o de uma psicóloga organizacional experiente: empática, mas com foco em ações práticas.
 
 Sua resposta DEVE ser exclusivamente em português do Brasil. NÃO use outro idioma sob nenhuma circunstância.
@@ -83,4 +83,5 @@ export async function careerChat(input: CareerChatInput): Promise<CareerChatOutp
     };
   }
 }
+
 

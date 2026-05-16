@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
 import { signIn, signInWithRedirect } from 'aws-amplify/auth';
-import { Hub } from 'aws-amplify/utils';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
@@ -16,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Eye, EyeOff } from 'lucide-react';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import Image from 'next/image';
 
 import { useLocale } from '@/hooks/use-locale';
@@ -55,10 +54,10 @@ export default function LoginPage() {
         title: t('login.toast.success.title'),
         description: t('login.toast.success.description'),
     });
-    // Redireciona via Next.js router para manter o estado da aplicação
-    // O FirebaseProvider (Amplify bridge) detectará a mudança de estado via Hub e checkUser
-    router.push('/profile');
-    setIsSubmitting(false);
+    // Reload completo para garantir que o AuthProvider detecte a sessão
+    setTimeout(() => {
+      window.location.href = '/profile';
+    }, 500);
   };
 
   const handleGoogleSignIn = async () => {

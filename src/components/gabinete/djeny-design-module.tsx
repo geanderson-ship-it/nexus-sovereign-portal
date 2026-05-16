@@ -222,12 +222,12 @@ const DesignStudio = () => {
     };
 
     const handleCopyPix = () => {
-        const pixKey = "00020126580014BR.GOV.BCB.PIX0114+551199999999952040000530398654071500.005802BR5915NexusPremium6009SaoPaulo62070503***6304ABCD";
+        const pixKey = "+5551999799582";
         navigator.clipboard.writeText(pixKey);
     };
 
     const handleSendProof = () => {
-        const phone = "5511999999999"; // User should change this
+        const phone = "5551999799582"; // User should change this
         const msg = encodeURIComponent(t('chat.djenyDesign.payment.whatsappMsg'));
         window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
     };

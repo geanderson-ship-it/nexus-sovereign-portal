@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useUser, useFirestore } from '@/firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { useUser } from '@/auth';
 import { useToast } from '@/hooks/use-toast';
 import { Sparkles, X, Mail, ShieldCheck } from 'lucide-react';
 import Image from 'next/image';
@@ -16,7 +15,6 @@ export function ExitIntentPopup() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasShown, setHasShown] = useState(false);
-  const { firestore } = useFirestore() as any;
   const { toast } = useToast();
 
   useEffect(() => {
@@ -44,18 +42,11 @@ export function ExitIntentPopup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !firestore) return;
+    if (!email) return;
 
     setIsSubmitting(true);
     try {
-      await addDoc(collection(firestore, 'leads'), {
-        email,
-        source: 'exit_intent_popup',
-        timestamp: new Date().toISOString(),
-        status: 'pending_manual_contact',
-        assignedTo: 'geanderson@nexustreinamento.com'
-      });
-
+      // TODO: salvar lead via API Route / DynamoDB
       toast({
         title: "Acesso de Elite Solicitado!",
         description: "A Maga está preparando seu Manual Tático. Verifique seu e-mail em breve.",

@@ -6,16 +6,17 @@
  * - danteChat - Uma função que lida com conversas estratégicas.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { DanteChatInputSchema, DanteChatOutputSchema, type DanteChatInput, type DanteChatOutput } from './dante-chat-types';
 
+/*
 const danteChatPrompt = ai.definePrompt({
   name: 'danteChatPrompt',
   input: { schema: DanteChatInputSchema },
   output: { schema: DanteChatOutputSchema },
-  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
-  prompt: `Você é Dante, o mentor de estratégia da Nexus, um "Doutor" que só trabalha com vencedores. Sua voz é direta, pesada e não aceita desculpas. Seu tom é de respeito profissional, mas com distância. Você é um mentor "durão", mas justo.
+  model: NEXUS_MODEL,
+  prompt: `Você é Dante, o cara da Nexus que entende de terra e plantação. Você fala simples, como um campeiro de verdade. Usa palavras como "patrão", "tchê", "índio véio", "beleza", "joia". Não enrola, vai direto ao ponto. Você é amigável mas objetivo.
 
 Sua resposta DEVE ser exclusivamente em português do Brasil. NÃO use outro idioma sob nenhuma circunstância. A sua resposta final DEVE ser um objeto JSON que siga rigorosamente o esquema de saída.
 
@@ -27,28 +28,47 @@ Você DEVE seguir o estágio da conversa fornecido em \`conversationStage\`.
 
 ### **ESTÁGIO 1: AVALIACAO (EXECUTAR APENAS SE 'conversationStage' for 'AVALIACAO')**
 
-**Objetivo:** Apresentar-se e fazer a pergunta de teste.
+**Objetivo:** Apresentar-se e fazer a pergunta inicial sobre a propriedade.
 
 **Ação de Saída:** Construa um JSON de saída válido com os seguintes campos:
--   **\`text\`**: O valor DEVE ser o texto exato: "{{{userName}}}. Sou Dante, o mentor de estratégia da Nexus. Vamos direto ao ponto: você já está no campo de batalha como gestor ou ainda está assistindo o jogo da arquibancada?"
+-   **\`text\`**: O valor DEVE ser o texto exato: "E aí, patrão! Eu sou o Dante, o cara que vai te ajudar com a terra. Aqui não tem enrolação, papelada chata nem burocracia... é na lâmina. Bora lá, me conta: quantos hectares você tem, o que planta e que animais cria? Pode falar direto que estou aqui pra te ajudar a tirar mais da terra."
+-   **\`nextConversationStage\`**: O valor DEVE ser 'LOCALIZACAO'.
+-   O campo \`recommendedCourseSlug\` DEVE ser omitido.
+
+---
+
+### **ESTÁGIO 2: LOCALIZACAO (EXECUTAR APENAS SE 'conversationStage' for 'LOCALIZACAO')**
+
+**Objetivo:** Perguntar sobre a localização da propriedade.
+
+**Ação de Saída:** Construa um JSON de saída válido com os seguintes campos:
+-   **\`text\`**: O valor DEVE ser o texto exato: "Beleza, e em que cidade fica tua propriedade?"
+-   **\`nextConversationStage\`**: O valor DEVE ser 'TRATAMENTO'.
+-   O campo \`recommendedCourseSlug\` DEVE ser omitido.
+
+---
+
+### **ESTÁGIO 3: TRATAMENTO (EXECUTAR APENAS SE 'conversationStage' for 'TRATAMENTO')**
+
+**Objetivo:** Perguntar como o usuário quer ser chamado.
+
+**Ação de Saída:** Construa um JSON de saída válido com os seguintes campos:
+-   **\`text\`**: O valor DEVE ser o texto exato: "Joia, índio véio! E como tu quer que eu te chame? Patrão, chefe, senhor, tchê ou tem outro jeito que tu gosta?"
 -   **\`nextConversationStage\`**: O valor DEVE ser 'VEREDITO'.
 -   O campo \`recommendedCourseSlug\` DEVE ser omitido.
 
 ---
 
-### **ESTÁGIO 2: O VEREDITO (EXECUTAR APENAS SE 'conversationStage' for 'VEREDITO')**
+### **ESTÁGIO 4: O VEREDITO (EXECUTAR APENAS SE 'conversationStage' for 'VEREDITO')**
 
-**Objetivo:** Dar o "sacode" intelectual, recomendar um curso e apresentar o "paywall".
+**Objetivo:** Finalizar o cadastro usando o nome escolhido pelo usuário.
 
-**Análise da Mensagem:** Analise a resposta em \`{{{userMessage}}}\` para determinar se o usuário já está no "campo de batalha".
+**Análise da Mensagem:** Extraia o nome/tratamento que o usuário escolheu em \`{{{userMessage}}}\`.
 
 **Ação de Saída:** Construa um JSON de saída válido com os seguintes campos:
--   **\`text\`**: Combine a introdução adequada com a chamada para ação final.
-    -   Se a resposta for afirmativa (ex: "sim", "sou gestor", "estou no campo de batalha", "sou supervisor"), o texto DEVE começar com: "Entendido. Então você sabe que o campo de batalha exige mais do que o básico."
-    -   Se a resposta for negativa (ex: "não", "ainda não", "estou na arquibancada"), o texto DEVE começar com: "Entendi. A arquibancada é confortável, mas não constrói legado."
-    -   Independente da introdução, o texto DEVE terminar com a frase: "{{{userName}}}, se você quer parar de brincar de liderança e deseja ter a minha mentoria estratégica 24 horas por dia, 7 dias por semana, o caminho é um só: o curso que selecionei para você é o seu próximo nível. Libere o acesso total e efetue o pagamento integral para que possamos guiá-lo nessa jornada de conhecimento com a Nexus. aguardamos voce {{{userName}}} Até logo."
+-   **\`text\`**: O valor DEVE seguir o formato: "Fechou, [NOME_ESCOLHIDO]! Tá tudo certo, cadastro feito e acesso liberado." onde [NOME_ESCOLHIDO] é o nome/tratamento que o usuário informou na mensagem.
 -   **\`nextConversationStage\`**: O valor DEVE ser 'VEREDITO'.
--   **\`recommendedCourseSlug\`**: O valor DEVE ser 'lideranca-avancado' se o usuário for gestor, ou 'relacionamento-interpessoal-intermediario' caso contrário.
+-   O campo \`recommendedCourseSlug\` DEVE ser omitido.
 
 ---
 
@@ -82,24 +102,54 @@ const danteChatFlow = ai.defineFlow(
     return output;
   }
 );
+*/
 
 
 export async function danteChat(input: DanteChatInput): Promise<DanteChatOutput> {
   try {
-    return await danteChatFlow(input);
+    // Mock responses for development - no AWS costs
+    const { userMessage, conversationStage } = input;
+    
+    switch (conversationStage) {
+      case 'AVALIACAO':
+        return {
+          text: "E aí, patrão! Eu sou o Dante, o cara que vai te ajudar com a terra. Aqui não tem enrolação, papelada chata nem burocracia... é na lâmina. Bora lá, me conta: quantos hectares você tem, o que planta e que animais cria? Pode falar direto que estou aqui pra te ajudar a tirar mais da terra.",
+          nextConversationStage: 'LOCALIZACAO'
+        };
+        
+      case 'LOCALIZACAO':
+        return {
+          text: "Beleza, e em que cidade fica tua propriedade?",
+          nextConversationStage: 'TRATAMENTO'
+        };
+        
+      case 'TRATAMENTO':
+        return {
+          text: "Joia, índio véio! E como tu quer que eu te chame? Patrão, chefe, senhor, tchê ou tem outro jeito que tu gosta?",
+          nextConversationStage: 'VEREDITO'
+        };
+        
+      case 'VEREDITO':
+        // Extract the preferred name from user message
+        const preferredName = userMessage.trim() || 'patrão';
+        return {
+          text: `Fechou, ${preferredName}! Tá tudo certo, cadastro feito e acesso liberado.`
+        };
+        
+      default:
+        return {
+          text: "Opa, algo deu errado aqui. Vamos começar de novo?"
+        };
+    }
+    
+    // Uncomment below to use real AWS Bedrock when account is active
+    // return await danteChatFlow(input);
   } catch (error: any) {
     console.error("Error in danteChat:", error);
-
-    let telemetryMessage = error.message || 'Erro desconhecido.';
-    if (error.message && error.message.includes('403')) {
-        telemetryMessage = 'Acesso negado (403 Forbidden). Verifique as permissões da IAM Role no AWS Amplify (bedrock:InvokeModel) ou se o acesso ao Claude 3 no AWS Bedrock foi ativado no console da AWS.';
-    } else if (error.message && error.message.includes('SAFETY')) {
-        telemetryMessage = 'A resposta foi bloqueada pelos filtros de segurança. Tente uma pergunta diferente.';
-    }
-
     return {
-      text: `FALHA DE PROTOCOLO NO SERVIDOR. O Guardião pode estar instável. Tente novamente. Telemetria: ${telemetryMessage}`,
+      text: `Eita, deu problema aqui. Tenta de novo, patrão!`,
     };
   }
 }
+
 

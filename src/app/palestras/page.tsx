@@ -17,8 +17,8 @@ import Image from 'next/image';
 import { useLocale } from '@/hooks/use-locale';
 import { palestras } from '@/lib/courses-data';
 import { cn } from '@/lib/utils';
-import { useUser, useFirestore, useMemoFirebase, useCollection } from '@/firebase';
-import { collection, query } from 'firebase/firestore';
+import { useUser, useMemoAuth } from '@/auth';
+
 import { Skeleton } from '@/components/ui/skeleton';
 import { Lock, Sparkles } from 'lucide-react';
 import { isAdminUser } from '@/lib/constants';
@@ -28,30 +28,12 @@ const WHATSAPP_NUMBER = '5551999799582';
 export default function PalestrasPage() {
   const { t, tArray } = useLocale();
   const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
 
-  const purchasesQuery = useMemoFirebase(() => {
-    if (!user?.uid || !firestore) return null;
-    return query(collection(firestore, 'users', user.uid, 'purchases'));
-  }, [user?.uid, firestore]);
+  const isAdmin = useMemo(() => isAdminUser(user), [user]);
+  const purchasesLoading = false;
+  const isLoading = isUserLoading;
 
-  const { data: purchases, isLoading: purchasesLoading } = useCollection<any>(purchasesQuery);
-
-  const isAdmin = useMemo(() => {
-    const result = isAdminUser(user);
-    if (user) {
-        console.log(`[Palestras] Admin check for ${user.email}: ${result}`);
-    }
-    return result;
-  }, [user]);
-
-  const isLoading = isUserLoading || (user && purchasesLoading);
-
-  const getIsPurchased = (slug: string) => {
-    if (isAdmin) return true;
-    if (!purchases) return false;
-    return purchases.some((p: any) => p.courseId === slug);
-  };
+  const getIsPurchased = (slug: string) => isAdmin;
 
   const generateWhatsAppLink = (palestraTitle: string) => {
     const message = t('lectures.whatsapp.message', { title: palestraTitle });

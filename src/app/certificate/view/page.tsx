@@ -1,12 +1,12 @@
 'use client';
 
-import { useUser, useFirestore, useMemoFirebase } from '@/firebase';
-import { useDoc } from '@/firebase/firestore/use-doc';
+import { useUser, useMemoAuth } from '@/auth';
+
 import { allCourses } from '@/lib/courses-data';
 import { Logo } from '@/components/logo';
 import { useSearchParams } from 'next/navigation';
 import { useMemo, Suspense } from 'react';
-import { doc, DocumentReference } from 'firebase/firestore';
+
 import { Skeleton } from '@/components/ui/skeleton';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -75,7 +75,6 @@ const NotFoundState = () => (
 
 function CertificateContent() {
   const { user, isUserLoading } = useUser();
-  const firestore = useFirestore();
   const searchParams = useSearchParams();
   const purchaseId = searchParams?.get('id') as string | undefined;
 
@@ -94,15 +93,8 @@ function CertificateContent() {
       };
   }, [isAdminPreview, purchaseId, user?.uid, courseSlugFromAdmin]);
 
-
-  const purchaseDocRef = useMemoFirebase(() => {
-    if (!user?.uid || !purchaseId || !firestore || isAdminPreview) return null;
-    return doc(firestore, 'users', user.uid, 'purchases', purchaseId) as DocumentReference<Purchase>;
-  }, [firestore, user?.uid, purchaseId, isAdminPreview]);
-
-  const { data: fetchedPurchase, isLoading: purchaseLoading } = useDoc<Purchase>(purchaseDocRef);
-  
-  const purchase = isAdminPreview ? mockPurchase : fetchedPurchase;
+  const purchase = mockPurchase;
+  const purchaseLoading = false;
 
   const course = useMemo(() => {
     if (!purchase) return null;
@@ -136,7 +128,7 @@ function CertificateContent() {
                 
                 <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
                     <Image
-                        src="https://i.postimg.cc/h4Qm1pwR/Certificado.png"
+                        src="/Certificado/Certificado..png"
                         alt="Fundo do Certificado Nexus"
                         fill
                         className="object-cover opacity-100"
@@ -144,37 +136,36 @@ function CertificateContent() {
                     />
                 </div>
                 
-                <div className="relative z-10 flex flex-col items-center pt-64 md:pt-80">
-                    <h1 className={cn("text-2xl font-bold tracking-tight uppercase text-accent mb-6 drop-shadow-md", "font-headline")}>
+                <div className="relative z-10 flex flex-col items-center pt-32 md:pt-48">
+                    <h1 className={cn("text-3xl md:text-4xl font-bold tracking-tight uppercase text-amber-400 mb-8 drop-shadow-lg", "font-headline")}>
                         Certificado de Conclusão
                     </h1>
 
-                    <p className="text-lg text-muted-foreground mb-4">
-                        Certificamos que
+                    <p className="text-xl md:text-2xl text-white/90 mb-6 font-light">
+                        A Nexus tem o orgulho de certificar que
                     </p>
 
-                    <p className="text-5xl md:text-6xl font-extrabold text-primary font-headline tracking-wider mb-6 leading-tight">
+                    <p className="text-4xl md:text-6xl font-extrabold text-amber-300 font-headline tracking-wider mb-8 leading-tight drop-shadow-lg">
                         {user.displayName}
                     </p>
 
-                    <p className="max-w-3xl text-base md:text-lg text-muted-foreground mb-8">
-                        concluiu com êxito o curso <strong className="text-foreground font-semibold">{course.title}</strong>, com carga horária de {course.lessons * 2} horas, desenvolvendo competências humanas, interpessoais e práticas para fortalecer relações, ampliar consciência e evoluir em sua jornada profissional e pessoal.
+                    <p className="max-w-4xl text-lg md:text-xl text-white/85 mb-8 font-light leading-relaxed">
+                        concluiu com êxito o curso <strong className="text-amber-400 font-semibold">{course.title}</strong>
                     </p>
-                    
-                    <div className="bg-primary/10 rounded-lg p-4 max-w-3xl mb-12 border border-primary/20">
-                        <p className="text-base text-muted-foreground">
-                            O participante demonstrou dedicação, abertura ao aprendizado e compromisso com o desenvolvimento contínuo, alinhado aos valores da Nexus: <strong className="text-foreground">Humanidade, Confiança, Ética e Respeito.</strong>
+
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 max-w-4xl mb-12 border border-amber-400/30">
+                        <p className="text-lg md:text-xl text-white/90 font-light leading-relaxed">
+                            sob os pilares da Nexus: <strong className="text-amber-400 font-semibold">Humanidade, Respeito, Ética e Confiança</strong>
                         </p>
                     </div>
 
-
-                    <div className="flex flex-col items-center justify-center gap-2 rounded-full border-2 border-dashed border-accent/50 p-4 mb-16 w-80">
-                        <Award className="w-8 h-8 text-accent" />
-                        <p className="font-semibold text-accent text-center">Aprovado com Humanidade, Confiança e Respeito</p>
-                        <p className="text-xs font-bold tracking-wider text-muted-foreground">NEXUS TREINAMENTO</p>
+                    <div className="flex flex-col items-center justify-center gap-3 rounded-full border-2 border-amber-400/50 p-6 mb-16 w-96 bg-white/5 backdrop-blur-sm">
+                        <Award className="w-10 h-10 text-amber-400" />
+                        <p className="font-semibold text-amber-300 text-center text-lg">NEXUS TREINAMENTO</p>
+                        <p className="text-sm font-bold tracking-wider text-white/70">Certificado de Excelência</p>
                     </div>
 
-                    <p className="text-sm text-muted-foreground mt-12">Data de Conclusão: {completionDate}</p>
+                    <p className="text-base text-white/80 mt-8 font-light">Data de Conclusão: {completionDate}</p>
 
                 </div>
             </div>

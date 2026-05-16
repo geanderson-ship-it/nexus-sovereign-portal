@@ -36,7 +36,7 @@ import { Input } from '@/components/ui/input';
 import { useLocale } from '@/hooks/use-locale';
 import { cn } from '@/lib/utils';
 import { magadotChat } from '@/ai/flows/magadot-chat-flow';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 export function MagaOSModule() {
@@ -60,7 +60,7 @@ export function MagaOSModule() {
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   
-  const MAGA_PIX_KEY = "00020126580014BR.GOV.BCB.PIX0114+5511999999999520400005303149.005802BR5915NexusMagaOS6009SaoPaulo62070503***6304ABCD";
+  const MAGA_PIX_KEY = "+5551999799582";
   const fullWelcome = "Oi! Que bom ter você aqui. Sou a Maga, sua parceira na Nexus. Vamos conversar de forma simples e encontrar a beleza no que você busca?";
 
   useEffect(() => {

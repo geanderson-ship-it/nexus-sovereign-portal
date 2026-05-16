@@ -12,13 +12,13 @@ import { danteSafra } from '@/ai/flows/dante-safra-flow';
 import { IAPaymentModal } from './maga/ia-payment-modal';
 import type { DanteSafraOutput, DanteSafraInput, PropertyDetails, DanteConversationStage } from '@/ai/flows/dante-safra-types';
 import placeholderImages from '@/lib/placeholder-images.json';
-import { useUser, useFirestore } from '@/firebase';
+import { useUser } from '@/auth';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import { useRouter } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import { FeedbackDialog } from '@/components/feedback-dialog';
 import { useLocale } from '@/hooks/use-locale';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+
 
 
 type Sender = 'user' | 'system';
@@ -77,7 +77,6 @@ const DanteSafraDashboard = ({ onMenuClick }: { onMenuClick: (prompt: string) =>
 export default function DanteSafraChat() {
   const { user } = useUser();
   const { t, locale } = useLocale();
-  const firestore = useFirestore();
   const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -126,42 +125,10 @@ export default function DanteSafraChat() {
       console.error("VIX DIAGNOSTIC: Failed to load chat history from localStorage", error);
     }
     
-    async function checkUserSetup() {
-      if (user && firestore) {
-        const userDocRef = doc(firestore, 'users', user.uid);
-        try {
-          const userDoc = await getDoc(userDocRef);
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            if (userData.danteSafraSetup?.isComplete) {
-              setSetupStage('ANALISE');
-              setNickname(userData.danteSafraSetup.nickname || null);
-              const { nickname: _n, isComplete: _ic, hasAxisUpgrade: _hau, ...details } = userData.danteSafraSetup;
-              setPropertyDetails(details);
-              setHasAxisUpgrade(!!userData.danteSafraSetup.hasAxisUpgrade);
-              
-              // Verifica elegibilidade (30 dias)
-              if (userData.danteSafraSetup.createdAt) {
-                  const createdAt = userData.danteSafraSetup.createdAt.toDate ? userData.danteSafraSetup.createdAt.toDate() : new Date(userData.danteSafraSetup.createdAt);
-                  const diffTime = Math.abs(new Date().getTime() - createdAt.getTime());
-                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                  setIsEligibleForAxis(diffDays >= 30);
-              } else {
-                  // Força elegibilidade para teste/demo se necessário, ou inicializa data
-                  setIsEligibleForAxis(true); 
-              }
-            }
-          }
-        } catch (e) {
-            console.error("Failed to fetch user setup status", e);
-        }
-      }
-      setIsInitialLoading(false);
-    }
-
-    checkUserSetup();
+    // TODO: buscar setup do usuário via Amplify Data / DynamoDB
+    setIsInitialLoading(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, firestore, warmUpAudio]);
+  }, [user, warmUpAudio]);
 
   // Save only messages to localStorage on change
   useEffect(() => {
@@ -311,20 +278,8 @@ export default function DanteSafraChat() {
         setPropertyDetails(prev => ({ ...prev, ...response.propertyDetails }));
       }
 
-      if (response.nextStage === 'ANALISE' && setupStage !== 'ANALISE' && user && firestore) {
-        const finalNickname = response.newNickname || nickname;
-        const finalDetails = { ...propertyDetails, ...response.propertyDetails };
-    
-        if (finalNickname) {
-            const userDocRef = doc(firestore, "users", user.uid);
-            await setDoc(userDocRef, {
-                danteSafraSetup: {
-                    isComplete: true,
-                    nickname: finalNickname,
-                    ...finalDetails
-                }
-            }, { merge: true });
-        }
+      if (response.nextStage === 'ANALISE' && setupStage !== 'ANALISE') {
+        // TODO: salvar setup via Amplify Data / DynamoDB
       }
 
       const isTransitioningToMenu = response.nextStage === 'ANALISE';
@@ -355,7 +310,7 @@ export default function DanteSafraChat() {
     } finally {
       setIsLoading(false);
     }
-  }, [stopAudio, addMessage, setupStage, nickname, user, playAudio, messages, firestore, propertyDetails]);
+  }, [stopAudio, addMessage, setupStage, nickname, user, playAudio, messages, propertyDetails]);
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -423,7 +378,7 @@ export default function DanteSafraChat() {
                 <div key={msg.id} className={cn("flex items-start gap-2", msg.sender === 'user' ? "justify-end" : "justify-start")}>
                     {msg.sender === 'system' && (
                         <Avatar className="w-8 h-8 flex-shrink-0">
-                        <AvatarImage src={placeholderImages.dante.src} alt="Dante Safra" />
+                        <AvatarImage src="/Nexus Empresas/dante safra.jpg" alt="Dante Safra" />
                         <AvatarFallback>DS</AvatarFallback>
                         </Avatar>
                     )}
@@ -478,7 +433,7 @@ export default function DanteSafraChat() {
       <div className="relative z-10 flex flex-col h-full text-white">
         <CardHeader className="flex flex-row items-center gap-3">
           <Avatar className="h-12 w-12 border-2 border-emerald-500">
-            <AvatarImage src={placeholderImages.dante.src} alt="Dante Safra" />
+            <AvatarImage src="/Nexus Empresas/dante safra.jpg" alt="Dante Safra" />
             <AvatarFallback className="bg-emerald-800 text-white font-bold">DS</AvatarFallback>
           </Avatar>
           <div>
@@ -517,19 +472,12 @@ export default function DanteSafraChat() {
                 isOpen={isUpgradeModalOpen}
                 onClose={() => setIsUpgradeModalOpen(false)}
                 iaName="Dante Safra Axis Elite"
-                pixKey="00020126580014BR.GOV.BCB.PIX0114+55119999999995204000053031500.005802BR5915NexusAxisUpgrade6009SaoPaulo62070503***6304ABCD"
+                pixKey="+5551999799582"
                 onSuccess={async () => {
-                   if (user && firestore) {
-                       const userDocRef = doc(firestore, "users", user.uid);
-                       await setDoc(userDocRef, {
-                           danteSafraSetup: {
-                               hasAxisUpgrade: true
-                           }
-                       }, { merge: true });
-                       setHasAxisUpgrade(true);
-                       setIsUpgradeModalOpen(false);
-                       router.push('/intelligence/dante-safra/axis');
-                   }
+                   // TODO: salvar upgrade via Amplify Data / DynamoDB
+                   setHasAxisUpgrade(true);
+                   setIsUpgradeModalOpen(false);
+                   router.push('/intelligence/dante-safra/axis');
                 }}
             />
         </CardHeader>

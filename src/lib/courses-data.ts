@@ -1,4 +1,3 @@
-
 export type Course = {
     slug: string;
     title: string;
@@ -30,6 +29,7 @@ export type Course = {
     internalValue?: number;
     speakers?: { name: string; image: string; alt: string; }[];
     implementationManual?: string;
+    id?: string;
 };
 
 
@@ -120,7 +120,7 @@ export const palestras: Course[] = [
     category: 'Comunicação',
     internalValue: 3500,
     image: {
-        "src": "https://i.postimg.cc/bN72sB6r/Dante-e-Djeny-palestrantes.jpg",
+        "src": "/Palestras/Dante e Djeny palestrantes..png",
         "alt": "Dante e Djeny, as IAs da Nexus, como palestrantes em um evento corporativo.",
         "hint": "AI speakers"
       },
@@ -202,7 +202,7 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
     category: 'Engajamento e Cultura',
     internalValue: 3500,
     image: {
-        "src": "https://i.postimg.cc/wMmNQwpv/Dante-e-Djeny-palestrante-2.png",
+        "src": "/Palestras/Dante e Djeny palestrante 2.png",
         "alt": "Dante e Djeny, as IAs da Nexus, como palestrantes em um evento corporativo.",
         "hint": "AI speakers"
       },
@@ -250,7 +250,7 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
     category: 'Desenvolvimento Humano',
     internalValue: 4000,
     image: {
-        "src": "https://i.postimg.cc/C1tD8W99/Dante-e-Djeny-palestrante-3.png",
+        "src": "/Palestras/Dante e Djeny palestrante 3.png",
         "alt": "Dante e Djeny, as IAs da Nexus, como palestrantes em um evento corporativo.",
         "hint": "AI speakers"
       },
@@ -298,7 +298,7 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
     category: 'Liderança e Performance',
     internalValue: 5000,
     image: {
-        "src": "https://i.postimg.cc/1XqFrvQ3/Dante-e-Djeny-palestrante-6.png",
+        "src": "/Palestras/Dante e Djeny palestrante 6.png",
         "alt": "Dante e Djeny, as IAs da Nexus, como palestrantes em um evento corporativo.",
         "hint": "AI speakers"
       },
@@ -346,7 +346,7 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
     category: 'Cultura e Inovação',
     internalValue: 5000,
     image: {
-        "src": "https://i.postimg.cc/1tcZZxww/Dante-e-Djeny-palestrantes-8.jpg",
+        "src": "/Palestras/Dante e Djeny palestrantes 8..png",
         "alt": "Dante e Djeny, as IAs da Nexus, como palestrantes em um evento corporativo.",
         "hint": "AI speakers"
     },
@@ -394,7 +394,7 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
     category: 'Alta Gestão',
     internalValue: 6000,
     image: {
-        "src": "https://i.postimg.cc/j27f4Mbz/Dante-e-Djeny-palestrantes-5.png",
+        "src": "/Palestras/Dante e Djeny palestrantes 5.png",
         "alt": "Dante e Djeny, as IAs da Nexus, como palestrantes em um evento corporativo.",
         "hint": "AI speakers"
     },
@@ -442,7 +442,7 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
     category: 'Liderança e Negociação',
     internalValue: 6000,
     image: {
-        "src": "https://i.postimg.cc/50qMMcLQ/Dante-e-Djeny-palestrante-7.jpg",
+        "src": "/Palestras/Dante e Djeny palestrante 7.png",
         "alt": "Dante e Djeny, as IAs da Nexus, como palestrantes em um evento corporativo.",
         "hint": "AI speakers"
     },
@@ -477,52 +477,6 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
     discountedPrice: 0,
     lessons: 0,
     hasAIBonus: false,
-    speakers: [
-        { name: 'Dante', image: 'https://i.postimg.cc/Qx75CsSr/Dante-virtual-2.png', alt: 'Dante' },
-        { name: 'Djeny', image: 'https://i.postimg.cc/L8qWnJwF/Djeny-virtual-2.png', alt: 'Djeny' }
-    ]
-  },
-  {
-    id: 'nexus-intelligence-agro-design',
-    slug: 'nexus-intelligence-agro-design',
-    title: 'Nexus Intelligence: Agro Design Business',
-    category: 'Inteligência Artificial',
-    internalValue: 5000,
-    image: {
-        "src": "https://i.postimg.cc/P5Rz3JJk/Palestra-futurista.png",
-        "alt": "Nexus Intelligence Agro Design",
-        "hint": "agro and design fusion"
-      },
-    tags: ['ROI', 'Design IA', 'Agro', 'Nexus'],
-    type: 'palestra' as const,
-    subtitle: 'A união entre a Eficiência Radical e a Criação de Alta Fidelidade.',
-    targetAudience: [
-        'Produtores rurais e gestores do agronegócio.',
-        'Empresas de arquitetura e design.',
-        'Investidores interessados em IA aplicada.',
-    ],
-    problem: [
-        'Baixo ROI em processos tradicionais.',
-        'Lentidão na criação visual de projetos.',
-        'Falta de dados preditivos para tomada de decisão no campo.',
-    ],
-    content: [
-        'Dante: Blindagem de ROI e Inteligência Tática.',
-        'Djeny: Ambientação Instantânea e Design de Alta Fidelidade.',
-        'Integração de ecossistemas para aceleração de vendas.',
-    ],
-    benefits: [
-        'Redução drástica de custos operacionais.',
-        'Aumento de até 40% na conversão de vendas via design.',
-        'Proteção de margens de lucro com análise de dados.',
-    ],
-    methodology: 'Imersão tecnológica Nexus, unindo o cérebro tático do agro com a magia visual do design.',
-    duration: '1h 30min',
-    expectedResult: 'Dominar o uso de IA para transformar eficiência técnica em lucro real e estética de luxo.',
-    originalPrice: 0,
-    discountedPrice: 0,
-    lessons: 0,
-    hasAIBonus: true,
     speakers: [
         { name: 'Dante', image: 'https://i.postimg.cc/Qx75CsSr/Dante-virtual-2.png', alt: 'Dante' },
         { name: 'Djeny', image: 'https://i.postimg.cc/L8qWnJwF/Djeny-virtual-2.png', alt: 'Djeny' }

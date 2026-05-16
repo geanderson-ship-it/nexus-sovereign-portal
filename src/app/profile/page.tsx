@@ -1,21 +1,26 @@
 'use client';
 
-import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
+import { useUser, useMemoAuth } from '@/auth';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { collection, query } from 'firebase/firestore';
+import { updateUserAttributes } from 'aws-amplify/auth';
+import { useToast } from '@/hooks/use-toast';
+import { useNickname } from '@/hooks/use-nickname';
+
 import { allCourses, Course } from '@/lib/courses-data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Award, Users, Zap } from 'lucide-react';
 import { isAdminUser } from '@/lib/constants';
 import placeholderImages from '@/lib/placeholder-images.json';
-import { errorEmitter } from '@/firebase/error-emitter';
+import { eventEmitter } from '@/auth/event-emitter';
 import { useLocale } from '@/hooks/use-locale';
 
 
@@ -35,27 +40,19 @@ interface PurchasedCourse extends Purchase {
 export default function ProfilePage() {
   const { t } = useLocale();
   const { user, isUserLoading } = useUser();
-  const router = useRouter();
-  const firestore = useFirestore();
+  const { toast } = useToast();
+  const { nickname, saveNickname } = useNickname(user?.email);
+  const [nicknameInput, setNicknameInput] = useState('');
 
   useEffect(() => {
-    if (!isUserLoading && !user) {
-      router.push('/login');
-    }
-  }, [user, isUserLoading, router]);
+    if (nickname) setNicknameInput(nickname);
+  }, [nickname]);
 
-  const purchasesQuery = useMemoFirebase(() => {
-    if (!user?.uid || !firestore) return null;
-    return query(collection(firestore, 'users', user.uid, 'purchases'));
-  }, [user?.uid, firestore]);
-  
-  const { data: purchases, isLoading: purchasesLoading } = useCollection<Purchase>(purchasesQuery);
+  const displayName = nickname || user?.displayName?.split(' ')[0] || 'Comandante';
 
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
-
   const purchasedCourses = useMemo((): PurchasedCourse[] => {
     if (isAdmin) {
-      // For admins, simulate ownership of all courses
       return allCourses
         .filter(c => c.type === 'course')
         .map(course => ({
@@ -67,20 +64,9 @@ export default function ProfilePage() {
           courseDetails: course
         }));
     }
-
-    if (!purchases) {
-      return [];
-    }
-    const courses: PurchasedCourse[] = [];
-    for (const purchase of purchases) {
-      const courseDetails = allCourses.find(c => c.slug === purchase.courseId && c.type === 'course');
-      if (courseDetails) {
-        courses.push({ ...purchase, courseDetails });
-      }
-    }
-    return courses;
-  }, [purchases, isAdmin, user?.uid]);
-  
+    return [];
+  }, [isAdmin, user?.uid]);
+  const purchasesLoading = false;
   const hasAccessToMentoria = useMemo(() => purchasedCourses.length > 0 || isAdmin, [purchasedCourses, isAdmin]);
 
 
@@ -145,13 +131,45 @@ export default function ProfilePage() {
                 </Avatar>
                 <div>
                 <h1 className={cn('text-4xl font-bold tracking-tighter text-primary', 'font-headline')}>
-                    {t('profile.welcome', { name: user.displayName || t('profile.default_name') })}
+                    Bem-vindo(a), {displayName}!
                 </h1>
                 <p className="text-lg text-muted-foreground">{user.email}</p>
                 </div>
             </div>
             
-             {hasAccessToMentoria ? (
+            {/* Card de Apelido */}
+            <Card className="mb-8 bg-zinc-950/60 border-2 border-zinc-700/40 backdrop-blur-md">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
+                  ✏️ Como prefere ser chamado?
+                </CardTitle>
+                <CardDescription className="text-gray-400 text-sm">
+                  Apenas um apelido para uso no site. Não altera seu cadastro.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex gap-3">
+                  <Input
+                    placeholder={`Ex: Comandante, Guerreiro...`}
+                    value={nicknameInput}
+                    onChange={(e) => setNicknameInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && saveNickname(nicknameInput)}
+                    className="bg-black/30 border-zinc-700 text-white max-w-xs"
+                  />
+                  <Button
+                    onClick={() => {
+                      saveNickname(nicknameInput);
+                      toast({ title: `Pronto! Agora você é ${nicknameInput || user.displayName?.split(' ')[0]}.` });
+                    }}
+                    variant="outline"
+                    className="border-primary/40 text-primary hover:bg-primary/10"
+                  >
+                    Salvar
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+            {hasAccessToMentoria ? (
                  <Card className="my-12 bg-zinc-950/60 border-2 border-primary/20 backdrop-blur-md shadow-xl shadow-black/40">
                     <CardHeader>
                         <div className="flex items-center gap-4">
@@ -166,24 +184,24 @@ export default function ProfilePage() {
                                 </Avatar>
                             </div>
                             <div>
-                                <CardTitle className="font-headline text-2xl text-white">{t('profile.commandRoomAccess' as any) || 'Acesso à Sala de Comando.'}</CardTitle>
-                                <CardDescription className="text-gray-400">{t('profile.commandRoomDescription' as any) || 'Seus mentores de IA estão disponíveis nos terminais dedicados.'}</CardDescription>
+                                <CardTitle className="font-headline text-2xl text-white">{t('profile.commandRoom.title')}</CardTitle>
+                                <CardDescription className="text-gray-400">{t('profile.commandRoom.description')}</CardDescription>
                             </div>
                         </div>
                     </CardHeader>
                     <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <Button size="lg" className="h-auto py-6 bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-400/20 shadow-lg shadow-blue-500/10" onClick={() => errorEmitter.emit('open-chat', { context: 'clan' })}>
+                        <Button size="lg" className="h-auto py-6 bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-400/20 shadow-lg shadow-blue-500/10" onClick={() => eventEmitter.emit('open-chat', { context: 'clan' })}>
                             <div className="flex flex-col items-center text-center">
                                 <Users className="h-6 w-6 mb-2" />
-                                <span className="font-bold text-lg">{t('profile.clanRoom.title' as any) || 'Sala do Clã'}</span>
-                                <span className="text-xs text-blue-100/70">{t('profile.clanRoom.description' as any) || 'Conselho com Djeny & Dante'}</span>
+                                <span className="font-bold text-lg">{t('profile.clanRoom.title')}</span>
+                                <span className="text-xs text-blue-100/70">{t('profile.clanRoom.description')}</span>
                             </div>
                         </Button>
-                        <Button size="lg" className="h-auto py-6 bg-zinc-900 border-2 border-primary/20 hover:border-primary/40 text-white shadow-lg shadow-primary/5" onClick={() => errorEmitter.emit('open-chat', { context: 'djeny' })}>
+                        <Button size="lg" className="h-auto py-6 bg-zinc-900 border-2 border-primary/20 hover:border-primary/40 text-white shadow-lg shadow-primary/5" onClick={() => eventEmitter.emit('open-chat', { context: 'djeny' })}>
                              <div className="flex flex-col items-center text-center">
                                 <Zap className="h-6 w-6 mb-2 text-primary" />
-                                <span className="font-bold text-lg">{t('profile.djenyTerminal.title' as any) || 'Terminal Djeny'}</span>
-                                <span className="text-xs text-gray-400">{t('profile.djenyTerminal.description' as any) || 'Avaliação de Mérito e Mentoria'}</span>
+                                <span className="font-bold text-lg">{t('profile.djenyTerminal.title')}</span>
+                                <span className="text-xs text-gray-400">{t('profile.djenyTerminal.description')}</span>
                             </div>
                         </Button>
                     </CardContent>

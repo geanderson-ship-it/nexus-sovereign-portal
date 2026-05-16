@@ -27,7 +27,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { collabChat } from '@/ai/flows/collab-chat-flow';
-import { useUser } from '@/firebase';
+import { useUser } from '@/auth';
 
 interface CollabMessage {
   role: 'user' | 'model';

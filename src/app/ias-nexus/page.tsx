@@ -37,7 +37,7 @@ const IAsNexusPage = () => {
       name: 'Dante',
       role: t('ias.dante.role'),
       description: t('ias.dante.desc'),
-      image: 'https://i.postimg.cc/Qx75CsSr/Dante-virtual-2.png',
+      image: '/IAs Nexus/Dante - mentor.png',
       link: '/intelligence/dante-safra',
       color: 'from-amber-500/20 to-orange-500/20'
     },
@@ -46,7 +46,7 @@ const IAsNexusPage = () => {
       name: 'Djeny',
       role: t('ias.djeny.role'),
       description: t('ias.djeny.desc'),
-      image: 'https://i.postimg.cc/L8qWnJwF/Djeny-virtual-2.png',
+      image: '/IAs Nexus/Djeny - mentora.png',
       link: '/gabinete/djeny-design',
       color: 'from-cyan-500/20 to-emerald-500/20'
     }
@@ -71,7 +71,7 @@ const IAsNexusPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {personas.map((persona, index) => {
             const isSoon = true; // Agora todas as IAs estão 'Em Breve'
-            
+
             return (
               <motion.div
                 key={persona.id}
@@ -86,7 +86,7 @@ const IAsNexusPage = () => {
                   !isSoon && "hover:border-primary/50"
                 )}>
                   <div className={`absolute inset-0 bg-gradient-to-br ${persona.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-                  
+
                   {isSoon && (
                     <div className="absolute top-4 right-4 z-50">
                       <Badge className="bg-amber-500 text-black font-black px-3 py-1 scale-110 shadow-lg border-2 border-white/20">EM BREVE</Badge>
@@ -95,14 +95,14 @@ const IAsNexusPage = () => {
 
                   <CardContent className="p-0 relative z-10">
                     <div className="relative aspect-[4/5] overflow-hidden">
-                      <motion.div 
+                      <motion.div
                         className="w-full h-full"
                         animate={(!isSoon && ['maga', 'orion'].includes(persona.id)) ? {
                           scale: [1, 1.03, 1],
                         } : {}}
-                        transition={{ 
-                          duration: 5, 
-                          repeat: Infinity, 
+                        transition={{
+                          duration: 5,
+                          repeat: Infinity,
                           ease: "easeInOut",
                           delay: index * 0.5
                         }}
@@ -127,7 +127,7 @@ const IAsNexusPage = () => {
                       <p className="text-gray-400 text-sm mb-6 leading-relaxed">
                         {persona.description}
                       </p>
-                      
+
                       {isSoon ? (
                         <Button disabled className="w-full bg-white/5 border-white/10 text-white/40 cursor-not-allowed">
                           Aguardando Protocolo
@@ -158,12 +158,12 @@ const IAsNexusPage = () => {
             <div className="absolute top-6 right-6 z-50">
               <Badge className="bg-amber-500 text-black font-black px-4 py-1.5 scale-125 shadow-2xl">LABS: EM BREVE</Badge>
             </div>
-            
+
             <div className="relative bg-black/80 backdrop-blur-3xl rounded-[22px] p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-12 overflow-hidden">
-              
+
               {/* Visual Accent */}
               <div className="absolute top-0 right-0 w-1/3 h-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_70%)] pointer-events-none" />
-              
+
               <div className="flex-1 text-center md:text-left relative z-10">
                 <Badge variant="outline" className="text-amber-500 border-amber-500/30 mb-4 tracking-widest px-4 py-1">ACESSO EM DESENVOLVIMENTO</Badge>
                 <h2 className="text-4xl md:text-6xl font-bold font-headline mb-4 tracking-tighter text-white/60">
@@ -180,17 +180,17 @@ const IAsNexusPage = () => {
               </div>
 
               <div className="relative w-full md:w-[40%] aspect-video md:aspect-square flex items-center justify-center p-4">
-                 <div className="relative w-full h-full flex items-center justify-center gap-2">
-                    <div className="relative w-1/2 h-full">
-                      <Image src="/maga-avatar-premium.png" alt="Maga" fill className="object-contain brightness-50 grayscale transition-transform duration-700" />
-                    </div>
-                    <div className="relative w-1/2 h-full">
-                      <Image src="/orion-avatar-premium.png" alt="Orion" fill className="object-contain brightness-50 grayscale transition-transform duration-700" />
-                    </div>
-                 </div>
-                 {/* HUD Overlays */}
-                 <div className="absolute top-0 left-0 border-t border-l border-white/10 w-8 h-8" />
-                 <div className="absolute bottom-0 right-0 border-b border-r border-white/10 w-8 h-8" />
+                <div className="relative w-full h-full flex items-center justify-center gap-2">
+                  <div className="relative w-1/2 h-full">
+                    <Image src="/maga-avatar-premium.png" alt="Maga" fill className="object-contain brightness-50 grayscale transition-transform duration-700" />
+                  </div>
+                  <div className="relative w-1/2 h-full">
+                    <Image src="/orion-avatar-premium.png" alt="Orion" fill className="object-contain brightness-50 grayscale transition-transform duration-700" />
+                  </div>
+                </div>
+                {/* HUD Overlays */}
+                <div className="absolute top-0 left-0 border-t border-l border-white/10 w-8 h-8" />
+                <div className="absolute bottom-0 right-0 border-b border-r border-white/10 w-8 h-8" />
               </div>
 
             </div>

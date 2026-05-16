@@ -44,7 +44,7 @@ function Clock() {
 
 function WeatherMini({ weather, manualTemp }: { weather: any; manualTemp: number | null }) {
   const temp = manualTemp !== null ? manualTemp : (weather?.current?.temp || '--');
-  
+
   return (
     <div className={styles.miniWeatherRow}>
       <div className={styles.miniWeatherCard} title="Temperatura Atual">
@@ -71,8 +71,8 @@ function FileExplorer() {
 
   const handleFolderSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
-    const audioFiles = selectedFiles.filter(f => 
-      f.type.startsWith('audio/') || 
+    const audioFiles = selectedFiles.filter(f =>
+      f.type.startsWith('audio/') ||
       /\.(mp3|wav|ogg|m4a)$/i.test(f.name)
     );
     setFiles(audioFiles);
@@ -92,12 +92,13 @@ function FileExplorer() {
         <span>📂 Arquivos Locais</span>
         <label className={styles.loadFolderBtn}>
           Carregar Pasta
-          <input 
-            type="file" 
-            webkitdirectory="true" 
-            directory="true" 
-            multiple 
-            style={{ display: 'none' }} 
+          <input
+            type="file"
+            // @ts-ignore - atributos não-padrão para seleção de diretório
+            webkitdirectory="true"
+            directory="true"
+            multiple
+            style={{ display: 'none' }}
             onChange={handleFolderSelect}
           />
         </label>
@@ -105,12 +106,12 @@ function FileExplorer() {
       <div className={styles.explorerList}>
         {files.length === 0 ? (
           <div className={styles.explorerEmpty}>
-            Nenhuma pasta carregada.<br/>Clique em "Carregar Pasta" para indexar suas músicas.
+            Nenhuma pasta carregada.<br />Clique em "Carregar Pasta" para indexar suas músicas.
           </div>
         ) : (
           files.map((file, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className={styles.explorerItem}
               draggable
               onDragStart={(e) => handleDragStart(e, file)}
@@ -119,7 +120,7 @@ function FileExplorer() {
                 <span className={styles.explorerItemIcon}>🎵</span>
                 <span className={styles.explorerItemName}>{file.name}</span>
               </div>
-              <button 
+              <button
                 className={styles.explorerAddBtn}
                 onClick={() => {
                   // Dispatch a custom event that StudioNexusPro can listen to
@@ -192,18 +193,18 @@ function QueuePanel({ queue, isSpeaking, onStop, playbackTime, playbackStatus, o
         </div>
 
         <div className={styles.playerControls}>
-          <button 
-            className={styles.playerBtn} 
-            onClick={onRestart} 
+          <button
+            className={styles.playerBtn}
+            onClick={onRestart}
             title="Reiniciar faixa"
             style={{ opacity: isSpeaking ? 1 : 0.35 }}
           >
             <SkipBack size={24} fill="currentColor" />
           </button>
-          
-          <button 
-            className={`${styles.playerBtn} ${styles.playPauseBtn}`} 
-            onClick={onTogglePause} 
+
+          <button
+            className={`${styles.playerBtn} ${styles.playPauseBtn}`}
+            onClick={onTogglePause}
             title={playbackStatus === 'playing' ? 'Pausar' : 'Play'}
             style={{ opacity: isSpeaking ? 1 : 0.35 }}
           >
@@ -213,9 +214,9 @@ function QueuePanel({ queue, isSpeaking, onStop, playbackTime, playbackStatus, o
               <Play size={32} fill="currentColor" />
             )}
           </button>
- 
-          <button 
-            className={styles.playerBtn} 
+
+          <button
+            className={styles.playerBtn}
             onClick={onSkip}
             title="Próxima faixa"
             style={{ opacity: isSpeaking ? 1 : 0.35 }}
@@ -225,15 +226,15 @@ function QueuePanel({ queue, isSpeaking, onStop, playbackTime, playbackStatus, o
         </div>
 
         <div className={styles.progressBar}>
-           <div 
-             className={styles.progressFill} 
-             style={{ width: `${(playbackTime.current / (playbackTime.duration || 1)) * 100}%` }} 
-           />
+          <div
+            className={styles.progressFill}
+            style={{ width: `${(playbackTime.current / (playbackTime.duration || 1)) * 100}%` }}
+          />
         </div>
       </div>
 
       <div className={styles.queueSubHeader}>PRÓXIMOS NA FILA</div>
-      
+
       {queue.length === 0 ? (
         <div className={styles.queueEmpty}>Nenhum anúncio na fila</div>
       ) : (
@@ -258,24 +259,24 @@ function QueuePanel({ queue, isSpeaking, onStop, playbackTime, playbackStatus, o
 
 function LogPanel({ log }: { log: Array<{ time: string; text: string; type: string }> }) {
   const typeIcon: Record<string, string> = {
-    music:      '🎧',
-    jingle:     '🎶',
-    time:       '⏰',
-    temp:       '🌡️',
-    forecast:   '🌦️',
+    music: '🎧',
+    jingle: '🎶',
+    time: '⏰',
+    temp: '🌡️',
+    forecast: '🌦️',
     'station-id': '📡',
-    custom:     '📢',
+    custom: '📢',
     'next-track': '🎵',
   };
 
   const typeColor: Record<string, string> = {
-    music:      '#3b82f6',
-    jingle:     '#a855f7',
-    time:       '#FDB813',
-    temp:       '#f97316',
-    forecast:   '#06b6d4',
+    music: '#3b82f6',
+    jingle: '#a855f7',
+    time: '#FDB813',
+    temp: '#f97316',
+    forecast: '#06b6d4',
     'station-id': '#10b981',
-    custom:     '#ec4899',
+    custom: '#ec4899',
     'next-track': '#60a5fa',
   };
 
@@ -330,7 +331,7 @@ export function StudioNexusPro() {
     setMounted(true);
     const savedStationLogo = localStorage.getItem('nexus_station_logo');
     if (savedStationLogo) setStationLogo(savedStationLogo);
-    
+
     const savedSoftwareLogo = localStorage.getItem('nexus_software_logo');
     if (savedSoftwareLogo) setSoftwareLogo(savedSoftwareLogo);
   }, []);
@@ -360,9 +361,9 @@ export function StudioNexusPro() {
   }
 
   const activeStation: StationConfig = { ...station, manualTemp };
-  const { 
-    queue, weather, isSpeaking, log, enqueue, stop, 
-    playbackTime, playbackStatus, togglePause, skipNext, restartTrack 
+  const {
+    queue, weather, isSpeaking, log, enqueue, stop,
+    playbackTime, playbackStatus, togglePause, skipNext, restartTrack
   } = useAnnouncer(activeStation);
 
   const quickButtons: Array<{ type: AnnounceType; label: string; color: string }> = [
@@ -394,10 +395,10 @@ export function StudioNexusPro() {
     <div className={styles.layout}>
       {/* Header */}
       <header className={styles.header} style={{ height: '100px', display: 'grid', gridTemplateColumns: '320px 1fr 320px', alignItems: 'center', padding: '0 30px', gap: '20px' }}>
-        
+
         {/* Left: Station Info */}
         <div className={styles.headerLeft} style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <div 
+          <div
             onClick={() => document.getElementById('station-logo-upload')?.click()}
             style={{
               width: '90px',
@@ -429,18 +430,18 @@ export function StudioNexusPro() {
 
         {/* Center: Main Title */}
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-          <span style={{ 
-            color: '#FDB813', 
-            fontSize: '2.2rem', 
-            fontWeight: '950', 
-            letterSpacing: '4px', 
+          <span style={{
+            color: '#FDB813',
+            fontSize: '2.2rem',
+            fontWeight: '950',
+            letterSpacing: '4px',
             textTransform: 'uppercase',
             textShadow: '0 4px 15px rgba(253, 184, 19, 0.4)',
             whiteSpace: 'nowrap'
           }}>
             Radio Automatizer.
           </span>
-          <div className={styles.onAirBadge} style={{ 
+          <div className={styles.onAirBadge} style={{
             padding: '4px 12px',
             fontSize: '0.8rem',
             background: 'rgba(239, 68, 68, 0.15)',
@@ -464,7 +465,7 @@ export function StudioNexusPro() {
             </button>
           </div>
 
-          <div 
+          <div
             onClick={() => document.getElementById('software-logo-upload')?.click()}
             style={{
               height: '90px',
@@ -477,16 +478,16 @@ export function StudioNexusPro() {
               marginLeft: '10px'
             }}
           >
-            <Image 
-              src={softwareLogo || "https://i.postimg.cc/t4nTCxJZ/Nexus-studio.png"} 
-              alt="Studio Nexus Logo" 
+            <Image
+              src={softwareLogo || "/Nexus Intelligence Studio/Nexus studio chumbo.png"}
+              alt="Studio Nexus Logo"
               width={180}
               height={80}
-              style={{ 
+              style={{
                 objectFit: 'contain',
                 transform: 'translateY(-12px)',
                 filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.1))'
-              }} 
+              }}
             />
             <input id="software-logo-upload" type="file" accept="image/*" style={{ display: 'none' }} onChange={handleSoftwareLogoUpload} />
           </div>
@@ -499,7 +500,7 @@ export function StudioNexusPro() {
           <Clock />
           <WeatherMini weather={weather} manualTemp={manualTemp} />
           <FileExplorer />
-          <button 
+          <button
             className={styles.manualTempBtn}
             onClick={() => {
               const val = window.prompt("Digite a temperatura local (°C):", manualTemp?.toString() || "");
@@ -511,8 +512,8 @@ export function StudioNexusPro() {
         </div>
 
         <div className={styles.centerCol}>
-          <SequenceBuilder 
-            onEnqueueSequence={handleEnqueueSequence} 
+          <SequenceBuilder
+            onEnqueueSequence={handleEnqueueSequence}
             existingQueue={queue}
           />
           <div className={styles.card}>
@@ -533,10 +534,10 @@ export function StudioNexusPro() {
         </div>
 
         <div className={styles.rightCol}>
-          <QueuePanel 
-            queue={queue} 
-            isSpeaking={isSpeaking} 
-            onStop={stop} 
+          <QueuePanel
+            queue={queue}
+            isSpeaking={isSpeaking}
+            onStop={stop}
             playbackTime={playbackTime}
             playbackStatus={playbackStatus}
             onTogglePause={togglePause}
@@ -555,15 +556,15 @@ export function StudioNexusPro() {
               <button className={styles.modalClose} onClick={() => setShowSettings(false)}>✕</button>
             </div>
             <div className={styles.modalBody}>
-               {/* Simplified settings for brevity, similar to original */}
-               <label className={styles.formLabel}>Nome da Emissora</label>
-               <input className={styles.input} value={tempStation.name} onChange={e => setTempStation(p => ({ ...p, name: e.target.value }))} />
-               <label className={styles.formLabel}>Cidade (para clima)</label>
-               <input className={styles.input} value={tempStation.city} onChange={e => setTempStation(p => ({ ...p, city: e.target.value }))} />
-               <div className={styles.voiceSelect}>
-                  <button className={`${styles.voiceOption} ${tempStation.gender === 'female' ? styles.voiceActive : ''}`} onClick={() => setTempStation(p => ({ ...p, gender: 'female' }))}>🎙️ Camila</button>
-                  <button className={`${styles.voiceOption} ${tempStation.gender === 'male' ? styles.voiceActive : ''}`} onClick={() => setTempStation(p => ({ ...p, gender: 'male' }))}>🎙️ Thiago</button>
-               </div>
+              {/* Simplified settings for brevity, similar to original */}
+              <label className={styles.formLabel}>Nome da Emissora</label>
+              <input className={styles.input} value={tempStation.name} onChange={e => setTempStation(p => ({ ...p, name: e.target.value }))} />
+              <label className={styles.formLabel}>Cidade (para clima)</label>
+              <input className={styles.input} value={tempStation.city} onChange={e => setTempStation(p => ({ ...p, city: e.target.value }))} />
+              <div className={styles.voiceSelect}>
+                <button className={`${styles.voiceOption} ${tempStation.gender === 'female' ? styles.voiceActive : ''}`} onClick={() => setTempStation(p => ({ ...p, gender: 'female' }))}>🎙️ Camila</button>
+                <button className={`${styles.voiceOption} ${tempStation.gender === 'male' ? styles.voiceActive : ''}`} onClick={() => setTempStation(p => ({ ...p, gender: 'male' }))}>🎙️ Thiago</button>
+              </div>
             </div>
             <div className={styles.modalFooter}>
               <button className={styles.saveBtn} onClick={saveSettings}>Salvar</button>

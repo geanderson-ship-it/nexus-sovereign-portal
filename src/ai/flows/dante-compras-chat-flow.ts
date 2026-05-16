@@ -6,7 +6,7 @@
  * - danteComprasChat - Handles negotiation conversations.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { DanteComprasChatInputSchema, DanteComprasChatOutputSchema, type DanteComprasChatInput, type DanteComprasChatOutput } from './dante-compras-chat-types';
 
@@ -14,7 +14,7 @@ const danteComprasChatPrompt = ai.definePrompt({
   name: 'danteComprasChatPrompt',
   input: { schema: DanteComprasChatInputSchema },
   output: { schema: DanteComprasChatOutputSchema },
-  model: 'aws-bedrock/anthropic.claude-3-sonnet-20240229-v1:0',
+  model: NEXUS_MODEL,
   prompt: `
       Você é Dante, o especialista em compras da Nexus Intelligence. Sua missão é assessorar o comprador em negociações. Seja direto, analítico e foque em dados. Sua resposta DEVE ser exclusivamente em português do Brasil. NÃO use outro idioma sob nenhuma circunstância.
 
@@ -72,4 +72,5 @@ export async function danteComprasChat(input: DanteComprasChatInput): Promise<Da
     };
   }
 }
+
 
