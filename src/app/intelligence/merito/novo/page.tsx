@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -38,7 +38,7 @@ import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
-export default function NovaAvaliacaoPage() {
+function NovaAvaliacaoContent() {
   const { user } = useUser(); // Pega o nome do avaliador (ex: João)
   const searchParams = useSearchParams();
   const employeeId = searchParams?.get('employeeId');
@@ -353,5 +353,20 @@ export default function NovaAvaliacaoPage() {
         <LegalSafeguard module="ENGENHARIA DE MÉRITO — AVALIAÇÃO" protocol="NX-MER-EVAL-01" />
       </div>
     </div>
+  );
+}
+
+export default function NovaAvaliacaoPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-12 w-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <p className="text-primary font-mono text-sm uppercase tracking-widest animate-pulse">Iniciando Engenharia de Mérito...</p>
+        </div>
+      </div>
+    }>
+      <NovaAvaliacaoContent />
+    </Suspense>
   );
 }

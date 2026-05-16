@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { permanentEmployees } from '@/lib/data/employees';
 import { Button } from '@/components/ui/button';
@@ -18,7 +18,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
-export default function CertificadoMeritoPage() {
+function CertificadoMeritoContent() {
   const searchParams = useSearchParams();
   const employeeId = searchParams?.get('id') || 'emp-001';
   const employee = permanentEmployees.find(emp => emp.id === employeeId);
@@ -184,5 +184,17 @@ export default function CertificadoMeritoPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function CertificadoMeritoPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-zinc-950">
+        <div className="h-12 w-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <CertificadoMeritoContent />
+    </Suspense>
   );
 }
