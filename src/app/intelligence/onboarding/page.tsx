@@ -47,6 +47,7 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 export default function OnboardingPage() {
   const [employeeName, setEmployeeName] = useState('');
@@ -222,7 +223,8 @@ ${plan.month1_mission}
     const Icon = training.icon;
 
     return (
-      <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-12 relative overflow-hidden">
+      <SovereignShowcase moduleName="Treinamento e Integração" imagePath="/Nexus Intelligence RH/Nexus Intelligence RH.png">
+        <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-12 relative overflow-hidden">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -999,11 +1001,13 @@ ${plan.month1_mission}
           )}
         </motion.div>
       </div>
+      </SovereignShowcase>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-12 relative overflow-hidden">
+    <SovereignShowcase moduleName="Treinamento e Integração" imagePath="/Nexus Intelligence RH/Nexus Intelligence RH.png">
+      <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-12 relative overflow-hidden">
       
       {/* HERO SECTION */}
       <motion.div 
@@ -1310,6 +1314,7 @@ ${plan.month1_mission}
       </Tabs>
 
       <LegalSafeguard module="INTEGRAÇÃO NEXUS" protocol="NX-7742-RH" />
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

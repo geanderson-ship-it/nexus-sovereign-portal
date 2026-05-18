@@ -73,6 +73,7 @@ import { analyzeQuotation } from '@/ai/flows/dante-quotation-flow';
 import type { QuotationAnalysisOutput } from '@/ai/flows/dante-quotation-types';
 import DanteComprasChat from '@/components/dante-compras-chat';
 import { TrialGate } from '@/components/trial-gate';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 const dailyEconomy = [
   { day: 'D-6', economy: 150 },
@@ -196,7 +197,8 @@ function TrialContent() {
 
 
   return (
-    <div className="space-y-8">
+    <SovereignShowcase moduleName="Dante Compras" imagePath="/Nexus Empresas/Dante compras.jpg">
+      <div className="space-y-8">
         <div className="flex items-center gap-4 mb-4">
             <Link href="/intelligence/compras">
                 <ArrowLeft className="h-6 w-6 hover:text-blue-400 transition-colors" />
@@ -590,7 +592,8 @@ function TrialContent() {
                 </DialogContent>
             </Dialog>
         </div>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }
 

@@ -10,14 +10,41 @@ import { atenaChat } from '@/ai/flows/atena-chat-flow';
 import { orionChat } from '@/ai/flows/orion-chat-flow';
 import { useLocale } from '@/hooks/use-locale';
 import { useUser } from '@/auth';
+import type { AwsRumConfig } from 'aws-rum-web';
 
 function AtenaContent() {
   const { user } = useUser();
-  const { currentLocale } = useLocale();
+  const { locale } = useLocale();
   const searchParams = useSearchParams();
   const [isLive, setIsLive] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [mode, setMode] = useState<'voice' | 'text'>('voice');
+
+  // AWS CloudWatch RUM Real-Time Analytics Initialization
+  useEffect(() => {
+    const initRum = async () => {
+      try {
+        const { AwsRum } = await import('aws-rum-web');
+        const config: AwsRumConfig = {
+          sessionSampleRate: 1,
+          endpoint: "https://dataplane.rum.us-east-1.amazonaws.com",
+          telemetries: ["performance", "errors", "http"],
+          allowCookies: true,
+          enableXRay: false,
+          signing: false
+        };
+
+        const APPLICATION_ID = "021991d4-ea3c-42a0-8ede-74ae723397d2";
+        const APPLICATION_VERSION = "1.0.0";
+        const APPLICATION_REGION = "us-east-1";
+
+        new AwsRum(APPLICATION_ID, APPLICATION_VERSION, APPLICATION_REGION, config);
+      } catch (error) {
+        // Ignore errors thrown during CloudWatch RUM web client initialization
+      }
+    };
+    initRum();
+  }, []);
   const [selectedAvatar, setSelectedAvatar] = useState<'Atena' | 'Orion'>('Atena');
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -25,7 +52,7 @@ function AtenaContent() {
 
   // URL Parameter Handling
   useEffect(() => {
-    const avatar = searchParams.get('avatar');
+    const avatar = searchParams?.get('avatar');
     if (avatar && ['Atena', 'Orion'].includes(avatar)) {
       setSelectedAvatar(avatar as any);
       setIsLive(true);

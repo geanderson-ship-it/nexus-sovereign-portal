@@ -7,7 +7,8 @@ import { LayoutWrapper } from '@/components/layout/layout-wrapper';
 import { NexusAvatarChat } from '@/components/nexus-avatar-chat';
 import Script from 'next/script';
 import { Metadata } from 'next';
-import GoogleAnalytics from '@/components/analytics/google-analytics';
+
+import AwsRumAnalytics from '@/components/analytics/aws-rum-analytics';
 
 export const viewport = {
   width: 'device-width',
@@ -81,27 +82,15 @@ export default function RootLayout({
       className="dark"
       style={{ colorScheme: 'dark' }}
     >
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-WGDRHPK766"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
 
-          gtag('config', 'G-WGDRHPK766');
-        `}
-      </Script>
       <Script id="json-ld" type="application/ld+json" strategy="afterInteractive">
         {`
           {
             "@context": "https://schema.org",
             "@type": "EducationalOrganization",
             "name": "Nexus Inteligência",
-            "url": "https://nexus-site-novo.vercel.app",
-            "logo": "https://nexus-site-novo.vercel.app/nexus-hero-hologram.png",
+            "url": "https://nexustreinamento.com",
+            "logo": "https://nexustreinamento.com/nexus-hero-hologram.png",
             "description": "Plataforma avançada de cursos online, mentoria de IA e inteligência estratégica para acelerar sua carreira e negócios.",
             "brand": "Nexus",
             "keywords": "IA, Inteligência Artificial, Mentoria, Gestão, Liderança"
@@ -115,7 +104,8 @@ export default function RootLayout({
           fontHeadline.variable
         )}
       >
-        <GoogleAnalytics />
+
+        <AwsRumAnalytics />
         <ClientProviders>
             <LayoutWrapper>
               {children}

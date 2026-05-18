@@ -37,6 +37,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 export default function EstrategiaPage() {
   const [activeTab, setActiveTab] = useState('estrategia');
@@ -44,7 +45,8 @@ export default function EstrategiaPage() {
   const [isHomologated, setIsHomologated] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-12 relative overflow-hidden">
+    <SovereignShowcase moduleName="Estratégia & Liderança" imagePath="/Nexus Intelligence Estratégia e liderança/Nexus Intelligence estratégia e liderança.png">
+      <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-12 relative overflow-hidden">
       
       {/* AMBIENT BACKGROUND */}
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -590,6 +592,7 @@ export default function EstrategiaPage() {
           </div>
         )}
       </AnimatePresence>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

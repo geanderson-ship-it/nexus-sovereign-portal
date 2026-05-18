@@ -32,6 +32,7 @@ import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 interface MeritIndex {
     id: string;
@@ -57,7 +58,8 @@ export default function MeritoPage() {
     );
 
     return (
-        <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-8">
+        <SovereignShowcase moduleName="Engenharia de Mérito" imagePath="/Nexus Intelligence RH/Nexus Intelligence RH.png">
+            <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-8">
             {/* HERO SECTION - NOVO */}
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -320,6 +322,7 @@ export default function MeritoPage() {
             <div className="max-w-7xl mx-auto px-6 pb-24 mt-12">
                 <LegalSafeguard module="ENGENHARIA DE MÉRITO" protocol="NX-MERIT-01" />
             </div>
-        </div>
+            </div>
+        </SovereignShowcase>
     );
 }

@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
 import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import * as gtag from '@/lib/gtag';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 const QrCode = dynamic(() => import('@/components/ui/qr-code').then(mod => mod.QrCode), {
   ssr: false,
@@ -64,7 +65,8 @@ export default function DjenyDesignAccessPage() {
   const whatsappUrl = `https://wa.me/5551999799582?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <div className="flex flex-col min-h-screen items-center text-white py-12 px-4 bg-[#020617] relative">
+    <SovereignShowcase moduleName="Djeny Design" imagePath="/Nexus Intelligence Design/Nexus Intelligence Design.png">
+      <div className="flex flex-col min-h-screen items-center text-white py-12 px-4 bg-[#020617] relative">
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-pink-900/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/10 rounded-full blur-[150px]" />
@@ -341,6 +343,7 @@ export default function DjenyDesignAccessPage() {
              </Card>
         </div>
       </div>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

@@ -15,6 +15,7 @@ import { Plus, Trash2, ArrowLeft, Printer, Target, Settings2, CalendarDays, Fact
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 const TEMPO_DISPONIVEL_DIA = 528; // 8.8h * 60min
 
@@ -205,7 +206,8 @@ export default function PPCPPage() {
   const isClient = mounted;
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 space-y-12 font-sans selection:bg-amber-500/30">
+    <SovereignShowcase moduleName="Nexus PPCP" imagePath="/Nexus Empresas/Dante PPCP.png">
+      <div className="min-h-screen bg-black text-white p-6 space-y-12 font-sans selection:bg-amber-500/30">
       
       {/* HEADER */}
       <div className="flex items-center justify-between flex-wrap gap-4 border-b border-amber-500/10 pb-6">
@@ -483,6 +485,7 @@ export default function PPCPPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

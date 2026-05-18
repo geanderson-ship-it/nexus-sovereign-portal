@@ -43,6 +43,7 @@ import {
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 import { useToast } from '@/hooks/use-toast';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 // Mock data - substituir por dados reais depois
 const mockOrders = [
@@ -233,7 +234,8 @@ export default function NexusExpedicaoPage() {
   };
 
   return (
-    <div className="space-y-8">
+    <SovereignShowcase moduleName="Dante Expedição" imagePath="/Nexus Empresas/Dante expedição.png">
+      <div className="space-y-8">
       <div className="flex items-center justify-between">
         <Button
           variant="outline"
@@ -752,6 +754,7 @@ export default function NexusExpedicaoPage() {
       </Dialog>
 
       <LegalSafeguard module="NEXUS EXPEDIÇÃO" protocol="NX-7742-EXP" />
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

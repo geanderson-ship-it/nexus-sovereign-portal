@@ -16,6 +16,7 @@ import { Timer, Plus, Trash2, AlertTriangle, CheckCircle, ArrowLeft, Printer, Ta
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 const MINIMO_CICLOS = 5;
 const METRICA_HORA_UTIL = 53; 
@@ -208,7 +209,8 @@ export default function CronoanalisePage() {
   const isClient = mounted;
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 space-y-12 font-sans selection:bg-violet-500/30">
+    <SovereignShowcase moduleName="Nexus Cronoanálise" imagePath="/Nexus Empresas/Dante cronoanalista.png">
+      <div className="min-h-screen bg-black text-white p-6 space-y-12 font-sans selection:bg-violet-500/30">
       
       {/* HEADER DA PÁGINA */}
       <div className="flex items-center justify-between flex-wrap gap-4 border-b border-violet-500/10 pb-6">
@@ -491,6 +493,7 @@ export default function CronoanalisePage() {
            </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

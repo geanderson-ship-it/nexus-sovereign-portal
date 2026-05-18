@@ -17,6 +17,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 // ─── MOCK ANALYSIS RESULT ───────────────────────────────────────────────────
 const mockFindings = [
@@ -114,7 +115,8 @@ export default function HealthPage() {
   const overallSeverity = 8;
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 relative overflow-hidden">
+    <SovereignShowcase moduleName="Nexus Health" imagePath="/Nexus Intelligence Health(saúde)/Nexus Intelligence Healt com slogan.png">
+      <div className="min-h-screen bg-[#020617] text-slate-200 relative overflow-hidden">
 
       {/* AMBIENT */}
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -514,6 +516,7 @@ export default function HealthPage() {
           />
         </div>
       </div>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

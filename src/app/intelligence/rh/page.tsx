@@ -21,6 +21,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 const modules = [
   {
@@ -54,7 +55,8 @@ const modules = [
 
 export default function RHHubPage() {
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 relative overflow-hidden pb-20">
+    <SovereignShowcase moduleName="Nexus Intelligence RH" imagePath="/Nexus Intelligence RH/Nexus Intelligence RH.png">
+      <div className="min-h-screen bg-[#020617] text-slate-200 relative overflow-hidden pb-20">
       {/* AMBIENT */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[120px] animate-pulse" />
@@ -186,6 +188,7 @@ export default function RHHubPage() {
           <LegalSafeguard module="NEXUS RH" protocol="NX-RH-CORE-00" />
         </div>
       </div>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 import { useVendas, type OrdemPedido, type StatusOP } from '@/lib/vendas/store';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 const statusConfig: Record<StatusOP, { label: string; color: string; icon: React.ElementType }> = {
   aberta:               { label: 'Aberta',              color: 'text-blue-400 border-blue-500/30',    icon: ClipboardList },
@@ -59,7 +60,8 @@ export default function VendasPage() {
   }, [ops, busca]);
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 space-y-8 font-sans">
+    <SovereignShowcase moduleName="Dante Vendas" imagePath="/Nexus Empresas/Dante Vendas.png">
+      <div className="min-h-screen bg-black text-white p-6 space-y-8 font-sans">
 
       {/* HEADER */}
       <div className="flex items-center justify-between flex-wrap gap-4 border-b border-blue-500/10 pb-6">
@@ -306,6 +308,7 @@ export default function VendasPage() {
           )}
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

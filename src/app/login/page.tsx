@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
-import { signIn, signInWithRedirect } from 'aws-amplify/auth';
+import { signIn } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
@@ -58,20 +58,6 @@ export default function LoginPage() {
     setTimeout(() => {
       window.location.href = '/profile';
     }, 500);
-  };
-
-  const handleGoogleSignIn = async () => {
-    setIsSubmitting(true);
-    try {
-      await signInWithRedirect({ provider: 'Google' });
-    } catch (error: any) {
-      toast({
-        variant: 'destructive',
-        title: t('common.error' as any) || 'Erro',
-        description: error.message || 'Falha ao conectar com o Google.',
-      });
-      setIsSubmitting(false);
-    }
   };
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
@@ -167,19 +153,6 @@ export default function LoginPage() {
               </Button>
             </form>
           </Form>
-           <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  {t('login.orWith')}
-                </span>
-              </div>
-            </div>
-           <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isSubmitting}>
-              {isSubmitting ? t('login.googleWait') : t('login.googleSubmit')}
-           </Button>
           <div className="mt-4 text-center text-sm">
             {t('login.noAccount')} {' '}
             <Link href="/signup" className="text-primary hover:underline">

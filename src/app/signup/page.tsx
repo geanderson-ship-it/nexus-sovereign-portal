@@ -13,7 +13,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { signUp, confirmSignUp, signInWithRedirect, autoSignIn } from 'aws-amplify/auth';
+import { signUp, confirmSignUp, autoSignIn } from 'aws-amplify/auth';
 import { generateClient } from 'aws-amplify/data';
 import { Eye, EyeOff } from 'lucide-react';
 import { useUser } from '@/auth';
@@ -69,20 +69,6 @@ export default function SignupPage() {
         setTimeout(() => {
             window.location.href = '/profile';
         }, 500);
-    };
-
-    const handleGoogleSignIn = async () => {
-        setIsSubmitting(true);
-        try {
-            await signInWithRedirect({ provider: 'Google' });
-        } catch (error: any) {
-            toast({
-                variant: 'destructive',
-                title: 'Alerta de Rota.',
-                description: error.message || 'Falha ao conectar com o Google.',
-            });
-            setIsSubmitting(false);
-        }
     };
     
     const onSubmit = async (values: z.infer<typeof signupSchema>) => {
@@ -291,19 +277,6 @@ export default function SignupPage() {
                   </Button>
               </form>
           </Form>
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Ou continue com.
-                </span>
-              </div>
-            </div>
-          <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isSubmitting}>
-            {isSubmitting ? 'Aguarde...' : 'Inscrever-se com Google'}
-          </Button>
           <div className="mt-4 text-center text-sm">
             Já tem uma conta?{' '}
             <Link href="/login" className="text-primary hover:underline">

@@ -11,6 +11,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useLocale } from '@/hooks/use-locale';
 import * as gtag from '@/lib/gtag';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 export default function AgronegocioPage() {
   const { user } = useUser();
@@ -18,7 +19,8 @@ export default function AgronegocioPage() {
   const isAdmin = isAdminUser(user);
 
   return (
-    <div className="w-full min-h-screen bg-[#020617] text-slate-200 relative overflow-hidden">
+    <SovereignShowcase moduleName="Nexus Agronegócio" imagePath="/Nexus Intelligence Agro/Nexus Intelligence Agro.png">
+      <div className="w-full min-h-screen bg-[#020617] text-slate-200 relative overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-900/10 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-900/8 rounded-full blur-[150px]" />
@@ -171,6 +173,7 @@ export default function AgronegocioPage() {
           <LegalSafeguard module="NEXUS AGRONEGÓCIO" protocol="NX-AGRO-01" />
         </div>
       </div>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

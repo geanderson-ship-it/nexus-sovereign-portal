@@ -16,13 +16,15 @@ import { StudioNexusPro } from '@/components/gabinete/studio-nexus-pro';
 import { LayoutDashboard, Code2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 export default function StudioGabinetePage() {
   const { t } = useLocale();
   const [viewMode, setViewMode] = React.useState<'app' | 'git'>('app');
 
   return (
-    <div className="min-h-screen bg-[#080b10] text-[#f0f6fc] font-sans selection:bg-blue-500/30">
+    <SovereignShowcase moduleName="Nexus Studio" imagePath="/Nexus Intelligence Studio/Nexus studio chumbo.png">
+      <div className="min-h-screen bg-[#080b10] text-[#f0f6fc] font-sans selection:bg-blue-500/30">
       {/* View Toggle Bar */}
       <div className="bg-zinc-900/50 border-b border-zinc-800 px-4 py-2 flex justify-end gap-2 fixed top-0 left-0 right-0 z-[100] backdrop-blur-sm">
          <Button 
@@ -149,6 +151,7 @@ export default function StudioGabinetePage() {
         </>
       )}
       </div>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }

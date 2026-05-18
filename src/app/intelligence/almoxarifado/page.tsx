@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 import { useAlmoxarifado, type ItemEstoque } from '@/lib/almoxarifado/store';
+import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 type MovType = 'entrada' | 'saida';
 type DialogMode = 'item' | 'movimento' | null;
@@ -94,7 +95,8 @@ export default function AlmoxarifadoPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 space-y-8 font-sans">
+    <SovereignShowcase moduleName="Dante Almoxarifado" imagePath="/Nexus Empresas/Dante almoxarife.png">
+      <div className="min-h-screen bg-black text-white p-6 space-y-8 font-sans">
 
       {/* HEADER */}
       <div className="flex items-center justify-between flex-wrap gap-4 border-b border-emerald-500/10 pb-6">
@@ -385,6 +387,7 @@ export default function AlmoxarifadoPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+      </div>
+    </SovereignShowcase>
   );
 }
