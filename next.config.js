@@ -40,7 +40,7 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
-  disable: process.env.NODE_ENV === 'development', // Opcional: Desabilita em dev para evitar spam no console
+  disable: false, // Alterado para false para testar a instalação no npm run dev
   workboxOptions: {
     disableDevLogs: true,
   },

@@ -144,7 +144,7 @@ function AtenaContent() {
   if (!isLive) {
     return (
       <div className="min-h-[100dvh] bg-[#020617] flex flex-col items-center justify-center p-6 relative overflow-hidden">
-        {user && <PWAManifestInjector manifestUrl="/atena-manifest.json" />}
+        <link rel="manifest" href="/atena-manifest.json" />
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] max-w-[1000px] max-h-[1000px] bg-violet-900/10 rounded-full blur-[120px]" />
         </div>
@@ -223,7 +223,7 @@ function AtenaContent() {
 
   return (
     <div className="min-h-[100dvh] bg-[#020617] flex flex-col p-2 sm:p-4 md:p-8 lg:p-12 relative overflow-hidden">
-      {user && <PWAManifestInjector manifestUrl="/atena-manifest.json" />}
+      <link rel="manifest" href="/atena-manifest.json" />
       <div className="relative flex-1 w-full max-w-4xl mx-auto rounded-[2rem] md:rounded-[3rem] border border-blue-500/20 bg-black overflow-hidden shadow-[0_0_100px_rgba(59,130,246,0.15)] ring-1 ring-white/5">
         <Image
           src={currentOutfit}

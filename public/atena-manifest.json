@@ -2,15 +2,15 @@
   "name": "Atena - Inteligência Executiva",
   "short_name": "Atena",
   "description": "Atena AI Companion",
-  "start_url": "/intelligence/atena",
+  "start_url": "/atena",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#3b82f6",
   "icons": [
     {
-      "src": "/icons/atena-icon.svg",
+      "src": "/atena/Atena segunda.png",
       "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]

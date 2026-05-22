@@ -2,15 +2,15 @@
   "name": "Dante Safra",
   "short_name": "Dante Safra",
   "description": "Dante Safra AI",
-  "start_url": "/intelligence/dante",
+  "start_url": "/dante-safra",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#10b981",
   "icons": [
     {
-      "src": "/icons/dante-icon.svg",
+      "src": "/Nexus Empresas/dante safra.jpg",
       "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
+      "type": "image/jpeg",
       "purpose": "any maskable"
     }
   ]
