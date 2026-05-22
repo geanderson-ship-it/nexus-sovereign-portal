@@ -202,12 +202,20 @@ export function SiteHeader() {
                       </Link>
                     </DropdownMenuItem>
                     {isAdmin && (
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10 text-primary font-medium">
-                        <Link href="/gabinete" className="flex items-center w-full">
-                          <Shield className="mr-2 h-4 w-4" />
-                          <span>{t('navGabinete')}</span>
-                        </Link>
-                      </DropdownMenuItem>
+                      <>
+                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10 text-primary font-medium">
+                          <Link href="/gabinete" className="flex items-center w-full">
+                            <Shield className="mr-2 h-4 w-4" />
+                            <span>{t('navGabinete')}</span>
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10 text-emerald-400 font-medium">
+                          <Link href="/propostas/cidades-do-futuro" className="flex items-center w-full">
+                            <Globe className="mr-2 h-4 w-4" />
+                            <span>Cidades do Futuro</span>
+                          </Link>
+                        </DropdownMenuItem>
+                      </>
                     )}
                     <DropdownMenuSeparator className="bg-border/50" />
                     <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive hover:bg-destructive/10 focus:text-destructive">

@@ -74,9 +74,9 @@ export default function SequenceBuilder({ onEnqueueSequence, existingQueue = [] 
   const isDuplicate = (label: string) => {
     const target = normalizeLabel(label);
     // Check in local items
-    const inTimeline = items.some(i => normalizeLabel(i.label) === target);
+    const inTimeline = items.some(i => normalizeLabel(i.label || '') === target);
     // Check in active queue
-    const inQueue = existingQueue.some(q => normalizeLabel(q.label) === target);
+    const inQueue = existingQueue.some(q => normalizeLabel(q.label || '') === target);
     return inTimeline || inQueue;
   };
 
@@ -382,7 +382,7 @@ export default function SequenceBuilder({ onEnqueueSequence, existingQueue = [] 
                     </span>
                     {item.voiceOverride && (
                       <span style={{ fontSize: '10px', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.05)', padding: '1px 6px', borderRadius: '4px' }}>
-                        Voz: {item.voiceOverride === 'female' ? 'Camila' : 'Thiago'}
+                        Voz: {item.voiceOverride === 'female' ? 'Camila' : 'Ricardo'}
                       </span>
                     )}
                   </div>
@@ -513,7 +513,7 @@ function InsertionForm({ type, setType, text, setText, audioUrl, setAudioUrl, vo
           >
             <option value="">Voz Padrão</option>
             <option value="female">Feminina (Camila)</option>
-            <option value="male">Masculina (Thiago)</option>
+            <option value="male">Masculina (Ricardo)</option>
           </select>
         )}
       </div>

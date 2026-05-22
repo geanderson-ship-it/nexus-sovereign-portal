@@ -67,8 +67,8 @@ const textToSpeechFlow = ai.defineFlow(
       charon: 'Ricardo',
       
       // Dante (Survivor Style)
-      dante: 'Thiago',
-      iapetus: 'Thiago'
+      dante: 'Ricardo',
+      iapetus: 'Ricardo'
     };
 
     // Fallback de vozes baseado no local se não houver mapeamento
@@ -84,6 +84,7 @@ const textToSpeechFlow = ai.defineFlow(
     };
 
     const selectedVoiceId = getVoiceId(voice, locale || 'pt-BR');
+    const selectedEngine = selectedVoiceId === 'Ricardo' ? Engine.STANDARD : Engine.NEURAL;
 
     try {
       if (!text || text.trim().length === 0) {
@@ -92,7 +93,7 @@ const textToSpeechFlow = ai.defineFlow(
 
       // 1. Sintetizar o Áudio (MP3)
       const audioCommand = new SynthesizeSpeechCommand({
-        Engine: Engine.NEURAL,
+        Engine: selectedEngine,
         Text: text,
         OutputFormat: OutputFormat.MP3,
         VoiceId: selectedVoiceId as any,
@@ -112,7 +113,7 @@ const textToSpeechFlow = ai.defineFlow(
 
       // 2. Sintetizar os Visemas (Speech Marks) para Lip-Sync
       const marksCommand = new SynthesizeSpeechCommand({
-        Engine: Engine.NEURAL,
+        Engine: selectedEngine,
         Text: text,
         OutputFormat: OutputFormat.JSON,
         SpeechMarkTypes: [SpeechMarkType.VISEME],

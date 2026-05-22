@@ -175,7 +175,7 @@ export function GithubReadme() {
                 <li><strong className="text-white">Name:</strong> Rádio Encanto FM</li>
                 <li><strong className="text-white">Frequency:</strong> 100.1 FM</li>
                 <li><strong className="text-white">Location:</strong> São Paulo, SP</li>
-                <li><strong className="text-white">Voice Engine:</strong> Amazon Polly Neural (Camila/Thiago)</li>
+                <li><strong className="text-white">Voice Engine:</strong> Amazon Polly Neural (Camila/Ricardo)</li>
               </ul>
             </div>
             <div className="space-y-4">

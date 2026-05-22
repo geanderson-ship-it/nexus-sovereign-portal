@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import { FeedbackDialog } from '@/components/feedback-dialog';
 import { useLocale } from '@/hooks/use-locale';
+import { PWAManifestInjector } from '@/components/pwa-injector';
 
 
 
@@ -429,6 +430,7 @@ export default function DanteSafraChat() {
         "w-full max-w-3xl flex flex-col shadow-2xl border-emerald-800/60 relative",
         isMaximized ? "fixed inset-0 z-50 max-w-full h-full rounded-none" : "h-full"
     )}>
+      {hasAxisUpgrade && <PWAManifestInjector manifestUrl="/dante-manifest.json" />}
       <div className="absolute inset-0 bg-black/50 z-0" />
       <div className="relative z-10 flex flex-col h-full text-white">
         <CardHeader className="flex flex-row items-center gap-3">

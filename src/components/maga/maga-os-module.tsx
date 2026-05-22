@@ -38,6 +38,7 @@ import { cn } from '@/lib/utils';
 import { magadotChat } from '@/ai/flows/magadot-chat-flow';
 import { useUser } from '@/auth';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { PWAManifestInjector } from '@/components/pwa-injector';
 
 export function MagaOSModule() {
   const { user } = useUser();
@@ -149,6 +150,12 @@ export function MagaOSModule() {
 
   return (
     <div className="max-w-5xl mx-auto h-[85vh] flex flex-col relative animate-in fade-in duration-1000">
+      {/* 
+        A INJEÇÃO DO MANIFESTO ACONTECE AQUI.
+        Neste cenário, estamos assumindo que quem chega nesta tela e não está na Trial Gate já pagou pelo acesso VIP.
+        Se fosse uma tela pública, envolveríamos com if(hasPurchasedAtena).
+      */}
+      {user && <PWAManifestInjector manifestUrl="/atena-manifest.json" />}
       
       {/* MAGA HERO AVATAR (BACKGROUND/CENTER) */}
       <div 

@@ -34,4 +34,16 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+const withPWA = require('@ducanh2912/next-pwa').default({
+  dest: 'public',
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  swcMinify: true,
+  disable: process.env.NODE_ENV === 'development', // Opcional: Desabilita em dev para evitar spam no console
+  workboxOptions: {
+    disableDevLogs: true,
+  },
+});
+
+module.exports = withPWA(nextConfig);

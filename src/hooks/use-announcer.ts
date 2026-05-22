@@ -2,13 +2,19 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+export type VoiceEngine = 'polly' | 'elevenlabs';
+
 export interface StationConfig {
   name: string;
   frequency: string;
   city: string;
   slogan: string;
   gender: 'female' | 'male';
+  voiceEngine?: VoiceEngine;
+  elevenLabsApiKey?: string;
+  elevenLabsVoiceId?: string;
   manualTemp?: number | null;
+  bgMusicUrl?: string;
 }
 
 export type AnnounceType = 'time' | 'temp' | 'forecast' | 'station-id' | 'next-track' | 'custom' | 'jingle' | 'music';
@@ -72,6 +78,8 @@ const PRONUNCIATION_DICT: Record<string, string> = {
   'Revival': 'Rivaivol',
   'revival': 'rivaivol',
   'Creedence Clearwater Revival': 'Crídence Clíar-uóter Rivaivol',
+  'Nexus': 'Nécsus',
+  'nexus': 'nécsus',
 };
 
 function applyPronunciationCorrections(text: string): string {
@@ -128,8 +136,8 @@ export function useAnnouncer(station: StationConfig) {
   }, []);
 
   // Constants for crossfade
-  const CROSSFADE_TIME = 5; // seconds before end to start next
-  const FADE_DURATION = 2.5; // duration of volume ramp
+  const CROSSFADE_TIME = 0; // seconds before end to start next
+  const FADE_DURATION = 0; // duration of volume ramp
 
 
   // Fetch weather
@@ -309,11 +317,18 @@ export function useAnnouncer(station: StationConfig) {
   const speakText = useCallback(async (text: string, voiceOverride?: 'female' | 'male'): Promise<void> => {
     const ctx = getAudioContext();
     
+    // Determine TTS engine
+    const useElevenLabs = station.voiceEngine === 'elevenlabs' && station.elevenLabsApiKey && station.elevenLabsVoiceId;
+    const ttsUrl = useElevenLabs ? '/api/tts/elevenlabs' : '/api/tts';
+    const ttsBody = useElevenLabs
+      ? { text, apiKey: station.elevenLabsApiKey, voiceId: station.elevenLabsVoiceId }
+      : { text, gender: voiceOverride || station.gender };
+
     try {
-      const res = await fetch('/api/tts', {
+      const res = await fetch(ttsUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, gender: voiceOverride || station.gender }),
+        body: JSON.stringify(ttsBody),
       });
 
       if (!res.ok) throw new Error('TTS error');
@@ -329,18 +344,55 @@ export function useAnnouncer(station: StationConfig) {
         source.connect(gain);
         gain.connect(ctx.destination);
 
+        let bgAudio: HTMLAudioElement | null = null;
+        let bgSource: MediaElementAudioSourceNode | null = null;
+        let bgGain: GainNode | null = null;
+
+        if (station.bgMusicUrl) {
+          bgAudio = new Audio(station.bgMusicUrl);
+          if (!station.bgMusicUrl.startsWith('blob:')) {
+            bgAudio.crossOrigin = "anonymous";
+          }
+          bgAudio.loop = true;
+          bgSource = ctx.createMediaElementSource(bgAudio);
+          bgGain = ctx.createGain();
+          
+          if (bgSource && bgGain) {
+            bgSource.connect(bgGain);
+            bgGain.connect(ctx.destination);
+          }
+        }
+
         // Simple fade in for voice
         audio.oncanplay = () => {
           gain.gain.setValueAtTime(0, ctx.currentTime);
           gain.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.5);
           audio.play().catch(reject);
+
+          if (bgAudio && bgGain) {
+            bgGain.gain.setValueAtTime(0, ctx.currentTime);
+            bgGain.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 1);
+            bgAudio.play().catch(e => console.warn('BGM play failed', e));
+          }
         };
 
         audio.onended = () => {
           URL.revokeObjectURL(url);
           source.disconnect();
           gain.disconnect();
-          resolve();
+          
+          if (bgAudio && bgGain) {
+            bgGain.gain.setValueAtTime(bgGain.gain.value, ctx.currentTime);
+            bgGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 2);
+            setTimeout(() => {
+              bgAudio?.pause();
+              bgSource?.disconnect();
+              bgGain?.disconnect();
+              resolve();
+            }, 2000);
+          } else {
+            resolve();
+          }
         };
         
         audio.onerror = () => reject(new Error('TTS playback error'));

@@ -124,6 +124,7 @@ export function useNexusAudio() {
         }
 
         processedText = processedText.replace(/\b(Jean|Gean)\b/gi, 'Gian');
+        processedText = processedText.replace(/\bNexus\b/gi, 'Nécsus');
 
         const newAbortController = new AbortController();
         abortControllerRef.current = newAbortController;

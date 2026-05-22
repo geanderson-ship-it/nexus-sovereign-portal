@@ -66,7 +66,7 @@ function AtenaContent() {
       const outfits = [
         '/atena/Atena domingo.png',   // 0 - Domingo
         '/atena/Atena segunda.png',   // 1 - Segunda
-        '/atena/Atena terça.png',     // 2 - Terça
+        '/atena/Atena - Dia frio.png', // 2 - Terça (Para aquecer o coração no frio do Sul!)
         '/atena/Atena quarta.png',    // 3 - Quarta
         '/atena/Atena quinta.png',    // 4 - Quinta
         '/atena/Atena sexta.png',     // 5 - Sexta

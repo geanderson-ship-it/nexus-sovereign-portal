@@ -1,22 +1,16 @@
 {
-  "name": "Atena - Nexus Companion",
+  "name": "Atena - Inteligência Executiva",
   "short_name": "Atena",
-  "description": "Sua Companheira e Agente Executiva Nexus",
-  "start_url": "/maga",
+  "description": "Atena AI Companion",
+  "start_url": "/intelligence/atena",
   "display": "standalone",
   "background_color": "#020617",
-  "theme_color": "#020617",
+  "theme_color": "#3b82f6",
   "icons": [
     {
-      "src": "/icons/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "/icons/atena-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ]

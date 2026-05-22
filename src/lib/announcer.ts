@@ -5,35 +5,32 @@ export interface StationConfig {
   frequency: string;
   city: string;
   slogan?: string;
+  gender?: 'female' | 'male';
+  bgMusicUrl?: string;
 }
 
-function numberToWords(n: number): string {
-  const ones = ['', 'uma', 'duas', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove',
-    'dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove'];
-  const tens = ['', '', 'vinte', 'trinta', 'quarenta', 'cinquenta'];
+function formatSpokenTime(hour: number, min: number): string {
+  let displayHour = hour % 12;
+  if (displayHour === 0) displayHour = 12;
 
-  if (n < 20) return ones[n];
-  if (n < 60) {
-    const ten = Math.floor(n / 10);
-    const one = n % 10;
-    return one === 0 ? tens[ten] : `${tens[ten]} e ${ones[one]}`;
+  if (min === 0) {
+    if (hour === 0) return 'meia-noite';
+    if (hour === 12) return 'meio-dia';
+    return hour === 1 || hour === 13 ? '1 hora' : `${displayHour} horas`;
   }
-  return String(n);
-}
 
-function formatHour(hour: number): string {
-  if (hour === 0) return 'meia-noite';
-  if (hour === 12) return 'meio-dia';
-  const h = numberToWords(hour);
-  return hour === 1 ? `uma hora` : `${h} horas`;
-}
+  if (min <= 30) {
+    return `${displayHour} e ${min}`;
+  }
 
-function formatMinutes(min: number): string {
-  if (min === 0) return '';
-  if (min === 30) return ' e meia';
-  if (min === 15) return ' e um quarto';
-  if (min === 45) return ' e quarenta e cinco minutos';
-  return ` e ${numberToWords(min)} minutos`;
+  const diff = 60 - min;
+  let nextHour = (hour + 1) % 12;
+  if (nextHour === 0) nextHour = 12;
+  
+  if (nextHour === 1) {
+    return `${diff} para a 1`;
+  }
+  return `${diff} para as ${nextHour}`;
 }
 
 function getPeriod(hour: number): string {
@@ -57,7 +54,7 @@ export function buildTimeAnnouncement(station: StationConfig, now: Date): string
   const period = getPeriod(hour);
   const greeting = getGreeting(hour);
 
-  const timeStr = `${formatHour(hour)}${formatMinutes(min)} ${period}`;
+  const timeStr = `${formatSpokenTime(hour, min)} ${period}`;
 
   return `São ${timeStr}. Você está ouvindo a ${station.name}, ${station.frequency}. ${greeting}!`;
 }
@@ -70,9 +67,10 @@ export function buildTempAnnouncement(
   manualTemp?: number
 ): string {
   const hour = now.getHours();
+  const min = now.getMinutes();
   const period = getPeriod(hour);
   const greeting = getGreeting(hour);
-  const timeStr = `${formatHour(hour)} ${period}`;
+  const timeStr = `${formatSpokenTime(hour, min)} ${period}`;
   const temp = manualTemp !== undefined ? manualTemp : weather.temp;
   const desc = manualTemp !== undefined ? '' : `, com ${weather.description}`;
 
@@ -122,5 +120,5 @@ export function buildNextTrackAnnouncement(station: StationConfig, artist: strin
 
 // Announcement: Custom ad/text
 export function buildCustomAnnouncement(station: StationConfig, text: string): string {
-  return `${text} — Uma mensagem da ${station.name}, ${station.frequency}.`;
+  return text;
 }

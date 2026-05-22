@@ -10,25 +10,26 @@ const pollyClient = new PollyClient({
 
 export type VoiceGender = 'female' | 'male';
 
-const NEURAL_VOICES: Record<VoiceGender, VoiceId> = {
+const VOICES: Record<VoiceGender, VoiceId> = {
   female: 'Camila',
-  male: 'Thiago',
+  male: 'Ricardo',
 };
 
 export async function synthesizeSpeech(text: string, gender: VoiceGender = 'female'): Promise<Buffer> {
-  const voiceId = NEURAL_VOICES[gender];
+  const voiceId = VOICES[gender];
+  const engine = voiceId === 'Ricardo' ? Engine.STANDARD : Engine.NEURAL;
 
   // Escapar caracteres XML para não quebrar o SSML
   const escapedText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-  // Aplicando a prosódia de "locutor animado" (velocidade +10%, tom +6%) para ambos (Thiago e Camila)
-  const ssmlText = `<speak><prosody rate="110%" pitch="+6%">${escapedText}</prosody></speak>`;
+  // Aplicando a prosódia de "locutor animado" (velocidade +10%) para ambos (Ricardo e Camila)
+  const ssmlText = `<speak><prosody rate="110%">${escapedText}</prosody></speak>`;
 
   const command = new SynthesizeSpeechCommand({
     Text: ssmlText,
     TextType: TextType.SSML,
     VoiceId: voiceId,
-    Engine: Engine.NEURAL,
+    Engine: engine,
     OutputFormat: OutputFormat.MP3,
     LanguageCode: 'pt-BR',
   });

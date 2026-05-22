@@ -457,7 +457,7 @@ export function StudioNexusPro() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
             <span className={styles.voiceLabel} style={{ fontSize: '11px', padding: '4px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: '1.2' }}>
               <span style={{ fontSize: '14px' }}>🎙️</span>
-              <span style={{ whiteSpace: 'nowrap' }}>{station.gender === 'female' ? 'Camila' : 'Thiago'} · Neural</span>
+              <span style={{ whiteSpace: 'nowrap' }}>{station.gender === 'female' ? 'Camila' : 'Ricardo'} · Neural</span>
             </span>
             <button className={styles.settingsBtn} style={{ fontSize: '11px', padding: '6px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: '1.2' }} onClick={() => { setTempStation(station); setShowSettings(true); }}>
               <span style={{ fontSize: '14px' }}>⚙️</span>
@@ -559,12 +559,113 @@ export function StudioNexusPro() {
               {/* Simplified settings for brevity, similar to original */}
               <label className={styles.formLabel}>Nome da Emissora</label>
               <input className={styles.input} value={tempStation.name} onChange={e => setTempStation(p => ({ ...p, name: e.target.value }))} />
+
+              {/* Frequência da Rádio */}
+              <label className={styles.formLabel}>Frequência da Rádio</label>
+              <input
+                className={styles.input}
+                placeholder="Ex: 100.1 FM"
+                value={tempStation.frequency}
+                onChange={e => setTempStation(p => ({ ...p, frequency: e.target.value }))}
+              />
+
               <label className={styles.formLabel}>Cidade (para clima)</label>
               <input className={styles.input} value={tempStation.city} onChange={e => setTempStation(p => ({ ...p, city: e.target.value }))} />
-              <div className={styles.voiceSelect}>
-                <button className={`${styles.voiceOption} ${tempStation.gender === 'female' ? styles.voiceActive : ''}`} onClick={() => setTempStation(p => ({ ...p, gender: 'female' }))}>🎙️ Camila</button>
-                <button className={`${styles.voiceOption} ${tempStation.gender === 'male' ? styles.voiceActive : ''}`} onClick={() => setTempStation(p => ({ ...p, gender: 'male' }))}>🎙️ Thiago</button>
+              <label className={styles.formLabel}>Trilha de Fundo (Selecione o arquivo ou digite a URL)</label>
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <input 
+                  className={styles.input} 
+                  style={{ flex: 1, marginBottom: 0 }} 
+                  value={tempStation.bgMusicUrl || ''} 
+                  onChange={e => setTempStation(p => ({ ...p, bgMusicUrl: e.target.value }))} 
+                  placeholder="Ex: /bgm/loop.mp3" 
+                />
+                <button 
+                  className={styles.saveBtn} 
+                  style={{ padding: '8px 12px', fontSize: '12px', width: 'auto' }}
+                  onClick={() => document.getElementById('bg-file-upload')?.click()}
+                >
+                  📁 Buscar
+                </button>
+                <input 
+                  id="bg-file-upload" 
+                  type="file" 
+                  accept=".mp3,.mpeg,.mp4,.m4a,.wav,.ogg,.wma,.aac,.flac,audio/*,video/mp4" 
+                  style={{ display: 'none' }} 
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const url = URL.createObjectURL(file);
+                      setTempStation(p => ({ ...p, bgMusicUrl: url }));
+                    }
+                    e.target.value = '';
+                  }} 
+                />
               </div>
+              {/* --- Motor de Voz --- */}
+              <label className={styles.formLabel}>Motor de Voz do Locutor</label>
+              <div className={styles.voiceSelect} style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {/* Camila - AWS Polly (Feminina) */}
+                <button
+                  className={`${styles.voiceOption} ${tempStation.voiceEngine !== 'elevenlabs' && tempStation.gender === 'female' ? styles.voiceActive : ''}`}
+                  onClick={() => setTempStation(p => ({ ...p, gender: 'female', voiceEngine: 'polly' }))}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '10px 14px' }}
+                >
+                  <span style={{ fontSize: '20px' }}>🎙️</span>
+                  <span>Camila</span>
+                  <span style={{ fontSize: '9px', opacity: 0.6 }}>AWS Polly</span>
+                </button>
+
+                {/* Ricardo - AWS Polly (Masculino) */}
+                <button
+                  className={`${styles.voiceOption} ${tempStation.voiceEngine !== 'elevenlabs' && tempStation.gender === 'male' ? styles.voiceActive : ''}`}
+                  onClick={() => setTempStation(p => ({ ...p, gender: 'male', voiceEngine: 'polly' }))}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '10px 14px' }}
+                >
+                  <span style={{ fontSize: '20px' }}>🎙️</span>
+                  <span>Ricardo</span>
+                  <span style={{ fontSize: '9px', opacity: 0.6 }}>AWS Polly</span>
+                </button>
+
+                {/* ElevenLabs - Voz Clonada */}
+                <button
+                  className={`${styles.voiceOption} ${tempStation.voiceEngine === 'elevenlabs' ? styles.voiceActive : ''}`}
+                  onClick={() => setTempStation(p => ({ ...p, voiceEngine: 'elevenlabs' }))}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '10px 14px', borderColor: tempStation.voiceEngine === 'elevenlabs' ? '#a855f7' : undefined }}
+                >
+                  <span style={{ fontSize: '20px' }}>✨</span>
+                  <span>ElevenLabs</span>
+                  <span style={{ fontSize: '9px', opacity: 0.6 }}>IA Premium</span>
+                </button>
+              </div>
+
+              {/* Campos exclusivos do ElevenLabs */}
+              {tempStation.voiceEngine === 'elevenlabs' && (
+                <div style={{ marginTop: '12px', padding: '14px', background: 'rgba(168, 85, 247, 0.08)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ fontSize: '11px', color: '#a855f7', fontWeight: 600, marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    ✨ Configurações ElevenLabs
+                  </div>
+                  <label className={styles.formLabel} style={{ marginBottom: '2px' }}>API Key</label>
+                  <input
+                    className={styles.input}
+                    type="password"
+                    placeholder="sk_..."
+                    value={tempStation.elevenLabsApiKey || ''}
+                    onChange={e => setTempStation(p => ({ ...p, elevenLabsApiKey: e.target.value }))}
+                    style={{ marginBottom: '4px' }}
+                  />
+                  <label className={styles.formLabel} style={{ marginBottom: '2px' }}>Voice ID</label>
+                  <input
+                    className={styles.input}
+                    placeholder="Ex: 21m00Tcm4TlvDq8ikWAM"
+                    value={tempStation.elevenLabsVoiceId || ''}
+                    onChange={e => setTempStation(p => ({ ...p, elevenLabsVoiceId: e.target.value }))}
+                  />
+                  <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '2px' }}>
+                    Encontre o Voice ID no painel do ElevenLabs → My Voices → clique na voz → copie o ID.
+                  </span>
+                </div>
+              )}
             </div>
             <div className={styles.modalFooter}>
               <button className={styles.saveBtn} onClick={saveSettings}>Salvar</button>
