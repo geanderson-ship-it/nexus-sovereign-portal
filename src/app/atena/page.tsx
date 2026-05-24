@@ -10,7 +10,6 @@ import { atenaChat } from '@/ai/flows/atena-chat-flow';
 import { orionChat } from '@/ai/flows/orion-chat-flow';
 import { useLocale } from '@/hooks/use-locale';
 import { useUser } from '@/auth';
-import { PWAManifestInjector } from '@/components/pwa-injector';
 import type { AwsRumConfig } from 'aws-rum-web';
 
 function AtenaContent() {

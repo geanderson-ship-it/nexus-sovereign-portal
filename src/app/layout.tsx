@@ -42,6 +42,12 @@ export const metadata: Metadata = {
     description: 'Acelere sua jornada com o cérebro da Nexus.',
     images: ['/nexus-hero-hologram.png'],
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Atena',
+  },
   alternates: {
     canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     languages: {

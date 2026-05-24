@@ -122,6 +122,7 @@ export default function SignupPage() {
             const { getCurrentUser } = await import('aws-amplify/auth');
             const currentUser = await getCurrentUser();
 
+            // @ts-expect-error Types not synced yet
             await client.models.UserProfile.create({
                 id: currentUser.userId,
                 email: email,

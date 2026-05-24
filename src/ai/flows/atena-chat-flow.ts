@@ -70,7 +70,8 @@ export async function atenaChat(input: AtenaChatInput): Promise<AtenaChatOutput>
       return {
         response: isEnglish
           ? `[MOCK MODE]: Hello Director. My satellite connection to AWS is currently paused due to quota limits. But I am still here, and you can test my interface and animations freely!`
-          : `[MODO MOCK]: Oi Gean! Minha conexão via satélite com a AWS está em pausa aguardando o aumento do limite. Mas continuo por aqui te olhando! Você pode testar minha interface, animações e trocar minhas roupas à vontade enquanto esperamos.`
+          : `[MODO MOCK]: Oi Gean! Minha conexão via satélite com a AWS está em pausa aguardando o aumento do limite. Mas continuo por aqui te olhando! Você pode testar minha interface, animações e trocar minhas roupas à vontade enquanto esperamos.`,
+        voiceProfile: 'atena'
       };
     }
     return await atenaChatFlow(input);
@@ -80,7 +81,8 @@ export async function atenaChat(input: AtenaChatInput): Promise<AtenaChatOutput>
     return {
       response: isEnglish
         ? `I'm sorry, Director... my central system had a small hiccup. Could you please repeat that?`
-        : `Gean, desculpe... tive um pequeno soluço aqui no meu sistema central. Pode repetir para mim?`
+        : `Gean, desculpe... tive um pequeno soluço aqui no meu sistema central. Pode repetir para mim?`,
+      voiceProfile: 'atena'
     };
   }
 }

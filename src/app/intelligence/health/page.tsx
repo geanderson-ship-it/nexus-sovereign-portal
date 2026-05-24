@@ -11,7 +11,7 @@ import {
   HeartPulse, Brain, ShieldCheck, Activity, ChevronLeft,
   Upload, Scan, AlertTriangle, CheckCircle, Clock, FileText,
   ZoomIn, BarChart3, Microscope, Eye, TrendingUp, Star,
-  ChevronDown, Info, Download, Share2, User
+  ChevronDown, Info, Download, Share2, User, Stethoscope, X
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -20,48 +20,75 @@ import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 
 // ─── MOCK ANALYSIS RESULT ───────────────────────────────────────────────────
-const mockFindings = [
-  {
-    id: 1,
-    region: 'Lobo Superior Direito',
-    finding: 'Opacidade irregular com bordas espiculadas',
-    severity: 9,
-    confidence: 94.7,
-    type: 'CRÍTICO',
-    color: 'red',
-    detail: 'Padrão compatível com lesão primária pulmonar. Recomenda-se biópsia imediata e estadiamento.',
+const findingsDB: Record<string, any> = {
+  rx: {
+    title: 'Raio-X Torácico',
+    overallSeverity: 8,
+    summary: 'Lesão pulmonar suspeita com alta probabilidade de malignidade detectada no lobo superior direito.',
+    details: 'A IA identificou 4 achados nesta imagem, sendo 1 crítico e 2 moderados. Recomenda-se encaminhamento urgente para especialista.',
+    findings: [
+      { id: 1, region: 'Lobo Superior Direito', finding: 'Opacidade irregular com bordas espiculadas', severity: 9, confidence: 94.7, type: 'CRÍTICO', color: 'red', detail: 'Padrão compatível com lesão primária pulmonar. Recomenda-se biópsia imediata e estadiamento.' },
+      { id: 2, region: 'Mediastino', finding: 'Leve alargamento mediastinal', severity: 5, confidence: 87.2, type: 'MODERADO', color: 'amber', detail: 'Possível adenopatia reativa ou comprometimento linfonodal secundário. Correlacionar com TC.' },
+      { id: 3, region: 'Seios costofrênicos', finding: 'Pequeno derrame pleural bilateral', severity: 4, confidence: 91.3, type: 'MODERADO', color: 'amber', detail: 'Volume estimado < 200ml. Monitorar evolução. Pode indicar processo inflamatório sistêmico.' },
+      { id: 4, region: 'Campos pulmonares', finding: 'Trama broncovascular preservada', severity: 1, confidence: 99.1, type: 'NORMAL', color: 'emerald', detail: 'Sem alterações na trama vascular dos campos pulmonares restantes.' },
+    ]
   },
-  {
-    id: 2,
-    region: 'Mediastino',
-    finding: 'Leve alargamento mediastinal',
-    severity: 5,
-    confidence: 87.2,
-    type: 'MODERADO',
-    color: 'amber',
-    detail: 'Possível adenopatia reativa ou comprometimento linfonodal secundário. Correlacionar com TC.',
+  rm: {
+    title: 'Ressonância Magnética Craniana',
+    overallSeverity: 7,
+    summary: 'Múltiplas lesões desmielinizantes periventriculares detectadas.',
+    details: 'A IA identificou 3 focos hiperintensos em T2/FLAIR sugestivos de processo desmielinizante ativo. Correlação clínica é fortemente recomendada.',
+    findings: [
+      { id: 1, region: 'Substância Branca Periventricular', finding: 'Lesões hiperintensas ovoideias (Dedos de Dawson)', severity: 8, confidence: 96.2, type: 'CRÍTICO', color: 'red', detail: 'Múltiplos focos sugestivos de doença desmielinizante inflamatória aguda.' },
+      { id: 2, region: 'Corpo Caloso', finding: 'Foco puntiforme de hiperintensidade', severity: 6, confidence: 88.5, type: 'MODERADO', color: 'amber', detail: 'Lesão calosoca subcentimétrica, típica do espectro desmielinizante.' },
+      { id: 3, region: 'Fossa Posterior', finding: 'Estruturas preservadas', severity: 1, confidence: 99.8, type: 'NORMAL', color: 'emerald', detail: 'Tronco encefálico e cerebelo sem anomalias de sinal.' }
+    ]
   },
-  {
-    id: 3,
-    region: 'Seios costofrênicos',
-    finding: 'Pequeno derrame pleural bilateral',
-    severity: 4,
-    confidence: 91.3,
-    type: 'MODERADO',
-    color: 'amber',
-    detail: 'Volume estimado < 200ml. Monitorar evolução. Pode indicar processo inflamatório sistêmico.',
+  tc: {
+    title: 'Tomografia Abdominal com Contraste',
+    overallSeverity: 6,
+    summary: 'Presença de litíase renal bilateral com dilatação pielocalicial leve à direita.',
+    details: 'A IA identificou múltiplos cálculos renais não-obstrutivos à esquerda e um cálculo semi-obstrutivo no terço proximal do ureter direito.',
+    findings: [
+      { id: 1, region: 'Ureter Direito Proximal', finding: 'Cálculo hiperdenso (6mm) com ureterohidronefrose leve', severity: 7, confidence: 98.1, type: 'CRÍTICO', color: 'red', detail: 'Obstrução parcial da via excretora direita. Risco de cólica nefrética aguda.' },
+      { id: 2, region: 'Cálices Renais Esquerdos', finding: 'Microlitíase não-obstrutiva esparsa', severity: 3, confidence: 92.4, type: 'LEVE', color: 'emerald', detail: 'Cálculos < 3mm. Monitoramento clínico e hidratação.' },
+      { id: 3, region: 'Fígado e Pâncreas', finding: 'Atenuação homogênea, sem lesões focais', severity: 1, confidence: 99.5, type: 'NORMAL', color: 'emerald', detail: 'Órgãos parenquimatosos sólidos sem alterações tomográficas.' }
+    ]
   },
-  {
-    id: 4,
-    region: 'Campos pulmonares',
-    finding: 'Trama broncovascular preservada',
-    severity: 1,
-    confidence: 99.1,
-    type: 'NORMAL',
-    color: 'emerald',
-    detail: 'Sem alterações na trama vascular dos campos pulmonares restantes.',
+  us: {
+    title: 'Ultrassonografia Pélvica',
+    overallSeverity: 4,
+    summary: 'Útero miomatoso com nódulos intramurais e subserosos.',
+    details: 'A IA identificou 2 nódulos miomatosos de pequenas dimensões sem sinais de degeneração ou compressão endometrial significativa.',
+    findings: [
+      { id: 1, region: 'Miométrio Anterior', finding: 'Nódulo hipoecoico intramural (2.5cm)', severity: 4, confidence: 95.3, type: 'MODERADO', color: 'amber', detail: 'Leiomioma típico. Não abaúla a cavidade endometrial.' },
+      { id: 2, region: 'Endométrio', finding: 'Espessura normal e regular (6mm)', severity: 1, confidence: 98.7, type: 'NORMAL', color: 'emerald', detail: 'Aspecto trilaminar preservado, compatível com fase proliferativa.' },
+      { id: 3, region: 'Anexos Bilaterais', finding: 'Ovários com pequenos folículos antrais', severity: 1, confidence: 97.2, type: 'NORMAL', color: 'emerald', detail: 'Sem cistos complexos ou massas anexiais suspeitas.' }
+    ]
   },
-];
+  mamo: {
+    title: 'Mamografia Digital Bilateral',
+    overallSeverity: 9,
+    summary: 'Grupamento de microcalcificações pleomórficas suspeitas na mama esquerda (BI-RADS 4C).',
+    details: 'A IA detectou calcificações lineares ramificadas de alta suspeição no quadrante supero-externo da mama esquerda. Investigação histopatológica compulsória.',
+    findings: [
+      { id: 1, region: 'QSE Mama Esquerda', finding: 'Microcalcificações pleomórficas finas agrupadas', severity: 10, confidence: 97.8, type: 'CRÍTICO', color: 'red', detail: 'Padrão suspeito para Carcinoma Ductal In Situ (CDIS). Biópsia estereotáxica indicada com urgência.' },
+      { id: 2, region: 'Mama Direita', finding: 'Tecido fibroglandular denso e heterogêneo', severity: 3, confidence: 91.0, type: 'LEVE', color: 'emerald', detail: 'Padrão ACR C. Pode reduzir a sensibilidade da mamografia. US complementar sugerido.' },
+      { id: 3, region: 'Linfonodos Axilares', finding: 'Linfonodos com centro radiolucente bilateral', severity: 1, confidence: 99.4, type: 'NORMAL', color: 'emerald', detail: 'Linfonodos de aspecto habitual, sem sinais de infiltração axilar.' }
+    ]
+  },
+  eco: {
+    title: 'Ecocardiograma Transtorácico',
+    overallSeverity: 5,
+    summary: 'Hipertrofia excêntrica leve do ventrículo esquerdo com função sistólica preservada.',
+    details: 'A IA estimou a Fração de Ejeção em 62% e detectou espessamento leve do septo interventricular, compatível com remodelamento secundário a HAS.',
+    findings: [
+      { id: 1, region: 'Ventrículo Esquerdo', finding: 'Hipertrofia concêntrica leve (SIV 12mm)', severity: 5, confidence: 93.6, type: 'MODERADO', color: 'amber', detail: 'Padrão sugestivo de cardiopatia hipertensiva inicial.' },
+      { id: 2, region: 'Válvula Mitral', finding: 'Refluxo valvar mitral mínimo (fisiológico)', severity: 2, confidence: 96.1, type: 'LEVE', color: 'emerald', detail: 'Sem repercussão hemodinâmica. Jato regurgitante pequeno e central.' },
+      { id: 3, region: 'Pericárdio', finding: 'Folhetos pericárdicos finos', severity: 1, confidence: 99.9, type: 'NORMAL', color: 'emerald', detail: 'Ausência de derrame pericárdico ou espessamento restritivo.' }
+    ]
+  }
+};
 
 const severityColor = (s: number) => {
   if (s >= 8) return { text: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30', badge: 'bg-red-600', bar: '[&>div]:bg-red-500' };
@@ -88,6 +115,7 @@ export default function HealthPage() {
   const [expandedFinding, setExpandedFinding] = useState<number | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [patient, setPatient] = useState({ nome: '', cpf: '', nascimento: '' });
+  const [showDetailedReport, setShowDetailedReport] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const startAnalysis = () => {
@@ -112,7 +140,35 @@ export default function HealthPage() {
     { label: 'Geração do laudo preliminar', done: progress > 92 },
   ];
 
-  const overallSeverity = 8;
+  const activeFindings = findingsDB[selectedType] || findingsDB['rx'];
+  const overallSeverity = activeFindings.overallSeverity;
+  const mockFindings = activeFindings.findings;
+
+  const exportPDF = async () => {
+    const text = `Laudo Médico - ${activeFindings.title}\nGravidade: ${overallSeverity}/10\n\nResumo:\n${activeFindings.summary}\n\nDetalhes:\n${activeFindings.details}`;
+    const blob = new Blob([text], { type: 'text/plain' });
+    try {
+      if ('showSaveFilePicker' in window) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const handle = await (window as any).showSaveFilePicker({
+          suggestedName: `laudo-${selectedType}.txt`,
+          types: [{ description: 'Laudo Médico (Texto)', accept: { 'text/plain': ['.txt'] } }],
+        });
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `laudo-${selectedType}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error('Download cancelado ou falhou', err);
+    }
+  };
 
   return (
     <SovereignShowcase moduleName="Nexus Health" imagePath="/Nexus Intelligence Health(saúde)/Nexus Intelligence Healt com slogan.png">
@@ -314,12 +370,13 @@ export default function HealthPage() {
                   onDrop={(e: React.DragEvent) => { e.preventDefault(); setDragOver(false); startAnalysis(); }}
                   whileHover={{ scale: 1.01 }}
                   className={cn(
-                    'relative border-2 border-dashed rounded-[40px] p-16 text-center cursor-pointer transition-all duration-300',
+                    'relative overflow-hidden rounded-[40px] p-16 text-center cursor-pointer transition-all duration-300 backdrop-blur-xl',
                     dragOver
-                      ? 'border-teal-400 bg-teal-500/10'
-                      : 'border-white/15 hover:border-teal-500/40 hover:bg-teal-500/5 bg-white/2'
+                      ? 'border-2 border-teal-400 bg-teal-500/20 shadow-[0_0_40px_rgba(20,184,166,0.3)]'
+                      : 'border border-white/10 hover:border-teal-500/40 hover:bg-teal-500/10 bg-white/5 shadow-2xl'
                   )}
                 >
+                  <div className="absolute -inset-24 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10 opacity-50 blur-3xl pointer-events-none" />
                   <input ref={fileRef} type="file" className="hidden" accept="image/*,.dcm" onChange={startAnalysis} />
                   <div className="space-y-4">
                     <div className="mx-auto w-20 h-20 rounded-full bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
@@ -354,16 +411,18 @@ export default function HealthPage() {
           {phase === 'analyzing' && (
             <motion.div key="analyzing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-8">
               <div className="max-w-2xl mx-auto text-center space-y-6 py-12">
-                <div className="relative mx-auto w-32 h-32">
-                  <div className="absolute inset-0 rounded-full border-4 border-teal-500/20 animate-pulse" />
-                  <div className="absolute inset-2 rounded-full border-2 border-teal-400/40 animate-spin" style={{ animationDuration: '3s' }} />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Brain className="h-12 w-12 text-teal-400" />
-                  </div>
+                <div className="relative mx-auto w-48 h-48 rounded-[32px] overflow-hidden border border-teal-500/30 bg-teal-950/20 shadow-[0_0_40px_rgba(20,184,166,0.15)] flex items-center justify-center">
+                  <div className="absolute inset-0 bg-[linear-gradient(rgba(20,184,166,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(20,184,166,0.05)_1px,transparent_1px)] bg-[size:12px_12px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_70%)]" />
+                  <motion.div 
+                    animate={{ top: ['0%', '100%', '0%'] }}
+                    transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
+                    className="absolute left-0 right-0 h-1 bg-teal-400 shadow-[0_0_30px_6px_rgba(45,212,191,0.5)] z-10"
+                  />
+                  <Microscope className="w-16 h-16 text-teal-400/80 z-0 animate-pulse" />
                 </div>
                 <div>
                   <h2 className="text-3xl font-black text-white uppercase italic">Analisando Imagem...</h2>
-                  <p className="text-slate-400 mt-2">IA de visão computacional médica em execução</p>
+                  <p className="text-slate-400 mt-2">NEXUS AI · Varredura de Alta Densidade em Execução</p>
                 </div>
                 <div className="space-y-2">
                   <Progress value={progress} className="h-2 bg-white/10 [&>div]:bg-teal-500 [&>div]:transition-all [&>div]:duration-200" />
@@ -393,13 +452,16 @@ export default function HealthPage() {
               {/* Result Header */}
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
-                  <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1">Análise Concluída · 00:01:23 · Raio-X Torácico</p>
+                  <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1">Análise Concluída · 00:01:23 · {activeFindings.title}</p>
                   <h2 className="text-3xl font-black text-white uppercase italic">
                     Laudo <span className="text-teal-400">Preliminar IA</span>
                   </h2>
                 </div>
                 <div className="flex gap-3">
-                  <Button variant="outline" className="border-white/10 text-slate-400 hover:text-white gap-2 font-black uppercase text-xs">
+                  <Button variant="outline" onClick={() => setShowDetailedReport(true)} className="border-teal-500/30 bg-teal-500/10 text-teal-400 hover:bg-teal-500/20 hover:text-white gap-2 font-black uppercase text-xs transition-colors">
+                    <Stethoscope className="h-4 w-4" /> Laudo Detalhado
+                  </Button>
+                  <Button variant="outline" onClick={exportPDF} className="border-white/10 text-slate-400 hover:text-white gap-2 font-black uppercase text-xs">
                     <Download className="h-4 w-4" /> Exportar PDF
                   </Button>
                   <Button variant="outline" className="border-white/10 text-slate-400 hover:text-white gap-2 font-black uppercase text-xs">
@@ -428,10 +490,10 @@ export default function HealthPage() {
                   <div className="flex-1 space-y-3">
                     <Badge className="bg-red-600 text-white font-black text-xs px-4 py-1 uppercase tracking-widest">⚠ ACHADOS CRÍTICOS DETECTADOS</Badge>
                     <p className="text-white font-bold text-lg leading-snug">
-                      Lesão pulmonar suspeita com alta probabilidade de malignidade detectada no lobo superior direito.
+                      {activeFindings.summary}
                     </p>
                     <p className="text-slate-400 text-sm">
-                      A IA identificou <span className="text-red-400 font-bold">4 achados</span> nesta imagem, sendo <span className="text-red-400 font-bold">1 crítico</span> e <span className="text-amber-400 font-bold">2 moderados</span>. Recomenda-se encaminhamento urgente para especialista.
+                      {activeFindings.details}
                     </p>
                   </div>
                   <div className="flex-shrink-0 hidden md:flex flex-col items-center gap-2">
@@ -447,7 +509,7 @@ export default function HealthPage() {
                   Achados Detalhados <span className="text-teal-400">({mockFindings.length})</span>
                 </h3>
                 <div className="space-y-3">
-                  {mockFindings.map((f) => {
+                  {mockFindings.map((f: any) => {
                     const c = severityColor(f.severity);
                     const isExpanded = expandedFinding === f.id;
                     return (
@@ -463,11 +525,11 @@ export default function HealthPage() {
                             <div className="text-[9px] text-slate-500 uppercase">/10</div>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
+                            <div className="flex flex-wrap items-center gap-2 mb-1">
                               <Badge className={cn(c.badge, 'text-white border-none text-[9px] font-black px-2 uppercase')}>{f.type}</Badge>
                               <span className="text-[10px] text-slate-500">{f.region}</span>
                             </div>
-                            <p className="text-white font-bold text-sm truncate">{f.finding}</p>
+                            <p className="text-white font-bold text-sm line-clamp-2 md:truncate">{f.finding}</p>
                             <div className="flex items-center gap-2 mt-1.5">
                               <Progress value={f.confidence} className={cn('h-1 flex-1 bg-white/10', c.bar)} />
                               <span className={cn('text-[10px] font-black flex-shrink-0', c.text)}>{f.confidence}% conf.</span>
@@ -516,6 +578,105 @@ export default function HealthPage() {
           />
         </div>
       </div>
+      
+      {/* DETAILED REPORT MODAL */}
+      <AnimatePresence>
+        {showDetailedReport && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 backdrop-blur-md bg-black/60"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              className="relative w-full max-w-4xl max-h-full overflow-y-auto bg-slate-950 border border-teal-500/30 shadow-[0_0_80px_rgba(20,184,166,0.15)] rounded-[32px]"
+            >
+              <div className="sticky top-0 bg-slate-950/80 backdrop-blur-xl border-b border-white/10 p-6 flex items-center justify-between z-10">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-full bg-teal-500/20 flex items-center justify-center border border-teal-500/30">
+                    <Stethoscope className="h-5 w-5 text-teal-400" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-black text-white uppercase italic">Laudo Clínico Detalhado</h2>
+                    <p className="text-xs text-slate-400 font-mono">NEXUS-ID: {Math.random().toString(36).substring(2, 10).toUpperCase()} · {activeFindings.title}</p>
+                  </div>
+                </div>
+                <Button variant="ghost" size="icon" onClick={() => setShowDetailedReport(false)} className="text-slate-400 hover:text-white rounded-full">
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
+              <div className="p-8 space-y-8">
+                {/* Paciente */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1">Paciente</p>
+                    <p className="text-white font-bold">{patient.nome || 'Não Informado'}</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1">CPF / Identificação</p>
+                    <p className="text-white font-bold">{patient.cpf || '***.***.***-**'}</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                    <p className="text-[10px] text-slate-500 uppercase tracking-widest font-black mb-1">Data Análise</p>
+                    <p className="text-white font-bold">{new Date().toLocaleDateString('pt-BR')}</p>
+                  </div>
+                </div>
+
+                <Separator className="bg-white/10" />
+
+                {/* Resumo */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-black text-white uppercase tracking-widest flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-teal-400" /> Resumo do Laudo
+                  </h3>
+                  <div className="bg-teal-950/20 border border-teal-500/20 rounded-2xl p-6 space-y-3">
+                    <p className="text-white text-lg leading-relaxed">{activeFindings.summary}</p>
+                    <p className="text-slate-400">{activeFindings.details}</p>
+                  </div>
+                </div>
+
+                {/* Corpo do Texto Completo Fictício */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-black text-white uppercase tracking-widest flex items-center gap-2">
+                    <Microscope className="h-4 w-4 text-teal-400" /> Descrição Analítica (Texto Completo)
+                  </h3>
+                  <div className="prose prose-invert max-w-none text-slate-300">
+                    <p>
+                      Exame realizado com protocolo de alta resolução. As imagens obtidas foram analisadas através do sistema
+                      algorítmico <strong>NEXUS VISION AI (v4.2.1)</strong>. O modelo de predição computacional aponta para
+                      um índice de gravidade global de <strong>{overallSeverity}/10</strong>.
+                    </p>
+                    <p>
+                      <strong>Achados Estruturais Principais:</strong>
+                    </p>
+                    <ul className="space-y-2 text-sm">
+                      {mockFindings.map((f: any) => (
+                        <li key={f.id}>
+                          <strong>{f.region}:</strong> {f.finding}. <em>({f.detail})</em> - <span className="text-teal-400 font-bold">Confiança IA: {f.confidence}%</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-4">
+                      <strong>Conclusão da IA Diagnóstica:</strong> {activeFindings.summary} É imprescindível a correlação dos achados de imagem supracitados
+                      com os dados clínicos e laboratoriais do paciente para a formulação da hipótese diagnóstica definitiva.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6 border-t border-white/10 bg-black/20 flex justify-end gap-3 rounded-b-[32px]">
+                <Button onClick={() => setShowDetailedReport(false)} className="bg-white text-black hover:bg-slate-200 font-black uppercase text-xs">
+                  Fechar Laudo
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       </div>
     </SovereignShowcase>
   );

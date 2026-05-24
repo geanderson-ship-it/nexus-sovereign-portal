@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, User, Loader2, Wheat, Mic, Pause, Volume2, Camera as CameraIcon, X, Maximize, Minimize, ThermometerSun, DollarSign, Sprout, Beef, PiggyBank, Crown, Zap } from 'lucide-react';
+import { Send, User, Loader2, Wheat, Mic, Pause, Volume2, Camera as CameraIcon, X, Maximize, Minimize, ThermometerSun, DollarSign, Sprout, Beef, PiggyBank, Crown, Zap, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { danteSafra } from '@/ai/flows/dante-safra-flow';
 import { IAPaymentModal } from './maga/ia-payment-modal';
@@ -18,7 +18,6 @@ import { useRouter } from 'next/navigation';
 import { Separator } from '@/components/ui/separator';
 import { FeedbackDialog } from '@/components/feedback-dialog';
 import { useLocale } from '@/hooks/use-locale';
-import { PWAManifestInjector } from '@/components/pwa-injector';
 
 
 
@@ -33,42 +32,195 @@ interface Message {
 
 const DanteSafraDashboard = ({ onMenuClick }: { onMenuClick: (prompt: string) => void }) => {
     const { t } = useLocale();
-    const menuItems = [
-        { title: t('intelligence.dante-safra.dashboard.title1'), icon: Sprout, items: [t('intelligence.dante-safra.dashboard.item.soja'), t('intelligence.dante-safra.dashboard.item.milho'), t('intelligence.dante-safra.dashboard.item.fumo'), t('intelligence.dante-safra.dashboard.item.feijao')] },
-        { title: t('intelligence.dante-safra.dashboard.title2'), icon: Beef, items: [t('intelligence.dante-safra.dashboard.item.corte'), t('intelligence.dante-safra.dashboard.item.leiteiro')] },
-        { title: t('intelligence.dante-safra.dashboard.title3'), icon: PiggyBank, items: [t('intelligence.dante-safra.dashboard.item.suinos'), t('intelligence.dante-safra.dashboard.item.aves'), t('intelligence.dante-safra.dashboard.item.ovinos')] },
-        { title: t('intelligence.dante-safra.dashboard.title4'), icon: ThermometerSun, items: [] },
-        { title: t('intelligence.dante-safra.dashboard.title5'), icon: DollarSign, items: [] }
-    ];
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const ALL_CROPS = useMemo(() => [
+      { id: 'soja', name: 'Protocolo Soja Ouro Verde (Alto Rendimento)', searchKeywords: ['soja', 'soybean', 'soy'] },
+      { id: 'milho', name: 'Protocolo Milho Imperial (Alta Performance)', searchKeywords: ['milho', 'corn', 'maiz'] },
+      { id: 'fumo', name: 'Protocolo Tabaco Folha de Ouro (Cura Especial)', searchKeywords: ['fumo', 'tabaco', 'smoke'] },
+      { id: 'feijao', name: 'Protocolo Feijão Nobre (Nutrição de Precisão)', searchKeywords: ['feijao', 'feijão', 'beans'] },
+      { id: 'canola', name: 'Protocolo Canola Dourada (Manejo de Inverno)', searchKeywords: ['canola', 'colza'] },
+      { id: 'nozes', name: 'Cultura de Nozes Pecã (Pomar de Precisão)', searchKeywords: ['nozes', 'noz', 'pecã', 'walnuts'] },
+      { id: 'aipim', name: 'Protocolo Aipim Raiz Forte (Rendimento de Solo)', searchKeywords: ['aipim', 'mandioca', 'aipin', 'cassava'] },
+      { id: 'maca', name: 'Operação Pomar de Maçã (Fisiologia & Clima)', searchKeywords: ['maca', 'maçã', 'apple'] },
+      { id: 'pessego', name: 'Pomar de Pêssego Nobre (Manejo Fitossanitário)', searchKeywords: ['pessego', 'pêssego', 'peach'] },
+      { id: 'uva', name: 'Protocolo Viticultura (Videiras de Alta Performance)', searchKeywords: ['uva', 'parreira', 'vinho', 'grapes'] },
+      { id: 'trigo', name: 'Protocolo Trigo de Inverno (Panificação Superior)', searchKeywords: ['trigo', 'wheat'] },
+      { id: 'arroz', name: 'Cultura de Arroz Irrigado (Manejo de Várzea)', searchKeywords: ['arroz', 'rice'] },
+    ], []);
+
+    const ALL_LIVESTOCK = useMemo(() => [
+      { id: 'corte', name: 'Operação Pecuária de Corte (Angus & Nelore de Elite)', searchKeywords: ['corte', 'boi', 'novilho', 'angus', 'nelore', 'carne'] },
+      { id: 'leiteiro', name: 'Bovinocultura de Leite (Lactação de Alta Eficiência)', searchKeywords: ['leite', 'leiteiro', 'vaca', 'holandesa', 'jersey', 'girolando'] },
+      { id: 'suinos', name: 'Suinocultura de Climatização Avançada', searchKeywords: ['suino', 'suíno', 'porco', 'leitão'] },
+      { id: 'aves', name: 'Avicultura de Clima Controlado e Alta Precisão', searchKeywords: ['ave', 'aves', 'frango', 'galinha', 'aviário'] },
+      { id: 'ovinos', name: 'Ovinocultura de Alta Performance (Genética de Ponta)', searchKeywords: ['ovino', 'ovinos', 'ovelha', 'carneiro', 'lã'] },
+    ], []);
+
+    const filteredCrops = useMemo(() => {
+        if (!searchQuery.trim()) {
+            return ALL_CROPS.slice(0, 8); // soja, milho, fumo, feijão, canola, nozes, aipim, maçã
+        }
+        const query = searchQuery.toLowerCase().trim();
+        return ALL_CROPS.filter(crop => 
+            crop.name.toLowerCase().includes(query) || 
+            crop.searchKeywords.some(kw => kw.includes(query))
+        );
+    }, [searchQuery, ALL_CROPS]);
+
+    const filteredLivestock = useMemo(() => {
+        if (!searchQuery.trim()) {
+            return ALL_LIVESTOCK;
+        }
+        const query = searchQuery.toLowerCase().trim();
+        return ALL_LIVESTOCK.filter(livestock => 
+            livestock.name.toLowerCase().includes(query) || 
+            livestock.searchKeywords.some(kw => kw.includes(query))
+        );
+    }, [searchQuery, ALL_LIVESTOCK]);
+
+    const handleSearchSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase().trim();
+            const matchedCrop = ALL_CROPS.find(crop => 
+                crop.name.toLowerCase().includes(query) || 
+                crop.searchKeywords.some(kw => kw === query)
+            );
+            const matchedLivestock = ALL_LIVESTOCK.find(l => 
+                l.name.toLowerCase().includes(query) || 
+                l.searchKeywords.some(kw => kw === query)
+            );
+
+            if (matchedCrop) {
+                onMenuClick(`Analisar ${matchedCrop.name}`);
+            } else if (matchedLivestock) {
+                onMenuClick(`Analisar ${matchedLivestock.name}`);
+            } else {
+                onMenuClick(`Analisar Protocolo para ${searchQuery}`);
+            }
+        }
+    };
 
     return (
-        <div className="p-4">
+        <div className="p-4 space-y-4">
+            {/* Imposing Glowing Search Bar */}
+            <form onSubmit={handleSearchSubmit} className="flex gap-2 bg-black/40 p-2 rounded-lg border border-emerald-700/40 shadow-inner relative z-20">
+                <div className="relative flex-1">
+                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-emerald-500/70" />
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        placeholder="Pesquise cultivos ou pecuária do Sul (canola, uva, aipim, nozes)..."
+                        className="w-full bg-black/50 border border-gray-700 rounded-md pl-9 pr-4 py-2 text-xs text-gray-200 placeholder:text-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                    />
+                </div>
+                <Button type="submit" size="sm" className="bg-emerald-700 hover:bg-emerald-600 text-xs px-4">
+                    Consultar Dante
+                </Button>
+            </form>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {menuItems.map(item => (
-                    <Card key={item.title} className="border-emerald-700/30">
-                        <CardHeader className="p-3">
-                            <CardTitle className="flex items-center gap-2 text-emerald-400 text-sm font-headline">
-                                <item.icon className="h-4 w-4" />
-                                {item.title}
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-3">
-                            {item.items.length > 0 ? (
-                                <div className="flex flex-wrap gap-2">
-                                    {item.items.map(subItem => (
-                                        <Button key={subItem} variant="outline" size="sm" className="border-gray-600 text-gray-300 text-xs h-7" onClick={() => onMenuClick(t('intelligence.dante-safra.chat.analysis_about', { item: subItem }))}>
-                                            {subItem}
-                                        </Button>
-                                    ))}
-                                </div>
-                            ) : (
-                                <Button className="w-full bg-emerald-700/80 text-xs h-8" onClick={() => onMenuClick(t('intelligence.dante-safra.chat.report_about', { title: item.title }))}>
-                                    {t('intelligence.dante-safra.dashboard.access')}
+                {/* Plantio Card */}
+                <Card className="border-emerald-700/30 bg-gray-900/40">
+                    <CardHeader className="p-3">
+                        <CardTitle className="flex items-center gap-2 text-emerald-400 text-sm font-headline">
+                            <Sprout className="h-4 w-4" />
+                            Dante Safra — Divisão de Plantio
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-3">
+                        {filteredCrops.length > 0 ? (
+                            <div className="flex flex-col gap-1.5 max-h-[180px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-emerald-800">
+                                {filteredCrops.map(crop => (
+                                    <Button 
+                                        key={crop.id} 
+                                        variant="outline" 
+                                        size="sm" 
+                                        className="justify-start border-gray-800 bg-gray-900/60 hover:bg-emerald-950/20 hover:border-emerald-800 text-gray-300 text-[11px] h-8 px-3 font-medium transition-all"
+                                        onClick={() => onMenuClick(`Analisar ${crop.name}`)}
+                                    >
+                                        {crop.name}
+                                    </Button>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-4">
+                                <p className="text-gray-500 text-xs">Nenhum cultivo encontrado para "{searchQuery}".</p>
+                                <Button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    className="mt-2 text-xs border-emerald-800 text-emerald-400 hover:bg-emerald-950/20"
+                                    onClick={() => onMenuClick(`Analisar Protocolo para ${searchQuery}`)}
+                                >
+                                    Solicitar Análise de "{searchQuery}"
                                 </Button>
-                            )}
-                        </CardContent>
-                    </Card>
-                ))}
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+
+                {/* Pecuária Card */}
+                <Card className="border-emerald-700/30 bg-gray-900/40">
+                    <CardHeader className="p-3">
+                        <CardTitle className="flex items-center gap-2 text-emerald-400 text-sm font-headline">
+                            <Beef className="h-4 w-4" />
+                            Dante Safra — Divisão de Pecuária
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-3">
+                        {filteredLivestock.length > 0 ? (
+                            <div className="flex flex-col gap-1.5 max-h-[180px] overflow-y-auto pr-1">
+                                {filteredLivestock.map(l => (
+                                    <Button 
+                                        key={l.id} 
+                                        variant="outline" 
+                                        size="sm" 
+                                        className="justify-start border-gray-800 bg-gray-900/60 hover:bg-emerald-950/20 hover:border-emerald-800 text-gray-300 text-[11px] h-8 px-3 font-medium transition-all"
+                                        onClick={() => onMenuClick(`Analisar ${l.name}`)}
+                                    >
+                                        {l.name}
+                                    </Button>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-4">
+                                <p className="text-gray-500 text-xs">Nenhum sistema pecuário encontrado.</p>
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+
+                {/* Clima e Solo Card */}
+                <Card className="border-emerald-700/30 bg-gray-900/40">
+                    <CardHeader className="p-3">
+                        <CardTitle className="flex items-center gap-2 text-emerald-400 text-sm font-headline">
+                            <ThermometerSun className="h-4 w-4" />
+                            Dante Safra — Clima e Solo
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-3">
+                        <Button className="w-full bg-emerald-800/40 hover:bg-emerald-700/60 border border-emerald-700/30 text-emerald-300 text-xs h-8" onClick={() => onMenuClick("Gerar Relatório de Clima e Qualidade do Solo")}>
+                            {t('intelligence.dante-safra.dashboard.access')}
+                        </Button>
+                    </CardContent>
+                </Card>
+
+                {/* Mercado e Preços Card */}
+                <Card className="border-emerald-700/30 bg-gray-900/40">
+                    <CardHeader className="p-3">
+                        <CardTitle className="flex items-center gap-2 text-emerald-400 text-sm font-headline">
+                            <DollarSign className="h-4 w-4" />
+                            Dante Safra — Mercado e Preços
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-3">
+                        <Button className="w-full bg-emerald-800/40 hover:bg-emerald-700/60 border border-emerald-700/30 text-emerald-300 text-xs h-8" onClick={() => onMenuClick("Consultar cotações atualizadas de mercado")}>
+                            {t('intelligence.dante-safra.dashboard.access')}
+                        </Button>
+                    </CardContent>
+                </Card>
             </div>
         </div>
     );
@@ -119,8 +271,11 @@ export default function DanteSafraChat() {
     try {
       const savedState = localStorage.getItem('danteSafraChatHistory');
       if (savedState) {
-        const { messages: savedMessages } = JSON.parse(savedState);
+        const { messages: savedMessages, setupStage: savedStage, nickname: savedNickname, propertyDetails: savedProps } = JSON.parse(savedState);
         if (savedMessages) setMessages(savedMessages);
+        if (savedStage) setSetupStage(savedStage);
+        if (savedNickname) setNickname(savedNickname);
+        if (savedProps) setPropertyDetails(savedProps);
       }
     } catch (error) {
       console.error("VIX DIAGNOSTIC: Failed to load chat history from localStorage", error);
@@ -131,15 +286,15 @@ export default function DanteSafraChat() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, warmUpAudio]);
 
-  // Save only messages to localStorage on change
+  // Save full state to localStorage on change
   useEffect(() => {
     try {
-      const stateToSave = { messages };
+      const stateToSave = { messages, setupStage, nickname, propertyDetails };
       localStorage.setItem('danteSafraChatHistory', JSON.stringify(stateToSave));
     } catch (error) {
       console.error("VIX DIAGNOSTIC: Failed to save chat history to localStorage", error);
     }
-  }, [messages]);
+  }, [messages, setupStage, nickname, propertyDetails]);
 
 
   useEffect(() => {
@@ -483,13 +638,7 @@ export default function DanteSafraChat() {
                 }}
             />
         </CardHeader>
-        <ScrollArea className="flex-1">
-            {setupStage === 'ANALISE' && (
-                <>
-                <DanteSafraDashboard onMenuClick={(prompt) => processMessage(prompt)} />
-                <Separator className="bg-emerald-800/30" />
-                </>
-            )}
+        <ScrollArea className="flex-1 min-h-0 w-full">
             <div className="p-4">{renderMessages()}</div>
         </ScrollArea>
           <CardFooter className="p-4 border-t border-emerald-800/60 flex flex-col items-start gap-2">

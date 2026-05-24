@@ -1,17 +1,23 @@
 {
-  "name": "Nexus Holding Group",
-  "short_name": "Nexus",
-  "description": "Ecossistema de Alta Performance",
-  "start_url": "/",
+  "name": "Atena Nexus",
+  "short_name": "Atena",
+  "description": "Auxiliar Executiva Exclusiva da Nexus",
+  "start_url": "/atena",
   "display": "standalone",
   "background_color": "#020617",
-  "theme_color": "#f59e0b",
+  "theme_color": "#020617",
   "icons": [
     {
-      "src": "/icons/nexus-icon.svg",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
+      "src": "/atena/Atena - IA privada.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/atena/Atena - IA privada.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
