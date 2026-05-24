@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { LogOut, Menu, User as UserIcon, Shield, Globe, ArrowRight } from 'lucide-react';
+import { LogOut, Menu, User as UserIcon, Shield, Globe, ArrowRight, Sparkles } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -207,6 +207,12 @@ export function SiteHeader() {
                           <Link href="/gabinete" className="flex items-center w-full">
                             <Shield className="mr-2 h-4 w-4" />
                             <span>{t('navGabinete')}</span>
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-blue-500/10 text-blue-400 font-bold">
+                          <Link href="/atena" className="flex items-center w-full">
+                            <Sparkles className="mr-2 h-4 w-4" />
+                            <span>Atena (IA Exclusiva)</span>
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10 text-emerald-400 font-medium">
