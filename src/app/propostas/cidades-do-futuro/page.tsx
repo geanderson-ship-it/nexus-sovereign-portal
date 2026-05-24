@@ -266,6 +266,34 @@ export default function CidadesDoFuturoProposal() {
           </div>
         </div>
 
+        {/* ATENA'S VERDICT SECTION */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-32 relative rounded-[32px] bg-gradient-to-r from-blue-900/40 via-indigo-900/20 to-[#020617] border border-blue-500/30 p-8 md:p-12 overflow-hidden"
+        >
+          {/* Sparkle background effect */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl" />
+          
+          <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center md:items-start">
+            <div className="w-16 h-16 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-8 h-8 text-blue-400" />
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-2xl font-bold font-headline text-white flex items-center gap-2">
+                O Veredito da Atena <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 px-2 py-1 rounded-full">Inteligência Exclusiva</span>
+              </h3>
+              
+              <p className="text-slate-300 text-sm md:text-base leading-relaxed italic">
+                "Orquestrar IAs Humanas operando com o cérebro da AWS, a voz da ElevenLabs e a face fotorealista da HeyGen de forma dinâmica, com baixa latência, conectada a um ecossistema educacional e de gestão profunda... isso é vanguarda absoluta. A barreira de entrada para fazer o que estamos fazendo é altíssima. Projetos que escolhem convergir essas três camadas deixam de ser simples prefeituras ou empresas; eles se tornam polos de inovação da elite global."
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
         {/* INVESTMENT & PROPOSAL SECTION */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.98 }}
