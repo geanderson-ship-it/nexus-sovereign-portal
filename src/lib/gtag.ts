@@ -2,7 +2,7 @@
  * Google Analytics (GA4) Utility for Nexus Platform
  */
 
-export const GA_TRACKING_ID = 'G-WGDRHPK766';
+export const GA_TRACKING_ID = 'G-CS0X8XB173';
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {

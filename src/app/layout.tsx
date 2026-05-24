@@ -9,6 +9,8 @@ import Script from 'next/script';
 import { Metadata } from 'next';
 
 import AwsRumAnalytics from '@/components/analytics/aws-rum-analytics';
+import GoogleAnalytics from '@/components/analytics/google-analytics';
+import { GA_TRACKING_ID } from '@/lib/gtag';
 
 export const viewport = {
   width: 'device-width',
@@ -88,7 +90,24 @@ export default function RootLayout({
       className="dark"
       style={{ colorScheme: 'dark' }}
     >
-
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+      />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+        }}
+      />
       <Script id="json-ld" type="application/ld+json" strategy="afterInteractive">
         {`
           {
@@ -112,6 +131,7 @@ export default function RootLayout({
       >
 
         <AwsRumAnalytics />
+        <GoogleAnalytics />
         <ClientProviders>
             <LayoutWrapper>
               {children}

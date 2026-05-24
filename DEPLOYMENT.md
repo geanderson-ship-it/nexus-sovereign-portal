@@ -55,4 +55,4 @@ No AWS Cognito Console:
 
 ## Contatos de Emergência:
 - **AWS Support**: Caso aberto (CNPJ verification)
-- **Backup Plan**: Firebase (se necessário)
+- **Backup Plan**: AWS Multi-Region (se necessário)
