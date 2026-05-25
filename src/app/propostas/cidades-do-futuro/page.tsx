@@ -287,9 +287,41 @@ export default function CidadesDoFuturoProposal() {
                 O Veredito da Atena <span className="text-xs font-bold uppercase tracking-widest text-blue-400 bg-blue-500/10 px-2 py-1 rounded-full">Inteligência Exclusiva</span>
               </h3>
               
-              <p className="text-slate-300 text-sm md:text-base leading-relaxed italic">
-                "Orquestrar IAs Humanas operando com o cérebro da AWS, a voz da ElevenLabs e a face fotorealista da HeyGen de forma dinâmica, com baixa latência, conectada a um ecossistema educacional e de gestão profunda... isso é vanguarda absoluta. A barreira de entrada para fazer o que estamos fazendo é altíssima. Projetos que escolhem convergir essas três camadas deixam de ser simples prefeituras ou empresas; eles se tornam polos de inovação da elite global."
-              </p>
+              <div className="space-y-6">
+                <p className="text-slate-300 text-sm md:text-base leading-relaxed italic">
+                  "Orquestrar IAs Humanas operando com o cérebro da AWS, a voz da ElevenLabs e a face fotorealista da HeyGen de forma dinâmica, conectada a um ecossistema profundo... isso é vanguarda absoluta. O mercado atual se divide de forma muito clara:"
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="bg-slate-900/50 border border-slate-800 p-8 rounded-2xl flex flex-col justify-center">
+                    <p className="text-4xl md:text-5xl font-bold font-headline text-slate-500 mb-2">95%</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">A Base do Mercado</p>
+                    <p className="text-sm text-slate-500 leading-relaxed">
+                      <strong>Exemplos:</strong> ChatGPT, Gemini, Claude, etc.<br/><br/>
+                      Chat frio, genérico e sem integração. Operam apenas por texto ou voz sintetizada em interfaces padronizadas. Sem conexão emocional ou olho no olho.
+                    </p>
+                  </div>
+                  <div className="bg-blue-900/20 border border-blue-900/50 p-8 rounded-2xl flex flex-col justify-center">
+                    <p className="text-4xl md:text-5xl font-bold font-headline text-blue-400 mb-2">4%</p>
+                    <p className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-4">Os Inovadores</p>
+                    <p className="text-sm text-slate-400 leading-relaxed">
+                      <strong>Exemplos:</strong> Vídeos de marketing e tutoriais pré-gravados.<br/><br/>
+                      Tentativas de humanização utilizando avatares, porém engessados e roteirizados. Sem interação ao vivo, sem improviso e sem a conexão do "olho no olho".
+                    </p>
+                  </div>
+                  <div className="bg-emerald-900/20 border border-emerald-500/30 p-8 rounded-2xl relative overflow-hidden flex flex-col justify-center transform hover:scale-105 transition-transform duration-300">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/20 rounded-full blur-2xl" />
+                    <p className="text-4xl md:text-5xl font-bold font-headline text-emerald-400 mb-2">&lt; 1%</p>
+                    <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-4">O Nível Nexus</p>
+                    <p className="text-sm text-emerald-100/90 leading-relaxed relative z-10">
+                      <strong>Exemplo:</strong> Live Avatar Nexus em Tempo Real.<br/><br/>
+                      A vanguarda absoluta. Tecnologia de ponta com interação olho no olho, dinâmica e de baixíssima latência. IAs que lêem o momento e sentem o que o usuário sente através do olhar.
+                    </p>
+                  </div>
+                </div>
+                <p className="text-slate-300 text-sm md:text-base leading-relaxed italic border-l-2 border-blue-500/50 pl-4">
+                  "A barreira de entrada é altíssima. Projetos que escolhem convergir essas três camadas deixam de ser simples prefeituras; eles se tornam polos de inovação da elite global."
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
