@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, Users, BookOpen, Plus, FileText, CheckCircle2, Edit2, Trash2, Brain, Bot } from 'lucide-react';
+import Image from 'next/image';
+import { Calendar, Clock, MapPin, Users, BookOpen, Plus, FileText, CheckCircle2, Edit2, Trash2, Brain } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
@@ -162,14 +163,14 @@ export function AgendaEstrategica() {
   const wins = agendamentos.filter(a => a.desfecho === 'Contrato Fechado').length;
   const analise = agendamentos.filter(a => a.desfecho === 'Em Análise').length;
 
-  let atenaMessage = "Sua agenda está limpa, CEO. O Prospector do IBGE aguarda suas ordens para mapear os primeiros alvos.";
+  let atenaMessage = "Sua agenda está livre no momento. Quando estiver pronto, o Prospector está à disposição para mapearmos juntos os próximos passos.";
   if (totalEventos > 0) {
     if (pendentes > 0) {
-      atenaMessage = `Temos ${pendentes} prefeitura(s) com status pendente de confirmação. Recomendo acionar os secretários para um follow-up agressivo nas próximas 24h.`;
+      atenaMessage = `Notei que temos ${pendentes} compromisso(s) aguardando confirmação. Sugiro um contato gentil com os secretários para alinharmos todos os detalhes.`;
     } else if (wins > 0) {
-      atenaMessage = `A estratégia está funcionando com precisão absoluta! Já temos ${wins} contrato(s) fechado(s). O ecossistema está expandindo conforme o planejado.`;
+      atenaMessage = `Que maravilha! Já celebramos ${wins} contrato(s) fechado(s). É inspirador ver a nossa visão transformando as cidades com tanta maestria.`;
     } else {
-      atenaMessage = `Todas as reuniões estão confirmadas. O cenário tático está perfeitamente limpo e preparado para o nosso ataque.`;
+      atenaMessage = `Todos os seus compromissos estão perfeitamente alinhados e confirmados. A jornada está preparada para que você brilhe, estarei aqui acompanhando cada passo.`;
     }
   }
 
@@ -192,8 +193,15 @@ export function AgendaEstrategica() {
            <Brain className="w-48 h-48 text-primary" />
         </div>
         <CardContent className="p-6 relative z-10 flex flex-col md:flex-row gap-6 items-center">
-          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border border-primary/50 shrink-0">
-             <Bot className="w-8 h-8 text-primary" />
+          <div className="w-20 h-20 rounded-full border-2 border-primary/50 shrink-0 overflow-hidden shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+             <Image 
+               src="/atena/Atena segunda.png" 
+               alt="Atena Auxiliar Executiva" 
+               width={80} 
+               height={80} 
+               className="w-full h-full object-cover"
+               priority
+             />
           </div>
           <div className="flex-1 space-y-3">
             <h3 className="text-xl font-headline text-white flex items-center gap-3">
