@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, Users, BookOpen, Plus, FileText, CheckCircle2, Edit2, Trash2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, BookOpen, Plus, FileText, CheckCircle2, Edit2, Trash2, Brain, Bot } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -137,17 +138,40 @@ export function AgendaEstrategica() {
       const [dayA, monthA, yearA] = (a.data || '').split('/');
       const [dayB, monthB, yearB] = (b.data || '').split('/');
       
-      const dateA = new Date(`${yearA}-${monthA}-${dayA}T${a.horario || '00:00'}`);
-      const dateB = new Date(`${yearB}-${monthB}-${dayB}T${b.horario || '00:00'}`);
+      const dA = (dayA || '00').padStart(2, '0');
+      const mA = (monthA || '00').padStart(2, '0');
+      const yA = yearA || '0000';
+      const timeA = (a.horario || '00:00').padStart(5, '0');
+      const keyA = `${yA}${mA}${dA}${timeA}`;
+
+      const dB = (dayB || '00').padStart(2, '0');
+      const mB = (monthB || '00').padStart(2, '0');
+      const yB = yearB || '0000';
+      const timeB = (b.horario || '00:00').padStart(5, '0');
+      const keyB = `${yB}${mB}${dB}${timeB}`;
       
-      if (!isNaN(dateA.getTime()) && !isNaN(dateB.getTime())) {
-        return dateA.getTime() - dateB.getTime();
-      }
-      return 0;
+      return keyA.localeCompare(keyB);
     } catch {
       return 0;
     }
   });
+
+  // Cálculos Analíticos da Atena
+  const totalEventos = agendamentos.length;
+  const pendentes = agendamentos.filter(a => a.status === 'Pendente').length;
+  const wins = agendamentos.filter(a => a.desfecho === 'Contrato Fechado').length;
+  const analise = agendamentos.filter(a => a.desfecho === 'Em Análise').length;
+
+  let atenaMessage = "Sua agenda está limpa, CEO. O Prospector do IBGE aguarda suas ordens para mapear os primeiros alvos.";
+  if (totalEventos > 0) {
+    if (pendentes > 0) {
+      atenaMessage = `Temos ${pendentes} prefeitura(s) com status pendente de confirmação. Recomendo acionar os secretários para um follow-up agressivo nas próximas 24h.`;
+    } else if (wins > 0) {
+      atenaMessage = `A estratégia está funcionando com precisão absoluta! Já temos ${wins} contrato(s) fechado(s). O ecossistema está expandindo conforme o planejado.`;
+    } else {
+      atenaMessage = `Todas as reuniões estão confirmadas. O cenário tático está perfeitamente limpo e preparado para o nosso ataque.`;
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -161,6 +185,35 @@ export function AgendaEstrategica() {
           Novo Evento
         </Button>
       </div>
+
+      {/* Atena Executive Assistant Panel */}
+      <Card className="bg-slate-900/80 border-primary/30 shadow-[0_0_15px_rgba(34,211,238,0.05)] relative overflow-hidden">
+        <div className="absolute -top-10 -right-10 p-4 opacity-5 pointer-events-none">
+           <Brain className="w-48 h-48 text-primary" />
+        </div>
+        <CardContent className="p-6 relative z-10 flex flex-col md:flex-row gap-6 items-center">
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border border-primary/50 shrink-0">
+             <Bot className="w-8 h-8 text-primary" />
+          </div>
+          <div className="flex-1 space-y-3">
+            <h3 className="text-xl font-headline text-white flex items-center gap-3">
+               Atena 
+               <Badge variant="outline" className="text-[10px] uppercase tracking-widest text-primary border-primary/50 bg-primary/5">
+                 Auxiliar Executiva Exclusiva
+               </Badge>
+            </h3>
+            <p className="text-slate-300 text-sm italic font-light leading-relaxed">
+              "{atenaMessage}"
+            </p>
+            <div className="flex flex-wrap gap-4 pt-3 mt-1 border-t border-slate-800/50">
+               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Total: <strong className="text-white text-sm ml-1">{totalEventos}</strong></div>
+               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Pendentes: <strong className="text-amber-400 text-sm ml-1">{pendentes}</strong></div>
+               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Em Análise: <strong className="text-blue-400 text-sm ml-1">{analise}</strong></div>
+               <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">Wins: <strong className="text-emerald-400 text-sm ml-1">{wins}</strong></div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <Card className="bg-slate-900/60 border-slate-800 backdrop-blur-md">
         <CardContent className="p-0">
@@ -310,7 +363,13 @@ export function AgendaEstrategica() {
               <Input 
                 placeholder="Ex: 14:00" 
                 value={formData.horario || ''} 
-                onChange={e => setFormData({...formData, horario: e.target.value})}
+                maxLength={5}
+                onChange={e => {
+                  let val = e.target.value.replace(/\D/g, '');
+                  if (val.length > 4) val = val.substring(0, 4);
+                  if (val.length >= 3) val = val.substring(0, 2) + ':' + val.substring(2);
+                  setFormData({...formData, horario: val});
+                }}
                 className="bg-slate-800 border-slate-700 text-white"
               />
             </div>
