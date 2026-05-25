@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, Map, ExternalLink, Phone, ShieldCheck, TrendingUp, Loader2 } from 'lucide-react';
+import { Search, Map, ExternalLink, Phone, ShieldCheck, TrendingUp, Loader2, Activity } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 interface UF {
