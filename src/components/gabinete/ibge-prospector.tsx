@@ -17,6 +17,13 @@ interface UF {
 interface Municipio {
   id: number;
   nome: string;
+  microrregiao?: {
+    mesorregiao?: {
+      UF?: {
+        sigla: string;
+      }
+    }
+  };
 }
 
 export function IbgeProspector() {
@@ -166,24 +173,38 @@ export function IbgeProspector() {
                   <TableRow className="border-slate-800 hover:bg-transparent">
                     <TableHead className="text-slate-400 font-bold">Município</TableHead>
                     <TableHead className="text-slate-400 font-bold text-center">Grau de Possibilidade</TableHead>
+                    <TableHead className="text-slate-400 font-bold text-center">Logística</TableHead>
                     <TableHead className="text-slate-400 font-bold text-right">Ações de Prospecção</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredMunicipios.map((cidade) => {
                     const scoreData = getNexusScore(cidade.id);
-                    const searchQuery = encodeURIComponent(`Prefeitura de ${cidade.nome} ${selectedUf} telefone contato email gabinete do prefeito`);
+                    const ufSigla = cidade.microrregiao?.mesorregiao?.UF?.sigla || (selectedUf !== 'BR' ? selectedUf : '');
+                    const searchQuery = encodeURIComponent(`Prefeitura de ${cidade.nome} ${ufSigla} telefone contato email gabinete do prefeito`);
+                    const routeQuery = encodeURIComponent(`Mato Leitão, RS to ${cidade.nome}, ${ufSigla}`);
                     
                     return (
                       <TableRow key={cidade.id} className="border-slate-800 hover:bg-slate-800/30 transition-colors">
                         <TableCell className="font-medium text-slate-200 py-4">
-                          {cidade.nome}
+                          {cidade.nome} {ufSigla && <span className="text-slate-500 text-xs ml-1">({ufSigla})</span>}
                         </TableCell>
                         <TableCell className="text-center py-4">
                           <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full ${scoreData.bg} border border-${scoreData.color.replace('text-', 'border-')}/30`}>
                             <Activity className={`w-3 h-3 ${scoreData.color}`} />
                             <span className={`text-xs font-bold ${scoreData.color}`}>{scoreData.score}% ({scoreData.level})</span>
                           </div>
+                        </TableCell>
+                        <TableCell className="text-center py-4">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="bg-transparent border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800"
+                            onClick={() => window.open(`https://www.google.com/maps/dir/${routeQuery}`, '_blank')}
+                          >
+                            <Map className="w-4 h-4 mr-2 text-emerald-400" />
+                            Ver Rota
+                          </Button>
                         </TableCell>
                         <TableCell className="text-right py-4">
                           <Button 

@@ -68,6 +68,25 @@ export default function GabinetePage() {
           </Link>
           
           {/* Espaço para futuras ferramentas do Gabinete */}
+          <Link href="/gabinete/agenda">
+            <Card className="bg-slate-900/50 border-slate-800 hover:border-emerald-500/50 transition-colors cursor-pointer group h-full">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Shield className="w-6 h-6 text-emerald-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-emerald-400 transition-colors">Agenda Estratégica</CardTitle>
+                <CardDescription>Painel de Controle de Reuniões</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Organize suas visitas, gerencie os anfitriões e defina a estratégia de ataque (Assunto e Observações) para cada prefeitura.
+                </p>
+                <div className="mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-emerald-500">
+                  Acessar Ferramenta <MapPin className="w-4 h-4" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </div>
     </div>
