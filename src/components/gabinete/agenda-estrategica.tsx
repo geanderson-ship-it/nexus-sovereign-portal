@@ -20,6 +20,7 @@ interface AgendaItem {
   assunto: string;
   observacoes: string;
   status: string;
+  desfecho?: string;
 }
 
 const INITIAL_AGENDA: AgendaItem[] = [
@@ -33,6 +34,7 @@ const INITIAL_AGENDA: AgendaItem[] = [
     assunto: 'Apresentação do ecossistema e ferramentas de saúde',
     observacoes: 'Levar material impresso do Dante Safra e folder Health.',
     status: 'Confirmado',
+    desfecho: 'Em Aberto',
   },
   {
     id: 2,
@@ -44,6 +46,7 @@ const INITIAL_AGENDA: AgendaItem[] = [
     assunto: 'Pilar Educação - Retenção de Jovens',
     observacoes: 'Destacar o uso de IAs Humanas nos cursos.',
     status: 'Pendente',
+    desfecho: 'Em Análise',
   }
 ];
 
@@ -57,13 +60,14 @@ export function AgendaEstrategica() {
   
   // Form states
   const [formData, setFormData] = useState<Partial<AgendaItem>>({
-    status: 'Pendente'
+    status: 'Pendente',
+    desfecho: 'Em Aberto'
   });
 
   // Carregar dados salvos no navegador (localStorage)
   useEffect(() => {
     setIsMounted(true);
-    const saved = localStorage.getItem('nexus_agenda_v1');
+    const saved = localStorage.getItem('nexus_agenda_v2'); // Mudamos a key para garantir a migração de dados (adicionando desfecho)
     if (saved) {
       try {
         setAgendamentos(JSON.parse(saved));
@@ -78,13 +82,13 @@ export function AgendaEstrategica() {
   // Salvar automaticamente sempre que houver mudança
   useEffect(() => {
     if (isMounted) {
-      localStorage.setItem('nexus_agenda_v1', JSON.stringify(agendamentos));
+      localStorage.setItem('nexus_agenda_v2', JSON.stringify(agendamentos));
     }
   }, [agendamentos, isMounted]);
 
   const handleOpenNew = () => {
     setEditingId(null);
-    setFormData({ status: 'Pendente' });
+    setFormData({ status: 'Pendente', desfecho: 'Em Aberto' });
     setIsModalOpen(true);
   };
 
@@ -128,6 +132,23 @@ export function AgendaEstrategica() {
 
   if (!isMounted) return null; // Previne hidratação incorreta
 
+  const sortedAgendamentos = [...agendamentos].sort((a, b) => {
+    try {
+      const [dayA, monthA, yearA] = (a.data || '').split('/');
+      const [dayB, monthB, yearB] = (b.data || '').split('/');
+      
+      const dateA = new Date(`${yearA}-${monthA}-${dayA}T${a.horario || '00:00'}`);
+      const dateB = new Date(`${yearB}-${monthB}-${dayB}T${b.horario || '00:00'}`);
+      
+      if (!isNaN(dateA.getTime()) && !isNaN(dateB.getTime())) {
+        return dateA.getTime() - dateB.getTime();
+      }
+      return 0;
+    } catch {
+      return 0;
+    }
+  });
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -151,12 +172,12 @@ export function AgendaEstrategica() {
                   <TableHead className="text-slate-400 font-bold">Evento / Assunto</TableHead>
                   <TableHead className="text-slate-400 font-bold">Local & Anfitrião</TableHead>
                   <TableHead className="text-slate-400 font-bold">Observações</TableHead>
-                  <TableHead className="text-slate-400 font-bold text-center">Status</TableHead>
+                  <TableHead className="text-slate-400 font-bold text-center">Status / Desfecho</TableHead>
                   <TableHead className="text-slate-400 font-bold text-right">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {agendamentos.map((item) => (
+                {sortedAgendamentos.map((item) => (
                   <TableRow key={item.id} className="border-slate-800 hover:bg-slate-800/30 transition-colors">
                     
                     <TableCell className="py-4 align-top">
@@ -203,17 +224,30 @@ export function AgendaEstrategica() {
                     </TableCell>
 
                     <TableCell className="text-center py-4 align-top">
-                      <button 
-                        onClick={() => handleToggleStatus(item.id, item.status)}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all hover:scale-105 cursor-pointer ${
-                          item.status === 'Confirmado' 
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
-                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
-                        }`}
-                      >
-                        {item.status === 'Confirmado' ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-                        {item.status}
-                      </button>
+                      <div className="flex flex-col items-center gap-2">
+                        <button 
+                          onClick={() => handleToggleStatus(item.id, item.status)}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all hover:scale-105 cursor-pointer ${
+                            item.status === 'Confirmado' 
+                              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                              : 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
+                          }`}
+                        >
+                          {item.status === 'Confirmado' ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+                          {item.status}
+                        </button>
+
+                        {item.desfecho && item.desfecho !== 'Em Aberto' && (
+                          <div className={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded border ${
+                            item.desfecho === 'Contrato Fechado' ? 'text-emerald-400 border-emerald-500/50 bg-emerald-500/10' :
+                            item.desfecho === 'Em Análise' ? 'text-blue-400 border-blue-500/50 bg-blue-500/10' :
+                            item.desfecho === 'Negado' ? 'text-red-400 border-red-500/50 bg-red-500/10' :
+                            'text-slate-400 border-slate-700 bg-slate-800'
+                          }`}>
+                            {item.desfecho}
+                          </div>
+                        )}
+                      </div>
                     </TableCell>
 
                     <TableCell className="text-right py-4 align-top">
@@ -302,7 +336,7 @@ export function AgendaEstrategica() {
             </div>
 
             <div className="col-span-2 sm:col-span-1">
-              <label className="text-xs font-bold text-slate-400 uppercase mb-1 block">Status Inicial</label>
+              <label className="text-xs font-bold text-slate-400 uppercase mb-1 block">Status</label>
               <Select value={formData.status} onValueChange={(val) => setFormData({...formData, status: val})}>
                 <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
                   <SelectValue placeholder="Selecione" />
@@ -310,6 +344,21 @@ export function AgendaEstrategica() {
                 <SelectContent className="bg-slate-800 border-slate-700 text-white">
                   <SelectItem value="Pendente" className="text-amber-400 font-bold">Pendente</SelectItem>
                   <SelectItem value="Confirmado" className="text-emerald-400 font-bold">Confirmado</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="col-span-2">
+              <label className="text-xs font-bold text-slate-400 uppercase mb-1 block">Desfecho Comercial</label>
+              <Select value={formData.desfecho || 'Em Aberto'} onValueChange={(val) => setFormData({...formData, desfecho: val})}>
+                <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
+                  <SelectValue placeholder="Selecione" />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-800 border-slate-700 text-white">
+                  <SelectItem value="Em Aberto" className="text-slate-300 font-bold">Em Aberto (Sem Desfecho)</SelectItem>
+                  <SelectItem value="Em Análise" className="text-blue-400 font-bold">Em Análise (Aguardando Retorno)</SelectItem>
+                  <SelectItem value="Contrato Fechado" className="text-emerald-400 font-bold">Contrato Fechado (Win)</SelectItem>
+                  <SelectItem value="Negado" className="text-red-400 font-bold">Negado (Lost)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
