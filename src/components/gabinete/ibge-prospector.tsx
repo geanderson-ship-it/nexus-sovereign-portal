@@ -25,6 +25,7 @@ export function IbgeProspector() {
   const [municipios, setMunicipios] = useState<Municipio[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filterPossibilidade, setFilterPossibilidade] = useState<string>('todos');
 
   // Fetch UFs on mount
   useEffect(() => {
@@ -46,9 +47,14 @@ export function IbgeProspector() {
     }
     
     setLoading(true);
-    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`)
+    const url = selectedUf === 'BR'
+      ? 'https://servicodados.ibge.gov.br/api/v1/localidades/municipios'
+      : `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`;
+
+    fetch(url)
       .then(res => res.json())
       .then(data => {
+        // If BR, data comes with microrregiao.mesorregiao.UF.sigla, we could map it, but for now we just use nome
         setMunicipios(data);
         setLoading(false);
       })
@@ -70,9 +76,20 @@ export function IbgeProspector() {
   };
 
   const filteredMunicipios = useMemo(() => {
-    if (!searchTerm) return municipios;
-    return municipios.filter(m => m.nome.toLowerCase().includes(searchTerm.toLowerCase()));
-  }, [municipios, searchTerm]);
+    let result = municipios;
+    if (searchTerm) {
+      result = result.filter(m => m.nome.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+    if (filterPossibilidade !== 'todos') {
+      result = result.filter(m => getNexusScore(m.id).level === filterPossibilidade);
+    }
+    
+    // Sort by descending score
+    result = [...result].sort((a, b) => getNexusScore(b.id).score - getNexusScore(a.id).score);
+    
+    // Limit to 200 to prevent browser lag when tracking entire Brazil
+    return result.slice(0, 200);
+  }, [municipios, searchTerm, filterPossibilidade]);
 
   return (
     <div className="space-y-6">
@@ -97,6 +114,7 @@ export function IbgeProspector() {
                   <SelectValue placeholder="Selecione um Estado" />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-800 border-slate-700 text-slate-200 max-h-[300px]">
+                  <SelectItem value="BR" className="hover:bg-slate-700 cursor-pointer font-bold text-emerald-400">🇧🇷 Brasil Inteiro (Rastreio Total)</SelectItem>
                   {ufs.map(uf => (
                     <SelectItem key={uf.id} value={uf.sigla} className="hover:bg-slate-700 cursor-pointer">
                       {uf.nome} ({uf.sigla})
@@ -106,7 +124,22 @@ export function IbgeProspector() {
               </Select>
             </div>
 
-            <div className="w-full md:w-2/3">
+            <div className="w-full md:w-1/3">
+              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 block">Grau de Possibilidade</label>
+              <Select value={filterPossibilidade} onValueChange={setFilterPossibilidade}>
+                <SelectTrigger className="bg-slate-800/50 border-slate-700 text-slate-200 h-12">
+                  <SelectValue placeholder="Todos" />
+                </SelectTrigger>
+                <SelectContent className="bg-slate-800 border-slate-700 text-slate-200">
+                  <SelectItem value="todos" className="hover:bg-slate-700 cursor-pointer">Todos</SelectItem>
+                  <SelectItem value="Altíssimo" className="hover:bg-slate-700 cursor-pointer text-emerald-400 font-bold">Altíssimo</SelectItem>
+                  <SelectItem value="Alto" className="hover:bg-slate-700 cursor-pointer text-blue-400 font-bold">Alto</SelectItem>
+                  <SelectItem value="Médio" className="hover:bg-slate-700 cursor-pointer text-amber-400 font-bold">Médio</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="w-full md:w-1/3">
               <label className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 block">Buscar Cidade</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
@@ -168,6 +201,11 @@ export function IbgeProspector() {
                   })}
                 </TableBody>
               </Table>
+              {municipios.length > 200 && (
+                <div className="p-4 text-center text-xs text-slate-500 bg-slate-900/50 border-t border-slate-800">
+                  Mostrando os 200 primeiros resultados para otimização. Refine a busca ou use o filtro de possibilidade.
+                </div>
+              )}
             </div>
           ) : selectedUf ? (
             <div className="py-12 text-center text-slate-500">
