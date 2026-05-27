@@ -13,8 +13,23 @@ export function Gallery() {
   const { t, tObject } = useLocale();
 
   return (
-    <section id="gallery" className="w-full bg-background py-20 md:py-24">
-      <div className="container mx-auto max-w-7xl text-center">
+    <section id="gallery" className="w-full py-20 md:py-24 text-white relative min-h-screen">
+      
+      {/* FIXED BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/assets/galeria-12-sharp.png"
+          alt="Nexus Gallery Background"
+          fill
+          priority
+          className="object-cover opacity-25"
+          style={{ objectPosition: 'center center' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
+      </div>
+
+      <div className="relative z-10 container mx-auto max-w-7xl text-center">
         
         <h1 className={cn("text-4xl font-bold tracking-tighter sm:text-5xl", "font-headline")}>
             {t('gallery.title')}

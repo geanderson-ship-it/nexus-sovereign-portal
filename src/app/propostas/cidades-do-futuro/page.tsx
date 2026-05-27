@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useUser } from '@/auth';
 import { useRouter } from 'next/navigation';
+import { isAdminUser } from '@/lib/constants';
 import { NexusIntelligenceLogo } from '@/components/nexus-intelligence-logo';
 import { Logo } from '@/components/logo';
 import Image from 'next/image';
@@ -30,8 +31,8 @@ export default function CidadesDoFuturoProposal() {
   // Authentication Guard
   useEffect(() => {
     if (!isUserLoading) {
-      if (!user) {
-        // Redireciona para o login se não houver usuário autenticado
+      if (!user || !isAdminUser(user)) {
+        // Redireciona para o login se não for administrador
         router.push('/login');
       } else {
         setIsAuthorized(true);

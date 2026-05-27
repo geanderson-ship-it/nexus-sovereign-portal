@@ -24,7 +24,24 @@ export default function AboutPage() {
   ];
   
   return (
-    <div className="container mx-auto py-12 md:py-20">
+    <div className="relative min-h-screen">
+
+      {/* BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/assets/alta-lideranca.png"
+          alt="Nexus Sobre Background"
+          fill
+          priority
+          className="object-cover opacity-45"
+          style={{ objectPosition: 'center 20%' }}
+        />
+        {/* Dark overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.04)_0%,transparent_60%)]" />
+      </div>
+
+      <div className="relative z-10 container mx-auto py-12 md:py-20">
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl">
           {t('about.title')}
@@ -146,6 +163,7 @@ export default function AboutPage() {
         </div>
       </section>
 
+      </div>
     </div>
   );
 }

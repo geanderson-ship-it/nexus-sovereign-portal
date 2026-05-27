@@ -263,19 +263,19 @@ export default function SuportePage() {
   if (!mounted) return null;
 
   return (
-    <main className="min-h-screen relative overflow-hidden pt-28 pb-20 flex flex-col items-center">
+    <main className="min-h-screen text-slate-100 pt-28 pb-20 flex flex-col items-center relative">
       {/* Background Image */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <Image
           src="/images/support-bg-nexus.png"
           alt="Nexus Support Triage"
           fill
-          sizes="100vw"
-          className="object-cover opacity-80"
-          style={{ objectPosition: 'center' }}
           priority
+          className="object-cover opacity-45"
+          style={{ objectPosition: 'center center' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/30 to-background/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.03)_0%,transparent_60%)]" />
       </div>
 
       {/* Background Ambience */}

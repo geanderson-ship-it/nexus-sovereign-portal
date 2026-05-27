@@ -1,0 +1,642 @@
+{
+  "en-US": {
+    "name": "English (US)",
+    "totalKeys": 1311,
+    "missingCount": 0,
+    "missingKeys": [],
+    "untranslatedCount": 230,
+    "untranslatedKeys": [
+      {
+        "key": "navIntelligence",
+        "value": "Intelligence"
+      },
+      {
+        "key": "navExcellence",
+        "value": "Excellence"
+      },
+      {
+        "key": "inicio.intelligence.dante.chat.title",
+        "value": "Dante Chat:"
+      },
+      {
+        "key": "inicio.intelligence.dante.safra.title",
+        "value": "Dante Safra:"
+      },
+      {
+        "key": "inicio.intelligence.dante.compras.title",
+        "value": "Dante Compras:"
+      },
+      {
+        "key": "inicio.intelligence.djeny.chat.title",
+        "value": "Djeny Chat:"
+      },
+      {
+        "key": "inicio.intelligence.djeny.design.title",
+        "value": "Djeny Design:"
+      },
+      {
+        "key": "brand.colors.background",
+        "value": "Background"
+      },
+      {
+        "key": "brand.colors.foreground",
+        "value": "Foreground"
+      },
+      {
+        "key": "brand.colors.primary",
+        "value": "Primary"
+      },
+      {
+        "key": "brand.colors.accent",
+        "value": "Accent"
+      },
+      {
+        "key": "brand.colors.secondary",
+        "value": "Secondary"
+      },
+      {
+        "key": "brand.colors.muted",
+        "value": "Muted"
+      },
+      {
+        "key": "brand.colors.destructive",
+        "value": "Destructive"
+      },
+      {
+        "key": "brand.typography.headline.family",
+        "value": "Poppins"
+      }
+    ],
+    "extraCount": 52,
+    "extraKeys": [
+      "analytics.activeUsers",
+      "analytics.activityFlow",
+      "analytics.data.brazil",
+      "analytics.data.desktop",
+      "analytics.data.direct",
+      "analytics.data.france",
+      "analytics.data.fri",
+      "analytics.data.mobile",
+      "analytics.data.mon",
+      "analytics.data.now",
+      "analytics.data.organic",
+      "analytics.data.others",
+      "analytics.data.portugal",
+      "analytics.data.referral",
+      "analytics.data.sat"
+    ]
+  },
+  "es-ES": {
+    "name": "Spanish (Spain)",
+    "totalKeys": 1260,
+    "missingCount": 0,
+    "missingKeys": [],
+    "untranslatedCount": 71,
+    "untranslatedKeys": [
+      {
+        "key": "inicio.intelligence.dante.chat.title",
+        "value": "Dante Chat:"
+      },
+      {
+        "key": "inicio.intelligence.dante.safra.title",
+        "value": "Dante Safra:"
+      },
+      {
+        "key": "inicio.intelligence.dante.compras.title",
+        "value": "Dante Compras:"
+      },
+      {
+        "key": "inicio.intelligence.djeny.chat.title",
+        "value": "Djeny Chat:"
+      },
+      {
+        "key": "inicio.intelligence.djeny.design.title",
+        "value": "Djeny Design:"
+      },
+      {
+        "key": "brand.typography.headline.family",
+        "value": "Poppins"
+      },
+      {
+        "key": "brand.typography.body.family",
+        "value": "PT Sans"
+      },
+      {
+        "key": "contact.phone.title",
+        "value": "WhatsApp."
+      },
+      {
+        "key": "contact.form.phone.placeholder",
+        "value": "(XX) XXXXX-XXXX"
+      },
+      {
+        "key": "contact.mailto.company",
+        "value": "Empresa: "
+      },
+      {
+        "key": "privacy.section3.title",
+        "value": "3. Cookies."
+      },
+      {
+        "key": "intelligence.title",
+        "value": "Nexus Intelligence."
+      },
+      {
+        "key": "intelligence.danteSafra.standard.title",
+        "value": "DANTE SAFRA STANDARD"
+      },
+      {
+        "key": "intelligence.danteSafra.axis.cta",
+        "value": "Desbloquear AXIS"
+      },
+      {
+        "key": "intelligence.djenyDesign.personal.title",
+        "value": "DJENY DESIGN PERSONAL"
+      }
+    ],
+    "extraCount": 1,
+    "extraKeys": [
+      "intelligence.footer"
+    ]
+  },
+  "de-DE": {
+    "name": "German (Germany)",
+    "totalKeys": 1260,
+    "missingCount": 0,
+    "missingKeys": [],
+    "untranslatedCount": 202,
+    "untranslatedKeys": [
+      {
+        "key": "navIntelligence",
+        "value": "Intelligence"
+      },
+      {
+        "key": "navExcellence",
+        "value": "Excellence"
+      },
+      {
+        "key": "inicio.intelligence.dante.chat.title",
+        "value": "Dante Chat:"
+      },
+      {
+        "key": "inicio.intelligence.dante.safra.title",
+        "value": "Dante Safra:"
+      },
+      {
+        "key": "inicio.intelligence.dante.compras.title",
+        "value": "Dante Compras:"
+      },
+      {
+        "key": "inicio.intelligence.djeny.chat.title",
+        "value": "Djeny Chat:"
+      },
+      {
+        "key": "inicio.intelligence.djeny.design.title",
+        "value": "Djeny Design:"
+      },
+      {
+        "key": "brand.typography.headline.family",
+        "value": "Poppins"
+      },
+      {
+        "key": "brand.typography.body.family",
+        "value": "PT Sans"
+      },
+      {
+        "key": "contact.phone.title",
+        "value": "WhatsApp."
+      },
+      {
+        "key": "privacy.section3.title",
+        "value": "3. Cookies."
+      },
+      {
+        "key": "intelligence.title",
+        "value": "Nexus Intelligence."
+      },
+      {
+        "key": "intelligence.danteSafra.standard.title",
+        "value": "DANTE SAFRA STANDARD"
+      },
+      {
+        "key": "intelligence.djenyDesign.personal.title",
+        "value": "DJENY DESIGN PERSONAL"
+      },
+      {
+        "key": "intelligence.djenyDesign.business.title",
+        "value": "DJENY BUSINESS"
+      }
+    ],
+    "extraCount": 1,
+    "extraKeys": [
+      "intelligence.footer"
+    ]
+  },
+  "fr-FR": {
+    "name": "French (France)",
+    "totalKeys": 1260,
+    "missingCount": 0,
+    "missingKeys": [],
+    "untranslatedCount": 25,
+    "untranslatedKeys": [
+      {
+        "key": "navIntelligence",
+        "value": "Intelligence"
+      },
+      {
+        "key": "navExcellence",
+        "value": "Excellence"
+      },
+      {
+        "key": "brand.colors.accent",
+        "value": "Accent"
+      },
+      {
+        "key": "brand.typography.headline.family",
+        "value": "Poppins"
+      },
+      {
+        "key": "brand.typography.body.family",
+        "value": "PT Sans"
+      },
+      {
+        "key": "contact.email.title",
+        "value": "E-mail."
+      },
+      {
+        "key": "contact.phone.title",
+        "value": "WhatsApp."
+      },
+      {
+        "key": "contact.form.email",
+        "value": "E-mail."
+      },
+      {
+        "key": "privacy.section3.title",
+        "value": "3. Cookies."
+      },
+      {
+        "key": "intelligence.title",
+        "value": "Nexus Intelligence."
+      },
+      {
+        "key": "intelligence.danteSafra.standard.title",
+        "value": "DANTE SAFRA STANDARD"
+      },
+      {
+        "key": "intelligence.djenyDesign.personal.title",
+        "value": "DJENY DESIGN PERSONAL"
+      },
+      {
+        "key": "intelligence.djenyDesign.business.title",
+        "value": "DJENY BUSINESS"
+      },
+      {
+        "key": "login.emailLabel",
+        "value": "E-mail."
+      },
+      {
+        "key": "forgotPassword.emailLabel",
+        "value": "E-mail."
+      }
+    ],
+    "extraCount": 1,
+    "extraKeys": [
+      "intelligence.footer"
+    ]
+  },
+  "ja-JP": {
+    "name": "Japanese (Japan)",
+    "totalKeys": 1278,
+    "missingCount": 0,
+    "missingKeys": [],
+    "untranslatedCount": 24,
+    "untranslatedKeys": [
+      {
+        "key": "contact.phone.title",
+        "value": "WhatsApp."
+      },
+      {
+        "key": "contact.form.phone.placeholder",
+        "value": "(XX) XXXXX-XXXX"
+      },
+      {
+        "key": "signup.cpf",
+        "value": "CPF."
+      },
+      {
+        "key": "signup.birthDatePlaceholder",
+        "value": "DD/MM/AAAA"
+      },
+      {
+        "key": "feedback.trigger",
+        "value": "Enviar Feedback"
+      },
+      {
+        "key": "feedback.title",
+        "value": "Melhorar o Dante Safra"
+      },
+      {
+        "key": "feedback.description",
+        "value": "Encontrou um erro ou tem uma sugestão? Relate abaixo com voz, texto ou fotos."
+      },
+      {
+        "key": "feedback.form.text",
+        "value": "Sua mensagem"
+      },
+      {
+        "key": "feedback.form.textPlaceholder",
+        "value": "Descreva o que aconteceu ou sua sugestão..."
+      },
+      {
+        "key": "feedback.form.voice",
+        "value": "Relato por Voz"
+      },
+      {
+        "key": "feedback.form.record",
+        "value": "Gravar Relato"
+      },
+      {
+        "key": "feedback.form.recorded",
+        "value": "Áudio Gravado"
+      },
+      {
+        "key": "feedback.form.stop",
+        "value": "Parar"
+      },
+      {
+        "key": "feedback.form.attach",
+        "value": "Anexar"
+      },
+      {
+        "key": "feedback.toast.empty",
+        "value": "Por favor, adicione algum texto, áudio ou imagem."
+      }
+    ],
+    "extraCount": 19,
+    "extraKeys": [
+      "courseDetail.goldPlan.offerExpires",
+      "courseDetail.goldPlan.unlockAccess",
+      "courseDetail.guarantee",
+      "courseDetail.socialProof",
+      "courses.lideranca-avancado.category",
+      "courses.lideranca-avancado.featuredLabel",
+      "courses.preparando-equipes-intermediario.category",
+      "courses.relacionamento-interpessoal-iniciante.category",
+      "courses.relacionamento-interpessoal-intermediario.category",
+      "courses.relacionamento-interpessoal-intermediario.featuredLabel",
+      "intelligence.footer",
+      "palestras.comunicacao-que-conecta.category",
+      "palestras.cultura-de-alta-performance.category",
+      "palestras.gestao-de-conflitos.category",
+      "palestras.inteligencia-emocional.category"
+    ]
+  },
+  "zh-CN": {
+    "name": "Chinese (Simplified)",
+    "totalKeys": 1311,
+    "missingCount": 0,
+    "missingKeys": [],
+    "untranslatedCount": 24,
+    "untranslatedKeys": [
+      {
+        "key": "brand.typography.headline.family",
+        "value": "Poppins"
+      },
+      {
+        "key": "brand.typography.body.family",
+        "value": "PT Sans"
+      },
+      {
+        "key": "contact.phone.title",
+        "value": "WhatsApp."
+      },
+      {
+        "key": "feedback.trigger",
+        "value": "Enviar Feedback"
+      },
+      {
+        "key": "feedback.title",
+        "value": "Melhorar o Dante Safra"
+      },
+      {
+        "key": "feedback.description",
+        "value": "Encontrou um erro ou tem uma sugestão? Relate abaixo com voz, texto ou fotos."
+      },
+      {
+        "key": "feedback.form.text",
+        "value": "Sua mensagem"
+      },
+      {
+        "key": "feedback.form.textPlaceholder",
+        "value": "Descreva o que aconteceu ou sua sugestão..."
+      },
+      {
+        "key": "feedback.form.voice",
+        "value": "Relato por Voz"
+      },
+      {
+        "key": "feedback.form.record",
+        "value": "Gravar Relato"
+      },
+      {
+        "key": "feedback.form.recorded",
+        "value": "Áudio Gravado"
+      },
+      {
+        "key": "feedback.form.stop",
+        "value": "Parar"
+      },
+      {
+        "key": "feedback.form.attach",
+        "value": "Anexar"
+      },
+      {
+        "key": "feedback.toast.empty",
+        "value": "Por favor, adicione algum texto, áudio ou imagem."
+      },
+      {
+        "key": "feedback.toast.recordError",
+        "value": "Não foi possível acessar o microfone para gravar o áudio."
+      }
+    ],
+    "extraCount": 52,
+    "extraKeys": [
+      "analytics.activeUsers",
+      "analytics.activityFlow",
+      "analytics.data.brazil",
+      "analytics.data.desktop",
+      "analytics.data.direct",
+      "analytics.data.france",
+      "analytics.data.fri",
+      "analytics.data.mobile",
+      "analytics.data.mon",
+      "analytics.data.now",
+      "analytics.data.organic",
+      "analytics.data.others",
+      "analytics.data.portugal",
+      "analytics.data.referral",
+      "analytics.data.sat"
+    ]
+  },
+  "ar-AE": {
+    "name": "Arabic (UAE)",
+    "totalKeys": 1311,
+    "missingCount": 0,
+    "missingKeys": [],
+    "untranslatedCount": 23,
+    "untranslatedKeys": [
+      {
+        "key": "brand.typography.headline.family",
+        "value": "Poppins"
+      },
+      {
+        "key": "brand.typography.body.family",
+        "value": "PT Sans"
+      },
+      {
+        "key": "contact.phone.title",
+        "value": "WhatsApp."
+      },
+      {
+        "key": "feedback.trigger",
+        "value": "Enviar Feedback"
+      },
+      {
+        "key": "feedback.title",
+        "value": "Melhorar o Dante Safra"
+      },
+      {
+        "key": "feedback.description",
+        "value": "Encontrou um erro ou tem uma sugestão? Relate abaixo com voz, texto ou fotos."
+      },
+      {
+        "key": "feedback.form.text",
+        "value": "Sua mensagem"
+      },
+      {
+        "key": "feedback.form.textPlaceholder",
+        "value": "Descreva o que aconteceu ou sua sugestão..."
+      },
+      {
+        "key": "feedback.form.voice",
+        "value": "Relato por Voz"
+      },
+      {
+        "key": "feedback.form.record",
+        "value": "Gravar Relato"
+      },
+      {
+        "key": "feedback.form.recorded",
+        "value": "Áudio Gravado"
+      },
+      {
+        "key": "feedback.form.stop",
+        "value": "Parar"
+      },
+      {
+        "key": "feedback.form.attach",
+        "value": "Anexar"
+      },
+      {
+        "key": "feedback.toast.empty",
+        "value": "Por favor, adicione algum texto, áudio ou imagem."
+      },
+      {
+        "key": "feedback.toast.recordError",
+        "value": "Não foi possível acessar o microfone para gravar o áudio."
+      }
+    ],
+    "extraCount": 52,
+    "extraKeys": [
+      "analytics.activeUsers",
+      "analytics.activityFlow",
+      "analytics.data.brazil",
+      "analytics.data.desktop",
+      "analytics.data.direct",
+      "analytics.data.france",
+      "analytics.data.fri",
+      "analytics.data.mobile",
+      "analytics.data.mon",
+      "analytics.data.now",
+      "analytics.data.organic",
+      "analytics.data.others",
+      "analytics.data.portugal",
+      "analytics.data.referral",
+      "analytics.data.sat"
+    ]
+  },
+  "ru-RU": {
+    "name": "Russian (Russia)",
+    "totalKeys": 1260,
+    "missingCount": 0,
+    "missingKeys": [],
+    "untranslatedCount": 170,
+    "untranslatedKeys": [
+      {
+        "key": "navIntelligence",
+        "value": "Intelligence"
+      },
+      {
+        "key": "navExcellence",
+        "value": "Excellence"
+      },
+      {
+        "key": "inicio.intelligence.dante.chat.title",
+        "value": "Dante Chat:"
+      },
+      {
+        "key": "inicio.intelligence.dante.safra.title",
+        "value": "Dante Safra:"
+      },
+      {
+        "key": "inicio.intelligence.dante.compras.title",
+        "value": "Dante Compras:"
+      },
+      {
+        "key": "inicio.intelligence.djeny.chat.title",
+        "value": "Djeny Chat:"
+      },
+      {
+        "key": "inicio.intelligence.djeny.design.title",
+        "value": "Djeny Design:"
+      },
+      {
+        "key": "brand.typography.headline.family",
+        "value": "Poppins"
+      },
+      {
+        "key": "brand.typography.body.family",
+        "value": "PT Sans"
+      },
+      {
+        "key": "contact.phone.title",
+        "value": "WhatsApp."
+      },
+      {
+        "key": "contact.form.phone.placeholder",
+        "value": "(XX) XXXXX-XXXX"
+      },
+      {
+        "key": "contact.mailto.email",
+        "value": "Email: "
+      },
+      {
+        "key": "privacy.section3.title",
+        "value": "3. Cookies."
+      },
+      {
+        "key": "intelligence.title",
+        "value": "Nexus Intelligence."
+      },
+      {
+        "key": "intelligence.djenyDesign.personal.title",
+        "value": "DJENY DESIGN PERSONAL"
+      }
+    ],
+    "extraCount": 1,
+    "extraKeys": [
+      "intelligence.footer"
+    ]
+  }
+}

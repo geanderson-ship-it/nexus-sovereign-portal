@@ -84,18 +84,24 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative flex min-h-[calc(100vh-theme(spacing.14))] items-center justify-center py-12 px-4">
-       <Image
-          src="https://i.postimg.cc/HsP5WHsx/palestras-para-empresas-industria.jpg"
+    <div className="relative flex min-h-[calc(100vh-theme(spacing.14))] items-center justify-center py-12 px-4 text-white">
+      
+      {/* FIXED BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/nexus-hero-hologram.png"
           alt="Nexus Login Background"
           fill
-          sizes="100vw"
-          className="object-cover -z-10"
-          quality={100}
           priority
+          className="object-cover opacity-25"
+          style={{ objectPosition: 'center center' }}
         />
-        <div className="absolute inset-0 bg-background/80 -z-10 backdrop-blur-sm" />
-      <Card className="w-full max-w-sm border-primary/20 shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
+      </div>
+
+      <div className="relative z-10 w-full max-w-sm">
+        <Card className="w-full max-w-sm border-primary/20 bg-black/60 backdrop-blur-md shadow-2xl text-slate-100">
         <CardHeader className="text-center">
           <div className="mb-4 flex justify-center">
             <Logo width={200} height={67} />
@@ -161,6 +167,7 @@ export default function LoginPage() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

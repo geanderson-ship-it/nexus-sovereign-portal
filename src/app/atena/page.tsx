@@ -5,15 +5,28 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff, MessageSquare, X, Send, Video, Settings, Activity, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { atenaChat } from '@/ai/flows/atena-chat-flow';
 import { orionChat } from '@/ai/flows/orion-chat-flow';
 import { useLocale } from '@/hooks/use-locale';
 import { useUser } from '@/auth';
 import type { AwsRumConfig } from 'aws-rum-web';
+import { isAdminUser } from '@/lib/constants';
 
 function AtenaContent() {
-  const { user } = useUser();
+  const { user, isUserLoading } = useUser();
+  const router = useRouter();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    if (!isUserLoading) {
+      if (!user || !isAdminUser(user)) {
+        router.push('/login');
+      } else {
+        setIsAuthorized(true);
+      }
+    }
+  }, [user, isUserLoading, router]);
   const { locale } = useLocale();
   const searchParams = useSearchParams();
   const [isLive, setIsLive] = useState(false);
@@ -70,7 +83,7 @@ function AtenaContent() {
         '/atena/Atena quarta.png',    // 3 - Quarta
         '/atena/Atena quinta.png',    // 4 - Quinta
         '/atena/Atena sexta.png',     // 5 - Sexta
-        '/atena/Atena sábado.png'     // 6 - Sábado
+        '/atena/Atena sabado.png'     // 6 - Sábado
       ];
       const today = new Date().getDay();
       setCurrentOutfit(outfits[today]);
@@ -140,12 +153,32 @@ function AtenaContent() {
     }
   };
 
+  if (isUserLoading || !isAuthorized) {
+    return (
+      <div className="min-h-screen bg-[#020617] flex flex-col items-center justify-center text-violet-400">
+        <Loader2 className="w-12 h-12 mb-4 animate-spin text-violet-500/50" />
+        <h2 className="text-xl font-headline tracking-widest text-white/50 uppercase">Verificando Credenciais</h2>
+      </div>
+    );
+  }
+
   if (!isLive) {
     return (
-      <div className="min-h-[100dvh] bg-[#020617] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+      <div className="min-h-[100dvh] text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
         <link rel="manifest" href="/atena-manifest.json" />
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] max-w-[1000px] max-h-[1000px] bg-violet-900/10 rounded-full blur-[120px]" />
+        
+        {/* FIXED BACKGROUND IMAGE */}
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <Image
+            src="/assets/lider-treinador.png"
+            alt="Nexus Network"
+            fill
+            priority
+            className="object-cover opacity-20"
+            style={{ objectPosition: 'center center' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/40 via-[#020617]/70 to-[#020617]/90" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
         </div>
 
         <motion.div

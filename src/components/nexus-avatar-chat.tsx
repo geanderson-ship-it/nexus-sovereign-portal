@@ -86,7 +86,7 @@ const aiConfig: Record<AIContext, {
   clan: {
     name: 'Nexus Clan: Sala de Comando',
     description: 'Sua Mentoria Estratégica 24/7',
-    avatar: 'clan',
+    avatar: '/Nexus Cursos/Instrutores Dante e Djeny.png',
     avatarAlt: 'Nexus Clan',
     avatarFallback: 'C',
     borderColor: 'border-primary',

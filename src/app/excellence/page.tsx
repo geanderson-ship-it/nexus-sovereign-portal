@@ -72,8 +72,23 @@ export default function ExcellencePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white py-12 md:py-20 px-4">
-      <div className="container mx-auto">
+    <div className="min-h-screen text-white py-12 md:py-20 px-4 relative">
+      
+      {/* BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/assets/alta-lideranca.png"
+          alt="Nexus Excellence Background"
+          fill
+          priority
+          className="object-cover opacity-20"
+          style={{ objectPosition: 'center center' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
+      </div>
+
+      <div className="relative z-10 container mx-auto">
         <div className="text-center mb-16">
           <motion.h1 
             initial={{ opacity: 0, scale: 0.9 }}

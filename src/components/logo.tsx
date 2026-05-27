@@ -12,7 +12,7 @@ export function Logo({
 }) {
   return (
     <Image
-      src="https://i.postimg.cc/g02B8h7b/Cartao-de-visita-mod.png"
+      src="/nexus-treinamento-logo.png"
       alt="Nexus Treinamento Logo"
       width={width}
       height={height}

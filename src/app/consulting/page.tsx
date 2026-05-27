@@ -41,7 +41,22 @@ export default function ConsultingPage() {
   ];
 
   return (
-    <div className="container mx-auto py-12 md:py-20">
+    <div className="min-h-screen text-white relative">
+      {/* BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/assets/lideranca-estrategica.png"
+          alt="Nexus Consulting Background"
+          fill
+          priority
+          className="object-cover opacity-25"
+          style={{ objectPosition: 'center center' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.04)_0%,transparent_60%)]" />
+      </div>
+
+      <div className="relative z-10 container mx-auto py-12 md:py-20">
       <div className="mb-12 text-center">
         <h1 className="font-headline text-4xl font-bold tracking-tighter text-primary sm:text-5xl">
           {t('consulting.title')}
@@ -92,5 +107,6 @@ export default function ConsultingPage() {
         </div>
       </div>
     </div>
+  </div>
   );
 }

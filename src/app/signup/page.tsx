@@ -171,8 +171,24 @@ export default function SignupPage() {
     }
 
   return (
-    <div className="flex min-h-[calc(100vh-theme(spacing.14))] items-center justify-center py-12">
-      <Card className="w-full max-w-lg border-primary/20 shadow-2xl">
+    <div className="relative flex min-h-[calc(100vh-theme(spacing.14))] items-center justify-center py-12 px-4 text-white">
+      
+      {/* FIXED BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/assets/dante-builder-v3.png"
+          alt="Nexus Signup Background"
+          fill
+          priority
+          className="object-cover opacity-20"
+          style={{ objectPosition: 'center center' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
+      </div>
+
+      <div className="relative z-10 w-full max-w-lg">
+        <Card className="w-full max-w-lg border-primary/20 bg-black/60 backdrop-blur-md shadow-2xl text-slate-100">
         <CardHeader className="text-center">
           <div className="mb-4 flex justify-center">
             <Logo width={200} height={67} />
@@ -288,6 +304,7 @@ export default function SignupPage() {
           )}
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

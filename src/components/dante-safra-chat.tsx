@@ -630,6 +630,8 @@ export default function DanteSafraChat() {
                 onClose={() => setIsUpgradeModalOpen(false)}
                 iaName="Dante Safra Axis Elite"
                 pixKey="+5551999799582"
+                monthlyPrice="R$ 149,00"
+                annualPrice="R$ 1.499,00"
                 onSuccess={async () => {
                    // TODO: salvar upgrade via Amplify Data / DynamoDB
                    setHasAxisUpgrade(true);

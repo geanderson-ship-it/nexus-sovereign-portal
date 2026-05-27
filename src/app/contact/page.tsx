@@ -71,31 +71,31 @@ ${data.message}`.trim();
   };
 
   return (
-    <div className="relative container mx-auto py-12 md:py-20 min-h-screen">
+    <div className="min-h-screen text-white relative">
       {/* Background de Conexões */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <Image
-          src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+          src="/nexus-agenda-bg.png"
           alt="Nexus Network"
           fill
-          sizes="100vw"
-          className="object-cover opacity-60"
-          style={{ objectPosition: 'center 100%' }}
-          unoptimized={true}
           priority
+          className="object-cover opacity-35"
+          style={{ objectPosition: 'center center' }}
         />
         {/* Overlay ajustado para aparecer bem o azul mas proteger o texto */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/10 to-background/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.04)_0%,transparent_60%)]" />
       </div>
 
-      <div className="relative z-10 mb-12 text-center">
-        <h1 className={cn("text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl lg:text-7xl", "font-headline")}>
-          {t('contact.title')}
-        </h1>
-        <p className="mx-auto mt-6 max-w-[700px] text-lg text-muted-foreground md:text-xl font-sans">
-          {t('contact.subtitle')}
-        </p>
-      </div>
+      <div className="relative z-10 container mx-auto py-12 md:py-20">
+        <div className="mb-12 text-center">
+          <h1 className={cn("text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl lg:text-7xl", "font-headline")}>
+            {t('contact.title')}
+          </h1>
+          <p className="mx-auto mt-6 max-w-[700px] text-lg text-muted-foreground md:text-xl font-sans">
+            {t('contact.subtitle')}
+          </p>
+        </div>
 
       <div className="grid grid-cols-1 items-start gap-16 md:grid-cols-2">
         <div className="space-y-8">
@@ -222,6 +222,7 @@ ${data.message}`.trim();
               </>
             )}
           </div>
+      </div>
       </div>
     </div>
   );

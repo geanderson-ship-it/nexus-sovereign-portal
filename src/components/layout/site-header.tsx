@@ -313,6 +313,19 @@ export function SiteHeader() {
                           <Button variant="outline" className="w-full justify-start border-border/40" asChild onClick={() => setMobileMenuOpen(false)}>
                             <Link href="/profile"><UserIcon className="mr-2 h-4 w-4" /> {t('userArea')}</Link>
                           </Button>
+                          {isAdmin && (
+                            <>
+                              <Button variant="outline" className="w-full justify-start border-primary/20 text-primary font-medium hover:bg-primary/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                <Link href="/gabinete"><Shield className="mr-2 h-4 w-4" /> {t('navGabinete')}</Link>
+                              </Button>
+                              <Button variant="outline" className="w-full justify-start border-blue-500/20 text-blue-400 font-bold hover:bg-blue-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                <Link href="/atena"><Sparkles className="mr-2 h-4 w-4" /> Atena (IA Exclusiva)</Link>
+                              </Button>
+                              <Button variant="outline" className="w-full justify-start border-emerald-500/20 text-emerald-400 font-medium hover:bg-emerald-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                <Link href="/propostas/cidades-do-futuro"><Globe className="mr-2 h-4 w-4" /> Cidades do Futuro</Link>
+                              </Button>
+                            </>
+                          )}
                           <Button variant="destructive" className="w-full justify-start mt-2" onClick={handleLogout}>
                             <LogOut className="mr-2 h-4 w-4" /> {t('logout')}
                           </Button>

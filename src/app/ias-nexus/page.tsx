@@ -21,7 +21,9 @@ const IAsNexusPage = () => {
       description: t('ias.maga.desc'),
       image: '/maga-avatar-premium.png',
       link: '/intelligence/maga-os',
-      color: 'from-rose-500/20 to-purple-500/20'
+      color: 'from-rose-500/20 to-purple-500/20',
+      hoverGlow: 'from-rose-500/40 to-purple-500/40',
+      hoverBorder: 'group-hover:border-rose-500/50'
     },
     {
       id: 'orion',
@@ -30,7 +32,9 @@ const IAsNexusPage = () => {
       description: t('ias.orion.desc'),
       image: '/orion-avatar-premium.png',
       link: '/intelligence/orion-os',
-      color: 'from-slate-500/20 to-blue-500/20'
+      color: 'from-slate-500/20 to-blue-500/20',
+      hoverGlow: 'from-blue-500/40 to-slate-500/40',
+      hoverBorder: 'group-hover:border-blue-500/50'
     },
     {
       id: 'dante',
@@ -39,7 +43,9 @@ const IAsNexusPage = () => {
       description: t('ias.dante.desc'),
       image: '/IAs Nexus/Dante - mentor.png',
       link: '/intelligence/dante-safra',
-      color: 'from-amber-500/20 to-orange-500/20'
+      color: 'from-amber-500/20 to-orange-500/20',
+      hoverGlow: 'from-amber-500/40 to-orange-500/40',
+      hoverBorder: 'group-hover:border-amber-500/50'
     },
     {
       id: 'djeny',
@@ -47,25 +53,58 @@ const IAsNexusPage = () => {
       role: t('ias.djeny.role'),
       description: t('ias.djeny.desc'),
       image: '/IAs Nexus/Djeny - mentora.png',
-      link: '/gabinete/djeny-design',
-      color: 'from-cyan-500/20 to-emerald-500/20'
+      link: '/djeny-design',
+      color: 'from-cyan-500/20 to-emerald-500/20',
+      hoverGlow: 'from-cyan-500/40 to-emerald-500/40',
+      hoverBorder: 'group-hover:border-cyan-500/50'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-12 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-black text-white pt-24 pb-12 px-4 relative">
+
+      {/* BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/nexus-agenda-bg.png"
+          alt="Nexus IAs Background"
+          fill
+          priority
+          className="object-cover opacity-40"
+          style={{ objectPosition: 'center center' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/55 to-black/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.05)_0%,transparent_60%)]" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-7xl font-bold font-headline mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-primary to-gray-500">
-            {t('ias.title')}
-          </h1>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto italic">
-            {t('ias.subtitle')}
-          </p>
+          {/* Impactful glassmorphism title card */}
+          <div className="relative inline-block rounded-2xl md:rounded-3xl border border-white/10 bg-black/40 backdrop-blur-md px-10 py-10 md:px-16 md:py-12 shadow-[0_0_80px_rgba(0,0,0,0.6)] overflow-hidden max-w-5xl mx-auto">
+            {/* Top glow line */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
+            {/* Corner accents */}
+            <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-primary/50" />
+            <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-primary/50" />
+            <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-primary/30" />
+            <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-primary/30" />
+            {/* Ambient glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.04)_0%,transparent_70%)] pointer-events-none" />
+
+            <h1 className="text-5xl md:text-7xl font-bold font-headline mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-primary to-gray-500 [text-shadow:none]">
+              {t('ias.title')}
+            </h1>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto italic">
+              {t('ias.subtitle')}
+            </p>
+
+            {/* Bottom glow line */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -78,12 +117,18 @@ const IAsNexusPage = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={!isSoon ? { y: -10 } : {}}
-                className={cn(isSoon && "opacity-80 grayscale-[0.3]")}
+                whileHover={{ y: -8 }}
+                className={cn("relative group transition-all duration-500", isSoon && "opacity-85 hover:opacity-100 grayscale-[0.25] hover:grayscale-0")}
               >
+                {/* Glowing custom-colored aura behind the card on hover */}
+                <div className={cn(
+                  "absolute -inset-2.5 rounded-[24px] bg-gradient-to-br opacity-0 group-hover:opacity-60 blur-2xl transition-all duration-500 -z-10 pointer-events-none",
+                  persona.hoverGlow
+                )} />
+
                 <Card className={cn(
-                  "relative h-full overflow-hidden bg-white/5 border-white/10 backdrop-blur-xl group transition-all duration-500",
-                  !isSoon && "hover:border-primary/50"
+                  "relative h-full overflow-hidden bg-black/75 border-white/10 backdrop-blur-2xl transition-all duration-500",
+                  persona.hoverBorder
                 )}>
                   <div className={`absolute inset-0 bg-gradient-to-br ${persona.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 

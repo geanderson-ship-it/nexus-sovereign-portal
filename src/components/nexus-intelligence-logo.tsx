@@ -12,7 +12,7 @@ export function NexusIntelligenceLogo({
 }) {
   return (
     <Image
-      src="https://i.postimg.cc/SKxtC9Ph/Logo-estilizado-para.png"
+      src="/nexus-intelligence-logo.png"
       alt="Nexus Intelligence Logo"
       width={width}
       height={height}

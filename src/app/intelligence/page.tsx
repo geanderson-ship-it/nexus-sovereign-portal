@@ -16,6 +16,19 @@ import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
 const segments = [
   {
+    id: 'egide',
+    icon: Shield,
+    label: 'SEGURANÇA PÚBLICA',
+    title: 'Nexus Intelligence Égide',
+    description: 'Cerco eletrônico inteligente, inteligência preditiva e integração de forças policiais em tempo real.',
+    color: 'blue',
+    href: '/intelligence/egide',
+    image: '/Nexus Intelligence Édge/Nexus Intelligence Édgi.png',
+    products: ['Cerco Eletrônico LPR', 'Predição de Delitos', 'Despacho WebSockets'],
+    badge: 'SAFETY_INTELLIGENCE',
+    available: true,
+  },
+  {
     id: 'agronegocio',
     icon: Wheat,
     label: 'AGRONEGÓCIO',
@@ -152,15 +165,25 @@ export default function IntelligencePage() {
   return (
     <div className="w-full min-h-screen bg-[#020617] text-slate-200 relative overflow-hidden">
 
-
-
-      {/* AMBIENT */}
+      {/* BACKGROUND IMAGE HERO */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[120px] animate-pulse" />
+        <Image
+          src="/assets/lideranca-estrategica.png"
+          alt="Nexus Intelligence Background"
+          fill
+          priority
+          className="object-cover opacity-40"
+          style={{ objectPosition: 'center 20%' }}
+        />
+        {/* Dark overlays to keep the cyberpunk feel */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/30 via-[#020617]/60 to-[#020617]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.08)_0%,transparent_60%)]" />
+        {/* Ambient orbs */}
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-900/15 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-emerald-900/10 rounded-full blur-[150px]" />
         <div className="absolute top-[30%] left-[20%] w-[30%] h-[30%] bg-pink-900/5 rounded-full blur-[100px]" />
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/50 to-[#020617]" />
+        {/* Scanlines */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.012)_1px,transparent_1px)] bg-[size:35px_35px] opacity-30" />
       </div>
 
       {/* HERO */}

@@ -138,11 +138,24 @@ export default function NexusEmpresasPage() {
   return (
     <div className="w-full min-h-screen bg-[#020A14] text-slate-200 relative overflow-hidden">
 
-      {/* AMBIENT */}
+      {/* BACKGROUND IMAGE */}
       <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/nexus-hero-hologram.png"
+          alt="Nexus Empresas Background"
+          fill
+          priority
+          className="object-cover opacity-55"
+          style={{ objectPosition: 'center top' }}
+        />
+        {/* Dark overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#020A14]/25 via-[#020A14]/55 to-[#020A14]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(0,212,255,0.06)_0%,transparent_60%)]" />
+        {/* Ambient orbs */}
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-900/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-900/8 rounded-full blur-[150px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,87,255,0.03)_1px,transparent_1px),linear-gradient(to_right,rgba(0,87,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+        {/* Tech grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,87,255,0.025)_1px,transparent_1px),linear-gradient(to_right,rgba(0,87,255,0.025)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
       </div>
 
       {/* HERO */}

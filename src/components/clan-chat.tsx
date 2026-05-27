@@ -239,25 +239,14 @@ export function ClanChat() {
       <div className="absolute inset-0 bg-background/80 z-0" />
       <div className="relative z-10 flex flex-col h-full">
         <CardHeader className="flex flex-row items-center gap-3">
-          <div className="flex -space-x-4">
-            <Avatar className="h-12 w-12 border-2 border-accent">
-              <AvatarImage
-                src={placeholderImages.contact.src}
-                alt={placeholderImages.contact.alt}
-              />
-              <AvatarFallback className="bg-accent text-accent-foreground font-bold">
-                DJ
-              </AvatarFallback>
-            </Avatar>
-            <Avatar className="h-12 w-12 border-2 border-gray-500">
-              <AvatarImage
-                src={placeholderImages.dante.src}
-                alt={placeholderImages.dante.alt}
-              />
-              <AvatarFallback className="bg-gray-600 text-white font-bold">
-                DA
-              </AvatarFallback>
-            </Avatar>
+          <div className="relative w-16 h-12 rounded-lg overflow-hidden border-2 border-primary shadow-lg bg-neutral-900 shrink-0">
+            <Image
+              src="/Nexus Cursos/Instrutores Dante e Djeny.png"
+              alt="Dante e Djeny"
+              fill
+              className="object-cover"
+              sizes="4rem"
+            />
           </div>
           <div>
             <CardTitle className="font-headline text-lg">
@@ -282,20 +271,15 @@ export function ClanChat() {
                   )}
                 >
                   {msg.sender === 'system' && (
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center -space-x-3">
-                            <Avatar className="h-6 w-6 border-2 border-accent">
-                              <AvatarImage
-                                src={placeholderImages.contact.src}
-                                alt={placeholderImages.contact.alt}
-                              />
-                            </Avatar>
-                            <Avatar className="h-6 w-6 border-2 border-gray-500">
-                              <AvatarImage
-                                src={placeholderImages.dante.src}
-                                alt={placeholderImages.dante.alt}
-                              />
-                            </Avatar>
-                          </div>
+                        <div className="relative w-10 h-8 rounded border border-primary bg-neutral-900 overflow-hidden shrink-0">
+                          <Image
+                            src="/Nexus Cursos/Instrutores Dante e Djeny.png"
+                            alt="Dante e Djeny"
+                            fill
+                            className="object-cover"
+                            sizes="2.5rem"
+                          />
+                        </div>
                   )}
                   <div
                     className={cn(
@@ -317,19 +301,14 @@ export function ClanChat() {
               ))}
               {isLoading && messages[messages.length - 1]?.sender === 'user' && (
                 <div className="flex items-center gap-2 justify-start">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center -space-x-3">
-                    <Avatar className="h-6 w-6 animate-pulse border-2 border-accent">
-                      <AvatarImage
-                        src={placeholderImages.contact.src}
-                        alt={placeholderImages.contact.alt}
-                      />
-                    </Avatar>
-                    <Avatar className="h-6 w-6 animate-pulse border-2 border-gray-500">
-                      <AvatarImage
-                        src={placeholderImages.dante.src}
-                        alt={placeholderImages.dante.alt}
-                      />
-                    </Avatar>
+                  <div className="relative w-10 h-8 rounded border border-primary bg-neutral-900 overflow-hidden shrink-0 animate-pulse">
+                    <Image
+                      src="/Nexus Cursos/Instrutores Dante e Djeny.png"
+                      alt="Dante e Djeny"
+                      fill
+                      className="object-cover"
+                      sizes="2.5rem"
+                    />
                   </div>
                   <div className="bg-secondary rounded-lg px-4 py-3 rounded-bl-none">
                     <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />

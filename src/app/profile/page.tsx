@@ -112,100 +112,176 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="bg-background relative min-h-screen">
-        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] scale-125 pointer-events-none">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="light-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-                    <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="0.5"/>
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#light-grid)" />
-            </svg>
-        </div>
-        <div className="container relative mx-auto py-12 md:py-20">
-            <div className="mb-12 flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
-                <Avatar className="h-24 w-24 border-2 border-primary">
-                <AvatarImage src={user.photoURL ?? undefined} alt={user.displayName ?? 'Avatar'} />
-                <AvatarFallback className="text-3xl">{userInitials}</AvatarFallback>
-                </Avatar>
-                <div>
-                <h1 className={cn('text-4xl font-bold tracking-tighter text-primary', 'font-headline')}>
-                    Bem-vindo(a), {displayName}!
-                </h1>
-                <p className="text-lg text-muted-foreground">{user.email}</p>
-                </div>
-            </div>
-            
-            {/* Card de Apelido */}
-            <Card className="mb-8 bg-zinc-950/60 border-2 border-zinc-700/40 backdrop-blur-md">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-                  ✏️ Como prefere ser chamado?
-                </CardTitle>
-                <CardDescription className="text-gray-400 text-sm">
-                  Apenas um apelido para uso no site. Não altera seu cadastro.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-3">
-                  <Input
-                    placeholder={`Ex: Comandante, Guerreiro...`}
-                    value={nicknameInput}
-                    onChange={(e) => setNicknameInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && saveNickname(nicknameInput)}
-                    className="bg-black/30 border-zinc-700 text-white max-w-xs"
-                  />
-                  <Button
-                    onClick={() => {
-                      saveNickname(nicknameInput);
-                      toast({ title: `Pronto! Agora você é ${nicknameInput || user.displayName?.split(' ')[0]}.` });
-                    }}
-                    variant="outline"
-                    className="border-primary/40 text-primary hover:bg-primary/10"
-                  >
-                    Salvar
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-            {hasAccessToMentoria ? (
-                 <Card className="my-12 bg-zinc-950/60 border-2 border-primary/20 backdrop-blur-md shadow-xl shadow-black/40">
-                    <CardHeader>
-                        <div className="flex items-center gap-4">
-                            <div className="flex -space-x-4">
-                                <Avatar className="h-12 w-12 border-2 border-blue-500">
-                                    <AvatarImage src={placeholderImages.contact.src} alt={placeholderImages.contact.alt} />
-                                    <AvatarFallback className="bg-blue-600 text-white font-bold">DJ</AvatarFallback>
-                                </Avatar>
-                                <Avatar className="h-12 w-12 border-2 border-gray-500">
-                                    <AvatarImage src={placeholderImages.dante.src} alt={placeholderImages.dante.alt} />
-                                    <AvatarFallback className="bg-gray-600 text-white font-bold">DA</AvatarFallback>
-                                </Avatar>
-                            </div>
-                            <div>
-                                <CardTitle className="font-headline text-2xl text-white">{t('profile.commandRoom.title')}</CardTitle>
-                                <CardDescription className="text-gray-400">{t('profile.commandRoom.description')}</CardDescription>
-                            </div>
+    <div className="relative min-h-screen text-slate-100">
+      
+      {/* FIXED BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/assets/dante-builder-v3.png"
+          alt="Nexus Command Deck"
+          fill
+          priority
+          className="object-cover opacity-20"
+          style={{ objectPosition: 'center center' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
+      </div>
+
+      {/* Grid Scanlines Ambience */}
+      <div className="absolute top-0 left-0 w-full h-full opacity-[0.02] scale-125 pointer-events-none z-0">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="light-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#light-grid)" />
+        </svg>
+      </div>
+
+      <div className="relative z-10 container mx-auto py-12 md:py-20 px-4">
+          <div className="mb-12 flex flex-col items-center gap-6 text-center md:flex-row md:text-left">
+              <Avatar className="h-24 w-24 border-2 border-primary shadow-2xl">
+              <AvatarImage src={user.photoURL ?? undefined} alt={user.displayName ?? 'Avatar'} />
+              <AvatarFallback className="text-3xl bg-primary/20 text-primary">{userInitials}</AvatarFallback>
+              </Avatar>
+              <div>
+              <h1 className={cn('text-4xl font-bold tracking-tighter text-primary [text-shadow:0_0_15px_rgba(245,158,11,0.15)]', 'font-headline')}>
+                  Bem-vindo(a), {displayName}!
+              </h1>
+              <p className="text-lg text-muted-foreground">{user.email}</p>
+              </div>
+          </div>
+          
+          {/* Card de Apelido */}
+          <Card className="mb-8 bg-zinc-950/65 border border-white/5 backdrop-blur-md">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
+                ✏️ Como prefere ser chamado?
+              </CardTitle>
+              <CardDescription className="text-gray-400 text-sm">
+                Apenas um apelido para uso no site. Não altera seu cadastro.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-3">
+                <Input
+                  placeholder={`Ex: Comandante, Guerreiro...`}
+                  value={nicknameInput}
+                  onChange={(e) => setNicknameInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && saveNickname(nicknameInput)}
+                  className="bg-black/40 border-zinc-700 text-white max-w-xs focus:border-primary"
+                />
+                <Button
+                  onClick={() => {
+                    saveNickname(nicknameInput);
+                    toast({ title: `Pronto! Agora você é ${nicknameInput || user.displayName?.split(' ')[0]}.` });
+                  }}
+                  variant="outline"
+                  className="border-primary/40 text-primary hover:bg-primary/10"
+                >
+                  Salvar
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+          {hasAccessToMentoria ? (
+               <Card className="my-12 bg-zinc-950/65 border border-primary/10 backdrop-blur-md shadow-2xl shadow-black/60">
+                  <CardHeader className="border-b border-white/5 pb-4">
+                      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
+                          <div className="relative w-28 h-20 rounded-xl overflow-hidden shrink-0 border border-white/10 shadow-lg bg-neutral-900">
+                              <Image 
+                                  src="/Nexus Cursos/Instrutores Dante e Djeny.png" 
+                                  alt="Instrutores Dante e Djeny" 
+                                  fill
+                                  sizes="(max-width: 768px) 7rem, 7rem"
+                                  className="object-cover"
+                                  priority
+                              />
+                          </div>
+                          <div>
+                              <CardTitle className="font-headline text-2xl text-white">{t('profile.commandRoom.title')}</CardTitle>
+                              <CardDescription className="text-gray-400">{t('profile.commandRoom.description')}</CardDescription>
+                          </div>
+                      </div>
+                  </CardHeader>
+                  <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+                      
+                      {/* CARD 1: SALA DE CONSELHO TÁTICO (DANTE) */}
+                      <button 
+                        onClick={() => eventEmitter.emit('open-chat', { context: 'clan' })}
+                        className="group relative flex items-center gap-4 p-5 rounded-2xl bg-zinc-950/80 border-2 border-amber-500/20 hover:border-amber-500/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.15)] transition-all duration-500 hover:-translate-y-1.5 text-left w-full overflow-hidden"
+                      >
+                        {/* Glowing orange/amber aura behind the card on hover */}
+                        <div className="absolute -inset-2 rounded-[24px] bg-gradient-to-br from-amber-500/15 to-orange-600/15 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10 pointer-events-none" />
+                        
+                        {/* Mentor Image (Dante) */}
+                        <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-amber-500/30 group-hover:border-amber-500 transition-colors duration-500 bg-neutral-900 shadow-2xl">
+                          <Image
+                            src="/IAs Nexus/Dante - mentor.png"
+                            alt="Prof. Dante"
+                            fill
+                            sizes="6rem"
+                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                          />
                         </div>
-                    </CardHeader>
-                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <Button size="lg" className="h-auto py-6 bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-400/20 shadow-lg shadow-blue-500/10" onClick={() => eventEmitter.emit('open-chat', { context: 'clan' })}>
-                            <div className="flex flex-col items-center text-center">
-                                <Users className="h-6 w-6 mb-2" />
-                                <span className="font-bold text-lg">{t('profile.clanRoom.title')}</span>
-                                <span className="text-xs text-blue-100/70">{t('profile.clanRoom.description')}</span>
-                            </div>
-                        </Button>
-                        <Button size="lg" className="h-auto py-6 bg-zinc-900 border-2 border-primary/20 hover:border-primary/40 text-white shadow-lg shadow-primary/5" onClick={() => eventEmitter.emit('open-chat', { context: 'djeny' })}>
-                             <div className="flex flex-col items-center text-center">
-                                <Zap className="h-6 w-6 mb-2 text-primary" />
-                                <span className="font-bold text-lg">{t('profile.djenyTerminal.title')}</span>
-                                <span className="text-xs text-gray-400">{t('profile.djenyTerminal.description')}</span>
-                            </div>
-                        </Button>
-                    </CardContent>
-                </Card>
+
+                        {/* Card copy */}
+                        <div className="flex-1 space-y-1.5">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/25 text-[9px] font-black tracking-widest text-amber-400 uppercase animate-pulse">
+                            ⚔️ OPERACIONAL
+                          </span>
+                          <h3 className="font-headline text-lg font-bold text-white group-hover:text-primary transition-colors duration-300">
+                            {t('profile.clanRoom.title')}
+                          </h3>
+                          <p className="text-xs text-neutral-400 font-sans line-clamp-2 leading-relaxed">
+                            {t('profile.clanRoom.description')}
+                          </p>
+                          <div className="text-[10px] font-black text-amber-400/80 uppercase tracking-wider pt-1 flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-300">
+                            Acessar Terminal ➔
+                          </div>
+                        </div>
+                      </button>
+
+                      {/* CARD 2: MATRIZ DE MÉRITO E COMPETÊNCIAS (DJENY) */}
+                      <button 
+                        onClick={() => eventEmitter.emit('open-chat', { context: 'djeny' })}
+                        className="group relative flex items-center gap-4 p-5 rounded-2xl bg-zinc-950/80 border-2 border-emerald-500/20 hover:border-emerald-500/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)] transition-all duration-500 hover:-translate-y-1.5 text-left w-full overflow-hidden"
+                      >
+                        {/* Glowing emerald/cyan aura behind the card on hover */}
+                        <div className="absolute -inset-2 rounded-[24px] bg-gradient-to-br from-emerald-500/15 to-cyan-600/15 opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10 pointer-events-none" />
+                        
+                        {/* Mentor Image (Djeny) */}
+                        <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-emerald-500/30 group-hover:border-emerald-500 transition-colors duration-500 bg-neutral-900 shadow-2xl">
+                          <Image
+                            src="/IAs Nexus/Djeny - mentora.png"
+                            alt="Prof. Djeny"
+                            fill
+                            sizes="6rem"
+                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                          />
+                        </div>
+
+                        {/* Card copy */}
+                        <div className="flex-1 space-y-1.5">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/25 text-[9px] font-black tracking-widest text-emerald-400 uppercase animate-pulse">
+                            🪷 SINERGIA & MÉRITO
+                          </span>
+                          <h3 className="font-headline text-lg font-bold text-white group-hover:text-emerald-400 transition-colors duration-300">
+                            {t('profile.djenyTerminal.title')}
+                          </h3>
+                          <p className="text-xs text-neutral-400 font-sans line-clamp-2 leading-relaxed">
+                            {t('profile.djenyTerminal.description')}
+                          </p>
+                          <div className="text-[10px] font-black text-emerald-400/80 uppercase tracking-wider pt-1 flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-300">
+                            Acessar Terminal ➔
+                          </div>
+                        </div>
+                      </button>
+
+                  </CardContent>
+              </Card>
              ) : (
                 <Card className="text-center max-w-2xl mx-auto my-12">
                     <CardHeader>

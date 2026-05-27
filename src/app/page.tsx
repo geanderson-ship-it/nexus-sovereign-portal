@@ -32,8 +32,23 @@ export default function HomePage() {
     const { t } = useLocale();
 
     return (
-        <div className="min-h-screen bg-[#080b10] text-[#f0f6fc] font-sans selection:bg-blue-500/30">
-            <div className="text-foreground overflow-x-hidden">
+        <div className="min-h-screen bg-[#080b10] text-[#f0f6fc] font-sans selection:bg-blue-500/30 relative">
+
+            {/* BACKGROUND IMAGE */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <Image
+                    src="/nexus-prospector-bg.png"
+                    alt="Nexus Background"
+                    fill
+                    priority
+                    className="object-cover opacity-40"
+                    style={{ objectPosition: 'center center' }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#080b10]/25 via-[#080b10]/55 to-[#080b10]/90" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.06)_0%,transparent_70%)]" />
+            </div>
+
+            <div className="relative z-10 text-foreground overflow-x-hidden">
                 <section className="relative min-h-[90dvh] flex flex-col items-center justify-center pt-24 overflow-hidden">
                 <div className="container relative z-10">
                     <div className="flex flex-col items-center justify-center mb-0 w-full">
@@ -45,7 +60,7 @@ export default function HomePage() {
                         >
                             <div className="relative w-full aspect-[21/9] md:aspect-[16/7] lg:aspect-[2.5/1] overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/5">
                                 <Image
-                                    src="https://i.postimg.cc/Kj1cPYH3/Combine-the-first-im.png"
+                                    src="/nexus-hero-hologram.png"
                                     alt="Nexus Holding Group: Convergência Humana"
                                     fill
                                     className="object-contain object-center transition-all duration-[4000ms]"
@@ -61,14 +76,28 @@ export default function HomePage() {
                         transition={{ duration: 1, delay: 0.6 }}
                         className="text-center max-w-5xl mx-auto mt-8 md:mt-12 relative z-20"
                     >
-                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline tracking-tighter mb-4 leading-tight drop-shadow-lg">
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-primary/30">
-                                {t('inicio.title')}
-                            </span>
-                        </h1>
-                        <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto mb-16 leading-relaxed font-light italic opacity-70 tracking-tight">
-                            {t('inicio.subtitle')}
-                        </p>
+                        {/* Glassmorphism Card */}
+                        <div className="relative rounded-2xl md:rounded-3xl border border-white/10 bg-black/30 backdrop-blur-md px-8 py-10 md:px-14 md:py-12 shadow-[0_0_60px_rgba(0,0,0,0.4)] overflow-hidden">
+                            {/* Subtle amber glow top */}
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+                            {/* Corner accents */}
+                            <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-primary/30 rounded-tl-sm" />
+                            <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-primary/30 rounded-tr-sm" />
+                            <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/30 rounded-bl-sm" />
+                            <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/30 rounded-br-sm" />
+
+                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline tracking-tighter mb-4 leading-tight drop-shadow-lg">
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-primary/30">
+                                    {t('inicio.title')}
+                                </span>
+                            </h1>
+                            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light italic opacity-70 tracking-tight">
+                                {t('inicio.subtitle')}
+                            </p>
+
+                            {/* Subtle bottom glow */}
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                        </div>
                     </motion.div>
                 </div>
 
@@ -81,8 +110,16 @@ export default function HomePage() {
                 <div className="container grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
                     
                     {/* Nexus Treinamento */}
-                    <div className="flex flex-col text-center">
-                        <div className="flex-grow space-y-6">
+                    <div className="relative rounded-2xl md:rounded-3xl border border-primary/15 bg-black/30 backdrop-blur-md p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
+                        {/* Top accent line */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+                        {/* Corner accents */}
+                        <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-primary/30 rounded-tl-sm" />
+                        <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-primary/30 rounded-tr-sm" />
+                        <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/30 rounded-bl-sm" />
+                        <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/30 rounded-br-sm" />
+
+                        <div className="flex-grow space-y-6 text-center">
                             <div className="flex justify-center">
                                <Logo width={400} height={134} />
                             </div>
@@ -125,10 +162,21 @@ export default function HomePage() {
                                 </Button>
                             </div>
                         </div>
+
+                        {/* Bottom glow */}
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
                     </div>
 
                     {/* Nexus Intelligence */}
-                    <div className="flex flex-col">
+                    <div className="relative rounded-2xl md:rounded-3xl border border-blue-500/15 bg-black/30 backdrop-blur-md p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
+                        {/* Top accent line */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+                        {/* Corner accents */}
+                        <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-blue-500/30 rounded-tl-sm" />
+                        <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-blue-500/30 rounded-tr-sm" />
+                        <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-blue-500/30 rounded-bl-sm" />
+                        <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-blue-500/30 rounded-br-sm" />
+
                         <div className="flex-grow space-y-6">
                             <div className="flex justify-center">
                                 <NexusIntelligenceLogo width={400} height={134} />
@@ -162,6 +210,9 @@ export default function HomePage() {
                                <Link href="/intelligence">{t('inicio.intelligence.cta')}</Link>
                            </Button>
                         </div>
+
+                        {/* Bottom glow */}
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
                     </div>
                 </div>
             </section>
@@ -196,7 +247,13 @@ export default function HomePage() {
             <section className="py-16 md:py-24 border-t border-white/5">
                 <div className="container">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold font-headline text-primary">{t('inicio.pillars.title')}</h2>
+                        <div className="relative inline-block rounded-2xl border border-primary/20 bg-black/35 backdrop-blur-md px-10 py-6 shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+                            <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/40" />
+                            <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-primary/40" />
+                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">{t('inicio.pillars.title')}</h2>
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+                        </div>
                     </div>
                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {/* Pillar Cards */}
@@ -240,7 +297,13 @@ export default function HomePage() {
             <section className="py-16 md:py-24">
                  <div className="container">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold font-headline text-primary">{t('inicio.impulses.title')}</h2>
+                        <div className="relative inline-block rounded-2xl border border-primary/20 bg-black/35 backdrop-blur-md px-10 py-6 shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-hidden">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+                            <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/40" />
+                            <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-primary/40" />
+                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">{t('inicio.impulses.title')}</h2>
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+                        </div>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
                         <Card className="bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
@@ -258,14 +321,24 @@ export default function HomePage() {
                             <CardContent><p className="text-muted-foreground">{t('inicio.impulses.vanguarda.description')}</p></CardContent>
                         </Card>
                     </div>
-                    <div className="mt-20 text-center space-y-4 max-w-4xl mx-auto">
-                        <p className="text-3xl font-semibold text-blue-400">{t('inicio.final.line1')}</p>
-                        <p className="text-3xl font-semibold text-primary">{t('inicio.final.line2')}</p>
-                        <p className="text-3xl font-bold font-headline text-foreground">{t('inicio.final.line3')}</p>
+                    <div className="mt-20 text-center max-w-4xl mx-auto">
+                        <div className="relative rounded-2xl md:rounded-3xl border border-white/10 bg-black/40 backdrop-blur-md px-10 py-10 shadow-[0_0_60px_rgba(0,0,0,0.5)] overflow-hidden">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
+                            <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-blue-400/30" />
+                            <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-blue-400/30" />
+                            <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/30" />
+                            <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/30" />
+                            <div className="space-y-3">
+                                <p className="text-3xl font-semibold text-blue-400 [text-shadow:0_0_20px_rgba(96,165,250,0.4)]">{t('inicio.final.line1')}</p>
+                                <p className="text-3xl font-semibold text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">{t('inicio.final.line2')}</p>
+                                <p className="text-3xl font-bold font-headline text-white">{t('inicio.final.line3')}</p>
+                            </div>
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+                        </div>
                     </div>
                  </div>
             </section>
+            </div>
         </div>
-    </div>
     );
 }

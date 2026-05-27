@@ -41,7 +41,23 @@ export default function PalestrasPage() {
   };
 
   return (
-    <div className="container mx-auto py-12 md:py-20">
+    <div className="min-h-screen text-white relative">
+      
+      {/* FIXED BACKGROUND IMAGE */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/Palestras/Palestra futurista.png"
+          alt="Nexus Lectures Background"
+          fill
+          priority
+          className="object-cover opacity-25"
+          style={{ objectPosition: 'center center' }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/65 to-black/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
+      </div>
+
+      <div className="relative z-10 container mx-auto py-12 md:py-20">
       <div className="mb-12 text-center">
         <h1
           className={
@@ -52,14 +68,15 @@ export default function PalestrasPage() {
         </h1>
       </div>
 
-      <div className="relative h-96 w-full max-w-5xl mx-auto my-12 rounded-lg overflow-hidden shadow-2xl">
+      <div className="relative h-96 w-full max-w-5xl mx-auto my-12 rounded-lg overflow-hidden shadow-2xl border border-white/10">
         <Image
-          src="https://i.postimg.cc/P5Rz3JJk/Palestra-futurista.png"
+          src="/Palestras/Palestra futurista.png"
           alt={t('lectures.hero.alt')}
           fill
           sizes="(max-width: 1024px) 100vw, 1024px"
           style={{ objectFit: 'cover' }}
           data-ai-hint="futuristic presentation"
+          priority
         />
       </div>
 
@@ -174,6 +191,7 @@ export default function PalestrasPage() {
             </CardFooter>
           </Card>
         )})}
+      </div>
       </div>
     </div>
   );
