@@ -13,108 +13,87 @@ export interface AgendaItem {
   type: 'work' | 'personal' | 'strategic' | 'meeting';
 }
 
-function getLocalISOString(date: Date, hours: number, minutes: number): string {
-  const d = new Date(date);
-  d.setHours(hours, minutes, 0, 0);
-  
-  // Calculate timezone offset
-  const offsetMinutes = d.getTimezoneOffset();
-  const offsetSign = offsetMinutes > 0 ? '-' : '+';
-  const absOffsetMinutes = Math.abs(offsetMinutes);
-  const offsetHours = String(Math.floor(absOffsetMinutes / 60)).padStart(2, '0');
-  const offsetMins = String(absOffsetMinutes % 60).padStart(2, '0');
-  
-  // Format local parts
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  const hh = String(d.getHours()).padStart(2, '0');
-  const mm = String(d.getMinutes()).padStart(2, '0');
-  const ss = '00';
-  
-  return `${year}-${month}-${day}T${hh}:${mm}:${ss}${offsetSign}${offsetHours}:${offsetMins}`;
-}
-
-function getDynamicAgendaInternal() {
-  const today = new Date();
-  
-  const tomorrow = new Date();
-  tomorrow.setDate(today.getDate() + 1);
-
-  const inThreeDays = new Date();
-  inThreeDays.setDate(today.getDate() + 3);
-
-  const todayEvents: AgendaItem[] = [
-    {
-      id: 'appt-today-1',
-      title: 'Reunião Estratégica com Empresa X',
-      startTime: getLocalISOString(today, 9, 0),
-      endTime: getLocalISOString(today, 10, 30),
-      location: 'Sala de Comando Nexus',
-      description: 'Discussão sobre expansão da infraestrutura e parcerias tecnológicas',
-      type: 'meeting'
-    },
-    {
-      id: 'appt-today-2',
-      title: 'Análise de KPIs de Produção',
-      startTime: getLocalISOString(today, 11, 0),
-      endTime: getLocalISOString(today, 12, 0),
-      location: 'Sala de Análise',
-      description: 'Revisão dos índices de mérito e eficiência das células',
-      type: 'work'
-    }
-  ];
-
-  const tomorrowEvents: AgendaItem[] = [
-    {
-      id: 'appt-tomorrow-1',
-      title: 'Apresentação Cidades do Futuro',
-      startTime: getLocalISOString(tomorrow, 14, 0),
-      endTime: getLocalISOString(tomorrow, 15, 30),
-      location: 'Prefeitura de Vale Verde, RS',
-      description: 'Apresentação do ecossistema e ferramentas de saúde',
-      type: 'strategic'
-    }
-  ];
-
-  const upcomingEvents: AgendaItem[] = [
-    {
-      id: 'appt-upcoming-1',
-      title: 'Reunião Secretariado',
-      startTime: getLocalISOString(inThreeDays, 9, 30),
-      endTime: getLocalISOString(inThreeDays, 11, 0),
-      location: 'Prefeitura de Passo do Sobrado, RS',
-      description: 'Pilar Educação - Retenção de Jovens',
-      type: 'meeting'
-    }
-  ];
-
-  return { todayEvents, tomorrowEvents, upcomingEvents };
-}
-
-// Generate once at module load
-const { todayEvents, tomorrowEvents, upcomingEvents } = getDynamicAgendaInternal();
-
-export const dailyAgenda: AgendaItem[] = [...todayEvents, ...tomorrowEvents, ...upcomingEvents];
+export const dailyAgenda: AgendaItem[] = [
+  {
+    id: 'appt-001',
+    title: 'Agrocomercial Kist e Hemann',
+    startTime: '2026-05-28T08:30:00-03:00',
+    endTime: '2026-05-28T10:00:00-03:00',
+    location: 'Agrocomercial Kist e Hemann - Unidade Santa Cruz do Sul',
+    description: 'Demonstração Dante Safra',
+    type: 'strategic'
+  },
+  {
+    id: 'appt-002',
+    title: 'Apresentação Cidades do Futuro',
+    startTime: '2026-05-28T13:30:00-03:00',
+    endTime: '2026-05-28T14:15:00-03:00',
+    location: 'Prefeitura de Passo do Sobrado, RS',
+    description: 'Apresentação do ecossistema e ferramentas de saúde',
+    type: 'strategic'
+  },
+  {
+    id: 'appt-003',
+    title: 'Apresentação Cidades do futuro',
+    startTime: '2026-05-28T14:30:00-03:00',
+    endTime: '2026-05-28T15:30:00-03:00',
+    location: 'Prefeitura de Vale Verde, RS',
+    description: 'Pilar Educação - Retenção de Jovens',
+    type: 'strategic'
+  },
+  {
+    id: 'appt-004',
+    title: 'Apresentação Cidades do futuro',
+    startTime: '2026-05-29T13:30:00-03:00',
+    endTime: '2026-05-29T14:30:00-03:00',
+    location: 'Prefeitura de Ipê',
+    description: 'Apresentação cidades do futuro',
+    type: 'strategic'
+  },
+  {
+    id: 'appt-005',
+    title: 'Apresentação Cidades do futuro',
+    startTime: '2026-06-01T09:00:00-03:00',
+    endTime: '2026-06-01T10:30:00-03:00',
+    location: 'Prefeitura de Vanini',
+    description: 'Apresentação do ecossistema e ferramentas',
+    type: 'strategic'
+  }
+];
 
 export function getFormattedAgenda(): string {
-  if (dailyAgenda.length === 0) return "Nenhum compromisso agendado para hoje, amanhã ou futuro próximo.";
+  if (dailyAgenda.length === 0) return "Nenhum compromisso agendado.";
   
   const formatList = (items: AgendaItem[], label: string) => {
     if (items.length === 0) return `${label}: Nenhum compromisso agendado.`;
     const lines = items.map(item => {
       const dateObj = new Date(item.startTime);
       const dayStr = String(dateObj.getDate()).padStart(2, '0') + '/' + String(dateObj.getMonth() + 1).padStart(2, '0');
-      const start = dateObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-      const end = new Date(item.endTime).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const start = dateObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
+      const end = new Date(item.endTime).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
       return `- [${dayStr} às ${start} - ${end}] ${item.title} (${item.type}) no local "${item.location || 'Não especificado'}": ${item.description || ''}`;
     });
     return `${label}:\n${lines.join('\n')}`;
   };
 
-  return `${formatList(todayEvents, 'AGENDA DE HOJE')}
+  const todayEvents = dailyAgenda.filter(item => {
+    const d = new Date(item.startTime);
+    return d.getDate() === 27 && d.getMonth() === 4;
+  });
+  
+  const tomorrowEvents = dailyAgenda.filter(item => {
+    const d = new Date(item.startTime);
+    return d.getDate() === 28 && d.getMonth() === 4;
+  });
 
-${formatList(tomorrowEvents, 'AGENDA DE AMANHÃ')}
+  const upcomingEvents = dailyAgenda.filter(item => {
+    const d = new Date(item.startTime);
+    return d.getDate() > 28 || d.getMonth() > 4;
+  });
+
+  return `${formatList(todayEvents, 'AGENDA DE HOJE (27/05/2026)')}
+
+${formatList(tomorrowEvents, 'AGENDA DE AMANHÃ (28/05/2026)')}
 
 ${formatList(upcomingEvents, 'COMPROMISSOS FUTUROS')}`;
 }

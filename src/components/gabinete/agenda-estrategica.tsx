@@ -28,27 +28,63 @@ interface AgendaItem {
 const INITIAL_AGENDA: AgendaItem[] = [
   {
     id: 1,
-    evento: 'Apresentação Cidades do Futuro',
+    evento: 'Agrocomercial Kist e Hemann',
     data: '28/05/2026',
-    horario: '14:00',
-    local: 'Prefeitura de Vale Verde, RS',
-    anfitriao: 'Prefeito Carlos Silva',
-    assunto: 'Apresentação do ecossistema e ferramentas de saúde',
-    observacoes: 'Levar material impresso do Dante Safra e folder Health.',
+    horario: '08:30',
+    local: 'Agrocomercial Kist e Hemann - Unidade Santa Cruz do Sul',
+    anfitriao: 'Diretoria',
+    assunto: 'Demonstração Dante Safra',
+    observacoes: 'Confirmado',
     status: 'Confirmado',
     desfecho: 'Em Aberto',
   },
   {
     id: 2,
-    evento: 'Reunião Secretariado',
-    data: '30/05/2026',
-    horario: '09:30',
-    local: 'Prefeitura de Passo do Sobrado, RS',
-    anfitriao: 'Sec. de Saúde e Educação',
+    evento: 'Apresentação Cidades do Futuro',
+    data: '28/05/2026',
+    horario: '13:30',
+    local: 'Prefeitura de passo do Sobrado, RS',
+    anfitriao: 'Prefeito, sec. da agricultura, saúde e educação.',
+    assunto: 'Apresentação do ecossistema e ferramentas de saúde',
+    observacoes: 'Confirmado',
+    status: 'Confirmado',
+    desfecho: 'Em Aberto',
+  },
+  {
+    id: 3,
+    evento: 'Apresentação Cidades do futuro',
+    data: '28/05/2026',
+    horario: '14:30',
+    local: 'Prefeitura de Vale Verde, RS',
+    anfitriao: 'Prefeito, sec. da agricultura, saúde e educação',
     assunto: 'Pilar Educação - Retenção de Jovens',
-    observacoes: 'Destacar o uso de IAs Humanas nos cursos.',
-    status: 'Pendente',
-    desfecho: 'Em Análise',
+    observacoes: 'Confirmado',
+    status: 'Confirmado',
+    desfecho: 'Em Aberto',
+  },
+  {
+    id: 4,
+    evento: 'Apresentação Cidades do futuro',
+    data: '29/05/2026',
+    horario: '13:30',
+    local: 'Prefeitura de Ipê',
+    anfitriao: 'Prefeito, sec. agricultura, educação e saúde',
+    assunto: 'Apresentação cidades do futuro.',
+    observacoes: 'Confirmado',
+    status: 'Confirmado',
+    desfecho: 'Em Aberto',
+  },
+  {
+    id: 5,
+    evento: 'Apresentação Cidades do futuro',
+    data: '01/06/2026',
+    horario: '09:00',
+    local: 'Prefeitura de Vanini',
+    anfitriao: 'Prefeito, sec. da gricultura, educação e saúde.',
+    assunto: 'Apresentação do ecossistema',
+    observacoes: 'Confirmado',
+    status: 'Confirmado',
+    desfecho: 'Em Aberto',
   }
 ];
 
@@ -69,7 +105,7 @@ export function AgendaEstrategica() {
   // Carregar dados salvos no navegador (localStorage)
   useEffect(() => {
     setIsMounted(true);
-    const saved = localStorage.getItem('nexus_agenda_v2'); // Mudamos a key para garantir a migração de dados (adicionando desfecho)
+    const saved = localStorage.getItem('nexus_agenda_v3'); // Atualizado para v3 para migrar os dados com os novos compromissos reais do usuário
     if (saved) {
       try {
         setAgendamentos(JSON.parse(saved));
@@ -84,7 +120,7 @@ export function AgendaEstrategica() {
   // Salvar automaticamente sempre que houver mudança
   useEffect(() => {
     if (isMounted) {
-      localStorage.setItem('nexus_agenda_v2', JSON.stringify(agendamentos));
+      localStorage.setItem('nexus_agenda_v3', JSON.stringify(agendamentos));
     }
   }, [agendamentos, isMounted]);
 
