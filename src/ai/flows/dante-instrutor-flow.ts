@@ -60,8 +60,7 @@ const danteInstrutorChatPrompt = ai.definePrompt({
   `,
   config: {
     temperature: 0.5,
-    topP: 1,
-    maxOutputTokens: 8192,
+maxOutputTokens: 8192,
   },
 });
 

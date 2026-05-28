@@ -48,8 +48,7 @@ ${nexusCorePillars}
 Execute o protocolo. **COMANDO FINAL E INEGOCIÃVEL: Responda SOMENTE no idioma solicitado ({{{locale}}}).**`,
     config: {
         temperature: 0.6,
-        topP: 1,
-        maxOutputTokens: 8192,
+maxOutputTokens: 8192,
     },
 });
 
@@ -111,8 +110,7 @@ const magadotChatFlow = ai.defineFlow(
       output: { schema: MagadotChatOutputSchema },
       config: {
         temperature: 0.6,
-        topP: 1,
-        maxOutputTokens: 8192,
+maxOutputTokens: 8192,
       }
     });
 

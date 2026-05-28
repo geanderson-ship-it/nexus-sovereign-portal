@@ -53,8 +53,7 @@ export const orionChatFlow = ai.defineFlow(
       output: { schema: OrionChatOutputSchema },
       config: {
         temperature: 0.5, // Orion is more focused/less creative than Atena
-        topP: 1,
-        maxOutputTokens: 2048,
+maxOutputTokens: 2048,
       }
     });
 

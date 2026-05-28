@@ -19,8 +19,7 @@ export async function generateRetrofitImage(input: RetrofitInput): Promise<Retro
         config: {
             responseModalities: ['TEXT', 'IMAGE'],
             temperature: 0.4,
-            topP: 1,
-            maxOutputTokens: 8192,
+maxOutputTokens: 8192,
         },
     });
 

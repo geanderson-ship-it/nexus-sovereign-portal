@@ -83,8 +83,7 @@ Execute o protocolo para o estágio atual.
 `,
   config: {
     temperature: 0.4,
-    topP: 1,
-    maxOutputTokens: 8192,
+maxOutputTokens: 8192,
   },
 });
 

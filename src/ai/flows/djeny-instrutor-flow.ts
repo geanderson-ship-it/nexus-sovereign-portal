@@ -57,8 +57,7 @@ const djenyInstrutorChatPrompt = ai.definePrompt({
   `,
   config: {
     temperature: 0.6,
-    topP: 1,
-    maxOutputTokens: 8192,
+maxOutputTokens: 8192,
   },
 });
 

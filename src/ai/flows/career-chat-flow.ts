@@ -43,8 +43,7 @@ ${leadershipPrinciples}
 **COMANDO FINAL E INEGOCIÁVEL: Responda SOMENTE em Português do Brasil.**`,
     config: {
         temperature: 0.7,
-        topP: 1,
-        maxOutputTokens: 8192,
+maxOutputTokens: 8192,
     },
 });
 

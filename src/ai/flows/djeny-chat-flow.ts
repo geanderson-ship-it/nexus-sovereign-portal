@@ -74,8 +74,7 @@ DADOS DA SESSÃO:
 `,
   config: {
     temperature: 0.7,
-    topP: 1,
-    maxOutputTokens: 8192,
+maxOutputTokens: 8192,
   },
 });
 

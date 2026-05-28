@@ -51,8 +51,7 @@ export const atenaChatFlow = ai.defineFlow(
       output: { schema: AtenaChatOutputSchema },
       config: {
         temperature: 0.7,
-        topP: 1,
-        maxOutputTokens: 2048,
+maxOutputTokens: 2048,
       }
     });
 
