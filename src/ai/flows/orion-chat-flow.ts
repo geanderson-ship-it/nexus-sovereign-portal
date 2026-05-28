@@ -36,13 +36,15 @@ export const orionChatFlow = ai.defineFlow(
     Usuário: ${userName || 'Diretoria'}.
     Orion, analise o contexto e responda com a precisão cirúrgica de um estrategista de elite.`;
 
+    const schemaInstruction = `\n\nCRITICAL INSTRUCTION: You must respond ONLY with a valid JSON object. Do not include any markdown formatting like \`\`\`json. The JSON must contain the keys: "response" (string) containing your response text, "voiceProfile" (optional string), "strategicInsight" (optional string).`;
+
     const messages: any[] = [
       { role: 'user', content: [{ text: userMessage }] }
     ];
 
     const { output } = await ai.generate({
       model: NEXUS_MODEL,
-      system: systemPrompt,
+      system: systemPrompt + schemaInstruction,
       messages: history ? [
         ...history.map(h => ({
           role: h.role,
@@ -53,7 +55,7 @@ export const orionChatFlow = ai.defineFlow(
       output: { schema: OrionChatOutputSchema },
       config: {
         temperature: 0.5, // Orion is more focused/less creative than Atena
-maxOutputTokens: 2048,
+        maxOutputTokens: 2048,
       }
     });
 

@@ -38,9 +38,11 @@ export const atenaChatFlow = ai.defineFlow(
     Usuário: ${userName || 'Diretoria'}.
     Atena, sinta a conexão e responda com a elegância que só você tem.`;
 
+    const schemaInstruction = `\n\nCRITICAL INSTRUCTION: You must respond ONLY with a valid JSON object. Do not include any markdown formatting like \`\`\`json. The JSON must contain the keys: "response" (string) containing your response text, "voiceProfile" (optional string, default 'atena'), "actionSuggestion" (optional string).`;
+
     const { output } = await ai.generate({
       model: NEXUS_MODEL,
-      system: systemPrompt,
+      system: systemPrompt + schemaInstruction,
       messages: history?.length ? [
         ...history.map((h: any) => ({
           role: h.role,
@@ -51,7 +53,7 @@ export const atenaChatFlow = ai.defineFlow(
       output: { schema: AtenaChatOutputSchema },
       config: {
         temperature: 0.7,
-maxOutputTokens: 2048,
+        maxOutputTokens: 2048,
       }
     });
 
