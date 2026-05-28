@@ -8,7 +8,7 @@ if (!process.env.AWS_REGION && process.env.NODE_ENV === 'production') {
   console.warn("⚠️ [NEXUS COMPONENT] Warning: AWS Region not found. Bedrock calls might fail.");
 }
 
-export const NEXUS_MODEL = 'aws-bedrock/us.anthropic.claude-3-haiku-20240307-v1:0';
+export const NEXUS_MODEL = 'aws-bedrock/us.anthropic.claude-sonnet-4-6';
 
 export const ai = genkit({
   plugins: [

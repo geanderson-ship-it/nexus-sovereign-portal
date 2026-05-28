@@ -583,7 +583,7 @@ export default function DanteSafraChat() {
   return (
     <Card className={cn(
         "w-full max-w-3xl flex flex-col shadow-2xl border-emerald-800/60 relative",
-        isMaximized ? "fixed inset-0 z-50 max-w-full h-full rounded-none" : "h-full"
+        isMaximized ? "fixed inset-0 z-50 max-w-full h-full rounded-none" : "h-[70vh] min-h-[550px]"
     )}>
       <link rel="manifest" href="/dante-manifest.json" />
       <div className="absolute inset-0 bg-black/50 z-0" />
@@ -640,9 +640,9 @@ export default function DanteSafraChat() {
                 }}
             />
         </CardHeader>
-        <ScrollArea className="flex-1 min-h-0 w-full">
-            <div className="p-4">{renderMessages()}</div>
-        </ScrollArea>
+        <div className="flex-1 overflow-y-auto w-full min-h-0 custom-scrollbar p-4">
+            {renderMessages()}
+        </div>
           <CardFooter className="p-4 border-t border-emerald-800/60 flex flex-col items-start gap-2">
               <form onSubmit={handleFormSubmit} className="flex w-full items-start gap-2">
                 <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileChange} disabled={isLoading || setupStage !== 'ANALISE'} />

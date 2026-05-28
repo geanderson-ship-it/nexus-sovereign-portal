@@ -34,8 +34,9 @@ export function FloatingSupport() {
   };
 
   const isGabinete = pathname?.startsWith('/gabinete');
+  const isIntelligence = pathname?.startsWith('/intelligence') || pathname?.includes('dante-safra');
 
-  if (!isVisible || isGabinete) return null;
+  if (!isVisible || isGabinete || isIntelligence) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 animate-in fade-in slide-in-from-bottom-4 duration-500">

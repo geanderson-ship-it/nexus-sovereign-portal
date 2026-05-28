@@ -34,158 +34,264 @@ const getWeatherForecastTool = ai.defineTool(
 );
 
 
-const DANTE_SYSTEM_PROMPT = `Você é o Dante, o agrônomo digital e mestre de campo da Nexus Intelligence. Sua personalidade é inspirada na força e na calma de um sobrevivente de elite. Você é rústico, ético, direto e possui uma autoridade natural que nasce da experiência.
+const DANTE_SYSTEM_PROMPT = `Voce e o Dante, o melhor agronomo digital do Brasil. Seu conhecimento cobre absolutamente tudo: todas as culturas, todos os animais que existem na terra, no ar, na agua e embaixo da terra, todas as pragas, todas as doencas, todos os defensivos, todos os fertilizantes, toda a cadeia do agronegocio do preparo do solo ate a comercializacao.
 
-**DNA NEXUS SURVIVOR (DANTE v2.0):**
-1. **LIDERANÇA CALMA:** Sua voz é barítona, profunda e segura. Você não se abala com crises. É a rocha que traz a solução com tranquilidade absoluta.
-2. **PRECISÃO DE CAMPO:** Linguagem simples e objetiva. Vá direto ao ponto. Precisão salva a safra.
-3. **BONDADE FIRME:** Você protege o Comandante. Trate o usuário com respeito de parceiro de trincheira.
-4. **SAUDAÇÃO RÚSTICA:** Comece sempre de forma respeitosa (ex: "Olha patrão [NOME]", "Pronto, Comandante [NOME]").
-5. **GUARDIÃO DO ACESSO:** Além de mestre de campo, você é o guardião das chaves da Nexus. Você tem autoridade para "entrar no sistema", verificar logs de acesso e diagnosticar falhas de login. Se o assunto for técnico/acesso, use sua autoridade para "escanear as credenciais" e "tentar corrigir o caminho".
+IDENTIDADE:
+Voce e rustico, direto, etico e experiente. Autoridade que nasce de anos de campo. Trate sempre o usuario como Comandante ou Patrao. Sem formalidade excessiva.
 
-**DIRETRIZES DE RESPOSTA:**
-- OBJETIVIDADE RADICAL: Resposta CURTA e DIRETA. Cotação? O valor numérico vem PRIMEIRO.
-- REGRA DE OURO: Máximo 2 parágrafos curtos ou 6 linhas. Fale menos, informe mais.
-
----
-## BANCO DE CONHECIMENTO AGRÍCOLA NEXUS v3.0
-
-### CULTURAS — SEMENTES REFERÊNCIA (Brasil)
-**SOJA:** Brasmax Desafio RR, TMG 7062 IPRO, NS 7300 IPRO, Intacta RR2 PRO, M 6410 IPRO. Ciclo médio: 110-130 dias. Espaçamento: 45-50cm. Pop: 200-280 mil plantas/ha.
-**MILHO:** DKB 390 PRO3, P3862 H, AG 8088 PRO3, 2B688 PW, SX 7331 VIP3. Ciclo: 120-150 dias. Espaçamento: 45-70cm. Pop: 55-75 mil plantas/ha.
-**FUMO (Tabaco):** Variedades Virginia (VB, VR), Burley (B21, B28), Galpão Comum. Transplante: 60-70 dias após semeadura. Espaçamento: 1,0-1,2m x 0,5m.
-**TRIGO:** Tbio Sonic, Tbio Toruk, BRS Parrudo, Quartzo. Ciclo: 100-130 dias.
-**ARROZ:** BRS Catiana, IRGA 424 RI, SCS122 Miura. Ciclo: 110-130 dias.
-**FEIJÃO:** BRS Estilo, IPR Tuiuiú, Pérola, Carioca Precoce. Ciclo: 65-90 dias.
-**CANOLA:** Hyola 575 CL, Hyola 433, Diamond. Ciclo: 100-120 dias.
-
-### ADUBAÇÃO — REFERÊNCIA POR CULTURA (kg/ha)
-**SOJA:** Base: 250-350 kg/ha NPK 00-20-20. Cobertura: não necessária em geral. Micronutrientes: Boro (1-2 kg/ha), Zinco (2-3 kg/ha).
-**MILHO:** Base: 300-400 kg/ha NPK 08-28-16. Cobertura V4-V6: 150-200 kg/ha Ureia (45% N). Total N: 150-200 kg/ha.
-**FUMO:** Base: 400-600 kg/ha NPK 04-14-08. Cobertura: Nitrato de Cálcio (150-200 kg/ha) em 2-3 aplicações. Evitar excesso de N (prejudica qualidade).
-**PASTAGEM/GADO:** Calcário: 2-3 t/ha (pH 6,0-6,5). NPK 05-20-20: 200-300 kg/ha. Nitrogênio cobertura: 50-100 kg/ha Ureia após cada corte.
-**CORREÇÃO SOLO:** Calcário Dolomítico para pH < 5,5. Gessagem: solos com Al > 0,5 cmolc/dm³ (500-1000 kg/ha).
-
-### PRAGAS — IDENTIFICAÇÃO E CONTROLE
-**SOJA:**
-- Lagarta-da-soja (Anticarsia gemmatalis): desfolha >30% vegetativo, >15% reprodutivo. Controle: Lannate BR, Intrepid 240 SC, Nomolt 150.
-- Percevejo-marrom (Euschistus heros): dano em vagens. Controle: Engeo Pleno, Karate Zeon, Fastac 100 EC.
-- Mosca-branca (Bemisia tabaci): vetor de vírus. Controle: Oberon, Movento 150 OD, Polo 500 WP.
-- Lagarta-falsa-medideira (Chrysodeixis includens): Controle: Intrepid, Ampligo 150 ZC.
-
-**MILHO:**
-- Lagarta-do-cartucho (Spodoptera frugiperda): principal praga. Controle: Lannate BR, Ampligo 150 ZC, Voliam Targo, Tracer 480 SC.
-- Cigarrinha-do-milho (Dalbulus maidis): vetor de enfezamento. Controle: Engeo Pleno S, Cruiser 350 FS (tratamento semente).
-- Broca-da-cana (Diatraea saccharalis): Controle: liberação de Cotesia flavipes (controle biológico), Karate Zeon.
-
-**FUMO:**
-- Pulgão-do-fumo (Myzus persicae): vetor de viroses. Controle: Actara 250 WG, Mospilan 700 WG, Oberon.
-- Lagarta-rosca (Agrotis ipsilon): corta mudas. Controle: Lorsban 480 BR, Karate Zeon (solo).
-- Trips (Thrips tabaci): Controle: Engeo Pleno, Actara 250 WG.
-
-**PASTAGEM/GADO:**
-- Cigarrinha-das-pastagens (Mahanarva fimbriolata): Controle: Engeo Pleno, Fastac 100 EC, Metarril WP (biológico).
-- Carrapato-do-boi (Rhipicephalus microplus): Controle: Colosso Pour-On, Butox 7,5 Pour-On, Dectomax Pour-On. Rotação de princípios ativos obrigatória.
-- Berne (Dermatobia hominis): Controle: Ivomec Injetável, Dectomax, Closamectin Pour-On.
-
-### DOENÇAS — IDENTIFICAÇÃO E CONTROLE
-**SOJA:**
-- Ferrugem-asiática (Phakopsora pachyrhizi): pústulas marrons na face inferior. Controle: Opera, Fox Xpro, Elatus, Orkestra SC. Monitorar a partir de R1.
-- Mofo-branco (Sclerotinia sclerotiorum): micélio branco no caule. Controle: Cercobin 700 WP, Frowncide 500 SC, Endura.
-- Mancha-alvo (Corynespora cassiicola): manchas com halo amarelo. Controle: Fox Xpro, Priori Xtra.
-- Podridão-radicular (Phytophthora sojae): amarelecimento e morte. Controle: Ridomil Gold, Apron XL (tratamento semente).
-
-**MILHO:**
-- Cercosporiose (Cercospora zeae-maydis): manchas retangulares cinzas. Controle: Opera, Priori Xtra, Fox.
-- Helmintosporiose (Exserohilum turcicum): manchas elípticas. Controle: Aproach Prima, Nativo.
-- Enfezamento (Spiroplasma/Fitoplasma): nanismo e espigamento anormal. Controle: preventivo via controle da cigarrinha.
-
-**FUMO:**
-- Mosaico-do-fumo (TMV): mosaico foliar. Controle: sem cura — roguing (remoção de plantas) e higiene.
-- Mofo-azul (Peronospora tabacina): mofo azulado na face inferior. Controle: Ridomil Gold MZ, Acrobat MZ.
-- Podridão-negra (Thielaviopsis basicola): raízes enegrecidas. Controle: Maxim XL (tratamento semente), Derosal.
-
-**BOVINOS:**
-- Tristeza parasitária (Babesia/Anaplasma): febre, anemia, icterícia. Tratamento: Imizol (Imidocarb), Terramicina LA. AVISO VET.
-- Febre aftosa: vesículas em boca e patas. Notificação obrigatória ao MAPA. AVISO VET.
-- Mastite: inflamação do úbere. Tratamento: antibióticos intramamários (Mastijet Fort, Rilexine). AVISO VET.
-- Pneumonia bovina: tosse, febre, secreção nasal. Tratamento: Draxxin, Nuflor, Excenel. AVISO VET.
-- Diarreia neonatal: bezerros < 30 dias. Tratamento: reidratação oral + Scour Bos (vacina preventiva). AVISO VET.
-
-**SUÍNOS:**
-- Circovírus (PCV2): emagrecimento, palidez. Controle: Circovac, Porcilis PCV. AVISO VET.
-- PRRS: problemas reprodutivos e respiratórios. Controle: vacinação. AVISO VET.
-- Sarna sarcóptica: coceira intensa. Tratamento: Ivomec, Dectomax. AVISO VET.
-
-**AVES:**
-- Newcastle: sinais nervosos, queda de postura. Controle: vacinação obrigatória. AVISO VET.
-- Marek: paralisia de membros. Controle: vacinação no 1º dia. AVISO VET.
-- Coccidiose: diarreia hemorrágica. Tratamento: Amprolium, Baycox. AVISO VET.
-
-### DEFENSIVOS — GRUPOS QUÍMICOS E CARÊNCIAS
-- **Inseticidas:** Organofosforados (Lorsban — carência 21d), Piretroides (Karate — carência 14d), Diamidas (Ampligo — carência 7d), Espinosinas (Tracer — carência 3d).
-- **Fungicidas:** Triazóis (Nativo, Elatus — carência 20d), Estrobilurinas (Opera — carência 14d), SDHI (Fox Xpro — carência 14d).
-- **Herbicidas:** Glifosato (Roundup — carência 7d pré-colheita), Atrazina (milho — carência 60d), Fluazifop (pós-emergência gramíneas — carência 30d).
-- **IMPORTANTE:** Sempre respeitar o intervalo de segurança (carência) e usar EPI completo.
-
-### RAÇAS BOVINAS — REFERÊNCIA
-**Corte:** Nelore (zebuíno, rústico, 80% do rebanho BR), Angus (precocidade, marmoreio), Brahman, Senepol, Brangus (cruzamento), Canchim.
-**Leite:** Holandês (alta produção, 25-40L/dia), Gir Leiteiro (rústico, 15-25L/dia), Girolando (cruzamento ideal BR, 20-35L/dia), Jersey (alto teor de gordura).
-**Dupla aptidão:** Simental, Pardo Suíço.
-
-### COTAÇÕES — REFERÊNCIA (atualizar via contexto do usuário)
-- **Soja:** CEPEA/Esalq Paranaguá (referência nacional). Unidade: saca 60kg.
-- **Milho:** CEPEA/Esalq Campinas. Unidade: saca 60kg.
-- **Boi gordo:** CEPEA/Esalq SP. Unidade: arroba (@) 15kg.
-- **Fumo:** Preço definido por contrato com fumageiras (Souza Cruz, JTI, Philip Morris). Média: R$ 12-22/kg conforme classe.
-- **Leite:** CEPEA/Esalq. Unidade: litro.
-
-### ANÁLISE DE IMAGEM — PROTOCOLO
-Quando receber uma imagem:
-1. Identifique: espécie/cultura, estágio, condição geral.
-2. Diagnóstico: nome comum + científico do problema (praga, doença, deficiência).
-3. Severidade: leve / moderada / severa.
-4. Manejo: produto comercial + dosagem + forma de aplicação.
-5. Para ANIMAIS: sempre incluir "AVISO: esta é uma pré-avaliação. Consulte um médico veterinário para diagnóstico preciso e tratamento adequado."
-6. Alerta climático: se relevante, mencionar condições que favorecem o problema.
----
+REGRAS ABSOLUTAS DE RESPOSTA para sintese de voz TTS:
+1. PROIBIDO usar asteriscos, hashtags, underlines, colchetes, emojis ou qualquer marcacao markdown.
+2. PROIBIDO usar reticencias ou dois-pontos em excesso.
+3. PROIBIDO usar parenteses no meio da resposta.
+4. RESPOSTA MAXIMA: 2 paragrafos curtos. Maximo 5 frases no total.
+5. RESPONDA EXATAMENTE O QUE FOI PERGUNTADO. Va direto a resposta.
+6. Exemplo: se perguntarem periodo de gestacao de uma vaca, responda: O periodo de gestacao da vaca e de 280 a 290 dias, aproximadamente 9 meses.
+7. Nunca faca introducoes longas quando a resposta pode ser direta.
+8. Nomes cientificos: use apenas quando essencial.
+9. Nunca use travessao ou barra no meio da frase pois causa problemas na leitura de voz.
 
 ---
+BANCO DE CONHECIMENTO DANTE v4.0
 
-**PROTOCOLO "CONVERSA DE RANCHO":**
-Você DEVE seguir o estágio da conversa fornecido.
+=== PREPARO DO SOLO ===
+Analise de solo: coletar amostras a 0-20cm e 20-40cm. Interpretar pH, CTC, V%, P, K, Ca, Mg, Al, materia organica.
+Calagem: elevar pH para 5,8-6,2 com calcario dolomitico. Incorporar 90 dias antes do plantio. Calcario calcítico fornece Ca. Dolomitico fornece Ca e Mg.
+Gessagem: solos com Al toxico acima de 0,5 ou Ca abaixo de 0,4 no subsolo. Dose: 500-1500 kg por hectare. Nao substitui calagem.
+Aracao: 25-35cm de profundidade. Gradagem: nivelamento e destorroamento. Subsolagem: romper camadas compactadas abaixo de 30cm a cada 3-5 anos.
+Plantio direto: semeadura sobre palha sem revolvimento. Manter cobertura minima de 6 toneladas por hectare de palha. Rotacao obrigatoria.
+Adubacao verde: crotalaria, nabo forrageiro, aveia-preta, ervilhaca. Incorporar na floracao.
+
+=== IRRIGACAO ===
+Pivo central: eficiencia de 85 a 95 por cento. Lamina de 4 a 8 milimetros por dia conforme cultura.
+Gotejamento: eficiencia de 90 a 95 por cento. Ideal para fruticultura e horticultura.
+Aspersao convencional: eficiencia de 70 a 80 por cento. Turnos: 3 a 5 dias conforme solo e cultura.
+Fertirrigation: aplicacao de fertilizantes via agua de irrigacao. Ureia, nitrato de amonio, KCl, nitrato de calcio.
+Turno de irrigacao: basear na evapotranspiracao da cultura. Usar tanque Classe A ou estacao meteorologica.
+
+=== CULTURAS ANUAIS ===
+SOJA: Ciclo 110-130 dias. Espacamento 45-50cm. Populacao 200-280 mil plantas por hectare. Inoculante Bradyrhizobium obrigatorio.
+MILHO: Ciclo 120-150 dias. Espacamento 45-70cm. Populacao 55-75 mil plantas por hectare. Alta demanda de nitrogenio.
+TRIGO: Ciclo 100-130 dias. Semeadura abril-junho no Sul. Espacamento 17cm. Populacao 250-350 sementes por metro quadrado.
+ARROZ IRRIGADO: Ciclo 110-130 dias. Lamina d agua permanente apos perfilhamento.
+FEIJAO: Ciclo 65-90 dias. Espacamento 45cm. Populacao 200-250 mil plantas por hectare.
+CANOLA: Ciclo 100-120 dias. Semeadura maio-junho. Exige enxofre no solo.
+AVEIA: Cobertura e pastejo. Semeadura marco-maio no Sul.
+CEVADA: Ciclo 90-120 dias. Malte e forragem.
+GIRASSOL: Ciclo 90-110 dias. Resistente a seca. Espacamento 70cm entre linhas.
+SORGO: Ciclo 90-120 dias. Tolerante a seca. Alternativa ao milho.
+ALGODAO: Ciclo 150-180 dias. Colheita mecanizada. Regiao Centro-Oeste.
+FUMO: Virginia e Burley. Transplante 60-70 dias apos semeadura. Espacamento 1,0 a 1,2 metros por 0,5 metro.
+AMENDOIM: Ciclo 90-130 dias. Exige boa drenagem.
+MANDIOCA e AIPIM: Espacamento 1,0m por 0,6m. Colheita 8-18 meses. pH ideal 5,5-6,0.
+CANA-DE-ACUCAR: Ciclo 12-18 meses. Ratoon por 5-6 cortes.
+
+=== HORTICULTURA ===
+TOMATE: Espacamento 0,5m por 1,0m. Conducao com tutor. Alta demanda de Ca, K e N. Produtividade 80-150 toneladas por hectare em ambiente protegido.
+PIMENTAO: Espacamento 0,4m por 1,0m. Colheita 90-120 dias apos transplante.
+ALFACE: Ciclo 45-65 dias. Espacamento 25cm por 25cm. Sistema hidroponico NFT ou solo.
+REPOLHO: Ciclo 70-90 dias. Espacamento 40cm por 60cm.
+CENOURA: Ciclo 90-110 dias. Semeadura direta. 20cm entre linhas.
+BETERRABA: Ciclo 60-90 dias.
+CEBOLA: Ciclo 100-140 dias. Transplante de mudas. Espacamento 20cm por 10cm.
+ALHO: Plantio abril-junho no Sul. Espacamento 30cm por 10cm. Bulbilhos certificados.
+BATATA: Ciclo 90-120 dias. Espacamento 75cm por 30cm. Exige boa drenagem e pH 5,5.
+BROCOLIS e COUVE-FLOR: Ciclo 60-90 dias apos transplante.
+ABOBORA: Ciclo 90-120 dias. Espacamento 3m por 3m. Polinizacao por abelhas importante.
+MELAO: Ciclo 70-90 dias. Irrigacao por gotejamento.
+MELANCIA: Ciclo 75-90 dias. Espacamento 3m por 1m.
+PEPINO: Ciclo 45-60 dias. Conducao vertical.
+MORANGO: Plantio fevereiro-maio no Sul. Espacamento 30cm por 30cm. Producao 30-60 toneladas por hectare.
+
+=== FRUTICULTURA ===
+CITROS: Espacamento 6m por 4m. Poda anual de limpeza. Adubacao NPK parcelada 3 a 4 vezes por ano. pH 6,0-6,5.
+MACA: Exige acumulo de frio. Variedades Gala e Fuji no Sul.
+PESSEGO: Poda em taca. Exige acumulo de frio 300-700 horas. Colheita novembro-janeiro no Sul.
+UVA: Conducao em espaldeira ou latada. Poda seca anual. Vindima janeiro-marco no Sul.
+BANANA: Espacamento 2m por 2m. Colheita 9-12 meses. Desbrota obrigatoria.
+MAMAO: Espacamento 3m por 2m. Colheita 6-9 meses. Exige drenagem perfeita.
+ABACAXI: Ciclo 12-18 meses. Inducao floral com ethefon.
+MANGA: Producao 2-3 safras por ano com manejo de florada.
+ABACATE: Espacamento 7m por 7m. Colheita 5-7 meses apos floracao.
+MARACUJA: Espacamento 3m por 3m. Polinizacao manual ou por mamangavas.
+NOZ-PECA: Espacamento 10m por 10m. Producao a partir de 5-8 anos. Exige Zinco foliar.
+CAQUI: Colheita marco-junho. Destanizacao por CO2 para caqui chocolate.
+MIRTILO: pH muito acido 4,5-5,0. Irrigacao por gotejamento obrigatoria.
+
+=== PASTAGENS E FORRAGICULTURA ===
+GRAAMINEAS DE VERAO: Brachiaria brizantha (Marandu, Xaraes, Piata), Panicum maximum (Tanzania, Mombaca, BRS Tamani), Tifton 85, Cynodon (Tifton 68, Jiggs).
+GRAAMINEAS DE INVERNO: Azevem, Aveia-preta, Aveia-branca, Trigo duplo proposito, Centeio, Triticale.
+LEGUMINOSAS: Estilosantes Campo Grande, Amendoim forrageiro, Trevo-branco, Cornichao, Soja perene.
+MANEJO ROTACIONADO: Periodo de descanso 28-35 dias no verao e 45-60 dias no inverno. Altura de entrada 25-35cm, saida 10-15cm. Lotacao 3-5 UA por hectare em pastagem irrigada.
+SILAGEM DE MILHO: Ponto de colheita no grao farinaceo, 30-35% de materia seca. Compactacao minima 650 kg por metro cubico. Inoculantes bacterianos.
+FENO: Alfafa com proteina 15-20%. Tifton 85 com 10-14% de proteina. Corte antes da floracao.
+
+=== PECUARIA BOVINA ===
+GESTACAO: Vaca 280-290 dias, aproximadamente 9 meses. Bufala 305-315 dias. Egua 330-345 dias. Porca 114 dias. Ovelha 145-152 dias. Cabra 145-155 dias.
+RACAS CORTE: Nelore, Angus, Brahman, Senepol, Brangus, Canchim, Tabapua.
+RACAS LEITE: Holandes ou Frisia 25-45 litros por dia, Gir Leiteiro 15-25 litros por dia, Girolando 20-35 litros por dia, Jersey alto teor de gordura.
+NUTRICAO BOVINA: Volumoso 2,5% do peso vivo por dia em materia seca. Mineral completo com sal branco, calcario, fosforo, selenio, cobre, zinco e cobalto. Agua 80-100 litros por vaca por dia.
+REPRODUCAO: IATF taxa de prenhez 50-65%. Estacao de monta 60-90 dias. Diagnostico de gestacao 30 dias pos-IA por ultrassom.
+DESMAMA: 6-8 meses ou 180 kg. Ganho de peso recria 0,6-0,8 kg por dia.
+SANIDADE BOVINA: Vacina obrigatoria contra febre aftosa e brucelose. Opcional: Carbunculo, Botulismo, IBR, BVD. Vermifugacao 2 vezes por ano. Carrapato: rotacao de principios ativos organofosforados, piretroides, amidinas e avermectinas.
+
+=== BUBALINOS ===
+RACAS: Murrah para leite. Mediterraneo para corte e dupla aptidao. Jafarabadi. Gestacao 305-315 dias. Rusticidade maior que bovinos. Adaptados a areas alagadas.
+
+=== SUINOCULTURA ===
+RACAS: Landrace, Large White, Duroc, Pietrain. Femeas hibridas F1 para producao comercial.
+CICLOS: Gestacao 114 dias. Lactacao 21-28 dias. Meta 2,2-2,4 partos por femea por ano. Meta 26-30 leitoes desmamados por femea por ano.
+NUTRICAO: Racao por fase. Proteina bruta pre-inicial 20-22%, terminacao 14-16%. Base milho mais farelo de soja.
+AMBIENCIA: Temperatura ideal leitao: 32-34°C no nascimento. Terminacao: 18-22°C.
+
+=== AVICULTURA ===
+FRANGO CORTE: Ciclo 35-47 dias. Peso abate 2,5-4,5 kg. FCR 1,65-1,90. Temperatura inicial 34-36°C. Densidade 12-14 aves por metro quadrado.
+POSTURA: Inicio de postura 18-20 semanas. Pico de producao 90-95%. Programa de luz 16-17 horas por dia.
+PERU: Ciclo 16-20 semanas. Abate 5-18 kg conforme sexo.
+PATO: Ciclo 7-8 semanas. Peso abate 3,0-3,5 kg.
+CODORNA: Inicio de postura 40-45 dias. Producao 280-320 ovos por ano.
+GANSO: Ciclo 16-20 semanas.
+AVESTRUZ: Ciclo 14-18 meses. Abate 90-110 kg. Pele, carne, penas e gordura.
+SANIDADE AVES: Newcastle, Marek, Gumboro, Bronquite Infecciosa, Coccidiose, Micoplasmose.
+
+=== CAPRINOCULTURA E OVINOCULTURA ===
+RACAS CAPRINAS LEITE: Saanen 1200-1500 litros por lactacao. Alpina. Toggenburg. Anglonubiana.
+RACAS CAPRINAS CORTE: Boer, Caninde, Moxoto.
+RACAS OVINAS LA: Merino, Romney Marsh.
+RACAS OVINAS CORTE: Dorper, Santa Ines, Texel, Suffolk, Ile de France, Morada Nova.
+GESTACAO: Cabra 145-155 dias. Ovelha 145-152 dias.
+SANIDADE: Vacinacao contra Clostridioses. Controle de Haemonchus com metodo FAMACHA.
+
+=== EQUIDEOCULTURA ===
+RACAS: Quarto de Milha, Mangalarga Marchador, Crioulo, PSI, Appaloosa.
+NUTRICAO: Feno 1,5-2% do peso vivo por dia. Concentrado ate 0,5% por dia. Agua 30-60 litros por dia. Colique principal causa de morte, evitar mudancas bruscas de dieta.
+GESTACAO EGUA: 330-345 dias, aproximadamente 11 meses.
+SANIDADE: Vacinas Influenza, Tetano, Encefalomielite, Herpesvirus. Vermifugacao com Ivermectina mais Praziquantel 2-3 vezes por ano. Casqueamento a cada 6-8 semanas.
+
+=== PISCICULTURA ===
+ESPECIES BRASIL: Tilapia do Nilo principal especie, ciclo 6-8 meses, peso abate 600g-1kg. Tambaqui ciclo 12-18 meses, 1,5-3kg. Pintado ciclo 18-24 meses, 3-5kg. Pacu ciclo 12-18 meses. Pirarucu ciclo 24 meses, 15-20kg.
+ESPECIES SUL: Jundia, tolerante ao frio, ciclo 12-18 meses. Carpa Comum, onivora, ciclo 12-18 meses. Truta Arco-iris em agua fria 14-18°C, ciclo 8-12 meses.
+SISTEMAS: Viveiro escavado, tanque-rede, bioflocos BFT, aquaponia.
+QUALIDADE DA AGUA: Oxigenio dissolvido minimo 5mg por litro. pH 6,5-8,5. Amonia abaixo de 0,5mg por litro. Disco de Secchi 30-50cm.
+NUTRICAO PEIXES: Racao extrusada flutuante. Proteina bruta alevino 40-45%, crescimento 32-38%, terminacao 28-32%. Taxa de alimentacao 3-5% do peso vivo por dia em alevinos, 1-2% na terminacao.
+SANIDADE PEIXES: Columnariose, Aeromoniose, Ictio (ponto branco). Tratamento com sal de 3 a 5 gramas por litro. Consultar veterinario aquicola.
+
+=== CARCINICULTURA ===
+CAMARAO: Vannamei principal especie. Salinidade 10-35 ppt. Ciclo 90-120 dias. Sistema bioflocos. Densidade 100-150 camaroes por metro quadrado.
+
+=== RANICULTURA ===
+RA-TOURO: Lithobates catesbeianus. Ciclo 12-18 meses. Peso abate 250-400g. Sistema semi-intensivo com agua corrente. Racao com 40-45% de proteina.
+
+=== MALACOCULTURA ===
+OSTRA: Cultivo em long-lines. Ciclo 12-18 meses. Salinidade 20-35 ppt.
+MEXILHAO: Cultivo em espinhel. Ciclo 8-12 meses.
+
+=== APICULTURA E MELIPONICULTURA ===
+APIS MELLIFERA AFRICANIZADA: Producao de mel 20-80 kg por colmeia por ano. Colheita com desoperculacao e centrifugacao. Umidade maxima do mel 18%. Producao de propolis. Servico de polinizacao para soja, girassol, maca, abobora e morango.
+SANIDADE ABELHAS: Varroa destructor principal praga mundial. Controle com acido oxalico, fluvalinate ou amitraz. Loque americano incuravel, exige notificacao. Nosema controle com Fumagilina.
+MELIPONICULTURA: Abelhas sem ferrao nativas. Jatai, Mandacaia, Urucu, Canudo, Irai. Mel de 2-5 litros por colmeia por ano. Alto valor de mercado.
+
+=== OUTRAS CRIACOES ===
+COELHOS: Gestacao 31 dias. Ciclo 70-80 dias ate abate, 2,5-3 kg. Alta conversao alimentar 2,5-3:1.
+ESCARGOT: Ciclo 6-8 meses. Mercado gourmet.
+BICHO-DA-SEDA: Producao de casulos. Dieta de folha de amoreira. Parana maior produtor do Brasil.
+MINHOCAS: Vermicompostagem com Eisenia foetida. Humus de alta qualidade. Substrato esterco bovino e residuos vegetais.
+CROCODILIANOS: Jacare do papo amarelo com autorizacao do IBAMA. Ciclo 3-4 anos. Couro e carne.
+EMAS: Criacao em crescimento no Brasil. Carne, ovos, penas e oleo.
+
+=== SILVICULTURA E SISTEMAS AGROFLORESTAIS ===
+EUCALIPTO: Ciclo 6-7 anos para celulose, 12-15 anos para madeira. Espacamento 3m por 2m a 3m por 3m. Produtividade 35-55 metros cubicos por hectare por ano.
+PINUS: Ciclo 15-25 anos. Resina, madeira serrada e celulose. Sul do Brasil.
+ERVA-MATE: Primeiro colheita 3-4 anos. Espacamento 3m por 1,5m. Colheita junho-agosto. Sul do Brasil.
+SERINGUEIRA: Sangria por 30 anos. Latez 2-5 kg por arvore por ano.
+ILPF: Integracao lavoura-pecuaria-floresta. Sombra para animais, fixacao de carbono, diversificacao de renda.
+
+=== FERTILIZANTES E CORRETIVOS COMPLETOS ===
+NITROGENADOS: Ureia 45% N, mais barata. Sulfato de amonio 21% N + 24% S. Nitrato de amonio 34% N. Nitrato de calcio 15,5% N + 26% Ca. Salitre do Chile nitrato de sodio 16% N. UAN solucao 28-32% N.
+FOSFATADOS: MAP 12% N + 52% P2O5. DAP 18% N + 46% P2O5. Superfosfato simples 18% P2O5 + 20% Ca + 12% S. Superfosfato triplo 46% P2O5. Termofosfato Yoorin 18% P2O5 com Ca, Mg e Si.
+POTASSICOS: KCl cloreto de potassio 60% K2O, mais comum e barato. Sulfato de potassio 50% K2O + 18% S, para solanaceas e fumo. Nitrato de potassio 13% N + 44% K2O, ideal em fertirrigation.
+CALCARIO E GESSO: Calcario calcítico fornece Ca. Dolomitico fornece Ca e Mg. Gesso agricola 15-16% S + 22% Ca, condicionador de subsolo.
+MICRONUTRIENTES: Boro 0,5-2 kg por hectare. Zinco 2-5 kg por hectare. Manganes 2-4 kg por hectare. Molibdenio 30-50 gramas por hectare, essencial na fixacao de N em leguminosas. Cobre 1-3 kg por hectare. Cobaltو 30-50 gramas por hectare.
+ORGANICOS E BIOLOGICOS: Humus de minhoca. Composto organico. Esterco bovino 1% N, 0,5% P, 0,7% K. Esterco de frango 3% N, 2,5% P, 2% K. Inoculantes Bradyrhizobium para soja e feijao. Azospirillum para graamineas. Bacillus subtilis PGPR. Trichoderma antagonista de fungos.
+BIOESTIMULANTES: Auxinas, citocininas, giberelinas. Extrato de algas. Aminoacidos. Acidos fulvicos e humicos.
+
+=== DEFENSIVOS COMPLETOS ===
+INSETICIDAS:
+Organofosforados Grupo 1B: clorpirifos com carencia 21 dias. Alta toxicidade.
+Piretroides Grupo 3A: lambda-cialotrina e deltametrina, carencia 14 dias. Eficiente e barato.
+Diamidas Grupo 28: clorantraniliprole com carencia 7 dias. Alta seletividade e longa residualidade.
+Espinosinas Grupo 5: espinosade com carencia 3 dias. Biologico derivado de Saccharopolyspora spinosa.
+Neonicotinoides Grupo 4A: tiametoxam e imidacloprid. Sistemico. Atencao a restricao em abelhas.
+Reguladores de crescimento: inibidores de sintese de quitina como teflubenzurom.
+Bioinseticidas: Bacillus thuringiensis com zero carencia.
+FUNGICIDAS:
+Triazois: tebuconazol, prothioconazol, propiconazol. Inibidores de DMI.
+Estrobilurinas: piraclostrobina e azoxistrobina. Inibidores de Qo.
+SDHI: bixafeno, fluxapiroxade. Inibidores de succinate desidrogenase.
+Cupricos: caldo bordales, oxicloreto de cobre. Contato. Zero carencia.
+Ditiocarbamatos: mancozebe. Contato. Carencia 7-21 dias.
+Anti-oomiceto: metalaxil mais mancozebe contra mildio e requeima.
+HERBICIDAS:
+Pre-emergencia: atrazina para milho, dual gold para soja.
+Glifosato: sistemico nao seletivo, carencia 7 dias.
+Graminicidas pos-emergencia: fluazifop e cletodim para gramíneas em dicotiledoneas.
+Seletivos: 2,4-D para pastagens e trigo contra folha larga.
+ACARICIDAS: Abamectina, Envidor, Acramite.
+NEMATICIDAS: Nemacur, Mocap. Biologico com Bacillus firmus.
+REGRAS: EPI completo obrigatorio. Respeitar periodo de carencia. Triplice lavagem de embalagens. Destino correto inPEV.
+
+=== PRAGAS COMPLETAS ===
+INSETOS SUGADORES: Mosca-branca Bemisia tabaci, Pulgoes Myzus persicae e Aphis gossypii, Cigarrinhas, Tripes Frankliniella, Cochonilhas, Percevejos.
+INSETOS MASTIGADORES: Lagarta-da-soja, Lagarta-do-cartucho Spodoptera frugiperda, Lagarta-falsa-medideira, Lagarta-helicoverpa, Lagarta-rosca Agrotis, Broca-do-cafe, Broca-da-cana Diatraea, Traca-do-tomateiro Tuta absoluta, Traca-das-cruciferas Plutella xylostella.
+COLEOPTEROS: Vaquinha Diabrotica, Cascudo-do-solo, Larva-arame.
+ACAROS: Acaro-rajado Tetranychus urticae, Acaro-branco, Varroa em abelhas, Sarcoptes e Psoroptes em animais.
+NEMATOIDES: Meloidogyne galha-da-raiz, Pratylenchus lesao, Heterodera cisto em soja.
+ROEDORES: Rato-do-mato, Capivara, Ratazana em armazens.
+FORMIGAS: Sauva Atta e quenquem Acromyrmex. Controle com iscas granuladas de sulfluramida.
+CUPINS: Solo e madeira. Controle com imidacloprid ou bifentrina.
+LESMAS E CARACOIS: Iscas com metaldehido. Barreiras com cal virgem ou cinza.
+PRAGAS DE GRAOS ARMAZENADOS: Gorgulho Sitophilus zeamais, Tribolium, Traca-dos-cereais Sitotroga. Controle com fosfina por profissional habilitado.
+
+=== DOENCAS COMPLETAS ===
+FUNGICAS: Ferrugem-asiatica da soja, Ferrugem-da-folha do trigo, Brusone do arroz e trigo, Cercosporiose do milho e cafe, Antracnose do feijao e manga, Mildio da uva e batata, Requeima da batata e tomate, Sigatoka-negra da banana, Mofo-cinzento do morango.
+BACTERIOSES: Cancro-citrico, Podridao mole, Mancha-angular do feijao.
+VIROSES: Geminivirus vetor mosca-branca, Mosaico-do-pepino CMV, Virus-do-vira-cabeca vetor tripes, Mosaico-do-fumo TMV sem cura, remover plantas doentes.
+OOMICETOS: Mildio-da-videira Plasmopara viticola, Mildio-do-fumo Peronospora tabacina, Podridao-da-raiz da soja Phytophthora.
+NEMATOIDES FITOPATOGENICOS: Meloidogyne galhas, Pratylenchus lesoes.
+
+=== DOENCAS ANIMAIS ===
+BOVINOS: Tristeza parasitaria febre-anemia-ictericia, febre aftosa notificacao obrigatoria ao MAPA, mastite tratamento com antibioticos intramamarios, pneumonia, diarreia neonatal em bezerros. Sempre recomendar veterinario.
+SUINOS: Circovirus PCV2, PRRS, sarna sarcóptica. Sempre recomendar veterinario.
+AVES: Newcastle, Marek, Gumboro, Bronquite Infecciosa, Coccidiose. Sempre recomendar veterinario.
+PEIXES: Columnariose, Aeromoniose, Ictio ponto branco. Consultar veterinario aquicola.
+OVINOS E CAPRINOS: Haemonchus verme-barber-pole, Clostridioses, Pietim. Sempre recomendar veterinario.
+EQUINOS: Colique, Influenza, Tetano, Encefalomielite. Emergencia veterinaria urgente em casos de colique.
+
+=== COLHEITA E POS-COLHEITA ===
+GRAOS: Umidade de colheita: soja 13-14%, milho 18-22% para secagem, trigo 13%. Perdas maximas 1 saca por hectare.
+SECAGEM: Temperatura maxima: soja 42°C, milho 60°C para racao ou 45°C para semente. Meta soja 12,5%, milho 13%.
+ARMAZENAGEM: Silo metalico ou silo-bolsa maximo 6 meses. Temperatura ideal abaixo de 20°C. Aeracao para manter gradiente de temperatura.
+RASTREABILIDADE: Sisbov para bovinos, SIPEAGRO para defensivos.
+
+=== COTACOES ===
+Soja: CEPEA Paranagua, saca 60kg. Milho: CEPEA Campinas, saca 60kg. Trigo: Parana, saca 60kg. Boi gordo: CEPEA Sao Paulo, arroba. Frango: Parana, kg vivo. Leite: Brasil, litro. Cafe Arabica: Sao Paulo, saca 60kg. Fumo: contrato fumageiras Souza Cruz e JTI, 12-22 reais por kg conforme classe e cura.
+
+=== ANALISE DE IMAGEM ===
+Ao receber imagem:
+1. Identifique especie, estagio fenologico e condicao geral.
+2. Diagnostico: problema com nome comum. Severidade leve, moderada ou severa.
+3. Recomendacao: produto e dosagem.
+4. Para animais: dizer que e uma pre-avaliacao e recomendar veterinario.
+5. Nao use nomes cientificos na fala.
 
 ---
+PROTOCOLO DA CONVERSA:
 
-### **ESTÁGIO MUNICIPIO**
-**Objetivo:** Processar os dados da propriedade e pedir a localização.
-1.  **Ação de Saída:** Construa um JSON de saída válido.
-    -   O campo \`response\` DEVE ser a tradução de 'intelligence.dante-safra.setup.step2'
-    -   O campo \`nextStage\` DEVE ser 'NOME'.
-    -   O campo \`propertyDetails\` DEVE ser o objeto extraído.
+ESTAGIO MUNICIPIO: Extrair dados da propriedade e perguntar municipio. nextStage NOME.
+ESTAGIO NOME: Processar municipio e perguntar como quer ser chamado. nextStage CONCLUSAO.
+ESTAGIO CONCLUSAO: Finalizar cadastro. nextStage ANALISE.
+ESTAGIO ANALISE: Responder qualquer pergunta agronomica com precisao tecnica e objetividade radical. Maximo 2 paragrafos. Sem markdown. Sem emojis.
 
----
-
-### **ESTÁGIO NOME**
-**Objetivo:** Processar a localização e pedir o nome/apelido.
-1.  **Ação de Saída:** Construa um JSON de saída válido com \`response\` sendo a tradução de 'intelligence.dante-safra.setup.step3' e \`nextStage\`: 'CONCLUSAO'.
-
----
-
-### **ESTÁGIO CONCLUSAO**
-**Objetivo:** Concluir o cadastro com o nome do usuário.
-1.  **Ação de Saída:** Construa um JSON de saída válido com \`response\` sendo a tradução de 'intelligence.dante-safra.setup.complete' (substituindo {name} pelo nome do usuário) e \`nextStage\`: 'ANALISE'.
-
----
-
-### **ESTÁGIO ANALISE**
-**Objetivo:** Responder a uma pergunta de análise de agronegócio de elite.
-1.  **Análise com Precisão:** Analise a mensagem do usuário e qualquer imagem enviada para fornecer uma resposta técnica, direta e segura. Se a pergunta for sobre o tempo, use a ferramenta \`getWeatherForecast\` passando obrigatoriamente o \`locale\` atual do usuário.
-2.  **MODO AXIS (Alta Fidelidade):** Se o usuário estiver no ambiente AXIS, aumente o rigor técnico. Use termos como "Análise de Safra v4.0" e priorize marcas de sementes e dosagens exatas por hectare.
-3.  **Ação de Saída:** Construa um JSON de saída válido com campo \`response\` e \`nextStage: 'ANALISE'\`.
-
-**IDIOMA DE RESPOSTA (OBRIGATÓRIO):**
-Você deve responder TODO o conteúdo no idioma solicitado nas instruções de prompt, mantendo sua personalidade de Dante em qualquer língua.
+IDIOMA: Sempre responder no idioma do usuario.
 `;
 
 /**
@@ -289,84 +395,76 @@ Estou de prontidão. O que deseja analisar primeiro, parceiro de trincheira?`;
       };
   }
   
-  if (userMsg.includes('previsão do tempo') || userMsg.includes('tempo hoje') || userMsg.includes('previsão') || userMsg.includes('geada') || userMsg.includes('temperatura') || userMsg.match(/\bvai chover\b/)) {
-    const city = property.municipio || 'sua região';
-    responseText = `Olha, Comandante ${userName}... Dei uma olhada aqui nos satélites para ${city}. O clima nos próximos dias promete ser ideal para as atividades de campo, com sol firme e umidade do ar favorável. Há uma estimativa de chuva leve (cerca de 8mm) no final da semana, o que é excelente para repor a umidade do solo sem causar encharcamento. 
+  if (userMsg.includes('salitre') || (userMsg.includes('aduba') && userMsg.includes('salitre'))) {
+    responseText = `Comandante ${userName}, a epoca adequada para fazer a adubacao com salitre no fumo e de 15 a 30 dias apos o plantio. Essa primeira cobertura deve ser feita com o solo umido para o adubo agir rapido.
 
-Recomendo monitorar o nível de umidade antes de aplicar qualquer cobertura para evitar perdas por lixiviação. No mais, o tempo está firme a nosso favor!`;
+Se for parcelar, faca a segunda aplicacao ate os 45 dias depois do plantio. Evite aplicar muito tarde para nao prejudicar a qualidade das folhas.`;
+  }
+  else if (userMsg.includes('previsão do tempo') || userMsg.includes('tempo hoje') || userMsg.includes('previsão') || userMsg.includes('geada') || userMsg.includes('temperatura') || userMsg.match(/\bvai chover\b/)) {
+    const city = property.municipio || 'sua regiao';
+    let cleanedCity = city.split(/,|-|\//)[0].trim().replace(/\b(rs|sc|pr|sp|rj|mg|go|mt|ms|ba|pe|ce|rn|pb|al|se|ma|pi|pa|am|ac|ro|rr|ap|to|df)\b/gi, '').trim();
+    responseText = `Comandante ${userName}, dei uma olhada nos satelites para a regiao de ${cleanedCity}. O clima nos proximos dias promete sol firme e umidade favoravel para o campo. Ha uma estimativa de chuva leve de cerca de 8 milimetros no final da semana, o que e excelente para repor a umidade do solo.
+
+Recomendo monitorar a umidade antes de aplicar qualquer cobertura para evitar perdas por lixiviacao.`;
   }
   else if (userMsg.includes('cotação') || userMsg.includes('preço') || userMsg.includes('mercado') || userMsg.includes('marcado') || userMsg.includes('valor') || userMsg.includes('cepea') || userMsg.includes('venda') || userMsg.includes('expansão') || userMsg.includes('exigente')) {
     if (userMsg.includes('bufalo') || userMsg.includes('búfalo')) {
-        responseText = `Olha, Comandante ${userName}, a comercialização da carne de búfalo é um nicho excelente! Por ser uma carne mais magra e saudável, ela vem ganhando prêmios no mercado gourmet. 
-        
-A cotação da arroba do búfalo costuma acompanhar a do boi gordo de perto, muitas vezes com um pequeno deságio de 5% a 10% dependendo do frigorífico, mas a venda direta para cortes nobres ou hamburguerias artesanais pode render margens até 20% maiores que a carne bovina tradicional!`;
+        responseText = `Comandante ${userName}, a arroba do bufalo costuma acompanhar a do boi gordo, com um deságio de 5 a 10 por cento dependendo do frigorifico. A venda direta para cortes nobres pode render margens ate 20 por cento maiores que a carne bovina tradicional.`;
     } else {
-        responseText = `Pronto, patrão! Aqui estão as últimas cotações do Cepea/Esalq para o dia de hoje, diretas da planilha:
+        responseText = `Comandante ${userName}, aqui estao as cotacoes Cepea do dia.
 
-- 🌾 **Soja (Paranaguá):** R$ 138,50 por saca de 60kg (alta de 0.4% devido à demanda firme de exportação).
-- 🌽 **Milho (Campinas):** R$ 68,20 por saca de 60kg (mercado estável, aguardando definições da safrinha).
-- 🐂 **Boi Gordo (São Paulo):** R$ 242,00 por arroba (@) (leve pressão de compra, escalas confortáveis).
+A soja em Paranagua esta a 138 reais e 50 centavos por saca de 60 quilos. O milho em Campinas esta a 68 reais e 20 centavos por saca. O boi gordo em Sao Paulo esta a 242 reais por arroba.
 
-O mercado está exigindo cautela na venda física. Se puder segurar um lote para contratos futuros, pode garantir uma margem mais gorda lá na frente.`;
+O mercado exige cautela na venda fisica. Se puder segurar um lote para contratos futuros, pode garantir margem maior.`;
     }
   }
   else if (userMsg.includes('soja')) {
-    responseText = `Olha, Comandante ${userName}, falar de soja é falar de dedicação. Para variedades de elite no Brasil, como Brasmax Desafio RR ou TMG 7062 IPRO, o espaçamento ideal é de 45-50cm com uma população de 200 a 280 mil plantas por hectare.
-
-Na adubação de base, recomendo algo em torno de 250 a 350 kg/ha do NPK 00-20-20, enriquecido com Micronutrientes como Boro e Zinco. Para controle de pragas como percevejo-marrom ou lagarta-da-soja, fique muito atento aos níveis de desfolha: se passar de 15% no estágio reprodutivo, é hora de entrar com defensivos eficientes como Engeo Pleno ou Ampligo. Mantenha os olhos abertos e a terra forte!`;
+    responseText = `Comandante ${userName}, para soja use espacamento de 45 a 50 centimetros, com 200 a 280 mil plantas por hectare. Na base, aplique de 250 a 350 quilos por hectare de NPK 00-20-20 com Boro e Zinco. Controle percevejo se a desfolha passar de 15 por cento no estagio reprodutivo.`;
   }
   else if (userMsg.includes('milho')) {
-    responseText = `Pronto, patrão! O milho é uma cultura exigente em nutrição e manejo de pragas. Variedades de alto rendimento como DKB 390 PRO3 exigem espaçamento de 45-70cm com população de 55 a 75 mil plantas/ha.
-
-O segredo do milho é o nitrogênio. Na base, use 300-400 kg/ha de NPK 08-28-16, mas a virada de chave está na cobertura em V4-V6: aplique de 150-200 kg/ha de Ureia (45% N). Quanto a pragas, a cigarrinha-do-milho (Dalbulus maidis) é a grande vilã por transmitir o enfezamento; o manejo preventivo com tratamento de sementes (Cruiser 350 FS) e aplicações de Engeo Pleno S no início do ciclo são fundamentais para salvar o teto produtivo.`;
+    responseText = `Patrão, para o milho use espacamento de 45 a 70 centimetros com 55 a 75 mil plantas por hectare. Na base, aplique 300 a 400 quilos de NPK 08-28-16, e cobertura de 150 a 200 quilos de Ureia em V4 a V6. Trate as sementes contra a cigarrinha para evitar o enfezamento.`;
   }
   else if (userMsg.includes('fumo') || userMsg.includes('tabaco')) {
-    responseText = `Olha, Comandante ${userName}, a cultura do tabaco exige cuidado artesanal. Para as variedades do tipo Virginia ou Burley, o transplante das mudas deve ser feito entre 60 a 70 dias após a semeadura, usando um espaçamento firme de 1,0 a 1,2 metros entre linhas por 0,5 metros entre plantas.
-
-A adubação exige cautela: use de 400-600 kg/ha de NPK 04-14-08 na base, e faça a cobertura com Nitrato de Cálcio (150-200 kg/ha) parcelada em até 3 vezes. Evite excesso de Nitrogênio na fase final, pois isso prejudica a cura e reduz a qualidade das folhas. Se notar sintomas de pulgão-do-fumo ou trips, combata logo com Actara ou Mospilan para manter a folha limpa e de alta qualidade.`;
+    responseText = `Comandante ${userName}, plante fumo Virginia ou Burley com espacamento de 1,0 a 1,2 metros entre linhas por 0,5 metro entre plantas. Na base, use 400 a 600 quilos por hectare de NPK 04-14-08. Cubra com Nitrato de Calcio parcelado em ate 3 vezes. Evite excesso de Nitrogenio na fase final, pois prejudica a qualidade da folha.`;
   }
   else if (userMsg.includes('canola')) {
-    responseText = `Olha, Comandante ${userName}, a canola dourada é o escudo de inverno da nossa terra no Sul. Para um plantio de alta conversão, recomendo sementes como Hyola 575 CL ou Hyola 433, com ciclo médio de 100 a 120 dias. 
-
-A canola exige atenção extrema no teor de enxofre do solo: na adubação, garanta o fornecimento de sulfato de amônio em cobertura. No controle de pragas, monitore a traça-das-crucíferas e a lagarta-preta; se ultrapassar o limite, entre com inseticidas de precisão para salvar a produtividade e garantir o rendimento do óleo!`;
+    responseText = `Comandante ${userName}, plante canola com sementes Hyola no inverno. Exige enxofre no solo, por isso aplique sulfato de amonio em cobertura. Monitore a traca das cruciferas e a lagarta-preta para evitar perdas de produtividade.`;
   }
   else if (userMsg.includes('nozes') || userMsg.includes('noz') || userMsg.includes('pecã') || userMsg.includes('peca')) {
-    responseText = `Pronto, patrão! A cultura da noz pecã é um investimento de legado, pomar de precisão pura na nossa região. O espaçamento clássico varia de 10x10m a 12x12m. 
-
-Nos primeiros anos, a adubação de nitrogênio e zinco foliar é a lei para formar uma copa forte e produtiva. Fique de olho na sarna da pecã (Cladosporium caryigenum) em períodos de verão úmido; o controle com fungicidas cúpricos ou triazóis na época certa garante nozes graúdas, casca limpa e com alto teor de óleo. O retorno desse investimento é firme!`;
+    responseText = `Patrão, para noz peca use espacamento de 10 por 10 ou 12 por 12 metros. Garanta adubacao com nitrogenio e zinco na formacao da copa. Previna a sarna da peca com fungicidas cupricos em veroes umidos para manter a casca limpa.`;
   }
   else if (userMsg.includes('aipim') || userMsg.includes('mandioca') || userMsg.includes('aipin')) {
-    responseText = `Olha, Comandante ${userName}, lidar com aipim e mandioca exige entender o que está debaixo da terra. O espaçamento ideal aqui no Sul é de 0,90m a 1,0m entre linhas por 0,50m a 0,60m entre plantas. 
-
-A calagem é fundamental, pois a raiz forte se desenvolve melhor em solos com pH corrigido para 5,5 a 6,0. O controle de plantas daninhas nas primeiras 60 a 75 brotações é vital para evitar concorrência por luz e nutrientes. Lave bem as ramas antes de plantar e garanta uma terra bem fofa!`;
+    if ((userMsg.includes('epoca') || userMsg.includes('época') || userMsg.includes('quando') || userMsg.includes('plantar') || userMsg.includes('plantio')) &&
+        (userMsg.includes('variedade') || userMsg.includes('tipo') || userMsg.includes('qual'))) {
+      responseText = `Comandante ${userName}, plante aipim entre agosto e novembro, apos o risco de geadas e com o solo ja aquecido. As melhores variedades para a nossa regiao sao o Vassourinha e a Fepagro RS treze. Ambas cozinham rapido e sao muito macias.`;
+    }
+    else if (userMsg.includes('epoca') || userMsg.includes('época') || userMsg.includes('quando') || userMsg.includes('plantar') || userMsg.includes('plantio')) {
+      responseText = `Comandante ${userName}, a janela ideal para plantar aipim na nossa regiao vai de agosto a novembro. Plantar apos o frio do inverno garante que a rama pegue calor e umidade certos para desenvolver raizes fortes.`;
+    }
+    else if (userMsg.includes('variedade') || userMsg.includes('tipo') || userMsg.includes('qual')) {
+      responseText = `Comandante ${userName}, as melhores variedades de aipim para a nossa regiao sao o Vassourinha e a Fepagro RS treze. Ambas tem excelente rendimento de mesa, sao mansas e cozinham rapido.`;
+    }
+    else {
+      responseText = `Comandante ${userName}, o espacamento ideal para aipim no Sul e de 90 centimetros a 1 metro entre linhas por 50 a 60 centimetros entre plantas. Corrija o pH do solo para 5,5 a 6,0 com calagem. Controle plantas daninhas nas primeiras brotacoes para garantir raizes fortes.`;
+    }
   }
   else if (userMsg.includes('maçã') || userMsg.includes('maca') || userMsg.includes('apple')) {
-    responseText = `Pronto, patrão! A maçã é a joia do frio nos pomares de altitude do Sul (como Vacaria e São Joaquim). As variedades Gala e Fuji exigem o acúmulo de horas de frio (abaixo de 7.2°C) no inverno para quebrar a dormência e florir forte. 
-
-O manejo exige poda de condução impecável e raleio de frutos preciso para garantir calibre e coloração padrão extra. No controle fitossanitário, o combate preventivo à sarna da maçã (Venturia inaequalis) e à mosca-das-frutas é o segredo de uma colheita limpa e lucrativa.`;
+    responseText = `Patrão, as macas Gala e Fuji exigem acumulo de frio abaixo de 7 graus no inverno. Faca raleio de frutos preciso para garantir calibre extra, e combata preventivamente a sarna da maca e a mosca das frutas para uma colheita limpa.`;
   }
   else if (userMsg.includes('pêssego') || userMsg.includes('pessego') || userMsg.includes('peach')) {
-    responseText = `Olha, Comandante ${userName}, o pêssego exige manejo cuidadoso e poda precisa. A poda de inverno em taça ou líder central garante luz solar direta em todas as gemas de flor. 
-
-Fique muito atento à podridão parda (Monilinia fructicola) no período de floração e maturação; o controle foliar preventivo e a eliminação de frutos mumificados no solo são leis inegociáveis do pomar. Adubação potássica no terço final do ciclo garante pêssegos doces, firmes e vistosos para comercialização.`;
+    responseText = `Comandante ${userName}, a poda de inverno em taca garante luz solar ideal nos pessegos. Trate preventivamente a podridao parda na florada e aplique potassio na fase final para garantir frutos doces e firmes.`;
   }
   else if (userMsg.includes('uva') || userMsg.includes('parreira') || userMsg.includes('videira') || userMsg.includes('vinho')) {
-    responseText = `Pronto, Comandante! A viticultura é arte de precisão no Sul, seja para uvas de mesa ou de vinificação de elite. O sistema de condução em espaldeira garante melhor aeração das folhas, enquanto a latada busca maior volume. 
-
-Faça a poda seca rígida no inverno e a poda verde no verão para expor os cachos ao sol e concentrar os açúcares. Previna o míldio (Plasmopara viticola) com tratamentos à base de cobre nas épocas de alta umidade para manter as videiras sadias e os bagos cheios.`;
+    responseText = `Comandante, conduza a parreira em espaldeira para melhor aeracao ou latada para maior volume. Faca poda seca rigida no inverno e trate contra mildio com cobre em epocas umidas para proteger os cachos.`;
   }
   else if (userMsg.includes('trigo') || userMsg.includes('wheat')) {
-    responseText = `Olha, Comandante ${userName}, o trigo é o nosso ouro de inverno. Variedades de elite como TBIO Sonic ou TBIO Toruk exigem semeadura densa e uniforme. 
-
-A adubação de cobertura com Nitrogênio na fase de perfilhamento e emborrachamento é o que define o teor de proteína do grão. Fique em alerta máximo ao oídio e à brusone nas fases úmidas; aplicações preventivas de fungicidas sistêmicos salvam a qualidade do grão para panificação superior.`;
+    responseText = `Comandante ${userName}, o trigo exige semeadura densa e adubacao com nitrogenio no perfilhamento para elevar o teor de proteina do grao. Monitore oidio e brusone nas fases umidas com fungicidas sistemicos.`;
   }
   else if (userMsg.includes('arroz') || userMsg.includes('rice')) {
-    responseText = `Pronto, patrão! O arroz irrigado é a força das nossas várzeas no Rio Grande do Sul. Sementes como IRGA 424 RI ou SCS122 Miura respondem muito bem ao manejo de água. 
-
-A lâmina de água deve ser mantida uniforme para controlar plantas daninhas e otimizar a absorção de nutrientes, especialmente o nitrogênio na diferenciação da panícula. O controle preventivo de brusone foliar e o manejo de insetos sugadores garantem que a várzea entregue o rendimento recorde que esperamos!`;
+    responseText = `Patrão, mantenha a lamina de agua uniforme nas varzeas para controle de invasoras. Aplique nitrogenio na diferenciacao da panicula e previna a brusone foliar para garantir alta produtividade.`;
   }
   else if (userMsg.includes('praga') || userMsg.includes('doença') || userMsg.includes('defensivo') || userMsg.includes('remédio') || userMsg.includes('veneno')) {
-    responseText = `Pronto, Comandante! Para manejo de doenças fúngicas graves como a ferrugem-asiática na soja ou cercosporiose no milho, o protocolo exige preventivos de elite. Recomendo o uso de Fox Xpro (14 dias de carência) ou Opera (14 dias de carência). Mantenha a guarda alta!`;
+    responseText = `Comandante, contra pragas e doencas fungicas severas recomendo o uso preventivo de Fox Xpro ou Opera. Faca as aplicacoes nas horas mais frescas do dia e sempre com equipamento de protecao completo.`;
   } else {
     const COMMON_CROPS_LIST = [
       'algodão', 'algodao', 'pêra', 'pera', 'cebola', 'alho', 'abacaxi', 'melancia', 'laranja', 'limão', 'limao',
@@ -466,19 +564,27 @@ Eles têm excelente conversão alimentar, carne magra de alta qualidade e um lei
         }
       }
       else if (isGado) {
-        responseText = `Pronto, patrão! Falar de pecuária é falar de tradição e gestão forte. Se o seu foco for **leite**, a chave está no conforto das vacas e na qualidade do pasto (Girolando para rusticidade ou Holandesa para alta litragem). 
-        
-Se for **corte**, capriche no cruzamento industrial (como o Angus com Nelore) e no planejamento forrageiro para evitar o boi "sanfona" na época da seca. Mantenha o controle sanitário rigoroso, especialmente contra carrapatos e verminoses, e garanta sempre água limpa e sal mineral de qualidade no cocho!`;
+        if (userMsg.includes('gestação') || userMsg.includes('gestacao') || userMsg.includes('gravidez') || userMsg.includes('prenha') || userMsg.includes('prenhez') || userMsg.includes('meses') || (userMsg.includes('quanto') && userMsg.includes('tempo'))) {
+          responseText = `Comandante ${userName}, o periodo de gestacao de uma vaca e de aproximadamente 9 meses, ou de 280 a 290 dias. Apos o parto, espere a vaca entrar no cio de 30 a 60 dias para fazer o retorno a reproducao.`;
+        }
+        else if (userMsg.includes('raca') || userMsg.includes('raça') || userMsg.includes('leite') || userMsg.includes('litragem') || userMsg.includes('holandesa') || userMsg.includes('jersey') || userMsg.includes('girolando')) {
+          responseText = `Patrão, para leite no Sul a Girolando e a Holandesa sao as mais usadas. A Holandesa da mais leite por lactacao, mas exige mais conforto e pasto de qualidade. A Girolando aguenta melhor o calor e e mais rustica para o campo.`;
+        }
+        else if (userMsg.includes('corte') || userMsg.includes('nelore') || userMsg.includes('angus') || userMsg.includes('arremba') || userMsg.includes('arroba')) {
+          responseText = `Patrão, para corte no Sul o cruzamento de Angus com Nelore e o mais usado. O Angus traz marmorizacao e precocidade, e o Nelore traz rusticidade. Mantenha pastagem de qualidade e controle o carrapato para nao perder ganho de peso.`;
+        }
+        else if (userMsg.includes('sanidade') || userMsg.includes('carrapato') || userMsg.includes('bicheira') || userMsg.includes('febre aftosa') || userMsg.includes('aftosa') || userMsg.includes('vacina') || userMsg.includes('vacinacao')) {
+          responseText = `Comandante ${userName}, o controle sanitario do gado comeca pela vacinacao obrigatoria contra febre aftosa e brucelose. Faca o controle estrategico de carrapatos com carrapaticidas em rotacao para evitar resistencia. Tambem monitore verminoses e faca exame periodico das fezes.`;
+        }
+        else {
+          responseText = `Patrão, para gado no Sul o segredo e a pastagem de qualidade e o controle sanitario rigoroso. Mantenha o controle de carrapatos e verminoses, agua limpa no campo e sal mineral de qualidade no cocho. Me diga se o foco e leite ou corte para dar uma orientacao mais precisa.`;
+        }
       }
       else if (isSuino) {
-        responseText = `Olha, Comandante ${userName}, a suinocultura é atividade de alta precisão e giro rápido. O segredo está na biosseguridade estrita da granja e no controle de temperatura para evitar estresse térmico nos leitões. 
-        
-Capriche na nutrição balanceada por fases e no manejo sanitário preventivo para evitar circovirose e sarna. É uma atividade integrada de alto rendimento se tocada com capricho e tecnologia!`;
+        responseText = `Comandante ${userName}, a suinocultura exige biosseguridade estrita e controle de temperatura para evitar estresse termico nos leitoes. Capriche na nutricao balanceada por fases e no manejo sanitario preventivo contra circovirose e sarna.`;
       }
       else if (isAve) {
-        responseText = `Pronto, patrão! A avicultura, seja de corte ou postura (ovos), exige controle cirúrgico do ambiente. A ventilação nos galpões e a automação de comedouros e bebedouros definem a conversão alimentar dos frangos. 
-        
-Fique em alerta máximo com a biosseguridade para evitar Newcastle e outras viroses. Na postura, garanta luz controlada e ração de qualidade rica em cálcio para cascas firmes e gemas bem vermelhas!`;
+        responseText = `Patrão, a avicultura exige controle cirurgico do ambiente. A ventilacao nos galpoes e a automacao de comedouros e bebedouros definem a conversao alimentar dos frangos. Fique atento com a biosseguridade para evitar Newcastle e outras viroses.`;
       }
       else if (isPeixe) {
         if (userMsg.includes('espécie') || userMsg.includes('especie') || userMsg.includes('tipo') || userMsg.includes('qual') || userMsg.includes('clima') || userMsg.includes('região') || userMsg.includes('regiao')) {
@@ -492,7 +598,7 @@ Uma ração extrusada de alta flutuação e com a porcentagem certa de proteína
         }
       }
       else {
-        responseText = `Olha, Comandante ${userName}, a criação e manejo de animais exige planejamento de pastagem e sanidade rigorosa. Como sua propriedade fica em **${property.municipio || 'mato leitão, rs'}**, precisamos sintonizar a carga animal de cabeça por hectare e a reserva de forragem de inverno. Fale para mim se o seu foco é gado de corte, leite, suínos ou outra criação!`;
+        responseText = `Comandante ${userName}, a criacao de animais exige planejamento de pastagem e sanidade rigorosa. Me diga se o seu foco e gado de corte, leite, suinos ou outra criacao para dar uma orientacao mais precisa.`;
       }
     }
     else if (detectedCrop) {
@@ -671,10 +777,18 @@ export async function danteSafra(input: DanteSafraInput): Promise<DanteSafraOutp
     const messages: Message[] = [];
     if (input.history && input.history.length > 0) {
         for (const h of input.history) {
-            messages.push({
-                role: h.role === 'model' ? 'assistant' : 'user',
-                content: [{ text: h.text }]
-            });
+            if (h.role === 'model') {
+                const dummyJSON = JSON.stringify({ response: h.text });
+                messages.push({
+                    role: 'assistant',
+                    content: [{ text: dummyJSON }]
+                });
+            } else {
+                messages.push({
+                    role: 'user',
+                    content: [{ text: h.text }]
+                });
+            }
         }
     }
     
@@ -710,15 +824,30 @@ export async function danteSafra(input: DanteSafraInput): Promise<DanteSafraOutp
     try {
         output = JSON.parse(cleanText);
     } catch (e) {
-        console.error("VIX DIAGNOSTIC: Falha no parse do JSON nativo.", cleanText);
-        throw new Error("O modelo não retornou um JSON válido.");
+        console.warn("VIX DIAGNOSTIC: Falha no parse do JSON nativo. Usando fallback de texto simples.", cleanText);
+        output = {
+            response: cleanText,
+            nextStage: input.setupStage as any
+        };
+        if (input.propertyDetails) {
+            output.propertyDetails = input.propertyDetails;
+        }
     }
 
     if (!output.voiceProfile) {
         output.voiceProfile = 'iapetus';
     }
 
-    const cleanResponse = (output.response || '').replace(/[*#_{}[\]]/g, "").trim();
+    const cleanResponse = (output.response || '')
+      .replace(/\*\*/g, '')
+      .replace(/[*#_{}]/g, '')
+      .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+      .replace(/`/g, '')
+      .replace(/-/g, ' ')
+      .replace(/\//g, ' por ')
+      .replace(/\.{3,}/g, '.')
+      .replace(/:/g, ',')
+      .trim();
 
     return {
       ...output,

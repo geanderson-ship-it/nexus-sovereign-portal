@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
 
     // ─── Call AWS Bedrock — Claude 3.5 Sonnet (multimodal) ───────────────────
     const command = new InvokeModelCommand({
-      modelId: 'anthropic.claude-3-5-sonnet-20241022-v2:0',
+      modelId: 'us.anthropic.claude-sonnet-4-6',
       contentType: 'application/json',
       accept: 'application/json',
       body: JSON.stringify({
@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
       success: true,
       analysis: analysisResult,
       meta: {
-        model: 'anthropic.claude-3-5-sonnet-20241022-v2:0',
+        model: 'us.anthropic.claude-sonnet-4-6',
         provider: 'AWS Bedrock',
         examType,
         analyzedAt: new Date().toISOString(),

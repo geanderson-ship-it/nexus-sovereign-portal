@@ -18,4 +18,5 @@ if (accessKeyId && secretAccessKey) {
 
 export const bedrockClient = new BedrockRuntimeClient(config);
 
-export const BEDROCK_NEXUS_MODEL = 'anthropic.claude-3-haiku-20240307-v1:0';
+export const BEDROCK_NEXUS_MODEL = 'us.anthropic.claude-sonnet-4-6';
+

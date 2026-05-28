@@ -91,6 +91,67 @@ const textToSpeechFlow = ai.defineFlow(
         throw new Error("O texto para síntese está vazio.");
       }
 
+      // ElevenLabs Custom Voice Integration for Dante Safra, Athena, and Orion
+      const voiceNameLower = (voice || '').toLowerCase();
+      const isDante = voiceNameLower === 'dante';
+      const isAtena = voiceNameLower === 'atena' || voiceNameLower === 'athena';
+      const isOrion = voiceNameLower === 'orion';
+      
+      let targetElevenLabsVoiceId = null;
+      if (isDante && process.env.DANTE_ELEVENLABS_VOICE_ID) {
+        targetElevenLabsVoiceId = process.env.DANTE_ELEVENLABS_VOICE_ID;
+      } else if (isAtena && process.env.ATENA_ELEVENLABS_VOICE_ID) {
+        targetElevenLabsVoiceId = process.env.ATENA_ELEVENLABS_VOICE_ID;
+      } else if (isOrion && process.env.ORION_ELEVENLABS_VOICE_ID) {
+        targetElevenLabsVoiceId = process.env.ORION_ELEVENLABS_VOICE_ID;
+      }
+
+      if (targetElevenLabsVoiceId && process.env.ELEVENLABS_API_KEY) {
+        try {
+          console.log(`[ElevenLabs TTS] Generating voice clonada for ${voiceNameLower} with voice ID: ${targetElevenLabsVoiceId}`);
+          const response = await fetch(
+            `https://api.elevenlabs.io/v1/text-to-speech/${targetElevenLabsVoiceId}`,
+            {
+              method: 'POST',
+              headers: {
+                'accept': 'audio/mpeg',
+                'content-type': 'application/json',
+                'xi-api-key': process.env.ELEVENLABS_API_KEY!,
+              },
+              body: JSON.stringify({
+                text: text.trim(),
+                model_id: 'eleven_multilingual_v2',
+                voice_settings: {
+                  stability: 0.45,
+                  similarity_boost: 0.80,
+                  style: 0.3,
+                  use_speaker_boost: true,
+                  speed: 1.0,
+                },
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.text();
+            console.error('[ElevenLabs TTS Flow Error]', response.status, errorData);
+            throw new Error(`Erro do ElevenLabs: ${response.status}`);
+          }
+
+          const audioArray = await response.arrayBuffer();
+          const audioBuffer = Buffer.from(audioArray);
+          const audioDataUri = `data:audio/mp3;base64,${audioBuffer.toString('base64')}`;
+
+          return {
+            audioDataUri,
+            speechMarks: [] // ElevenLabs has no native visemes in basic TTS API
+          };
+        } catch (elevenErr: any) {
+          console.error("VIX DIAGNOSTIC: Falha ao gerar áudio com ElevenLabs para Dante. Fazendo fallback para Amazon Polly...", elevenErr);
+          // Fallback - continue with existing Polly logic below
+        }
+      }
+
       // 1. Sintetizar o Áudio (MP3)
       const audioCommand = new SynthesizeSpeechCommand({
         Engine: selectedEngine,

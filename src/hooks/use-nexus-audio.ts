@@ -123,8 +123,42 @@ export function useNexusAudio() {
             return;
         }
 
+        // 1. Substituir pronúncias comuns
         processedText = processedText.replace(/\b(Jean|Gean)\b/gi, 'Gian');
         processedText = processedText.replace(/\bNexus\b/gi, 'Nécsus');
+
+        // 2. Normalizar gêneros gramaticais e abreviações
+        processedText = processedText.replace(/o\(a\)/gi, 'o');
+        processedText = processedText.replace(/a\(o\)/gi, 'a');
+
+        // 3. Remover siglas de estados para evitar gagueira
+        processedText = processedText.replace(/\b(rs|sc|pr|sp|rj|mg|go|mt|ms|ba|pe|ce|rn|pb|al|se|ma|pi|pa|am|ac|ro|rr|ap|to|df)\b/gi, '');
+
+        // 4. Limpar formatação Markdown (negrito, itálico, títulos, listas)
+        processedText = processedText.replace(/\*\*/g, '');
+        processedText = processedText.replace(/\*/g, '');
+        processedText = processedText.replace(/__/g, '');
+        processedText = processedText.replace(/_/g, '');
+        processedText = processedText.replace(/#/g, '');
+        processedText = processedText.replace(/`+/g, '');
+        processedText = processedText.replace(/[\[\]]/g, '');
+
+        // 5. Normalizar pontuações complexas ou causadoras de gagueira (reticências, dois pontos, parênteses)
+        processedText = processedText.replace(/\.{2,}/g, '. ');
+        processedText = processedText.replace(/:/g, ', ');
+        processedText = processedText.replace(/;/g, ', ');
+        processedText = processedText.replace(/[\(\)]/g, '');
+
+        // 6. Remover todos os tipos de Emojis
+        processedText = processedText.replace(/[\u{1F300}-\u{1F9FF}]/gu, '');
+        processedText = processedText.replace(/[\u{1F600}-\u{1F64F}]/gu, '');
+        processedText = processedText.replace(/[\u{2700}-\u{27BF}]/gu, '');
+        processedText = processedText.replace(/[\u{1F680}-\u{1F6FF}]/gu, '');
+        processedText = processedText.replace(/[\u{2600}-\u{26FF}]/gu, '');
+        processedText = processedText.replace(/[\u{1F1E0}-\u{1F1FF}]/gu, '');
+
+        // 7. Normalizar espaços em branco
+        processedText = processedText.replace(/\s+/g, ' ').trim();
 
         const newAbortController = new AbortController();
         abortControllerRef.current = newAbortController;
