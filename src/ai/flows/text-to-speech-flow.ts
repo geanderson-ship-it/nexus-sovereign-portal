@@ -113,7 +113,9 @@ const textToSpeechFlow = ai.defineFlow(
           const sanitizeForWillVoice = (raw: string): string => {
             return raw
               .replace(/maçãs/gi, 'massans')
-              .replace(/maçã/gi,  'massan');
+              .replace(/maçã/gi,  'massan')
+              .replace(/(?<=^|[^a-zA-Z0-9À-ÿ])çãs(?=$|[^a-zA-Z0-9À-ÿ])/gi, 'massans')
+              .replace(/(?<=^|[^a-zA-Z0-9À-ÿ])çã(?=$|[^a-zA-Z0-9À-ÿ])/gi,  'massan');
           };
 
           const ttsText = isDante ? sanitizeForWillVoice(text.trim()) : text.trim();
