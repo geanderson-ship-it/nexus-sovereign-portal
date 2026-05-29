@@ -117,8 +117,9 @@ const textToSpeechFlow = ai.defineFlow(
           };
 
           const ttsText = isDante ? sanitizeForWillVoice(text.trim()) : text.trim();
+          
+          console.log(`[ElevenLabs TTS] Generating voice clone for "${voiceNameLower}". Raw text: "${text.trim()}" | Sent text: "${ttsText}" | Voice ID: ${targetElevenLabsVoiceId}`);
 
-          console.log(`[ElevenLabs TTS] Generating voice clonada for ${voiceNameLower} with voice ID: ${targetElevenLabsVoiceId}`);
           const response = await fetch(
             `https://api.elevenlabs.io/v1/text-to-speech/${targetElevenLabsVoiceId}`,
             {
