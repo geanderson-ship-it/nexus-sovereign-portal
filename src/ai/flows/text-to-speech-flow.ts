@@ -112,38 +112,8 @@ const textToSpeechFlow = ai.defineFlow(
           // corretamente caracteres especiais do Português: ã, ç, â, etc.
           const sanitizeForWillVoice = (raw: string): string => {
             return raw
-              // Palavras inteiras problemáticas primeiro
-              .replace(/maçãs/gi,    'macas')
-              .replace(/maçã/gi,     'macao')
-              .replace(/feijão/gi,   'feijao')
-              .replace(/adubação/gi, 'adubacao')
-              .replace(/irrigação/gi,'irrigacao')
-              .replace(/aplicação/gi,'aplicacao')
-              .replace(/produção/gi, 'producao')
-              .replace(/ações/gi,    'acoes')
-              .replace(/ação/gi,     'acao')
-              .replace(/informação/gi,'informacao')
-              .replace(/seleção/gi,  'selecao')
-              .replace(/colheita/gi, 'colheita')
-              .replace(/pão/gi,      'pao')
-              .replace(/não/gi,      'nao')
-              .replace(/são/gi,      'sao')
-              .replace(/também/gi,   'tambem')
-              .replace(/então/gi,    'entao')
-              // Substituições por caractere
-              .replace(/ç/g, 's').replace(/Ç/g, 'S')
-              .replace(/ã/g, 'a').replace(/Ã/g, 'A')
-              .replace(/â/g, 'a').replace(/Â/g, 'A')
-              .replace(/á/g, 'a').replace(/Á/g, 'A')
-              .replace(/à/g, 'a').replace(/À/g, 'A')
-              .replace(/é/g, 'e').replace(/É/g, 'E')
-              .replace(/ê/g, 'e').replace(/Ê/g, 'E')
-              .replace(/í/g, 'i').replace(/Í/g, 'I')
-              .replace(/ó/g, 'o').replace(/Ó/g, 'O')
-              .replace(/ô/g, 'o').replace(/Ô/g, 'O')
-              .replace(/õ/g, 'o').replace(/Õ/g, 'O')
-              .replace(/ú/g, 'u').replace(/Ú/g, 'U')
-              .replace(/ü/g, 'u').replace(/Ü/g, 'U');
+              .replace(/maçãs/gi, 'massans')
+              .replace(/maçã/gi,  'massan');
           };
 
           const ttsText = isDante ? sanitizeForWillVoice(text.trim()) : text.trim();
