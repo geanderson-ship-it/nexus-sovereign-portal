@@ -108,6 +108,46 @@ const textToSpeechFlow = ai.defineFlow(
 
       if (targetElevenLabsVoiceId && process.env.ELEVENLABS_API_KEY) {
         try {
+          // Sanitiza texto para vozes de língua inglesa (ex: Will) que não pronunciam
+          // corretamente caracteres especiais do Português: ã, ç, â, etc.
+          const sanitizeForWillVoice = (raw: string): string => {
+            return raw
+              // Palavras inteiras problemáticas primeiro
+              .replace(/maçãs/gi,    'macas')
+              .replace(/maçã/gi,     'macao')
+              .replace(/feijão/gi,   'feijao')
+              .replace(/adubação/gi, 'adubacao')
+              .replace(/irrigação/gi,'irrigacao')
+              .replace(/aplicação/gi,'aplicacao')
+              .replace(/produção/gi, 'producao')
+              .replace(/ações/gi,    'acoes')
+              .replace(/ação/gi,     'acao')
+              .replace(/informação/gi,'informacao')
+              .replace(/seleção/gi,  'selecao')
+              .replace(/colheita/gi, 'colheita')
+              .replace(/pão/gi,      'pao')
+              .replace(/não/gi,      'nao')
+              .replace(/são/gi,      'sao')
+              .replace(/também/gi,   'tambem')
+              .replace(/então/gi,    'entao')
+              // Substituições por caractere
+              .replace(/ç/g, 's').replace(/Ç/g, 'S')
+              .replace(/ã/g, 'a').replace(/Ã/g, 'A')
+              .replace(/â/g, 'a').replace(/Â/g, 'A')
+              .replace(/á/g, 'a').replace(/Á/g, 'A')
+              .replace(/à/g, 'a').replace(/À/g, 'A')
+              .replace(/é/g, 'e').replace(/É/g, 'E')
+              .replace(/ê/g, 'e').replace(/Ê/g, 'E')
+              .replace(/í/g, 'i').replace(/Í/g, 'I')
+              .replace(/ó/g, 'o').replace(/Ó/g, 'O')
+              .replace(/ô/g, 'o').replace(/Ô/g, 'O')
+              .replace(/õ/g, 'o').replace(/Õ/g, 'O')
+              .replace(/ú/g, 'u').replace(/Ú/g, 'U')
+              .replace(/ü/g, 'u').replace(/Ü/g, 'U');
+          };
+
+          const ttsText = isDante ? sanitizeForWillVoice(text.trim()) : text.trim();
+
           console.log(`[ElevenLabs TTS] Generating voice clonada for ${voiceNameLower} with voice ID: ${targetElevenLabsVoiceId}`);
           const response = await fetch(
             `https://api.elevenlabs.io/v1/text-to-speech/${targetElevenLabsVoiceId}`,
@@ -119,7 +159,7 @@ const textToSpeechFlow = ai.defineFlow(
                 'xi-api-key': process.env.ELEVENLABS_API_KEY!,
               },
               body: JSON.stringify({
-                text: text.trim(),
+                text: ttsText,
                 model_id: 'eleven_multilingual_v2',
                 voice_settings: {
                   stability: 0.45,
@@ -131,6 +171,7 @@ const textToSpeechFlow = ai.defineFlow(
               }),
             }
           );
+
 
           if (!response.ok) {
             const errorData = await response.text();
