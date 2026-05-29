@@ -104,7 +104,28 @@ MORANGO: Plantio fevereiro-maio no Sul. Espacamento 30cm por 30cm. Producao 30-6
 
 === FRUTICULTURA ===
 CITROS: Espacamento 6m por 4m. Poda anual de limpeza. Adubacao NPK parcelada 3 a 4 vezes por ano. pH 6,0-6,5.
-MACA: Exige acumulo de frio. Variedades Gala e Fuji no Sul.
+
+MACA (MACIEIRA) - ESPECIALIDADE SERRA GAUCHA E IPE/RS:
+ACUMULO DE FRIO: Frio abaixo de 7,2 graus Celsius necessario para quebrar a dormencia. Gala precisa de 400 a 700 horas. Fuji e Eva precisa de 800 a 1200 horas. Anos com frio insuficiente causam brotacao irregular e queda de producao.
+QUEBRA DE DORMENCIA: Cianamida hidrogenada Dormex dose 0,8 a 1,2 por cento em imersao dos ramos, ou pulverizacao. Aplicar no inicio do inchamento das gemas, 60 dias antes da brotacao prevista. Proibido em temperaturas acima de 12 graus na aplicacao.
+VARIEDADES: Gala e mutantes Galassi, Brookfield, Galaxy, Imperial Gala, superprecoces. Fuji e mutantes Kiku, Mishima, Fuji Suprema. Eva tolerante ao calor para regioes de baixo frio acumulado. Maxi Gala e Galaxy sao premium para exportacao.
+PORTA-ENXERTOS: Marubakaido com interenxerto de M-9 reduz vigor e antecipa producao para 2 a 3 anos. M-7 semi-anao medio vigor. M-9 anao para pomares adensados com irrigacao gotejamento. Maruba livre da tristeza da macieira.
+CONDUCAO E PODA: Sistema fuseto ou eixo central mais produtivo. Poda de inverno em julho e agosto para abrir copa e eliminar ramos ladroes. Poda verde no verao para melhorar entrada de luz nos frutos e coloracao da casca. Angulo dos ramos 60 a 90 graus do eixo central para induzir frutificacao.
+RALEIO: Fundamental para calibre e qualidade. Quimico com ANA acido naftalenacetico 10 a 15 ppm entre 10 e 25 dias apos a plena floracao. BAP 75 a 150 ppm para aumentar calibre. Manual complementar deixando 1 fruto a cada 15 a 20 centimetros no ramo. Pomares sem raleio produzem frutos miudos e bienalidade.
+ADUBACAO: Base na plantacao: fosforo e potassio conforme analise de solo. Anual em producao: nitrogenio parcelado 3 vezes, 30 por cento na brotacao, 50 por cento pos-colheita e 20 por cento no verao. Calcario para pH 6,0 a 6,5. Boro foliar 0,3 por cento na florada e queda das petalas obrigatorio para evitar podridao amarga. Calcio foliar 4 a 6 aplicacoes entre junho e janeiro para prevenir bitter pit.
+IRRIGACAO: Gotejamento obrigatorio em pomares comerciais modernos. Critico nas fases de brotacao, florada, crescimento rapido de frutos julho a setembro e na maturacao. Deficit hidrico na florada causa morte de flores. Excesso proximo da colheita racha os frutos.
+POLINIZACAO: Maca exige polinizacao cruzada entre variedades. Distribuir polinizadores a cada 10 metros no pomar. Abelhas Apis mellifera essencial para alta taxa de pegamento. Manter 2 a 4 colmeias por hectare na florada. Sincronizar floracao entre variedades.
+PRAGAS: Mosca das frutas Anastrepha fraterculus principal praga. Controle com proteina hidrolisada iscada mais malatiao ou spinosade. Monitorar com armadilhas McPhail. Cochonilha San Jose tratamento oleos minerais no dormencia. Acaro vermelho controle com abamectina ou enxofre. Tripes limao controle com spinosade. Lagartas das brotacoes Bacillus thuringiensis.
+DOENCAS: Sarna Venturia inaequalis principal doenca, controle preventivo com fungicidas ditiocarbamatos ou SDHI antes das chuvas na brotacao e apos. Podridao amarga Colletotrichum requer boro e calcio foliar. Mancha de glomerella emergente, controle similar a sarna. Oídio Podosphaera leucotricha enxofre molhavel preventivo. Fogo bacteriano Erwinia amylovora em variedades suscetíveis, notificacao obrigatoria.
+COLHEITA: Indice de amido com solucao de lugol, escala 1 a 8, colher entre 5 e 6. Firmeza de polpa 7 a 8 kgf para Gala, 8 a 9 kgf para Fuji. Brix minimo 10,5 para Gala e 12 para Fuji. Colheita Gala janeiro a fevereiro, Fuji marco a abril. Escalonada em 2 a 3 passes para garantir calibre uniforme.
+CLASSIFICACAO: Calibre minimo 60mm mercado interno, 65mm exportacao. Categorias extra, cat 1 e cat 2. Coloracao minima 50 por cento vermelha para variedades blushed.
+ARMAZENAGEM: Camara fria convencional 0 a 1 grau, umidade 90 a 95 por cento. Atmosfera controlada AC com CO2 2 a 3 por cento e O2 1 a 2 por cento para Fuji ate 9 meses. Gala aguanta 3 a 4 meses em AC.
+PIM: Producao Integrada de Maca certificacao federal obrigatoria para exportacao. Caderno de campo, limite de LMR nos defensivos, rastreabilidade total.
+REGIAO IPE E VACARIA: Altitude 900 a 1100 metros, inverno rigoroso com geadas frequentes, frio suficiente para Fuji sem Dormex em bons anos. Solo vermelho latossolo de boa drenagem. Clima temperado umido sem estacao seca. Principal polo nacional de producao de maca junto com Fraiburgo SC.
+
+PERA: Variedades de inverno Packham, Rocha, D'Anjou exigem frio similar a Fuji. Williams Bartlett sazonal. Poda em espaldeira laminada. Alta exigencia de boro foliar. Polinizacao cruzada obrigatoria com variedades sincronas. Mercado nacional ainda dependente de importacao da Argentina.
+MARMELO: Base para geleias e doces. Rustico, tolerante ao frio severo. Espacamento 4m por 4m. Baixa exigencia de insumos. Mercado artesanal e gourmet em crescimento na Serra Gaucha.
+
 PESSEGO: Poda em taca. Exige acumulo de frio 300-700 horas. Colheita novembro-janeiro no Sul.
 UVA: Conducao em espaldeira ou latada. Poda seca anual. Vindima janeiro-marco no Sul.
 BANANA: Espacamento 2m por 2m. Colheita 9-12 meses. Desbrota obrigatoria.
@@ -448,9 +469,40 @@ O mercado exige cautela na venda fisica. Se puder segurar um lote para contratos
       responseText = `Comandante ${userName}, o espacamento ideal para aipim no Sul e de 90 centimetros a 1 metro entre linhas por 50 a 60 centimetros entre plantas. Corrija o pH do solo para 5,5 a 6,0 com calagem. Controle plantas daninhas nas primeiras brotacoes para garantir raizes fortes.`;
     }
   }
-  else if (userMsg.includes('maçã') || userMsg.includes('maca') || userMsg.includes('apple')) {
-    responseText = `Patrão, as macas Gala e Fuji exigem acumulo de frio abaixo de 7 graus no inverno. Faca raleio de frutos preciso para garantir calibre extra, e combata preventivamente a sarna da maca e a mosca das frutas para uma colheita limpa.`;
+  else if (userMsg.includes('maçã') || userMsg.includes('maca') || userMsg.includes('macieira') || userMsg.includes('pomar') || userMsg.includes('apple')) {
+    const isFrio = userMsg.includes('frio') || userMsg.includes('dormência') || userMsg.includes('dormencia') || userMsg.includes('dormex') || userMsg.includes('acumulo');
+    const isPoda = userMsg.includes('poda') || userMsg.includes('prunning') || userMsg.includes('raleio') || userMsg.includes('ralear') || userMsg.includes('calibre');
+    const isAdub = userMsg.includes('aduba') || userMsg.includes('calcio') || userMsg.includes('cálcio') || userMsg.includes('boro') || userMsg.includes('nutri') || userMsg.includes('fertiliz');
+    const isPraga = userMsg.includes('praga') || userMsg.includes('mosca') || userMsg.includes('sarna') || userMsg.includes('doença') || userMsg.includes('doenca') || userMsg.includes('fungic') || userMsg.includes('inseticida') || userMsg.includes('cochonilha') || userMsg.includes('acaro') || userMsg.includes('ácaro');
+    const isColheita = userMsg.includes('colheita') || userMsg.includes('colher') || userMsg.includes('maturação') || userMsg.includes('maturacao') || userMsg.includes('brix') || userMsg.includes('firmeza') || userMsg.includes('amido');
+    const isArmazen = userMsg.includes('armazen') || userMsg.includes('câmara') || userMsg.includes('camara') || userMsg.includes('atmosfera') || userMsg.includes('estoque') || userMsg.includes('guardar') || userMsg.includes('fria');
+    const isVariedade = userMsg.includes('variedade') || userMsg.includes('gala') || userMsg.includes('fuji') || userMsg.includes('eva') || userMsg.includes('kiku') || userMsg.includes('galaxy') || userMsg.includes('brookfield');
+    const isEnxerto = userMsg.includes('enxerto') || userMsg.includes('porta-enxerto') || userMsg.includes('marubakaido') || userMsg.includes('mudas') || userMsg.includes('plantio') || userMsg.includes('plantar');
+    const isPIM = userMsg.includes('pim') || userMsg.includes('certificaç') || userMsg.includes('exportaç') || userMsg.includes('exportacao') || userMsg.includes('rastreabi');
+
+    if (isFrio) {
+      responseText = `Comandante ${userName}, o acumulo de frio e a chave do pomar de maca. A Gala precisa de 400 a 700 horas abaixo de 7 graus. A Fuji exige de 800 a 1200 horas. Em anos de inverno fraco, aplica-se Dormex na dose de 0,8 a 1,2 por cento nos ramos no inicio do inchamento das gemas para forcar a brotacao uniforme. Nunca aplique com temperatura acima de 12 graus.`;
+    } else if (isPoda) {
+      responseText = `Comandante ${userName}, a poda de inverno em julho e agosto e feita para abrir a copa e eliminar ramos ladroes verticais. Deixa os ramos laterais com angulo de 60 a 90 graus do eixo para induzir frutificacao. No verao faz a poda verde para melhorar a entrada de luz e coloracao dos frutos. O raleio quimico com ANA de 10 a 25 dias apos a plena floracao e fundamental para garantir frutos com calibre de exportacao.`;
+    } else if (isAdub) {
+      responseText = `Comandante ${userName}, na maca o calcio foliar e item obrigatorio, de 4 a 6 aplicacoes entre junho e janeiro para evitar o bitter pit que apodrece a polpa por dentro. O boro tambem e critico na florada e na queda das petalas para evitar a podridao amarga. O nitrogenio deve ser parcelado em 3 vezes, 30 por cento na brotacao, 50 por cento pos-colheita e 20 por cento no verao. Manter pH do solo entre 6,0 e 6,5.`;
+    } else if (isPraga) {
+      responseText = `Comandante ${userName}, a mosca das frutas Anastrepha e a principal praga da maca. O controle e feito com proteina hidrolisada iscada mais spinosade ou malatiao, monitorando com armadilhas McPhail. Para sarna Venturia aplique fungicidas preventivos antes e apos as chuvas na brotacao. Na dormencia aplique oleo mineral para controle da cochonilha San Jose. Mantenha um programa de calcio e boro foliar para prevenir podridao amarga.`;
+    } else if (isColheita) {
+      responseText = `Comandante ${userName}, a colheita certa e no indice de amido entre 5 e 6 na escala do lugol. A Gala colhe de janeiro a fevereiro com firmeza de polpa de 7 a 8 quilos-forca e Brix minimo de 10,5 graus. A Fuji colhe de marco a abril com firmeza de 8 a 9 quilos-forca e Brix minimo de 12 graus. Faca a colheita em 2 a 3 passes para pegar cada fruto no ponto certo e garantir calibre uniforme.`;
+    } else if (isArmazen) {
+      responseText = `Comandante ${userName}, a camara fria convencional deve ficar entre 0 e 1 grau com umidade de 90 a 95 por cento. A Gala aguenta ate 4 meses. Para a Fuji, a atmosfera controlada com CO2 de 2 a 3 por cento e oxigenio de 1 a 2 por cento permite guardar ate 9 meses sem perda de qualidade comercial. E o diferencial que define a rentabilidade de uma safra inteira.`;
+    } else if (isVariedade) {
+      responseText = `Comandante ${userName}, para a regiao de Ipe e Serra Gaucha as melhores escolhas sao Gala e seus clones Brookfield, Galaxy e Imperial Gala para colheita precoce de janeiro a fevereiro. Para colheita tardia, Fuji Kiku e Fuji Suprema sao as mais valorizadas no mercado. A Eva serve para regioes com menos frio acumulado. O Galaxy e o Brookfield sao premium para exportacao com calibre e coloracao superior.`;
+    } else if (isEnxerto) {
+      responseText = `Comandante ${userName}, o porta-enxerto Marubakaido com interenxerto de M-9 e o mais usado na Serra Gaucha. Ele reduz o vigor da arvore e antecipa a producao para 2 a 3 anos apos o plantio. O espacamento recomendado e de 4 metros entre linhas por 1,5 a 2 metros entre plantas em sistema fuseto. A producao plena comeca aos 5 a 6 anos e o pomar dura 20 a 25 anos bem manejado.`;
+    } else if (isPIM) {
+      responseText = `Comandante ${userName}, a Producao Integrada de Maca e obrigatoria para exportacao. Ela exige caderno de campo com registro de todas as aplicacoes, respeito aos limites maximos de residuos LMR e rastreabilidade do talhao ate a embalagem. Os pomares certificados tem acesso a mercados europeus e norte-americanos onde o preco e 30 a 50 por cento maior que o mercado interno. O MAPA faz auditorias anuais.`;
+    } else {
+      responseText = `Patrão, a maca em Ipe e Serra Gaucha exige tecnica de ponta. O acumulo de frio abaixo de 7 graus e a base de tudo: Gala precisa de 400 a 700 horas, Fuji de 800 a 1200 horas. Use porta-enxerto Marubakaido com M-9 para antecipar producao. Faca raleio quimico com ANA de 10 a 25 dias apos a floracao para garantir calibre de exportacao. Controle preventivo de sarna e mosca das frutas sao obrigatorios para uma colheita limpa e rentavel.`;
+    }
   }
+
   else if (userMsg.includes('pêssego') || userMsg.includes('pessego') || userMsg.includes('peach')) {
     responseText = `Comandante ${userName}, a poda de inverno em taca garante luz solar ideal nos pessegos. Trate preventivamente a podridao parda na florada e aplique potassio na fase final para garantir frutos doces e firmes.`;
   }
