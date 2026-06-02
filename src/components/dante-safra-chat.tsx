@@ -253,7 +253,7 @@ export default function DanteSafraChat() {
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const hasTriggeredGreeting = useRef(false);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -274,7 +274,11 @@ export default function DanteSafraChat() {
         const { messages: savedMessages, setupStage: savedStage, nickname: savedNickname, propertyDetails: savedProps } = JSON.parse(savedState);
         if (savedMessages) setMessages(savedMessages);
         if (savedStage) setSetupStage(savedStage);
-        if (savedNickname) setNickname(savedNickname);
+        if (savedStage === 'ANALISE' && savedNickname) {
+          setNickname(savedNickname);
+        } else {
+          setNickname(null);
+        }
         if (savedProps) setPropertyDetails(savedProps);
       }
     } catch (error) {
@@ -330,8 +334,13 @@ export default function DanteSafraChat() {
 
   useEffect(() => {
     setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 300);
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTo({
+          top: chatContainerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   }, [messages]);
 
   const addMessage = useCallback((sender: Sender, data: { text: string } | DanteSafraOutput, imageUri?: string) => {
@@ -348,6 +357,10 @@ export default function DanteSafraChat() {
     // Só dispara se não estiver carregando inicialmente, não houver mensagens e for estágio inicial
     if (!isInitialLoading && messages.length === 0 && setupStage === 'PROPRIEDADE' && !hasTriggeredGreeting.current) {
       hasTriggeredGreeting.current = true;
+      
+      // Reset onboarding state for a clean new client registration
+      setNickname(null);
+      setPropertyDetails({});
       
       const fetchAndPlayGreeting = async () => {
         setIsLoading(true);
@@ -366,7 +379,7 @@ export default function DanteSafraChat() {
           const response: DanteSafraOutput = await danteSafra({
             userMessage: "", 
             setupStage: "PROPRIEDADE",
-            userName: user?.displayName || 'Comandante',
+            userName: 'Comandante',
             locale: locale,
           });
           
@@ -416,7 +429,7 @@ export default function DanteSafraChat() {
         userMessage: currentInput,
         photoDataUri: imageUri,
         setupStage: setupStage,
-        userName: nickname || user?.displayName || 'Comandante',
+        userName: setupStage === 'ANALISE' ? (nickname || user?.displayName || 'Comandante') : 'Comandante',
         propertyDetails: propertyDetails,
         locale: locale,
         history: historyForAI as { role: "user" | "model"; text: string }[],
@@ -576,7 +589,6 @@ export default function DanteSafraChat() {
             <div className="bg-gray-700/80 rounded-lg px-4 py-3 rounded-bl-none"><Loader2 className="w-5 h-5 animate-spin text-muted-foreground" /></div>
             </div>
         )}
-        <div ref={messagesEndRef} />
         </div>
   );
 
@@ -640,7 +652,7 @@ export default function DanteSafraChat() {
                 }}
             />
         </CardHeader>
-        <div className="flex-1 overflow-y-auto w-full min-h-0 custom-scrollbar p-4">
+        <div ref={chatContainerRef} className="flex-1 overflow-y-auto w-full min-h-0 custom-scrollbar p-4">
             {renderMessages()}
         </div>
           <CardFooter className="p-4 border-t border-emerald-800/60 flex flex-col items-start gap-2">

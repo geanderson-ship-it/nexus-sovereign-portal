@@ -165,7 +165,7 @@ export default function DanteChat() {
   const [isRecording, setIsRecording] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const userInitials = useMemo(() => {
@@ -232,8 +232,13 @@ export default function DanteChat() {
   
   useEffect(() => {
     setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 300);
+      if (chatContainerRef.current) {
+        chatContainerRef.current.scrollTo({
+          top: chatContainerRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
   }, [messages]);
 
   // Automatically send first message if in AVALIACAO stage
@@ -351,8 +356,8 @@ export default function DanteChat() {
         </CardHeader>
         
         <CardContent className="flex-1 flex flex-col p-0 relative min-h-0">
-            <ScrollArea className="flex-1 w-full">
-            <div className="p-4 space-y-6">
+            <div ref={chatContainerRef} className="flex-1 overflow-y-auto w-full min-h-0 custom-scrollbar p-4">
+            <div className="space-y-6">
                 {messages.map((msg) => (
                     <div key={msg.id} className={cn("flex items-end gap-2", msg.sender === 'user' ? "justify-end" : "justify-start")}>
                         {msg.sender === 'system' && (
@@ -382,9 +387,8 @@ export default function DanteChat() {
                     </div>
                 </div>
                 )}
-                <div ref={messagesEndRef} />
             </div>
-            </ScrollArea>
+            </div>
         </CardContent>
         <CardFooter className="p-4 border-t border-blue-800/60">
           <div className="flex w-full flex-col gap-2">
