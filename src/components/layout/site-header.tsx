@@ -86,6 +86,7 @@ export function SiteHeader() {
     { title: t('navConsultoria'), href: '/consulting' },
     { title: t('navIntelligence'), href: '/intelligence' },
     { title: 'Global', href: '/intelligence/global' },
+    { title: 'Agro', href: '/agro' },
     { title: 'Empresas', href: '/nexus-empresas' },
     { title: t('navSobre'), href: '/about' },
     { title: t('navContato'), href: '/contact' },
@@ -113,6 +114,8 @@ export function SiteHeader() {
                     ? 'text-primary font-bold hover:text-primary/80 neon-text' 
                     : item.href === '/intelligence/global'
                     ? 'text-blue-500 font-bold hover:text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] uppercase tracking-wide'
+                    : item.href === '/agro'
+                    ? 'text-emerald-400 font-bold hover:text-emerald-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.6)] uppercase tracking-wide'
                     : item.href === '/nexus-empresas'
                     ? 'text-[#00D4FF] font-bold hover:text-[#00D4FF]/80'
                     : pathname === item.href 
@@ -271,6 +274,8 @@ export function SiteHeader() {
                           'flex items-center justify-between p-3 rounded-lg transition-all duration-200 group',
                           item.href === '/intelligence/global'
                             ? 'bg-blue-500/10 text-blue-400 font-bold border border-blue-500/30'
+                            : item.href === '/agro'
+                            ? 'bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/30'
                             : item.href === '/intelligence'
                               ? 'bg-primary/10 text-primary border border-primary/20'
                               : pathname === item.href
