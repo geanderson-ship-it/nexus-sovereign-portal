@@ -40,11 +40,32 @@ function ContactContent() {
     }
   }, [searchParams]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
+    // 1. Salvar lead no banco de backup do servidor
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          company: data.company || '',
+          subject: selectedSubject || data.subject,
+          message: data.message,
+        }),
+      });
+    } catch (err) {
+      console.error('Erro ao registrar lead em segundo plano:', err);
+    }
+
+    // 2. Construir link do WhatsApp
     const whatsappBody = `*Nova Requisição de Contato - Nexus*
 
 *Nome:* ${data.firstName} ${data.lastName}

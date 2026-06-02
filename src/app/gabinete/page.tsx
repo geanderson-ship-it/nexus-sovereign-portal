@@ -449,6 +449,27 @@ export default function GabinetePage() {
               </CardContent>
             </Card>
           </Link>
+
+          {/* Central de Leads do Site */}
+          <Link href="/gabinete/leads">
+            <Card className="bg-slate-900/50 border-slate-800 hover:border-indigo-500/50 transition-colors cursor-pointer group h-full">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Users className="w-6 h-6 text-indigo-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-indigo-400 transition-colors">Contatos & Leads</CardTitle>
+                <CardDescription>Gerenciador de Oportunidades</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Monitore em tempo real as pessoas que preencheram o formulário no portal da Nexus. Nunca perca um contato devido a popups bloqueados.
+                </p>
+                <div className="mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-indigo-500">
+                  Gerenciar Oportunidades <Users className="w-4 h-4" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
 
         {/* TABELA DE PREÇOS DO PORTFÓLIO NEXUS */}

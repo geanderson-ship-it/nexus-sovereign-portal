@@ -10,10 +10,20 @@ if (!process.env.AWS_REGION && process.env.NODE_ENV === 'production') {
 
 export const NEXUS_MODEL = 'aws-bedrock/us.anthropic.claude-sonnet-4-6';
 
+const bedrockRegion = process.env.BEDROCK_REGION || process.env.AWS_REGION || 'us-east-1';
+const bedrockAccessKeyId = process.env.BEDROCK_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID;
+const bedrockSecretAccessKey = process.env.BEDROCK_SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY;
+
 export const ai = genkit({
   plugins: [
     awsBedrock({
-      region: process.env.AWS_REGION || 'us-east-1',
+      region: bedrockRegion,
+      ...(bedrockAccessKeyId && bedrockSecretAccessKey ? {
+        credentials: {
+          accessKeyId: bedrockAccessKeyId,
+          secretAccessKey: bedrockSecretAccessKey,
+        }
+      } : {})
     }),
   ],
   // Otimização Platinum: Por padrão, usamos o Claude 3 Haiku para a agilidade da Nexus.

@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, MicOff, MessageSquare, X, Send, Video, Settings, Activity, Loader2 } from 'lucide-react';
+import { Mic, MicOff, MessageSquare, X, Send, Video, Settings, Activity, Loader2, Paperclip, FileText, ImageIcon, Music, Film, ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -12,6 +12,7 @@ import { useLocale } from '@/hooks/use-locale';
 import { useUser } from '@/auth';
 import type { AwsRumConfig } from 'aws-rum-web';
 import { isAdminUser } from '@/lib/constants';
+import { extractVideoFrames } from '@/lib/video-frames';
 
 function AtenaContent() {
   const { user, isUserLoading } = useUser();
@@ -62,6 +63,32 @@ function AtenaContent() {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [currentOutfit, setCurrentOutfit] = useState('/atena/Atena segunda.png');
+  const [attachedFile, setAttachedFile] = useState<{ name: string; type: string; base64: string; preview?: string; mediaType: 'image' | 'pdf' | 'audio' | 'video' } | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      const isImage = file.type.startsWith('image/');
+      const isAudio = file.type.startsWith('audio/');
+      const isVideo = file.type.startsWith('video/');
+      const mediaType: 'image' | 'pdf' | 'audio' | 'video' = isImage ? 'image' : isAudio ? 'audio' : isVideo ? 'video' : 'pdf';
+      setAttachedFile({
+        name: file.name,
+        type: file.type,
+        base64,
+        preview: isImage ? base64 : undefined,
+        mediaType
+      });
+    };
+    reader.readAsDataURL(file);
+    // Reset input so same file can be re-attached
+    e.target.value = '';
+  };
 
   // URL Parameter Handling
   useEffect(() => {
@@ -103,35 +130,169 @@ function AtenaContent() {
     { id: 1, text: greetings.Atena, sender: 'ai' }
   ]);
 
+  // Auto-scroll to bottom whenever messages change or while typing
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isTyping]);
+
   // Reset chat history and initial greeting when avatar changes
   useEffect(() => {
     setMessages([{ id: Date.now(), text: greetings[selectedAvatar], sender: 'ai' }]);
   }, [selectedAvatar, user?.name]);
 
   const handleSendMessage = async () => {
-    if (!inputText.trim() || isTyping) return;
+    if ((!inputText.trim() && !attachedFile) || isTyping) return;
 
     const userMsg = inputText.trim();
     const currentUserName = user?.name || 'Usuário Nexus';
-    const newMsg = { id: Date.now(), text: userMsg, sender: 'user' };
+    const attachmentLabel = attachedFile ? `\n📎 [${attachedFile.name}]` : '';
+    const newMsg = { id: Date.now(), text: userMsg + attachmentLabel, sender: 'user', attachedFile: attachedFile || undefined };
     setMessages(prev => [...prev, newMsg]);
     setInputText('');
+    const currentAttachment = attachedFile;
+    setAttachedFile(null);
     setIsTyping(true);
 
     try {
       let aiResponse = '';
 
+      // --- URL detection and fetching ---
+      let urlContext = '';
+      // Detect URLs with OR without http/https prefix
+      const urlRegex = /(?:https?:\/\/|(?<!\w)(?=\w))(?:(?:www\.)?[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(?:\/[^\s"'<>()]*)?/gi;
+      const rawUrls = userMsg.match(urlRegex) || [];
+      const detectedUrls = rawUrls.filter(u => u.includes('.')).map(u =>
+        u.startsWith('http') ? u : `https://${u}`
+      );
+      if (detectedUrls.length > 0) {
+        const urlToFetch = detectedUrls[0]; // fetch first URL found
+        const fetchingId = Date.now();
+        setMessages(prev => [...prev, {
+          id: fetchingId,
+          text: `🌐 Lendo ${urlToFetch}...`,
+          sender: 'ai'
+        }]);
+        try {
+          const res = await fetch('/api/fetch-url', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: urlToFetch }),
+          });
+          const data = await res.json();
+          if (data.content) {
+            urlContext = `\n\n[Conteúdo da página "${data.title}" (${urlToFetch}):\n${data.content}]`;
+          } else {
+            urlContext = `\n\n[Tentei acessar ${urlToFetch} mas não consegui: ${data.error || 'erro desconhecido'}]`;
+          }
+        } catch {
+          urlContext = `\n\n[Tentei acessar ${urlToFetch} mas houve uma falha de conexão.]`;
+        }
+        setMessages(prev => prev.filter(m => m.id !== fetchingId));
+      }
+
+      // --- Transcription step for audio/video ---
+      let transcriptContext = '';
+      if (currentAttachment && (currentAttachment.mediaType === 'audio' || currentAttachment.mediaType === 'video')) {
+        // Show transcribing status in chat
+        const transcribingId = Date.now();
+        setMessages(prev => [...prev, {
+          id: transcribingId,
+          text: `🎙️ Transcrevendo "${currentAttachment.name}"...`,
+          sender: 'ai'
+        }]);
+
+        try {
+          const res = await fetch('/api/transcribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              base64: currentAttachment.base64,
+              mimeType: currentAttachment.type,
+              fileName: currentAttachment.name,
+            }),
+          });
+          const data = await res.json();
+          if (data.transcript) {
+            transcriptContext = `\n\n[Transcrição do arquivo "${currentAttachment.name}": "${data.transcript}"]`;
+          } else {
+            transcriptContext = `\n\n[O usuário enviou um arquivo de ${currentAttachment.mediaType} mas a transcrição não foi possível: ${data.error || 'erro desconhecido'}]`;
+          }
+        } catch {
+          transcriptContext = `\n\n[O usuário enviou um arquivo de ${currentAttachment.mediaType} mas houve falha na transcrição.]`;
+        }
+
+        // Remove transcribing status message
+        setMessages(prev => prev.filter(m => m.id !== transcribingId));
+      }
+
+      // --- Visual frame analysis for video ---
+      let visualContext = '';
+      if (currentAttachment && currentAttachment.mediaType === 'video') {
+        const analyzingId = Date.now();
+        setMessages(prev => [...prev, {
+          id: analyzingId,
+          text: `👁️ Analisando visualmente "${currentAttachment.name}"...`,
+          sender: 'ai'
+        }]);
+        try {
+          const frames = await extractVideoFrames(currentAttachment.base64, currentAttachment.type, 4);
+          if (frames.length > 0) {
+            const res = await fetch('/api/analyze-frames', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                frames,
+                fileName: currentAttachment.name,
+                userMessage: userMsg,
+              }),
+            });
+            const data = await res.json();
+            if (data.description) {
+              visualContext = `\n\n[Análise visual do vídeo "${currentAttachment.name}": ${data.description}]`;
+            }
+          }
+        } catch {
+          // Visual analysis failed — transcript alone is still useful
+        }
+        setMessages(prev => prev.filter(m => m.id !== analyzingId));
+      }
+
+      // --- Build full message context ---
+      const buildAttachmentContext = (att: typeof currentAttachment) => {
+        if (!att) return '';
+        if (att.mediaType === 'audio' || att.mediaType === 'video') return transcriptContext + visualContext;
+        const typeLabel = att.mediaType === 'image' ? 'imagem' : 'documento PDF';
+        const instruction = att.mediaType === 'image'
+          ? 'Comente sobre a imagem de forma natural, como se a tivesse recebido e visto.'
+          : 'Confirme que recebeu o documento e esteja pronta para ajudar com ele.';
+        return `\n\n[O usuário enviou uma ${typeLabel}: "${att.name}". ${instruction}]`;
+      };
+
+      const messageWithAttachment = userMsg + urlContext + buildAttachmentContext(currentAttachment);
+
       if (selectedAvatar === 'Atena') {
+        const savedAgenda = localStorage.getItem('nexus_agenda_v3') || '';
+        const history = messages.map(m => ({
+          role: m.sender === 'user' ? 'user' as const : 'model' as const,
+          text: m.text
+        }));
         const result = await atenaChat({
-          userMessage: userMsg,
+          userMessage: messageWithAttachment,
           userName: currentUserName,
-          currentOutfit: currentOutfit
+          currentOutfit: currentOutfit,
+          clientAgenda: savedAgenda,
+          history
         });
         aiResponse = result.response;
       } else {
+        const history = messages.map(m => ({
+          role: m.sender === 'user' ? 'user' as const : 'model' as const,
+          text: m.text
+        }));
         const result = await orionChat({
-          userMessage: userMsg,
-          userName: currentUserName
+          userMessage: messageWithAttachment,
+          userName: currentUserName,
+          history
         });
         aiResponse = result.response;
       }
@@ -166,6 +327,15 @@ function AtenaContent() {
     return (
       <div className="min-h-[100dvh] text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
         <link rel="manifest" href="/atena-manifest.json" />
+        
+        {/* BACK TO GABINETE BUTTON */}
+        <button
+          onClick={() => router.push('/gabinete')}
+          className="absolute top-6 left-6 z-20 flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 backdrop-blur-md text-slate-300 hover:text-white transition-all hover:bg-slate-900/60 shadow-lg hover:scale-105"
+        >
+          <ArrowLeft className="h-4 w-4 text-violet-400" />
+          <span className="text-xs font-black uppercase tracking-widest">Voltar</span>
+        </button>
         
         {/* FIXED BACKGROUND IMAGE */}
         <div className="fixed inset-0 z-0 pointer-events-none">
@@ -286,6 +456,13 @@ function AtenaContent() {
               )}
             </div>
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => router.push('/gabinete')}
+                className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-all hover:scale-105"
+                title="Voltar ao Gabinete"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
               <button className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors">
                 <Settings className="h-4 w-4" />
               </button>
@@ -308,7 +485,7 @@ function AtenaContent() {
                   exit={{ opacity: 0, y: 20 }}
                   className="bg-black/60 backdrop-blur-xl border border-white/10 rounded-[32px] overflow-hidden flex flex-col h-[50vh] max-h-[400px]"
                 >
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col">
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col" style={{ scrollBehavior: 'smooth' }}>
                     {messages.map((msg) => (
                       <div
                         key={msg.id}
@@ -333,21 +510,73 @@ function AtenaContent() {
                         <span>{selectedAvatar} processando solicitação...</span>
                       </div>
                     )}
+                    {/* Anchor for auto-scroll */}
+                    <div ref={messagesEndRef} />
+                    {/* Attachment preview bar */}
+                    {attachedFile && (
+                      <div className="px-3 py-2 bg-black/40 border-t border-white/5 flex flex-col gap-2">
+                        <div className="flex items-center gap-2">
+                          {/* Icon badge by type */}
+                          {attachedFile.mediaType === 'image' && attachedFile.preview ? (
+                            <img src={attachedFile.preview} alt="preview" className="h-8 w-8 object-cover rounded-lg border border-white/10 flex-shrink-0" />
+                          ) : attachedFile.mediaType === 'audio' ? (
+                            <div className="h-8 w-8 rounded-lg bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                              <Music className="h-4 w-4 text-violet-400" />
+                            </div>
+                          ) : attachedFile.mediaType === 'video' ? (
+                            <div className="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                              <Film className="h-4 w-4 text-blue-400" />
+                            </div>
+                          ) : (
+                            <div className="h-8 w-8 rounded-lg bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                              <FileText className="h-4 w-4 text-red-400" />
+                            </div>
+                          )}
+                          <span className="flex-1 text-xs text-slate-300 truncate">{attachedFile.name}</span>
+                          <button onClick={() => setAttachedFile(null)} className="text-slate-500 hover:text-white transition-colors flex-shrink-0">
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                        {/* Native media players */}
+                        {attachedFile.mediaType === 'audio' && (
+                          <audio controls src={attachedFile.base64} className="w-full h-8" style={{ accentColor: '#7c3aed' }} />
+                        )}
+                        {attachedFile.mediaType === 'video' && (
+                          <video controls src={attachedFile.base64} className="w-full rounded-lg max-h-28 object-contain" />
+                        )}
+                      </div>
+                    )}
                   </div>
                   <div className="p-3 bg-black/40 border-t border-white/5 flex items-center gap-2">
+                    {/* Hidden file input */}
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*,audio/*,video/*,.pdf"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
+                    {/* Attachment button */}
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="w-10 h-10 rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 flex items-center justify-center flex-shrink-0 transition-all"
+                      title="Anexar imagem, áudio, vídeo ou PDF"
+                    >
+                      <Paperclip className="h-4 w-4" />
+                    </button>
                     <input
                       type="text"
                       value={inputText}
                       onChange={(e) => setInputText(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                      placeholder="Diretoria, o que deseja agora?"
+                      placeholder="Oi Atena, pode falar..."
                       className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500/50"
                     />
                     <button
                       onClick={handleSendMessage}
-                      disabled={!inputText.trim()}
+                      disabled={!inputText.trim() && !attachedFile}
                       className={cn(
-                        "w-12 h-12 rounded-full text-white flex items-center justify-center flex-shrink-0 disabled:opacity-50",
+                        "w-12 h-12 rounded-full text-white flex items-center justify-center flex-shrink-0 disabled:opacity-50 transition-all",
                         selectedAvatar === 'Atena' ? "bg-violet-600" : "bg-green-600"
                       )}
                     >

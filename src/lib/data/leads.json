@@ -1,0 +1,38 @@
+[
+  {
+    "id": "l1a8d3e",
+    "firstName": "Gilberto",
+    "lastName": "Schumann",
+    "email": "gilberto.schumann@passodosobrado.rs.gov.br",
+    "phone": "51987654321",
+    "company": "Prefeitura de Passo do Sobrado",
+    "subject": "Dante Safra - Monitoramento Agrícola",
+    "message": "Olá! Gostaria de agendar uma reunião de demonstração do Dante Safra offline. Tivemos uma conversa rápida sobre o fomento à nossa produção agrícola de base familiar e gostaríamos de avaliar as telas e os relatórios integrados para os produtores.",
+    "createdAt": "2026-06-01T14:32:00.000Z",
+    "status": "novo"
+  },
+  {
+    "id": "l2b9f4g",
+    "firstName": "Luciana",
+    "lastName": "Vanderlei",
+    "email": "luciana.v@grupocalcados.com.br",
+    "phone": "51998877665",
+    "company": "Polo Calçadista de Mato Leitão",
+    "subject": "Nexus PPCP & Compras",
+    "message": "Bom dia, Gean! Tudo bem? Estamos precisando otimizar a expedição e o controle de insumos na nossa unidade metal-mecânica em Mato Leitão. Gostaria de saber como a inteligência artificial do Nexus Compras pode auditar automaticamente nossos orçamentos e evitar desvios.",
+    "createdAt": "2026-05-30T10:15:30.000Z",
+    "status": "contatado"
+  },
+  {
+    "id": "l3c0h5j",
+    "firstName": "Carlos",
+    "lastName": "Medeiros",
+    "email": "carlos.medeiros@ipe.rs.gov.br",
+    "phone": "54991223344",
+    "company": "Prefeitura de Ipê",
+    "subject": "Égide Intelligence & Transparência",
+    "message": "Estamos no processo de blindagem de auditoria do Selo Prata de Transparência Pública. Gostaríamos de entender como o sistema Égide realiza a fiscalização e a varredura preventiva de licitações municipais em tempo real.",
+    "createdAt": "2026-05-29T16:45:10.000Z",
+    "status": "arquivado"
+  }
+]

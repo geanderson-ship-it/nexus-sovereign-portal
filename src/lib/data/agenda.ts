@@ -61,8 +61,31 @@ export const dailyAgenda: AgendaItem[] = [
   }
 ];
 
-export function getFormattedAgenda(): string {
-  if (dailyAgenda.length === 0) return "Nenhum compromisso agendado.";
+export function parseClientAgenda(clientItems: any[]): AgendaItem[] {
+  return clientItems.map(item => {
+    try {
+      const [day, month, year] = item.data.split('/');
+      const [hour, minute] = item.horario.split(':');
+      // Format as ISO in America/Sao_Paulo timezone
+      const isoStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:00-03:00`;
+      return {
+        id: String(item.id),
+        title: item.evento || item.assunto || 'Compromisso',
+        startTime: isoStr,
+        endTime: isoStr,
+        location: item.local,
+        description: `${item.assunto || ''} | Anfitrião: ${item.anfitriao || ''} | Status: ${item.status || ''}`,
+        type: 'strategic'
+      };
+    } catch {
+      return null;
+    }
+  }).filter((x): x is AgendaItem => x !== null);
+}
+
+export function getFormattedAgenda(customAgenda?: AgendaItem[]): string {
+  const agendaToUse = customAgenda || dailyAgenda;
+  if (agendaToUse.length === 0) return "Nenhum compromisso agendado.";
   
   const formatList = (items: AgendaItem[], label: string) => {
     if (items.length === 0) return `${label}: Nenhum compromisso agendado.`;
@@ -76,24 +99,50 @@ export function getFormattedAgenda(): string {
     return `${label}:\n${lines.join('\n')}`;
   };
 
-  const todayEvents = dailyAgenda.filter(item => {
-    const d = new Date(item.startTime);
-    return d.getDate() === 27 && d.getMonth() === 4;
+  const getLocalDateString = (d: Date) => {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Sao_Paulo',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+    const parts = formatter.formatToParts(d);
+    const year = parts.find(p => p.type === 'year')?.value;
+    const month = parts.find(p => p.type === 'month')?.value;
+    const day = parts.find(p => p.type === 'day')?.value;
+    return `${year}-${month}-${day}`;
+  };
+
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  const todayStr = getLocalDateString(today);
+  const tomorrowStr = getLocalDateString(tomorrow);
+
+  const todayEvents = agendaToUse.filter(item => {
+    const itemDate = getLocalDateString(new Date(item.startTime));
+    return itemDate === todayStr;
   });
   
-  const tomorrowEvents = dailyAgenda.filter(item => {
-    const d = new Date(item.startTime);
-    return d.getDate() === 28 && d.getMonth() === 4;
+  const tomorrowEvents = agendaToUse.filter(item => {
+    const itemDate = getLocalDateString(new Date(item.startTime));
+    return itemDate === tomorrowStr;
   });
 
-  const upcomingEvents = dailyAgenda.filter(item => {
-    const d = new Date(item.startTime);
-    return d.getDate() > 28 || d.getMonth() > 4;
+  const upcomingEvents = agendaToUse.filter(item => {
+    const itemDate = getLocalDateString(new Date(item.startTime));
+    return itemDate > tomorrowStr;
   });
 
-  return `${formatList(todayEvents, 'AGENDA DE HOJE (27/05/2026)')}
+  const formatDateLabel = (dStr: string) => {
+    const [year, month, day] = dStr.split('-');
+    return `${day}/${month}/${year}`;
+  };
 
-${formatList(tomorrowEvents, 'AGENDA DE AMANHÃ (28/05/2026)')}
+  return `${formatList(todayEvents, `AGENDA DE HOJE (${formatDateLabel(todayStr)})`)}
+
+${formatList(tomorrowEvents, `AGENDA DE AMANHÃ (${formatDateLabel(tomorrowStr)})`)}
 
 ${formatList(upcomingEvents, 'COMPROMISSOS FUTUROS')}`;
 }
