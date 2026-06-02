@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ArrowLeft, Sprout, Users, Landmark, Check, Copy, Sparkles, Shield, ChevronRight, Volume2, Camera, Database, WifiOff } from 'lucide-react';
+import { ArrowLeft, Sprout, Users, Landmark, Check, Sparkles, Shield, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+
 import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
-import { useToast } from '@/hooks/use-toast';
+
 
 type ProfileType = 'agricultor' | 'cooperativa' | 'gestor_publico';
 
@@ -20,7 +20,6 @@ interface ProfileData {
 }
 
 export default function AgroPage() {
-  const { toast } = useToast();
   const [selectedProfile, setSelectedProfile] = useState<ProfileType | null>(null);
 
   const profiles: ProfileData[] = [
@@ -29,11 +28,11 @@ export default function AgroPage() {
       title: 'Agricultor',
       subtitle: 'Produtor de Precisão',
       icon: <Sprout className="h-6 w-6 text-emerald-400" />,
-      description: 'Cérebro tático para o produtor individual. Análises de solo de alta precisão, manejo fitossanitário preventivo e telemetria offline direta da lavoura.',
+      description: 'O Dante Safra cuida da sua propriedade de A a Z. Da semente na terra ao dinheiro no bolso.',
       benefits: [
-        'Recomendações customizadas por cultura e solo',
-        'Protocolo de manejo e controle biológico de pragas',
-        'Previsões climáticas localizadas e alertas agrícolas'
+        '🌱 Qualquer Cultura: Planta milho, soja, fumo, hortaliça ou pastagem? O Dante fala a língua da sua terra. Sem complicação, sem manual difícil. É só perguntar e ele te responde na hora.',
+        '🩺 Médico da Lavoura: Tirou uma foto da folha doente? Em segundos o Dante identifica a praga ou doença e já te diz exatamente o que fazer. Sem esperar engenheiro, sem perder tempo e sem perder dinheiro.',
+        '🐷 Olho na Criação: Acompanha peso, saúde e consumo de ração do seu rebanho pelo celular. Menos perda, mais resultado. Você cuida melhor sem sair da porteira.'
       ],
       prompts: [
         'Dante, como otimizar a calagem para solo argiloso visando o plantio de soja?',
@@ -46,11 +45,11 @@ export default function AgroPage() {
       title: 'Cooperativa',
       subtitle: 'Sinergia & Escala',
       icon: <Users className="h-6 w-6 text-emerald-400" />,
-      description: 'Centralização estratégica para o ecossistema corporativo. Agregação de telemetria de múltiplos produtores, relatórios agroclimáticos regionais e previsão de safra consolidada.',
+      description: 'Garantia de safra cheia e padrão de excelência para os seus associados.',
       benefits: [
-        'Painel unificado com telemetria agregada dos cooperados',
-        'Previsões de rendimento e quebra de safra regionalizadas',
-        'Relatórios de conformidade ESG e boas práticas agrícolas'
+        '🌾 Grãos de Primeira: Seu associado chega no recebimento com produto de qualidade? É porque o Dante Safra acompanhou a lavoura do começo ao fim. Menos perda, menos desconto, mais dinheiro para o produtor e para a cooperativa.',
+        '🛡️ Escudo Contra Pragas: Uma praga não avisa hora de chegar. Mas quando chega, o Dante já sabe. Monitoramento contínuo que protege as lavouras dos seus associados antes que o estrago vire prejuízo grande.',
+        '📈 Fomento Inteligente: Chega de planejar insumos e crédito no achismo. Com dados reais de cada produtor, a cooperativa financia com segurança, compra melhor e entrega mais resultado para quem está na base.'
       ],
       prompts: [
         'Dante, como gerar um modelo de previsão de safra consolidado para 50 cooperados?',
@@ -60,14 +59,14 @@ export default function AgroPage() {
     },
     {
       id: 'gestor_publico',
-      title: 'Gestor Público',
+      title: 'Município (Prefeituras)',
       subtitle: 'Vocação & GovTech',
       icon: <Landmark className="h-6 w-6 text-emerald-400" />,
-      description: 'Inteligência territorial para governos municipais. Mapeamento da vocação regional agropecuária, programas de fomento ao microprodutor e relatórios socioambientais.',
+      description: 'Transforme sua cidade no próximo Polo de Tecnologia Agrícola e orgulhe a sua comunidade.',
       benefits: [
-        'Auditoria e direcionamento de programas de insumos municipais',
-        'Mapeamento georreferenciado da produtividade por microrregião',
-        'Cálculo de retorno econômico sobre investimentos agrícolas locais'
+        '🏆 Município Destaque: Imagina o seu município na televisão como referência em tecnologia no campo? Com o Dante Safra, sua cidade vira exemplo. Um projeto pioneiro que coloca o nome da prefeitura no mapa e orgulha cada morador.',
+        '🎓 Escola do Futuro: O jovem que aprende a usar inteligência artificial na roça não precisa ir embora pra cidade. Capacite os alunos da rede pública com a profissão que o agronegócio está pedindo. Família unida, campo forte.',
+        '💰 Dinheiro que Fica Aqui: Produtor que produz mais emite mais nota, paga mais imposto e movimenta mais o comércio local. Sem aumentar carga tributária, a prefeitura vê a arrecadação crescer junto com a lavoura.'
       ],
       prompts: [
         'Dante, como estruturar um programa municipal de calagem eficiente e auditável?',
@@ -77,20 +76,23 @@ export default function AgroPage() {
     }
   ];
 
-  const handleCopyPrompt = (promptText: string) => {
-    navigator.clipboard.writeText(promptText);
-    toast({
-      title: 'Prompt Copiado!',
-      description: 'O prompt foi copiado para sua área de transferência. Cole no terminal do Dante abaixo!',
-      variant: 'default',
-    });
-  };
+
 
   const activeProfileData = profiles.find(p => p.id === selectedProfile);
 
   return (
     <SovereignShowcase moduleName="Dante Safra" imagePath="/Nexus Empresas/Dante safra axis.png">
-      <div className="min-h-screen bg-[#020617] text-white flex flex-col pt-14 pb-12">
+      <div className="min-h-screen text-white flex flex-col pt-14 pb-12 relative">
+        {/* Background image */}
+        <div
+          className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/Agro/agro-bg.png')" }}
+        />
+        {/* Dark overlay para legibilidade */}
+        <div className="fixed inset-0 z-0 bg-[#020617]/85 backdrop-blur-[2px]" />
+        {/* Conteúdo acima do fundo */}
+        <div className="relative z-10 flex flex-col flex-1">
+
         {/* Header */}
         <div className="flex items-center gap-4 p-6 border-b border-emerald-800/30">
           <Link href="/" className="p-2 hover:bg-white/10 rounded-lg transition-colors">
@@ -111,31 +113,51 @@ export default function AgroPage() {
           
           {/* Section 1: Three Target Profiles */}
           <div className="space-y-6">
-            <div className="text-center md:text-left">
               <h2 className="text-xl font-bold font-headline uppercase tracking-widest text-emerald-400 flex items-center justify-center md:justify-start gap-2">
-                <Sparkles className="h-5 w-5 animate-pulse" /> Selecione o Perfil de Atuação
+                <Sparkles className="h-5 w-5 animate-pulse" /> Matriz de Engajamento e Abordagem Tática
               </h2>
-              <p className="text-xs text-gray-400 mt-1 max-w-xl">
-                Escolha uma das vertentes para desbloquear diretrizes, pilares estratégicos e ganchos de abordagem tática recomendados.
+              <p className="text-sm text-gray-300 mt-2 max-w-2xl leading-relaxed">
+                Selecione o perfil do seu interlocutor para estruturar pitches de alto impacto, alinhar as dores do campo à inteligência soberana e acionar os ganchos estratégicos do Dante Safra.
               </p>
-            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {profiles.map((profile) => {
                 const isSelected = selectedProfile === profile.id;
+                const cardImages: Record<string, string> = {
+                  agricultor: '/agro/Dante safra vídeo.png',
+                  cooperativa: '/Agro/Cooperativismo.png',
+                  gestor_publico: '/Agro/Prefeito-na-lavoura.png',
+                };
+                const hasImage = !!cardImages[profile.id];
                 return (
                   <div
                     key={profile.id}
                     onClick={() => setSelectedProfile(isSelected ? null : profile.id)}
-                    className={`relative p-5 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer group backdrop-blur-xl ${
+                    className={`relative rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer group backdrop-blur-xl overflow-hidden bg-slate-950/20 ${
                       isSelected
-                        ? 'bg-emerald-950/20 border-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.25)]'
-                        : 'bg-slate-900/40 border-emerald-900/30 hover:border-emerald-700/50 hover:bg-slate-900/60 hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.1)]'
+                        ? 'border-emerald-400 shadow-[0_0_24px_rgba(16,185,129,0.28)] bg-emerald-950/10'
+                        : 'border-emerald-900/30 hover:border-emerald-700/50 hover:-translate-y-1 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)]'
                     }`}
                   >
-                    <div>
-                      {/* Badge / Status */}
-                      <div className="flex justify-between items-start">
+                    {/* Top Image area */}
+                    {hasImage ? (
+                      <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
+                        <img
+                          src={cardImages[profile.id]}
+                          alt={profile.title}
+                          className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
+                            profile.id === 'gestor_publico' ? 'object-contain p-2' : 'object-cover object-top'
+                          }`}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
+                        {isSelected && (
+                          <span className="absolute top-3 right-3 p-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-400">
+                            <Check className="h-3 w-3" />
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="p-6 bg-slate-900/20 border-b border-emerald-900/20 flex justify-between items-start shrink-0">
                         <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 group-hover:scale-110 transition-transform duration-300">
                           {profile.icon}
                         </div>
@@ -145,25 +167,30 @@ export default function AgroPage() {
                           </span>
                         )}
                       </div>
+                    )}
 
-                      {/* Header Titles */}
-                      <h3 className="text-lg font-bold text-white mt-4 font-headline tracking-tight group-hover:text-emerald-300 transition-colors">
-                        {profile.title}
-                      </h3>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 -mt-0.5">
-                        {profile.subtitle}
-                      </p>
-
-                      {/* Description */}
-                      <p className="text-xs text-gray-400 mt-3 leading-relaxed">
-                        {profile.description}
-                      </p>
-                    </div>
-
-                    {/* Expand/Read indicator */}
-                    <div className="mt-6 pt-4 border-t border-emerald-950/30 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                      <span>{isSelected ? 'Ocultar Detalhes' : 'Ver Abordagem'}</span>
-                      <ChevronRight className={`h-4 w-4 transition-transform duration-300 ${isSelected ? 'rotate-90' : 'group-hover:translate-x-1'}`} />
+                    {/* Isolated text box below */}
+                    <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40">
+                      <div>
+                        {hasImage && (
+                          <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit mb-4">
+                            {profile.icon}
+                          </div>
+                        )}
+                        <h3 className="text-lg font-bold text-white font-headline tracking-tight group-hover:text-emerald-300 transition-colors">
+                          {profile.title}
+                        </h3>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 -mt-0.5">
+                          {profile.subtitle}
+                        </p>
+                        <p className="text-sm text-gray-300 mt-3 leading-relaxed">
+                          {profile.description}
+                        </p>
+                      </div>
+                      <div className="mt-6 pt-4 border-t border-emerald-950/20 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-emerald-400">
+                        <span>{isSelected ? 'Ocultar' : 'Ver Abordagem'}</span>
+                        <ChevronRight className={`h-4 w-4 transition-transform duration-300 ${isSelected ? 'rotate-90' : 'group-hover:translate-x-1'}`} />
+                      </div>
                     </div>
                   </div>
                 );
@@ -173,179 +200,76 @@ export default function AgroPage() {
 
           {/* Section 2: Selected Profile Dashboard Widget */}
           {selectedProfile && activeProfileData && (
-            <div className="bg-slate-900/30 border border-emerald-800/20 backdrop-blur-xl rounded-[32px] p-6 md:p-8 shadow-2xl animate-fade-in-down">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                {/* Benefits / Metrics */}
-                <div className="space-y-4">
-                  <h4 className="text-base font-bold font-headline uppercase tracking-wider text-emerald-300 flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-emerald-400" />
-                    Métricas e Pilares Estratégicos
+            <div className="bg-slate-900/30 border border-emerald-800/20 backdrop-blur-xl rounded-[32px] p-8 md:p-12 shadow-2xl animate-fade-in-down">
+              <div className="space-y-8">
+                <div>
+                  <h4 className="text-2xl font-bold font-headline uppercase tracking-wider text-emerald-300 flex items-center gap-3">
+                    <Shield className="h-6 w-6 text-emerald-400" />
+                    Diretrizes de Impacto & Pilares de Valor
                   </h4>
-                  <p className="text-xs text-gray-400 leading-relaxed">
-                    Benefícios reais ao implantar os fluxos customizados do Dante Safra para a categoria **{activeProfileData.title}**:
+                  <p className="text-sm text-gray-300 mt-2 ml-9 max-w-2xl leading-relaxed">
+                    Tecnologia soberana de precisão e inteligência prática desenhadas sob medida para otimizar os resultados e a produtividade no agronegócio moderno.
                   </p>
-                  <ul className="space-y-3 mt-4">
-                    {activeProfileData.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-xs text-gray-200">
-                        <Check className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-
-                {/* Quick Prompts */}
-                <div className="space-y-4">
-                  <h4 className="text-base font-bold font-headline uppercase tracking-wider text-emerald-300 flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-emerald-400" />
-                    Consultas Recomendadas (Prompts)
-                  </h4>
-                  <p className="text-xs text-gray-400">
-                    Clique em um card de prompt profissional abaixo para copiá-lo e colá-lo direto no terminal de chat:
-                  </p>
-                  <div className="flex flex-col gap-3 mt-4">
-                    {activeProfileData.prompts.map((promptText, idx) => (
-                      <button
+                <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {activeProfileData.benefits.map((benefit, idx) => {
+                    const pilarImages: Record<string, string[]> = {
+                      agricultor: ['/agro/Milho.jpg', '/agro/Soja.jpg', '/agro/Criação.jpg'],
+                      cooperativa: ['/Agro/Milho-caminhao.jpg', '/Agro/Pragas de lavoura.webp', '/Agro/Fomento.png'],
+                      gestor_publico: ['/Agro/Municipio-destaque.png', '/Agro/Fim-exodo-rural.png', '/Agro/PIB-municipio.png'],
+                    };
+                    const images = pilarImages[selectedProfile ?? ''];
+                    const hasImg = !!images?.[idx];
+                    return (
+                      <li
                         key={idx}
-                        onClick={() => handleCopyPrompt(promptText)}
-                        className="w-full text-left p-3 rounded-xl bg-black/40 border border-emerald-900/30 hover:border-emerald-500/50 hover:bg-emerald-950/10 transition-all duration-200 flex items-center justify-between group/prompt"
+                        className="flex flex-col rounded-2xl overflow-hidden border border-emerald-900/30 hover:border-emerald-600/60 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)] transition-all duration-300 group bg-slate-950/25 backdrop-blur-xl"
                       >
-                        <span className="text-[11px] text-gray-300 font-medium leading-relaxed max-w-[90%] group-hover/prompt:text-white transition-colors">
-                          "{promptText}"
-                        </span>
-                        <Copy className="h-3.5 w-3.5 text-emerald-500/50 group-hover/prompt:text-emerald-400 shrink-0 opacity-0 group-hover/prompt:opacity-100 transition-all" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                        {/* Top Image area */}
+                        {hasImg ? (
+                          <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
+                            <img
+                              src={images[idx]}
+                              alt={benefit.split(':')[0]}
+                              className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
+                                selectedProfile === 'gestor_publico' ? 'object-contain p-2' : 'object-cover'
+                              }`}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
+                          </div>
+                        ) : (
+                          <div className="p-6 bg-slate-900/20 border-b border-emerald-900/20 shrink-0">
+                            <span className="text-4xl">{benefit.split(' ')[0]}</span>
+                          </div>
+                        )}
 
+                        {/* Isolated text box below */}
+                        <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40">
+                          <div className="space-y-3 text-left">
+                            <p className="text-xl font-bold text-white leading-snug">
+                              {benefit.split(':')[0].replace(/^\S+\s/, '')}
+                            </p>
+                            <p className="text-sm text-gray-300 leading-relaxed">
+                              {benefit.split(':')[1]?.trim()}
+                            </p>
+                          </div>
+                          {/* Pilar indicator at footer */}
+                          <div className="mt-6 pt-4 border-t border-emerald-950/20 text-[10px] font-black uppercase tracking-widest text-emerald-400">
+                            Pilar {idx + 1} — Dante Safra
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             </div>
           )}
 
-          {/* Section 3: Simulated Chat Terminal (No direct interaction) */}
-          <div className="flex flex-col items-center justify-center gap-6 mt-4">
-            <div className="text-center max-w-xl">
-              <h2 className="text-xl font-bold font-headline uppercase tracking-wider text-emerald-300">
-                Simulador do Terminal Dante Safra
-              </h2>
-              <p className="text-xs text-gray-400 mt-1">
-                Conheça a interface tática do Dante Safra, desenhada para uma interação ágil e direta no campo.
-              </p>
-            </div>
-            
-            {/* Mock Chat Window */}
-            <div className="w-full max-w-3xl bg-slate-900/60 border border-emerald-800/40 rounded-[32px] overflow-hidden shadow-2xl relative">
-              <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none" />
-              
-              <div className="relative z-10 flex flex-col text-white">
-                {/* Simulated Header */}
-                <div className="p-4 border-b border-emerald-800/30 flex items-center justify-between bg-slate-950/40">
-                  <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <div className="w-10 h-10 rounded-full border border-emerald-500/50 bg-emerald-950 flex items-center justify-center overflow-hidden">
-                        <Sprout className="h-5 w-5 text-emerald-400" />
-                      </div>
-                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-slate-900 animate-pulse" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-sm text-emerald-300 font-headline">Dante Safra</h3>
-                      <p className="text-[10px] text-gray-400">Inteligência Tática Agrícola Activa</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5 text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-                    <WifiOff className="h-3 w-3" />
-                    <span>Telemetria Off-line</span>
-                  </div>
-                </div>
+        </div>{/* fim flex-1 max-w-6xl */}
+        </div>{/* fim z-10 */}
+      </div>{/* fim min-h-screen */}
 
-                {/* Simulated Conversation Body */}
-                <div className="p-6 space-y-6 max-h-[420px] overflow-y-auto custom-scrollbar text-xs md:text-sm">
-                  {/* User Input Bubble */}
-                  <div className="flex items-start gap-3 justify-end">
-                    <div className="max-w-[85%] bg-emerald-800/80 rounded-2xl rounded-tr-none p-4 text-white space-y-3 shadow-lg">
-                      <div className="flex items-center gap-3 bg-emerald-900/60 p-2.5 rounded-xl border border-emerald-700/30">
-                        <Volume2 className="h-4 w-4 text-emerald-300" />
-                        <div className="flex-1 h-1.5 bg-emerald-700/50 rounded-full overflow-hidden relative min-w-[120px]">
-                          <div className="absolute top-0 left-0 w-2/3 h-full bg-emerald-300 rounded-full" />
-                        </div>
-                        <span className="text-[10px] text-emerald-200">0:08</span>
-                      </div>
-                      <div className="relative rounded-xl overflow-hidden border border-emerald-700 bg-slate-950 aspect-video max-w-sm">
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 flex items-end p-3">
-                          <span className="text-[9px] uppercase tracking-wider font-black text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/50">milho_folha_alerta.png</span>
-                        </div>
-                        <img 
-                          src="/Nexus Empresas/Dante safra axis.png" 
-                          alt="Folha com praga" 
-                          className="object-cover w-full h-full opacity-60" 
-                        />
-                      </div>
-                      <p className="leading-relaxed text-xs">
-                        "Dante, comecei a ver essa lagarta em algumas folhas de milho e a análise de solo da área deu pH 5.2. Qual a recomendação com sinal fraco no talhão?"
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Dante Output Bubble */}
-                  <div className="flex items-start gap-3 justify-start">
-                    <div className="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                      <Sprout className="h-4 w-4 text-emerald-400" />
-                    </div>
-                    <div className="max-w-[85%] bg-slate-800/80 border border-slate-700/40 rounded-2xl rounded-tl-none p-4 text-slate-200 space-y-4 shadow-lg">
-                      <div className="border-b border-slate-700/50 pb-2 flex items-center justify-between">
-                        <span className="font-bold text-emerald-300 font-headline">Laudo Agronômico Sincronizado</span>
-                        <span className="text-[9px] text-slate-400 font-mono">ID: NX-4011</span>
-                      </div>
-                      <div className="space-y-3 text-xs leading-relaxed text-slate-300">
-                        <p className="font-bold text-white flex items-center gap-1.5">
-                          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                          1. Identificação de Pragas e Ação
-                        </p>
-                        <p className="pl-3">
-                          A imagem confirma a incidência inicial de <strong className="text-emerald-300">Spodoptera frugiperda</strong> (Lagarta-do-cartucho). Nível de alerta: <span className="text-amber-400 font-bold">Médio</span>.
-                          <br />• <strong>Manejo:</strong> Iniciar pulverização biológica com calda de <em>Bacillus thuringiensis</em> para controle seletivo.
-                        </p>
-
-                        <p className="font-bold text-white flex items-center gap-1.5">
-                          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                          2. Correção de Solo (pH 5.2)
-                        </p>
-                        <p className="pl-3">
-                          A acidez elevada limita a absorção de nutrientes.
-                          <br />• <strong>Recomendação:</strong> Incorporar <strong className="text-emerald-300">2.4 toneladas/ha</strong> de calcário dolomítico (PRNT 85%) na próxima janela de preparo.
-                        </p>
-
-                        <p className="font-bold text-white flex items-center gap-1.5">
-                          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                          3. Facilidade e Sincronização
-                        </p>
-                        <p className="pl-3">
-                          • Diagnóstico técnico concluído sem necessidade de internet.
-                          <br />• Laudo e receitas salvos em cache local. Prontos para consulta no interior da fazenda.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Simulated Input Footer */}
-                <div className="p-4 border-t border-emerald-800/30 bg-slate-950/40 flex items-center gap-2 text-gray-500 text-xs">
-                  <span className="text-emerald-500/80 font-bold uppercase tracking-widest text-[9px] mx-auto">
-                    Interação Simples e Relatório Completo Através de Áudio e Foto
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="w-full max-w-3xl">
-              <LegalSafeguard module="DANTE SAFRA" protocol="NX-SAFRA-01" />
-            </div>
-          </div>
-
-        </div>
-      </div>
     </SovereignShowcase>
   );
 }

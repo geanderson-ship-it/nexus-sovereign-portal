@@ -48,20 +48,6 @@ export function SovereignShowcase({
   if (!showDemoOnly) {
     return (
       <div className="relative">
-        {/* Floating Admin Control Panel */}
-        {isAdmin && (
-          <div className="fixed top-24 left-6 z-[200] bg-slate-900/90 backdrop-blur-xl border-2 border-amber-500/50 rounded-2xl p-3 shadow-2xl flex items-center gap-3 animate-pulse">
-            <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-            <span className="text-[10px] font-black text-amber-400 uppercase tracking-widest">Modo Admin Interativo</span>
-            <Button 
-              size="sm" 
-              onClick={() => setShowDemoOnly(true)}
-              className="bg-amber-600 hover:bg-amber-500 text-white font-black text-[9px] uppercase tracking-widest h-8 px-3 rounded-lg"
-            >
-              Simular Visão Cliente
-            </Button>
-          </div>
-        )}
         {children}
       </div>
     );
@@ -173,35 +159,50 @@ export function SovereignShowcase({
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-center text-center">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-start text-left">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 self-center md:self-start">
                 <Sprout className="h-6 w-6 text-emerald-400" />
               </div>
-              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider">Agricultor</h4>
-              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5">Produtor de Precisão</p>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                Análises de solo de alta precisão, manejo fitossanitário preventivo e telemetria offline direta da lavoura.
+              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider self-center md:self-start">Agricultor</h4>
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5 self-center md:self-start">Produtor de Precisão</p>
+              <p className="text-xs text-slate-300 mt-3 font-semibold leading-relaxed">
+                "O Dante Safra cuida da sua propriedade de A a Z. Da semente na terra ao dinheiro no bolso."
               </p>
+              <ul className="text-[11px] text-slate-400 mt-3 space-y-2 leading-relaxed">
+                <li>🌱 <strong>Qualquer Cultura:</strong> Grãos, fumo, hortaliças, frutas ou pastagem.</li>
+                <li>🩺 <strong>Médico da Lavoura:</strong> Diagnostica doenças foliares e pragas.</li>
+                <li>🐷 <strong>Olho na Criação:</strong> Controla peso, saúde animal e consumo de ração.</li>
+              </ul>
             </div>
-            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-center text-center">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-start text-left">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 self-center md:self-start">
                 <Users className="h-6 w-6 text-emerald-400" />
               </div>
-              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider">Cooperativa</h4>
-              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5">Sinergia & Escala</p>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                Agregação de telemetria de múltiplos produtores, relatórios agroclimáticos regionais e previsão de safra consolidada.
+              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider self-center md:self-start">Cooperativa</h4>
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5 self-center md:self-start">Sinergia & Escala</p>
+              <p className="text-xs text-slate-300 mt-3 font-semibold leading-relaxed">
+                "Garantia de safra cheia e padrão de excelência para os seus associados."
               </p>
+              <ul className="text-[11px] text-slate-400 mt-3 space-y-2 leading-relaxed">
+                <li>🌾 <strong>Grãos de Primeira:</strong> O produtor entrega o melhor produto no recebimento.</li>
+                <li>🛡️ <strong>Escudo Contra Pragas:</strong> Monitoramento regional para proteção de lavouras.</li>
+                <li>📈 <strong>Fomento Inteligente:</strong> Planejamento seguro de insumos e financiamentos.</li>
+              </ul>
             </div>
-            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-center text-center">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-start text-left">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 self-center md:self-start">
                 <Landmark className="h-6 w-6 text-emerald-400" />
               </div>
-              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider">Gestor Público</h4>
-              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5">Vocação & GovTech</p>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                Mapeamento da vocação regional agropecuária, programas de fomento ao microprodutor e relatórios socioambientais.
+              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider self-center md:self-start">Para o Município</h4>
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5 self-center md:self-start">Prefeituras & Vocação</p>
+              <p className="text-xs text-slate-300 mt-3 font-semibold leading-relaxed">
+                "Transforme sua cidade no próximo Polo de Tecnologia Agrícola e orgulhe a sua comunidade."
               </p>
+              <ul className="text-[11px] text-slate-400 mt-3 space-y-2 leading-relaxed">
+                <li>🏆 <strong>Município Destaque:</strong> Cidade no mapa da inovação com projeto pioneiro.</li>
+                <li>🎓 <strong>Escola do Futuro:</strong> Capacitação de jovens para manter as famílias no campo.</li>
+                <li>💰 <strong>Dinheiro Local:</strong> Aumento de arrecadação do bloco de produtor sem novos impostos.</li>
+              </ul>
             </div>
           </div>
 
