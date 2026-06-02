@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ArrowLeft, Sprout, Users, Landmark, Check, Copy, Sparkles, Shield, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Sprout, Users, Landmark, Check, Copy, Sparkles, Shield, ChevronRight, Volume2, Camera, Database, WifiOff } from 'lucide-react';
 import Link from 'next/link';
-import DanteSafraChat from '@/components/dante-safra-chat';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 import { useToast } from '@/hooks/use-toast';
@@ -225,18 +224,120 @@ export default function AgroPage() {
             </div>
           )}
 
-          {/* Section 3: Interactive Chat Terminal */}
+          {/* Section 3: Simulated Chat Terminal (No direct interaction) */}
           <div className="flex flex-col items-center justify-center gap-6 mt-4">
             <div className="text-center max-w-xl">
               <h2 className="text-xl font-bold font-headline uppercase tracking-wider text-emerald-300">
-                Terminal de Comando Inteligente
+                Simulador do Terminal Dante Safra
               </h2>
               <p className="text-xs text-gray-400 mt-1">
-                Utilize o Terminal Dante Safra integrado abaixo para processar análises, otimizações e telemetria offline.
+                Conheça a interface tática do Dante Safra, desenhada para uma interação ágil e direta no campo.
               </p>
             </div>
             
-            <DanteSafraChat />
+            {/* Mock Chat Window */}
+            <div className="w-full max-w-3xl bg-slate-900/60 border border-emerald-800/40 rounded-[32px] overflow-hidden shadow-2xl relative">
+              <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none" />
+              
+              <div className="relative z-10 flex flex-col text-white">
+                {/* Simulated Header */}
+                <div className="p-4 border-b border-emerald-800/30 flex items-center justify-between bg-slate-950/40">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <div className="w-10 h-10 rounded-full border border-emerald-500/50 bg-emerald-950 flex items-center justify-center overflow-hidden">
+                        <Sprout className="h-5 w-5 text-emerald-400" />
+                      </div>
+                      <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-slate-900 animate-pulse" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-sm text-emerald-300 font-headline">Dante Safra</h3>
+                      <p className="text-[10px] text-gray-400">Inteligência Tática Agrícola Activa</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                    <WifiOff className="h-3 w-3" />
+                    <span>Telemetria Off-line</span>
+                  </div>
+                </div>
+
+                {/* Simulated Conversation Body */}
+                <div className="p-6 space-y-6 max-h-[420px] overflow-y-auto custom-scrollbar text-xs md:text-sm">
+                  {/* User Input Bubble */}
+                  <div className="flex items-start gap-3 justify-end">
+                    <div className="max-w-[85%] bg-emerald-800/80 rounded-2xl rounded-tr-none p-4 text-white space-y-3 shadow-lg">
+                      <div className="flex items-center gap-3 bg-emerald-900/60 p-2.5 rounded-xl border border-emerald-700/30">
+                        <Volume2 className="h-4 w-4 text-emerald-300" />
+                        <div className="flex-1 h-1.5 bg-emerald-700/50 rounded-full overflow-hidden relative min-w-[120px]">
+                          <div className="absolute top-0 left-0 w-2/3 h-full bg-emerald-300 rounded-full" />
+                        </div>
+                        <span className="text-[10px] text-emerald-200">0:08</span>
+                      </div>
+                      <div className="relative rounded-xl overflow-hidden border border-emerald-700 bg-slate-950 aspect-video max-w-sm">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 flex items-end p-3">
+                          <span className="text-[9px] uppercase tracking-wider font-black text-emerald-300 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/50">milho_folha_alerta.png</span>
+                        </div>
+                        <img 
+                          src="/Nexus Empresas/Dante safra axis.png" 
+                          alt="Folha com praga" 
+                          className="object-cover w-full h-full opacity-60" 
+                        />
+                      </div>
+                      <p className="leading-relaxed text-xs">
+                        "Dante, comecei a ver essa lagarta em algumas folhas de milho e a análise de solo da área deu pH 5.2. Qual a recomendação com sinal fraco no talhão?"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Dante Output Bubble */}
+                  <div className="flex items-start gap-3 justify-start">
+                    <div className="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                      <Sprout className="h-4 w-4 text-emerald-400" />
+                    </div>
+                    <div className="max-w-[85%] bg-slate-800/80 border border-slate-700/40 rounded-2xl rounded-tl-none p-4 text-slate-200 space-y-4 shadow-lg">
+                      <div className="border-b border-slate-700/50 pb-2 flex items-center justify-between">
+                        <span className="font-bold text-emerald-300 font-headline">Laudo Agronômico Sincronizado</span>
+                        <span className="text-[9px] text-slate-400 font-mono">ID: NX-4011</span>
+                      </div>
+                      <div className="space-y-3 text-xs leading-relaxed text-slate-300">
+                        <p className="font-bold text-white flex items-center gap-1.5">
+                          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                          1. Identificação de Pragas e Ação
+                        </p>
+                        <p className="pl-3">
+                          A imagem confirma a incidência inicial de <strong className="text-emerald-300">Spodoptera frugiperda</strong> (Lagarta-do-cartucho). Nível de alerta: <span className="text-amber-400 font-bold">Médio</span>.
+                          <br />• <strong>Manejo:</strong> Iniciar pulverização biológica com calda de <em>Bacillus thuringiensis</em> para controle seletivo.
+                        </p>
+
+                        <p className="font-bold text-white flex items-center gap-1.5">
+                          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                          2. Correção de Solo (pH 5.2)
+                        </p>
+                        <p className="pl-3">
+                          A acidez elevada limita a absorção de nutrientes.
+                          <br />• <strong>Recomendação:</strong> Incorporar <strong className="text-emerald-300">2.4 toneladas/ha</strong> de calcário dolomítico (PRNT 85%) na próxima janela de preparo.
+                        </p>
+
+                        <p className="font-bold text-white flex items-center gap-1.5">
+                          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                          3. Facilidade e Sincronização
+                        </p>
+                        <p className="pl-3">
+                          • Diagnóstico técnico concluído sem necessidade de internet.
+                          <br />• Laudo e receitas salvos em cache local. Prontos para consulta no interior da fazenda.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simulated Input Footer */}
+                <div className="p-4 border-t border-emerald-800/30 bg-slate-950/40 flex items-center gap-2 text-gray-500 text-xs">
+                  <span className="text-emerald-500/80 font-bold uppercase tracking-widest text-[9px] mx-auto">
+                    Interação Simples e Relatório Completo Através de Áudio e Foto
+                  </span>
+                </div>
+              </div>
+            </div>
             
             <div className="w-full max-w-3xl">
               <LegalSafeguard module="DANTE SAFRA" protocol="NX-SAFRA-01" />
