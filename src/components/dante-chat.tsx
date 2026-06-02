@@ -241,6 +241,14 @@ export default function DanteChat() {
     }, 100);
   }, [messages]);
 
+  useEffect(() => {
+    if (!isLoading && messages.length > 0) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isLoading, messages.length]);
+
   // Automatically send first message if in AVALIACAO stage
   useEffect(() => {
     if (messages.length === 0 && conversationStage === 'AVALIACAO' && !isLoading) {

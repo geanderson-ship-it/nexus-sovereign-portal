@@ -343,6 +343,14 @@ export default function DanteSafraChat() {
     }, 100);
   }, [messages]);
 
+  useEffect(() => {
+    if (!isLoading && !isInitialLoading) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isLoading, isInitialLoading]);
+
   const addMessage = useCallback((sender: Sender, data: { text: string } | DanteSafraOutput, imageUri?: string) => {
     const newMessage: Message = {
       id: Date.now(),

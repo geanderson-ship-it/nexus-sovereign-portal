@@ -64,7 +64,7 @@ function AtenaContent() {
   const [isTyping, setIsTyping] = useState(false);
   const [currentOutfit, setCurrentOutfit] = useState('/atena/Atena segunda.png');
   const [attachedFile, setAttachedFile] = useState<{ name: string; type: string; base64: string; preview?: string; mediaType: 'image' | 'pdf' | 'audio' | 'video' } | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,7 +132,12 @@ function AtenaContent() {
 
   // Auto-scroll to bottom whenever messages change or while typing
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [messages, isTyping]);
 
   // Reset chat history and initial greeting when avatar changes
@@ -485,7 +490,7 @@ function AtenaContent() {
                   exit={{ opacity: 0, y: 20 }}
                   className="bg-black/60 backdrop-blur-xl border border-white/10 rounded-[32px] overflow-hidden flex flex-col h-[50vh] max-h-[400px]"
                 >
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col" style={{ scrollBehavior: 'smooth' }}>
+                  <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 flex flex-col" style={{ scrollBehavior: 'smooth' }}>
                     {messages.map((msg) => (
                       <div
                         key={msg.id}
@@ -510,8 +515,7 @@ function AtenaContent() {
                         <span>{selectedAvatar} processando solicitação...</span>
                       </div>
                     )}
-                    {/* Anchor for auto-scroll */}
-                    <div ref={messagesEndRef} />
+
                     {/* Attachment preview bar */}
                     {attachedFile && (
                       <div className="px-3 py-2 bg-black/40 border-t border-white/5 flex flex-col gap-2">

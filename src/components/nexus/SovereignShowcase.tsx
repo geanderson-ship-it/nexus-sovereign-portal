@@ -50,7 +50,7 @@ export function SovereignShowcase({
       <div className="relative">
         {/* Floating Admin Control Panel */}
         {isAdmin && (
-          <div className="fixed bottom-6 right-6 z-[200] bg-slate-900/90 backdrop-blur-xl border-2 border-amber-500/50 rounded-2xl p-3 shadow-2xl flex items-center gap-3 animate-pulse">
+          <div className="fixed top-24 left-6 z-[200] bg-slate-900/90 backdrop-blur-xl border-2 border-amber-500/50 rounded-2xl p-3 shadow-2xl flex items-center gap-3 animate-pulse">
             <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
             <span className="text-[10px] font-black text-amber-400 uppercase tracking-widest">Modo Admin Interativo</span>
             <Button 

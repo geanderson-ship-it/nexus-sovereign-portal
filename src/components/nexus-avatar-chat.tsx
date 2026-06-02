@@ -154,7 +154,7 @@ export function NexusAvatarChat() {
   const [djenyStage, setDjenyStage] = useState<DjenyConversationStage>('AVALIACAO');
   const [danteStage, setDanteStage] = useState<DanteConversationStage>('AVALIACAO');
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const pathname = usePathname();
@@ -212,7 +212,12 @@ export function NexusAvatarChat() {
   }, [isOpen, warmUpAudio]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [messages]);
 
   // --- Data Queries ---
@@ -368,7 +373,7 @@ export function NexusAvatarChat() {
           </CardHeader>
           
           <div className="flex-1 min-h-0">
-            <div className="h-full overflow-y-auto p-4">
+            <div ref={chatContainerRef} className="h-full overflow-y-auto p-4">
               {messages.map(msg => {
               const recommendedSlug = (msg.data as any).recommendedCourseSlug;
               const textToPlay = (msg.data as any).response || (msg.data as any).text || '';
@@ -428,7 +433,6 @@ export function NexusAvatarChat() {
                       </div>
                   </div>
               )}
-              <div ref={messagesEndRef} />
             </div>
           </div>
 
