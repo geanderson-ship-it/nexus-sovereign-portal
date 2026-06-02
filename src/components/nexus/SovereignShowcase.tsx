@@ -6,7 +6,7 @@ import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Shield, Eye, Lock, Phone, HelpCircle, CheckCircle, RefreshCw } from 'lucide-react';
+import { Shield, Eye, Lock, Phone, HelpCircle, CheckCircle, RefreshCw, Sprout, Users, Landmark } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -160,6 +160,52 @@ export function SovereignShowcase({
           </motion.div>
         </div>
       </div>
+
+      {/* Three profiles for Dante Safra Showcase */}
+      {moduleName === 'Dante Safra' && (
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 mt-2">
+          <div className="text-center mb-6">
+            <h3 className="text-base font-bold font-headline uppercase tracking-widest text-emerald-400">
+              Perfis de Atuação e Soluções
+            </h3>
+            <p className="text-xs text-slate-500 mt-1">
+              Conheça as três vertentes táticas do módulo Dante Safra desenvolvidas para o agronegócio.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-center text-center">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <Sprout className="h-6 w-6 text-emerald-400" />
+              </div>
+              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider">Agricultor</h4>
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5">Produtor de Precisão</p>
+              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                Análises de solo de alta precisão, manejo fitossanitário preventivo e telemetria offline direta da lavoura.
+              </p>
+            </div>
+            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-center text-center">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <Users className="h-6 w-6 text-emerald-400" />
+              </div>
+              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider">Cooperativa</h4>
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5">Sinergia & Escala</p>
+              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                Agregação de telemetria de múltiplos produtores, relatórios agroclimáticos regionais e previsão de safra consolidada.
+              </p>
+            </div>
+            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-center text-center">
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                <Landmark className="h-6 w-6 text-emerald-400" />
+              </div>
+              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider">Gestor Público</h4>
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5">Vocação & GovTech</p>
+              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                Mapeamento da vocação regional agropecuária, programas de fomento ao microprodutor e relatórios socioambientais.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* LUXURY FLOATING CTA DOCK */}
       <div className="relative z-10 w-full max-w-4xl mx-auto pt-6 pb-2">
