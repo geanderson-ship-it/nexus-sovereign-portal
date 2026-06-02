@@ -124,7 +124,7 @@ export default function AgroPage() {
               {profiles.map((profile) => {
                 const isSelected = selectedProfile === profile.id;
                 const cardImages: Record<string, string> = {
-                  agricultor: '/agro/Dante safra vídeo.png',
+                  agricultor: '/Agro/Dante safra vídeo.png',
                   cooperativa: '/Agro/Cooperativismo.png',
                   gestor_publico: '/Agro/Prefeito-na-lavoura.png',
                 };
@@ -214,7 +214,7 @@ export default function AgroPage() {
                 <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {activeProfileData.benefits.map((benefit, idx) => {
                     const pilarImages: Record<string, string[]> = {
-                      agricultor: ['/agro/Milho.jpg', '/agro/Soja.jpg', '/agro/Criação.jpg'],
+                      agricultor: ['/Agro/Milho.jpg', '/Agro/Soja.jpg', '/Agro/Criação.jpg'],
                       cooperativa: ['/Agro/Milho-caminhao.jpg', '/Agro/Pragas de lavoura.webp', '/Agro/Fomento.png'],
                       gestor_publico: ['/Agro/Municipio-destaque.png', '/Agro/Fim-exodo-rural.png', '/Agro/PIB-municipio.png'],
                     };
