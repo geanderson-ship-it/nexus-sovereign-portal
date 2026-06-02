@@ -37,20 +37,20 @@ export default function HomePage() {
             {/* BACKGROUND IMAGE */}
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <Image
-                    src="/nexus-prospector-bg.png"
+                    src="/nexus-tech-world-bg.png"
                     alt="Nexus Background"
                     fill
                     priority
-                    className="object-cover opacity-40"
+                    className="object-cover opacity-35"
                     style={{ objectPosition: 'center center' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#080b10]/25 via-[#080b10]/55 to-[#080b10]/90" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#080b10]/20 via-[#080b10]/50 to-[#080b10]/95" />
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.06)_0%,transparent_70%)]" />
             </div>
 
             <div className="relative z-10 text-foreground overflow-x-hidden">
                 <section className="relative min-h-[90dvh] flex flex-col items-center justify-center pt-24 overflow-hidden">
-                <div className="container relative z-10">
+                <div className="w-full max-w-[1650px] mx-auto px-4 md:px-8 relative z-10">
                     <div className="flex flex-col items-center justify-center mb-0 w-full">
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.98 }}
@@ -58,12 +58,12 @@ export default function HomePage() {
                             transition={{ duration: 1.5, ease: "easeOut" }}
                             className="relative w-full max-w-[1500px] group px-0"
                         >
-                            <div className="relative w-full aspect-[21/9] md:aspect-[16/7] lg:aspect-[2.5/1] overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/5">
+                            <div className="relative w-full aspect-[16/9] md:aspect-[16/7] lg:aspect-[2.3/1] overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/5">
                                 <Image
                                     src="/nexus-hero-hologram.png"
                                     alt="Nexus Holding Group: Convergência Humana"
                                     fill
-                                    className="object-contain object-center transition-all duration-[4000ms]"
+                                    className="object-contain object-center scale-[1.01] md:scale-[1.02] lg:scale-[1.04] transition-all duration-[4000ms]"
                                     priority
                                 />
                             </div>
