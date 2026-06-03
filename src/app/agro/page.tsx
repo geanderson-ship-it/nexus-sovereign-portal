@@ -94,15 +94,15 @@ export default function AgroPage() {
         <div className="relative z-10 flex flex-col flex-1">
 
         {/* Header */}
-        <div className="flex items-center gap-4 p-6 border-b border-emerald-800/30">
-          <Link href="/" className="p-2 hover:bg-white/10 rounded-lg transition-colors">
+        <div className="flex items-center gap-4 p-4 sm:p-6 border-b border-emerald-800/30">
+          <Link href="/" className="p-2 hover:bg-white/10 rounded-lg transition-colors shrink-0">
             <ArrowLeft className="h-6 w-6 hover:text-emerald-400 transition-colors" />
           </Link>
           <div>
-            <h1 className="text-3xl font-bold tracking-tighter text-emerald-300 font-headline">
+            <h1 className="text-xl sm:text-3xl font-bold tracking-tighter text-emerald-300 font-headline">
               Portal Dante Safra — Agro
             </h1>
-            <p className="text-sm text-gray-400 md:text-base">
+            <p className="text-xs sm:text-sm text-gray-400 md:text-base leading-relaxed">
               Inteligência de precisão, telemetria e expansão tática para o agronegócio soberano.
             </p>
           </div>
@@ -200,14 +200,14 @@ export default function AgroPage() {
 
           {/* Section 2: Selected Profile Dashboard Widget */}
           {selectedProfile && activeProfileData && (
-            <div className="bg-slate-900/30 border border-emerald-800/20 backdrop-blur-xl rounded-[32px] p-8 md:p-12 shadow-2xl animate-fade-in-down">
-              <div className="space-y-8">
+            <div className="bg-slate-900/30 border border-emerald-800/20 backdrop-blur-xl rounded-2xl md:rounded-[32px] p-4 sm:p-8 md:p-12 shadow-2xl animate-fade-in-down">
+              <div className="space-y-6 sm:space-y-8">
                 <div>
-                  <h4 className="text-2xl font-bold font-headline uppercase tracking-wider text-emerald-300 flex items-center gap-3">
-                    <Shield className="h-6 w-6 text-emerald-400" />
+                  <h4 className="text-lg sm:text-2xl font-bold font-headline uppercase tracking-wider text-emerald-300 flex items-center gap-3">
+                    <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400 shrink-0" />
                     Diretrizes de Impacto & Pilares de Valor
                   </h4>
-                  <p className="text-sm text-gray-300 mt-2 ml-9 max-w-2xl leading-relaxed">
+                  <p className="text-sm text-gray-300 mt-2 ml-0 sm:ml-9 max-w-2xl leading-relaxed">
                     Tecnologia soberana de precisão e inteligência prática desenhadas sob medida para otimizar os resultados e a produtividade no agronegócio moderno.
                   </p>
                 </div>

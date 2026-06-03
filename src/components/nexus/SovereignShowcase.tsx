@@ -115,7 +115,7 @@ export function SovereignShowcase({
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="relative w-full max-w-7xl aspect-[16/9] rounded-[40px] overflow-hidden border-2 border-white/10 bg-slate-950 shadow-[0_0_80px_rgba(0,0,0,0.8)] group"
+            className="relative w-full max-w-7xl aspect-[16/9] rounded-2xl md:rounded-[40px] overflow-hidden border-2 border-white/10 bg-slate-950 shadow-[0_0_80px_rgba(0,0,0,0.8)] group"
           >
             {/* Monitor Glass Reflections */}
             <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.02] to-white/0 pointer-events-none z-20" />
@@ -132,14 +132,14 @@ export function SovereignShowcase({
               src={imagePath} 
               alt={`${moduleName} Screenshot Showcase`}
               fill
-              className="object-cover md:object-contain transition-transform duration-[4s] group-hover:scale-102"
+              className="object-contain transition-transform duration-[4s] group-hover:scale-102"
               priority
             />
 
             {/* Glassmorphic Non-Editable Indicator Badge */}
-            <div className="absolute top-6 right-6 z-20 bg-black/60 backdrop-blur-xl border border-white/10 px-4 py-2 rounded-xl flex items-center gap-2">
+            <div className="absolute top-4 right-4 md:top-6 md:right-6 z-20 bg-black/60 backdrop-blur-xl border border-white/10 px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-              <span className="text-[10px] font-black text-white uppercase tracking-widest">
+              <span className="text-[8px] md:text-[10px] font-black text-white uppercase tracking-widest">
                 Modo Somente Leitura (Vitrine)
               </span>
             </div>
@@ -149,60 +149,111 @@ export function SovereignShowcase({
 
       {/* Three profiles for Dante Safra Showcase */}
       {moduleName === 'Dante Safra' && (
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 mt-2">
-          <div className="text-center mb-6">
-            <h3 className="text-base font-bold font-headline uppercase tracking-widest text-emerald-400">
-              Perfis de Atuação e Soluções
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-4 mt-2">
+          <div className="text-center mb-8">
+            <h3 className="text-xl font-bold font-headline uppercase tracking-widest text-emerald-400">
+              Matriz de Engajamento e Abordagem Tática
             </h3>
-            <p className="text-xs text-slate-500 mt-1">
-              Conheça as três vertentes táticas do módulo Dante Safra desenvolvidas para o agronegócio.
+            <p className="text-xs text-slate-400 mt-2 max-w-2xl mx-auto leading-relaxed">
+              Selecione o perfil do seu interlocutor para estruturar pitches de alto impacto, alinhar as dores do campo à inteligência soberana e acionar os ganchos estratégicos do Dante Safra.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-start text-left">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 self-center md:self-start">
-                <Sprout className="h-6 w-6 text-emerald-400" />
+            {/* Agricultor */}
+            <div className="flex flex-col rounded-2xl border border-emerald-900/30 hover:border-emerald-700/50 hover:-translate-y-1 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)] transition-all duration-300 group bg-slate-950/20 backdrop-blur-xl overflow-hidden">
+              <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
+                <img
+                  src="/Agro/Dante safra vídeo.png"
+                  alt="Agricultor"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
               </div>
-              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider self-center md:self-start">Agricultor</h4>
-              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5 self-center md:self-start">Produtor de Precisão</p>
-              <p className="text-xs text-slate-300 mt-3 font-semibold leading-relaxed">
-                "O Dante Safra cuida da sua propriedade de A a Z. Da semente na terra ao dinheiro no bolso."
-              </p>
-              <ul className="text-[11px] text-slate-400 mt-3 space-y-2 leading-relaxed">
-                <li>🌱 <strong>Qualquer Cultura:</strong> Grãos, fumo, hortaliças, frutas ou pastagem.</li>
-                <li>🩺 <strong>Médico da Lavoura:</strong> Diagnostica doenças foliares e pragas.</li>
-                <li>🐷 <strong>Olho na Criação:</strong> Controla peso, saúde animal e consumo de ração.</li>
-              </ul>
+              <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40 text-left">
+                <div>
+                  <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit mb-4">
+                    <Sprout className="h-6 w-6 text-emerald-400" />
+                  </div>
+                  <h4 className="text-lg font-bold text-white font-headline tracking-tight group-hover:text-emerald-300 transition-colors">
+                    Agricultor
+                  </h4>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 -mt-0.5">
+                    Produtor de Precisão
+                  </p>
+                  <p className="text-xs text-gray-300 mt-3 leading-relaxed">
+                    O Dante Safra cuida da sua propriedade de A a Z. Da semente na terra ao dinheiro no bolso.
+                  </p>
+                  <ul className="text-[11px] text-slate-400 mt-4 space-y-2.5 leading-relaxed border-t border-emerald-950/20 pt-3">
+                    <li>🌱 <strong>Qualquer Cultura:</strong> Planta milho, soja, fumo, hortaliça ou pastagem. O Dante fala a língua da sua terra.</li>
+                    <li>🩺 <strong>Médico da Lavoura:</strong> Com uma foto da folha doente, o Dante identifica a praga em segundos e diz o que fazer.</li>
+                    <li>🐷 <strong>Olho na Criação:</strong> Acompanha peso, saúde e consumo de ração do seu rebanho pelo celular.</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-start text-left">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 self-center md:self-start">
-                <Users className="h-6 w-6 text-emerald-400" />
+            {/* Cooperativa */}
+            <div className="flex flex-col rounded-2xl border border-emerald-900/30 hover:border-emerald-700/50 hover:-translate-y-1 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)] transition-all duration-300 group bg-slate-950/20 backdrop-blur-xl overflow-hidden">
+              <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
+                <img
+                  src="/Agro/Cooperativismo.png"
+                  alt="Cooperativa"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
               </div>
-              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider self-center md:self-start">Cooperativa</h4>
-              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5 self-center md:self-start">Sinergia & Escala</p>
-              <p className="text-xs text-slate-300 mt-3 font-semibold leading-relaxed">
-                "Garantia de safra cheia e padrão de excelência para os seus associados."
-              </p>
-              <ul className="text-[11px] text-slate-400 mt-3 space-y-2 leading-relaxed">
-                <li>🌾 <strong>Grãos de Primeira:</strong> O produtor entrega o melhor produto no recebimento.</li>
-                <li>🛡️ <strong>Escudo Contra Pragas:</strong> Monitoramento regional para proteção de lavouras.</li>
-                <li>📈 <strong>Fomento Inteligente:</strong> Planejamento seguro de insumos e financiamentos.</li>
-              </ul>
+              <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40 text-left">
+                <div>
+                  <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit mb-4">
+                    <Users className="h-6 w-6 text-emerald-400" />
+                  </div>
+                  <h4 className="text-lg font-bold text-white font-headline tracking-tight group-hover:text-emerald-300 transition-colors">
+                    Cooperativa
+                  </h4>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 -mt-0.5">
+                    Sinergia & Escala
+                  </p>
+                  <p className="text-xs text-gray-300 mt-3 leading-relaxed">
+                    Garantia de safra cheia e padrão de excelência para os seus associados.
+                  </p>
+                  <ul className="text-[11px] text-slate-400 mt-4 space-y-2.5 leading-relaxed border-t border-emerald-950/20 pt-3">
+                    <li>🌾 <strong>Grãos de Primeira:</strong> Seu associado chega no recebimento com produto de qualidade, acompanhado de perto.</li>
+                    <li>🛡️ <strong>Escudo Contra Pragas:</strong> Monitoramento contínuo que protege as lavouras antes que o estrago vire prejuízo.</li>
+                    <li>📈 <strong>Fomento Inteligente:</strong> Com dados reais de cada produtor, a cooperativa financia e planeja melhor.</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div className="bg-slate-900/40 border border-emerald-900/20 backdrop-blur-xl p-5 rounded-2xl flex flex-col items-start text-left">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 self-center md:self-start">
-                <Landmark className="h-6 w-6 text-emerald-400" />
+            {/* Gestor Público */}
+            <div className="flex flex-col rounded-2xl border border-emerald-900/30 hover:border-emerald-700/50 hover:-translate-y-1 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)] transition-all duration-300 group bg-slate-950/20 backdrop-blur-xl overflow-hidden">
+              <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
+                <img
+                  src="/Agro/Prefeito-na-lavoura.png"
+                  alt="Gestor Público"
+                  className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
               </div>
-              <h4 className="text-sm font-bold text-white mt-3 font-headline uppercase tracking-wider self-center md:self-start">Para o Município</h4>
-              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest -mt-0.5 self-center md:self-start">Prefeituras & Vocação</p>
-              <p className="text-xs text-slate-300 mt-3 font-semibold leading-relaxed">
-                "Transforme sua cidade no próximo Polo de Tecnologia Agrícola e orgulhe a sua comunidade."
-              </p>
-              <ul className="text-[11px] text-slate-400 mt-3 space-y-2 leading-relaxed">
-                <li>🏆 <strong>Município Destaque:</strong> Cidade no mapa da inovação com projeto pioneiro.</li>
-                <li>🎓 <strong>Escola do Futuro:</strong> Capacitação de jovens para manter as famílias no campo.</li>
-                <li>💰 <strong>Dinheiro Local:</strong> Aumento de arrecadação do bloco de produtor sem novos impostos.</li>
-              </ul>
+              <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40 text-left">
+                <div>
+                  <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit mb-4">
+                    <Landmark className="h-6 w-6 text-emerald-400" />
+                  </div>
+                  <h4 className="text-lg font-bold text-white font-headline tracking-tight group-hover:text-emerald-300 transition-colors">
+                    Gestor Público
+                  </h4>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 -mt-0.5">
+                    Prefeituras & Vocação
+                  </p>
+                  <p className="text-xs text-gray-300 mt-3 leading-relaxed">
+                    Transforme sua cidade no próximo Polo de Tecnologia Agrícola e orgulhe a sua comunidade.
+                  </p>
+                  <ul className="text-[11px] text-slate-400 mt-4 space-y-2.5 leading-relaxed border-t border-emerald-950/20 pt-3">
+                    <li>🏆 <strong>Município Destaque:</strong> Sua cidade ganha força e destaque regional com um projeto pioneiro.</li>
+                    <li>🎓 <strong>Escola do Futuro:</strong> Ajuda a reter o jovem no campo mostrando que a lavoura também é digital.</li>
+                    <li>💰 <strong>Dinheiro Local:</strong> Aumenta a arrecadação municipal do bloco de produtor ajudando na produtividade.</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
 
