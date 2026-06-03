@@ -19,6 +19,75 @@ interface ProfileData {
   prompts: string[];
 }
 
+function ProfileDetails({ profile }: { profile: ProfileData }) {
+  return (
+    <div className="bg-slate-900/30 border border-emerald-800/20 backdrop-blur-xl rounded-2xl md:rounded-[32px] p-4 sm:p-8 md:p-12 shadow-2xl animate-fade-in-down">
+      <div className="space-y-6 sm:space-y-8">
+        <div>
+          <h4 className="text-lg sm:text-2xl font-bold font-headline uppercase tracking-wider text-emerald-300 flex items-center gap-3">
+            <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400 shrink-0" />
+            Diretrizes de Impacto & Pilares de Valor
+          </h4>
+          <p className="text-sm text-gray-300 mt-2 ml-0 sm:ml-9 max-w-2xl leading-relaxed">
+            Tecnologia soberana de precisão e inteligência prática desenhadas sob medida para otimizar os resultados e a produtividade no agronegócio moderno.
+          </p>
+        </div>
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {profile.benefits.map((benefit, idx) => {
+            const pilarImages: Record<string, string[]> = {
+              agricultor: ['/Agro/Milho.jpg', '/Agro/Soja.jpg', '/Agro/Criação.jpg'],
+              cooperativa: ['/Agro/Milho-caminhao.jpg', '/Agro/Pragas de lavoura.webp', '/Agro/Fomento.png'],
+              gestor_publico: ['/Agro/Municipio-destaque.png', '/Agro/Fim-exodo-rural.png', '/Agro/PIB-municipio.png'],
+            };
+            const images = pilarImages[profile.id ?? ''];
+            const hasImg = !!images?.[idx];
+            return (
+              <li
+                key={idx}
+                className="flex flex-col rounded-2xl overflow-hidden border border-emerald-900/30 hover:border-emerald-600/60 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)] transition-all duration-300 group bg-slate-950/25 backdrop-blur-xl"
+              >
+                {/* Top Image area */}
+                {hasImg ? (
+                  <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
+                    <img
+                      src={images[idx]}
+                      alt={benefit.split(':')[0]}
+                      className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
+                        profile.id === 'gestor_publico' ? 'object-contain p-2' : 'object-cover'
+                      }`}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
+                  </div>
+                ) : (
+                  <div className="p-6 bg-slate-900/20 border-b border-emerald-900/20 shrink-0">
+                    <span className="text-4xl">{benefit.split(' ')[0]}</span>
+                  </div>
+                )}
+
+                {/* Isolated text box below */}
+                <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40">
+                  <div className="space-y-3 text-left">
+                    <p className="text-xl font-bold text-white leading-snug">
+                      {benefit.split(':')[0].replace(/^\S+\s/, '')}
+                    </p>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      {benefit.split(':')[1]?.trim()}
+                    </p>
+                  </div>
+                  {/* Pilar indicator at footer */}
+                  <div className="mt-6 pt-4 border-t border-emerald-950/20 text-[10px] font-black uppercase tracking-widest text-emerald-400">
+                    Pilar {idx + 1} — Dante Safra
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 export default function AgroPage() {
   const [selectedProfile, setSelectedProfile] = useState<ProfileType | null>(null);
 
@@ -130,139 +199,86 @@ export default function AgroPage() {
                 };
                 const hasImage = !!cardImages[profile.id];
                 return (
-                  <div
-                    key={profile.id}
-                    onClick={() => setSelectedProfile(isSelected ? null : profile.id)}
-                    className={`relative rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer group backdrop-blur-xl overflow-hidden bg-slate-950/20 ${
-                      isSelected
-                        ? 'border-emerald-400 shadow-[0_0_24px_rgba(16,185,129,0.28)] bg-emerald-950/10'
-                        : 'border-emerald-900/30 hover:border-emerald-700/50 hover:-translate-y-1 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)]'
-                    }`}
-                  >
-                    {/* Top Image area */}
-                    {hasImage ? (
-                      <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
-                        <img
-                          src={cardImages[profile.id]}
-                          alt={profile.title}
-                          className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
-                            profile.id === 'gestor_publico' ? 'object-contain p-2' : 'object-cover object-top'
-                          }`}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
-                        {isSelected && (
-                          <span className="absolute top-3 right-3 p-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-400">
-                            <Check className="h-3 w-3" />
-                          </span>
-                        )}
-                      </div>
-                    ) : (
-                      <div className="p-6 bg-slate-900/20 border-b border-emerald-900/20 flex justify-between items-start shrink-0">
-                        <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 group-hover:scale-110 transition-transform duration-300">
-                          {profile.icon}
+                  <React.Fragment key={profile.id}>
+                    <div
+                      onClick={() => setSelectedProfile(isSelected ? null : profile.id)}
+                      className={`relative rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer group backdrop-blur-xl overflow-hidden bg-slate-950/20 ${
+                        isSelected
+                          ? 'border-emerald-400 shadow-[0_0_24px_rgba(16,185,129,0.28)] bg-emerald-950/10'
+                          : 'border-emerald-900/30 hover:border-emerald-700/50 hover:-translate-y-1 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)]'
+                      }`}
+                    >
+                      {/* Top Image area */}
+                      {hasImage ? (
+                        <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
+                          <img
+                            src={cardImages[profile.id]}
+                            alt={profile.title}
+                            className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
+                              profile.id === 'gestor_publico' ? 'object-contain p-2' : 'object-cover object-top'
+                            }`}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
+                          {isSelected && (
+                            <span className="absolute top-3 right-3 p-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-400">
+                              <Check className="h-3 w-3" />
+                            </span>
+                          )}
                         </div>
-                        {isSelected && (
-                          <span className="p-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-400">
-                            <Check className="h-3 w-3" />
-                          </span>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Isolated text box below */}
-                    <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40">
-                      <div>
-                        {hasImage && (
-                          <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit mb-4">
+                      ) : (
+                        <div className="p-6 bg-slate-900/20 border-b border-emerald-900/20 flex justify-between items-start shrink-0">
+                          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 group-hover:scale-110 transition-transform duration-300">
                             {profile.icon}
                           </div>
-                        )}
-                        <h3 className="text-lg font-bold text-white font-headline tracking-tight group-hover:text-emerald-300 transition-colors">
-                          {profile.title}
-                        </h3>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 -mt-0.5">
-                          {profile.subtitle}
-                        </p>
-                        <p className="text-sm text-gray-300 mt-3 leading-relaxed">
-                          {profile.description}
-                        </p>
-                      </div>
-                      <div className="mt-6 pt-4 border-t border-emerald-950/20 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                        <span>{isSelected ? 'Ocultar' : 'Ver Abordagem'}</span>
-                        <ChevronRight className={`h-4 w-4 transition-transform duration-300 ${isSelected ? 'rotate-90' : 'group-hover:translate-x-1'}`} />
+                          {isSelected && (
+                            <span className="p-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-400">
+                              <Check className="h-3 w-3" />
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Isolated text box below */}
+                      <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40">
+                        <div>
+                          {hasImage && (
+                            <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit mb-4">
+                              {profile.icon}
+                            </div>
+                          )}
+                          <h3 className="text-lg font-bold text-white font-headline tracking-tight group-hover:text-emerald-300 transition-colors">
+                            {profile.title}
+                          </h3>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 -mt-0.5">
+                            {profile.subtitle}
+                          </p>
+                          <p className="text-sm text-gray-300 mt-3 leading-relaxed">
+                            {profile.description}
+                          </p>
+                        </div>
+                        <div className="mt-6 pt-4 border-t border-emerald-950/20 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-emerald-400">
+                          <span>{isSelected ? 'Ocultar' : 'Ver Abordagem'}</span>
+                          <ChevronRight className={`h-4 w-4 transition-transform duration-300 ${isSelected ? 'rotate-90' : 'group-hover:translate-x-1'}`} />
+                        </div>
                       </div>
                     </div>
-                  </div>
+
+                    {/* Mobile Inline Details Widget */}
+                    {isSelected && (
+                      <div className="block md:hidden col-span-1 animate-fade-in-down mt-4">
+                        <ProfileDetails profile={profile} />
+                      </div>
+                    )}
+                  </React.Fragment>
                 );
               })}
             </div>
           </div>
 
-          {/* Section 2: Selected Profile Dashboard Widget */}
+          {/* Desktop Details Widget (rendered below all cards) */}
           {selectedProfile && activeProfileData && (
-            <div className="bg-slate-900/30 border border-emerald-800/20 backdrop-blur-xl rounded-2xl md:rounded-[32px] p-4 sm:p-8 md:p-12 shadow-2xl animate-fade-in-down">
-              <div className="space-y-6 sm:space-y-8">
-                <div>
-                  <h4 className="text-lg sm:text-2xl font-bold font-headline uppercase tracking-wider text-emerald-300 flex items-center gap-3">
-                    <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400 shrink-0" />
-                    Diretrizes de Impacto & Pilares de Valor
-                  </h4>
-                  <p className="text-sm text-gray-300 mt-2 ml-0 sm:ml-9 max-w-2xl leading-relaxed">
-                    Tecnologia soberana de precisão e inteligência prática desenhadas sob medida para otimizar os resultados e a produtividade no agronegócio moderno.
-                  </p>
-                </div>
-                <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {activeProfileData.benefits.map((benefit, idx) => {
-                    const pilarImages: Record<string, string[]> = {
-                      agricultor: ['/Agro/Milho.jpg', '/Agro/Soja.jpg', '/Agro/Criação.jpg'],
-                      cooperativa: ['/Agro/Milho-caminhao.jpg', '/Agro/Pragas de lavoura.webp', '/Agro/Fomento.png'],
-                      gestor_publico: ['/Agro/Municipio-destaque.png', '/Agro/Fim-exodo-rural.png', '/Agro/PIB-municipio.png'],
-                    };
-                    const images = pilarImages[selectedProfile ?? ''];
-                    const hasImg = !!images?.[idx];
-                    return (
-                      <li
-                        key={idx}
-                        className="flex flex-col rounded-2xl overflow-hidden border border-emerald-900/30 hover:border-emerald-600/60 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)] transition-all duration-300 group bg-slate-950/25 backdrop-blur-xl"
-                      >
-                        {/* Top Image area */}
-                        {hasImg ? (
-                          <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
-                            <img
-                              src={images[idx]}
-                              alt={benefit.split(':')[0]}
-                              className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
-                                selectedProfile === 'gestor_publico' ? 'object-contain p-2' : 'object-cover'
-                              }`}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
-                          </div>
-                        ) : (
-                          <div className="p-6 bg-slate-900/20 border-b border-emerald-900/20 shrink-0">
-                            <span className="text-4xl">{benefit.split(' ')[0]}</span>
-                          </div>
-                        )}
-
-                        {/* Isolated text box below */}
-                        <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40">
-                          <div className="space-y-3 text-left">
-                            <p className="text-xl font-bold text-white leading-snug">
-                              {benefit.split(':')[0].replace(/^\S+\s/, '')}
-                            </p>
-                            <p className="text-sm text-gray-300 leading-relaxed">
-                              {benefit.split(':')[1]?.trim()}
-                            </p>
-                          </div>
-                          {/* Pilar indicator at footer */}
-                          <div className="mt-6 pt-4 border-t border-emerald-950/20 text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                            Pilar {idx + 1} — Dante Safra
-                          </div>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+            <div className="hidden md:block animate-fade-in-down mt-4">
+              <ProfileDetails profile={activeProfileData} />
             </div>
           )}
 
