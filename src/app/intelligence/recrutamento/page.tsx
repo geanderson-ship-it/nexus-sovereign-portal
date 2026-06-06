@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Card, 
   CardContent, 
@@ -14,13 +14,14 @@ import {
   Video, 
   FileText, 
   Activity, 
-  ShieldCheck, 
   Search,
   PlusCircle,
   MoreVertical,
   ChevronRight,
   BrainCircuit,
-  Target
+  Target,
+  ChevronLeft,
+  X
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -30,9 +31,10 @@ import { RecruitmentVideoRoom } from '@/components/gabinete/recruitment-video-ro
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Label } from '@/components/ui/label';
-import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { Progress } from '@/components/ui/progress';
+import { useToast } from '@/hooks/use-toast';
 
 const initialCandidates = [
   { id: '1', name: 'Ricardo Silveira', role: 'Gerente de Produção', status: 'Aguardando Entrevista', score: null },
@@ -40,13 +42,115 @@ const initialCandidates = [
   { id: '3', name: 'João Pedro Martins', role: 'Operador de Máquinas', status: 'Dossiê em Análise', score: '7.2' },
 ];
 
+const candidatesReportData: Record<string, {
+  veredito: string;
+  nervousness: number;
+  sincerity: number;
+  coherence: number;
+  notes: string;
+  details: Array<{ question: string; score: 'good' | 'warning' | 'critical' }>;
+}> = {
+  '2': { // Fernanda Lima
+    veredito: 'APROVADO',
+    nervousness: 20,
+    sincerity: 92,
+    coherence: 88,
+    notes: 'Candidata demonstra excelente domínio técnico em processos de qualidade (SGQ e ferramentas Lean). Postura madura e respostas consistentes com seu histórico de estabilidade profissional. Sinal verde para contratação imediata.',
+    details: [
+      { question: 'Apresentação e histórico na região', score: 'good' },
+      { question: 'Motivo da saída do emprego anterior', score: 'good' },
+      { question: 'Motivação para trabalhar na Nexus', score: 'good' },
+      { question: 'Cultura de trabalho em equipe', score: 'good' }
+    ]
+  },
+  '3': { // João Pedro Martins
+    veredito: 'EM ANÁLISE',
+    nervousness: 65,
+    sincerity: 60,
+    coherence: 68,
+    notes: 'Candidato possui boa base prática como operador, porém demonstrou instabilidade ao explicar o motivo da saída de seu último emprego. Necessária avaliação presencial para checagem de referências. Há pequenos alertas comportamentais.',
+    details: [
+      { question: 'Apresentação e histórico na região', score: 'good' },
+      { question: 'Motivo da saída do emprego anterior', score: 'warning' },
+      { question: 'Motivação para trabalhar na Nexus', score: 'warning' },
+      { question: 'Cultura de trabalho em equipe', score: 'good' }
+    ]
+  }
+};
+
 export default function RecruitmentWarRoom() {
+  const { toast } = useToast();
   const [candidates, setCandidates] = useState(initialCandidates);
   const [isInterviewing, setIsInterviewing] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState<typeof initialCandidates[0] | null>(null);
+  const [viewingReportCandidate, setViewingReportCandidate] = useState<typeof initialCandidates[0] | null>(null);
   const [isNewProcessModalOpen, setIsNewProcessModalOpen] = useState(false);
   const [newCandidateName, setNewCandidateName] = useState('');
   const [newCandidateRole, setNewCandidateRole] = useState('');
+
+  // Estados para Entrevista Presencial
+  const [presencialDate, setPresencialDate] = useState('');
+  const [presencialInterviewer, setPresencialInterviewer] = useState('');
+  const [presencialEvaluation, setPresencialEvaluation] = useState('');
+  const [presencialVerdict, setPresencialVerdict] = useState<'approved' | 'rejected' | ''>('');
+  const [presencialSignature, setPresencialSignature] = useState('');
+
+  // Carrega dados da entrevista presencial ao selecionar um candidato
+  useEffect(() => {
+    if (!viewingReportCandidate) {
+      setPresencialDate('');
+      setPresencialInterviewer('');
+      setPresencialEvaluation('');
+      setPresencialVerdict('');
+      setPresencialSignature('');
+      return;
+    }
+    const saved = localStorage.getItem(`nexus_candidate_presencial_${viewingReportCandidate.id}`);
+    if (saved) {
+      const data = JSON.parse(saved);
+      setPresencialDate(data.date || '');
+      setPresencialInterviewer(data.interviewer || '');
+      setPresencialEvaluation(data.evaluation || '');
+      setPresencialVerdict(data.verdict || '');
+      setPresencialSignature(data.signature || '');
+    } else {
+      setPresencialDate('');
+      setPresencialInterviewer('');
+      setPresencialEvaluation('');
+      setPresencialVerdict('');
+      setPresencialSignature('');
+    }
+  }, [viewingReportCandidate]);
+
+  const handleSavePresencial = () => {
+    if (!viewingReportCandidate) return;
+    const data = {
+      date: presencialDate,
+      interviewer: presencialInterviewer,
+      evaluation: presencialEvaluation,
+      verdict: presencialVerdict,
+      signature: presencialSignature
+    };
+    localStorage.setItem(`nexus_candidate_presencial_${viewingReportCandidate.id}`, JSON.stringify(data));
+    
+    // Atualiza o status do candidato na lista para refletir o parecer
+    if (presencialVerdict) {
+      setCandidates(prev => prev.map(c => {
+        if (c.id === viewingReportCandidate.id) {
+          return {
+            ...c,
+            status: presencialVerdict === 'approved' ? 'Aprovado Presencial' : 'Reprovado Presencial'
+          };
+        }
+        return c;
+      }));
+    }
+
+    toast({
+      title: "Avaliação Presencial Salva",
+      description: `Os dados de ${viewingReportCandidate.name} foram registrados.`,
+    });
+  };
 
   const startInterview = (candidate: typeof initialCandidates[0]) => {
     setSelectedCandidate(candidate);
@@ -72,6 +176,7 @@ export default function RecruitmentWarRoom() {
     return (
       <RecruitmentVideoRoom 
         candidateName={selectedCandidate.name} 
+        candidateRole={selectedCandidate.role}
         onClose={() => setIsInterviewing(false)} 
       />
     );
@@ -271,7 +376,12 @@ export default function RecruitmentWarRoom() {
                         >
                           <Video className="h-4 w-4" />
                         </Button>
-                        <Button size="sm" variant="ghost" className="text-gray-400 hover:text-white">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="text-gray-400 hover:text-white"
+                          onClick={() => setViewingReportCandidate(candidate)}
+                        >
                           <FileText className="h-4 w-4" />
                         </Button>
                         <Button size="sm" variant="ghost" className="text-gray-400 hover:text-white">
@@ -288,40 +398,6 @@ export default function RecruitmentWarRoom() {
 
         {/* Coluna 2: Inteligência e Alertas */}
         <div className="space-y-6">
-           <Card className="bg-zinc-950/60 border-2 border-secondary/20 backdrop-blur-md shadow-2xl">
-              <CardHeader>
-                <CardTitle className="text-lg font-headline text-secondary flex items-center gap-2">
-                  <ShieldCheck className="h-5 w-5" /> Inteligência Operacional
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="p-4 rounded-md bg-secondary/10 border border-secondary/20">
-                  <h4 className="font-bold text-secondary text-sm flex items-center gap-2 uppercase tracking-tighter">
-                    <Activity className="h-4 w-4" /> Status Djeny (IA Humana)
-                  </h4>
-                  <p className="text-xs text-gray-400 mt-2">
-                    Sistema pronto para entrevista via vídeo. Protocolo de análise psicológica ativo.
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Alertas de Seleção</h4>
-                  <div className="flex items-start gap-3">
-                    <div className="h-2 w-2 rounded-full bg-emerald-500 mt-1.5 shadow-[0_0_8px_theme(colors.emerald.500)]" />
-                    <p className="text-sm text-gray-300">Candidato <span className="text-white font-bold">Fernanda Lima</span> aprovada tecnicamente.</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="h-2 w-2 rounded-full bg-amber-500 mt-1.5 shadow-[0_0_8px_theme(colors.amber.500)]" />
-                    <p className="text-sm text-gray-300">Dissonância detectada no currículo de <span className="text-white font-bold">João Pedro</span>.</p>
-                  </div>
-                </div>
-
-                <Button className="w-full bg-secondary text-black font-bold">
-                   VER RELATÓRIO COMPLETO <ChevronRight className="ml-2 h-4 w-4" />
-                </Button>
-              </CardContent>
-           </Card>
-
            {/* Selo Nexus Quality */}
            <div className="relative aspect-square w-full opacity-30 pointer-events-none">
               <Image 
@@ -336,6 +412,217 @@ export default function RecruitmentWarRoom() {
       <div className="max-w-7xl mx-auto px-6 pb-24 mt-12">
         <LegalSafeguard module="RECRUTAMENTO WAR ROOM" protocol="NX-REC-01" />
       </div>
+
+      {/* Modal Visualizar Avaliação Djeny */}
+      <AnimatePresence>
+        {viewingReportCandidate && (
+          <div className="fixed inset-0 z-[150] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-2xl bg-zinc-950 border-2 border-blue-500/20 shadow-2xl rounded-[32px] overflow-hidden"
+            >
+              {/* Header com gradiente */}
+              <div className="h-1.5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />
+              <div className="p-8 border-b border-white/5 bg-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
+                    <FileText className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-black text-white uppercase italic tracking-tighter text-left">Relatório de Avaliação</h3>
+                    <p className="text-blue-400 font-mono tracking-widest text-[9px] uppercase text-left">Nexus AI // Recrutamento Inteligente</p>
+                  </div>
+                </div>
+                <Button 
+                  onClick={() => setViewingReportCandidate(null)}
+                  variant="ghost" 
+                  size="icon" 
+                  className="rounded-lg h-9 w-9 text-slate-400 hover:text-white hover:bg-white/5 animate-in fade-in"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+
+              <div className="p-8 space-y-6 max-h-[65vh] overflow-y-auto custom-scrollbar">
+                {/* Perfil e Veredito */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-center">
+                    <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest mb-1.5">Candidato</p>
+                    <p className="text-xl font-bold text-white leading-none">{viewingReportCandidate.name}</p>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-wider mt-1">{viewingReportCandidate.role}</p>
+                  </div>
+                  
+                  <div className="p-5 rounded-2xl bg-white/5 border border-white/10 flex flex-col justify-center text-center md:text-left">
+                    <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest mb-1.5">Veredito Djeny</p>
+                    {viewingReportCandidate.score ? (
+                      <div className="flex items-center justify-center md:justify-start gap-3">
+                        <span className={cn(
+                          "text-xl font-black uppercase tracking-widest leading-none",
+                          candidatesReportData[viewingReportCandidate.id]?.veredito === 'APROVADO' ? "text-emerald-400" : "text-amber-400"
+                        )}>
+                          {candidatesReportData[viewingReportCandidate.id]?.veredito}
+                        </span>
+                        <Badge className="bg-blue-500/20 text-blue-400 border-none font-bold text-xs">
+                          {viewingReportCandidate.score} / 10
+                        </Badge>
+                      </div>
+                    ) : (
+                      <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Aguardando Avaliação</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Se tiver avaliação, exibe as notas de telemetria e análise */}
+                {viewingReportCandidate.score && candidatesReportData[viewingReportCandidate.id] ? (
+                  <>
+                    {/* Telemetria de Inteligência */}
+                    <div className="space-y-4">
+                      <p className="text-[9px] text-gray-500 uppercase font-black tracking-widest">Telemetria de Comportamento (Live):</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        {[
+                          { label: 'Nervosismo', val: candidatesReportData[viewingReportCandidate.id].nervousness, color: 'text-amber-400', barBg: 'bg-amber-400' },
+                          { label: 'Sinceridade', val: candidatesReportData[viewingReportCandidate.id].sincerity, color: 'text-emerald-400', barBg: 'bg-emerald-400' },
+                          { label: 'Coerência', val: candidatesReportData[viewingReportCandidate.id].coherence, color: 'text-blue-400', barBg: 'bg-blue-400' }
+                        ].map((m) => (
+                          <div key={m.label} className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-2">
+                            <div className="flex justify-between items-center text-xs">
+                              <span className="text-slate-400 font-bold">{m.label}</span>
+                              <span className={cn("font-black", m.color)}>{m.val}%</span>
+                            </div>
+                            <Progress value={m.val} className="h-1 bg-white/5" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Veredito Detalhado */}
+                    <div className="space-y-2">
+                      <p className="text-[9px] text-gray-500 uppercase font-black tracking-widest">Análise de IA (Djeny):</p>
+                      <div className="p-5 bg-blue-500/5 border border-blue-500/20 rounded-2xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-500" />
+                        <p className="text-xs text-slate-300 leading-relaxed italic font-medium">
+                          "{candidatesReportData[viewingReportCandidate.id].notes}"
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Detalhamento de Respostas */}
+                    <div className="space-y-3">
+                      <p className="text-[9px] text-gray-500 uppercase font-black tracking-widest">Detalhamento de Módulos:</p>
+                      <div className="space-y-2">
+                        {candidatesReportData[viewingReportCandidate.id].details.map((det, i) => (
+                          <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5 text-xs font-semibold">
+                            <span className="text-slate-300">{det.question}</span>
+                            <Badge className={cn(
+                              "text-[8px] font-black border-none uppercase px-3 py-1",
+                              det.score === 'good' ? "bg-emerald-500/20 text-emerald-400" : det.score === 'warning' ? "bg-amber-500/20 text-amber-400" : "bg-red-500/20 text-red-400"
+                            )}>
+                              {det.score === 'good' ? 'Coerente' : det.score === 'warning' ? 'Atenção' : 'Dissonante'}
+                            </Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="py-10 text-center border-2 border-dashed border-white/5 rounded-2xl space-y-2 bg-black/40">
+                    <BrainCircuit className="h-10 w-10 text-slate-600 mx-auto animate-pulse" />
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Ficha de Triagem em Aberto</p>
+                    <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
+                      O candidato ainda não realizou a entrevista com a Djeny. Agende ou inicie a videochamada para processar a avaliação comportamental.
+                    </p>
+                  </div>
+                )}
+                <Separator className="bg-white/5" />
+
+                {/* Seção Entrevista Presencial */}
+                <div className="space-y-4 pt-2">
+                  <h4 className="text-[10px] text-blue-400 font-black uppercase tracking-widest flex items-center gap-2">
+                    <Users className="h-4 w-4" /> Entrevista Presencial (Avaliação Humana)
+                  </h4>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <Label className="text-[9px] uppercase font-bold text-slate-500 ml-1">Data da Entrevista</Label>
+                      <Input
+                        type="date"
+                        value={presencialDate}
+                        onChange={(e) => setPresencialDate(e.target.value)}
+                        className="bg-black/40 border-white/10 h-10 text-xs text-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[9px] uppercase font-bold text-slate-500 ml-1">Entrevistador Responsável</Label>
+                      <Input
+                        type="text"
+                        placeholder="Nome do entrevistador"
+                        value={presencialInterviewer}
+                        onChange={(e) => setPresencialInterviewer(e.target.value)}
+                        className="bg-black/40 border-white/10 h-10 text-xs text-white"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label className="text-[9px] uppercase font-bold text-slate-500 ml-1">Avaliação da Entrevista Presencial</Label>
+                    <textarea
+                      placeholder="Descreva as qualificações técnicas observadas, postura, referências profissionais..."
+                      value={presencialEvaluation}
+                      onChange={(e) => setPresencialEvaluation(e.target.value)}
+                      className="w-full min-h-[90px] bg-black/40 border border-white/10 rounded-xl p-3 text-xs text-white placeholder:text-slate-600 focus:border-blue-500 outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <Label className="text-[9px] uppercase font-bold text-slate-500 ml-1">Parecer do Entrevistador</Label>
+                      <select
+                        value={presencialVerdict}
+                        onChange={(e: any) => setPresencialVerdict(e.target.value)}
+                        className="w-full bg-black/40 border border-white/10 h-10 rounded-xl px-3 text-xs text-white focus:border-blue-500 outline-none cursor-pointer"
+                      >
+                        <option value="" className="bg-slate-950 text-slate-500">Escolha o parecer...</option>
+                        <option value="approved" className="bg-slate-950 text-emerald-400 font-bold">Aprovado (Efetivado/Contratado)</option>
+                        <option value="rejected" className="bg-slate-950 text-red-400 font-bold">Reprovado</option>
+                      </select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[9px] uppercase font-bold text-slate-500 ml-1">Assinatura Digital / Eletrônica</Label>
+                      <Input
+                        type="text"
+                        placeholder="Assine digitando seu nome"
+                        value={presencialSignature}
+                        onChange={(e) => setPresencialSignature(e.target.value)}
+                        className="bg-black/40 border-white/10 h-10 text-xs text-white"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <Button 
+                      onClick={handleSavePresencial}
+                      className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase tracking-widest text-[10px] h-11 rounded-xl shadow-lg shadow-emerald-950/20"
+                    >
+                      Salvar Avaliação Presencial
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 border-t border-white/5 bg-zinc-950/80 flex justify-end gap-3">
+                <Button 
+                  onClick={() => setViewingReportCandidate(null)}
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-[10px] h-10 px-8 rounded-xl"
+                >
+                  Fechar
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

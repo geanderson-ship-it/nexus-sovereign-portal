@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { X, Send, User, Loader2, Maximize, Minimize, Volume2, Mic, Pause, BookOpen, Camera as CameraIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, resizeAndCompressImage, extractVideoFramesGrid } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -171,7 +171,7 @@ export function NexusAvatarChat() {
 
   const disclaimerText = useMemo(() => {
     let text = "A IA pode cometer erros. Confira as respostas.";
-    if (activeContext.startsWith('dante')) text = "O Dante é uma IA e pode cometer erros.";
+    if (activeContext.startsWith('dante')) text = "O Dante é uma IA e pode cometer erros. Vídeos de até 30s suportados.";
     else if (activeContext.startsWith('djeny') || activeContext === 'career') text = "A Djeny é uma IA e pode cometer erros.";
     return `${text} O áudio pode demorar alguns instantes.`;
   }, [activeContext]);
@@ -438,13 +438,34 @@ export function NexusAvatarChat() {
 
           <CardFooter className="p-2 border-t flex flex-col gap-2 flex-shrink-0">
             <form onSubmit={handleSubmit} className="flex w-full gap-2">
-              <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={(e) => {
+              <input type="file" ref={fileInputRef} className="hidden" accept="image/*,video/*" onChange={async (e) => {
                 const file = e.target.files?.[0];
                 if (file) {
-                  const reader = new FileReader();
-                  reader.onload = (ev) => handleSubmit(undefined, "Analise esta imagem", ev.target?.result as string);
-                  reader.readAsDataURL(file);
+                  setIsLoading(true);
+                  try {
+                    let imageUri = '';
+                    if (file.type.startsWith('video/')) {
+                      const result = await extractVideoFramesGrid(file);
+                      if (result.duration > 30) {
+                        addMessage('system', { 
+                          response: '⚠️ O tempo máximo permitido para análise de vídeo é de 30 segundos. Por favor, envie um vídeo mais curto.' 
+                        });
+                        setIsLoading(false);
+                        if (e.target) e.target.value = '';
+                        return;
+                      }
+                      imageUri = result.dataUrl;
+                    } else {
+                      imageUri = await resizeAndCompressImage(file);
+                    }
+                    handleSubmit(undefined, "Analise esta imagem", imageUri);
+                  } catch (err: any) {
+                    console.error("VIX DIAGNOSTIC: File processing failed", err);
+                    alert("Falha ao processar arquivo para envio.");
+                    setIsLoading(false);
+                  }
                 }
+                if (e.target) e.target.value = '';
               }} />
               <Button type="button" size="icon" variant="ghost" onClick={() => fileInputRef.current?.click()}><CameraIcon className="h-4 w-4"/></Button>
               <Textarea value={input} onChange={e => setInput(e.target.value)} placeholder="Mensagem..." className="min-h-[40px] resize-none" />

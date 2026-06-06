@@ -45,14 +45,133 @@ export default function MeritoPage() {
     const { user, isUserLoading } = useUser();
     const [searchTerm, setSearchTerm] = useState('');
 
-    // TODO: buscar avaliações via Amplify Data / DynamoDB
-    const evaluations: MeritIndex[] = [];
+    const [employees, setEmployees] = useState(permanentEmployees);
+    const [evaluations, setEvaluations] = useState<MeritIndex[]>([]);
     const areEvaluationsLoading = false;
     const error = null;
+    const [isCadastroModalOpen, setIsCadastroModalOpen] = useState(false);
+    const [newEmpData, setNewEmpData] = useState({
+        name: '',
+        role: '',
+        department: 'Produção',
+        meritScore: 8.0,
+        status: 'active' as const,
+        admissionDate: new Date().toISOString().split('T')[0]
+    });
 
     const isLoading = isUserLoading || areEvaluationsLoading;
 
-    const filteredEmployees = permanentEmployees.filter(emp => 
+    React.useEffect(() => {
+        if (typeof window === 'undefined') return;
+        try {
+            // 1. Carregar colaboradores da base persistida ou usar o default
+            let currentEmployees = [...permanentEmployees];
+            const storedEmps = localStorage.getItem('nexus_permanent_employees');
+            if (storedEmps) {
+                currentEmployees = JSON.parse(storedEmps);
+            } else {
+                localStorage.setItem('nexus_permanent_employees', JSON.stringify(permanentEmployees));
+            }
+
+            // 2. Carregar avaliações
+            const stored = localStorage.getItem('nexus_merit_evaluations');
+            if (stored) {
+                const list = JSON.parse(stored);
+                
+                // Mapear para o formato MeritIndex
+                const meritIndices: MeritIndex[] = list.map((item: any) => ({
+                    id: item.id,
+                    employeeName: item.employeeName,
+                    evaluationDate: item.date,
+                    finalMeritIndex: item.finalScore
+                }));
+                // Ordenar por data decrescente
+                meritIndices.sort((a: any, b: any) => new Date(b.evaluationDate).getTime() - new Date(a.evaluationDate).getTime());
+                setEvaluations(meritIndices);
+
+                // Calcular notas atualizadas baseadas nas avaliações do histórico
+                currentEmployees = currentEmployees.map(emp => {
+                    const empEvals = list.filter((evalRecord: any) => evalRecord.employeeId === emp.id);
+                    if (empEvals.length > 0) {
+                        const sumOfNewEvals = empEvals.reduce((acc: number, curr: any) => acc + curr.finalScore, 0);
+                        const totalScore = emp.meritScore + sumOfNewEvals;
+                        const averageScore = totalScore / (1 + empEvals.length);
+                        return {
+                            ...emp,
+                            meritScore: averageScore
+                        };
+                    }
+                    return emp;
+                });
+            }
+            setEmployees(currentEmployees);
+        } catch (e) {
+            console.error("Erro ao carregar dados do localStorage:", e);
+        }
+    }, []);
+
+    const handleAddEmployee = () => {
+        if (!newEmpData.name.trim() || !newEmpData.role.trim()) {
+            alert("Por favor, preencha o nome e o cargo.");
+            return;
+        }
+
+        const newId = 'emp-' + Math.random().toString(36).substring(2, 9);
+        const newEmployee = {
+            id: newId,
+            name: newEmpData.name,
+            role: newEmpData.role,
+            department: newEmpData.department,
+            admissionDate: newEmpData.admissionDate || new Date().toISOString().split('T')[0],
+            meritScore: Number(newEmpData.meritScore) || 8.0,
+            status: newEmpData.status,
+            avatar: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70) + 1}`
+        };
+
+        try {
+            const storedEmps = localStorage.getItem('nexus_permanent_employees');
+            const list = storedEmps ? JSON.parse(storedEmps) : [...permanentEmployees];
+            list.push(newEmployee);
+            localStorage.setItem('nexus_permanent_employees', JSON.stringify(list));
+            
+            // Recarregar os dados para re-calcular médias
+            setEmployees(list);
+            
+            const stored = localStorage.getItem('nexus_merit_evaluations');
+            let updatedList = [...list];
+            if (stored) {
+                const evalList = JSON.parse(stored);
+                updatedList = list.map((emp: any) => {
+                    const empEvals = evalList.filter((evalRecord: any) => evalRecord.employeeId === emp.id);
+                    if (empEvals.length > 0) {
+                        const sumOfNewEvals = empEvals.reduce((acc: number, curr: any) => acc + curr.finalScore, 0);
+                        const totalScore = emp.meritScore + sumOfNewEvals;
+                        const averageScore = totalScore / (1 + empEvals.length);
+                        return {
+                            ...emp,
+                            meritScore: averageScore
+                        };
+                    }
+                    return emp;
+                });
+            }
+            setEmployees(updatedList);
+
+            setIsCadastroModalOpen(false);
+            setNewEmpData({
+                name: '',
+                role: '',
+                department: 'Produção',
+                meritScore: 8.0,
+                status: 'active',
+                admissionDate: new Date().toISOString().split('T')[0]
+            });
+        } catch (e) {
+            console.error("Erro ao cadastrar colaborador:", e);
+        }
+    };
+
+    const filteredEmployees = employees.filter(emp => 
       emp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       emp.role.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -190,7 +309,10 @@ export default function MeritoPage() {
                             <Button variant="outline" className="border-white/10 text-slate-400 hover:text-white rounded-xl flex-1 md:flex-none">
                                 <Filter className="h-4 w-4 mr-2" /> Filtrar Setor
                             </Button>
-                            <Button className="bg-primary text-black font-bold rounded-xl flex-1 md:flex-none">
+                            <Button 
+                                onClick={() => setIsCadastroModalOpen(true)}
+                                className="bg-primary text-black font-bold rounded-xl flex-1 md:flex-none"
+                            >
                                 <PlusCircle className="h-4 w-4 mr-2" /> Novo Cadastro
                             </Button>
                         </div>
@@ -322,6 +444,84 @@ export default function MeritoPage() {
             <div className="max-w-7xl mx-auto px-6 pb-24 mt-12">
                 <LegalSafeguard module="ENGENHARIA DE MÉRITO" protocol="NX-MERIT-01" />
             </div>
+
+            {/* Modal Novo Cadastro */}
+            {isCadastroModalOpen && (
+                <div className="fixed inset-0 z-[150] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+                    <Card className="w-full max-w-md bg-zinc-950 border-2 border-primary/20 shadow-2xl">
+                        <CardHeader>
+                            <CardTitle className="text-xl font-headline text-white flex items-center gap-2">
+                                <PlusCircle className="h-5 w-5 text-primary" /> Efetivar Colaborador
+                            </CardTitle>
+                            <CardDescription>Cadastre o novo funcionário na base da Engenharia de Mérito.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                                <label className="text-xs text-gray-300 font-bold uppercase">Nome do Colaborador</label>
+                                <Input 
+                                    value={newEmpData.name}
+                                    onChange={(e) => setNewEmpData({...newEmpData, name: e.target.value})}
+                                    placeholder="Ex: Leticia Braga..." 
+                                    className="bg-black/40 border-white/10" 
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs text-gray-300 font-bold uppercase">Cargo</label>
+                                <Input 
+                                    value={newEmpData.role}
+                                    onChange={(e) => setNewEmpData({...newEmpData, role: e.target.value})}
+                                    placeholder="Ex: Analista de Qualidade" 
+                                    className="bg-black/40 border-white/10" 
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-xs text-gray-300 font-bold uppercase">Departamento</label>
+                                    <select 
+                                        value={newEmpData.department}
+                                        onChange={(e) => setNewEmpData({...newEmpData, department: e.target.value})}
+                                        className="w-full h-10 px-3 rounded-md bg-black/40 border border-white/10 text-white text-sm"
+                                    >
+                                        <option value="Qualidade" className="bg-zinc-950">Qualidade</option>
+                                        <option value="Produção" className="bg-zinc-950">Produção</option>
+                                        <option value="Logística" className="bg-zinc-950">Logística</option>
+                                        <option value="Manutenção" className="bg-zinc-950">Manutenção</option>
+                                    </select>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-xs text-gray-300 font-bold uppercase">IMN de Entrada</label>
+                                    <Input 
+                                        type="number"
+                                        step="0.1"
+                                        min="1"
+                                        max="10"
+                                        value={newEmpData.meritScore}
+                                        onChange={(e) => setNewEmpData({...newEmpData, meritScore: Number(e.target.value)})}
+                                        className="bg-black/40 border-white/10" 
+                                    />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs text-gray-300 font-bold uppercase">Data de Admissão</label>
+                                <Input 
+                                    type="date"
+                                    value={newEmpData.admissionDate}
+                                    onChange={(e) => setNewEmpData({...newEmpData, admissionDate: e.target.value})}
+                                    className="bg-black/40 border-white/10" 
+                                />
+                            </div>
+                            <div className="flex gap-3 pt-4">
+                                <Button variant="ghost" onClick={() => setIsCadastroModalOpen(false)} className="flex-1 text-gray-400">
+                                    Cancelar
+                                </Button>
+                                <Button onClick={handleAddEmployee} className="flex-1 bg-primary text-black font-black uppercase tracking-widest">
+                                    Cadastrar
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+            )}
             </div>
         </SovereignShowcase>
     );

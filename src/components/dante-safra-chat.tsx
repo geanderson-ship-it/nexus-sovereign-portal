@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Send, User, Loader2, Wheat, Mic, Pause, Volume2, Camera as CameraIcon, X, Maximize, Minimize, ThermometerSun, DollarSign, Sprout, Beef, PiggyBank, Crown, Zap, Search } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, resizeAndCompressImage, extractVideoFramesGrid } from '@/lib/utils';
 import { danteSafra } from '@/ai/flows/dante-safra-flow';
 import { IAPaymentModal } from './maga/ia-payment-modal';
 import type { DanteSafraOutput, DanteSafraInput, PropertyDetails, DanteConversationStage } from '@/ai/flows/dante-safra-types';
@@ -497,15 +497,29 @@ export default function DanteSafraChat() {
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const imageUri = e.target?.result as string;
+      setIsLoading(true);
+      try {
+        let imageUri = '';
+        if (file.type.startsWith('video/')) {
+          const result = await extractVideoFramesGrid(file);
+          if (result.duration > 30) {
+            addMessage('system', { 
+              response: '⚠️ O tempo máximo permitido para análise de vídeo é de 30 segundos. Por favor, grave ou selecione um vídeo mais curto.' 
+            });
+            setIsLoading(false);
+            if (event.target) event.target.value = '';
+            return;
+          }
+          imageUri = result.dataUrl;
+        } else {
+          imageUri = await resizeAndCompressImage(file);
+        }
         await processMessage(t('chat.danteSafra.submittingRetrofit'), imageUri);
-      };
-      reader.onerror = () => {
-        addMessage('system', { response: t('chat.danteSafra.error.protocol') });
-      };
-      reader.readAsDataURL(file);
+      } catch (err: any) {
+        console.error("VIX DIAGNOSTIC: File processing failed", err);
+        addMessage('system', { response: t('chat.danteSafra.error.protocol') + ` (${err.message || 'Erro no processamento do arquivo'})` });
+        setIsLoading(false);
+      }
     }
     if(event.target) event.target.value = '';
   };
@@ -665,7 +679,7 @@ export default function DanteSafraChat() {
         </div>
           <CardFooter className="p-4 border-t border-emerald-800/60 flex flex-col items-start gap-2">
               <form onSubmit={handleFormSubmit} className="flex w-full items-start gap-2">
-                <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileChange} disabled={isLoading || setupStage !== 'ANALISE'} />
+                <input type="file" ref={fileInputRef} className="hidden" accept="image/*,video/*" onChange={handleFileChange} disabled={isLoading || setupStage !== 'ANALISE'} />
                 <Button type="button" size="icon" variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isLoading || setupStage !== 'ANALISE'} className={cn(setupStage !== 'ANALISE' && 'opacity-50 cursor-not-allowed', "border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white")}>
                     <CameraIcon className="w-5 h-5" />
                     <span className="sr-only">{t('chat.danteSafra.uploadPrompt')}</span>
@@ -690,7 +704,10 @@ export default function DanteSafraChat() {
                   <span className="sr-only">{t('contact.form.cta')}</span>
                 </Button>
               </form>
-              <p className="w-full pt-1 text-center text-xs text-gray-500">{t('intelligence.footer')}</p>
+              <div className="w-full pt-1 text-center text-[10px] text-gray-500 flex flex-col sm:flex-row justify-between px-1 gap-1">
+                <span>{t('intelligence.footer')}</span>
+                {setupStage === 'ANALISE' && <span className="text-emerald-500/80 font-semibold">Formatos aceitos: Imagem ou Vídeo de até 30s</span>}
+              </div>
             </CardFooter>
       </div>
     </Card>

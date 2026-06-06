@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,7 +32,10 @@ import {
   Users,
   Star,
   HeartHandshake,
-  Package
+  Package,
+  Eye,
+  Printer,
+  X
 } from 'lucide-react';
 import { generateOnboardingPlan } from '@/ai/flows/onboarding-flow';
 import type { OnboardingPlanOutput } from '@/ai/flows/onboarding-types';
@@ -48,6 +51,8 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
+import { QrCode } from '@/components/ui/qr-code';
+import { permanentEmployees } from '@/lib/data/employees';
 
 export default function OnboardingPage() {
   const [employeeName, setEmployeeName] = useState('');
@@ -58,11 +63,19 @@ export default function OnboardingPage() {
   const [auditResponse, setAuditResponse] = useState<string | null>(null);
   const [activeTraining, setActiveTraining] = useState<string | null>(null);
   const [activeSubModule, setActiveSubModule] = useState<string | null>(null);
+  const [isVisualizing, setIsVisualizing] = useState(false);
+  const [previewStyle, setPreviewStyle] = useState<'digital' | 'print'>('digital');
   const { toast } = useToast();
 
   type CertStatus = 'locked' | 'available' | 'in-progress' | 'completed';
   type CertType = 'seguranca' | 'norma' | 'tecnico' | 'cultura';
   interface Cert { id: string; title: string; description: string; status: CertStatus; type: CertType; icon: React.ElementType; duration: string; }
+
+  const getEmployeesList = () => {
+    if (typeof window === 'undefined') return permanentEmployees;
+    const stored = localStorage.getItem('nexus_permanent_employees');
+    return stored ? JSON.parse(stored) : permanentEmployees;
+  };
 
   const [certifications, setCertifications] = useState<Cert[]>([
     { id: 'safety-1', title: 'Segurança em Primeiro Lugar', description: 'Uso obrigatório de EPIs e protocolos de zona de risco.', status: 'available', type: 'seguranca', icon: HardHat, duration: '45 min' },
@@ -74,6 +87,82 @@ export default function OnboardingPage() {
   const [isNormsCertified, setIsNormsCertified] = useState(false);
   const [isTechCertified, setIsTechCertified] = useState(false);
   const [isComplianceSigned, setIsComplianceSigned] = useState(false);
+
+  const saveTrainingProgress = (
+    currentName: string,
+    certs: Cert[],
+    certified: boolean,
+    normsCertified: boolean,
+    techCertified: boolean,
+    complianceSigned: boolean
+  ) => {
+    if (!currentName) return;
+    const data = {
+      certifications: certs.map(c => ({
+        id: c.id,
+        title: c.title,
+        description: c.description,
+        status: c.status,
+        type: c.type,
+        duration: c.duration
+      })),
+      isCertified: certified,
+      isNormsCertified: normsCertified,
+      isTechCertified: techCertified,
+      isComplianceSigned: complianceSigned
+    };
+    localStorage.setItem(`nexus_training_status_${currentName}`, JSON.stringify(data));
+  };
+
+  useEffect(() => {
+    if (!employeeName) {
+      setCertifications([
+        { id: 'safety-1', title: 'Segurança em Primeiro Lugar', description: 'Uso obrigatório de EPIs e protocolos de zona de risco.', status: 'available', type: 'seguranca', icon: HardHat, duration: '45 min' },
+        { id: 'norms-1', title: 'Normas Internas Nexus', description: 'Código de conduta, horários e ética operacional.', status: 'in-progress', type: 'norma', icon: Scale, duration: '30 min' },
+        { id: 'technical-1', title: 'Manual de Maquinário v4', description: 'Operação básica e parada de emergência de prensas.', status: 'available', type: 'tecnico', icon: Zap, duration: '1h 20m' },
+        { id: 'culture-1', title: 'Cultura de Elite', description: 'A história do Nexus e nossa visão de futuro.', status: 'locked', type: 'cultura', icon: BrainCircuit, duration: '20 min' },
+      ]);
+      setIsCertified(false);
+      setIsNormsCertified(false);
+      setIsTechCertified(false);
+      setIsComplianceSigned(false);
+      return;
+    }
+
+    const saved = localStorage.getItem(`nexus_training_status_${employeeName}`);
+    if (saved) {
+      const data = JSON.parse(saved);
+      const iconMap: Record<string, React.ElementType> = {
+        'safety-1': HardHat,
+        'norms-1': Scale,
+        'technical-1': Zap,
+        'culture-1': BrainCircuit
+      };
+      
+      const certsWithIcons = data.certifications.map((c: any) => ({
+        ...c,
+        icon: iconMap[c.id] || BookOpen
+      }));
+
+      setCertifications(certsWithIcons);
+      setIsCertified(data.isCertified);
+      setIsNormsCertified(data.isNormsCertified);
+      setIsTechCertified(data.isTechCertified);
+      setIsComplianceSigned(data.isComplianceSigned);
+    } else {
+      setCertifications([
+        { id: 'safety-1', title: 'Segurança em Primeiro Lugar', description: 'Uso obrigatório de EPIs e protocolos de zona de risco.', status: 'available' as CertStatus, type: 'seguranca' as CertType, icon: HardHat, duration: '45 min' },
+        { id: 'norms-1', title: 'Normas Internas Nexus', description: 'Código de conduta, horários e ética operacional.', status: 'in-progress' as CertStatus, type: 'norma' as CertType, icon: Scale, duration: '30 min' },
+        { id: 'technical-1', title: 'Manual de Maquinário v4', description: 'Operação básica e parada de emergência de prensas.', status: 'available' as CertStatus, type: 'tecnico' as CertType, icon: Zap, duration: '1h 20m' },
+        { id: 'culture-1', title: 'Cultura de Elite', description: 'A história do Nexus e nossa visão de futuro.', status: 'locked' as CertStatus, type: 'cultura' as CertType, icon: BrainCircuit, duration: '20 min' },
+      ]);
+      setIsCertified(false);
+      setIsNormsCertified(false);
+      setIsTechCertified(false);
+      setIsComplianceSigned(false);
+    }
+  }, [employeeName]);
+
 
   const completedCerts = certifications.filter(c => c.status === 'completed').length;
   
@@ -172,10 +261,10 @@ ${plan.month1_mission}
   };
 
   const handleCertify = () => {
-    setCertifications(prev =>
-      prev.map(c => c.id === 'safety-1' ? { ...c, status: 'completed' as const } : c)
-    );
+    const newCerts = certifications.map(c => c.id === 'safety-1' ? { ...c, status: 'completed' as const } : c);
+    setCertifications(newCerts);
     setIsCertified(true);
+    saveTrainingProgress(employeeName, newCerts, true, isNormsCertified, isTechCertified, isComplianceSigned);
     setActiveTraining(null);
     setActiveSubModule(null);
     toast({
@@ -185,10 +274,10 @@ ${plan.month1_mission}
   };
 
   const handleNormsCertify = () => {
-    setCertifications(prev =>
-      prev.map(c => c.id === 'norms-1' ? { ...c, status: 'completed' as const } : c)
-    );
+    const newCerts = certifications.map(c => c.id === 'norms-1' ? { ...c, status: 'completed' as const } : c);
+    setCertifications(newCerts);
     setIsNormsCertified(true);
+    saveTrainingProgress(employeeName, newCerts, isCertified, true, isTechCertified, isComplianceSigned);
     setActiveTraining(null);
     toast({
       title: '🏅 Certificado Emitido!',
@@ -197,10 +286,10 @@ ${plan.month1_mission}
   };
 
   const handleTechCertify = () => {
-    setCertifications(prev =>
-      prev.map(c => c.id === 'technical-1' ? { ...c, status: 'completed' as const } : c)
-    );
+    const newCerts = certifications.map(c => c.id === 'technical-1' ? { ...c, status: 'completed' as const } : c);
+    setCertifications(newCerts);
     setIsTechCertified(true);
+    saveTrainingProgress(employeeName, newCerts, isCertified, isNormsCertified, true, isComplianceSigned);
     setActiveTraining(null);
     toast({
       title: '🏅 Certificado Emitido!',
@@ -210,6 +299,7 @@ ${plan.month1_mission}
 
   const handleComplianceSign = () => {
     setIsComplianceSigned(true);
+    saveTrainingProgress(employeeName, certifications, isCertified, isNormsCertified, isTechCertified, true);
     toast({
       title: '✅ Termo Assinado!',
       description: 'Ciência de segurança industrial registrada no protocolo NX-2024-RH.',
@@ -1113,62 +1203,145 @@ ${plan.month1_mission}
         </div>
 
         <TabsContent value="seguranca" className="space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {certifications.map((cert) => (
-                    <TrainingCard 
-                        key={cert.id}
-                        {...cert}
-                        onStart={() => handleStartTraining(cert.id)}
-                    />
-                ))}
-            </div>
+            {/* Seletor de Colaborador para Teste de Treinamento */}
+            <Card className="bg-zinc-950/60 border-2 border-slate-700/50 backdrop-blur-md rounded-[32px] overflow-hidden p-6 sm:p-8 no-print">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="space-y-1">
+                        <h3 className="text-lg font-black text-white uppercase italic tracking-tight flex items-center gap-2">
+                            <Users className="h-5 w-5 text-emerald-400" />
+                            Colaborador em Instrução
+                        </h3>
+                        <p className="text-xs text-slate-400">
+                            Selecione um profissional para carregar/salvar seu progresso de treinamento e assinar conformidades.
+                        </p>
+                    </div>
 
-            {/* Aviso de Compliance */}
-            <div className={cn(
-                "rounded-[40px] border-2 p-10 flex flex-col md:flex-row items-center gap-8 transition-all duration-700",
-                isComplianceSigned 
-                    ? "border-emerald-500/40 bg-emerald-500/5 shadow-2xl shadow-emerald-500/10" 
-                    : "border-rose-500/20 bg-rose-500/5"
-            )}>
-                <div className={cn(
-                    "p-6 rounded-full border transition-colors duration-500",
-                    isComplianceSigned 
-                        ? "bg-emerald-500/20 border-emerald-500/30" 
-                        : "bg-rose-500/20 border-rose-500/30"
-                )}>
-                    {isComplianceSigned ? (
-                        <ShieldCheck className="h-10 w-10 text-emerald-400" />
-                    ) : (
-                        <AlertTriangle className="h-10 w-10 text-rose-400" />
-                    )}
+                    <div className="w-full md:w-auto min-w-[280px]">
+                        {!employeeName ? (
+                            <select
+                                value={employeeName}
+                                onChange={(e) => {
+                                    const selected = getEmployeesList().find((emp: any) => emp.name === e.target.value);
+                                    if (selected) {
+                                        setEmployeeName(selected.name);
+                                        setEmployeeRole(selected.role);
+                                        toast({
+                                            title: "Colaborador Selecionado",
+                                            description: `${selected.name} foi carregado para o treinamento.`,
+                                        });
+                                    }
+                                }}
+                                className="w-full bg-black/40 border border-white/10 h-12 rounded-xl px-4 font-bold text-white focus:border-emerald-500 outline-none cursor-pointer text-xs"
+                            >
+                                <option value="" className="bg-slate-950 text-slate-500">-- Selecionar Colaborador (Teste) --</option>
+                                {getEmployeesList().map((emp: any) => (
+                                    <option key={emp.id} value={emp.name} className="bg-slate-950 text-white">
+                                        {emp.name} ({emp.role})
+                                    </option>
+                                ))}
+                            </select>
+                        ) : (
+                            <div className="flex items-center justify-between gap-4 p-3 bg-white/5 border border-white/5 rounded-2xl">
+                                <div className="flex items-center gap-3">
+                                    <div className="relative">
+                                        <div className="h-3 w-3 rounded-full bg-emerald-500 absolute -top-1 -right-1 border border-black animate-pulse" />
+                                        <div className="h-8 w-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+                                            {employeeName.charAt(0)}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold text-white leading-none">{employeeName}</p>
+                                        <p className="text-[9px] text-slate-500 uppercase tracking-widest mt-1 font-bold">{employeeRole}</p>
+                                    </div>
+                                </div>
+                                <Button 
+                                    onClick={() => {
+                                        setEmployeeName('');
+                                        setEmployeeRole('');
+                                        toast({
+                                            title: "Seleção Limpa",
+                                            description: "Escolha outro colaborador para testar os treinamentos.",
+                                        });
+                                    }}
+                                    variant="ghost" 
+                                    className="h-8 rounded-lg text-[10px] font-black uppercase text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 px-3"
+                                >
+                                    Alterar
+                                </Button>
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className="flex-1 space-y-2 text-center md:text-left">
-                    <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter">
-                        {isComplianceSigned ? 'Conformidade de Segurança Ativa' : 'Aviso de Segurança Industrial'}
-                    </h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">
-                        {isComplianceSigned 
-                            ? 'Você confirmou ciência de todos os protocolos NR-12 e NR-35. Seu acesso ao maquinário pesado está agora em fase de homologação pelo supervisor.'
-                            : 'De acordo com as normas NR-12 e NR-35, nenhum colaborador está autorizado a operar maquinário pesado sem a conclusão de todos os módulos de segurança. O descumprimento gera invalidação imediata do Índice de Mérito (IMN).'}
+            </Card>
+
+            {!employeeName ? (
+                <div className="relative rounded-[32px] overflow-hidden border-2 border-dashed border-white/10 p-12 text-center bg-black/20 no-print">
+                    <AlertTriangle className="h-12 w-12 text-amber-500 mx-auto mb-4 animate-bounce" />
+                    <h4 className="text-lg font-black text-white uppercase italic">Treinamento Bloqueado</h4>
+                    <p className="text-xs text-slate-400 max-w-md mx-auto mt-2">
+                        Para iniciar os módulos de segurança e assinar o termo de conformidade, selecione um colaborador acima.
                     </p>
                 </div>
-                <Button 
-                    onClick={handleComplianceSign}
-                    disabled={isComplianceSigned}
-                    className={cn(
-                        "font-black uppercase tracking-widest h-14 px-10 rounded-2xl transition-all duration-500",
+            ) : (
+                <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 no-print">
+                        {certifications.map((cert) => (
+                            <TrainingCard 
+                                key={cert.id}
+                                {...cert}
+                                onStart={() => handleStartTraining(cert.id)}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Aviso de Compliance */}
+                    <div className={cn(
+                        "rounded-[40px] border-2 p-10 flex flex-col md:flex-row items-center gap-8 transition-all duration-700 no-print",
                         isComplianceSigned 
-                            ? "bg-emerald-500 text-black cursor-default" 
-                            : "bg-rose-600 hover:bg-rose-500 text-white shadow-xl shadow-rose-600/20"
-                    )}
-                >
-                    {isComplianceSigned ? (
-                        <span className="flex items-center gap-2">
-                            <CheckCircle className="h-5 w-5" /> Termo Assinado
-                        </span>
-                    ) : 'Assinar Termo de Ciência'}
-                </Button>
-            </div>
+                            ? "border-emerald-500/40 bg-emerald-500/5 shadow-2xl shadow-emerald-500/10" 
+                            : "border-rose-500/20 bg-rose-500/5"
+                    )}>
+                        <div className={cn(
+                            "p-6 rounded-full border transition-colors duration-500",
+                            isComplianceSigned 
+                                ? "bg-emerald-500/20 border-emerald-500/30" 
+                                : "bg-rose-500/20 border-rose-500/30"
+                        )}>
+                            {isComplianceSigned ? (
+                                <ShieldCheck className="h-10 w-10 text-emerald-400" />
+                            ) : (
+                                <AlertTriangle className="h-10 w-10 text-rose-400" />
+                            )}
+                        </div>
+                        <div className="flex-1 space-y-2 text-center md:text-left">
+                            <h3 className="text-2xl font-black text-white uppercase italic tracking-tighter">
+                                {isComplianceSigned ? 'Conformidade de Segurança Ativa' : 'Aviso de Segurança Industrial'}
+                            </h3>
+                            <p className="text-slate-400 text-sm leading-relaxed">
+                                {isComplianceSigned 
+                                    ? 'Você confirmou ciência de todos os protocolos NR-12 e NR-35. Seu acesso ao maquinário pesado está agora em fase de homologação pelo supervisor.'
+                                    : 'De acordo com as normas NR-12 e NR-35, nenhum colaborador está autorizado a operar maquinário pesado sem a conclusão de todos os módulos de segurança. O descumprimento gera invalidação imediata do Índice de Mérito (IMN).'}
+                            </p>
+                        </div>
+                        <Button 
+                            onClick={handleComplianceSign}
+                            disabled={isComplianceSigned}
+                            className={cn(
+                                "font-black uppercase tracking-widest h-14 px-10 rounded-2xl transition-all duration-500",
+                                isComplianceSigned 
+                                    ? "bg-emerald-50 text-slate-950 cursor-default" 
+                                    : "bg-rose-600 hover:bg-rose-500 text-white shadow-xl shadow-rose-600/20"
+                            )}
+                        >
+                            {isComplianceSigned ? (
+                                <span className="flex items-center gap-2">
+                                    <CheckCircle className="h-5 w-5" /> Termo Assinado
+                                </span>
+                            ) : 'Assinar Termo de Ciência'}
+                        </Button>
+                    </div>
+                </>
+            )}
         </TabsContent>
 
         <TabsContent value="plano" className="space-y-12">
@@ -1293,27 +1466,738 @@ ${plan.month1_mission}
         </TabsContent>
 
         <TabsContent value="dossie" className="space-y-8">
-            <div className="max-w-4xl mx-auto">
-                <Card className="bg-zinc-950/60 border-2 border-slate-700/50 backdrop-blur-md shadow-xl rounded-[40px] overflow-hidden">
-                    <CardHeader className="p-10 border-b border-white/5">
-                        <CardTitle className="text-3xl font-black text-white uppercase italic tracking-tighter">Dossiê de Conformidade Técnica</CardTitle>
-                        <CardDescription className="text-slate-500 font-bold uppercase text-[10px] tracking-widest">Registros Auditáveis e Certificações</CardDescription>
-                    </CardHeader>
-                    <CardContent className="p-10">
-                        <div className="flex items-center justify-center h-64 border-2 border-dashed border-white/5 rounded-[32px]">
-                            <div className="text-center space-y-4">
-                                <FileCheck className="h-12 w-12 text-slate-700 mx-auto" />
-                                <p className="text-slate-500 font-bold uppercase text-xs tracking-widest">Nenhum dossiê selecionado para visualização.</p>
-                                <Button variant="outline" className="border-white/10 text-slate-400 rounded-xl">Buscar Colaborador</Button>
+            <div className="max-w-4xl mx-auto space-y-6">
+                {!employeeName ? (
+                    <Card className="bg-zinc-950/60 border-2 border-slate-700/50 backdrop-blur-md shadow-xl rounded-[40px] overflow-hidden">
+                        <CardHeader className="p-10 border-b border-white/5">
+                            <CardTitle className="text-3xl font-black text-white uppercase italic tracking-tighter">Dossiê de Conformidade Técnica</CardTitle>
+                            <CardDescription className="text-slate-500 font-bold uppercase text-[10px] tracking-widest">Selecione um colaborador para auditar</CardDescription>
+                        </CardHeader>
+                        <CardContent className="p-10 space-y-6">
+                            <div className="text-center py-6 border-2 border-dashed border-white/5 rounded-[32px] mb-6">
+                                <FileCheck className="h-12 w-12 text-slate-700 mx-auto mb-2" />
+                                <p className="text-slate-400 text-sm font-bold uppercase tracking-wider">Aguardando Seleção de Colaborador</p>
+                                <p className="text-xs text-slate-600 mt-1">Preencha o Plano de Batalha ou selecione abaixo na lista de colaboradores ativos.</p>
                             </div>
-                        </div>
-                    </CardContent>
-                </Card>
+                            
+                            <div className="space-y-4">
+                                <h4 className="text-[10px] text-gray-500 uppercase font-black tracking-widest">Colaboradores da Base:</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {(typeof window !== 'undefined' && localStorage.getItem('nexus_permanent_employees') 
+                                        ? JSON.parse(localStorage.getItem('nexus_permanent_employees')!) 
+                                        : permanentEmployees
+                                    ).map((emp: any) => (
+                                        <button
+                                            key={emp.id}
+                                            onClick={() => {
+                                                setEmployeeName(emp.name);
+                                                setEmployeeRole(emp.role);
+                                                toast({
+                                                    title: "Colaborador Selecionado",
+                                                    description: `${emp.name} carregado no fluxo de integração.`,
+                                                });
+                                            }}
+                                            className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all text-left group"
+                                        >
+                                            <div className="h-10 w-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                                                {emp.name.charAt(0)}
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-white group-hover:text-emerald-400 transition-colors">{emp.name}</p>
+                                                <p className="text-[10px] text-gray-500 uppercase tracking-widest">{emp.role}</p>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                ) : (
+                    <Card className="bg-zinc-950/60 border-2 border-slate-700/50 backdrop-blur-md shadow-xl rounded-[40px] overflow-hidden">
+                        <CardHeader className="p-10 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            <div>
+                                <CardTitle className="text-3xl font-black text-white uppercase italic tracking-tighter">Dossiê de Conformidade Técnica</CardTitle>
+                                <CardDescription className="text-slate-500 font-bold uppercase text-[10px] tracking-widest">Auditoria e Histórico de Certificação // Nexus Sovereign</CardDescription>
+                            </div>
+                            <Button 
+                                variant="outline" 
+                                onClick={() => {
+                                    setEmployeeName('');
+                                    setEmployeeRole('');
+                                }}
+                                className="border-white/10 text-slate-400 hover:text-white rounded-xl text-xs uppercase font-black"
+                            >
+                                Limpar Seleção
+                            </Button>
+                        </CardHeader>
+                        <CardContent className="p-10 space-y-8">
+                            {/* Perfil do Colaborador */}
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 rounded-3xl bg-white/5 border border-white/5 relative overflow-hidden">
+                                <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
+                                <div className="flex items-center gap-4">
+                                    <div className="h-16 w-16 rounded-full bg-emerald-500/10 border-2 border-emerald-500/30 text-emerald-400 flex items-center justify-center text-2xl font-black">
+                                        {employeeName.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-2xl font-black text-white uppercase tracking-tight leading-none">{employeeName}</h3>
+                                        <p className="text-xs text-emerald-400 uppercase tracking-widest font-black mt-2">{employeeRole}</p>
+                                        <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest mt-1">Status: Integração sob Auditoria</p>
+                                    </div>
+                                </div>
+                                <div className="text-center md:text-right space-y-1">
+                                    <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest">IMN Merit Index Impact</p>
+                                    <div className="flex items-center gap-2 justify-center md:justify-end">
+                                        <Zap className="h-5 w-5 text-emerald-400" />
+                                        <span className="text-2xl font-black text-emerald-400">+{((completedCerts * 0.2) + (isComplianceSigned ? 0.2 : 0)).toFixed(1)} IMN</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Compliance Bar */}
+                            <div className="space-y-3">
+                                <div className="flex justify-between items-end">
+                                    <span className="text-xs text-slate-400 uppercase font-black tracking-widest">Índice de Conformidade Técnica</span>
+                                    <span className="text-lg font-black text-emerald-400">{Math.round(progressPercent)}%</span>
+                                </div>
+                                <Progress value={progressPercent} className="h-3 bg-white/5" />
+                            </div>
+
+                            <Separator className="bg-white/5" />
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {/* Certificados e Status */}
+                                <div className="space-y-4">
+                                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                        <Award className="h-4 w-4 text-emerald-400" /> Certificações Operacionais
+                                    </h4>
+                                    <div className="space-y-3">
+                                        {activeCerts.map((cert) => {
+                                            const isDone = cert.status === 'completed';
+                                            return (
+                                                <div key={cert.id} className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
+                                                    <div className="flex items-center gap-3">
+                                                        <cert.icon className={cn("h-5 w-5", isDone ? "text-emerald-400" : "text-slate-500")} />
+                                                        <span className={cn("text-xs font-bold", isDone ? "text-white" : "text-slate-400")}>{cert.title}</span>
+                                                    </div>
+                                                    <Badge className={cn("text-[9px] font-black border-none uppercase", isDone ? "bg-emerald-500/20 text-emerald-400" : "bg-white/5 text-slate-500")}>
+                                                        {isDone ? 'Certificado' : 'Pendente'}
+                                                    </Badge>
+                                                </div>
+                                            );
+                                        })}
+                                        <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
+                                            <div className="flex items-center gap-3">
+                                                <Scale className={cn("h-5 w-5", isComplianceSigned ? "text-emerald-400" : "text-slate-500")} />
+                                                <span className={cn("text-xs font-bold", isComplianceSigned ? "text-white" : "text-slate-400")}>Termo de Conformidade</span>
+                                            </div>
+                                            <Badge className={cn("text-[9px] font-black border-none uppercase", isComplianceSigned ? "bg-emerald-500/20 text-emerald-400" : "bg-white/5 text-slate-500")}>
+                                                {isComplianceSigned ? 'Assinado' : 'Pendente'}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Auditor Logs */}
+                                <div className="space-y-4">
+                                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                        <Activity className="h-4 w-4 text-emerald-400" /> Trilha de Auditoria (Logs)
+                                    </h4>
+                                    <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-3 max-h-[180px] overflow-y-auto font-mono text-[10px] text-slate-400 scrollbar-thin scrollbar-thumb-white/5">
+                                        <p className="text-slate-500">[00:00:01] Processo de integração ativado para {employeeName}.</p>
+                                        {certifications.find(c => c.id === 'safety-1')?.status === 'completed' && (
+                                            <p className="text-emerald-400/80">[REGISTRO-01] NR-12: Treinamento "Segurança em Primeiro Lugar" concluído com sucesso.</p>
+                                        )}
+                                        {certifications.find(c => c.id === 'norms-1')?.status === 'completed' && (
+                                            <p className="text-emerald-400/80">[REGISTRO-02] Conduta: "Normas Internas Nexus" assimilado e certificado.</p>
+                                        )}
+                                        {certifications.find(c => c.id === 'technical-1')?.status === 'completed' && (
+                                            <p className="text-emerald-400/80">[REGISTRO-03] Equipamentos: "Manual de Maquinário v4" aprovado por avaliação prática.</p>
+                                        )}
+                                        {isComplianceSigned && (
+                                            <p className="text-emerald-400">[REGISTRO-04] Jurídico: Termo de Conformidade técnica assinado digitalmente e chancelado.</p>
+                                        )}
+                                        {progressPercent === 100 && (
+                                            <p className="text-yellow-400 font-bold">[AUDITORIA-OK] Protocolo de Conformidade Onboarding concluído com 100% de aproveitamento.</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Chancela Final */}
+                            {progressPercent === 100 ? (
+                                <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col md:flex-row items-center justify-between gap-4 animate-in fade-in zoom-in duration-500">
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-10 w-10 rounded-full bg-emerald-500/20 flex items-center justify-center border border-emerald-500/40">
+                                            <ShieldCheck className="h-6 w-6 text-emerald-400" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-black text-white uppercase">Selo de Conformidade Ativo</p>
+                                            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Chancela Digital Auditada pela Djeny IA</p>
+                                        </div>
+                                    </div>
+                                    <Badge className="bg-emerald-500 text-black border-none font-black text-[10px] px-6 py-2 tracking-widest uppercase">
+                                        Auditado & Aprovado
+                                    </Badge>
+                                </div>
+                            ) : (
+                                <div className="p-6 rounded-2xl bg-amber-500/5 border border-amber-500/10 flex flex-col md:flex-row items-center justify-between gap-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-10 w-10 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-500/20 animate-pulse">
+                                            <AlertTriangle className="h-5 w-5 text-amber-500" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-white uppercase">Aguardando Certificações</p>
+                                            <p className="text-[10px] text-slate-500 uppercase tracking-widest">Colaborador em período de instrução obrigatória.</p>
+                                        </div>
+                                    </div>
+                                    <Badge variant="outline" className="border-amber-500/30 text-amber-500 font-black text-[10px] px-6 py-2 tracking-widest uppercase">
+                                        Pendente
+                                    </Badge>
+                                </div>
+                            )}
+
+                            {/* Download Action */}
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                                <Button 
+                                    className="h-12 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2"
+                                    onClick={() => setIsVisualizing(true)}
+                                >
+                                    <Eye className="h-4 w-4" /> Visualizar Dossiê
+                                </Button>
+                                <Button 
+                                    variant="outline" 
+                                    className="h-12 rounded-xl border-white/10 text-white hover:bg-white/5 font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2"
+                                    onClick={() => window.print()}
+                                >
+                                    <Printer className="h-4 w-4" /> Imprimir Dossiê
+                                </Button>
+                                <Button 
+                                    variant="outline" 
+                                    className="h-12 rounded-xl border-white/10 text-white hover:bg-white/5 font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2"
+                                    onClick={() => {
+                                        toast({
+                                            title: "Relatório Gerado",
+                                            description: `O arquivo PDF do dossiê de ${employeeName} está sendo processado.`,
+                                        });
+                                    }}
+                                >
+                                    <FileCheck className="h-4 w-4" /> Exportar PDF
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
             </div>
         </TabsContent>
       </Tabs>
 
       <LegalSafeguard module="INTEGRAÇÃO NEXUS" protocol="NX-7742-RH" />
+
+      {/* Visualizer Modal Overlay */}
+      <AnimatePresence>
+        {isVisualizing && employeeName && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md overflow-y-auto no-print"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: 'spring', duration: 0.5 }}
+              className="relative w-full max-w-4xl bg-zinc-950 border border-white/10 rounded-[32px] overflow-hidden shadow-2xl flex flex-col my-8"
+            >
+              {/* Modal Header Controls */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 border-b border-white/5 bg-zinc-950/80 sticky top-0 z-10 backdrop-blur-sm">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+                    <FileCheck className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-white uppercase italic tracking-tight">Visualizador de Dossiê</h3>
+                    <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">NX-DOSSIER-ONB-7742</p>
+                  </div>
+                </div>
+                
+                {/* Style Toggle */}
+                <div className="flex items-center bg-zinc-900 border border-white/5 p-1 rounded-xl">
+                  <button
+                    onClick={() => setPreviewStyle('digital')}
+                    className={cn(
+                      "px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all",
+                      previewStyle === 'digital' 
+                        ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/20" 
+                        : "text-slate-400 hover:text-white"
+                    )}
+                  >
+                    Digital Dark
+                  </button>
+                  <button
+                    onClick={() => setPreviewStyle('print')}
+                    className={cn(
+                      "px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all",
+                      previewStyle === 'print' 
+                        ? "bg-slate-200 text-slate-950 shadow-md" 
+                        : "text-slate-400 hover:text-white"
+                    )}
+                  >
+                    Impressão (A4)
+                  </button>
+                </div>
+
+                {/* Actions */}
+                <div className="flex items-center gap-2">
+                  <Button
+                    onClick={() => window.print()}
+                    size="sm"
+                    className="bg-zinc-800 hover:bg-zinc-700 text-white font-black uppercase tracking-widest text-[9px] rounded-lg h-9 px-4 flex items-center gap-1.5"
+                  >
+                    <Printer className="h-3.5 w-3.5" /> Imprimir
+                  </Button>
+                  <Button
+                    onClick={() => setIsVisualizing(false)}
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-lg h-9 w-9 text-slate-400 hover:text-white hover:bg-white/5"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Scrollable Document Container */}
+              <div className="flex-1 p-6 sm:p-10 overflow-y-auto max-h-[70vh] custom-scrollbar bg-[#020617] flex justify-center">
+                {previewStyle === 'digital' ? (
+                  /* --- DIGITAL PREVIEW (DARK MODE) --- */
+                  <div className="w-full max-w-2xl bg-zinc-950/40 border-2 border-emerald-500/20 backdrop-blur-md rounded-[32px] p-8 space-y-8 relative overflow-hidden text-slate-300">
+                    <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
+                    
+                    {/* Header */}
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/5 pb-6">
+                      <div className="space-y-1">
+                        <h2 className="text-xl font-black text-white uppercase italic tracking-tighter">Portal Soberano Nexus</h2>
+                        <p className="text-[9px] text-emerald-400 font-bold uppercase tracking-widest">Sovereign Compliance & Technical Auditing</p>
+                      </div>
+                      <div className="text-left sm:text-right space-y-1 font-mono text-[9px] text-slate-500">
+                        <p>ID: NX-DOSSIER-ONB-7742</p>
+                        <p>EMISSÃO: {new Date().toLocaleDateString('pt-BR')}</p>
+                      </div>
+                    </div>
+
+                    {/* Employee Profile */}
+                    <div className="flex items-center gap-4 bg-white/5 p-5 rounded-2xl border border-white/5">
+                      <div className="h-12 w-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-black shrink-0">
+                        {employeeName.charAt(0)}
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-black text-white uppercase tracking-tight leading-none">{employeeName}</h3>
+                        <p className="text-[10px] text-emerald-400 uppercase tracking-widest font-black mt-1.5">{employeeRole}</p>
+                        <p className="text-[9px] text-slate-500 uppercase font-bold tracking-widest mt-1">Status: Homologação de Integração</p>
+                      </div>
+                    </div>
+
+                    {/* Metrics grid */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1">
+                        <p className="text-[8px] text-slate-500 font-bold uppercase tracking-wider">Índice de Conformidade</p>
+                        <p className="text-xl font-black text-white">{Math.round(progressPercent)}%</p>
+                      </div>
+                      <div className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1">
+                        <p className="text-[8px] text-slate-500 font-bold uppercase tracking-wider">Impacto no Índice de Mérito</p>
+                        <p className="text-xl font-black text-emerald-400">+{((completedCerts * 0.2) + (isComplianceSigned ? 0.2 : 0)).toFixed(1)} IMN</p>
+                      </div>
+                    </div>
+
+                    {/* Compliance Checklist */}
+                    <div className="space-y-3">
+                      <h4 className="text-[10px] text-slate-400 font-black uppercase tracking-wider">1. Checklists Regulatórios</h4>
+                      <div className="space-y-2">
+                        {activeCerts.map((cert) => {
+                          const isDone = cert.status === 'completed';
+                          return (
+                            <div key={cert.id} className="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5 text-xs font-semibold">
+                              <span className="flex items-center gap-2 text-white">
+                                <CheckCircle className={cn("h-4 w-4 shrink-0", isDone ? "text-emerald-400" : "text-slate-600")} />
+                                {cert.title}
+                              </span>
+                              <Badge className={cn("text-[8px] font-black border-none uppercase", isDone ? "bg-emerald-500/20 text-emerald-400" : "bg-white/5 text-slate-500")}>
+                                {isDone ? 'Certificado' : 'Pendente'}
+                              </Badge>
+                            </div>
+                          );
+                        })}
+                        <div className="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5 text-xs font-semibold">
+                          <span className="flex items-center gap-2 text-white">
+                            <CheckCircle className={cn("h-4 w-4 shrink-0", isComplianceSigned ? "text-emerald-400" : "text-slate-600")} />
+                            Termo de Conformidade
+                          </span>
+                          <Badge className={cn("text-[8px] font-black border-none uppercase", isComplianceSigned ? "bg-emerald-500/20 text-emerald-400" : "bg-white/5 text-slate-500")}>
+                            {isComplianceSigned ? 'Assinado' : 'Pendente'}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Audit Logs */}
+                    <div className="space-y-3">
+                      <h4 className="text-[10px] text-slate-400 font-black uppercase tracking-wider">2. Logs do Auditor</h4>
+                      <div className="p-4 bg-black/40 rounded-xl border border-white/5 font-mono text-[9px] text-slate-400 space-y-1.5 max-h-[140px] overflow-y-auto">
+                        <p className="text-slate-500">[00:00:01] Processo de integração ativado para {employeeName}.</p>
+                        {certifications.find(c => c.id === 'safety-1')?.status === 'completed' && (
+                          <p className="text-emerald-400/80">[REGISTRO-01] NR-12: Treinamento "Segurança em Primeiro Lugar" concluído.</p>
+                        )}
+                        {certifications.find(c => c.id === 'norms-1')?.status === 'completed' && (
+                          <p className="text-emerald-400/80">[REGISTRO-02] Conduta: "Normas Internas Nexus" certificado.</p>
+                        )}
+                        {certifications.find(c => c.id === 'technical-1')?.status === 'completed' && (
+                          <p className="text-emerald-400/80">[REGISTRO-03] Equipamentos: "Manual de Maquinário v4" concluído.</p>
+                        )}
+                        {isComplianceSigned && (
+                          <p className="text-emerald-400">[REGISTRO-04] Jurídico: Termo de Conformidade técnica assinado.</p>
+                        )}
+                        {progressPercent === 100 && (
+                          <p className="text-yellow-400 font-bold">[AUDITORIA-OK] Protocolo de Conformidade Onboarding concluído.</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* QR and Digital Signature */}
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-white/5">
+                      <div className="flex items-center gap-4">
+                        <div className="bg-white p-1 rounded-xl shrink-0">
+                          <QrCode value={`https://nexus.sovereign.portal/audit/onboarding/${employeeName}`} size={72} />
+                        </div>
+                        <div className="text-left font-mono text-[8px] text-slate-500 space-y-1">
+                          <p className="font-bold text-slate-400">CERTIFICAÇÃO DIGITAL NEXUS</p>
+                          <p>HASH: SHA256-NX-ONB-{employeeName.toUpperCase().slice(0, 3)}-9981</p>
+                          <p>ESTADO: {progressPercent === 100 ? 'APROVADO & AUDITADO' : 'AGUARDANDO PENDÊNCIAS'}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="text-center sm:text-right">
+                        <span className={cn(
+                          "inline-block text-[10px] font-black uppercase px-4 py-1.5 rounded-full border",
+                          progressPercent === 100 
+                            ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" 
+                            : "bg-amber-500/5 text-amber-500 border-amber-500/20"
+                        )}>
+                          {progressPercent === 100 ? 'Chancela Ativa' : 'Em Análise'}
+                        </span>
+                        <p className="text-[8px] text-slate-500 font-bold uppercase mt-1">Status do Selo de Conformidade</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* --- PRINT/A4 PREVIEW (LIGHT MODE) --- */
+                  <div className="w-full max-w-[21cm] bg-white text-black border border-slate-300 p-12 shadow-md font-sans text-xs space-y-8 leading-relaxed">
+                    
+                    {/* Header */}
+                    <div className="flex items-center justify-between border-b-2 border-slate-900 pb-4 mb-6">
+                      <div>
+                        <h2 className="text-lg font-black tracking-tight text-slate-900 uppercase">PORTAL SOBERANO NEXUS</h2>
+                        <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">Sovereign Compliance & Technical Auditing</p>
+                      </div>
+                      <div className="text-right font-mono text-[8px] text-slate-500">
+                        <p className="font-bold text-slate-900">NX-DOSSIER-ONB-7742</p>
+                        <p>DATA: {new Date().toLocaleDateString('pt-BR')}</p>
+                      </div>
+                    </div>
+
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-center border-b border-slate-200 pb-2">
+                      DOSSIÊ DE CONFORMIDADE TÉCNICA E INTEGRAÇÃO
+                    </h3>
+
+                    {/* Employee Profile */}
+                    <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                      <div>
+                        <p className="text-[8px] uppercase font-bold text-slate-500">Colaborador Auditado</p>
+                        <p className="text-sm font-black text-slate-900">{employeeName}</p>
+                      </div>
+                      <div>
+                        <p className="text-[8px] uppercase font-bold text-slate-500">Cargo / Função</p>
+                        <p className="text-sm font-black text-slate-900">{employeeRole}</p>
+                      </div>
+                      <div>
+                        <p className="text-[8px] uppercase font-bold text-slate-500">Índice de Conformidade</p>
+                        <p className="text-sm font-black text-slate-900">{Math.round(progressPercent)}% Concluído</p>
+                      </div>
+                      <div>
+                        <p className="text-[8px] uppercase font-bold text-slate-500">Impacto no Índice de Mérito (IMN)</p>
+                        <p className="text-sm font-black text-emerald-800">+{((completedCerts * 0.2) + (isComplianceSigned ? 0.2 : 0)).toFixed(1)} IMN</p>
+                      </div>
+                    </div>
+
+                    {/* Compliance Checklist */}
+                    <div className="space-y-2">
+                      <h4 className="text-[9px] font-black text-slate-900 uppercase tracking-widest border-b border-slate-200 pb-1">1. GRADE DE CERTIFICAÇÃO OBRIGATÓRIA</h4>
+                      <table className="w-full text-left text-[10px] border-collapse">
+                        <thead>
+                          <tr className="border-b border-slate-300 text-slate-600">
+                            <th className="py-1">Nome do Protocolo</th>
+                            <th className="py-1">Tipo de Regulamentação</th>
+                            <th className="py-1 text-right">Status do Certificado</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {activeCerts.map((cert) => {
+                            const isDone = cert.status === 'completed';
+                            return (
+                              <tr key={cert.id} className="border-b border-slate-100">
+                                <td className="py-1.5 font-bold text-slate-900">{cert.title}</td>
+                                <td className="py-1.5 text-slate-500">NR-Normativa Operacional</td>
+                                <td className={`py-1.5 text-right font-bold ${isDone ? 'text-emerald-700' : 'text-slate-400'}`}>
+                                  {isDone ? '[X] HOMOLOGADO' : '[ ] PENDENTE'}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                          <tr className="border-b border-slate-100">
+                            <td className="py-1.5 font-bold text-slate-900">Termo de Conformidade</td>
+                            <td className="py-1.5 text-slate-500">Termo de Ciência & Compliance</td>
+                            <td className={`py-1.5 text-right font-bold ${isComplianceSigned ? 'text-emerald-700' : 'text-slate-400'}`}>
+                              {isComplianceSigned ? '[X] ASSINADO DIGITALMENTE' : '[ ] PENDENTE'}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Audit Logs */}
+                    <div className="space-y-2">
+                      <h4 className="text-[9px] font-black text-slate-900 uppercase tracking-widest border-b border-slate-200 pb-1">2. TRILHA DE AUDITORIA E LOGS DO SISTEMA</h4>
+                      <div className="p-3 bg-slate-50 border border-slate-200 rounded font-mono text-[8px] text-slate-700 space-y-1">
+                        <p>[00:00:01] Processo de integração ativado para {employeeName}.</p>
+                        {certifications.find(c => c.id === 'safety-1')?.status === 'completed' && (
+                          <p>[REGISTRO-01] NR-12: Treinamento "Segurança em Primeiro Lugar" concluído com sucesso.</p>
+                        )}
+                        {certifications.find(c => c.id === 'norms-1')?.status === 'completed' && (
+                          <p>[REGISTRO-02] Conduta: "Normas Internas Nexus" assimilado e certificado.</p>
+                        )}
+                        {certifications.find(c => c.id === 'technical-1')?.status === 'completed' && (
+                          <p>[REGISTRO-03] Equipamentos: "Manual de Maquinário v4" aprovado por avaliação prática.</p>
+                        )}
+                        {isComplianceSigned && (
+                          <p>[REGISTRO-04] Jurídico: Termo de Conformidade técnica assinado digitalmente.</p>
+                        )}
+                        {progressPercent === 100 && (
+                          <p className="font-bold">[AUDITORIA-OK] Protocolo de Conformidade Onboarding concluído com 100% de aproveitamento.</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Signatures & Stamps */}
+                    <div className="grid grid-cols-2 gap-8 pt-6 border-t border-slate-200">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-white p-0.5 border border-slate-300 rounded shrink-0">
+                            <QrCode value={`https://nexus.sovereign.portal/audit/onboarding/${employeeName}`} size={48} />
+                          </div>
+                          <div className="font-mono text-[7px] text-slate-500 space-y-0.5">
+                            <p className="font-bold text-slate-800">CÓDIGO DE AUTENTICIDADE</p>
+                            <p>NX-ONB-{employeeName.toUpperCase().slice(0, 3)}-9981</p>
+                            <p>ASSINATURA DIGITAL REGISTRADA EM BANCO</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center justify-center border border-slate-300 p-2 rounded-lg bg-slate-50">
+                        <p className="text-[7px] font-black text-slate-500 uppercase tracking-widest mb-1">Chancela de Conformidade</p>
+                        <span className={`text-[9px] font-black uppercase px-3 py-1 rounded border ${progressPercent === 100 ? 'border-emerald-700 text-emerald-700 bg-emerald-50' : 'border-amber-600 text-amber-600 bg-amber-50'}`}>
+                          {progressPercent === 100 ? 'AUDITADO & APROVADO' : 'PENDENTE'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Footnote */}
+                    <div className="text-center text-[7px] text-slate-400 pt-4 border-t border-slate-100">
+                      Dossiê gerado eletronicamente e integrado ao Índice de Mérito Nexus. Este documento comprova a conformidade legal do colaborador sob as normas da NR-12 e NR-35 vigentes.
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Footer */}
+              <div className="p-6 border-t border-white/5 bg-zinc-950/80 flex items-center justify-end gap-3 sticky bottom-0 z-10 backdrop-blur-sm">
+                <Button
+                  onClick={() => setIsVisualizing(false)}
+                  className="bg-zinc-800 hover:bg-zinc-700 text-white font-black uppercase tracking-widest text-[10px] h-10 px-6 rounded-xl"
+                >
+                  Fechar
+                </Button>
+                <Button
+                  onClick={() => window.print()}
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase tracking-widest text-[10px] h-10 px-8 rounded-xl flex items-center gap-2"
+                >
+                  <Printer className="h-4 w-4" /> Imprimir Dossiê
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Printable Area (Invisible on screen, styled beautifully for A4 printing) */}
+      {employeeName && (
+        <div className="print-only-container hidden">
+          <div className="w-full bg-white text-black p-12 font-sans text-xs space-y-8 leading-relaxed">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b-2 border-slate-900 pb-4 mb-6">
+              <div>
+                <h2 className="text-lg font-black tracking-tight text-slate-900 uppercase">PORTAL SOBERANO NEXUS</h2>
+                <p className="text-[8px] font-black uppercase tracking-widest text-slate-500">Sovereign Compliance & Technical Auditing</p>
+              </div>
+              <div className="text-right font-mono text-[8px] text-slate-500">
+                <p className="font-bold text-slate-900">NX-DOSSIER-ONB-7742</p>
+                <p>DATA: {new Date().toLocaleDateString('pt-BR')}</p>
+              </div>
+            </div>
+
+            <h3 className="text-sm font-bold uppercase tracking-wider text-center border-b border-slate-200 pb-2">
+              DOSSIÊ DE CONFORMIDADE TÉCNICA E INTEGRAÇÃO
+            </h3>
+
+            {/* Employee Profile */}
+            <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 border border-slate-200 rounded-lg">
+              <div>
+                <p className="text-[8px] uppercase font-bold text-slate-500">Colaborador Auditado</p>
+                <p className="text-sm font-black text-slate-900">{employeeName}</p>
+              </div>
+              <div>
+                <p className="text-[8px] uppercase font-bold text-slate-500">Cargo / Função</p>
+                <p className="text-sm font-black text-slate-900">{employeeRole}</p>
+              </div>
+              <div>
+                <p className="text-[8px] uppercase font-bold text-slate-500">Índice de Conformidade</p>
+                <p className="text-sm font-black text-slate-900">{Math.round(progressPercent)}% Concluído</p>
+              </div>
+              <div>
+                <p className="text-[8px] uppercase font-bold text-slate-500">Impacto no Índice de Mérito (IMN)</p>
+                <p className="text-sm font-black text-emerald-800">+{((completedCerts * 0.2) + (isComplianceSigned ? 0.2 : 0)).toFixed(1)} IMN</p>
+              </div>
+            </div>
+
+            {/* Compliance Checklist */}
+            <div className="space-y-2">
+              <h4 className="text-[9px] font-black text-slate-900 uppercase tracking-widest border-b border-slate-200 pb-1">1. GRADE DE CERTIFICAÇÃO OBRIGATÓRIA</h4>
+              <table className="w-full text-left text-[10px] border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-300 text-slate-600">
+                    <th className="py-1">Nome do Protocolo</th>
+                    <th className="py-1">Tipo de Regulamentação</th>
+                    <th className="py-1 text-right">Status do Certificado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {activeCerts.map((cert) => {
+                    const isDone = cert.status === 'completed';
+                    return (
+                      <tr key={cert.id} className="border-b border-slate-100">
+                        <td className="py-1.5 font-bold text-slate-900">{cert.title}</td>
+                        <td className="py-1.5 text-slate-500">NR-Normativa Operacional</td>
+                        <td className={`py-1.5 text-right font-bold ${isDone ? 'text-emerald-700' : 'text-slate-400'}`}>
+                          {isDone ? '[X] HOMOLOGADO' : '[ ] PENDENTE'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  <tr className="border-b border-slate-100">
+                    <td className="py-1.5 font-bold text-slate-900">Termo de Conformidade</td>
+                    <td className="py-1.5 text-slate-500">Termo de Ciência & Compliance</td>
+                    <td className={`py-1.5 text-right font-bold ${isComplianceSigned ? 'text-emerald-700' : 'text-slate-400'}`}>
+                      {isComplianceSigned ? '[X] ASSINADO DIGITALMENTE' : '[ ] PENDENTE'}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Audit Logs */}
+            <div className="space-y-2">
+              <h4 className="text-[9px] font-black text-slate-900 uppercase tracking-widest border-b border-slate-200 pb-1">2. TRILHA DE AUDITORIA E LOGS DO SISTEMA</h4>
+              <div className="p-3 bg-slate-50 border border-slate-200 rounded font-mono text-[8px] text-slate-700 space-y-1">
+                <p>[00:00:01] Processo de integração ativado para {employeeName}.</p>
+                {certifications.find(c => c.id === 'safety-1')?.status === 'completed' && (
+                  <p>[REGISTRO-01] NR-12: Treinamento "Segurança em Primeiro Lugar" concluído com sucesso.</p>
+                )}
+                {certifications.find(c => c.id === 'norms-1')?.status === 'completed' && (
+                  <p>[REGISTRO-02] Conduta: "Normas Internas Nexus" assimilado e certificado.</p>
+                )}
+                {certifications.find(c => c.id === 'technical-1')?.status === 'completed' && (
+                  <p>[REGISTRO-03] Equipamentos: "Manual de Maquinário v4" aprovado por avaliação prática.</p>
+                )}
+                {isComplianceSigned && (
+                  <p>[REGISTRO-04] Jurídico: Termo de Conformidade técnica assinado digitalmente.</p>
+                )}
+                {progressPercent === 100 && (
+                  <p className="font-bold">[AUDITORIA-OK] Protocolo de Conformidade Onboarding concluído com 100% de aproveitamento.</p>
+                )}
+              </div>
+            </div>
+
+            {/* Signatures & Stamps */}
+            <div className="grid grid-cols-2 gap-8 pt-6 border-t border-slate-200">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="bg-white p-0.5 border border-slate-300 rounded shrink-0">
+                    <QrCode value={`https://nexus.sovereign.portal/audit/onboarding/${employeeName}`} size={48} />
+                  </div>
+                  <div className="font-mono text-[7px] text-slate-500 space-y-0.5">
+                    <p className="font-bold text-slate-800">CÓDIGO DE AUTENTICIDADE</p>
+                    <p>NX-ONB-{employeeName.toUpperCase().slice(0, 3)}-9981</p>
+                    <p>ASSINATURA DIGITAL REGISTRADA EM BANCO</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col items-center justify-center border border-slate-300 p-2 rounded-lg bg-slate-50">
+                <p className="text-[7px] font-black text-slate-500 uppercase tracking-widest mb-1">Chancela de Conformidade</p>
+                <span className={`text-[9px] font-black uppercase px-3 py-1 rounded border ${progressPercent === 100 ? 'border-emerald-700 text-emerald-700 bg-emerald-50' : 'border-amber-600 text-amber-600 bg-amber-50'}`}>
+                  {progressPercent === 100 ? 'AUDITADO & APROVADO' : 'PENDENTE'}
+                </span>
+              </div>
+            </div>
+
+            {/* Footnote */}
+            <div className="text-center text-[7px] text-slate-400 pt-4 border-t border-slate-100">
+              Dossiê gerado eletronicamente e integrado ao Índice de Mérito Nexus. Este documento comprova a conformidade legal do colaborador sob as normas da NR-12 e NR-35 vigentes.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Clean Print Style definitions */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media print {
+          /* Hide all portal visual content */
+          body * {
+            visibility: hidden !important;
+            background: none !important;
+          }
+          /* Show and position the A4 print container only */
+          .print-only-container, .print-only-container * {
+            visibility: visible !important;
+          }
+          .print-only-container {
+            display: block !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            background: white !important;
+            color: black !important;
+          }
+          /* Remove layout/shadow limits of print-only container on paper */
+          .print-only-container div {
+            box-shadow: none !important;
+            border-color: #cbd5e1 !important;
+          }
+          /* Ensure modal backdrop and overlays are fully hidden when printing */
+          .no-print, [role="dialog"], .fixed, header, nav, button, footer {
+            display: none !important;
+            visibility: hidden !important;
+          }
+        }
+      `}} />
       </div>
     </SovereignShowcase>
   );

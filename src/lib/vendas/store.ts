@@ -49,6 +49,91 @@ export interface OrdemPedido {
 const KEY_PRODUTOS = 'nexus_vendas_produtos';
 const KEY_OPS = 'nexus_vendas_ops';
 
+export const DEFAULT_PRODUTOS: Produto[] = [
+  {
+    id: "prod-default-1",
+    codigo: "JN-SUP-01",
+    nome: "Janela de Correr 2 Folhas (Suprema)",
+    descricao: "Janela de correr de alumínio linha Suprema, 2 folhas móveis com vidro incolor de 4mm. Altura 1.00m, largura 1.20m.",
+    preco: 850.00,
+    unidade: "UN",
+    imagem: "https://i.postimg.cc/658CJQzk/Nexus-Empresas-prata.png",
+    ativo: true,
+    materiais: [
+      { id: "mat-1-1", descricao: "Perfil Alumínio Suprema", quantidade: 3.8, unidade: "KG" },
+      { id: "mat-1-2", descricao: "Vidro Incolor 4mm", quantidade: 1.2, unidade: "M²" },
+      { id: "mat-1-3", descricao: "Kit de Acessórios Linha Suprema", quantidade: 1, unidade: "UN" },
+      { id: "mat-1-4", descricao: "Escova de Vedação", quantidade: 4.4, unidade: "M" }
+    ]
+  },
+  {
+    id: "prod-default-2",
+    codigo: "PT-GLD-02",
+    nome: "Porta de Giro Premium (Gold)",
+    descricao: "Porta de giro linha Gold com lambril duplo e fechadura digital embutida. Altura 2.10m, largura 0.90m.",
+    preco: 2450.00,
+    unidade: "UN",
+    imagem: "https://i.postimg.cc/658CJQzk/Nexus-Empresas-prata.png",
+    ativo: true,
+    materiais: [
+      { id: "mat-2-1", descricao: "Perfil Alumínio Gold", quantidade: 5.2, unidade: "KG" },
+      { id: "mat-2-2", descricao: "Lambril de Alumínio Duplo", quantidade: 1.8, unidade: "M²" },
+      { id: "mat-2-3", descricao: "Dobradiça Linha Gold", quantidade: 3, unidade: "UN" },
+      { id: "mat-2-4", descricao: "Fechadura Digital Biométrica", quantidade: 1, unidade: "UN" }
+    ]
+  },
+  {
+    id: "prod-default-3",
+    codigo: "JN-MAX-03",
+    nome: "Janela Maxim-Ar (Suprema)",
+    descricao: "Janela Maxim-ar linha Suprema com vidro miniboreal 4mm. Altura 0.60m, largura 0.60m.",
+    preco: 420.00,
+    unidade: "UN",
+    imagem: "https://i.postimg.cc/658CJQzk/Nexus-Empresas-prata.png",
+    ativo: true,
+    materiais: [
+      { id: "mat-3-1", descricao: "Perfil Alumínio Suprema", quantidade: 2.4, unidade: "KG" },
+      { id: "mat-3-2", descricao: "Vidro Miniboreal 4mm", quantidade: 0.36, unidade: "M²" },
+      { id: "mat-3-3", descricao: "Braço Articulado Inox", quantidade: 1, unidade: "UN" },
+      { id: "mat-3-4", descricao: "Fecho Maxim-ar", quantidade: 1, unidade: "UN" }
+    ]
+  },
+  {
+    id: "prod-default-4",
+    codigo: "PT-INT-04",
+    nome: "Porta Integrada Automatizada (Gold)",
+    descricao: "Porta integrada de correr com persiana motorizada em alumínio. Altura 2.20m, largura 1.50m.",
+    preco: 4800.00,
+    unidade: "UN",
+    imagem: "https://i.postimg.cc/658CJQzk/Nexus-Empresas-prata.png",
+    ativo: true,
+    materiais: [
+      { id: "mat-4-1", descricao: "Perfil Alumínio Gold", quantidade: 7.4, unidade: "KG" },
+      { id: "mat-4-2", descricao: "Palheta de Persiana Térmica", quantidade: 3.3, unidade: "M²" },
+      { id: "mat-4-3", descricao: "Motor Tubular Somfy 15Nm", quantidade: 1, unidade: "UN" },
+      { id: "mat-4-4", descricao: "Vidro Temperado 6mm", quantidade: 1.5, unidade: "M²" },
+      { id: "mat-4-5", descricao: "Kit de Guias e Rolamentos", quantidade: 1, unidade: "UN" }
+    ]
+  }
+];
+
+function loadProdutos(): Produto[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(KEY_PRODUTOS);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+    localStorage.setItem(KEY_PRODUTOS, JSON.stringify(DEFAULT_PRODUTOS));
+    return DEFAULT_PRODUTOS;
+  } catch {
+    return DEFAULT_PRODUTOS;
+  }
+}
+
 function load<T>(key: string): T[] {
   if (typeof window === 'undefined') return [];
   try {
@@ -72,7 +157,7 @@ export function useVendas() {
   const [ops, setOpsState] = useState<OrdemPedido[]>([]);
 
   useEffect(() => {
-    setProdutosState(load<Produto>(KEY_PRODUTOS));
+    setProdutosState(loadProdutos());
     setOpsState(load<OrdemPedido>(KEY_OPS));
   }, []);
 
@@ -110,5 +195,23 @@ export function useVendas() {
     setOps(prev => prev.map(op => op.id === id ? { ...op, status } : op));
   }, [setOps]);
 
-  return { produtos, ops, salvarProduto, excluirProduto, criarOP, atualizarStatusOP };
+  const importarProdutos = useCallback((novos: Produto[]) => {
+    setProdutos(() => novos);
+  }, [setProdutos]);
+
+  const restaurarPadroes = useCallback(() => {
+    setProdutos(() => DEFAULT_PRODUTOS);
+  }, [setProdutos]);
+
+  return { 
+    produtos, 
+    ops, 
+    salvarProduto, 
+    excluirProduto, 
+    criarOP, 
+    atualizarStatusOP,
+    importarProdutos,
+    restaurarPadroes
+  };
 }
+

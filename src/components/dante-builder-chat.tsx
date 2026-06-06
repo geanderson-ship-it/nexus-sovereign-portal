@@ -35,6 +35,17 @@ interface Message {
   isImageLoading?: boolean;
 }
 
+const getSafeImageSrc = (imageUri: string) => {
+  if (!imageUri) return '';
+  const trimmed = imageUri.trim();
+  if (trimmed.startsWith('<svg') || trimmed.includes('<svg')) {
+    return `data:image/svg+xml;utf8,${encodeURIComponent(trimmed)}`;
+  }
+  return trimmed.startsWith('data:') || trimmed.startsWith('http') || trimmed.startsWith('/')
+    ? trimmed
+    : `data:image/jpeg;base64,${trimmed}`;
+};
+
 export default function DanteBuilderChat() {
   const { user } = useUser();
   const { t } = useLocale();
@@ -72,12 +83,47 @@ export default function DanteBuilderChat() {
   }, [messages]);
 
   const addMessage = useCallback((sender: Sender, data: { text: string } | DanteBuilderChatOutput) => {
+    const id = Date.now() + Math.random();
     const newMessage: Message = {
-      id: Date.now(),
+      id,
       sender,
       data,
     };
     setMessages(prev => [...prev, newMessage]);
+    return id;
+  }, []);
+
+  const handleGenerateImage = useCallback(async (messageId: number, proposals: any[]) => {
+    setMessages(prev => prev.map(msg => msg.id === messageId ? { ...msg, isImageLoading: true } : msg));
+    
+    try {
+        const imageUris = await Promise.all(proposals.map(async p => {
+            try {
+                const uri = await generateDanteBuilderImage(p.imagePrompt);
+                // Se falhou e ativou o fallback estático da Nexus, mas temos a representação customizada SVG do Claude, preferimos o SVG!
+                if ((uri === '/Nexus Empresas/Dante Projetos.png' || uri === '/Nexus Empresas/Dante Builder.png') && p.svgRepresentation) {
+                    return p.svgRepresentation;
+                }
+                return uri;
+            } catch (err) {
+                if (p.svgRepresentation) return p.svgRepresentation;
+                return '/Nexus Empresas/Dante Projetos.png';
+            }
+        }));
+        setMessages(prev => prev.map(msg => {
+            if (msg.id === messageId) {
+                return { 
+                    ...msg, 
+                    isImageLoading: false, 
+                    data: { ...msg.data, imageUris } as DanteBuilderChatOutput 
+                };
+            }
+            return msg;
+        }));
+    } catch (error) {
+        console.error("Erro ao gerar imagem:", error);
+        setMessages(prev => prev.map(msg => msg.id === messageId ? { ...msg, isImageLoading: false } : msg));
+    }
   }, []);
 
   const processMessage = useCallback(async (text: string) => {
@@ -108,35 +154,17 @@ export default function DanteBuilderChat() {
         throw new Error("Falha no protocolo de resposta.");
       }
 
-      addMessage('system', response);
+      const systemMessageId = addMessage('system', response);
+      if (response.proposals && response.proposals.length > 0) {
+        handleGenerateImage(systemMessageId, response.proposals);
+      }
     } catch (error: any) {
       const errorText = `ERRO DE ENGENHARIA: ${error.message || 'Instabilidade no sistema.'}`;
       addMessage('system', { response: errorText });
     } finally {
       setIsLoading(false);
     }
-  }, [addMessage, messages]);
-
-  const handleGenerateImage = async (messageId: number, proposals: any[]) => {
-    setMessages(prev => prev.map(msg => msg.id === messageId ? { ...msg, isImageLoading: true } : msg));
-    
-    try {
-        const imageUris = await Promise.all(proposals.map(p => generateDanteBuilderImage(p.imagePrompt)));
-        setMessages(prev => prev.map(msg => {
-            if (msg.id === messageId) {
-                return { 
-                    ...msg, 
-                    isImageLoading: false, 
-                    data: { ...msg.data, imageUris } as DanteBuilderChatOutput 
-                };
-            }
-            return msg;
-        }));
-    } catch (error) {
-        console.error("Erro ao gerar imagem:", error);
-        setMessages(prev => prev.map(msg => msg.id === messageId ? { ...msg, isImageLoading: false } : msg));
-    }
-  };
+  }, [addMessage, messages, handleGenerateImage]);
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -214,7 +242,7 @@ export default function DanteBuilderChat() {
 
   const renderImageGen = (msg: Message) => {
     const data = msg.data as DanteBuilderChatOutput;
-    if (!data.proposals || (data.imageUris && data.imageUris.length > 0)) return null;
+    if (!data.proposals || (data.imageUris && data.imageUris.length > 0) || msg.isImageLoading) return null;
 
     return (
         <div className="mt-4 p-4 border border-dashed border-cyan-500/30 rounded-xl bg-cyan-500/5 flex flex-col items-center gap-3">
@@ -240,9 +268,7 @@ export default function DanteBuilderChat() {
         {imageUris.map((imageUri, index) => {
             const proposal = proposals?.[index];
             const title = proposal?.title || `Proposta Concept ${index + 1}`;
-            const safeSrc = imageUri.startsWith('data:') || imageUri.startsWith('http') 
-                ? imageUri 
-                : `data:image/jpeg;base64,${imageUri}`;
+            const safeSrc = getSafeImageSrc(imageUri);
 
             return (
                 <div key={index} className="relative group">
@@ -286,7 +312,7 @@ export default function DanteBuilderChat() {
         <CardHeader className="flex flex-row items-center gap-4 bg-zinc-950/80 backdrop-blur-md border-b border-cyan-900/40 py-4">
           <div className="flex-1">
             <CardTitle className="font-headline text-xl text-cyan-400 tracking-tight flex items-center gap-2 uppercase italic">
-                Nexus Projetos <span className="text-[10px] bg-cyan-400/20 px-2 py-0.5 rounded border border-cyan-500/30 not-italic tracking-widest text-white">CONTEXTUAL v3.3</span>
+                Projetos <span className="text-[10px] bg-cyan-400/20 px-2 py-0.5 rounded border border-cyan-500/30 not-italic tracking-widest text-white">CONTEXTUAL v3.3</span>
             </CardTitle>
             <CardDescription className="text-gray-400 text-xs font-mono uppercase tracking-widest">Universal Engineer: Produtos • Estruturas • Equipamentos • Máquinas</CardDescription>
           </div>
@@ -338,6 +364,19 @@ export default function DanteBuilderChat() {
                                     {isSystem && data.specifications && renderSpecs(data.specifications)}
                                     {isSystem && data.materialList && renderMaterialList(data.materialList)}
                                     {isSystem && renderImageGen(msg)}
+                                    {isSystem && msg.isImageLoading && (
+                                        <div className="mt-4 space-y-4 animate-pulse">
+                                            <div className="rounded-xl border border-cyan-500/20 bg-zinc-950 p-4 flex flex-col items-center justify-center min-h-[250px] relative">
+                                                <Loader2 className="h-8 w-8 animate-spin text-cyan-400 mb-2" />
+                                                <p className="text-[10px] text-cyan-300 uppercase font-mono tracking-widest">
+                                                    Gerando Modelo Visual do Produto...
+                                                </p>
+                                                <p className="text-[9px] text-gray-500 mt-1">
+                                                    Processando prompt técnico via AWS Bedrock Titan
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
                                     {isSystem && data.imageUris && data.imageUris.length > 0 && renderGeneratedImages(data.imageUris, data.proposals)}
                                 </div>
                             </div>
@@ -633,9 +672,9 @@ export default function DanteBuilderChat() {
                                     <div className="rounded-xl border border-white/10 overflow-hidden bg-black aspect-square flex items-center justify-center">
                                         {selectedProposal.imageUri && (
                                             <img 
-                                                src={selectedProposal.imageUri.startsWith('data:') || selectedProposal.imageUri.startsWith('http') ? selectedProposal.imageUri : `data:image/jpeg;base64,${selectedProposal.imageUri}`} 
+                                                src={getSafeImageSrc(selectedProposal.imageUri)} 
                                                 alt="Reference" 
-                                                className="w-full h-full object-cover"
+                                                className="w-full h-full object-contain p-4 bg-zinc-950"
                                             />
                                         )}
                                     </div>
@@ -670,7 +709,7 @@ export default function DanteBuilderChat() {
                                             }}
                                         >
                                             <ShoppingCart className="h-4 w-4 mr-2" />
-                                            COTAR MATERIAIS NO DANTE COMPRAS
+                                            COTAR MATERIAIS NO COMPRAS
                                         </Button>
                                     </div>
                                     

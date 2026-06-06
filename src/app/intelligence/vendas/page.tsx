@@ -60,7 +60,7 @@ export default function VendasPage() {
   }, [ops, busca]);
 
   return (
-    <SovereignShowcase moduleName="Dante Vendas" imagePath="/Nexus Empresas/Dante Vendas.png">
+    <SovereignShowcase moduleName="Vendas" imagePath="/Nexus Empresas/Dante Vendas.png">
       <div className="min-h-screen bg-black text-white p-6 space-y-8 font-sans">
 
       {/* HEADER */}
@@ -73,7 +73,7 @@ export default function VendasPage() {
           </Link>
           <div className="space-y-1">
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-black uppercase tracking-tight text-blue-400 font-headline italic">Dante Vendas</h1>
+              <h1 className="text-2xl font-black uppercase tracking-tight text-blue-400 font-headline italic">Vendas</h1>
               <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 italic">Sales Intelligence</Badge>
             </div>
             <p className="text-xs text-gray-500 font-medium uppercase tracking-widest italic">Catálogo · Pedidos · Ordens de Produção</p>
@@ -189,7 +189,7 @@ export default function VendasPage() {
         </div>
       )}
 
-      <LegalSafeguard module="DANTE VENDAS" protocol="NX-7741-SLS" />
+      <LegalSafeguard module="VENDAS" protocol="NX-7741-SLS" />
 
       {/* MODAL DETALHE OP */}
       <Dialog open={!!detalheOP} onOpenChange={o => !o && setDetalheOP(null)}>

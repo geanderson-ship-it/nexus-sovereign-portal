@@ -22,13 +22,13 @@ export const permanentEmployees: Employee[] = [
   },
   {
     id: 'emp-002',
-    name: 'Ana Paula Santos',
+    name: 'Leticia Braga',
     role: 'Analista de Qualidade',
     department: 'Qualidade',
     admissionDate: '2023-06-10',
     meritScore: 9.2,
     status: 'active',
-    avatar: 'https://i.pravatar.cc/150?img=2'
+    avatar: '/images/leticia_braga.png'
   },
   {
     id: 'emp-003',

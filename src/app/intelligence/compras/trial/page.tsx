@@ -197,7 +197,7 @@ function TrialContent() {
 
 
   return (
-    <SovereignShowcase moduleName="Dante Compras" imagePath="/Nexus Empresas/Dante compras.jpg">
+    <SovereignShowcase moduleName="Compras" imagePath="/Nexus Empresas/Dante compras.jpg">
       <div className="space-y-8">
         <div className="flex items-center gap-4 mb-4">
             <Link href="/intelligence/compras">
@@ -205,7 +205,7 @@ function TrialContent() {
             </Link>
             <div>
                 <h1 className="text-3xl font-bold tracking-tighter text-blue-300 font-headline">
-                Terminal Dante Compras (Teste).
+                Terminal Compras (Teste).
                 </h1>
                 <p className="text-lg text-gray-400">
                 Sua sessão de avaliação de 24 horas.
@@ -601,7 +601,7 @@ export default function DanteComprasTrialPage() {
     return (
         <TrialGate
             moduleId="dante-compras"
-            moduleName="Dante Compras"
+            moduleName="Compras"
             purchaseHref="/intelligence/compras/access"
         >
             <TrialContent />

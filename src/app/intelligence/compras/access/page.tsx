@@ -7,7 +7,7 @@ import { ArrowLeft, MessageSquare, ShieldCheck, Settings, Landmark } from 'lucid
 import Link from 'next/link';
 
 export default function DanteComprasAccessPage() {
-  const whatsappMessage = `Olá! Gostaria de agendar uma demonstração privada do Módulo Dante Compras e obter informações sobre o Licenciamento Corporativo Soberano.`;
+  const whatsappMessage = `Olá! Gostaria de agendar uma demonstração privada do Módulo Compras e obter informações sobre o Licenciamento Corporativo Soberano.`;
   const whatsappUrl = `https://wa.me/5551999799582?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
@@ -19,7 +19,7 @@ export default function DanteComprasAccessPage() {
           </Link>
           <div>
             <h1 className="text-3xl font-bold tracking-tighter text-blue-300 font-headline">
-              Módulo Dante Compras.
+              Módulo Compras.
             </h1>
             <p className="text-sm text-gray-400">
               Inteligência Estratégica de Suprimentos & Teoria dos Jogos.

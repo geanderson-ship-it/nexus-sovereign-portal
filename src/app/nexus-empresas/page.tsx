@@ -17,104 +17,93 @@ const modules = [
   {
     id: 'vendas',
     badge: 'SALES_INTELLIGENCE',
-    title: 'NEXUS', highlight: 'VENDAS',
+    title: '', highlight: 'VENDAS',
     subtitle: 'Catálogo, Pedidos e Ordens de Produção',
     description: 'O vendedor acessa o catálogo completo, monta o pedido com produto explodido e gera a OP automaticamente — que vai direto para o PPCP com data de entrega.',
     icon: ShoppingBag, color: 'indigo',
     features: ['Catálogo de produtos com lista de materiais', 'Geração automática de OP', 'Integração direta com PPCP', 'Rastreamento do pedido até a entrega'],
     image: '/Nexus Empresas/Dante Vendas.png',
     gtag: 'nexus_empresas_vendas', href: '/intelligence/vendas',
-    licenca: 'R$ 999', suporte: 'R$ 99/mês',
+    licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
     roi: 'Se paga eliminando o primeiro erro de pedido.',
+    frozen: false,
   },
   {
     id: 'compras',
     badge: 'SUPPLY_INTELLIGENCE',
-    title: 'NEXUS', highlight: 'COMPRAS',
+    title: '', highlight: 'COMPRAS',
     subtitle: 'IA de Intermediação e Auditoria de Suprimentos',
     description: 'Dante analisa cotações, compara fornecedores e audita cada decisão em tempo real — empresas economizam em média R$ 5.000 já na primeira compra.',
     icon: ShoppingCart, color: 'blue',
     features: ['Análise comparativa de fornecedores', 'Auditoria de decisões de compra', 'Relatórios de economia acumulada', 'Redução de até 30% no custo de aquisição'],
     image: '/Nexus Empresas/Dante compras.jpg',
     gtag: 'nexus_empresas_compras', href: '/intelligence/compras',
-    licenca: 'R$ 999', suporte: 'R$ 99/mês',
+    licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
     roi: 'Se paga na primeira cotação.',
   },
-  {
-    id: 'projetos',
-    badge: 'ENGINEERING_CORE_v3.0',
-    title: 'NEXUS', highlight: 'PROJETOS',
-    subtitle: 'Engenharia e Orçamentos Técnicos com IA',
-    description: 'O que um desenhista técnico leva 2 dias para entregar, o Dante Projetos entrega em minutos — com lista de materiais, imagem e orçamento prontos para execução.',
-    icon: Cpu, color: 'cyan',
-    features: ['Orçamentos técnicos automatizados', 'Lista de materiais detalhada', 'Visualização 3D do produto gerada por IA', 'Economia de até R$ 5.000 por projeto em mão de obra'],
-    image: '/Nexus Empresas/Dante Projetos.png',
-    gtag: 'nexus_empresas_projetos', href: '/intelligence/dante-builder',
-    licenca: 'R$ 999', suporte: 'R$ 99/mês',
-    roi: 'Se paga na primeira cotação.',
-  },
+
   {
     id: 'ppcp',
     badge: 'PRODUCTION_CONTROL',
-    title: 'NEXUS', highlight: 'PPCP',
+    title: '', highlight: 'PPCP',
     subtitle: 'Planejamento, Programação e Controle da Produção',
     description: 'Empresas que controlam a produção com IA reduzem o retrabalho em até 40% e eliminam gargalos antes que parem a linha.',
     icon: BarChart3, color: 'amber',
     features: ['Planejamento de capacidade produtiva', 'Programação de ordens de produção', 'Alertas de gargalo antes que parem a linha', 'Redução de até 25% no custo de produção'],
     image: '/Nexus Empresas/Dante PPCP.png',
     gtag: 'nexus_empresas_ppcp', href: '/intelligence/ppcp',
-    licenca: 'R$ 999', suporte: 'R$ 99/mês',
+    licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
     roi: 'Se paga na primeira ordem otimizada.',
   },
   {
     id: 'auditor',
     badge: 'AUDIT_INTELLIGENCE',
-    title: 'NEXUS', highlight: 'AUDITOR',
+    title: '', highlight: 'AUDITOR',
     subtitle: 'Auditoria Inteligente de Processos e Decisões',
     description: 'Empresas perdem em média 15% do faturamento por desvios não detectados. O Nexus Auditor identifica e bloqueia esses vazamentos antes que cheguem ao balanço.',
     icon: Shield, color: 'emerald',
     features: ['Auditoria em tempo real de processos críticos', 'Detecção de desvios e riscos', 'Trilha de auditoria imutável', 'Economia de até 15% do faturamento retida'],
     image: '/Nexus Empresas/Dante Auditor.png',
-    gtag: 'nexus_empresas_auditor', licenca: 'R$ 999', suporte: 'R$ 99/mês',
+    gtag: 'nexus_empresas_auditor', licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
     roi: 'Se paga evitando um único desvio.',
   },
   {
     id: 'cronoanalise',
     badge: 'TIME_INTELLIGENCE',
-    title: 'NEXUS', highlight: 'CRONOANALISE',
+    title: '', highlight: 'CRONOANALISE',
     subtitle: 'Cronoanálise e Tempos Padrão com IA',
     description: 'Elimine o achismo da produção. O Dante mede, analisa e define os tempos padrão reais de cada operação.',
     icon: Timer, color: 'violet',
     features: ['Cronometragem e tempo padrão por operação', 'Cálculo de eficiência real por operador', 'Identificação de operações gargalo', 'Integração direta com Nexus PPCP'],
     image: '/Nexus Empresas/Dante cronoanalista.png',
     gtag: 'nexus_empresas_cronoanalise', href: '/intelligence/cronoanalise',
-    licenca: 'R$ 999', suporte: 'R$ 99/mês',
+    licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
     roi: 'Se paga na primeira operação otimizada.',
   },
   {
     id: 'almoxarifado',
     badge: 'STOCK_INTELLIGENCE',
-    title: 'NEXUS', highlight: 'ALMOXARIFADO',
+    title: '', highlight: 'ALMOXARIFADO',
     subtitle: 'Gestão Inteligente de Estoque e Insumos',
     description: 'Estoque parado é dinheiro morto. O Dante controla entradas, saídas e saldo em tempo real.',
     icon: Package, color: 'orange',
     features: ['Controle de entrada e saída de materiais', 'Saldo em tempo real por insumo', 'Alertas de estoque mínimo', 'Integração com Compras e PPCP'],
     image: '/Nexus Empresas/Dante almoxarife.png',
     gtag: 'nexus_empresas_almoxarifado', href: '/intelligence/almoxarifado',
-    licenca: 'R$ 999', suporte: 'R$ 99/mês',
+    licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
     roi: 'Se paga eliminando a primeira parada por falta de material.',
   },
   {
     id: 'expedicao',
     badge: 'DISPATCH_INTELLIGENCE',
-    title: 'NEXUS', highlight: 'EXPEDIÇÃO',
+    title: '', highlight: 'EXPEDIÇÃO',
     subtitle: 'Controle de Saída, Romaneio e Entrega',
     description: 'Do estoque ao cliente sem erros. O Dante controla cada saída, gera romaneios automáticos e garante que o produto certo chegue no prazo certo.',
     icon: Truck, color: 'sky',
     features: ['Geração automática de romaneios', 'Controle de saída por pedido', 'Rastreamento de entregas', 'Integração com Almoxarifado e PPCP'],
     image: '/Nexus Empresas/Dante expedição.png',
     gtag: 'nexus_empresas_expedicao', href: '/intelligence/expedicao',
-    licenca: 'R$ 999', suporte: 'R$ 99/mês',
+    licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
     roi: 'Se paga eliminando o primeiro erro de entrega.',
   },
 ];
@@ -211,31 +200,40 @@ export default function NexusEmpresasPage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
                 onClick={() => setAberto(mod)}
-                className={`relative rounded-[28px] overflow-hidden border ${c.border} bg-slate-900/60 backdrop-blur-xl ${c.glow} group text-left hover:-translate-y-1 transition-all duration-300 hover:border-opacity-60`}
+                className={`relative rounded-[28px] overflow-hidden border ${mod.frozen ? 'border-cyan-500/20 opacity-75 shadow-[0_0_30px_rgba(6,182,212,0.02)]' : `${c.border} ${c.glow} hover:border-opacity-60`} bg-slate-900/60 backdrop-blur-xl group text-left hover:-translate-y-1 transition-all duration-300`}
               >
                 {/* IMAGEM */}
-                <div className="relative h-44 overflow-hidden bg-gradient-to-br from-slate-900 to-transparent">
-                  <Image src={mod.image} alt={mod.highlight} fill className="object-contain p-4 transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute top-3 left-3">
-                    <Badge className={`${c.badge} text-white border-none px-2 py-0.5 text-[8px] font-black tracking-widest uppercase`}>{mod.badge}</Badge>
+                <div className={`relative h-44 overflow-hidden bg-gradient-to-br from-slate-900 to-transparent ${mod.frozen ? 'grayscale opacity-50' : ''}`}>
+                  <Image src={mod.image} alt={mod.highlight} fill className={`object-contain p-4 transition-transform duration-700 ${mod.frozen ? '' : 'group-hover:scale-110'}`} />
+                  <div className="absolute top-3 left-3 flex flex-col gap-1.5">
+                    <Badge className={`${mod.frozen ? 'bg-cyan-950/80 text-cyan-400 border border-cyan-500/20' : `${c.badge} text-white border-none`} px-2 py-0.5 text-[8px] font-black tracking-widest uppercase`}>
+                      {mod.frozen ? 'EM DESENVOLVIMENTO' : mod.badge}
+                    </Badge>
+                    {mod.frozen && (
+                      <Badge className="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 text-[8px] font-black tracking-widest uppercase w-fit">
+                        AGUARDANDO AWS
+                      </Badge>
+                    )}
                   </div>
                 </div>
 
                 {/* INFO */}
                 <div className="p-5 space-y-2">
                   <div className="flex items-center gap-2">
-                    <div className={`p-1.5 rounded-lg ${c.bg}`}>
-                      <mod.icon className={`h-4 w-4 ${c.text}`} />
+                    <div className={`p-1.5 rounded-lg ${mod.frozen ? 'bg-cyan-950/40 border border-cyan-500/10' : c.bg}`}>
+                      <mod.icon className={`h-4 w-4 ${mod.frozen ? 'text-cyan-400' : c.text}`} />
                     </div>
-                    <span className={`text-[9px] font-black uppercase tracking-widest ${c.text}`}>{mod.title}</span>
+                    <span className={`text-[9px] font-black uppercase tracking-widest ${mod.frozen ? 'text-cyan-500' : c.text}`}>{mod.title}</span>
                   </div>
-                  <h3 className={`text-xl font-black uppercase tracking-tight text-white`}>
+                  <h3 className={`text-xl font-black uppercase tracking-tight ${mod.frozen ? 'text-slate-400 font-bold' : 'text-white'}`}>
                     {mod.highlight}
                   </h3>
-                  <p className="text-slate-500 text-xs leading-relaxed line-clamp-2">{mod.subtitle}</p>
-                  <div className={`flex items-center justify-between pt-2 border-t ${c.border}`}>
-                    <span className={`text-sm font-black ${c.text}`}>{mod.licenca}</span>
-                    <span className="text-[10px] text-slate-600 uppercase tracking-widest">Ver detalhes →</span>
+                  <p className={`text-xs leading-relaxed line-clamp-2 ${mod.frozen ? 'text-slate-600' : 'text-slate-500'}`}>{mod.subtitle}</p>
+                  <div className={`flex items-center justify-between pt-2 border-t ${mod.frozen ? 'border-cyan-500/10' : c.border}`}>
+                    <span className={`text-sm font-black ${mod.frozen ? 'text-slate-400' : c.text}`}>{mod.licenca}</span>
+                    <span className={`text-[10px] uppercase tracking-widest ${mod.frozen ? 'text-cyan-500/60' : 'text-slate-600'}`}>
+                      {mod.frozen ? 'Suspenso →' : 'Ver detalhes →'}
+                    </span>
                   </div>
                 </div>
               </motion.button>
@@ -351,16 +349,24 @@ export default function NexusEmpresasPage() {
                     </div>
                   </div>
 
-                  <div className="flex gap-3">
-                    {'href' in aberto && aberto.href && (
-                      <Button asChild variant="outline" className={`flex-1 border ${c.border} ${c.text} font-black uppercase tracking-widest h-12 rounded-2xl gap-2`}>
-                        <Link href={(aberto as any).href}><Eye className="h-4 w-4" /> Acessar Módulo</Link>
+                  <div className="flex gap-3 w-full">
+                    {aberto.frozen ? (
+                      <Button disabled className="w-full bg-slate-900/50 text-slate-500 border border-slate-800 font-black uppercase tracking-widest h-12 rounded-2xl cursor-not-allowed">
+                        Módulo Temporariamente Suspenso (Aguardando IA AWS)
                       </Button>
+                    ) : (
+                      <>
+                        {'href' in aberto && aberto.href && (
+                          <Button asChild variant="outline" className={`flex-1 border ${c.border} ${c.text} font-black uppercase tracking-widest h-12 rounded-2xl gap-2`}>
+                            <Link href={(aberto as any).href}><Eye className="h-4 w-4" /> Acessar Módulo</Link>
+                          </Button>
+                        )}
+                        <Button asChild className={`${'href' in aberto && aberto.href ? 'flex-1' : 'w-full'} bg-transparent border-2 ${c.btn} font-black uppercase tracking-widest h-12 rounded-2xl`}
+                          onClick={() => gtag.event({ action: 'contact_click', category: 'nexus_empresas', label: aberto.gtag })}>
+                          <Link href={WHATSAPP_URL} target="_blank"><Phone className="mr-2 h-4 w-4" /> Falar com Consultor</Link>
+                        </Button>
+                      </>
                     )}
-                    <Button asChild className={`${'href' in aberto && aberto.href ? 'flex-1' : 'w-full'} bg-transparent border-2 ${c.btn} font-black uppercase tracking-widest h-12 rounded-2xl`}
-                      onClick={() => gtag.event({ action: 'contact_click', category: 'nexus_empresas', label: aberto.gtag })}>
-                      <Link href={WHATSAPP_URL} target="_blank"><Phone className="mr-2 h-4 w-4" /> Falar com Consultor</Link>
-                    </Button>
                   </div>
                 </div>
               </div>

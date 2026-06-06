@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Shield, ArrowRight, Wheat, Paintbrush, Building2, Users, BrainCircuit, Zap, Database, Activity, HeartPulse } from 'lucide-react';
+import { Shield, ArrowRight, Wheat, Paintbrush, Building2, Users, BrainCircuit, Zap, Database, Activity, HeartPulse, Cpu } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
@@ -39,19 +39,6 @@ const segments = [
     image: '/Nexus Intelligence Agro/Nexus Intelligence Agro.png',
     products: ['Dante Safra Standard', 'Dante Safra Axis'],
     badge: 'AGRO_INTELLIGENCE',
-    available: true,
-  },
-  {
-    id: 'design',
-    icon: Paintbrush,
-    label: 'DESIGN & INTERIORES',
-    title: 'Design & Interiores',
-    description: 'IA generativa para ambientação, showrooms e identidade visual. Do conceito à imagem em segundos.',
-    color: 'pink',
-    href: '/intelligence/design',
-    image: '/Nexus Intelligence Design/Nexus Intelligence Design.png',
-    products: ['Djeny Design Personal', 'Djeny Design Business'],
-    badge: 'DESIGN_INTELLIGENCE',
     available: true,
   },
   {
@@ -145,6 +132,35 @@ const segments = [
     products: ['Diagnóstico Preventivo', 'Monitor Clínico', 'Protocolo IA'],
     badge: 'HEALTH_INTELLIGENCE',
     available: true,
+  },
+];
+
+const frozenSegments = [
+  {
+    id: 'design',
+    icon: Paintbrush,
+    label: 'DESIGN & INTERIORES',
+    title: 'Design & Interiores',
+    description: 'IA generativa para ambientação, showrooms e identidade visual. Do conceito à imagem em segundos.',
+    color: 'pink',
+    href: '/intelligence/design',
+    image: '/Nexus Intelligence Design/Nexus Intelligence Design.png',
+    products: ['Djeny Design Personal', 'Djeny Design Business'],
+    badge: 'DESIGN_INTELLIGENCE',
+    available: false,
+  },
+  {
+    id: 'projetos',
+    icon: Cpu,
+    label: 'ENGENHARIA & PROJETOS',
+    title: 'Projetos (Dante Builder)',
+    description: 'Orçamentos técnicos automatizados, listas de materiais detalhadas e representações visuais 3D geradas por inteligência artificial.',
+    color: 'cyan',
+    href: '/intelligence/dante-builder',
+    image: '/Nexus Empresas/Nexus Empresas prata.png',
+    products: ['Dante Builder Standard', 'Dante Builder Enterprise'],
+    badge: 'ENGINEERING_INTELLIGENCE',
+    available: false,
   },
 ];
 
@@ -325,6 +341,98 @@ export default function IntelligencePage() {
 
 
         </div>
+
+        {/* SEÇÃO EM DESENVOLVIMENTO (CONGELADOS) */}
+        <div className="mt-32 max-w-7xl mx-auto">
+          <div className="text-center mb-12 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-black tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              Módulos sob Suspensão Temporária
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">
+              Em <span className="text-cyan-400">Desenvolvimento</span>
+            </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-sm">
+              Módulos de geração de imagens temporariamente suspensos aguardando a liberação de novos recursos de IA na nuvem AWS.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {frozenSegments.map((seg, i) => {
+              const c = colorMap[seg.color];
+              return (
+                <motion.div
+                  key={seg.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="relative rounded-[40px] overflow-hidden border border-cyan-500/20 bg-slate-950/40 backdrop-blur-xl flex flex-col group transition-all duration-500 shadow-[0_0_50px_rgba(6,182,212,0.05)]"
+                >
+                  {/* OVERLAY CONGELADO / NEVE */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-cyan-950/20 via-transparent to-transparent pointer-events-none z-10" />
+                  
+                  {/* IMAGEM DESATURADA */}
+                  <div className="relative h-48 overflow-hidden bg-gradient-to-br from-slate-950 to-transparent opacity-40 grayscale filter blur-[0.5px]">
+                    {seg.image ? (
+                      <Image
+                        src={seg.image}
+                        alt={seg.title}
+                        fill
+                        className="object-contain p-6 animate-[pulse_8s_ease-in-out_infinite]"
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center h-full opacity-10">
+                        <seg.icon className="h-20 w-20" />
+                      </div>
+                    )}
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[8px] font-black tracking-[0.2em] uppercase">
+                        {seg.badge}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  {/* CONTEÚDO */}
+                  <div className="p-8 flex flex-col flex-1 gap-4 relative z-20">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/20">
+                        <seg.icon className="h-5 w-5 text-cyan-400" />
+                      </div>
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-400">{seg.label}</span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <h3 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+                        {seg.title}
+                      </h3>
+                      <Badge className="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[9px] font-black tracking-wider uppercase w-fit">
+                        Aguardando IA AWS
+                      </Badge>
+                    </div>
+                    
+                    <p className="text-slate-500 text-xs leading-relaxed flex-1">{seg.description}</p>
+
+                    {/* PRODUTOS */}
+                    <div className="flex flex-wrap gap-2 opacity-55">
+                      {seg.products.map((p, pi) => (
+                        <span key={pi} className="text-[9px] font-bold px-2 py-0.5 rounded-lg border border-cyan-500/10 bg-cyan-500/5 text-cyan-400">
+                          {p}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* CTA DESABILITADO */}
+                    <Button disabled className="w-full rounded-2xl font-black uppercase tracking-widest h-12 mt-2 bg-slate-900/50 text-slate-500 border border-slate-800 cursor-not-allowed">
+                      Módulo Suspenso
+                    </Button>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-6 pb-24">
           <LegalSafeguard module="NEXUS GLOBAL" protocol="NX-CORE-00" />
         </div>

@@ -9,6 +9,21 @@
 import { ai, NEXUS_MODEL } from '@/ai/genkit';
 import { z } from 'genkit';
 import { DanteBuilderChatInputSchema, DanteBuilderChatOutputSchema, type DanteBuilderChatInput, type DanteBuilderChatOutput } from './dante-builder-types';
+import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
+
+const bedrockRegion = process.env.BEDROCK_REGION || process.env.AWS_REGION || 'us-east-1';
+const bedrockAccessKeyId = process.env.BEDROCK_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID;
+const bedrockSecretAccessKey = process.env.BEDROCK_SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY;
+
+const bedrockClient = new BedrockRuntimeClient({
+  region: bedrockRegion,
+  ...(bedrockAccessKeyId && bedrockSecretAccessKey ? {
+    credentials: {
+      accessKeyId: bedrockAccessKeyId,
+      secretAccessKey: bedrockSecretAccessKey,
+    }
+  } : {})
+});
 
 const danteBuilderChatPrompt = ai.definePrompt({
   name: 'danteBuilderChatPrompt',
@@ -33,7 +48,8 @@ const danteBuilderChatPrompt = ai.definePrompt({
     - \`proposals\`: Array contendo OBRIGATORIAMENTE **APENAS UMA (1)** proposta de altíssimo escalão. O objeto deve ter:
         - \`title\`: Nome majestoso do projeto (ex: "Portal Paramétrico Silence", "Estrutura Modular Titan", "Dispositivo IoT Quantum").
         - \`conceptDescription\`: Defesa criativa ancorada no contexto e nos parâmetros exatos.
-        - \`imagePrompt\`: Prompt em inglês fotorrealista para geração de imagem técnica.
+        - \`imagePrompt\`: Prompt em inglês fotorrealista para a imagem técnica do produto/equipamento real. O prompt deve focar exclusivamente no produto/equipamento físico em si, renderizado de forma técnica, limpa, nítida e fotorrealista no ambiente correspondente (ex: campo aberto, skid, oficina, fábrica, etc.). NÃO inclua engenheiros, pessoas, mãos, pranchetas, computadores ou escritórios na imagem. Foque 100% no objeto físico real.
+        - \`svgRepresentation\`: Código SVG válido, completo e auto-suficiente do blueprint/esquema técnico do produto. O SVG deve ter width='100%' height='100%', viewBox='0 0 800 600', fundo escuro (ex: #09090b ou #000000), e ilustrar de forma esquemática, elegante e detalhada o produto solicitado usando linhas, círculos e polígonos nas cores especificadas (ex: amarelo industrial #eab308 ou #f59e0b para a bomba centrífuga AuruMax/Titan, flanges, etc.), além de marcações de cotas e textos com as dimensões indicadas. IMPORTANTE: NÃO use aspas duplas dentro de strings de atributos do SVG para evitar erros de JSON (use aspas simples '').
         - \`technicalArsenal\`:
             - \`engineeringNotes\`: Notas de mestre engenheiro específicas para o contexto.
             - \`preciseSpecs\`: Ligas, tratamentos, dimensões, tolerâncias, normas técnicas.
@@ -99,20 +115,86 @@ export async function danteBuilderChat(input: DanteBuilderChatInput): Promise<Da
  * Generates technical visual model for suppliers using Amazon Titan Image Generator.
  */
 export async function generateDanteBuilderImage(prompt: string): Promise<string> {
-  const { media } = await ai.generate({
-    model: 'aws-bedrock/amazon.titan-image-generator-v1',
-    prompt: [{ text: prompt }],
-    config: {
-      numberOfImages: 1,
-      quality: 'premium',
-      width: 1024,
-      height: 1024,
+  const models = [
+    {
+      id: "stability.sd3-5-large-v1:0",
+      payload: {
+        prompt: prompt,
+        aspect_ratio: "1:1",
+        output_format: "jpeg"
+      },
+      extractImage: (res: any) => res.images?.[0]
     },
-  });
+    {
+      id: "stability.stable-image-core-v1:0",
+      payload: {
+        prompt: prompt,
+        aspect_ratio: "1:1",
+        output_format: "jpeg"
+      },
+      extractImage: (res: any) => res.images?.[0]
+    },
+    {
+      id: "stability.stable-image-ultra-v1:0",
+      payload: {
+        prompt: prompt,
+        aspect_ratio: "1:1",
+        output_format: "jpeg"
+      },
+      extractImage: (res: any) => res.images?.[0]
+    },
+    {
+      id: "amazon.nova-canvas-v1:0",
+      payload: {
+        taskType: "TEXT_IMAGE",
+        textToImageParams: { text: prompt },
+        imageGenerationConfig: { numberOfImages: 1, quality: "premium", width: 1024, height: 1024 }
+      },
+      extractImage: (res: any) => res.images?.[0]
+    },
+    {
+      id: "amazon.titan-image-generator-v2:0",
+      payload: {
+        taskType: "TEXT_IMAGE",
+        textToImageParams: { text: prompt },
+        imageGenerationConfig: { numberOfImages: 1, quality: "premium", width: 1024, height: 1024 }
+      },
+      extractImage: (res: any) => res.images?.[0]
+    }
+  ];
 
-  if (!media?.url) {
-    throw new Error('Falha na engenharia da imagem.');
+  for (const model of models) {
+    try {
+      console.log(`Tentando gerar imagem no AWS Bedrock com o modelo ${model.id}...`);
+      const command = new InvokeModelCommand({
+        modelId: model.id,
+        contentType: "application/json",
+        accept: "application/json",
+        body: JSON.stringify(model.payload),
+      });
+
+      const response = await bedrockClient.send(command);
+      const responseBody = JSON.parse(new TextDecoder().decode(response.body));
+      const base64Image = model.extractImage(responseBody);
+
+      if (base64Image) {
+        console.log(`Imagem gerada com SUCESSO usando o modelo ${model.id}!`);
+        return base64Image;
+      }
+    } catch (error: any) {
+      console.warn(`Modelo ${model.id} indisponível ou falhou:`, error.message || error);
+    }
   }
-  return media.url;
+
+  // Caso todos falhem, aciona o fallback local estático (que no frontend tentará usar o SVG customizado)
+  console.warn("Todos os modelos de imagem da AWS falharam. Ativando contingência de blueprint local.");
+  const lowerPrompt = prompt.toLowerCase();
+  if (lowerPrompt.includes('door') || lowerPrompt.includes('gate') || lowerPrompt.includes('porta') || lowerPrompt.includes('window') || lowerPrompt.includes('janela') || lowerPrompt.includes('glass') || lowerPrompt.includes('abertura')) {
+    return '/Nexus Empresas/Dante Projetos.png';
+  }
+  if (lowerPrompt.includes('machine') || lowerPrompt.includes('equipment') || lowerPrompt.includes('máquina') || lowerPrompt.includes('peça') || lowerPrompt.includes('device') || lowerPrompt.includes('iot') || lowerPrompt.includes('estrutura')) {
+    return '/Nexus Empresas/Dante Builder.png';
+  }
+  return '/Nexus Empresas/Dante Projetos.png';
 }
 

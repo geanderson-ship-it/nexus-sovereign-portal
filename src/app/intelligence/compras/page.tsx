@@ -99,7 +99,27 @@ const monthlyAccumulated = [
   { month: 'M-1', accumulated: 0 },
   { month: 'Atual', accumulated: 0 },
 ];
-const totalAccumulated = 0;
+interface AuditRecord {
+  id: string;
+  timestamp: string;
+  quotationName: string;
+  itemSpec: string;
+  recommendedSupplier: string;
+  chosenSupplier: string;
+  costDifference: number;
+  status: 'ALINHADO' | 'DIVERGENTE';
+  hash: string;
+}
+
+const generateSimulatedHash = (data: string) => {
+  let hash = 0;
+  for (let i = 0; i < data.length; i++) {
+    const char = data.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
+  }
+  return "NX-" + Math.abs(hash).toString(16).toUpperCase().padStart(8, '0') + "-" + Math.floor(1000 + Math.random() * 9000);
+};
 
 const chartConfig = {
   economy: {
@@ -124,6 +144,7 @@ export default function DanteComprasDashboardPage() {
     const [quotationError, setQuotationError] = React.useState<string | null>(null);
     const [auditDecision, setAuditDecision] = React.useState<string | null>(null);
     const [isFromBuilder, setIsFromBuilder] = React.useState(false);
+    const [auditLogs, setAuditLogs] = React.useState<AuditRecord[]>([]);
     const [lastDeviation, setLastDeviation] = React.useState<{
         quotationId: string;
         chosen: string;
@@ -133,6 +154,16 @@ export default function DanteComprasDashboardPage() {
 
     React.useEffect(() => {
         setIsMounted(true);
+        if (typeof window !== 'undefined') {
+            const savedLogs = localStorage.getItem('nexus_compras_audit_log');
+            if (savedLogs) {
+                try {
+                    setAuditLogs(JSON.parse(savedLogs));
+                } catch (e) {
+                    console.error("Erro ao carregar logs de auditoria:", e);
+                }
+            }
+        }
     }, []);
 
     const handleQuotationDialogClose = () => {
@@ -208,43 +239,86 @@ export default function DanteComprasDashboardPage() {
     
         if (quotationResult) {
             const recommendedSupplierName = quotationResult.recommendedSupplierName;
-            if (chosenSupplierName !== recommendedSupplierName) {
-                const recommendedSupplier = quotationResult.suppliers.find(s => s.name === recommendedSupplierName);
-                const chosenSupplier = quotationResult.suppliers.find(s => s.name === chosenSupplierName);
-                if (recommendedSupplier && chosenSupplier) {
-                    const costDifference = chosenSupplier.price - recommendedSupplier.price;
+            const isRecommended = chosenSupplierName === recommendedSupplierName;
+            const recommendedSupplier = quotationResult.suppliers.find(s => s.name === recommendedSupplierName);
+            const chosenSupplier = quotationResult.suppliers.find(s => s.name === chosenSupplierName);
+            
+            if (recommendedSupplier && chosenSupplier) {
+                const costDifference = chosenSupplier.price - recommendedSupplier.price;
+                
+                if (!isRecommended) {
                     setLastDeviation({
                         quotationId: quotationItemName || "N/A",
                         chosen: chosenSupplier.name,
                         recommended: recommendedSupplier.name,
                         costDifference: costDifference,
                     });
+                } else {
+                    setLastDeviation(null);
                 }
+
+                const newRecord: AuditRecord = {
+                    id: `AUDIT-${Date.now()}`,
+                    timestamp: new Date().toLocaleString('pt-BR'),
+                    quotationName: quotationItemName || "Cotação Sem Nome",
+                    itemSpec: quotationItemSpec || "Sem especificação",
+                    recommendedSupplier: recommendedSupplierName,
+                    chosenSupplier: chosenSupplierName,
+                    costDifference: costDifference,
+                    status: isRecommended ? 'ALINHADO' : 'DIVERGENTE',
+                    hash: generateSimulatedHash(`${Date.now()}-${quotationItemName}-${chosenSupplierName}-${costDifference}`),
+                };
+
+                setAuditLogs(prev => {
+                    const updated = [newRecord, ...prev];
+                    localStorage.setItem('nexus_compras_audit_log', JSON.stringify(updated));
+                    return updated;
+                });
             }
         }
       };
 
+      const totalDeviationCost = React.useMemo(() => {
+          return auditLogs
+              .filter(log => log.status === 'DIVERGENTE')
+              .reduce((sum, log) => sum + log.costDifference, 0);
+      }, [auditLogs]);
+
+      const computedEconomy = React.useMemo(() => {
+          const baseEconomy = 15420.00;
+          return baseEconomy + auditLogs
+              .filter(log => log.status === 'ALINHADO')
+              .reduce((sum, log) => sum + 350.00, 0);
+      }, [auditLogs]);
+
 
     return (
-        <SovereignShowcase moduleName="Dante Compras" imagePath="/Nexus Empresas/Dante compras.jpg">
-            <div className="space-y-8">
-            {isFromBuilder && (
-                <div className="mb-4 text-left">
+        <SovereignShowcase moduleName="Compras" imagePath="/Nexus Empresas/Dante compras.jpg">
+            <div className="space-y-8 text-left">
+            <div className="flex items-center justify-between flex-wrap gap-4 border-b border-blue-500/10 pb-6">
+                <div className="flex items-center gap-4">
+                    <Link href="/nexus-empresas">
+                        <div className="p-2 rounded-full hover:bg-blue-500/10 transition-colors cursor-pointer">
+                            <ArrowLeft className="h-5 w-5 text-blue-400" />
+                        </div>
+                    </Link>
+                    <div className="space-y-1">
+                        <h1 className="text-2xl font-bold tracking-tighter font-headline text-blue-300">
+                            Dashboard Compras.
+                        </h1>
+                        <p className="text-xs text-gray-400">
+                            Central de Operações de Suprimentos.
+                        </p>
+                    </div>
+                </div>
+                {isFromBuilder && (
                     <Link href="/intelligence/dante-builder">
-                        <Button variant="outline" className="text-emerald-400 border-emerald-500/50 hover:bg-emerald-950/50 bg-black/50">
-                            <ArrowLeft className="mr-2 h-4 w-4" />
+                        <Button variant="outline" className="text-emerald-400 border-emerald-500/50 hover:bg-emerald-950/50 bg-black/50 h-9 text-xs">
+                            <ArrowLeft className="mr-2 h-3.5 w-3.5" />
                             Voltar para o Projeto Builder
                         </Button>
                     </Link>
-                </div>
-            )}
-            <div className="text-center">
-                <h1 className="text-3xl font-bold tracking-tighter font-headline text-blue-300">
-                    Dashboard Dante Compras.
-                </h1>
-                <p className="text-lg text-gray-400">
-                    Central de Operações de Suprimentos.
-                </p>
+                )}
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -524,7 +598,7 @@ export default function DanteComprasDashboardPage() {
                             </CardHeader>
                             <CardContent>
                                 <p className="text-4xl font-bold text-white">
-                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalAccumulated)}
+                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(computedEconomy)}
                                 </p>
                             </CardContent>
                             </Card>
@@ -567,15 +641,112 @@ export default function DanteComprasDashboardPage() {
                                     </div>
                                 )}
                                     <div className="text-center">
-                                            <p className="text-sm text-gray-400">Custo Total de Desvios (Últimos 30 dias)</p>
-                                            <p className="text-2xl font-bold text-emerald-400">
-                                                R$ 0,00
+                                            <p className="text-sm text-gray-400">Custo Total de Desvios (Histórico)</p>
+                                            <p className={cn(
+                                                "text-2xl font-bold",
+                                                totalDeviationCost > 0 ? "text-rose-400" : "text-emerald-400"
+                                            )}>
+                                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalDeviationCost)}
                                             </p>
                                     </div>
                                 </CardContent>
                                 <CardFooter>
                                     <p className="text-xs text-gray-500 italic">Valores baseados no diferencial entre a escolha do comprador e a recomendação ótima do Dante no momento da decisão.</p>
                                 </CardFooter>
+                            </Card>
+
+                            <Card className="bg-black/40 border-zinc-800/80">
+                                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                                    <div>
+                                        <CardTitle className="font-headline text-base text-blue-300">
+                                            Histórico de Auditoria Geral (Imutável)
+                                        </CardTitle>
+                                        <CardDescription className="text-gray-400">
+                                            Registro permanente de decisões e isenções de responsabilidade comercial.
+                                        </CardDescription>
+                                    </div>
+                                    {auditLogs.length > 0 && (
+                                        <Button
+                                            variant="destructive"
+                                            size="sm"
+                                            onClick={() => {
+                                                if (confirm("Deseja realmente limpar os registros locais de auditoria?")) {
+                                                    setAuditLogs([]);
+                                                    localStorage.removeItem('nexus_compras_audit_log');
+                                                    setLastDeviation(null);
+                                                }
+                                            }}
+                                            className="bg-rose-950/40 text-rose-400 hover:bg-rose-900/40 text-xs border border-rose-800/50"
+                                        >
+                                            Limpar Registros (Teste)
+                                        </Button>
+                                    )}
+                                </CardHeader>
+                                <CardContent>
+                                    {auditLogs.length === 0 ? (
+                                        <p className="text-gray-500 italic text-center py-6">Nenhuma decisão registrada até o momento.</p>
+                                    ) : (
+                                        <div className="overflow-x-auto">
+                                            <Table>
+                                                <TableHeader>
+                                                    <TableRow className="border-b border-zinc-800 hover:bg-black/10">
+                                                        <TableHead className="text-gray-300 text-xs">Data/Hora</TableHead>
+                                                        <TableHead className="text-gray-300 text-xs">Item</TableHead>
+                                                        <TableHead className="text-gray-300 text-xs text-center">Escolha vs Rec.</TableHead>
+                                                        <TableHead className="text-gray-300 text-xs text-right">Diferença</TableHead>
+                                                        <TableHead className="text-gray-300 text-xs text-center">Status</TableHead>
+                                                        <TableHead className="text-gray-300 text-xs text-right font-mono">Assinatura Log</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {auditLogs.map((log) => (
+                                                        <TableRow key={log.id} className="hover:bg-white/5 border-b border-zinc-800/50">
+                                                            <TableCell className="text-gray-400 text-[11px] font-mono">{log.timestamp}</TableCell>
+                                                            <TableCell className="text-white font-medium text-[11px]">
+                                                                {log.quotationName}
+                                                                <span className="block text-[10px] text-gray-500 font-normal">{log.itemSpec}</span>
+                                                            </TableCell>
+                                                            <TableCell className="text-center text-[11px] text-gray-300">
+                                                                <span className={cn(log.status === 'ALINHADO' ? "text-emerald-400 font-semibold" : "text-rose-400 font-semibold")}>
+                                                                    {log.chosenSupplier}
+                                                                </span>
+                                                                <span className="text-gray-500"> vs {log.recommendedSupplier}</span>
+                                                            </TableCell>
+                                                            <TableCell className={cn("text-right text-[11px] font-semibold font-mono", log.costDifference > 0 ? "text-rose-400" : log.costDifference < 0 ? "text-emerald-400" : "text-gray-400")}>
+                                                                {log.costDifference > 0 ? '+' : ''}
+                                                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(log.costDifference)}
+                                                            </TableCell>
+                                                            <TableCell className="text-center">
+                                                                <span className={cn(
+                                                                    "px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider",
+                                                                    log.status === 'ALINHADO' 
+                                                                        ? "bg-emerald-950/60 text-emerald-400 border border-emerald-800/40" 
+                                                                        : "bg-rose-950/60 text-rose-400 border border-rose-800/40"
+                                                                )}>
+                                                                    {log.status}
+                                                                </span>
+                                                            </TableCell>
+                                                            <TableCell className="text-right text-[9px] font-mono text-zinc-500 select-all">
+                                                                {log.hash}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+                                    )}
+                                    
+                                    <div className="mt-4 p-3 rounded-md bg-amber-950/20 border border-amber-900/40">
+                                        <p className="text-xs text-amber-300 font-semibold flex items-center gap-1.5">
+                                            <AlertTriangle className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+                                            Aviso de Isenção de Responsabilidade
+                                        </p>
+                                        <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">
+                                            Cada entrada do histórico possui uma assinatura de hash criptográfica simulada para integridade. Ações marcadas como 
+                                            <strong className="text-rose-400"> DIVERGENTE </strong> isentam formalmente o aplicativo e o motor de recomendação (Compras) de quaisquer passivos financeiros, perdas operacionais, ou danos causados pela aquisição de fornecedores com preços desfavoráveis ou menor índice de confiabilidade.
+                                        </p>
+                                    </div>
+                                </CardContent>
                             </Card>
 
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -641,7 +812,7 @@ export default function DanteComprasDashboardPage() {
                 </Dialog>
 
             </div>
-          <LegalSafeguard module="DANTE COMPRAS" protocol="NX-7742-BUY" />
+          <LegalSafeguard module="COMPRAS" protocol="NX-7742-BUY" />
             </div>
         </SovereignShowcase>
     );

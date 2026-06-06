@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { djenyRh } from '@/ai/flows/djeny-rh-flow';
+import { DjenyRhStage } from '@/ai/flows/djeny-rh-types';
 import {
   Card,
   CardContent,
@@ -11,8 +13,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
 import {
   Mic,
+  MicOff,
   Video,
   PhoneOff,
   Activity,
@@ -20,20 +24,25 @@ import {
   MessageSquare,
   Maximize2,
   Volume2,
+  VolumeX,
   User,
   Loader2,
   Smile,
   Zap,
-  BrainCircuit
+  BrainCircuit,
+  Send,
+  Paperclip
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import { Progress } from '@/components/ui/progress';
 import * as gtag from '@/lib/gtag';
 
 
 interface RecruitmentVideoRoomProps {
   candidateName: string;
+  candidateRole: string;
   onClose: () => void;
 }
 
@@ -106,7 +115,7 @@ const interviewGuide = [
   }
 ];
 
-export function RecruitmentVideoRoom({ candidateName, onClose }: RecruitmentVideoRoomProps) {
+export function RecruitmentVideoRoom({ candidateName, candidateRole, onClose }: RecruitmentVideoRoomProps) {
   const [isConnecting, setIsConnecting] = useState(true);
   const [nervousness, setNervousness] = useState(15);
   const [sincerity, setSincerity] = useState(85);
@@ -117,11 +126,219 @@ export function RecruitmentVideoRoom({ candidateName, onClose }: RecruitmentVide
   const [heygenActive, setHeygenActive] = useState(false); // Preparado para HeyGen
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
+  const { playAudio, stopAudio, isPlaying } = useNexusAudio();
+  const [isMuted, setIsMuted] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
+  const shouldBeListeningRef = useRef(false);
+
+  const [messages, setMessages] = useState<Array<{ id: string; text: string; sender: 'user' | 'djeny' }>>([
+    {
+      id: 'initial',
+      text: `Olá, ${candidateName}. Sou a Djeny, estrategista de RH da Nexus. É um prazer falar com você hoje. Para iniciarmos nossa entrevista para a vaga de ${candidateRole || 'Gerente de Produção'}, fale um pouco sobre você e de onde você é. O que te trouxe para trabalhar na nossa região?`,
+      sender: 'djeny'
+    }
+  ]);
+  const [inputText, setInputText] = useState('');
+  const [isDjenyTyping, setIsDjenyTyping] = useState(false);
+  const [djenyAnalysisNote, setDjenyAnalysisNote] = useState<string>(
+    "Aguardando primeiras interações para processar a análise de perfil do candidato."
+  );
+  
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Inicialização do Reconhecimento de Voz (Speech-to-Text)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      console.warn("Reconhecimento de voz não suportado pelo navegador.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'pt-BR';
+
+    recognition.onresult = (event: any) => {
+      let finalTranscript = '';
+      let interimTranscript = '';
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+        } else {
+          interimTranscript += event.results[i][0].transcript;
+        }
+      }
+      
+      const fullText = (finalTranscript + interimTranscript).trim();
+      if (fullText) {
+        setInputText(fullText);
+      }
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Erro no reconhecimento de voz:", event.error);
+      if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+        shouldBeListeningRef.current = false;
+      }
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      if (shouldBeListeningRef.current) {
+        try {
+          recognition.start();
+        } catch (e) {
+          console.error("Erro ao reiniciar reconhecimento de voz:", e);
+          setIsListening(false);
+        }
+      } else {
+        setIsListening(false);
+      }
+    };
+
+    recognitionRef.current = recognition;
+
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (e) {
+          // Ignora se já estiver parado
+        }
+      }
+    };
+  }, []);
+
+  const handleMicClick = () => {
+    if (!recognitionRef.current) {
+      alert("O seu navegador não suporta reconhecimento de voz ou a permissão para o microfone foi negada.");
+      return;
+    }
+
+    if (isListening) {
+      shouldBeListeningRef.current = false;
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      stopAudio(); // Silencia a Djeny para não atrapalhar a fala do candidato
+      setInputText('');
+      shouldBeListeningRef.current = true;
+      try {
+        recognitionRef.current.start();
+        setIsListening(true);
+      } catch (err) {
+        console.error("Falha ao iniciar reconhecimento:", err);
+      }
+    }
+  };
+
+  // Auto-scroll para a última mensagem do chat
+  useEffect(() => {
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollTo({
+        top: chatEndRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [messages, isDjenyTyping]);
+
+  const mapIndexToStage = (index: number): DjenyRhStage => {
+    if (index === 0) return 'ENTREVISTA_ABERTURA';
+    if (index === 1 || index === 2) return 'ENTREVISTA_TECNICA';
+    if (index === 3 || index === 4) return 'ENTREVISTA_COMPORTAMENTAL';
+    if (index === 5) return 'ENTREVISTA_ENCERRAMENTO';
+    return 'RECENSEAMENTO';
+  };
+
+  const handleSendUserMessage = async () => {
+    if (!inputText.trim() || isDjenyTyping) return;
+
+    // Se estiver ouvindo pelo microfone, para a sessão atual para limpar o histórico acumulado.
+    // O evento `onend` irá reiniciar a gravação automaticamente se shouldBeListeningRef for true.
+    if (isListening && recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) {}
+    }
+
+    const userText = inputText.trim();
+    setInputText('');
+
+    const userMsgId = Math.random().toString(36).substring(7);
+    const updatedMessages = [...messages, { id: userMsgId, text: userText, sender: 'user' as const }];
+    setMessages(updatedMessages);
+    setIsDjenyTyping(true);
+
+    try {
+      const history = messages.map(m => ({
+        role: m.sender === 'user' ? 'user' as const : 'model' as const,
+        text: m.text
+      }));
+
+      const currentStage = mapIndexToStage(currentQuestionIndex);
+      const jobDescription = `Vaga: ${candidateRole || 'Gerente de Produção'} na Nexus. Requisitos: alta performance, ética, alinhamento cultural, e competência técnica na área de atuação.`;
+      const cvContent = `Candidato: ${candidateName}. Cargo desejado: ${candidateRole || 'Gerente de Produção'}. Perfil técnico qualificado.`;
+
+      const result = await djenyRh({
+        userMessage: userText,
+        userName: candidateName,
+        candidateName,
+        currentStage,
+        jobDescription,
+        cvContent,
+        history
+      });
+
+      const djenyMsgId = Math.random().toString(36).substring(7);
+      setMessages(prev => [...prev, { id: djenyMsgId, text: result.response, sender: 'djeny' as const }]);
+
+      if (!isMuted) {
+        playAudio({
+          text: result.response,
+          voice: 'atena',
+          id: djenyMsgId
+        });
+      }
+
+      if (heygenActive) {
+        djenySpeak(result.response);
+      }
+
+      if (result.internalAnalysis) {
+        const analysis = result.internalAnalysis;
+        if (analysis.nervousnessLevel !== undefined) {
+          setNervousness(analysis.nervousnessLevel * 10);
+        }
+        if (analysis.consistencyScore !== undefined) {
+          setSincerity(analysis.consistencyScore * 10);
+          setCoherence(analysis.consistencyScore * 10);
+        }
+        if (analysis.psychologicalNotes) {
+          setDjenyAnalysisNote(analysis.psychologicalNotes);
+        }
+      }
+    } catch (error) {
+      console.error("Erro no fluxo Djeny RH:", error);
+      const errorMsgId = Math.random().toString(36).substring(7);
+      setMessages(prev => [...prev, { 
+        id: errorMsgId, 
+        text: "Desculpe, Gean. Tive um contratempo ao conectar com o servidor Nexus. Por favor, reformule sua resposta ou tente novamente.", 
+        sender: 'djeny' as const 
+      }]);
+    } finally {
+      setIsDjenyTyping(false);
+    }
+  };
+
   // --- HEYGEN INTEGRATION PLACEHOLDERS ---
   // Quando tiver o SDK, basta importar: import { StreamingAvatar } from "@heygen/streaming-avatar";
 
   const startHeyGenSession = async () => {
-    console.log("Iniciando Sessão HeyGen com Token...");
+    console.log("Iniciando Sessǜo HeyGen com Token...");
     // 1. Buscar token do seu backend
     // 2. avatar.current = new StreamingAvatar({ token });
     // 3. const session = await avatar.current.createStartAvatar({ avatarName: "DJENY_ID", quality: "high" });
@@ -147,6 +364,24 @@ export function RecruitmentVideoRoom({ candidateName, onClose }: RecruitmentVide
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  // Falar mensagem inicial após conexão estabelecida
+  useEffect(() => {
+    if (!isConnecting && !isMuted) {
+      playAudio({
+        text: messages[0].text,
+        voice: 'atena',
+        id: 'initial'
+      });
+    }
+  }, [isConnecting]);
+
+  // Parar áudio ao fechar a sala
+  useEffect(() => {
+    return () => {
+      stopAudio();
+    };
+  }, [stopAudio]);
 
   // Simulação de telemetria
   useEffect(() => {
@@ -194,16 +429,16 @@ export function RecruitmentVideoRoom({ candidateName, onClose }: RecruitmentVide
                 {!heygenActive ? (
                   <>
                     <img
-                      src="/IAs Nexus/Djeny - mentora.png"
+                      src="/Nexus Intelligence RH/RH Nexus Entrevista.png"
                       alt="Djeny RH"
-                      className="w-full h-full object-cover opacity-60 mix-blend-screen"
+                      className="w-full h-full object-cover object-top opacity-95"
                     />
-                    <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black/10">
                       <Button
                         onClick={startHeyGenSession}
-                        className="bg-primary/20 hover:bg-primary/40 text-primary border border-primary/30 font-black uppercase tracking-widest px-8"
+                        className="absolute top-4 right-4 bg-zinc-950/90 hover:bg-zinc-900/90 text-primary border-2 border-primary/70 font-black uppercase tracking-widest px-4 py-2 text-xs rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.4)] backdrop-blur-md transition-all duration-300 hover:scale-105"
                       >
-                        <Zap className="mr-2 h-4 w-4" /> Ativar Avatar Digital (HeyGen)
+                        <Zap className="mr-1.5 h-3.5 w-3.5" /> Ativar Avatar Digital (HeyGen)
                       </Button>
                     </div>
                   </>
@@ -224,16 +459,42 @@ export function RecruitmentVideoRoom({ candidateName, onClose }: RecruitmentVide
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
               </div>
 
-              {/* HUD da Djeny */}
-              <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end">
-                <div className="space-y-1">
-                  <h2 className="text-2xl font-bold text-white font-headline">Djeny (Sua Estrategista)</h2>
-                  <p className="text-primary font-mono text-sm uppercase tracking-widest">Protocolo Mentora // Ativo</p>
+              {/* Chat Subtitles / Banner da Djeny (no rodapé, de lado a lado, máx 2 linhas) */}
+              <div className="absolute bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md border-t border-white/10 px-8 py-3 min-h-[64px] flex items-center justify-between gap-4 pointer-events-auto z-10">
+                <div className="flex-1 text-sm text-slate-200 leading-relaxed max-w-4xl line-clamp-2 text-left">
+                  {isDjenyTyping ? (
+                    <p className="text-primary animate-pulse flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin shrink-0" />
+                      <span>Djeny está formulando a resposta...</span>
+                    </p>
+                  ) : (
+                    messages.length > 0 && (
+                      <p>
+                        <span className="font-black text-xs uppercase tracking-widest text-primary mr-2 shrink-0">
+                          {messages[messages.length - 1].sender === 'djeny' ? 'Djeny:' : `${candidateName}:`}
+                        </span>
+                        {messages[messages.length - 1].text}
+                      </p>
+                    )
+                  )}
                 </div>
-                <div className="flex gap-2">
-                  <div className="h-10 w-10 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white">
-                    <Volume2 className="h-5 w-5" />
-                  </div>
+                <div className="flex gap-2 shrink-0">
+                  <button
+                    onClick={() => {
+                      if (isPlaying) {
+                        stopAudio();
+                      }
+                      setIsMuted(!isMuted);
+                    }}
+                    className={cn(
+                      "h-10 w-10 rounded-full border flex items-center justify-center transition-all pointer-events-auto",
+                      isMuted 
+                        ? "bg-red-500/20 border-red-500/30 text-red-400" 
+                        : "bg-black/60 border-white/20 text-white hover:bg-black/80"
+                    )}
+                  >
+                    {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+                  </button>
                 </div>
               </div>
 
@@ -437,7 +698,7 @@ export function RecruitmentVideoRoom({ candidateName, onClose }: RecruitmentVide
                 <h4 className="text-[10px] uppercase font-bold text-gray-500 tracking-widest">Análise de IA (Djeny)</h4>
                 <div className="p-3 bg-white/5 rounded-md border border-white/5">
                   <p className="text-xs text-gray-300 italic">
-                    "Candidato demonstrando hesitação ao descrever o último projeto. Recomendo aprofundar a pergunta sobre entrega de prazos."
+                    "{djenyAnalysisNote}"
                   </p>
                 </div>
               </div>
@@ -448,30 +709,71 @@ export function RecruitmentVideoRoom({ candidateName, onClose }: RecruitmentVide
       </div>
 
       {/* Barra de Controle Inferior */}
-      <div className="h-24 bg-zinc-950 border-t border-white/5 flex items-center justify-center gap-4 px-8 backdrop-blur-md">
-        <Button variant="outline" size="icon" className="h-12 w-12 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10">
-          <Mic className="h-5 w-5" />
-        </Button>
-        <Button variant="outline" size="icon" className="h-12 w-12 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10">
-          <Video className="h-5 w-5" />
-        </Button>
-        <Button variant="outline" size="icon" className="h-12 w-12 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10">
-          <MessageSquare className="h-5 w-5" />
-        </Button>
-        <Separator orientation="vertical" className="h-8 bg-white/10 mx-2" />
-        <Button
-          onClick={() => {
-            gtag.event({
-              action: 'recruitment_interview_end',
-              category: 'Gabinete',
-              label: candidateName
-            });
-            onClose();
-          }}
-          className="h-14 px-8 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold flex items-center gap-3 shadow-lg shadow-red-900/20"
-        >
-          <PhoneOff className="h-5 w-5" /> ENCERRAR ENTREVISTA
-        </Button>
+      <div className="h-24 bg-zinc-950 border-t border-white/5 flex items-center justify-between gap-4 px-8 backdrop-blur-md">
+        <div className="flex items-center gap-3">
+          <Button 
+            onClick={handleMicClick}
+            variant="outline" 
+            size="icon" 
+            className={cn(
+              "h-12 w-12 rounded-full border transition-all duration-300",
+              isListening 
+                ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-400 animate-pulse hover:bg-emerald-500/30" 
+                : "bg-red-500/10 border-red-500/20 text-red-400/80 hover:bg-red-500/20"
+            )}
+            title={isListening ? "Desativar microfone (Mutar)" : "Ativar microfone (Falar)"}
+          >
+            {isListening ? <Mic className="h-5 w-5" /> : <MicOff className="h-5 w-5" />}
+          </Button>
+          <Button variant="outline" size="icon" className="h-12 w-12 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10">
+            <Video className="h-5 w-5" />
+          </Button>
+        </div>
+
+        <div className="flex-1 max-w-2xl flex items-center gap-2">
+          <Button variant="outline" size="icon" className="h-12 w-12 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10 shrink-0">
+            <Paperclip className="h-5 w-5" />
+          </Button>
+          <Input 
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSendUserMessage();
+              }
+            }}
+            disabled={isDjenyTyping}
+            placeholder={isDjenyTyping ? "Djeny está respondendo..." : "Digite sua mensagem para a Djeny..."} 
+            className="flex-1 bg-white/5 border border-white/10 rounded-full h-12 px-6 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-primary/50"
+          />
+          <Button 
+            onClick={handleSendUserMessage}
+            disabled={isDjenyTyping || !inputText.trim()}
+            className="h-12 w-12 rounded-full bg-primary text-black shrink-0 flex items-center justify-center hover:bg-primary/80 disabled:opacity-50"
+          >
+            {isDjenyTyping ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <Send className="h-5 w-5 ml-1" />
+            )}
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={() => {
+              gtag.event({
+                action: 'recruitment_interview_end',
+                category: 'Gabinete',
+                label: candidateName
+              });
+              onClose();
+            }}
+            className="h-12 px-6 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold flex items-center gap-2 shadow-lg shadow-red-900/20"
+          >
+            <PhoneOff className="h-4 w-4" /> ENCERRAR
+          </Button>
+        </div>
         {/* Final Report Modal (Djeny Style) */}
         {showReport && (
           <div className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-2xl flex items-center justify-center p-6">

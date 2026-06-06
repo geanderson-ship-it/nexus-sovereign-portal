@@ -23,6 +23,7 @@ export const DanteBuilderChatOutputSchema = z.object({
     title: z.string().describe("Título majestoso do modelo."),
     conceptDescription: z.string().describe("Breve explicação do porquê deste design ser inovador."),
     imagePrompt: z.string().describe("Prompt técnico em inglês para gerar a imagem deste modelo."),
+    svgRepresentation: z.string().optional().describe("Esquema técnico SVG completo e auto-suficiente do produto, com as cores reais especificadas (ex: amarelo RAL 1003)."),
     technicalArsenal: z.object({
       engineeringNotes: z.string().describe("Notas de engenharia profunda para o fornecedor."),
       preciseSpecs: z.array(z.string()).describe("Lista de especificações técnicas (ex: Ligas, tratamentos, espessuras)."),

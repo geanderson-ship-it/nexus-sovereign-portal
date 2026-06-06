@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog';
-import { ArrowLeft, Plus, Trash2, Package, Search, X, Edit2 } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Package, Search, X, Edit2, Upload, Download, RefreshCw } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
@@ -25,12 +25,151 @@ const produtoVazio = (): Omit<Produto, 'id'> => ({
 
 const PLACEHOLDER_IMG = 'https://i.postimg.cc/658CJQzk/Nexus-Empresas-prata.png';
 
+// Auxiliar para separar por vírgula/ponto-e-vírgula respeitando aspas
+function parseCSVLine(line: string, separator: string): string[] {
+  const parts: string[] = [];
+  let inQuotes = false;
+  let current = '';
+  
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === separator && !inQuotes) {
+      parts.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  parts.push(current);
+  
+  return parts.map(p => p.replace(/^"|"$/g, '').trim());
+}
+
+function parseCSV(text: string): Omit<Produto, 'id'>[] {
+  const lines = text.split('\n');
+  const result: Omit<Produto, 'id'>[] = [];
+  
+  if (lines.length <= 1) return [];
+  
+  const headerLine = lines[0];
+  const separator = headerLine.includes(';') ? ';' : ',';
+  
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    
+    const parts = parseCSVLine(line, separator);
+    if (parts.length < 2) continue;
+    
+    const codigo = parts[0]?.trim() || '';
+    const nome = parts[1]?.trim() || '';
+    const descricao = parts[2]?.trim() || '';
+    const preco = parseFloat(parts[3]?.replace(/[^\d.,]/g, '').replace(',', '.')) || 0;
+    const unidade = parts[4]?.trim() || 'UN';
+    
+    if (codigo && nome) {
+      result.push({
+        codigo: codigo.toUpperCase(),
+        nome,
+        descricao,
+        preco,
+        unidade: unidade.toUpperCase(),
+        imagem: '',
+        ativo: true,
+        materiais: []
+      });
+    }
+  }
+  return result;
+}
+
+function exportToCSV(produtosList: Produto[]) {
+  const headers = ['Codigo', 'Nome', 'Descricao', 'Preco', 'Unidade'];
+  const separator = ';';
+  
+  const rows = produtosList.map(p => [
+    `"${p.codigo.replace(/"/g, '""')}"`,
+    `"${p.nome.replace(/"/g, '""')}"`,
+    `"${p.descricao.replace(/"/g, '""')}"`,
+    p.preco.toString().replace('.', ','),
+    `"${p.unidade.replace(/"/g, '""')}"`
+  ]);
+  
+  const csvContent = [
+    headers.join(separator),
+    ...rows.map(r => r.join(separator))
+  ].join('\r\n');
+  
+  const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'catalogo-produtos-nexus.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function CatalogoPage() {
-  const { produtos, salvarProduto, excluirProduto } = useVendas();
+  const { produtos, salvarProduto, excluirProduto, importarProdutos, restaurarPadroes } = useVendas();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editandoId, setEditandoId] = useState<string | undefined>();
   const [form, setForm] = useState(produtoVazio());
   const [busca, setBusca] = useState('');
+  
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleImportCSV = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      try {
+        const importados = parseCSV(text);
+        if (importados.length === 0) {
+          alert("Nenhum produto válido encontrado no arquivo. Verifique se as colunas estão corretas.");
+          return;
+        }
+        
+        const substituir = confirm(`Encontrados ${importados.length} produtos. Deseja substituir todo o catálogo atual por estes novos produtos?\n\n(Se escolher "Cancelar", os novos produtos serão mesclados com o catálogo existente)`);
+        
+        if (substituir) {
+          importarProdutos(importados.map(p => ({ id: crypto.randomUUID(), ...p })));
+        } else {
+          const novosProdutos = [...produtos];
+          importados.forEach(imp => {
+            const index = novosProdutos.findIndex(p => p.codigo === imp.codigo);
+            if (index !== -1) {
+              novosProdutos[index] = { ...novosProdutos[index], ...imp };
+            } else {
+              novosProdutos.push({ id: crypto.randomUUID(), ...imp });
+            }
+          });
+          importarProdutos(novosProdutos);
+        }
+        alert("Planilha importada com sucesso!");
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao ler planilha. Certifique-se de que o arquivo está no formato CSV correto.");
+      }
+    };
+    reader.readAsText(file, 'utf-8');
+    e.target.value = '';
+  };
+
+  const handleExportCSV = () => {
+    exportToCSV(produtos);
+  };
+
+  const handleRestaurar = () => {
+    if (confirm("Deseja mesmo redefinir o catálogo para as esquadrias padrão da Nexus? Todas as suas alterações locais serão apagadas.")) {
+      restaurarPadroes();
+    }
+  };
 
   const abrirNovo = () => {
     setEditandoId(undefined);
@@ -78,6 +217,29 @@ export default function CatalogoPage() {
         <Button className="bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest h-10 px-6 rounded-xl text-[11px]" onClick={abrirNovo}>
           <Plus className="mr-2 h-4 w-4" /> Novo Produto
         </Button>
+      </div>
+
+      {/* PAINEL DE BANCO DE DADOS (CSV) */}
+      <div className="bg-zinc-950/40 border border-blue-500/10 rounded-[24px] p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="space-y-1">
+          <h4 className="text-xs font-black uppercase tracking-widest text-blue-400">Banco de Dados do Catálogo</h4>
+          <p className="text-[10px] text-gray-500 uppercase tracking-tighter">
+            Importe planilhas Excel (.csv) para alimentar o catálogo ou salve backups locais.
+            <span className="text-blue-500/70 block mt-0.5 font-mono">Colunas: Codigo; Nome; Descricao; Preco; Unidade (Separador: ponto-e-vírgula ';')</span>
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2 items-center justify-end">
+          <input type="file" ref={fileInputRef} className="hidden" accept=".csv" onChange={handleImportCSV} />
+          <Button variant="outline" size="sm" className="border-blue-500/20 text-blue-400 hover:bg-blue-500/10 h-9 text-[10px] font-black uppercase rounded-lg" onClick={() => fileInputRef.current?.click()}>
+            <Upload className="h-3.5 w-3.5 mr-1.5" /> Anexar Planilha (CSV)
+          </Button>
+          <Button variant="outline" size="sm" className="border-blue-500/20 text-blue-400 hover:bg-blue-500/10 h-9 text-[10px] font-black uppercase rounded-lg" onClick={handleExportCSV}>
+            <Download className="h-3.5 w-3.5 mr-1.5" /> Exportar Planilha
+          </Button>
+          <Button variant="outline" size="sm" className="border-rose-500/20 text-rose-400 hover:bg-rose-500/10 h-9 text-[10px] font-black uppercase rounded-lg" onClick={handleRestaurar}>
+            <RefreshCw className="h-3.5 w-3.5 mr-1.5" /> Restaurar Padrões
+          </Button>
+        </div>
       </div>
 
       {/* BUSCA */}
@@ -137,7 +299,7 @@ export default function CatalogoPage() {
         </div>
       )}
 
-      <LegalSafeguard module="DANTE VENDAS — CATÁLOGO" protocol="NX-7741-CAT" />
+      <LegalSafeguard module="VENDAS — CATÁLOGO" protocol="NX-7741-CAT" />
 
       {/* DIALOG CADASTRO */}
       <Dialog open={dialogOpen} onOpenChange={o => !o && setDialogOpen(false)}>

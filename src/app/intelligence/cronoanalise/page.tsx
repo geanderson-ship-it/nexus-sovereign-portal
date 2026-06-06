@@ -74,24 +74,35 @@ export default function CronoanalisePage() {
 
   useEffect(() => {
     setMounted(true);
-    setEstudos([{
-      id: 'demo-1',
-      operacao: 'MONTAGEM DE ESTRUTURA METÁLICA',
-      codigo: 'EST-001',
-      pecasPorCiclo: 1,
-      setor: 'CORTE E SOLDA',
-      liderSetor: 'ROBERTO CARLOS',
-      operador: 'Pedro Azuin',
-      matriculaOperador: '0375',
-      data: '2026-04-30',
-      horarioTiragem: '14:17 / 15:47',
-      fadiga: 10,
-      turnoHoras: 8.8,
-      tomadas: gerarTomadasIniciais(10).map((t, i) => ({...t, tempo: [0.70, 0.76, 0.74, 0.78, 0.72, 0.80, 0.74, 0.76, 0.74, 0.80][i].toString().replace('.', ',')})),
-      cronoanalista: 'Gustawo Zeula',
-      matriculaCronoanalista: '02125',
-      observacoes: '',
-    }]);
+    const saved = localStorage.getItem('nexus_cronoanalise_estudos');
+    if (saved) {
+      try {
+        setEstudos(JSON.parse(saved));
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      const defaultEstudos = [{
+        id: 'demo-1',
+        operacao: 'MONTAGEM DE ESTRUTURA METÁLICA',
+        codigo: 'EST-001',
+        pecasPorCiclo: 1,
+        setor: 'CORTE E SOLDA',
+        liderSetor: 'ROBERTO CARLOS',
+        operador: 'Pedro Azuin',
+        matriculaOperador: '0375',
+        data: '2026-04-30',
+        horarioTiragem: '14:17 / 15:47',
+        fadiga: 10,
+        turnoHoras: 8.8,
+        tomadas: gerarTomadasIniciais(10).map((t, i) => ({...t, tempo: [0.70, 0.76, 0.74, 0.78, 0.72, 0.80, 0.74, 0.76, 0.74, 0.80][i].toString().replace('.', ',')})),
+        cronoanalista: 'Gustawo Zeula',
+        matriculaCronoanalista: '02125',
+        observacoes: '',
+      }];
+      setEstudos(defaultEstudos);
+      localStorage.setItem('nexus_cronoanalise_estudos', JSON.stringify(defaultEstudos));
+    }
   }, []);
 
   const parseTempo = (tempo: string) => {
@@ -180,7 +191,11 @@ export default function CronoanalisePage() {
       id: editando ? editando.id : `estudo-${Date.now()}`,
       operacao, codigo, pecasPorCiclo, setor, liderSetor, operador, matriculaOperador, data, horarioTiragem, fadiga, turnoHoras, tomadas, cronoanalista, matriculaCronoanalista, observacoes
     };
-    setEstudos(prev => editando ? prev.map(e => e.id === editando.id ? novoEstudo : e) : [...prev, novoEstudo]);
+    setEstudos(prev => {
+      const next = editando ? prev.map(e => e.id === editando.id ? novoEstudo : e) : [...prev, novoEstudo];
+      localStorage.setItem('nexus_cronoanalise_estudos', JSON.stringify(next));
+      return next;
+    });
     setDialogOpen(false);
   };
 
@@ -255,8 +270,17 @@ export default function CronoanalisePage() {
                   <button onClick={() => abrirEditar(estudo)} className="rounded-full border border-violet-500/30 bg-violet-950/50 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-violet-300 hover:bg-violet-900/60 transition">
                     Ajustar
                   </button>
-                  <button className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-emerald-300 hover:bg-emerald-500/15 transition">
-                    Sincronizar Engenharia
+                  <button 
+                    onClick={() => {
+                      setEstudos(prev => {
+                        const next = prev.filter(x => x.id !== estudo.id);
+                        localStorage.setItem('nexus_cronoanalise_estudos', JSON.stringify(next));
+                        return next;
+                      });
+                    }}
+                    className="rounded-full border border-rose-500/40 bg-rose-500/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-rose-300 hover:bg-rose-500/15 transition"
+                  >
+                    Excluir
                   </button>
                 </div>
               </div>

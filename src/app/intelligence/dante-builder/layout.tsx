@@ -7,7 +7,7 @@ export default function DanteBuilderLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="container mx-auto py-8 h-screen max-h-screen flex flex-col overflow-hidden">
+    <div className="container mx-auto py-8 flex flex-col">
       {children}
     </div>
   );

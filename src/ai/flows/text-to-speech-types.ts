@@ -1,7 +1,7 @@
 import { z } from 'genkit';
 
 // Define voice profiles for type safety and clarity
-export const VoiceProfileSchema = z.enum(['djeny', 'dante', 'maga', 'orion']);
+export const VoiceProfileSchema = z.enum(['djeny', 'dante', 'maga', 'orion', 'atena']);
 export type VoiceProfile = z.infer<typeof VoiceProfileSchema>;
 
 export const TextToSpeechInputSchema = z.object({

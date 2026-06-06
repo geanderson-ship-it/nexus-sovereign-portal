@@ -126,6 +126,7 @@ export function useNexusAudio() {
         // 1. Substituir pronúncias comuns
         processedText = processedText.replace(/\b(Jean|Gean)\b/gi, 'Gian');
         processedText = processedText.replace(/\bNexus\b/gi, 'Nécsus');
+        processedText = processedText.replace(/\b(Djeny|Djenny|Djeni|Dieny)\b/gi, 'Diêni');
 
         // 2. Normalizar gêneros gramaticais e abreviações
         processedText = processedText.replace(/o\(a\)/gi, 'o');

@@ -29,7 +29,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { cn, resizeAndCompressImage, extractVideoFramesGrid } from '@/lib/utils';
 import { useNexusAudio } from '@/hooks/use-nexus-audio';
 import { danteSafra } from '@/ai/flows/dante-safra-flow';
 import { useUser } from '@/auth';
@@ -48,6 +48,7 @@ interface Message {
   text: string;
   timestamp: Date;
   status: 'sent' | 'received' | 'read';
+  imageUri?: string;
 }
 
 export function DanteSafraAxisChat() {
@@ -116,15 +117,39 @@ export function DanteSafraAxisChat() {
 
   const handleFileClick = () => fileInputRef.current?.click();
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPhotoDataUri(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setIsLoading(true);
+      try {
+        let imageUri = '';
+        if (file.type.startsWith('video/')) {
+          const result = await extractVideoFramesGrid(file);
+          if (result.duration > 30) {
+            setMessages(prev => [...prev, { 
+              id: `sys-err-${Date.now()}`, 
+              role: 'model', 
+              text: `[SISTEMA_AVISO] EXCESSO_DURACAO: Duração do vídeo (${Math.round(result.duration)}s) excede o limite operacional de 30 segundos. Operação abortada.`, 
+              timestamp: new Date(), 
+              status: 'read' 
+            }]);
+            setIsLoading(false);
+            if (e.target) e.target.value = '';
+            return;
+          }
+          imageUri = result.dataUrl;
+        } else {
+          imageUri = await resizeAndCompressImage(file);
+        }
+        setPhotoDataUri(imageUri);
+      } catch (err: any) {
+        console.error("VIX DIAGNOSTIC: File processing failed", err);
+        alert("Falha ao processar arquivo para envio.");
+      } finally {
+        setIsLoading(false);
+      }
     }
+    if (e.target) e.target.value = '';
   };
 
   const handleSendMessage = async (e?: React.FormEvent) => {
@@ -139,7 +164,8 @@ export function DanteSafraAxisChat() {
       role: 'user',
       text: userMsgText || (currentPhoto ? 'Imagem enviada para análise.' : ''),
       timestamp: new Date(),
-      status: 'sent'
+      status: 'sent',
+      imageUri: currentPhoto || undefined
     };
 
     setMessages(prev => [...prev, userMsg]);
@@ -308,6 +334,10 @@ export function DanteSafraAxisChat() {
                     </>
                   )}
 
+                  {msg.imageUri && (
+                    <img src={msg.imageUri} alt="Análise de imagem" className="rounded-2xl mb-2 max-w-full h-auto border border-emerald-900/30" />
+                  )}
+
                   <p className="leading-relaxed whitespace-pre-wrap">{msg.text}</p>
                   
                   {/* Simulated Tactical In-Line Widgets */}
@@ -367,7 +397,7 @@ export function DanteSafraAxisChat() {
                type="file" 
                ref={fileInputRef} 
                onChange={handleFileChange} 
-               accept="image/*" 
+               accept="image/*,video/*" 
                className="hidden" 
              />
 
@@ -444,8 +474,9 @@ export function DanteSafraAxisChat() {
                </div>
              </div>
           </form>
-          <p className="text-center text-[9px] text-emerald-900 mt-4 font-mono tracking-widest uppercase">
-             Canal Seguro // Encriptação Nexus v3.4
+          <p className="text-center text-[9px] text-emerald-900 mt-4 font-mono tracking-widest uppercase flex flex-col sm:flex-row justify-between px-6 gap-1">
+             <span>Canal Seguro // Encriptação Nexus v3.4</span>
+             <span className="text-emerald-600/80 font-bold">SUPORTE_MIDIA: IMAGEM // VÍDEO_MÁX_30S</span>
           </p>
         </div>
       </div>

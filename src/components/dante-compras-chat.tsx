@@ -185,7 +185,7 @@ export default function DanteComprasChat({ quotationAnalysis, onClose, isEmbedde
                 <AvatarFallback className="bg-gray-600 text-white font-bold">D</AvatarFallback>
             </Avatar>
             <div>
-            <CardTitle className="font-headline text-lg text-blue-300">Dante Compras (O Negociador).</CardTitle>
+            <CardTitle className="font-headline text-lg text-blue-300">Compras (O Negociador).</CardTitle>
             <CardDescription className="text-gray-400">Análise. Estratégia. Lucro.</CardDescription>
             </div>
             <div className="flex-1" />

@@ -257,6 +257,16 @@ export function IbgeProspector() {
     isAudited?: boolean;
   } | null>(null);
 
+  // Real IBGE Data state (fetched on briefing open)
+  const [ibgeRealData, setIbgeRealData] = useState<{
+    pibPerCapita: number | null;
+    popOcupada: number | null;
+    salarioMedio: number | null;
+    realBaseScore: number | null;
+    loading: boolean;
+    ano: string | null;
+  } | null>(null);
+
   // User-audited Custom Briefings from LocalStorage
   const [customBriefings, setCustomBriefings] = useState<Record<string, Briefing>>({});
   
@@ -552,6 +562,58 @@ export function IbgeProspector() {
     return result.slice(0, 200);
   }, [municipios, searchTerm, filterPossibilidade, filterTech, filterPilar, pesoBase, pesoTech, isMounted]);
 
+  // Fetch real IBGE Cidades data for a municipality
+  const fetchIbgeRealData = async (municipioId: number) => {
+    setIbgeRealData({ pibPerCapita: null, popOcupada: null, salarioMedio: null, realBaseScore: null, loading: true, ano: null });
+    try {
+      // Fetch PIB per capita (47001), % pop occupied (60036), avg salary in min wages (60038)
+      const [resPib, resPop, resSal] = await Promise.all([
+        fetch(`https://servicodados.ibge.gov.br/api/v1/pesquisas/-/indicadores/47001/resultados/${municipioId}`),
+        fetch(`https://servicodados.ibge.gov.br/api/v1/pesquisas/10058/indicadores/60036/resultados/${municipioId}`),
+        fetch(`https://servicodados.ibge.gov.br/api/v1/pesquisas/10058/indicadores/60038/resultados/${municipioId}`),
+      ]);
+
+      const dataPib = await resPib.json();
+      const dataPop = await resPop.json();
+      const dataSal = await resSal.json();
+
+      // Extract latest available value
+      const getLatest = (data: any[], indicadorId: number): { value: number | null; ano: string | null } => {
+        const res = data?.find((d: any) => d.id === indicadorId)?.res?.[0]?.res;
+        if (!res) return { value: null, ano: null };
+        const anos = Object.keys(res).filter(a => res[a] && res[a] !== '-').sort().reverse();
+        if (anos.length === 0) return { value: null, ano: null };
+        return { value: parseFloat(res[anos[0]]), ano: anos[0] };
+      };
+
+      const pib = getLatest(dataPib, 47001);
+      const pop = getLatest(dataPop, 60036);
+      const sal = getLatest(dataSal, 60038);
+
+      // Normalize PIB per capita against Brazilian reference (~R$ 52.000/year in 2023)
+      // Score: 0% = R$0/year, 100% = R$100.000+/year (very high)
+      const BR_PIB_REFERENCE = 52000; // approximate national average 2023
+      let realBaseScore: number | null = null;
+      if (pib.value !== null) {
+        // Score 40% (min) to 98% (max), normalized against reference
+        const normalized = Math.min(pib.value / BR_PIB_REFERENCE, 2.0); // cap at 2x reference
+        realBaseScore = Math.round(40 + (normalized * 29)); // maps 0..2x -> 40%..98%
+        realBaseScore = Math.min(98, Math.max(40, realBaseScore));
+      }
+
+      setIbgeRealData({
+        pibPerCapita: pib.value,
+        popOcupada: pop.value,
+        salarioMedio: sal.value,
+        realBaseScore,
+        loading: false,
+        ano: pib.ano,
+      });
+    } catch (e) {
+      setIbgeRealData({ pibPerCapita: null, popOcupada: null, salarioMedio: null, realBaseScore: null, loading: false, ano: null });
+    }
+  };
+
   // Open Strategic Briefing Mode
   const handleOpenBriefing = (cidade: Municipio, uf: string, score: number) => {
     if (!cidade) return;
@@ -565,6 +627,9 @@ export function IbgeProspector() {
     setEditVice(briefing.vice || '');
     setEditPartido(briefing.partido || '');
     setIsEditingCustomBriefing(false);
+    
+    // Fetch real IBGE data for this city
+    fetchIbgeRealData(cidade.id);
     
     setDialogMode('briefing');
     setIsDialogOpen(true);
@@ -1058,6 +1123,88 @@ export function IbgeProspector() {
                         </strong>
                         <span className="text-[10px] text-slate-400 block font-mono">App: {activeCity?.briefing?.appSugerido || ''}</span>
                       </div>
+                    </div>
+
+                    {/* IBGE Real Data Panel */}
+                    <div className="rounded-xl border border-blue-500/20 bg-blue-950/10 p-4 space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Activity className="w-4 h-4 text-blue-400 shrink-0" />
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-blue-400">Indicadores Reais — IBGE Cidades</span>
+                        {ibgeRealData?.ano && (
+                          <span className="ml-auto text-[9px] text-slate-500 font-mono">Ref. {ibgeRealData.ano}</span>
+                        )}
+                      </div>
+
+                      {ibgeRealData?.loading ? (
+                        <div className="flex items-center gap-2 text-slate-400 text-xs py-1">
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-400" />
+                          <span>Consultando IBGE em tempo real...</span>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-3 gap-3">
+                          {/* PIB per Capita */}
+                          <div className="bg-slate-950/40 rounded-lg p-2.5 text-center border border-slate-800">
+                            <span className="text-[9px] text-slate-500 uppercase font-bold block">PIB per Capita</span>
+                            {ibgeRealData?.pibPerCapita !== null && ibgeRealData?.pibPerCapita !== undefined ? (
+                              <>
+                                <strong className="text-white text-sm block mt-0.5">
+                                  R$ {ibgeRealData.pibPerCapita.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+                                </strong>
+                                <span className="text-[9px] text-emerald-400 font-mono">
+                                  Base Real: {ibgeRealData.realBaseScore}%
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-[10px] text-slate-600 block mt-1">Não disponível</span>
+                            )}
+                          </div>
+
+                          {/* Pop Ocupada */}
+                          <div className="bg-slate-950/40 rounded-lg p-2.5 text-center border border-slate-800">
+                            <span className="text-[9px] text-slate-500 uppercase font-bold block">Pop. Ocupada</span>
+                            {ibgeRealData?.popOcupada !== null && ibgeRealData?.popOcupada !== undefined ? (
+                              <strong className="text-white text-sm block mt-0.5">
+                                {ibgeRealData.popOcupada.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%
+                              </strong>
+                            ) : (
+                              <span className="text-[10px] text-slate-600 block mt-1">Não disponível</span>
+                            )}
+                          </div>
+
+                          {/* Salário Médio */}
+                          <div className="bg-slate-950/40 rounded-lg p-2.5 text-center border border-slate-800">
+                            <span className="text-[9px] text-slate-500 uppercase font-bold block">Salário Médio</span>
+                            {ibgeRealData?.salarioMedio !== null && ibgeRealData?.salarioMedio !== undefined ? (
+                              <strong className="text-white text-sm block mt-0.5">
+                                {ibgeRealData.salarioMedio.toLocaleString('pt-BR', { maximumFractionDigits: 1 })} SM
+                              </strong>
+                            ) : (
+                              <span className="text-[10px] text-slate-600 block mt-1">Não disponível</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Recalculated Score with real base */}
+                      {!ibgeRealData?.loading && ibgeRealData?.realBaseScore !== null && ibgeRealData?.realBaseScore !== undefined && activeCity && (() => {
+                        const techData = getTechData(activeCity.cidade.id);
+                        const realFinalScore = Math.round(
+                          (ibgeRealData.realBaseScore! * (pesoBase / 100)) + (techData.carencia * (pesoTech / 100))
+                        );
+                        return (
+                          <div className="mt-2 p-2.5 rounded-lg bg-emerald-500/5 border border-emerald-500/15 flex items-center justify-between gap-2">
+                            <span className="text-[10px] text-slate-400">
+                              Score recalculado com dados reais IBGE:
+                            </span>
+                            <span className="text-emerald-400 font-bold text-sm font-mono">
+                              {realFinalScore}%
+                              <span className="text-[9px] text-slate-500 ml-1">
+                                (Base {ibgeRealData.realBaseScore}% × {pesoBase}% + Carência {techData.carencia}% × {pesoTech}%)
+                              </span>
+                            </span>
+                          </div>
+                        );
+                      })()}
                     </div>
 
                     {/* Economic Strengths & Description */}

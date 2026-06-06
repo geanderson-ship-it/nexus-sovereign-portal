@@ -67,7 +67,6 @@ export default function NovoPedidoPage() {
     } else {
       setItens(prev => [...prev, { produto, quantidade: 1 }]);
     }
-    setBuscaProduto('');
   };
 
   const removerItem = (id: string) => setItens(prev => prev.filter(i => i.produto.id !== id));
@@ -195,7 +194,14 @@ export default function NovoPedidoPage() {
 
       {/* SELEÇÃO DE PRODUTOS */}
       <div className="rounded-[32px] border border-blue-500/20 bg-zinc-950/60 p-8 space-y-6">
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">— Produtos do Pedido</p>
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">— Produtos do Pedido</p>
+          <Link href="/intelligence/vendas/catalogo">
+            <Button variant="link" className="text-blue-400 hover:text-blue-300 text-[10px] font-black uppercase tracking-widest p-0 h-auto flex items-center gap-1.5 transition-colors">
+              <Package className="h-3.5 w-3.5" /> Ver Catálogo Completo
+            </Button>
+          </Link>
+        </div>
 
         {/* BUSCA DO CATÁLOGO */}
         <div className="relative">
@@ -203,37 +209,70 @@ export default function NovoPedidoPage() {
           <Input placeholder="Buscar produto no catálogo..." value={buscaProduto} onChange={e => setBuscaProduto(e.target.value)}
             className="bg-black/40 border-blue-500/20 text-white h-12 rounded-2xl pl-11 pr-10 text-sm" />
           {buscaProduto && <button onClick={() => setBuscaProduto('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"><X className="h-4 w-4" /></button>}
+        </div>
 
-          {/* DROPDOWN DO CATÁLOGO */}
-          {buscaProduto.trim().length > 0 && (
-            <div className="absolute top-14 left-0 w-full bg-zinc-950 border border-blue-500/20 rounded-2xl shadow-2xl z-50 overflow-hidden max-h-64 overflow-y-auto">
-              {produtosFiltrados.length === 0 ? (
-                <div className="p-4 text-center text-gray-500 text-xs uppercase tracking-widest">Nenhum produto encontrado</div>
-              ) : produtosFiltrados.map(p => (
-                <button key={p.id} className="w-full flex items-center justify-between px-5 py-3 hover:bg-blue-500/10 transition-colors text-left border-b border-white/5 last:border-0"
-                  onClick={() => adicionarProduto(p)}>
-                  <div className="flex items-center gap-3">
-                    {p.imagem ? <img src={p.imagem} alt={p.nome} className="h-10 w-10 object-contain rounded-lg bg-zinc-900" /> : <Package className="h-8 w-8 text-blue-500/30" />}
-                    <div>
-                      <p className="text-white font-bold text-sm uppercase">{p.nome}</p>
-                      <p className="text-gray-500 text-xs font-mono">{p.codigo} · {p.materiais.length} materiais</p>
+        {/* CATÁLOGO RÁPIDO PARA SELEÇÃO DIRETA */}
+        <div className="space-y-3">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Selecionar do Catálogo</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+            {produtosFiltrados.length === 0 ? (
+              <div className="col-span-full py-8 text-center text-gray-500 text-xs uppercase tracking-widest border border-dashed border-white/5 rounded-2xl">
+                Nenhum produto encontrado no catálogo
+              </div>
+            ) : (
+              produtosFiltrados.map(p => {
+                const itemNoCarrinho = itens.find(i => i.produto.id === p.id);
+                return (
+                  <div key={p.id} className="bg-black/40 border border-blue-500/10 hover:border-blue-500/30 rounded-2xl p-4 flex flex-col justify-between gap-3 transition-all relative overflow-hidden group">
+                    <div className="flex gap-3 items-center">
+                      {p.imagem ? (
+                        <img src={p.imagem} alt={p.nome} className="h-12 w-12 object-contain rounded-lg bg-zinc-900 border border-white/5" />
+                      ) : (
+                        <div className="h-12 w-12 rounded-lg bg-zinc-900 border border-white/5 flex items-center justify-center">
+                          <Package className="h-6 w-6 text-blue-500/20" />
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-white font-bold text-xs uppercase truncate" title={p.nome}>{p.nome}</p>
+                        <p className="text-gray-500 font-mono text-[9px] truncate">{p.codigo}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-1 border-t border-white/5 pt-2">
+                      <span className="text-blue-400 font-black text-xs">
+                        {p.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                      </span>
+                      <Button 
+                        size="sm" 
+                        variant={itemNoCarrinho ? "secondary" : "outline"}
+                        className={cn(
+                          "h-7 text-[9px] font-black uppercase rounded-lg px-2.5 transition-all",
+                          itemNoCarrinho ? "bg-blue-500/10 text-blue-400 border-blue-500/30" : "border-blue-500/20 text-blue-400 hover:bg-blue-500/10"
+                        )}
+                        onClick={() => adicionarProduto(p)}
+                      >
+                        {itemNoCarrinho ? `Qtd: ${itemNoCarrinho.quantidade}` : '+ Selecionar'}
+                      </Button>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-blue-400 font-black">{p.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                    <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 text-[8px]">+ Adicionar</Badge>
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
+                );
+              })
+            )}
+          </div>
         </div>
 
         {/* ITENS SELECIONADOS */}
         {itens.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 gap-3 border border-dashed border-blue-500/20 rounded-2xl">
-            <ShoppingBag className="h-10 w-10 text-blue-500/20" />
-            <p className="text-gray-600 text-xs uppercase tracking-widest">Busque e adicione produtos acima</p>
+          <div className="flex flex-col items-center justify-center py-12 gap-3 border border-dashed border-blue-500/20 rounded-2xl bg-zinc-950/40">
+            <ShoppingBag className="h-10 w-10 text-blue-500/20 animate-pulse" />
+            <div className="text-center space-y-1">
+              <p className="text-gray-500 text-xs uppercase tracking-widest font-black">Busque e adicione produtos acima</p>
+              <p className="text-[10px] text-gray-600 uppercase tracking-wider">
+                ou gerencie no{' '}
+                <Link href="/intelligence/vendas/catalogo" className="text-blue-400 hover:text-blue-300 hover:underline font-bold transition-all">
+                  Catálogo de Produtos
+                </Link>
+              </p>
+            </div>
           </div>
         ) : (
           <div className="rounded-2xl border border-blue-500/10 overflow-hidden">
@@ -297,7 +336,7 @@ export default function NovoPedidoPage() {
         </div>
       </div>
 
-      <LegalSafeguard module="DANTE VENDAS" protocol="NX-7741-SLS" />
+      <LegalSafeguard module="VENDAS" protocol="NX-7741-SLS" />
 
       {/* MODAL CONFIRMAÇÃO */}
       <Dialog open={confirmando} onOpenChange={o => !o && setConfirmando(false)}>

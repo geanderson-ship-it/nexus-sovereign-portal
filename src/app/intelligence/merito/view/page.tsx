@@ -20,18 +20,76 @@ import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
 function CertificadoMeritoContent() {
   const searchParams = useSearchParams();
-  const employeeId = searchParams?.get('id') || 'emp-001';
-  const employee = permanentEmployees.find(emp => emp.id === employeeId);
+  const idParam = searchParams?.get('id') || 'emp-001';
+
+  // Inicializa com o colaborador correspondente se o idParam for ID de colaborador (emp-*)
+  const initialEmployee = !idParam.startsWith('eval-')
+    ? permanentEmployees.find(emp => emp.id === idParam)
+    : null;
+
+  const [employee, setEmployee] = React.useState<any>(initialEmployee);
   const certificateRef = useRef<HTMLDivElement>(null);
 
-  // Mock de notas para o certificado (em produção viria do DB)
-  const stats = [
+  const [stats, setStats] = React.useState([
     { label: 'Disciplina', value: 5, icon: ShieldCheck },
     { label: 'Qualidade', value: 4, icon: CheckCircle2 },
     { label: 'Velocidade', value: 5, icon: Zap },
     { label: 'Comportamento', value: 4, icon: Award },
     { label: 'Proatividade', value: 5, icon: Award },
-  ];
+  ]);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const stored = localStorage.getItem('nexus_merit_evaluations');
+      const list = stored ? JSON.parse(stored) : [];
+
+      let activeEmployeeId = idParam;
+      let targetEval = null;
+
+      if (idParam.startsWith('eval-')) {
+        // É um ID de avaliação
+        targetEval = list.find((item: any) => item.id === idParam);
+        if (targetEval) {
+          activeEmployeeId = targetEval.employeeId;
+        }
+      } else {
+        // É um ID de colaborador
+        const empEvals = list.filter((item: any) => item.employeeId === idParam);
+        if (empEvals.length > 0) {
+          empEvals.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          targetEval = empEvals[0];
+        }
+      }
+
+      // Encontrar o colaborador correspondente
+      const emp = permanentEmployees.find(emp => emp.id === activeEmployeeId);
+      setEmployee(emp || null);
+
+      // Atualizar notas se houver avaliação correspondente
+      if (targetEval) {
+        setStats([
+          { label: 'Disciplina', value: targetEval.disciplina || 5, icon: ShieldCheck },
+          { label: 'Qualidade', value: targetEval.qualidade || 5, icon: CheckCircle2 },
+          { label: 'Velocidade', value: targetEval.velocidade || 5, icon: Zap },
+          { label: 'Comportamento', value: targetEval.comportamento || 5, icon: Award },
+          { label: 'Proatividade', value: targetEval.proatividade || 5, icon: Award },
+        ]);
+      } else if (emp) {
+        // Se for ID de colaborador e não tiver avaliação correspondente no localStorage, calcula pelas estrelas aproximadas do meritScore original
+        const baseVal = Math.round(emp.meritScore / 2);
+        setStats([
+          { label: 'Disciplina', value: baseVal, icon: ShieldCheck },
+          { label: 'Qualidade', value: baseVal, icon: CheckCircle2 },
+          { label: 'Velocidade', value: baseVal, icon: Zap },
+          { label: 'Comportamento', value: baseVal - 1 > 0 ? baseVal - 1 : 1, icon: Award },
+          { label: 'Proatividade', value: baseVal, icon: Award },
+        ]);
+      }
+    } catch (e) {
+      console.error("Erro ao carregar avaliações do localStorage:", e);
+    }
+  }, [idParam]);
 
   // Lógica de Níveis Nexus
   const getLevel = (score: number) => {

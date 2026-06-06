@@ -45,6 +45,7 @@ function NovaAvaliacaoContent() {
   const employee = permanentEmployees.find(emp => emp.id === employeeId);
 
   const [step, setStep] = useState(1);
+  const [hasSaved, setHasSaved] = useState(false);
   const [formData, setFormData] = useState({
     disciplina: 0,
     qualidade: 0,
@@ -114,6 +115,42 @@ function NovaAvaliacaoContent() {
     return (sum / 5) * 2; // Converte média de 1-5 para 1-10
   };
 
+  const saveEvaluation = () => {
+    if (typeof window === 'undefined' || hasSaved) return;
+    
+    const finalScore = calculateIMN();
+    const evaluationId = 'eval-' + Math.random().toString(36).substring(2, 9);
+    const newEval = {
+      id: evaluationId,
+      employeeId: employeeId || '',
+      employeeName: employee?.name || '',
+      evaluatorName: user?.name || 'Avaliador',
+      disciplina: formData.disciplina,
+      qualidade: formData.qualidade,
+      velocidade: formData.velocidade,
+      comportamento: formData.comportamento,
+      proatividade: formData.proatividade,
+      finalScore: finalScore,
+      date: new Date().toISOString(),
+      observacoes: formData.observacoes,
+    };
+
+    try {
+      const stored = localStorage.getItem('nexus_merit_evaluations');
+      const list = stored ? JSON.parse(stored) : [];
+      list.push(newEval);
+      localStorage.setItem('nexus_merit_evaluations', JSON.stringify(list));
+      
+      setHasSaved(true);
+      toast({
+        title: "Avaliação Registrada",
+        description: "Índice de Mérito Nexus (IMN) atualizado na base do colaborador.",
+      });
+    } catch (e) {
+      console.error("Erro ao salvar avaliação:", e);
+    }
+  };
+
   const nextStep = () => {
     if (step === 1) {
       const allRated = ratings.every(r => (formData[r.key as keyof typeof formData] as number) > 0);
@@ -122,10 +159,19 @@ function NovaAvaliacaoContent() {
         return;
       }
     }
+    if (step === 2) {
+      saveEvaluation();
+    }
     setStep(prev => prev + 1);
   };
 
   const prevStep = () => setStep(prev => prev - 1);
+
+  React.useEffect(() => {
+    if (step === 3 && !hasSaved) {
+      saveEvaluation();
+    }
+  }, [step, hasSaved]);
 
   const steps = [
     { title: "Avaliação Técnica", icon: Award },
