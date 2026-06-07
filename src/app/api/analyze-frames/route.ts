@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ConverseCommand } from '@aws-sdk/client-bedrock-runtime';
 import { bedrockClient } from '@/ai/bedrock-client';
 
-const MODEL_ID = 'amazon.nova-2-lite-v1:0';
+const MODEL_ID = 'us.amazon.nova-2-lite-v1:0';
 
 export async function POST(req: NextRequest) {
   try {

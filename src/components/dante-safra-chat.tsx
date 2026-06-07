@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, User, Loader2, Wheat, Mic, Pause, Volume2, Camera as CameraIcon, X, Maximize, Minimize, ThermometerSun, DollarSign, Sprout, Beef, PiggyBank, Crown, Zap, Search } from 'lucide-react';
+import { Send, User, Loader2, Wheat, Mic, Pause, Volume2, Camera as CameraIcon, X, Maximize, Minimize, ThermometerSun, DollarSign, Sprout, Beef, PiggyBank, Crown, Zap, Search, Trash2 } from 'lucide-react';
 import { cn, resizeAndCompressImage, extractVideoFramesGrid } from '@/lib/utils';
 import { danteSafra } from '@/ai/flows/dante-safra-flow';
 import { IAPaymentModal } from './maga/ia-payment-modal';
@@ -241,6 +241,8 @@ export default function DanteSafraChat() {
   const [nickname, setNickname] = useState<string | null>(null);
   const [propertyDetails, setPropertyDetails] = useState<Partial<PropertyDetails>>({});
   const [isMaximized, setIsMaximized] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedFileType, setSelectedFileType] = useState<'image' | 'video' | null>(null);
   
   // Axis Upgrade State
   const [hasAxisUpgrade, setHasAxisUpgrade] = useState(false);
@@ -256,6 +258,16 @@ export default function DanteSafraChat() {
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleClearChat = useCallback(() => {
+    stopAudio();
+    setMessages([]);
+    setSetupStage('PROPRIEDADE');
+    setNickname(null);
+    setPropertyDetails({});
+    hasTriggeredGreeting.current = false;
+    localStorage.removeItem('danteSafraChatHistory');
+  }, [stopAudio]);
 
   const userInitials = useMemo(() => {
     if (!user?.displayName) return 'U';
@@ -491,7 +503,11 @@ export default function DanteSafraChat() {
 
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
-    processMessage(input);
+    if (!input.trim() && !selectedImage) return;
+    const userText = input.trim() || (selectedFileType === 'video' ? 'Analisando vídeo...' : t('chat.danteSafra.submittingRetrofit'));
+    processMessage(userText, selectedImage || undefined);
+    setSelectedImage(null);
+    setSelectedFileType(null);
   };
   
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -500,6 +516,7 @@ export default function DanteSafraChat() {
       setIsLoading(true);
       try {
         let imageUri = '';
+        let fileType: 'image' | 'video' = 'image';
         if (file.type.startsWith('video/')) {
           const result = await extractVideoFramesGrid(file);
           if (result.duration > 30) {
@@ -511,13 +528,16 @@ export default function DanteSafraChat() {
             return;
           }
           imageUri = result.dataUrl;
+          fileType = 'video';
         } else {
           imageUri = await resizeAndCompressImage(file);
         }
-        await processMessage(t('chat.danteSafra.submittingRetrofit'), imageUri);
+        setSelectedImage(imageUri);
+        setSelectedFileType(fileType);
       } catch (err: any) {
         console.error("VIX DIAGNOSTIC: File processing failed", err);
         addMessage('system', { response: t('chat.danteSafra.error.protocol') + ` (${err.message || 'Erro no processamento do arquivo'})` });
+      } finally {
         setIsLoading(false);
       }
     }
@@ -649,6 +669,9 @@ export default function DanteSafraChat() {
               </Button>
             )}
 
+            <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white" title="Limpar Conversa" onClick={handleClearChat}>
+                <Trash2 className="h-4 w-4" />
+            </Button>
             <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white" onClick={() => setIsMaximized(!isMaximized)}>
                {isMaximized ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
             </Button>
@@ -678,6 +701,28 @@ export default function DanteSafraChat() {
             {renderMessages()}
         </div>
           <CardFooter className="p-4 border-t border-emerald-800/60 flex flex-col items-start gap-2">
+              {selectedImage && (
+                <div className="relative w-full mb-2 p-2 border border-emerald-800/40 rounded-md bg-black/60 flex items-center gap-3">
+                  <img src={selectedImage} alt="Preview" className="h-14 w-14 object-cover rounded border border-emerald-600/40" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[11px] text-gray-400 truncate">
+                      {selectedFileType === 'video' ? 'Frames do vídeo prontos para envio' : 'Imagem pronta para envio'}
+                    </p>
+                    <p className="text-[10px] text-emerald-500 font-semibold">
+                      Dica: você pode digitar uma pergunta antes de enviar.
+                    </p>
+                  </div>
+                  <Button 
+                    type="button" 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-6 w-6 text-gray-400 hover:text-white absolute right-1 top-1"
+                    onClick={() => { setSelectedImage(null); setSelectedFileType(null); }}
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </div>
+              )}
               <form onSubmit={handleFormSubmit} className="flex w-full items-start gap-2">
                 <input type="file" ref={fileInputRef} className="hidden" accept="image/*,video/*" onChange={handleFileChange} disabled={isLoading || setupStage !== 'ANALISE'} />
                 <Button type="button" size="icon" variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isLoading || setupStage !== 'ANALISE'} className={cn(setupStage !== 'ANALISE' && 'opacity-50 cursor-not-allowed', "border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white")}>
@@ -699,7 +744,7 @@ export default function DanteSafraChat() {
                     <Mic className="w-5 h-5" />
                     <span className="sr-only">{t('chat.danteSafra.input.setup')}</span>
                 </Button>
-                <Button type="submit" size="icon" disabled={isLoading || !input.trim()} className="bg-emerald-600 hover:bg-emerald-500 text-white">
+                <Button type="submit" size="icon" disabled={isLoading || (!input.trim() && !selectedImage)} className="bg-emerald-600 hover:bg-emerald-500 text-white">
                   <Send className="w-5 h-5" />
                   <span className="sr-only">{t('contact.form.cta')}</span>
                 </Button>
