@@ -8,7 +8,7 @@ if (!process.env.AWS_REGION && process.env.NODE_ENV === 'production') {
   console.warn("⚠️ [NEXUS COMPONENT] Warning: AWS Region not found. Bedrock calls might fail.");
 }
 
-export const NEXUS_MODEL = 'aws-bedrock/us.anthropic.claude-sonnet-4-6';
+export const NEXUS_MODEL = 'aws-bedrock/amazon.nova-2-lite-v1:0';
 
 const bedrockRegion = process.env.BEDROCK_REGION || process.env.AWS_REGION || 'us-east-1';
 const bedrockAccessKeyId = process.env.BEDROCK_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID;

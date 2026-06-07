@@ -1,15 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { BedrockRuntimeClient, InvokeModelCommand } from '@aws-sdk/client-bedrock-runtime';
+import { ConverseCommand } from '@aws-sdk/client-bedrock-runtime';
+import { bedrockClient } from '@/ai/bedrock-client';
 
-const bedrock = new BedrockRuntimeClient({
-  region: process.env.AWS_REGION || 'us-east-1',
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
-});
-
-const MODEL_ID = 'us.anthropic.claude-3-5-sonnet-20241022-v2:0';
+const MODEL_ID = 'amazon.nova-2-lite-v1:0';
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,15 +12,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Nenhum frame enviado.' }, { status: 400 });
     }
 
-    console.log(`[analyze-frames] Analisando ${frames.length} frames de "${fileName}"...`);
+    console.log(`[analyze-frames] Analisando ${frames.length} frames de "${fileName}" usando ${MODEL_ID}...`);
 
-    // Build multimodal content: images + instruction
+    // Build multimodal content blocks for the Converse API
     const imageContent = frames.map((base64: string) => ({
-      type: 'image',
-      source: {
-        type: 'base64',
-        media_type: 'image/jpeg',
-        data: base64,
+      image: {
+        format: 'jpeg' as const,
+        source: {
+          bytes: Buffer.from(base64, 'base64'),
+        },
       },
     }));
 
@@ -43,28 +36,30 @@ Descreva o que você vê nos frames de forma natural e detalhada:
 
 Responda em português, de forma fluida e informativa.`;
 
-    const body = JSON.stringify({
-      anthropic_version: 'bedrock-2023-05-31',
-      max_tokens: 1024,
-      messages: [{
-        role: 'user',
-        content: [
-          ...imageContent,
-          { type: 'text', text: prompt },
-        ],
-      }],
-    });
-
-    const command = new InvokeModelCommand({
+    const command = new ConverseCommand({
       modelId: MODEL_ID,
-      contentType: 'application/json',
-      accept: 'application/json',
-      body: Buffer.from(body),
+      messages: [
+        {
+          role: 'user',
+          content: [
+            ...imageContent,
+            { text: prompt },
+          ],
+        },
+      ],
+      inferenceConfig: {
+        maxTokens: 1024,
+        temperature: 0.1,
+      },
     });
 
-    const response = await bedrock.send(command);
-    const result = JSON.parse(Buffer.from(response.body).toString('utf-8'));
-    const description = result?.content?.[0]?.text || '';
+    const response = await bedrockClient.send(command);
+    
+    if (!response.output || !response.output.message || !response.output.message.content) {
+      throw new Error("A resposta da AWS veio vazia.");
+    }
+
+    const description = response.output.message.content[0]?.text || '';
 
     console.log(`[analyze-frames] Análise concluída (${description.length} chars)`);
 
