@@ -2524,8 +2524,11 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
               <p className="text-lg font-black text-white italic mt-0.5">{produto.qtdNecessaria.toLocaleString('pt-BR')}</p>
             </div>
             <div className="p-3 bg-black/40 border border-white/5 rounded-2xl">
-              <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Ciclo Padrão</span>
-              <p className="text-[10px] font-bold text-gray-300 mt-0.5">{produto.pecasPorCiclo}x @ {produto.tempoPadrao}s</p>
+              <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Ciclos Necessários</span>
+              <p className="text-lg font-black text-white italic mt-0.5">
+                {ciclosAlvo} <span className="text-[9px] font-normal text-gray-500 not-italic">ciclos</span>
+              </p>
+              <p className="text-[9px] font-bold text-gray-500 mt-0.5">{produto.tempoPadrao} min cada</p>
             </div>
             <div className="p-3 bg-black/40 border border-white/5 rounded-2xl">
               <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Tempo Planejado</span>
