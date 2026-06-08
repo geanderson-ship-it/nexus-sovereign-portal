@@ -130,6 +130,7 @@ interface Produto {
   horaFim?: string;
   qtdProduzida?: number;
   statusProducao?: 'fila' | 'produzindo' | 'concluido';
+  observacao?: string;
 }
 
 interface Programacao {
@@ -155,7 +156,8 @@ const gerarLinhasVazias = (count: number) =>
     horaInicio: '',
     horaFim: '',
     qtdProduzida: 0,
-    statusProducao: 'fila' as const
+    statusProducao: 'fila' as const,
+    observacao: ''
   }));
 
 type StatusOP = 'aberta' | 'aguardando_aprovacao' | 'aprovada' | 'em_producao' | 'entregue' | 'cancelada';
@@ -563,7 +565,8 @@ export default function PPCPPage() {
         horaInicio: '',
         horaFim: '',
         qtdProduzida: 0,
-        statusProducao: 'fila'
+        statusProducao: 'fila',
+        observacao: ''
       });
     }
     setFormData({
@@ -583,7 +586,8 @@ export default function PPCPPage() {
       horaInicio: string; 
       horaFim: string; 
       qtdProduzida: number; 
-      statusProducao: 'fila' | 'produzindo' | 'concluido' 
+      statusProducao: 'fila' | 'produzindo' | 'concluido';
+      observacao?: string;
     }
   ) => {
     setProgramacoes(prev => prev.map(prog => {
@@ -1149,18 +1153,20 @@ export default function PPCPPage() {
                    </div>
 
                    <div className="bg-zinc-950/60 border border-amber-500/10 rounded-[40px] overflow-hidden shadow-2xl backdrop-blur-md">
-                      <Table>
-                        <TableHeader className="bg-amber-500/5">
-                          <TableRow className="border-amber-500/10">
-                            <TableHead className="px-10 py-5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Item Programado</TableHead>
-                            <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Código</TableHead>
-                            <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Qtd Prog.</TableHead>
-                            <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Progresso / Status</TableHead>
-                            <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Operador / Tempo</TableHead>
-                            <TableHead className="text-right px-10 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">T. Nec (min)</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
+                      <div className="overflow-x-auto">
+                        <Table>
+                          <TableHeader className="bg-amber-500/5">
+                            <TableRow className="border-amber-500/10">
+                              <TableHead className="px-10 py-5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Item Programado</TableHead>
+                              <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Código</TableHead>
+                              <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Qtd Prog.</TableHead>
+                              <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Progresso / Status</TableHead>
+                              <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Operador / Tempo</TableHead>
+                              <TableHead className="text-right px-10 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">T. Nec (min)</TableHead>
+                              <TableHead className="text-left px-10 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] w-full min-w-[250px]">Observação</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
                           {prog.produtos.map((p) => {
                             const c = calcularLinha(p);
                             const pctProg = p.qtdNecessaria > 0 ? Math.round(((p.qtdProduzida || 0) / p.qtdNecessaria) * 100) : 0;
@@ -1273,12 +1279,32 @@ export default function PPCPPage() {
                                   )}
                                 </TableCell>
                                 <TableCell className="text-right px-10 font-black text-amber-400 text-base">{c.tempoNecessario.toFixed(2)}</TableCell>
+                                <TableCell className="text-left px-10 py-3 w-full">
+                                  <Input
+                                    placeholder="Atrasos, quebras, OS manutenção, faltas, etc..."
+                                    value={p.observacao || ''}
+                                    onChange={(e) => {
+                                      const val = e.target.value;
+                                      setProgramacoes(prev => prev.map(item => {
+                                        if (item.id === prog.id) {
+                                          return {
+                                            ...item,
+                                            produtos: item.produtos.map(prod => prod.id === p.id ? { ...prod, observacao: val } : prod)
+                                          };
+                                        }
+                                        return item;
+                                      }));
+                                    }}
+                                    className="bg-black/40 border border-white/5 h-9 rounded-xl text-xs font-semibold text-gray-300 placeholder:text-gray-700 focus-visible:ring-1 focus-visible:ring-amber-500/50 w-full min-w-[220px]"
+                                  />
+                                </TableCell>
                               </TableRow>
                             );
                           })}
                         </TableBody>
                       </Table>
-                      <div className="p-8 bg-black/40 border-t border-amber-500/10 flex justify-between items-center">
+                    </div>
+                    <div className="p-8 bg-black/40 border-t border-amber-500/10 flex justify-between items-center">
                         <div className="flex gap-10 items-center">
                            <div className="flex flex-col">
                               <span className="text-[9px] font-black uppercase text-gray-600 tracking-widest">Ocupação do Programa</span>
@@ -2326,6 +2352,7 @@ export default function PPCPPage() {
                     <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Operador</TableHead>
                     <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Horários (I - F)</TableHead>
                     <TableHead className="text-right px-6 text-[8px] font-black uppercase text-gray-500 tracking-wider">Tempo (min)</TableHead>
+                    <TableHead className="text-left px-6 text-[8px] font-black uppercase text-gray-500 tracking-wider w-full min-w-[200px]">Observação</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -2341,6 +2368,9 @@ export default function PPCPPage() {
                         <TableCell className="text-center font-bold text-amber-400 text-[10px] uppercase">{p.operador || '—'}</TableCell>
                         <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.horaInicio && p.horaFim ? `${p.horaInicio} - ${p.horaFim}` : '—'}</TableCell>
                         <TableCell className="text-right px-6 font-bold text-gray-300 text-xs">{c.tempoNecessario.toFixed(1)}</TableCell>
+                        <TableCell className="text-left px-6 text-xs text-gray-400 font-medium truncate max-w-[200px]" title={p.observacao || ''}>
+                          {p.observacao || '—'}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -2375,7 +2405,8 @@ interface CardApontamentoProps {
       horaInicio: string; 
       horaFim: string; 
       qtdProduzida: number; 
-      statusProducao: 'fila' | 'produzindo' | 'concluido' 
+      statusProducao: 'fila' | 'produzindo' | 'concluido';
+      observacao?: string;
     }
   ) => void;
   matchingOp?: any;
@@ -2387,6 +2418,7 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
   const [horaFim, setHoraFim] = useState(produto.horaFim || '');
   const [qtdProduzida, setQtdProduzida] = useState(produto.qtdProduzida || 0);
   const [statusProducao, setStatusProducao] = useState<'fila' | 'produzindo' | 'concluido'>(produto.statusProducao || 'fila');
+  const [observacao, setObservacao] = useState(produto.observacao || '');
   const [salvo, setSalvo] = useState(false);
 
   useEffect(() => {
@@ -2395,6 +2427,7 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
     setHoraFim(produto.horaFim || '');
     setQtdProduzida(produto.qtdProduzida !== undefined ? produto.qtdProduzida : 0);
     setStatusProducao(produto.statusProducao || 'fila');
+    setObservacao(produto.observacao || '');
     setSalvo(false);
   }, [produto]);
 
@@ -2440,7 +2473,8 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
       horaInicio,
       horaFim,
       qtdProduzida,
-      statusProducao
+      statusProducao,
+      observacao
     });
     setSalvo(true);
     setTimeout(() => setSalvo(false), 2000);
@@ -2615,7 +2649,17 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 items-center mt-4 lg:mt-0">
+          <div className="space-y-1.5">
+            <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Observação do Apontamento</Label>
+            <Input 
+              placeholder="Descreva atrasos, problemas de máquina, OS de manutenção, faltas, etc..." 
+              value={observacao} 
+              onChange={e => setObservacao(e.target.value)}
+              className="bg-black/60 border border-white/10 h-9 rounded-xl text-xs font-semibold text-white placeholder:text-gray-700"
+            />
+          </div>
+
+          <div className="flex justify-end gap-3 items-center mt-4">
             {efInfo && (
               <div className="text-[8px] text-gray-500 font-mono flex items-center gap-1.5">
                 <span>T. Real: {efInfo.tempoTrabalhado}m</span>
