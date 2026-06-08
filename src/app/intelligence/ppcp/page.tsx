@@ -2413,25 +2413,34 @@ interface CardApontamentoProps {
 }
 
 function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontamentoProps) {
+  const ciclosAlvo = Math.ceil(produto.qtdNecessaria / (produto.pecasPorCiclo || 1));
+  const qtdAjustadaCiclos = ciclosAlvo * (produto.pecasPorCiclo || 1);
+
   const [operador, setOperador] = useState(produto.operador || '');
   const [horaInicio, setHoraInicio] = useState(produto.horaInicio || '');
   const [horaFim, setHoraFim] = useState(produto.horaFim || '');
-  const [qtdProduzida, setQtdProduzida] = useState(produto.qtdProduzida || 0);
+  const [qtdProduzida, setQtdProduzida] = useState(
+    produto.qtdProduzida !== undefined && produto.qtdProduzida > 0 
+      ? produto.qtdProduzida 
+      : qtdAjustadaCiclos
+  );
   const [statusProducao, setStatusProducao] = useState<'fila' | 'produzindo' | 'concluido'>(produto.statusProducao || 'fila');
   const [observacao, setObservacao] = useState(produto.observacao || '');
   const [salvo, setSalvo] = useState(false);
 
   useEffect(() => {
+    const targetCiclos = Math.ceil(produto.qtdNecessaria / (produto.pecasPorCiclo || 1));
+    const targetQtd = targetCiclos * (produto.pecasPorCiclo || 1);
+
     setOperador(produto.operador || '');
     setHoraInicio(produto.horaInicio || '');
     setHoraFim(produto.horaFim || '');
-    setQtdProduzida(produto.qtdProduzida !== undefined ? produto.qtdProduzida : 0);
+    setQtdProduzida(produto.qtdProduzida !== undefined && produto.qtdProduzida > 0 ? produto.qtdProduzida : targetQtd);
     setStatusProducao(produto.statusProducao || 'fila');
     setObservacao(produto.observacao || '');
     setSalvo(false);
   }, [produto]);
 
-  const ciclosAlvo = Math.ceil(produto.qtdNecessaria / (produto.pecasPorCiclo || 1));
   const tempoAlvoMinutos = ciclosAlvo * (produto.tempoPadrao || 0);
 
   const efInfo = useMemo(() => {
@@ -2520,8 +2529,9 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
 
           <div className="grid grid-cols-3 gap-3">
             <div className="p-3 bg-black/40 border border-white/5 rounded-2xl">
-              <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Meta (Necessário)</span>
-              <p className="text-lg font-black text-white italic mt-0.5">{produto.qtdNecessaria.toLocaleString('pt-BR')}</p>
+              <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Meta (Ajustada)</span>
+              <p className="text-lg font-black text-white italic mt-0.5">{qtdAjustadaCiclos.toLocaleString('pt-BR')}</p>
+              <p className="text-[8px] text-gray-500 mt-0.5">Pedido: {produto.qtdNecessaria}</p>
             </div>
             <div className="p-3 bg-black/40 border border-white/5 rounded-2xl">
               <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Ciclos Necessários</span>
