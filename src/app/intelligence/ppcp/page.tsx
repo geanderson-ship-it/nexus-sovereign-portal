@@ -289,6 +289,9 @@ export default function PPCPPage() {
     }
   }, [dialogOpen]);
 
+  const [ultimoAcesso, setUltimoAcesso] = useState<number>(0);
+  const [temNovosPedidos, setTemNovosPedidos] = useState(false);
+
   const carregarDadosIntegrados = () => {
     if (typeof window !== 'undefined') {
       try {
@@ -300,6 +303,16 @@ export default function PPCPPage() {
       } catch (e) {
         console.error("Erro ao carregar dados integrados no PPCP:", e);
       }
+    }
+  };
+
+  const sincronizarPPCP = () => {
+    carregarDadosIntegrados();
+    if (typeof window !== 'undefined') {
+      const now = Date.now();
+      setUltimoAcesso(now);
+      localStorage.setItem('nexus_ppcp_ultimo_acesso', String(now));
+      setTemNovosPedidos(false);
     }
   };
 
@@ -329,6 +342,15 @@ export default function PPCPPage() {
     carregarDadosIntegrados();
 
     if (typeof window !== 'undefined') {
+      const storedAcesso = localStorage.getItem('nexus_ppcp_ultimo_acesso');
+      if (storedAcesso) {
+        setUltimoAcesso(Number(storedAcesso));
+      } else {
+        const now = Date.now();
+        setUltimoAcesso(now);
+        localStorage.setItem('nexus_ppcp_ultimo_acesso', String(now));
+      }
+
       try {
         const progsRaw = localStorage.getItem('nexus_ppcp_programacoes');
         if (progsRaw && JSON.parse(progsRaw).length >= 4) {
@@ -457,6 +479,31 @@ export default function PPCPPage() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    const checkNewOrders = () => {
+      if (typeof window === 'undefined') return;
+      try {
+        const opsRaw = localStorage.getItem('nexus_vendas_ops');
+        const ultimoAcessoStored = Number(localStorage.getItem('nexus_ppcp_ultimo_acesso') || ultimoAcesso || 0);
+        if (opsRaw && ultimoAcessoStored > 0) {
+          const currentOps = JSON.parse(opsRaw) as any[];
+          const containsNew = currentOps.some(op => {
+            if (!op.createdAt) return false;
+            const createdTime = new Date(op.createdAt).getTime();
+            return createdTime > ultimoAcessoStored && op.status !== 'cancelada';
+          });
+          setTemNovosPedidos(containsNew);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    checkNewOrders();
+    const interval = setInterval(checkNewOrders, 5000);
+    return () => clearInterval(interval);
+  }, [ultimoAcesso]);
 
   // Persistir programacoes sempre que mudarem
   useEffect(() => {
@@ -787,7 +834,8 @@ export default function PPCPPage() {
           status: op.status,
           origem,
           estudoId,
-          dataEntrega: op.dataEntregaPrevista
+          dataEntrega: op.dataEntregaPrevista,
+          createdAt: op.createdAt
         });
       });
     });
@@ -945,7 +993,7 @@ export default function PPCPPage() {
             activeTab === 'planilha' ? "border-amber-500 text-amber-400" : "border-transparent text-gray-500 hover:text-white"
           )}
         >
-          <Layers className="inline-block mr-2 h-4 w-4" /> Planilha Geral de Produção
+          <Layers className="inline-block mr-2 h-4 w-4" /> Controle de Pedidos
         </button>
         <button
           onClick={() => setActiveTab('turnos')}
@@ -954,7 +1002,7 @@ export default function PPCPPage() {
             activeTab === 'turnos' ? "border-amber-500 text-amber-400" : "border-transparent text-gray-500 hover:text-white"
           )}
         >
-          <Factory className="inline-block mr-2 h-4 w-4" /> Quadro de Turnos
+          <Factory className="inline-block mr-2 h-4 w-4" /> Programas
         </button>
         <button
           onClick={() => setActiveTab('terminal')}
@@ -969,7 +1017,7 @@ export default function PPCPPage() {
 
       {activeTab === 'turnos' && (
         <>
-          {/* SELETOR DE SUB-ABAS DE SETOR NO QUADRO DE TURNOS */}
+          {/* SELETOR DE SUB-ABAS DE SETOR NOS PROGRAMAS */}
           <div className="bg-zinc-950/60 border border-amber-500/10 rounded-[35px] p-6 shadow-xl backdrop-blur-md mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-left w-full">
             <div className="space-y-1">
               <h2 className="text-base font-black text-amber-400 uppercase italic tracking-wider flex items-center gap-2">
@@ -1004,13 +1052,13 @@ export default function PPCPPage() {
             </div>
           </div>
 
-          {/* DASHBOARD DE TURNOS */}
+          {/* DASHBOARD DE PROGRAMAS */}
           <div className="flex flex-wrap gap-16 w-full justify-start">
             {programacoes.filter(prog => prog.linha.toUpperCase() === activeSectorTab.toUpperCase()).length === 0 ? (
               <div className="bg-zinc-950/40 border border-zinc-800 rounded-[30px] p-16 text-center w-full max-w-lg mx-auto space-y-4">
                 <Factory className="h-12 w-12 text-amber-500/20 mx-auto" />
-                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Sem turnos agendados em {activeSectorTab}</p>
-                <p className="text-[10px] text-gray-600 max-w-xs mx-auto">Use o botão "Nova Programação" no topo para planejar um turno para esta linha.</p>
+                <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Sem programas agendados em {activeSectorTab}</p>
+                <p className="text-[10px] text-gray-600 max-w-xs mx-auto">Use o botão "Nova Programação" no topo para planejar um programa para esta linha.</p>
               </div>
             ) : (
               programacoes
@@ -1181,7 +1229,7 @@ export default function PPCPPage() {
                       <div className="p-8 bg-black/40 border-t border-amber-500/10 flex justify-between items-center">
                         <div className="flex gap-10 items-center">
                            <div className="flex flex-col">
-                              <span className="text-[9px] font-black uppercase text-gray-600 tracking-widest">Ocupação do Turno</span>
+                              <span className="text-[9px] font-black uppercase text-gray-600 tracking-widest">Ocupação do Programa</span>
                               <span className="text-2xl font-black text-white italic">{stats.tempo.toFixed(1)} / 528 <span className="text-xs font-normal text-gray-600">minutos</span></span>
                            </div>
                         </div>
@@ -1203,6 +1251,23 @@ export default function PPCPPage() {
 
       {activeTab === 'planilha' && (
         <div className="space-y-8">
+          {temNovosPedidos && (
+            <div className="bg-violet-950/20 border border-violet-500/30 rounded-[30px] p-6 flex flex-col sm:flex-row justify-between items-center gap-4 animate-[pulse_3s_infinite] text-left">
+              <div className="flex items-center gap-3">
+                <AlertTriangle className="h-6 w-6 text-violet-400 animate-bounce shrink-0" />
+                <div>
+                  <h4 className="text-sm font-black uppercase text-violet-400 tracking-wider">Novos Pedidos Lançados!</h4>
+                  <p className="text-xs text-gray-400 mt-1">Existem novos pedidos na Central de Vendas que foram cadastrados recentemente.</p>
+                </div>
+              </div>
+              <Button 
+                onClick={sincronizarPPCP}
+                className="bg-violet-600 hover:bg-violet-500 text-white font-black uppercase tracking-widest px-6 h-10 rounded-xl text-[10px]"
+              >
+                <Activity className="mr-2 h-4 w-4 animate-spin" /> Sincronizar Agora
+              </Button>
+            </div>
+          )}
           {/* CARDS RÁPIDOS (KPIs) */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-zinc-950/60 border border-amber-500/10 rounded-[30px] p-6 shadow-xl backdrop-blur-md">
@@ -1240,7 +1305,7 @@ export default function PPCPPage() {
           <div className="bg-zinc-950/60 border border-amber-500/10 rounded-[40px] overflow-hidden shadow-2xl backdrop-blur-md text-left">
             <div className="p-8 bg-amber-500/5 border-b border-amber-500/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h3 className="text-lg font-black uppercase tracking-tight text-white italic">Planilha Mestre de Produção</h3>
+                <h3 className="text-lg font-black uppercase tracking-tight text-white italic">Planilha Mestre - Pedidos Vendas</h3>
                 <p className="text-xs text-gray-500 mt-1">Dados consolidados e integrados das vendas e estudos de cronometragem.</p>
               </div>
               <div className="flex gap-2 flex-wrap">
@@ -1259,7 +1324,7 @@ export default function PPCPPage() {
                   <Globe className="mr-2 h-4 w-4 animate-[pulse_3s_infinite]" /> Disponibilizar na Rede
                 </Button>
                 <Button 
-                  onClick={carregarDadosIntegrados} 
+                  onClick={sincronizarPPCP} 
                   className="bg-amber-600 hover:bg-amber-500 text-white h-9 rounded-xl text-[10px] font-black uppercase tracking-widest"
                 >
                   <Activity className="mr-2 h-4 w-4 animate-pulse" /> Sincronizar Agora
@@ -1287,15 +1352,30 @@ export default function PPCPPage() {
                       <TableHead className="text-right pr-4 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap">Tempo Base (min)</TableHead>
                       <TableHead className="text-right pl-2 pr-10 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap">Tempo Total (min)</TableHead>
                       <TableHead className="text-left px-4 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Detalhes de Produção (BOM)</TableHead>
+                      <TableHead className="text-center px-4 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap">Regra de Corte</TableHead>
                       <TableHead className="text-center px-8 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Status OP</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {itensProducao.map((item) => {
                       const st = statusConfig[item.status as StatusOP] || { label: item.status, color: 'text-gray-400' };
+                      const isNew = item.createdAt && new Date(item.createdAt).getTime() > ultimoAcesso;
                       return (
-                        <TableRow key={item.id} className="border-amber-500/5 hover:bg-amber-500/5 transition-colors">
-                          <TableCell className="px-8 py-5 font-mono text-xs text-amber-300 font-bold whitespace-nowrap">{item.opNumero}</TableCell>
+                        <TableRow 
+                          key={item.id} 
+                          className={cn(
+                            "border-amber-500/5 hover:bg-amber-500/5 transition-all duration-300",
+                            isNew && "bg-violet-950/10 border-l-[3px] border-l-violet-500/80 shadow-[inset_4px_0_10px_rgba(139,92,246,0.05)]"
+                          )}
+                        >
+                          <TableCell className="px-8 py-5 font-mono text-xs text-amber-300 font-bold whitespace-nowrap flex items-center">
+                            {item.opNumero}
+                            {isNew && (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-[8px] font-black bg-violet-600 text-white uppercase tracking-widest animate-[pulse_1s_infinite] ml-2 shadow-[0_0_10px_rgba(139,92,246,0.5)]">
+                                Novo
+                              </span>
+                            )}
+                          </TableCell>
                           <TableCell className="font-bold text-gray-300 text-xs uppercase">{item.cliente}</TableCell>
                           <TableCell className="font-black text-sm uppercase text-white tracking-tight">{item.produtoNome}</TableCell>
                           <TableCell className="text-center pl-6 pr-16 font-mono text-[10px] text-gray-500 whitespace-nowrap">{item.produtoCodigo}</TableCell>
@@ -1332,6 +1412,30 @@ export default function PPCPPage() {
                                     <Settings2 className="h-3.5 w-3.5" />
                                     Estrutura ({count || 2} itens)
                                   </Button>
+                                </div>
+                              );
+                            })()}
+                          </TableCell>
+                          <TableCell className="text-center px-4">
+                            {(() => {
+                              if (!item.createdAt) return <span className="text-gray-600 text-[10px]">—</span>;
+                              const date = new Date(item.createdAt);
+                              const hour = date.getHours();
+                              const minutes = date.getMinutes();
+                              const timeStr = `${String(hour).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+                              
+                              const isAfterCutoff = hour >= 12;
+                              return (
+                                <div className="flex flex-col items-center gap-1 justify-center">
+                                  <Badge className={cn(
+                                    "text-[8px] font-black uppercase py-0.5 px-2 bg-transparent border",
+                                    isAfterCutoff 
+                                      ? "text-rose-400 border-rose-500/30 shadow-[0_0_10px_rgba(244,63,94,0.05)]" 
+                                      : "text-emerald-400 border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.05)]"
+                                  )}>
+                                    {isAfterCutoff ? 'Pós-Corte (Amanhã)' : 'Pré-Corte (Hoje)'}
+                                  </Badge>
+                                  <span className="text-[8px] text-gray-500 font-mono">Enviado: {timeStr}</span>
                                 </div>
                               );
                             })()}
@@ -1386,17 +1490,17 @@ export default function PPCPPage() {
               <div className="bg-zinc-950/60 border border-amber-500/10 rounded-[40px] p-20 text-center space-y-4">
                 <Layers className="h-16 w-16 text-amber-500/20 mx-auto" />
                 <p className="text-gray-500 font-bold uppercase tracking-widest text-sm">Sem programações ativas para o setor {sectorTerminal}</p>
-                <p className="text-xs text-gray-600 max-w-md mx-auto">Consulte o PPCP para programar novos turnos e ordens para esta linha.</p>
+                <p className="text-xs text-gray-600 max-w-md mx-auto">Consulte o PPCP para programar novos programas e ordens para esta linha.</p>
               </div>
             ) : (
               programacoes
                 .filter(prog => prog.linha.toUpperCase() === sectorTerminal)
                 .map(prog => (
                   <div key={prog.id} className="space-y-4">
-                    {/* INFO DO TURNO */}
+                    {/* INFO DO PROGRAMA */}
                     <div className="flex items-center justify-between px-6 bg-zinc-950/40 py-3 rounded-2xl border border-white/5 flex-wrap gap-2">
                       <div className="flex items-center gap-4">
-                        <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Turno / Data:</span>
+                        <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Programa / Data:</span>
                         <Badge className="bg-amber-500/10 text-amber-400 border border-amber-500/20 font-black uppercase px-3 py-1 text-[10px]">
                           {isClient && prog.data ? new Date(prog.data + 'T00:00:00').toLocaleDateString('pt-BR') : prog.data}
                         </Badge>
@@ -1472,7 +1576,7 @@ export default function PPCPPage() {
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                <div className="bg-black/40 border border-amber-500/20 rounded-3xl p-3 space-y-2 group focus-within:border-amber-500 transition-all">
-                  <Label className="text-[10px] font-black uppercase text-amber-500/60 flex items-center gap-2 tracking-widest"><CalendarDays className="h-3 w-3" /> Data do Turno</Label>
+                  <Label className="text-[10px] font-black uppercase text-amber-500/60 flex items-center gap-2 tracking-widest"><CalendarDays className="h-3 w-3" /> Data do Programa</Label>
                   <Input type="date" value={formData.data} onChange={e => setFormData(prev => ({...prev, data: e.target.value}))} className="bg-transparent border-none p-0 text-lg font-black text-white focus-visible:ring-0 h-auto" />
                </div>
                <div className="bg-black/40 border border-amber-500/20 rounded-3xl p-3 space-y-2 group focus-within:border-amber-500 transition-all">
@@ -1648,7 +1752,7 @@ export default function PPCPPage() {
               <button className="text-[10px] text-gray-600 hover:text-white font-black uppercase tracking-[0.4em] transition-colors" onClick={() => setDialogOpen(false)}>Descartar Matriz</button>
               <Button className="bg-amber-600 hover:bg-amber-500 text-white font-black uppercase tracking-widest px-14 h-16 rounded-[28px] shadow-2xl shadow-amber-600/30 transition-all hover:scale-105" onClick={salvar}
                 disabled={!formData.data || !formData.linha}>
-                Consolidar Turno
+                Consolidar Programa
               </Button>
             </div>
           </DialogFooter>
@@ -1723,7 +1827,7 @@ export default function PPCPPage() {
           </DialogHeader>
           <div className="space-y-6 py-4">
             <p className="text-xs text-gray-400 leading-relaxed">
-              Crie uma nova linha de produção no PPCP. Ela aparecerá como uma aba no Quadro de Turnos e estará disponível no Terminal do Líder para apontamentos.
+              Crie uma nova linha de produção no PPCP. Ela aparecerá como uma aba nos Programas e estará disponível no Terminal do Líder para apontamentos.
             </p>
 
             <div className="space-y-2">

@@ -30,6 +30,7 @@ export default function NovoPedidoPage() {
   const [supervisor, setSupervisor] = useState('');
   const [dataVenda, setDataVenda] = useState('');
   const [dataEntrega, setDataEntrega] = useState('');
+  const [corteAviso, setCorteAviso] = useState('');
 
   const maskData = (v: string) => {
     const nums = v.replace(/\D/g, '').slice(0, 8);
@@ -49,6 +50,26 @@ export default function NovoPedidoPage() {
     const [a, m, d] = iso.split('-');
     return `${d}/${m}/${a}`;
   };
+
+  React.useEffect(() => {
+    if (dataVenda && dataEntrega) {
+      const isoVenda = dataParaISO(dataVenda);
+      const isoEntrega = dataParaISO(dataEntrega);
+      if (isoVenda && isoEntrega && isoVenda === isoEntrega) {
+        const now = new Date();
+        if (now.getHours() >= 12) {
+          setCorteAviso('⚠️ PONTO DE CORTE ULTRAPASSADO (12h00): Pedidos lançados após as 12h00 só podem ser programados para produção a partir do próximo dia.');
+        } else {
+          setCorteAviso('');
+        }
+      } else {
+        setCorteAviso('');
+      }
+    } else {
+      setCorteAviso('');
+    }
+  }, [dataVenda, dataEntrega]);
+
   const [observacoes, setObservacoes] = useState('');
   const [itens, setItens] = useState<ItemPedido[]>([]);
   const [buscaProduto, setBuscaProduto] = useState('');
@@ -78,6 +99,19 @@ export default function NovoPedidoPage() {
 
   const confirmar = () => {
     if (!podeSalvar) return;
+    const isoVenda = dataParaISO(dataVenda);
+    const isoEntrega = dataParaISO(dataEntrega);
+    if (isoVenda && isoEntrega && isoVenda === isoEntrega) {
+      const now = new Date();
+      if (now.getHours() >= 12) {
+        alert("Aviso de Ponto de Corte: Este pedido foi efetuado após as 12h00 e não pode ser programado para entrega no mesmo dia. A data de entrega foi ajustada para o dia seguinte.");
+        const dt = new Date(isoVenda + 'T12:00:00');
+        dt.setDate(dt.getDate() + 1);
+        const amanhaBr = isoParaBR(dt.toISOString().split('T')[0]);
+        setDataEntrega(amanhaBr);
+        return;
+      }
+    }
     const op = criarOP({
       cliente, vendedor, supervisor, dataVenda: dataParaISO(dataVenda), dataEntregaPrevista: dataParaISO(dataEntrega),
       observacoes, valorTotal,
@@ -184,6 +218,12 @@ export default function NovoPedidoPage() {
               </div>
             </div>
           </div>
+          {corteAviso && (
+            <div className="md:col-span-3 p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-[10px] uppercase font-black tracking-widest animate-pulse flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 shrink-0 text-rose-500" />
+              <span>{corteAviso}</span>
+            </div>
+          )}
           <div className="space-y-1 md:col-span-3">
             <Label className="text-[10px] text-gray-500 uppercase tracking-widest font-black">Observações (opcional)</Label>
             <Input placeholder="Instruções especiais, condições de pagamento..." value={observacoes} onChange={e => setObservacoes(e.target.value)}

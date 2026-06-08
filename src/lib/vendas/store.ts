@@ -44,6 +44,7 @@ export interface OrdemPedido {
   status: StatusOP;
   observacoes: string;
   valorTotal: number;
+  createdAt?: string;
 }
 
 const KEY_PRODUTOS = 'nexus_vendas_produtos';
@@ -186,6 +187,7 @@ export function useVendas() {
       id: crypto.randomUUID(),
       numero: gerarNumeroOP(),
       status: 'aberta',
+      createdAt: new Date().toISOString(),
     };
     setOps(prev => [novaOP, ...prev]);
     return novaOP;
