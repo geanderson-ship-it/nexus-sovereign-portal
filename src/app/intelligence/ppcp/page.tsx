@@ -21,7 +21,7 @@ const TEMPO_DISPONIVEL_DIA = 528; // 8.8h * 60min
 
 // MOCK DO BANCO DE ENGENHARIA
 const BANCO_ENGENHARIA = [
-  { produto: 'CORTE DE PERFIL 6MM', codigo: 'PRF-006', pecasPorCiclo: 5, tempoPadrao: 0.81 },
+  { produto: 'CORTE DE PERFIL 6MM', codigo: 'PRF-006', pecasPorCiclo: 4, tempoPadrao: 0.81 },
   { produto: 'CORTE DE PERFIL 4MM', codigo: 'PRF-004', pecasPorCiclo: 7, tempoPadrao: 0.81 },
   { produto: 'CHAPA GALVANIZADA 1.5MM', codigo: 'CHP-1.5', pecasPorCiclo: 1, tempoPadrao: 0.81 },
   { produto: 'JANELA SUPREMA INTEGRADA', codigo: 'JN-SUP-01', pecasPorCiclo: 1, tempoPadrao: 3.5 },
@@ -375,7 +375,13 @@ export default function PPCPPage() {
           setProgramacoes(parsed.map(p => ({
             ...p,
             linha: p.linha === 'AJUSTE' ? 'ACABAMENTO' : p.linha,
-            status: p.status || 'ativo'
+            status: p.status || 'ativo',
+            produtos: p.produtos.map(prod => {
+              if (prod.codigo === 'PRF-006' && prod.pecasPorCiclo === 5) {
+                return { ...prod, pecasPorCiclo: 4 };
+              }
+              return prod;
+            })
           })));
         } else {
           // Initialize mock programacoes (one for each of the 4 sectors)
@@ -391,7 +397,7 @@ export default function PPCPPage() {
                   produto: 'CORTE DE PERFIL 6MM',
                   codigo: 'PRF-006',
                   maquina: 'Serra Fita 01',
-                  pecasPorCiclo: 5,
+                  pecasPorCiclo: 4,
                   tempoPadrao: 0.81,
                   qtdNecessaria: 150,
                   auditado: true,
