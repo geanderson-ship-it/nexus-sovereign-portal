@@ -21,7 +21,7 @@ export interface Produto {
   ativo: boolean;
 }
 
-export type StatusOP = 'aberta' | 'aguardando_aprovacao' | 'aprovada' | 'em_producao' | 'entregue' | 'cancelada';
+export type StatusOP = 'aberta' | 'aguardando_aprovacao' | 'aprovada' | 'em_producao' | 'pronto_expedicao' | 'entregue' | 'cancelada';
 
 export interface ItemOP {
   produtoId: string;

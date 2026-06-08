@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/table';
 import {
   ShoppingBag, Plus, ArrowLeft, Search, X, Package,
-  ClipboardList, CheckCircle, Clock, Truck, XCircle, AlertTriangle, Eye,
+  ClipboardList, CheckCircle, Clock, Truck, XCircle, AlertTriangle, Eye, PackageCheck,
 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -24,6 +24,7 @@ const statusConfig: Record<StatusOP, { label: string; color: string; icon: React
   aguardando_aprovacao: { label: 'Aguard. Aprovação',   color: 'text-amber-400 border-amber-500/30',  icon: AlertTriangle },
   aprovada:             { label: 'Aprovada',             color: 'text-emerald-400 border-emerald-500/30', icon: CheckCircle },
   em_producao:          { label: 'Em Produção',          color: 'text-violet-400 border-violet-500/30', icon: Clock },
+  pronto_expedicao:     { label: 'Pronto p/ Expedição', color: 'text-cyan-400 border-cyan-500/30',   icon: PackageCheck },
   entregue:             { label: 'Entregue',             color: 'text-emerald-400 border-emerald-500/30', icon: Truck },
   cancelada:            { label: 'Cancelada',            color: 'text-rose-400 border-rose-500/30',    icon: XCircle },
 };

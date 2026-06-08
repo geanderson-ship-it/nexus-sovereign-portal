@@ -11,7 +11,7 @@ import {
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog';
-import { Plus, Trash2, ArrowLeft, Printer, Target, Settings2, CalendarDays, Factory, Package, Scissors, Activity, Layers, Zap, Clock, Timer, Calculator, User, AlertTriangle, ShieldCheck, Info, Scale, Search, CheckCircle, Database, Globe, Share2, Maximize2, Minimize2 } from 'lucide-react';
+import { Plus, Trash2, ArrowLeft, Printer, Target, Settings2, CalendarDays, Factory, Package, Scissors, Activity, Layers, Zap, Clock, Timer, Calculator, User, AlertTriangle, ShieldCheck, Info, Scale, Search, CheckCircle, Database, Globe, Share2, Maximize2, Minimize2, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
@@ -116,6 +116,91 @@ const obterItensBOM = (codigo: string) => {
   return BOM_DATABASE[code] || [];
 };
 
+interface OperadorSessao {
+  id: string;
+  nome: string;
+  horaInicio: string;
+  horaFim: string;
+  qtdProduzida?: number;
+}
+
+const obterTempoTrabalhadoOperadores = (
+  ops?: OperadorSessao[],
+  fallbackInicio?: string,
+  fallbackFim?: string
+): number | null => {
+  const parseTimeToMinutes = (timeStr: string) => {
+    const parts = (timeStr || '').split(':');
+    if (parts.length !== 2) return null;
+    const hours = parseInt(parts[0], 10);
+    const minutes = parseInt(parts[1], 10);
+    if (isNaN(hours) || isNaN(minutes)) return null;
+    return hours * 60 + minutes;
+  };
+
+  if (ops && ops.length > 0) {
+    let total = 0;
+    let hasValid = false;
+    for (const op of ops) {
+      if (op.horaInicio && op.horaFim) {
+        const minI = parseTimeToMinutes(op.horaInicio);
+        const minF = parseTimeToMinutes(op.horaFim);
+        if (minI !== null && minF !== null) {
+          let diff = minF - minI;
+          if (diff <= 0) diff += 1440;
+          total += diff;
+          hasValid = true;
+        }
+      }
+    }
+    return hasValid ? total : null;
+  }
+
+  if (fallbackInicio && fallbackFim) {
+    const minI = parseTimeToMinutes(fallbackInicio);
+    const minF = parseTimeToMinutes(fallbackFim);
+    if (minI !== null && minF !== null) {
+      let diff = minF - minI;
+      if (diff <= 0) diff += 1440;
+      return diff;
+    }
+  }
+
+  return null;
+};
+
+const calcularEficienciaOperador = (
+  op: { horaInicio?: string; horaFim?: string; qtdProduzida?: number },
+  tempoPadrao: number,
+  linha: string,
+  pecasPorCiclo?: number
+) => {
+  if (!op.horaInicio || !op.horaFim || !op.qtdProduzida) return null;
+  const parseTimeToMinutes = (timeStr: string) => {
+    const parts = timeStr.split(':');
+    if (parts.length !== 2) return null;
+    const h = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
+    return isNaN(h) || isNaN(m) ? null : h * 60 + m;
+  };
+  const minI = parseTimeToMinutes(op.horaInicio);
+  const minF = parseTimeToMinutes(op.horaFim);
+  if (minI === null || minF === null) return null;
+  let diff = minF - minI;
+  if (diff <= 0) diff += 1440;
+  
+  const isCorte = (linha || '').toUpperCase() === 'CORTE';
+  const pecasPorCicloAjustada = isCorte ? (pecasPorCiclo || 1) : 1;
+  const ciclos = op.qtdProduzida / pecasPorCicloAjustada;
+  const tempoPadraoMinutos = ciclos * tempoPadrao;
+  const eficiencia = (tempoPadraoMinutos / diff) * 100;
+  return {
+    tempoTrabalhado: diff,
+    tempoPadraoMinutos,
+    eficiencia: parseFloat(eficiencia.toFixed(1))
+  };
+};
+
 interface Produto {
   id: string;
   produto: string;
@@ -131,6 +216,12 @@ interface Produto {
   qtdProduzida?: number;
   statusProducao?: 'fila' | 'produzindo' | 'concluido';
   observacao?: string;
+  cliente?: string;
+  opNumero?: string;
+  especificacoes?: string;
+  operadores?: OperadorSessao[];
+  apontadoConcluido?: boolean;
+  dataConcluidoApontamento?: string;
 }
 
 interface Programacao {
@@ -160,13 +251,14 @@ const gerarLinhasVazias = (count: number) =>
     observacao: ''
   }));
 
-type StatusOP = 'aberta' | 'aguardando_aprovacao' | 'aprovada' | 'em_producao' | 'entregue' | 'cancelada';
+type StatusOP = 'aberta' | 'aguardando_aprovacao' | 'aprovada' | 'em_producao' | 'pronto_expedicao' | 'entregue' | 'cancelada';
 
 const statusConfig: Record<StatusOP, { label: string; color: string }> = {
   aberta:               { label: 'Aberta',              color: 'text-blue-400 border-blue-500/30' },
   aguardando_aprovacao: { label: 'Aguard. Aprovação',   color: 'text-amber-400 border-amber-500/30' },
   aprovada:             { label: 'Aprovada',             color: 'text-emerald-400 border-emerald-500/30' },
   em_producao:          { label: 'Em Produção',          color: 'text-violet-400 border-violet-500/30' },
+  pronto_expedicao:     { label: 'Pronto p/ Expedição', color: 'text-cyan-400 border-cyan-500/30' },
   entregue:             { label: 'Entregue',             color: 'text-emerald-400 border-emerald-500/30' },
   cancelada:            { label: 'Cancelada',            color: 'text-rose-400 border-rose-500/30' },
 };
@@ -309,11 +401,59 @@ export default function PPCPPage() {
     setProgramacoes(prev => prev.map(p => p.id === id ? { ...p, status: 'ativo' } : p));
   };
 
+  const reconciliarStatusOPs = (ops: any[], progs: typeof programacoes) => {
+    // Coleta opNumeros de produtos de MONTAGEM já apontados como concluídos
+    const opsConcluidas = new Set<string>();
+    const opsEmProducaoAtiva = new Set<string>();
+
+    progs.forEach(prog => {
+      if (prog.linha.toUpperCase() !== 'MONTAGEM') return;
+      prog.produtos.forEach(p => {
+        if (!p.opNumero) return;
+        if (p.apontadoConcluido) {
+          opsConcluidas.add(p.opNumero);
+        } else if ((prog.status || 'ativo') === 'ativo') {
+          opsEmProducaoAtiva.add(p.opNumero);
+        }
+      });
+    });
+
+    let alterou = false;
+    const reconciliadas = ops.map(op => {
+      // Se está concluída na montagem → pronto_expedicao
+      if (opsConcluidas.has(op.numero) && op.status !== 'pronto_expedicao') {
+        alterou = true;
+        return { ...op, status: 'pronto_expedicao' };
+      }
+      // Se está em produção ativa na montagem → em_producao
+      if (opsEmProducaoAtiva.has(op.numero) && op.status !== 'em_producao' && op.status !== 'pronto_expedicao') {
+        alterou = true;
+        return { ...op, status: 'em_producao' };
+      }
+      // Se estava como em_producao mas não há nenhuma programação de montagem ativa → volta para aprovada
+      if (op.status === 'em_producao' && !opsEmProducaoAtiva.has(op.numero) && !opsConcluidas.has(op.numero)) {
+        alterou = true;
+        return { ...op, status: 'aprovada' };
+      }
+      return op;
+    });
+
+    if (alterou && typeof window !== 'undefined') {
+      localStorage.setItem('nexus_vendas_ops', JSON.stringify(reconciliadas));
+    }
+    return reconciliadas;
+  };
+
   const carregarDadosIntegrados = () => {
     if (typeof window !== 'undefined') {
       try {
         const opsRaw = localStorage.getItem('nexus_vendas_ops');
-        if (opsRaw) setVendasOps(JSON.parse(opsRaw));
+        if (opsRaw) {
+          const ops = JSON.parse(opsRaw);
+          // Reconcilia status das OPs com base nas programações de montagem atuais
+          const reconciliadas = reconciliarStatusOPs(ops, programacoes);
+          setVendasOps(reconciliadas);
+        }
 
         const estudosRaw = localStorage.getItem('nexus_cronoanalise_estudos');
         if (estudosRaw) setCronoEstudos(JSON.parse(estudosRaw));
@@ -325,6 +465,8 @@ export default function PPCPPage() {
 
   const sincronizarPPCP = () => {
     carregarDadosIntegrados();
+    // Reconcilia também o estado atual em memória
+    setVendasOps(prev => reconciliarStatusOPs(prev, programacoes));
     if (typeof window !== 'undefined') {
       const now = Date.now();
       setUltimoAcesso(now);
@@ -601,21 +743,52 @@ export default function PPCPPage() {
       qtdProduzida: number; 
       statusProducao: 'fila' | 'produzindo' | 'concluido';
       observacao?: string;
-    }
+      operadores?: OperadorSessao[];
+    },
+    confirmarConclusao?: boolean
   ) => {
-    setProgramacoes(prev => prev.map(prog => {
-      if (prog.id !== progId) return prog;
-      return {
-        ...prog,
-        produtos: prog.produtos.map(p => {
-          if (p.id !== produtoId) return p;
-          return {
-            ...p,
-            ...apontamento
-          };
-        })
-      };
-    }));
+    // Busca a programacao e o produto para obter linha e opNumero
+    let linhaSetor = '';
+    let opNumeroProduto = '';
+    setProgramacoes(prev => {
+      const prog = prev.find(p => p.id === progId);
+      if (prog) {
+        linhaSetor = prog.linha;
+        const prod = prog.produtos.find(p => p.id === produtoId);
+        if (prod) opNumeroProduto = prod.opNumero || '';
+      }
+      return prev.map(prog => {
+        if (prog.id !== progId) return prog;
+        return {
+          ...prog,
+          produtos: prog.produtos.map(p => {
+            if (p.id !== produtoId) return p;
+            return {
+              ...p,
+              ...apontamento,
+              auditado: confirmarConclusao ? true : p.auditado,
+              apontadoConcluido: confirmarConclusao ? true : p.apontadoConcluido,
+              dataConcluidoApontamento: confirmarConclusao
+                ? new Date().toISOString()
+                : p.dataConcluidoApontamento
+            };
+          })
+        };
+      });
+    });
+
+    // ESTÁGIO 2: Se montagem concluiu, eleva status da OP para "Pronto p/ Expedição"
+    if (confirmarConclusao && linhaSetor.toUpperCase() === 'MONTAGEM' && opNumeroProduto) {
+      setVendasOps(prev => {
+        const atualizadas = prev.map(o =>
+          o.numero === opNumeroProduto ? { ...o, status: 'pronto_expedicao' } : o
+        );
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('nexus_vendas_ops', JSON.stringify(atualizadas));
+        }
+        return atualizadas;
+      });
+    }
   };
 
   const abrirEditorBOM = (nome: string, codigo: string) => {
@@ -890,9 +1063,11 @@ export default function PPCPPage() {
     const produtosValidos = formData.produtos
       .filter(p => p.produto.trim() !== '' || p.qtdNecessaria > 0)
       .map(p => {
-        const ciclos = Math.ceil(p.qtdNecessaria / (p.pecasPorCiclo || 1));
+        const isCorte = (formData.linha || '').toUpperCase() === 'CORTE';
+        const pecasPorCicloAjustada = isCorte ? (p.pecasPorCiclo || 1) : 1;
+        const ciclos = Math.ceil(p.qtdNecessaria / pecasPorCicloAjustada);
         const tempoNecessario = ciclos * (p.tempoPadrao || 0);
-        const pecasPorHora = p.tempoPadrao > 0 ? ((p.pecasPorCiclo || 1) * 60) / p.tempoPadrao : 0;
+        const pecasPorHora = p.tempoPadrao > 0 ? (pecasPorCicloAjustada * 60) / p.tempoPadrao : 0;
         return { 
           ...p, 
           id: Math.random().toString(36).substr(2, 9),
@@ -917,7 +1092,103 @@ export default function PPCPPage() {
       if (editando) return prev.map(p => p.id === editando.id ? novaProg : p);
       return [...prev, novaProg];
     });
+
     setDialogOpen(false);
+  };
+
+  const enviarParaMontagem = (item: any) => {
+    // Busca a OP completa para obter TODOS os itens
+    const op = vendasOps.find(o => o.numero === item.opNumero);
+    if (!op) return;
+
+    const especificacoes = op.observacoes || '';
+    const targetDate = item.dataEntrega || op.dataEntregaPrevista || new Date().toISOString().split('T')[0];
+
+    // Converte cada item da OP em uma operação separada de montagem
+    const todosProdutos: Produto[] = op.itens.map((opItem: any) => {
+      // Usa dados de cronoanálise se disponível para tempo/ciclo corretos
+      const estudo = cronoEstudos.find((e: any) => e.codigo === opItem.produtoCodigo);
+      let tempoPadrao = 0.81;
+      let pecasPorCiclo = 1;
+      if (estudo) {
+        const tempos = estudo.tomadas
+          .map((t: any) => parseFloat(String(t.tempo || '0').replace(',', '.')) || 0)
+          .filter((v: number) => v > 0);
+        if (tempos.length > 0) {
+          const media = tempos.reduce((a: number, b: number) => a + b, 0) / tempos.length;
+          tempoPadrao = media * (1 + (estudo.fadiga / 100));
+          pecasPorCiclo = estudo.pecasPorCiclo || 1;
+        }
+      }
+      return {
+        id: Math.random().toString(36).substr(2, 9),
+        produto: opItem.produtoNome,
+        codigo: opItem.produtoCodigo,
+        maquina: 'Posto de Montagem 01',
+        pecasPorCiclo,
+        tempoPadrao,
+        qtdNecessaria: opItem.quantidade,
+        auditado: true,
+        statusProducao: 'fila' as const,
+        operador: '',
+        horaInicio: '',
+        horaFim: '',
+        qtdProduzida: 0,
+        observacao: '',
+        cliente: op.cliente,
+        opNumero: op.numero,
+        especificacoes
+      };
+    });
+
+    setProgramacoes(prev => {
+      const progExistente = prev.find(p =>
+        p.linha.toUpperCase() === 'MONTAGEM' &&
+        p.data === targetDate &&
+        (p.status || 'ativo') === 'ativo'
+      );
+
+      let novasProgs;
+      if (progExistente) {
+        // Filtra apenas os que ainda não estão na fila (evita duplicatas)
+        const novos = todosProdutos.filter(np =>
+          !progExistente.produtos.some(p => p.codigo === np.codigo && p.opNumero === np.opNumero)
+        );
+        if (novos.length === 0) {
+          alert(`Todos os ${todosProdutos.length} itens da OP ${op.numero} já estão programados para Montagem!`);
+          return prev;
+        }
+        novasProgs = prev.map(p =>
+          p.id === progExistente.id
+            ? { ...p, produtos: [...p.produtos, ...novos] }
+            : p
+        );
+        alert(`${novos.length} operação(ões) da OP ${op.numero} adicionadas ao programa de Montagem do dia ${new Date(targetDate + 'T00:00:00').toLocaleDateString('pt-BR')}!`);
+      } else {
+        const novaProg: Programacao = {
+          id: Math.random().toString(36).substr(2, 9),
+          data: targetDate,
+          linha: 'MONTAGEM',
+          lider: 'GERALDO PEREIRA',
+          produtos: todosProdutos,
+          status: 'ativo'
+        };
+        novasProgs = [novaProg, ...prev];
+        alert(`Programa de Montagem criado com ${todosProdutos.length} operação(ões) da OP ${op.numero} para ${new Date(targetDate + 'T00:00:00').toLocaleDateString('pt-BR')}!`);
+      }
+      return novasProgs;
+    });
+
+    // ESTÁGIO 1: Atualiza status da OP para "Em Produção"
+    setVendasOps(prev => {
+      const atualizadas = prev.map(o =>
+        o.numero === op.numero ? { ...o, status: 'em_producao' } : o
+      );
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('nexus_vendas_ops', JSON.stringify(atualizadas));
+      }
+      return atualizadas;
+    });
   };
 
   const updateProduto = (index: number, field: keyof Produto, value: string | number) => {
@@ -1193,20 +1464,11 @@ export default function PPCPPage() {
                             
                             // Calculate efficiency real
                             let efReal = null;
-                            if (p.horaInicio && p.horaFim && p.qtdProduzida) {
-                              const parseTimeToMinutes = (timeStr: string) => {
-                                const parts = timeStr.split(':');
-                                if (parts.length !== 2) return null;
-                                const h = parseInt(parts[0], 10);
-                                const m = parseInt(parts[1], 10);
-                                return isNaN(h) || isNaN(m) ? null : h * 60 + m;
-                              };
-                              const minI = parseTimeToMinutes(p.horaInicio);
-                              const minF = parseTimeToMinutes(p.horaFim);
-                              if (minI !== null && minF !== null) {
-                                let diff = minF - minI;
-                                if (diff <= 0) diff += 1440;
-                                const ciclos = p.qtdProduzida / (p.pecasPorCiclo || 1);
+                            if (p.qtdProduzida) {
+                              const diff = obterTempoTrabalhadoOperadores(p.operadores, p.horaInicio, p.horaFim);
+                              if (diff !== null && diff > 0) {
+                                const pecasPorCicloAjustada = isCorte ? (p.pecasPorCiclo || 1) : 1;
+                                const ciclos = p.qtdProduzida / pecasPorCicloAjustada;
                                 const tPad = ciclos * p.tempoPadrao;
                                 efReal = Math.round((tPad / diff) * 100);
                               }
@@ -1222,7 +1484,7 @@ export default function PPCPPage() {
                                 <TableCell className="px-10 py-5 font-black text-sm uppercase text-white tracking-tight flex items-center gap-3 flex-wrap">
                                   {p.produto}
                                   {p.auditado && <CheckCircle className="h-3 w-3 text-emerald-500" />}
-                                  {p.codigo && (
+                                  {p.codigo && (prog.linha || '').toUpperCase() !== 'ACABAMENTO' && (
                                     <Badge 
                                       onClick={() => abrirEditorBOM(p.produto, p.codigo)}
                                       className="bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/30 text-[8px] font-black uppercase tracking-widest px-2 py-0.5 ml-2 cursor-pointer flex items-center gap-1 transition-all"
@@ -1245,6 +1507,25 @@ export default function PPCPPage() {
                                         </Badge>
                                       </Link>
                                     )
+                                  )}
+                                  {(p.cliente || p.opNumero) && (
+                                    <div className="w-full flex flex-wrap gap-2 mt-1.5 items-center">
+                                      {p.cliente && (
+                                        <Badge className="bg-zinc-900 border border-zinc-800 text-gray-400 text-[8px] font-black uppercase tracking-widest px-2 py-0.5">
+                                          Cliente: {p.cliente}
+                                        </Badge>
+                                      )}
+                                      {p.opNumero && (
+                                        <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[8px] font-black uppercase tracking-widest px-2 py-0.5">
+                                          OP: #{p.opNumero}
+                                        </Badge>
+                                      )}
+                                      {p.especificacoes && (
+                                        <span className="text-[9px] text-amber-400/80 font-bold block max-w-md truncate" title={p.especificacoes}>
+                                          Obs: {p.especificacoes}
+                                        </span>
+                                      )}
+                                    </div>
                                   )}
                                 </TableCell>
                                 <TableCell className="text-center font-mono text-[10px] text-gray-500">{p.codigo}</TableCell>
@@ -1288,7 +1569,30 @@ export default function PPCPPage() {
                                   </div>
                                 </TableCell>
                                 <TableCell className="text-center">
-                                  {p.operador ? (
+                                  {p.operadores && p.operadores.length > 0 ? (
+                                    <div className="flex flex-col items-center gap-1">
+                                      <div className="flex flex-col items-center gap-0.5 max-h-[100px] overflow-y-auto pr-1">
+                                        {p.operadores.map((op) => (
+                                          <div key={op.id} className="flex flex-col items-center border-b border-white/5 pb-1 last:border-b-0">
+                                            <span className="text-[10px] font-black text-amber-400 uppercase tracking-tight">{op.nome || 'Sem Nome'}</span>
+                                            {op.horaInicio && op.horaFim && (
+                                              <span className="text-[8px] text-gray-500 font-mono">({op.horaInicio} - {op.horaFim})</span>
+                                            )}
+                                          </div>
+                                        ))}
+                                      </div>
+                                      {efReal !== null && (
+                                        <Badge className={cn(
+                                          "text-[8px] font-black mt-1 px-1.5 py-0",
+                                          efReal >= 100 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" :
+                                          efReal >= 80 ? "bg-amber-500/10 text-amber-400 border-amber-500/30" :
+                                          "bg-rose-500/10 text-rose-400 border-rose-500/30"
+                                        )}>
+                                          {efReal}% Efic.
+                                        </Badge>
+                                      )}
+                                    </div>
+                                  ) : p.operador ? (
                                     <div className="flex flex-col items-center gap-0.5">
                                       <span className="text-[11px] font-black text-amber-400 uppercase tracking-tight">{p.operador}</span>
                                       <span className="text-[9px] text-gray-500 font-mono">({p.horaInicio} - {p.horaFim})</span>
@@ -1394,21 +1698,13 @@ export default function PPCPPage() {
                           let totalRealMinutes = 0;
                           let totalStandardMinutes = 0;
                           prog.produtos.forEach(p => {
-                            if (p.horaInicio && p.horaFim && p.qtdProduzida) {
-                              const parseTimeToMinutes = (timeStr: string) => {
-                                const parts = timeStr.split(':');
-                                if (parts.length !== 2) return null;
-                                const h = parseInt(parts[0], 10);
-                                const m = parseInt(parts[1], 10);
-                                return isNaN(h) || isNaN(m) ? null : h * 60 + m;
-                              };
-                              const minI = parseTimeToMinutes(p.horaInicio);
-                              const minF = parseTimeToMinutes(p.horaFim);
-                              if (minI !== null && minF !== null) {
-                                let diff = minF - minI;
-                                if (diff <= 0) diff += 1440;
+                            if (p.qtdProduzida) {
+                              const diff = obterTempoTrabalhadoOperadores(p.operadores, p.horaInicio, p.horaFim);
+                              if (diff !== null && diff > 0) {
                                 totalRealMinutes += diff;
-                                const ciclos = p.qtdProduzida / (p.pecasPorCiclo || 1);
+                                const isCorte = (prog.linha || '').toUpperCase() === 'CORTE';
+                                const pecasPorCicloAjustada = isCorte ? (p.pecasPorCiclo || 1) : 1;
+                                const ciclos = p.qtdProduzida / pecasPorCicloAjustada;
                                 totalStandardMinutes += ciclos * p.tempoPadrao;
                               }
                             }
@@ -1571,17 +1867,18 @@ export default function PPCPPage() {
                 <Table>
                   <TableHeader className="bg-amber-500/5">
                     <TableRow className="border-amber-500/10 hover:bg-transparent">
-                      <TableHead className="px-8 py-5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap min-w-[100px]">Nº OP</TableHead>
-                      <TableHead className="text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Cliente</TableHead>
-                      <TableHead className="text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Produto / Operação</TableHead>
-                      <TableHead className="text-center pl-6 pr-16 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap">Código</TableHead>
-                      <TableHead className="text-center pl-16 pr-6 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Qtd</TableHead>
-                      <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Pçs/Ciclo</TableHead>
-                      <TableHead className="text-right pr-4 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap">Tempo Base (min)</TableHead>
-                      <TableHead className="text-right pl-2 pr-10 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap">Tempo Total (min)</TableHead>
-                      <TableHead className="text-left px-4 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Detalhes de Produção (BOM)</TableHead>
-                      <TableHead className="text-center px-4 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap">Regra de Corte</TableHead>
-                      <TableHead className="text-center px-8 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Status OP</TableHead>
+                      <TableHead className="px-4 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap min-w-[90px]">Nº OP</TableHead>
+                      <TableHead className="px-3 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Cliente</TableHead>
+                      <TableHead className="px-3 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Produto / Operação</TableHead>
+                      <TableHead className="text-center px-3 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap">Código</TableHead>
+                      <TableHead className="text-center px-2 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] max-w-[50px] leading-tight">Qtd</TableHead>
+                      <TableHead className="text-center px-2 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] max-w-[60px] leading-tight">Pçs/<br/>Ciclo</TableHead>
+                      <TableHead className="text-right px-2 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] max-w-[80px] leading-tight">Tempo Base<br/>(min)</TableHead>
+                      <TableHead className="text-right px-2 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] max-w-[80px] leading-tight">Tempo Total<br/>(min)</TableHead>
+                      <TableHead className="text-left px-3 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] max-w-[120px] leading-tight">Detalhes Prod.<br/>(BOM)</TableHead>
+                      <TableHead className="text-center px-2 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] max-w-[80px] leading-tight">Regra de<br/>Corte</TableHead>
+                      <TableHead className="text-center px-3 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] max-w-[80px] leading-tight">Status<br/>OP</TableHead>
+                      <TableHead className="text-center px-3 py-2.5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em] whitespace-nowrap max-w-[100px] leading-tight">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1596,7 +1893,7 @@ export default function PPCPPage() {
                             isNew && "bg-violet-950/10 border-l-[3px] border-l-violet-500/80 shadow-[inset_4px_0_10px_rgba(139,92,246,0.05)]"
                           )}
                         >
-                          <TableCell className="px-8 py-5 font-mono text-xs text-amber-300 font-bold whitespace-nowrap flex items-center">
+                          <TableCell className="px-4 py-2 font-mono text-xs text-amber-300 font-bold whitespace-nowrap flex items-center">
                             {item.opNumero}
                             {isNew && (
                               <span className="inline-flex items-center px-1.5 py-0.5 rounded-md text-[8px] font-black bg-violet-600 text-white uppercase tracking-widest animate-[pulse_1s_infinite] ml-2 shadow-[0_0_10px_rgba(139,92,246,0.5)]">
@@ -1604,16 +1901,16 @@ export default function PPCPPage() {
                               </span>
                             )}
                           </TableCell>
-                          <TableCell className="font-bold text-gray-300 text-xs uppercase">{item.cliente}</TableCell>
-                          <TableCell className="font-black text-sm uppercase text-white tracking-tight">{item.produtoNome}</TableCell>
-                          <TableCell className="text-center pl-6 pr-16 font-mono text-[10px] text-gray-500 whitespace-nowrap">{item.produtoCodigo}</TableCell>
-                          <TableCell className="text-center pl-16 pr-6 font-bold text-gray-300 text-base">{item.quantidade.toLocaleString()}</TableCell>
-                          <TableCell className="text-center"><Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 font-black text-[10px] px-3">{item.pecasPorCiclo}x</Badge></TableCell>
-                          <TableCell className="text-right pr-4 font-black text-white text-sm">{item.tempoPadrao.toFixed(3)}</TableCell>
-                          <TableCell className="text-right pl-2 pr-10 font-black text-amber-400 text-base">
+                          <TableCell className="px-3 py-2 font-bold text-gray-300 text-xs uppercase">{item.cliente}</TableCell>
+                          <TableCell className="px-3 py-2 font-black text-xs uppercase text-white tracking-tight">{item.produtoNome}</TableCell>
+                          <TableCell className="text-center px-3 py-2 font-mono text-[10px] text-gray-500 whitespace-nowrap">{item.produtoCodigo}</TableCell>
+                          <TableCell className="text-center px-2 py-2 font-bold text-gray-300 text-xs">{item.quantidade.toLocaleString()}</TableCell>
+                          <TableCell className="text-center px-2 py-2"><Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 font-black text-[9px] px-2 py-0.5">{item.pecasPorCiclo}x</Badge></TableCell>
+                          <TableCell className="text-right px-2 py-2 font-black text-white text-xs">{item.tempoPadrao.toFixed(3)}</TableCell>
+                          <TableCell className="text-right px-2 py-2 font-black text-amber-400 text-xs">
                             {item.tempoTotal.toFixed(1)}
                           </TableCell>
-                          <TableCell className="text-left font-mono text-[9px] text-amber-500/70 max-w-sm px-4 leading-relaxed">
+                          <TableCell className="text-left font-mono text-[9px] text-amber-500/70 max-w-sm px-3 py-2 leading-relaxed">
                             {(() => {
                               const trigger = bomUpdateTrigger;
                               let count = 0;
@@ -1630,23 +1927,23 @@ export default function PPCPPage() {
                                 count = BOM_DATABASE[code].length;
                               }
                               return (
-                                <div className="py-1">
+                                <div className="py-0.5">
                                   <Button 
                                     size="sm" 
                                     variant="outline" 
                                     onClick={() => abrirEditorBOM(item.produtoNome, item.produtoCodigo)}
-                                    className="border-amber-500/20 hover:border-amber-500/55 text-amber-400 text-[10px] font-black uppercase h-7 rounded-lg w-fit px-2.5 flex items-center gap-1.5"
+                                    className="border-amber-500/20 hover:border-amber-500/55 text-amber-400 text-[9px] font-black uppercase h-6 rounded-lg w-fit px-2 flex items-center gap-1"
                                   >
-                                    <Settings2 className="h-3.5 w-3.5" />
+                                    <Settings2 className="h-3 w-3" />
                                     Estrutura ({count || 2} itens)
                                   </Button>
                                 </div>
                               );
                             })()}
                           </TableCell>
-                          <TableCell className="text-center px-4">
+                          <TableCell className="text-center px-2 py-2">
                             {(() => {
-                              if (!item.createdAt) return <span className="text-gray-600 text-[10px]">—</span>;
+                              if (!item.createdAt) return <span className="text-gray-600 text-[9px]">—</span>;
                               const date = new Date(item.createdAt);
                               const hour = date.getHours();
                               const minutes = date.getMinutes();
@@ -1654,24 +1951,55 @@ export default function PPCPPage() {
                               
                               const isAfterCutoff = hour >= 12;
                               return (
-                                <div className="flex flex-col items-center gap-1 justify-center">
+                                <div className="flex flex-col items-center gap-0.5 justify-center">
                                   <Badge className={cn(
-                                    "text-[8px] font-black uppercase py-0.5 px-2 bg-transparent border",
+                                    "text-[7px] font-black uppercase py-0.5 px-1.5 bg-transparent border",
                                     isAfterCutoff 
-                                      ? "text-rose-400 border-rose-500/30 shadow-[0_0_10px_rgba(244,63,94,0.05)]" 
-                                      : "text-emerald-400 border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.05)]"
+                                      ? "text-rose-400 border-rose-500/30" 
+                                      : "text-emerald-400 border-emerald-500/30"
                                   )}>
-                                    {isAfterCutoff ? 'Pós-Corte (Amanhã)' : 'Pré-Corte (Hoje)'}
+                                    {isAfterCutoff ? 'Pós-Corte' : 'Pré-Corte'}
                                   </Badge>
-                                  <span className="text-[8px] text-gray-500 font-mono">Enviado: {timeStr}</span>
+                                  <span className="text-[7px] text-gray-500 font-mono">Enviado: {timeStr}</span>
                                 </div>
                               );
                             })()}
                           </TableCell>
-                          <TableCell className="text-center px-8">
-                            <Badge className={cn('border bg-transparent text-[8px] font-black uppercase py-0.5', st.color)}>
+                          <TableCell className="text-center px-3 py-2">
+                            <Badge className={cn('border bg-transparent text-[7px] font-black uppercase py-0.5 px-1.5', st.color)}>
                               {st.label}
                             </Badge>
+                          </TableCell>
+                          <TableCell className="text-center px-3 py-2 whitespace-nowrap">
+                            {(() => {
+                              const emProducao = item.status === 'em_producao';
+                              const prontoExpedir = item.status === 'pronto_expedicao';
+                              const bloqueado = emProducao || prontoExpedir;
+                              return (
+                                <Button
+                                  onClick={() => !bloqueado && enviarParaMontagem(item)}
+                                  disabled={bloqueado}
+                                  size="sm"
+                                  title={emProducao ? 'Item já está Em Produção na Montagem' : prontoExpedir ? 'Item concluído — Pronto para Expedição' : 'Enviar para fila de Montagem'}
+                                  className={cn(
+                                    "text-[8px] font-black uppercase tracking-widest px-2.5 h-7 rounded-lg transition-all",
+                                    emProducao
+                                      ? "bg-violet-900/40 text-violet-400 border border-violet-500/30 cursor-not-allowed opacity-70"
+                                      : prontoExpedir
+                                      ? "bg-cyan-900/40 text-cyan-400 border border-cyan-500/30 cursor-not-allowed opacity-70"
+                                      : "bg-blue-600 hover:bg-blue-500 text-white shadow-md"
+                                  )}
+                                >
+                                  {emProducao ? (
+                                    <><Factory className="h-3 w-3 mr-1" />Em Produção</>
+                                  ) : prontoExpedir ? (
+                                    <><ShieldCheck className="h-3 w-3 mr-1" />Pronto p/ Expedir</>
+                                  ) : (
+                                    'Programar Montagem'
+                                  )}
+                                </Button>
+                              );
+                            })()}
                           </TableCell>
                         </TableRow>
                       );
@@ -1744,24 +2072,32 @@ export default function PPCPPage() {
                       </Badge>
                     </div>
 
-                    {/* GRUPO DE CARDS DE APONTAMENTO */}
-                    <div className="grid grid-cols-1 gap-4">
-                      {prog.produtos.map(p => {
-                        const matchingOp = vendasOps.find(op => 
-                          op.itens && op.itens.some((item: any) => item.produtoCodigo === p.codigo)
-                        );
-                        return (
-                          <CardApontamento 
-                            key={p.id}
-                            progId={prog.id}
-                            linha={prog.linha}
-                            produto={p}
-                            onSalvar={salvarApontamento}
-                            matchingOp={matchingOp}
-                          />
-                        );
-                      })}
-                    </div>
+                    {/* GRUPO DE CARDS DE APONTAMENTO — oculta itens já concluídos pelo líder */}
+                    {prog.produtos.filter(p => !p.apontadoConcluido).length === 0 ? (
+                      <div className="flex flex-col items-center justify-center py-12 gap-3">
+                        <ShieldCheck className="h-10 w-10 text-emerald-500/40" />
+                        <p className="text-emerald-400/60 font-black uppercase text-xs tracking-widest">Todos os itens concluídos e enviados ao PPCP</p>
+                        <p className="text-gray-600 text-[10px]">Aguardando próxima programação do setor.</p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 gap-4">
+                        {prog.produtos.filter(p => !p.apontadoConcluido).map(p => {
+                          const matchingOp = vendasOps.find(op => 
+                            op.itens && op.itens.some((item: any) => item.produtoCodigo === p.codigo)
+                          );
+                          return (
+                            <CardApontamento 
+                              key={p.id}
+                              progId={prog.id}
+                              linha={prog.linha}
+                              produto={p}
+                              onSalvar={salvarApontamento}
+                              matchingOp={matchingOp}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 ))
             )}
@@ -2347,21 +2683,13 @@ export default function PPCPPage() {
                     let totalReal = 0;
                     let totalStd = 0;
                     viewingHistoryProg?.produtos.forEach(p => {
-                      if (p.horaInicio && p.horaFim && p.qtdProduzida) {
-                        const parseTimeToMinutes = (timeStr: string) => {
-                          const parts = timeStr.split(':');
-                          if (parts.length !== 2) return null;
-                          const h = parseInt(parts[0], 10);
-                          const m = parseInt(parts[1], 10);
-                          return isNaN(h) || isNaN(m) ? null : h * 60 + m;
-                        };
-                        const minI = parseTimeToMinutes(p.horaInicio);
-                        const minF = parseTimeToMinutes(p.horaFim);
-                        if (minI !== null && minF !== null) {
-                          let diff = minF - minI;
-                          if (diff <= 0) diff += 1440;
+                      if (p.qtdProduzida) {
+                        const diff = obterTempoTrabalhadoOperadores(p.operadores, p.horaInicio, p.horaFim);
+                        if (diff !== null && diff > 0) {
                           totalReal += diff;
-                          const ciclos = p.qtdProduzida / (p.pecasPorCiclo || 1);
+                          const isCorte = (viewingHistoryProg?.linha || '').toUpperCase() === 'CORTE';
+                          const pecasPorCicloAjustada = isCorte ? (p.pecasPorCiclo || 1) : 1;
+                          const ciclos = p.qtdProduzida / pecasPorCicloAjustada;
                           totalStd += ciclos * p.tempoPadrao;
                         }
                       }
@@ -2376,49 +2704,86 @@ export default function PPCPPage() {
                       <p className="text-2xl font-black text-gray-600 italic">—</p>
                     );
                   })()}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="rounded-2xl border border-white/5 overflow-hidden">
-              <Table>
-                <TableHeader className="bg-white/5">
-                  <TableRow className="border-white/5 hover:bg-transparent">
-                    <TableHead className="px-6 py-4 text-[8px] font-black uppercase text-gray-500 tracking-wider">Item Produzido</TableHead>
-                    <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Código</TableHead>
-                    <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Qtd Produzida / Meta</TableHead>
-                    <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Operador</TableHead>
-                    <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Horários (I - F)</TableHead>
-                    <TableHead className="text-right px-6 text-[8px] font-black uppercase text-gray-500 tracking-wider">Tempo (min)</TableHead>
-                    <TableHead className="text-left px-6 text-[8px] font-black uppercase text-gray-500 tracking-wider w-full min-w-[200px]">Observação</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {viewingHistoryProg?.produtos.map((p) => {
-                    const c = calcularLinha(p, viewingHistoryProg.linha);
-                    const isCorte = (viewingHistoryProg.linha || '').toUpperCase() === 'CORTE';
-                    const targetQtd = isCorte ? c.ciclos * (p.pecasPorCiclo || 1) : p.qtdNecessaria;
-                    return (
-                      <TableRow key={p.id} className="border-white/5 hover:bg-white/5">
-                        <TableCell className="px-6 py-4 font-bold text-xs uppercase text-white truncate max-w-[200px]">{p.produto}</TableCell>
-                        <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.codigo}</TableCell>
-                        <TableCell className="text-center font-bold text-white text-xs">
-                          <div>
-                            <span>{p.qtdProduzida || 0} / {targetQtd}</span>
-                            {isCorte && targetQtd - p.qtdNecessaria > 0 && (
-                              <span className="block text-[8px] text-emerald-400 font-semibold mt-0.5">(Sobra: +{targetQtd - p.qtdNecessaria})</span>
+              <div className="rounded-2xl border border-white/5 overflow-hidden">
+                <Table>
+                  <TableHeader className="bg-white/5">
+                    <TableRow className="border-white/5 hover:bg-transparent">
+                      <TableHead className="px-6 py-4 text-[8px] font-black uppercase text-gray-500 tracking-wider">Item Produzido</TableHead>
+                      <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Código</TableHead>
+                      <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Qtd Produzida / Meta</TableHead>
+                      <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Operador</TableHead>
+                      <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Horários (I - F)</TableHead>
+                      <TableHead className="text-right px-6 text-[8px] font-black uppercase text-gray-500 tracking-wider">Tempo (min)</TableHead>
+                      <TableHead className="text-left px-6 text-[8px] font-black uppercase text-gray-500 tracking-wider w-full min-w-[200px]">Observação</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {viewingHistoryProg?.produtos.map((p) => {
+                      const c = calcularLinha(p, viewingHistoryProg.linha);
+                      const isCorte = (viewingHistoryProg.linha || '').toUpperCase() === 'CORTE';
+                      const targetQtd = isCorte ? c.ciclos * (p.pecasPorCiclo || 1) : p.qtdNecessaria;
+                      return (
+                        <TableRow key={p.id} className="border-white/5 hover:bg-white/5">
+                          <TableCell className="px-6 py-4">
+                            <span className="font-bold text-xs uppercase text-white block truncate max-w-[200px]" title={p.produto}>{p.produto}</span>
+                            {(p.cliente || p.opNumero) && (
+                              <div className="flex flex-wrap gap-1.5 mt-1 items-center">
+                                {p.cliente && (
+                                  <Badge className="bg-zinc-900 border border-zinc-800 text-gray-400 text-[7px] font-black uppercase tracking-widest px-1.5 py-0">
+                                    Cli: {p.cliente}
+                                  </Badge>
+                                )}
+                                {p.opNumero && (
+                                  <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[7px] font-black uppercase tracking-widest px-1.5 py-0">
+                                    OP: #{p.opNumero}
+                                  </Badge>
+                                )}
+                                {p.especificacoes && (
+                                  <span className="text-[8px] text-amber-500/60 font-bold block max-w-[150px] truncate" title={p.especificacoes}>
+                                    Obs: {p.especificacoes}
+                                  </span>
+                                )}
+                              </div>
                             )}
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center font-bold text-amber-400 text-[10px] uppercase">{p.operador || '—'}</TableCell>
-                        <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.horaInicio && p.horaFim ? `${p.horaInicio} - ${p.horaFim}` : '—'}</TableCell>
-                        <TableCell className="text-right px-6 font-bold text-gray-300 text-xs">{c.tempoNecessario.toFixed(1)}</TableCell>
-                        <TableCell className="text-left px-6 text-xs text-gray-400 font-medium truncate max-w-[200px]" title={p.observacao || ''}>
-                          {p.observacao || '—'}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
+                          </TableCell>
+                          <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.codigo}</TableCell>
+                          <TableCell className="text-center font-bold text-white text-xs">
+                            <div>
+                              <span>{p.qtdProduzida || 0} / {targetQtd}</span>
+                              {isCorte && targetQtd - p.qtdNecessaria > 0 && (
+                                <span className="block text-[8px] text-emerald-400 font-semibold mt-0.5">(Sobra: +{targetQtd - p.qtdNecessaria})</span>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-center font-bold text-amber-400 text-[10px] uppercase">
+                            {p.operadores && p.operadores.length > 0 ? (
+                              <div className="flex flex-col items-center gap-0.5">
+                                {p.operadores.map((op) => (
+                                  <span key={op.id} className="block text-[9px] font-black text-amber-400 uppercase tracking-tight">{op.nome || 'Sem Nome'}</span>
+                                ))}
+                              </div>
+                            ) : p.operador || '—'}
+                          </TableCell>
+                          <TableCell className="text-center font-mono text-[9px] text-gray-500">
+                            {p.operadores && p.operadores.length > 0 ? (
+                              <div className="flex flex-col items-center gap-0.5">
+                                {p.operadores.map((op) => (
+                                  <span key={op.id} className="block text-[8px] font-mono text-gray-500">{op.horaInicio && op.horaFim ? `${op.horaInicio} - ${op.horaFim}` : '—'}</span>
+                                ))}
+                              </div>
+                            ) : p.horaInicio && p.horaFim ? `${p.horaInicio} - ${p.horaFim}` : '—'}
+                          </TableCell>
+                          <TableCell className="text-right px-6 font-bold text-gray-300 text-xs">{c.tempoNecessario.toFixed(1)}</TableCell>
+                          <TableCell className="text-left px-6 text-xs text-gray-400 font-medium truncate max-w-[200px]" title={p.observacao || ''}>
+                            {p.observacao || '—'}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                 </TableBody>
               </Table>
             </div>
@@ -2439,6 +2804,27 @@ export default function PPCPPage() {
   );
 }
 
+const formatarHora = (value: string) => {
+  let digits = value.replace(/\D/g, '');
+  if (digits.length === 1 && parseInt(digits, 10) > 2) {
+    digits = '0' + digits;
+  }
+  digits = digits.slice(0, 4);
+  if (digits.length >= 2) {
+    let hh = parseInt(digits.slice(0, 2), 10);
+    if (hh > 23) hh = 23;
+    const hhStr = hh.toString().padStart(2, '0');
+    if (digits.length > 2) {
+      let mm = parseInt(digits.slice(2), 10);
+      if (mm > 59) mm = 59;
+      const mmStr = mm.toString().padStart(digits.length - 2, '0');
+      return `${hhStr}:${mmStr}`;
+    }
+    return hhStr;
+  }
+  return digits;
+};
+
 interface CardApontamentoProps {
   progId: string;
   linha: string;
@@ -2453,28 +2839,26 @@ interface CardApontamentoProps {
       qtdProduzida: number; 
       statusProducao: 'fila' | 'produzindo' | 'concluido';
       observacao?: string;
-    }
+      operadores?: OperadorSessao[];
+    },
+    confirmarConclusao?: boolean
   ) => void;
   matchingOp?: any;
 }
 
 function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardApontamentoProps) {
   const isCorte = (linha || '').toUpperCase() === 'CORTE';
+  const isAcabamento = (linha || '').toUpperCase() === 'ACABAMENTO';
+  const shouldStackInfo = ['ACABAMENTO', 'SOLDA', 'MONTAGEM'].includes((linha || '').toUpperCase());
   const pecasPorCicloAjustada = isCorte ? (produto.pecasPorCiclo || 1) : 1;
   const ciclosAlvo = Math.ceil(produto.qtdNecessaria / pecasPorCicloAjustada);
   const qtdAjustadaCiclos = isCorte ? ciclosAlvo * pecasPorCicloAjustada : produto.qtdNecessaria;
 
-  const [operador, setOperador] = useState(produto.operador || '');
-  const [horaInicio, setHoraInicio] = useState(produto.horaInicio || '');
-  const [horaFim, setHoraFim] = useState(produto.horaFim || '');
-  const [qtdProduzida, setQtdProduzida] = useState(
-    produto.qtdProduzida !== undefined && produto.qtdProduzida > 0 
-      ? produto.qtdProduzida 
-      : qtdAjustadaCiclos
-  );
+  const [operadores, setOperadores] = useState<OperadorSessao[]>([]);
   const [statusProducao, setStatusProducao] = useState<'fila' | 'produzindo' | 'concluido'>(produto.statusProducao || 'fila');
   const [observacao, setObservacao] = useState(produto.observacao || '');
   const [salvo, setSalvo] = useState(false);
+  const [confirmarDialogOpen, setConfirmarDialogOpen] = useState(false);
 
   useEffect(() => {
     const targetCorte = (linha || '').toUpperCase() === 'CORTE';
@@ -2482,10 +2866,23 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
     const targetCiclos = Math.ceil(produto.qtdNecessaria / targetPcs);
     const targetQtd = targetCorte ? targetCiclos * targetPcs : produto.qtdNecessaria;
 
-    setOperador(produto.operador || '');
-    setHoraInicio(produto.horaInicio || '');
-    setHoraFim(produto.horaFim || '');
-    setQtdProduzida(produto.qtdProduzida !== undefined && produto.qtdProduzida > 0 ? produto.qtdProduzida : targetQtd);
+    if (produto.operadores && produto.operadores.length > 0) {
+      setOperadores(produto.operadores.map(op => ({
+        ...op,
+        qtdProduzida: op.qtdProduzida !== undefined ? op.qtdProduzida : 0
+      })));
+    } else {
+      setOperadores([
+        {
+          id: 'op-' + Math.random().toString(36).substr(2, 9),
+          nome: produto.operador || '',
+          horaInicio: produto.horaInicio || '',
+          horaFim: produto.horaFim || '',
+          qtdProduzida: produto.qtdProduzida !== undefined && produto.qtdProduzida > 0 ? produto.qtdProduzida : targetQtd
+        }
+      ]);
+    }
+
     setStatusProducao(produto.statusProducao || 'fila');
     setObservacao(produto.observacao || '');
     setSalvo(false);
@@ -2493,29 +2890,45 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
 
   const tempoAlvoMinutos = ciclosAlvo * (produto.tempoPadrao || 0);
 
+  const adicionarOperador = () => {
+    setOperadores(prev => [
+      ...prev,
+      {
+        id: 'op-' + Math.random().toString(36).substr(2, 9),
+        nome: '',
+        horaInicio: '',
+        horaFim: '',
+        qtdProduzida: 0
+      }
+    ]);
+  };
+
+  const removerOperador = (id: string) => {
+    setOperadores(prev => {
+      if (prev.length <= 1) return prev;
+      return prev.filter(op => op.id !== id);
+    });
+  };
+
+  const atualizarOperador = (id: string, campo: keyof OperadorSessao, valor: any) => {
+    setOperadores(prev => prev.map(op => {
+      if (op.id === id) {
+        return { ...op, [campo]: valor };
+      }
+      return op;
+    }));
+  };
+
   const efInfo = useMemo(() => {
-    if (!horaInicio || !horaFim || !qtdProduzida) return null;
+    const totalQtd = operadores.reduce((acc, op) => acc + (op.qtdProduzida || 0), 0);
+    if (!totalQtd) return null;
     
-    const parseTimeToMinutes = (timeStr: string) => {
-      const parts = timeStr.split(':');
-      if (parts.length !== 2) return null;
-      const hours = parseInt(parts[0], 10);
-      const minutes = parseInt(parts[1], 10);
-      if (isNaN(hours) || isNaN(minutes)) return null;
-      return hours * 60 + minutes;
-    };
+    const tempoTrabalhado = obterTempoTrabalhadoOperadores(operadores);
+    if (tempoTrabalhado === null || tempoTrabalhado <= 0) return null;
     
-    const minInicio = parseTimeToMinutes(horaInicio);
-    const minFim = parseTimeToMinutes(horaFim);
-    
-    if (minInicio === null || minFim === null) return null;
-    
-    let tempoTrabalhado = minFim - minInicio;
-    if (tempoTrabalhado <= 0) {
-      tempoTrabalhado += 1440; // overnight
-    }
-    
-    const ciclos = qtdProduzida / (produto.pecasPorCiclo || 1);
+    const isCorte = (linha || '').toUpperCase() === 'CORTE';
+    const pecasPorCicloAjustada = isCorte ? (produto.pecasPorCiclo || 1) : 1;
+    const ciclos = totalQtd / pecasPorCicloAjustada;
     const tempoPadraoMinutos = ciclos * produto.tempoPadrao;
     const eficiencia = (tempoPadraoMinutos / tempoTrabalhado) * 100;
     
@@ -2524,19 +2937,28 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
       tempoPadraoMinutos,
       eficiencia: parseFloat(eficiencia.toFixed(1))
     };
-  }, [horaInicio, horaFim, qtdProduzida, produto.pecasPorCiclo, produto.tempoPadrao]);
+  }, [operadores, produto.pecasPorCiclo, produto.tempoPadrao, linha]);
 
   const handleSalvar = () => {
+    // Só abre confirmação se status for concluido
+    if (statusProducao === 'concluido') {
+      setConfirmarDialogOpen(true);
+    }
+  };
+
+  const handleConfirmarConclusao = () => {
+    const totalQtd = operadores.reduce((acc, op) => acc + (op.qtdProduzida || 0), 0);
     onSalvar(progId, produto.id, {
-      operador,
-      horaInicio,
-      horaFim,
-      qtdProduzida,
+      operador: operadores[0]?.nome || '',
+      horaInicio: operadores[0]?.horaInicio || '',
+      horaFim: operadores[0]?.horaFim || '',
+      operadores,
+      qtdProduzida: totalQtd,
       statusProducao,
       observacao
-    });
+    }, true);
+    setConfirmarDialogOpen(false);
     setSalvo(true);
-    setTimeout(() => setSalvo(false), 2000);
   };
 
   return (
@@ -2546,7 +2968,7 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
       statusProducao === 'produzindo' ? "bg-violet-950/20 border-violet-500/30 shadow-[0_0_15px_rgba(139,92,246,0.05)]" :
       "bg-zinc-950/60 border-amber-500/10 hover:border-amber-500/20"
     )}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6">
         {/* ESQUERDA: INFORMAÇÃO PROGRAMADA */}
         <div className="space-y-4 pr-0 lg:pr-6 border-b lg:border-b-0 lg:border-r border-zinc-800/60 pb-6 lg:pb-0">
           <div className="flex justify-between items-start">
@@ -2571,13 +2993,32 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
                   )
                 )}
               </h4>
+              {(produto.cliente || produto.opNumero) && (
+                <div className="flex flex-wrap gap-2 mt-2 items-center">
+                  {produto.cliente && (
+                    <Badge className="bg-zinc-900 border border-zinc-800 text-gray-400 text-[8px] font-black uppercase tracking-widest px-2 py-0.5">
+                      Cliente: {produto.cliente}
+                    </Badge>
+                  )}
+                  {produto.opNumero && (
+                    <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[8px] font-black uppercase tracking-widest px-2 py-0.5">
+                      OP: #{produto.opNumero}
+                    </Badge>
+                  )}
+                  {produto.especificacoes && (
+                    <span className="text-[9px] text-amber-400/80 font-bold block max-w-xs truncate" title={produto.especificacoes}>
+                      Obs: {produto.especificacoes}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
             <Badge className="bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono text-[9px] px-2 py-0.5">
               {produto.codigo}
             </Badge>
           </div>
-
-          <div className="grid grid-cols-3 gap-3">
+ 
+          <div className={cn("grid gap-3", shouldStackInfo ? "grid-cols-1" : "grid-cols-3")}>
             <div className="p-3 bg-black/40 border border-white/5 rounded-2xl">
               <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Meta (Ajustada)</span>
               <p className="text-lg font-black text-white italic mt-0.5">{qtdAjustadaCiclos.toLocaleString('pt-BR')}</p>
@@ -2607,9 +3048,10 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
             <Settings2 className="h-3.5 w-3.5" />
             <span>Posto de Trabalho: <strong className="text-gray-300 uppercase">{produto.maquina || 'Bancada Padrão'}</strong></span>
           </div>
-
+ 
           {/* COMPONENTES / BOM DA ORDEM */}
           {(() => {
+            if (isAcabamento) return null;
             const bomItems = obterItensBOM(produto.codigo);
             if (bomItems.length === 0) return null;
             return (
@@ -2632,7 +3074,7 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
             );
           })()}
         </div>
-
+ 
         {/* DIREITA: APONTAMENTO DO OPERADOR */}
         <div className="space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
@@ -2657,68 +3099,104 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
                 ))}
               </div>
             </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="col-span-2 space-y-1.5">
-                <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Operador</Label>
-                <Input 
-                  placeholder="Nome do Operador" 
-                  value={operador} 
-                  onChange={e => setOperador(e.target.value.toUpperCase())}
-                  className="bg-black/60 border border-white/10 h-9 rounded-xl text-xs font-bold uppercase text-white"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Hora Início</Label>
-                <Input 
-                  placeholder="07:30" 
-                  value={horaInicio} 
-                  onChange={e => setHoraInicio(e.target.value)}
-                  className="bg-black/60 border border-white/10 h-9 rounded-xl text-center text-xs font-mono font-bold text-white"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Hora Fim</Label>
-                <Input 
-                  placeholder="12:00" 
-                  value={horaFim} 
-                  onChange={e => setHoraFim(e.target.value)}
-                  className="bg-black/60 border border-white/10 h-9 rounded-xl text-center text-xs font-mono font-bold text-white"
-                />
-              </div>
+ 
+            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-amber-500/20">
+              {operadores.map((op, index) => (
+                <div key={op.id} className="p-3 bg-black/35 border border-white/5 rounded-2xl relative space-y-2 hover:border-amber-500/10 transition-colors">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[9px] font-black uppercase text-gray-500 tracking-wider">Operador #{index + 1}</span>
+                    {operadores.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removerOperador(op.id)}
+                        className="text-rose-500 hover:text-rose-400 hover:bg-rose-500/10 p-1.5 rounded-lg transition-all"
+                        title="Remover Operador"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-6 gap-2 items-end">
+                    <div className="sm:col-span-2 space-y-1">
+                      <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Operador</Label>
+                      <Input
+                        placeholder="Nome"
+                        value={op.nome}
+                        onChange={e => atualizarOperador(op.id, 'nome', e.target.value.toUpperCase())}
+                        className="bg-black/60 border border-white/10 h-8 rounded-lg text-xs font-bold uppercase text-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Início</Label>
+                      <Input
+                        placeholder="07:30"
+                        value={op.horaInicio}
+                        onChange={e => atualizarOperador(op.id, 'horaInicio', formatarHora(e.target.value))}
+                        className="bg-black/60 border border-white/10 h-8 rounded-lg text-center text-xs font-mono font-bold text-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Fim</Label>
+                      <Input
+                        placeholder="12:00"
+                        value={op.horaFim}
+                        onChange={e => atualizarOperador(op.id, 'horaFim', formatarHora(e.target.value))}
+                        className="bg-black/60 border border-white/10 h-8 rounded-lg text-center text-xs font-mono font-bold text-white"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Qtd Prod.</Label>
+                      <Input
+                        type="number"
+                        placeholder="0"
+                        value={op.qtdProduzida || ''}
+                        onChange={e => atualizarOperador(op.id, 'qtdProduzida', Number(e.target.value))}
+                        className="bg-black/60 border border-white/10 h-8 rounded-lg text-center text-xs font-bold text-emerald-400"
+                      />
+                    </div>
+                    {/* EFICIÊNCIA INLINE */}
+                    <div className="space-y-1">
+                      <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Eficiência</Label>
+                      {(() => {
+                        const efOp = calcularEficienciaOperador(op, produto.tempoPadrao, linha, produto.pecasPorCiclo);
+                        return efOp ? (
+                          <div className={cn(
+                            "h-8 rounded-lg border flex flex-col items-center justify-center px-1",
+                            efOp.eficiencia >= 100 ? "bg-emerald-500/10 border-emerald-500/30" :
+                            efOp.eficiencia >= 80 ? "bg-amber-500/10 border-amber-500/30" :
+                            "bg-rose-500/10 border-rose-500/30"
+                          )}>
+                            <span className={cn(
+                              "text-[11px] font-black italic leading-none",
+                              efOp.eficiencia >= 100 ? "text-emerald-400" :
+                              efOp.eficiencia >= 80 ? "text-amber-400" :
+                              "text-rose-400"
+                            )}>{efOp.eficiencia}%</span>
+                            <span className="text-[7px] text-gray-600 font-mono leading-none mt-0.5">{efOp.tempoTrabalhado}m real</span>
+                          </div>
+                        ) : (
+                          <div className="h-8 rounded-lg border border-white/5 bg-black/30 flex items-center justify-center">
+                            <span className="text-[9px] text-gray-700 font-mono">—</span>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-
-            <div className="grid grid-cols-2 gap-3 items-end">
-              <div className="space-y-1.5">
-                <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Qtd Produzida (Peças)</Label>
-                <Input 
-                  type="number"
-                  placeholder="0" 
-                  value={qtdProduzida || ''} 
-                  onChange={e => setQtdProduzida(Number(e.target.value))}
-                  className="bg-black/60 border border-white/10 h-9 rounded-xl text-center text-xs font-bold text-emerald-400"
-                />
-              </div>
-
-              {/* LIVE EFFICIENCY INFO */}
-              <div className="p-2 rounded-xl bg-black/40 border border-white/5 h-9 flex items-center justify-between px-3">
-                <span className="text-[8px] font-black uppercase text-gray-500 tracking-wider">Eficiência:</span>
-                {efInfo ? (
-                  <span className={cn(
-                    "text-xs font-black italic",
-                    efInfo.eficiencia >= 100 ? "text-emerald-400" :
-                    efInfo.eficiencia >= 80 ? "text-amber-400" :
-                    "text-rose-400"
-                  )}>
-                    {efInfo.eficiencia}%
-                  </span>
-                ) : (
-                  <span className="text-[9px] font-bold text-gray-600 font-mono">--</span>
-                )}
-              </div>
+ 
+            <div className="flex justify-between items-center mt-1">
+              <button
+                type="button"
+                onClick={adicionarOperador}
+                className="flex items-center gap-1.5 text-[9px] font-black uppercase text-amber-400 hover:text-amber-350 transition-colors border border-amber-500/20 hover:border-amber-500/40 px-3 py-1.5 rounded-xl bg-amber-500/5 hover:bg-amber-500/10 cursor-pointer"
+              >
+                <Plus className="h-3 w-3" /> Acrescentar Operador
+              </button>
             </div>
           </div>
-
+ 
           <div className="space-y-1.5">
             <Label className="text-[8px] font-black uppercase tracking-widest text-gray-500">Observação do Apontamento</Label>
             <Input 
@@ -2728,7 +3206,7 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
               className="bg-black/60 border border-white/10 h-9 rounded-xl text-xs font-semibold text-white placeholder:text-gray-700"
             />
           </div>
-
+ 
           <div className="flex justify-end gap-3 items-center mt-4">
             {efInfo && (
               <div className="text-[8px] text-gray-500 font-mono flex items-center gap-1.5">
@@ -2737,19 +3215,82 @@ function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardA
                 <span>T. Pad: {efInfo.tempoPadraoMinutos.toFixed(1)}m</span>
               </div>
             )}
+
+            {statusProducao !== 'concluido' && (
+              <div className="text-[8px] text-amber-500/50 font-bold uppercase tracking-wider flex items-center gap-1">
+                <Lock className="h-3 w-3" />
+                Marque como Concluído para liberar
+              </div>
+            )}
+
             <Button
               onClick={handleSalvar}
+              disabled={statusProducao !== 'concluido'}
               className={cn(
                 "h-9 px-6 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all",
-                salvo ? "bg-emerald-600 hover:bg-emerald-600 text-white" : "bg-amber-600 hover:bg-amber-500 text-white"
+                statusProducao !== 'concluido'
+                  ? "bg-zinc-800 text-gray-600 cursor-not-allowed opacity-50 border border-zinc-700"
+                  : salvo
+                  ? "bg-emerald-600 hover:bg-emerald-600 text-white shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                  : "bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.2)] animate-pulse"
               )}
             >
-              {salvo ? <ShieldCheck className="h-4 w-4 mr-1.5" /> : null}
-              {salvo ? "Apontado!" : "Salvar Apontamento"}
+              <ShieldCheck className="h-4 w-4 mr-1.5" />
+              Salvar Apontamento
             </Button>
           </div>
         </div>
       </div>
+
+      {/* DIALOG DE CONFIRMAÇÃO DE CONCLUSÃO */}
+      <Dialog open={confirmarDialogOpen} onOpenChange={setConfirmarDialogOpen}>
+        <DialogContent className="bg-zinc-950 border border-emerald-500/30 text-white rounded-[30px] max-w-md shadow-[0_0_80px_rgba(16,185,129,0.15)]">
+          <DialogHeader className="p-6 pb-0">
+            <DialogTitle className="text-xl font-black uppercase tracking-tight text-emerald-400 flex items-center gap-3">
+              <ShieldCheck className="h-6 w-6 text-emerald-500" />
+              Confirmar Conclusão
+            </DialogTitle>
+          </DialogHeader>
+          <div className="px-6 py-4 space-y-4">
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Você está prestes a encerrar o apontamento de:
+            </p>
+            <div className="bg-black/50 border border-emerald-500/20 rounded-2xl p-4 space-y-1">
+              <p className="text-base font-black text-white uppercase italic">{produto.produto}</p>
+              <p className="text-[10px] text-gray-500 font-mono">{produto.codigo}</p>
+              <div className="flex gap-2 mt-2">
+                <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[9px] font-black uppercase">
+                  Status: Concluído
+                </Badge>
+                <Badge className="bg-zinc-900 border border-zinc-800 text-gray-400 text-[9px] font-black">
+                  {operadores.reduce((a, op) => a + (op.qtdProduzida || 0), 0)} peças produzidas
+                </Badge>
+              </div>
+            </div>
+            <div className="bg-amber-500/5 border border-amber-500/20 rounded-xl p-3">
+              <p className="text-[10px] text-amber-400/80 font-bold leading-relaxed">
+                ⚠️ Após confirmar, este item <strong>não aparecerá mais</strong> na sua tela e será registrado no PPCP como <strong>concluído</strong>. Esta ação não pode ser desfeita pelo terminal.
+              </p>
+            </div>
+          </div>
+          <div className="px-6 pb-6 flex gap-3 justify-end">
+            <Button
+              variant="ghost"
+              onClick={() => setConfirmarDialogOpen(false)}
+              className="text-gray-400 hover:text-white hover:bg-zinc-800 rounded-xl font-black uppercase text-[10px] tracking-widest"
+            >
+              Cancelar
+            </Button>
+            <Button
+              onClick={handleConfirmarConclusao}
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase text-[10px] tracking-widest px-6 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+            >
+              <ShieldCheck className="h-4 w-4 mr-1.5" />
+              Confirmar e Enviar ao PPCP
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
