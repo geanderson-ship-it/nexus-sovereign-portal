@@ -1230,7 +1230,12 @@ export default function PPCPPage() {
                                   )}
                                 </TableCell>
                                 <TableCell className="text-center font-mono text-[10px] text-gray-500">{p.codigo}</TableCell>
-                                <TableCell className="text-center font-bold text-gray-300 text-base">{targetQtd.toLocaleString()}</TableCell>
+                                <TableCell className="text-center font-bold text-gray-300 text-base">
+                                  {targetQtd.toLocaleString()}
+                                  {targetQtd - p.qtdNecessaria > 0 && (
+                                    <span className="block text-[9px] text-emerald-400 font-semibold mt-0.5">(Sobra: +{targetQtd - p.qtdNecessaria})</span>
+                                  )}
+                                </TableCell>
                                 <TableCell className="text-center">
                                   <div className="flex flex-col items-center gap-1">
                                     <div className="flex items-center gap-2">
@@ -1243,7 +1248,12 @@ export default function PPCPPage() {
                                         {st === 'concluido' ? 'Concluído' : st === 'produzindo' ? 'Produzindo' : 'Fila'}
                                       </Badge>
                                       {st !== 'fila' && (
-                                        <span className="text-[10px] font-mono text-gray-400">{p.qtdProduzida || 0} / {targetQtd}</span>
+                                        <div className="flex flex-col items-center gap-0.5">
+                                          <span className="text-[10px] font-mono text-gray-400">{p.qtdProduzida || 0} / {targetQtd}</span>
+                                          {targetQtd - p.qtdNecessaria > 0 && (
+                                            <span className="text-[8px] text-emerald-500 font-medium">(Sobra: +{targetQtd - p.qtdNecessaria})</span>
+                                          )}
+                                        </div>
                                       )}
                                     </div>
                                     {st !== 'fila' && (
@@ -2370,7 +2380,12 @@ export default function PPCPPage() {
                         <TableCell className="px-6 py-4 font-bold text-xs uppercase text-white truncate max-w-[200px]">{p.produto}</TableCell>
                         <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.codigo}</TableCell>
                         <TableCell className="text-center font-bold text-white text-xs">
-                          {p.qtdProduzida || 0} / {c.ciclos * (p.pecasPorCiclo || 1)}
+                          <div>
+                            <span>{p.qtdProduzida || 0} / {c.ciclos * (p.pecasPorCiclo || 1)}</span>
+                            {c.ciclos * (p.pecasPorCiclo || 1) - p.qtdNecessaria > 0 && (
+                              <span className="block text-[8px] text-emerald-400 font-semibold mt-0.5">(Sobra: +{c.ciclos * (p.pecasPorCiclo || 1) - p.qtdNecessaria})</span>
+                            )}
+                          </div>
                         </TableCell>
                         <TableCell className="text-center font-bold text-amber-400 text-[10px] uppercase">{p.operador || '—'}</TableCell>
                         <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.horaInicio && p.horaFim ? `${p.horaInicio} - ${p.horaFim}` : '—'}</TableCell>
@@ -2540,12 +2555,19 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
               <p className="text-lg font-black text-white italic mt-0.5">{qtdAjustadaCiclos.toLocaleString('pt-BR')}</p>
               <p className="text-[8px] text-gray-500 mt-0.5">Pedido: {produto.qtdNecessaria}</p>
             </div>
-            <div className="p-3 bg-black/40 border border-white/5 rounded-2xl">
-              <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Ciclos Necessários</span>
-              <p className="text-lg font-black text-white italic mt-0.5">
-                {ciclosAlvo} <span className="text-[9px] font-normal text-gray-500 not-italic">ciclos</span>
-              </p>
-              <p className="text-[9px] font-bold text-gray-500 mt-0.5">{produto.tempoPadrao} min cada</p>
+            <div className="p-3 bg-black/40 border border-white/5 rounded-2xl flex flex-col justify-between">
+              <div>
+                <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Ciclos Necessários</span>
+                <p className="text-lg font-black text-white italic mt-0.5">
+                  {ciclosAlvo} <span className="text-[9px] font-normal text-gray-500 not-italic">ciclos</span>
+                </p>
+              </div>
+              {qtdAjustadaCiclos - produto.qtdNecessaria > 0 && (
+                <div className="text-[8px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded w-fit mt-1">
+                  Sobra: +{qtdAjustadaCiclos - produto.qtdNecessaria} pçs
+                </div>
+              )}
+              <p className="text-[9px] font-bold text-gray-500 mt-1">{produto.tempoPadrao} min cada</p>
             </div>
             <div className="p-3 bg-black/40 border border-white/5 rounded-2xl">
               <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Tempo Planejado</span>
