@@ -263,7 +263,7 @@ export default function PPCPPage() {
   const [vendasOps, setVendasOps] = useState<any[]>([]);
   const [cronoEstudos, setCronoEstudos] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<'turnos' | 'planilha' | 'terminal'>('planilha');
-  const [setores, setSetores] = useState<string[]>(['CORTE', 'AJUSTE', 'SOLDA', 'MONTAGEM']);
+  const [setores, setSetores] = useState<string[]>(['CORTE', 'ACABAMENTO', 'SOLDA', 'MONTAGEM']);
   const [activeSectorTab, setActiveSectorTab] = useState<string>('CORTE');
   const [sectorTerminal, setSectorTerminal] = useState<string>('CORTE');
   const [addSectorDialogOpen, setAddSectorDialogOpen] = useState(false);
@@ -372,7 +372,11 @@ export default function PPCPPage() {
         const progsRaw = localStorage.getItem('nexus_ppcp_programacoes');
         if (progsRaw && JSON.parse(progsRaw).length >= 4) {
           const parsed = JSON.parse(progsRaw) as Programacao[];
-          setProgramacoes(parsed.map(p => ({ ...p, status: p.status || 'ativo' })));
+          setProgramacoes(parsed.map(p => ({
+            ...p,
+            linha: p.linha === 'AJUSTE' ? 'ACABAMENTO' : p.linha,
+            status: p.status || 'ativo'
+          })));
         } else {
           // Initialize mock programacoes (one for each of the 4 sectors)
           const mockProgs: Programacao[] = [
@@ -417,7 +421,7 @@ export default function PPCPPage() {
             {
               id: 'prog-2',
               data: new Date().toISOString().split('T')[0],
-              linha: 'AJUSTE',
+              linha: 'ACABAMENTO',
               lider: 'MARIA APARECIDA',
               produtos: [
                 {
@@ -490,7 +494,10 @@ export default function PPCPPage() {
 
         const setoresRaw = localStorage.getItem('nexus_ppcp_setores');
         if (setoresRaw) {
-          setSetores(JSON.parse(setoresRaw));
+          const parsed = JSON.parse(setoresRaw) as string[];
+          const migrado = parsed.map(s => s === 'AJUSTE' ? 'ACABAMENTO' : s);
+          setSetores(migrado);
+          localStorage.setItem('nexus_ppcp_setores', JSON.stringify(migrado));
         }
       } catch (e) {
         console.error("Erro ao inicializar:", e);
@@ -781,22 +788,24 @@ export default function PPCPPage() {
     setFormData(prev => ({ ...prev, produtos: novos }));
   };
 
-  const calcularLinha = (p: Produto) => {
-    const ciclos = Math.ceil(p.qtdNecessaria / (p.pecasPorCiclo || 1));
+  const calcularLinha = (p: Produto, linha: string) => {
+    const isCorte = (linha || '').toUpperCase() === 'CORTE';
+    const pecasPorCicloAjustada = isCorte ? (p.pecasPorCiclo || 1) : 1;
+    const ciclos = Math.ceil(p.qtdNecessaria / pecasPorCicloAjustada);
     const tempoNecessario = ciclos * (p.tempoPadrao || 0);
-    return { ciclos, tempoNecessario };
+    return { ciclos, tempoNecessario, pecasPorCicloAjustada };
   };
 
   const matrixCalculated = useMemo(() => {
     let saldoAcumulado = TEMPO_DISPONIVEL_DIA;
     return formData.produtos.map(p => {
-      const { ciclos, tempoNecessario } = calcularLinha(p);
+      const { ciclos, tempoNecessario } = calcularLinha(p, formData.linha);
       if (p.produto || p.qtdNecessaria > 0) {
         saldoAcumulado -= tempoNecessario;
       }
       return { ...p, ciclos, tempoNecessario, saldoRestante: saldoAcumulado };
     });
-  }, [formData.produtos]);
+  }, [formData.produtos, formData.linha]);
 
   const summary = useMemo(() => {
     return matrixCalculated.reduce((acc, p) => {
@@ -1110,9 +1119,11 @@ export default function PPCPPage() {
                 .filter(prog => prog.linha.toUpperCase() === activeSectorTab.toUpperCase() && (prog.status || 'ativo') === 'ativo')
                 .map((prog) => {
               const stats = prog.produtos.reduce((acc, p) => {
-                const c = calcularLinha(p);
+                const c = calcularLinha(p, prog.linha);
+                const isCorte = (prog.linha || '').toUpperCase() === 'CORTE';
+                const targetQtd = isCorte ? c.ciclos * (p.pecasPorCiclo || 1) : p.qtdNecessaria;
                 acc.tempo += c.tempoNecessario;
-                acc.pecas += p.qtdNecessaria;
+                acc.pecas += targetQtd;
                 return acc;
               }, { tempo: 0, pecas: 0 });
               const ocupacao = (stats.tempo / TEMPO_DISPONIVEL_DIA) * 100;
@@ -1168,8 +1179,9 @@ export default function PPCPPage() {
                           </TableHeader>
                           <TableBody>
                           {prog.produtos.map((p) => {
-                            const c = calcularLinha(p);
-                            const targetQtd = c.ciclos * (p.pecasPorCiclo || 1);
+                            const c = calcularLinha(p, prog.linha);
+                            const isCorte = (prog.linha || '').toUpperCase() === 'CORTE';
+                            const targetQtd = isCorte ? c.ciclos * (p.pecasPorCiclo || 1) : p.qtdNecessaria;
                             const pctProg = targetQtd > 0 ? Math.round(((p.qtdProduzida || 0) / targetQtd) * 100) : 0;
                             const st = p.statusProducao || 'fila';
                             
@@ -1364,11 +1376,13 @@ export default function PPCPPage() {
                         .filter(prog => (prog.status || 'ativo') === 'concluido')
                         .map((prog) => {
                           const totalPlanejado = prog.produtos.reduce((acc, p) => {
-                            const cycles = Math.ceil(p.qtdNecessaria / (p.pecasPorCiclo || 1));
-                            return acc + (cycles * (p.pecasPorCiclo || 1));
+                            const isCorte = (prog.linha || '').toUpperCase() === 'CORTE';
+                            const pecasPorCicloAjustada = isCorte ? (p.pecasPorCiclo || 1) : 1;
+                            const cycles = Math.ceil(p.qtdNecessaria / pecasPorCicloAjustada);
+                            return acc + (isCorte ? (cycles * pecasPorCicloAjustada) : p.qtdNecessaria);
                           }, 0);
                           const totalProduzido = prog.produtos.reduce((acc, p) => acc + (p.qtdProduzida || 0), 0);
-                          const totalTempo = prog.produtos.reduce((acc, p) => acc + (calcularLinha(p).tempoNecessario || 0), 0);
+                          const totalTempo = prog.produtos.reduce((acc, p) => acc + (calcularLinha(p, prog.linha).tempoNecessario || 0), 0);
                           
                           // Calculate average efficiency for the shift
                           let totalRealMinutes = 0;
@@ -1734,6 +1748,7 @@ export default function PPCPPage() {
                           <CardApontamento 
                             key={p.id}
                             progId={prog.id}
+                            linha={prog.linha}
                             produto={p}
                             onSalvar={salvarApontamento}
                             matchingOp={matchingOp}
@@ -2315,7 +2330,7 @@ export default function PPCPPage() {
               <div className="p-4 rounded-2xl bg-black/40 border border-white/5 text-center">
                 <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Tempo Total Planejado</span>
                 <p className="text-2xl font-black text-amber-400 italic mt-1">
-                  {viewingHistoryProg?.produtos.reduce((acc, p) => acc + (calcularLinha(p).tempoNecessario || 0), 0).toFixed(1)}
+                  {viewingHistoryProg?.produtos.reduce((acc, p) => acc + (calcularLinha(p, viewingHistoryProg.linha).tempoNecessario || 0), 0).toFixed(1)}
                   <span className="text-xs text-gray-600 font-normal"> min</span>
                 </p>
               </div>
@@ -2374,16 +2389,18 @@ export default function PPCPPage() {
                 </TableHeader>
                 <TableBody>
                   {viewingHistoryProg?.produtos.map((p) => {
-                    const c = calcularLinha(p);
+                    const c = calcularLinha(p, viewingHistoryProg.linha);
+                    const isCorte = (viewingHistoryProg.linha || '').toUpperCase() === 'CORTE';
+                    const targetQtd = isCorte ? c.ciclos * (p.pecasPorCiclo || 1) : p.qtdNecessaria;
                     return (
                       <TableRow key={p.id} className="border-white/5 hover:bg-white/5">
                         <TableCell className="px-6 py-4 font-bold text-xs uppercase text-white truncate max-w-[200px]">{p.produto}</TableCell>
                         <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.codigo}</TableCell>
                         <TableCell className="text-center font-bold text-white text-xs">
                           <div>
-                            <span>{p.qtdProduzida || 0} / {c.ciclos * (p.pecasPorCiclo || 1)}</span>
-                            {c.ciclos * (p.pecasPorCiclo || 1) - p.qtdNecessaria > 0 && (
-                              <span className="block text-[8px] text-emerald-400 font-semibold mt-0.5">(Sobra: +{c.ciclos * (p.pecasPorCiclo || 1) - p.qtdNecessaria})</span>
+                            <span>{p.qtdProduzida || 0} / {targetQtd}</span>
+                            {isCorte && targetQtd - p.qtdNecessaria > 0 && (
+                              <span className="block text-[8px] text-emerald-400 font-semibold mt-0.5">(Sobra: +{targetQtd - p.qtdNecessaria})</span>
                             )}
                           </div>
                         </TableCell>
@@ -2418,6 +2435,7 @@ export default function PPCPPage() {
 
 interface CardApontamentoProps {
   progId: string;
+  linha: string;
   produto: Produto;
   onSalvar: (
     progId: string, 
@@ -2434,9 +2452,11 @@ interface CardApontamentoProps {
   matchingOp?: any;
 }
 
-function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontamentoProps) {
-  const ciclosAlvo = Math.ceil(produto.qtdNecessaria / (produto.pecasPorCiclo || 1));
-  const qtdAjustadaCiclos = ciclosAlvo * (produto.pecasPorCiclo || 1);
+function CardApontamento({ progId, linha, produto, onSalvar, matchingOp }: CardApontamentoProps) {
+  const isCorte = (linha || '').toUpperCase() === 'CORTE';
+  const pecasPorCicloAjustada = isCorte ? (produto.pecasPorCiclo || 1) : 1;
+  const ciclosAlvo = Math.ceil(produto.qtdNecessaria / pecasPorCicloAjustada);
+  const qtdAjustadaCiclos = isCorte ? ciclosAlvo * pecasPorCicloAjustada : produto.qtdNecessaria;
 
   const [operador, setOperador] = useState(produto.operador || '');
   const [horaInicio, setHoraInicio] = useState(produto.horaInicio || '');
@@ -2451,8 +2471,10 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
   const [salvo, setSalvo] = useState(false);
 
   useEffect(() => {
-    const targetCiclos = Math.ceil(produto.qtdNecessaria / (produto.pecasPorCiclo || 1));
-    const targetQtd = targetCiclos * (produto.pecasPorCiclo || 1);
+    const targetCorte = (linha || '').toUpperCase() === 'CORTE';
+    const targetPcs = targetCorte ? (produto.pecasPorCiclo || 1) : 1;
+    const targetCiclos = Math.ceil(produto.qtdNecessaria / targetPcs);
+    const targetQtd = targetCorte ? targetCiclos * targetPcs : produto.qtdNecessaria;
 
     setOperador(produto.operador || '');
     setHoraInicio(produto.horaInicio || '');
@@ -2461,7 +2483,7 @@ function CardApontamento({ progId, produto, onSalvar, matchingOp }: CardApontame
     setStatusProducao(produto.statusProducao || 'fila');
     setObservacao(produto.observacao || '');
     setSalvo(false);
-  }, [produto]);
+  }, [produto, linha]);
 
   const tempoAlvoMinutos = ciclosAlvo * (produto.tempoPadrao || 0);
 
