@@ -1169,7 +1169,8 @@ export default function PPCPPage() {
                           <TableBody>
                           {prog.produtos.map((p) => {
                             const c = calcularLinha(p);
-                            const pctProg = p.qtdNecessaria > 0 ? Math.round(((p.qtdProduzida || 0) / p.qtdNecessaria) * 100) : 0;
+                            const targetQtd = c.ciclos * (p.pecasPorCiclo || 1);
+                            const pctProg = targetQtd > 0 ? Math.round(((p.qtdProduzida || 0) / targetQtd) * 100) : 0;
                             const st = p.statusProducao || 'fila';
                             
                             // Calculate efficiency real
@@ -1229,7 +1230,7 @@ export default function PPCPPage() {
                                   )}
                                 </TableCell>
                                 <TableCell className="text-center font-mono text-[10px] text-gray-500">{p.codigo}</TableCell>
-                                <TableCell className="text-center font-bold text-gray-300 text-base">{p.qtdNecessaria.toLocaleString()}</TableCell>
+                                <TableCell className="text-center font-bold text-gray-300 text-base">{targetQtd.toLocaleString()}</TableCell>
                                 <TableCell className="text-center">
                                   <div className="flex flex-col items-center gap-1">
                                     <div className="flex items-center gap-2">
@@ -1242,7 +1243,7 @@ export default function PPCPPage() {
                                         {st === 'concluido' ? 'Concluído' : st === 'produzindo' ? 'Produzindo' : 'Fila'}
                                       </Badge>
                                       {st !== 'fila' && (
-                                        <span className="text-[10px] font-mono text-gray-400">{p.qtdProduzida || 0} / {p.qtdNecessaria}</span>
+                                        <span className="text-[10px] font-mono text-gray-400">{p.qtdProduzida || 0} / {targetQtd}</span>
                                       )}
                                     </div>
                                     {st !== 'fila' && (
@@ -1352,7 +1353,10 @@ export default function PPCPPage() {
                       {programacoes
                         .filter(prog => (prog.status || 'ativo') === 'concluido')
                         .map((prog) => {
-                          const totalPlanejado = prog.produtos.reduce((acc, p) => acc + p.qtdNecessaria, 0);
+                          const totalPlanejado = prog.produtos.reduce((acc, p) => {
+                            const cycles = Math.ceil(p.qtdNecessaria / (p.pecasPorCiclo || 1));
+                            return acc + (cycles * (p.pecasPorCiclo || 1));
+                          }, 0);
                           const totalProduzido = prog.produtos.reduce((acc, p) => acc + (p.qtdProduzida || 0), 0);
                           const totalTempo = prog.produtos.reduce((acc, p) => acc + (calcularLinha(p).tempoNecessario || 0), 0);
                           
@@ -2292,7 +2296,10 @@ export default function PPCPPage() {
                 <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Total de Peças Produzidas</span>
                 <p className="text-2xl font-black text-white italic mt-1">
                   {viewingHistoryProg?.produtos.reduce((acc, p) => acc + (p.qtdProduzida || 0), 0).toLocaleString('pt-BR')}
-                  <span className="text-xs text-gray-500 font-normal"> / {viewingHistoryProg?.produtos.reduce((acc, p) => acc + p.qtdNecessaria, 0).toLocaleString('pt-BR')} peças</span>
+                  <span className="text-xs text-gray-500 font-normal"> / {viewingHistoryProg?.produtos.reduce((acc, p) => {
+                    const cycles = Math.ceil(p.qtdNecessaria / (p.pecasPorCiclo || 1));
+                    return acc + (cycles * (p.pecasPorCiclo || 1));
+                  }, 0).toLocaleString('pt-BR')} peças</span>
                 </p>
               </div>
               <div className="p-4 rounded-2xl bg-black/40 border border-white/5 text-center">
@@ -2363,7 +2370,7 @@ export default function PPCPPage() {
                         <TableCell className="px-6 py-4 font-bold text-xs uppercase text-white truncate max-w-[200px]">{p.produto}</TableCell>
                         <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.codigo}</TableCell>
                         <TableCell className="text-center font-bold text-white text-xs">
-                          {p.qtdProduzida || 0} / {p.qtdNecessaria}
+                          {p.qtdProduzida || 0} / {c.ciclos * (p.pecasPorCiclo || 1)}
                         </TableCell>
                         <TableCell className="text-center font-bold text-amber-400 text-[10px] uppercase">{p.operador || '—'}</TableCell>
                         <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.horaInicio && p.horaFim ? `${p.horaInicio} - ${p.horaFim}` : '—'}</TableCell>
