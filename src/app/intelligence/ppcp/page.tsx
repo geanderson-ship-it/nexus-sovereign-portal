@@ -138,6 +138,7 @@ interface Programacao {
   linha: string;
   lider: string;
   produtos: Produto[];
+  status?: 'ativo' | 'concluido';
 }
 
 const gerarLinhasVazias = (count: number) => 
@@ -291,6 +292,20 @@ export default function PPCPPage() {
 
   const [ultimoAcesso, setUltimoAcesso] = useState<number>(0);
   const [temNovosPedidos, setTemNovosPedidos] = useState(false);
+  const [subTabProgramas, setSubTabProgramas] = useState<'ativos' | 'historico'>('ativos');
+  const [archiveDialogOpen, setArchiveDialogOpen] = useState(false);
+  const [progToArchive, setProgToArchive] = useState<Programacao | null>(null);
+  const [viewingHistoryProg, setViewingHistoryProg] = useState<Programacao | null>(null);
+
+  const arquivarPrograma = (id: string) => {
+    setProgramacoes(prev => prev.map(p => p.id === id ? { ...p, status: 'concluido' } : p));
+    setArchiveDialogOpen(false);
+    setProgToArchive(null);
+  };
+
+  const restaurarPrograma = (id: string) => {
+    setProgramacoes(prev => prev.map(p => p.id === id ? { ...p, status: 'ativo' } : p));
+  };
 
   const carregarDadosIntegrados = () => {
     if (typeof window !== 'undefined') {
@@ -354,7 +369,8 @@ export default function PPCPPage() {
       try {
         const progsRaw = localStorage.getItem('nexus_ppcp_programacoes');
         if (progsRaw && JSON.parse(progsRaw).length >= 4) {
-          setProgramacoes(JSON.parse(progsRaw));
+          const parsed = JSON.parse(progsRaw) as Programacao[];
+          setProgramacoes(parsed.map(p => ({ ...p, status: p.status || 'ativo' })));
         } else {
           // Initialize mock programacoes (one for each of the 4 sectors)
           const mockProgs: Programacao[] = [
@@ -869,12 +885,13 @@ export default function PPCPPage() {
     
     if (produtosValidos.length === 0) return;
 
-    const novaProg = { 
+    const novaProg: Programacao = { 
       id: editando ? editando.id : Math.random().toString(36).substr(2, 9),
       data: formData.data,
       linha: formData.linha,
       lider: formData.lider,
-      produtos: produtosValidos
+      produtos: produtosValidos,
+      status: editando ? (editando.status || 'ativo') : 'ativo'
     };
 
     setProgramacoes(prev => {
@@ -1017,7 +1034,31 @@ export default function PPCPPage() {
 
       {activeTab === 'turnos' && (
         <>
-          {/* SELETOR DE SUB-ABAS DE SETOR NOS PROGRAMAS */}
+          {/* NAVEGAÇÃO DE SUB-ABAS INTERNAS: ATIVOS VS HISTÓRICO */}
+          <div className="flex border-b border-zinc-800/80 mb-6 gap-6 justify-start w-full">
+            <button
+              onClick={() => setSubTabProgramas('ativos')}
+              className={cn(
+                "pb-3 text-[10px] font-black uppercase tracking-wider border-b-2 px-2 transition-all flex items-center gap-1.5",
+                subTabProgramas === 'ativos' ? "border-amber-500 text-amber-400" : "border-transparent text-gray-500 hover:text-white"
+              )}
+            >
+              <Activity className="h-4 w-4" /> Programas Ativos & Planejamento
+            </button>
+            <button
+              onClick={() => setSubTabProgramas('historico')}
+              className={cn(
+                "pb-3 text-[10px] font-black uppercase tracking-wider border-b-2 px-2 transition-all flex items-center gap-1.5",
+                subTabProgramas === 'historico' ? "border-amber-500 text-amber-400" : "border-transparent text-gray-500 hover:text-white"
+              )}
+            >
+              <Clock className="h-4 w-4" /> Histórico Concluído
+            </button>
+          </div>
+
+          {subTabProgramas === 'ativos' ? (
+            <>
+              {/* SELETOR DE SUB-ABAS DE SETOR NOS PROGRAMAS */}
           <div className="bg-zinc-950/60 border border-amber-500/10 rounded-[35px] p-6 shadow-xl backdrop-blur-md mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-left w-full">
             <div className="space-y-1">
               <h2 className="text-base font-black text-amber-400 uppercase italic tracking-wider flex items-center gap-2">
@@ -1054,7 +1095,7 @@ export default function PPCPPage() {
 
           {/* DASHBOARD DE PROGRAMAS */}
           <div className="flex flex-wrap gap-16 w-full justify-start">
-            {programacoes.filter(prog => prog.linha.toUpperCase() === activeSectorTab.toUpperCase()).length === 0 ? (
+            {programacoes.filter(prog => prog.linha.toUpperCase() === activeSectorTab.toUpperCase() && (prog.status || 'ativo') === 'ativo').length === 0 ? (
               <div className="bg-zinc-950/40 border border-zinc-800 rounded-[30px] p-16 text-center w-full max-w-lg mx-auto space-y-4">
                 <Factory className="h-12 w-12 text-amber-500/20 mx-auto" />
                 <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Sem programas agendados em {activeSectorTab}</p>
@@ -1062,7 +1103,7 @@ export default function PPCPPage() {
               </div>
             ) : (
               programacoes
-                .filter(prog => prog.linha.toUpperCase() === activeSectorTab.toUpperCase())
+                .filter(prog => prog.linha.toUpperCase() === activeSectorTab.toUpperCase() && (prog.status || 'ativo') === 'ativo')
                 .map((prog) => {
               const stats = prog.produtos.reduce((acc, p) => {
                 const c = calcularLinha(p);
@@ -1091,6 +1132,17 @@ export default function PPCPPage() {
                         )}
                       </div>
                       <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 text-[10px] font-black uppercase text-emerald-400 hover:bg-emerald-500/10 px-4 rounded-lg flex items-center gap-1"
+                          onClick={() => {
+                            setProgToArchive(prog);
+                            setArchiveDialogOpen(true);
+                          }}
+                        >
+                          <CheckCircle className="h-3.5 w-3.5" /> Concluir & Arquivar
+                        </Button>
                         <Button size="sm" variant="ghost" className="h-8 text-[10px] font-black uppercase text-amber-400 hover:bg-amber-500/10 px-4 rounded-lg" onClick={() => abrirEditar(prog)}>Ajustar</Button>
                         <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-rose-500 hover:bg-rose-500/10 rounded-lg" onClick={() => setProgramacoes(prev => prev.filter(x => x.id !== prog.id))}><Trash2 className="h-4 w-4" /></Button>
                       </div>
@@ -1246,6 +1298,122 @@ export default function PPCPPage() {
             })
             )}
           </div>
+          </>
+          ) : (
+            <div className="space-y-6">
+              {/* LISTA DO HISTÓRICO */}
+              {programacoes.filter(prog => (prog.status || 'ativo') === 'concluido').length === 0 ? (
+                <div className="bg-zinc-950/40 border border-zinc-800 rounded-[30px] p-16 text-center w-full max-w-lg mx-auto space-y-4">
+                  <Clock className="h-12 w-12 text-amber-500/20 mx-auto animate-pulse" />
+                  <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Sem históricos arquivados</p>
+                  <p className="text-[10px] text-gray-600 max-w-xs mx-auto">Quando um programa de produção for concluído no chão de fábrica, clique em "Concluir & Arquivar" para guardá-lo aqui.</p>
+                </div>
+              ) : (
+                <div className="bg-zinc-950/60 border border-amber-500/10 rounded-[40px] overflow-hidden shadow-2xl backdrop-blur-md">
+                  <Table>
+                    <TableHeader className="bg-amber-500/5">
+                      <TableRow className="border-amber-500/10 hover:bg-transparent">
+                        <TableHead className="px-10 py-5 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Data</TableHead>
+                        <TableHead className="text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Setor / Linha</TableHead>
+                        <TableHead className="text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Líder do Turno</TableHead>
+                        <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Peças Produzidas</TableHead>
+                        <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Tempo Total (min)</TableHead>
+                        <TableHead className="text-center text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Eficiência Média</TableHead>
+                        <TableHead className="text-right px-10 text-[9px] font-black uppercase text-gray-500 tracking-[0.2em]">Ações</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {programacoes
+                        .filter(prog => (prog.status || 'ativo') === 'concluido')
+                        .map((prog) => {
+                          const totalPlanejado = prog.produtos.reduce((acc, p) => acc + p.qtdNecessaria, 0);
+                          const totalProduzido = prog.produtos.reduce((acc, p) => acc + (p.qtdProduzida || 0), 0);
+                          const totalTempo = prog.produtos.reduce((acc, p) => acc + (calcularLinha(p).tempoNecessario || 0), 0);
+                          
+                          // Calculate average efficiency for the shift
+                          let totalRealMinutes = 0;
+                          let totalStandardMinutes = 0;
+                          prog.produtos.forEach(p => {
+                            if (p.horaInicio && p.horaFim && p.qtdProduzida) {
+                              const parseTimeToMinutes = (timeStr: string) => {
+                                const parts = timeStr.split(':');
+                                if (parts.length !== 2) return null;
+                                const h = parseInt(parts[0], 10);
+                                const m = parseInt(parts[1], 10);
+                                return isNaN(h) || isNaN(m) ? null : h * 60 + m;
+                              };
+                              const minI = parseTimeToMinutes(p.horaInicio);
+                              const minF = parseTimeToMinutes(p.horaFim);
+                              if (minI !== null && minF !== null) {
+                                let diff = minF - minI;
+                                if (diff <= 0) diff += 1440;
+                                totalRealMinutes += diff;
+                                const ciclos = p.qtdProduzida / (p.pecasPorCiclo || 1);
+                                totalStandardMinutes += ciclos * p.tempoPadrao;
+                              }
+                            }
+                          });
+                          
+                          const efMed = totalRealMinutes > 0 ? Math.round((totalStandardMinutes / totalRealMinutes) * 100) : null;
+
+                          return (
+                            <TableRow key={prog.id} className="border-amber-500/5 hover:bg-amber-500/5 transition-colors">
+                              <TableCell className="px-10 py-5 font-black text-sm uppercase text-white tracking-tight">
+                                {isClient && prog.data ? new Date(prog.data + 'T00:00:00').toLocaleDateString('pt-BR') : prog.data}
+                              </TableCell>
+                              <TableCell className="font-black text-xs text-amber-400 uppercase italic tracking-wider">
+                                <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 text-[9px] px-3 font-bold">{prog.linha}</Badge>
+                              </TableCell>
+                              <TableCell className="font-bold text-gray-300 text-xs uppercase">{prog.lider || 'Sem Líder'}</TableCell>
+                              <TableCell className="text-center font-bold text-gray-300 text-xs">
+                                {totalProduzido.toLocaleString('pt-BR')} / {totalPlanejado.toLocaleString('pt-BR')}
+                              </TableCell>
+                              <TableCell className="text-center font-mono text-[10px] text-gray-400">
+                                {totalTempo.toFixed(1)} min
+                              </TableCell>
+                              <TableCell className="text-center font-mono">
+                                {efMed !== null ? (
+                                  <Badge className={cn(
+                                    "text-[9px] font-black px-2.5 py-0.5 bg-transparent border",
+                                    efMed >= 100 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" :
+                                    efMed >= 80 ? "bg-amber-500/10 text-amber-400 border-amber-500/30" :
+                                    "bg-rose-500/10 text-rose-400 border-rose-500/30"
+                                  )}>
+                                    {efMed}% Efic.
+                                  </Badge>
+                                ) : (
+                                  <span className="text-[10px] text-gray-600 font-bold">—</span>
+                                )}
+                              </TableCell>
+                              <TableCell className="text-right px-10">
+                                <div className="flex gap-2 justify-end">
+                                  <Button 
+                                    size="sm" 
+                                    variant="ghost" 
+                                    className="h-8 text-[10px] font-black uppercase text-amber-400 hover:bg-amber-500/10 px-3 rounded-lg border border-amber-500/20 hover:border-amber-500/50"
+                                    onClick={() => setViewingHistoryProg(prog)}
+                                  >
+                                    Ver Detalhes
+                                  </Button>
+                                  <Button 
+                                    size="sm" 
+                                    variant="ghost" 
+                                    className="h-8 text-[10px] font-black uppercase text-zinc-500 hover:text-white hover:bg-white/5 px-3 rounded-lg border border-zinc-800"
+                                    onClick={() => restaurarPrograma(prog.id)}
+                                  >
+                                    Restaurar
+                                  </Button>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </div>
+          )}
         </>
       )}
 
@@ -2038,6 +2206,156 @@ export default function PPCPPage() {
                 Salvar Estrutura
               </Button>
             </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* MODAL CONFIRMAÇÃO DE ARQUIVAMENTO */}
+      <Dialog open={archiveDialogOpen} onOpenChange={setArchiveDialogOpen}>
+        <DialogContent className="bg-zinc-950 border-amber-500/30 text-white max-w-md rounded-[40px] p-8 shadow-[0_0_80px_rgba(245,158,11,0.15)] text-left">
+          <DialogHeader>
+            <DialogTitle className="text-amber-400 font-black uppercase flex items-center gap-3 text-xl italic font-headline">
+              <AlertTriangle className="h-6 w-6 text-amber-500 animate-bounce" />
+              Concluir & Arquivar Programa
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6 py-4">
+            <p className="text-xs text-gray-400 leading-relaxed">
+              Deseja finalizar o programa de produção da linha <strong className="text-white uppercase">{progToArchive?.linha}</strong> planejado para <strong className="text-white">{progToArchive && new Date(progToArchive.data + 'T00:00:00').toLocaleDateString('pt-BR')}</strong> conduzido pelo líder <strong className="text-amber-400 uppercase italic">{progToArchive?.lider}</strong>?
+            </p>
+            <div className="p-4 rounded-2xl bg-black/60 border border-white/5 space-y-2 text-[11px] max-h-48 overflow-y-auto">
+              <p className="text-gray-500 uppercase tracking-widest text-[9px] font-black">Resumo das Operações</p>
+              {progToArchive?.produtos.map((p) => (
+                <div key={p.id} className="flex justify-between items-center border-b border-white/5 last:border-0 py-1">
+                  <span className="text-gray-300 font-bold uppercase truncate max-w-[200px]" title={p.produto}>{p.produto}</span>
+                  <span className="text-emerald-400 font-mono">Qtd: {p.qtdProduzida || 0} / {p.qtdNecessaria}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-[9px] text-gray-500 leading-relaxed italic">
+              * Esta ação moverá as informações para o Histórico de Produção de forma consolidada e somente leitura. Você poderá restaurá-lo se necessário.
+            </p>
+            <div className="flex justify-end gap-3 pt-2">
+              <Button variant="ghost" className="text-gray-500 hover:text-white text-[10px] font-black uppercase tracking-widest" onClick={() => { setArchiveDialogOpen(false); setProgToArchive(null); }}>
+                Cancelar
+              </Button>
+              <Button className="bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest px-6 h-10" onClick={() => progToArchive && arquivarPrograma(progToArchive.id)}>
+                Finalizar e Arquivar
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* MODAL DETALHES DO HISTÓRICO */}
+      <Dialog open={!!viewingHistoryProg} onOpenChange={(open) => !open && setViewingHistoryProg(null)}>
+        <DialogContent className="bg-zinc-950 border-amber-500/30 text-white max-w-4xl w-full rounded-[40px] p-8 shadow-[0_0_100px_rgba(245,158,11,0.15)] text-left flex flex-col max-h-[85vh]">
+          <DialogHeader className="border-b border-amber-500/10 pb-4">
+            <DialogTitle className="text-amber-400 font-headline font-black uppercase flex items-center gap-3 text-2xl italic">
+              <Clock className="h-6 w-6 text-amber-500" />
+              Detalhamento de Programa Arquivado
+            </DialogTitle>
+            <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">
+              Programa de <strong className="text-white">{viewingHistoryProg?.linha}</strong> em <strong className="text-white">{viewingHistoryProg && new Date(viewingHistoryProg.data + 'T00:00:00').toLocaleDateString('pt-BR')}</strong> — Líder: <strong className="text-white">{viewingHistoryProg?.lider}</strong>
+            </p>
+          </DialogHeader>
+
+          <div className="flex-1 overflow-auto py-6 space-y-6 scrollbar-thin scrollbar-thumb-amber-500/20 pr-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 rounded-2xl bg-black/40 border border-white/5 text-center">
+                <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Total de Peças Produzidas</span>
+                <p className="text-2xl font-black text-white italic mt-1">
+                  {viewingHistoryProg?.produtos.reduce((acc, p) => acc + (p.qtdProduzida || 0), 0).toLocaleString('pt-BR')}
+                  <span className="text-xs text-gray-500 font-normal"> / {viewingHistoryProg?.produtos.reduce((acc, p) => acc + p.qtdNecessaria, 0).toLocaleString('pt-BR')} peças</span>
+                </p>
+              </div>
+              <div className="p-4 rounded-2xl bg-black/40 border border-white/5 text-center">
+                <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Tempo Total Planejado</span>
+                <p className="text-2xl font-black text-amber-400 italic mt-1">
+                  {viewingHistoryProg?.produtos.reduce((acc, p) => acc + (calcularLinha(p).tempoNecessario || 0), 0).toFixed(1)}
+                  <span className="text-xs text-gray-600 font-normal"> min</span>
+                </p>
+              </div>
+              <div className="p-4 rounded-2xl bg-black/40 border border-white/5 text-center">
+                <span className="text-[8px] text-gray-500 uppercase tracking-widest font-black">Eficiência Média</span>
+                <div className="mt-1">
+                  {(() => {
+                    let totalReal = 0;
+                    let totalStd = 0;
+                    viewingHistoryProg?.produtos.forEach(p => {
+                      if (p.horaInicio && p.horaFim && p.qtdProduzida) {
+                        const parseTimeToMinutes = (timeStr: string) => {
+                          const parts = timeStr.split(':');
+                          if (parts.length !== 2) return null;
+                          const h = parseInt(parts[0], 10);
+                          const m = parseInt(parts[1], 10);
+                          return isNaN(h) || isNaN(m) ? null : h * 60 + m;
+                        };
+                        const minI = parseTimeToMinutes(p.horaInicio);
+                        const minF = parseTimeToMinutes(p.horaFim);
+                        if (minI !== null && minF !== null) {
+                          let diff = minF - minI;
+                          if (diff <= 0) diff += 1440;
+                          totalReal += diff;
+                          const ciclos = p.qtdProduzida / (p.pecasPorCiclo || 1);
+                          totalStd += ciclos * p.tempoPadrao;
+                        }
+                      }
+                    });
+                    const ef = totalReal > 0 ? Math.round((totalStd / totalReal) * 100) : null;
+                    return ef !== null ? (
+                      <Badge className={cn(
+                        "text-lg font-black italic px-3 py-1 bg-transparent border",
+                        ef >= 100 ? "text-emerald-400 border-emerald-500/30" : ef >= 80 ? "text-amber-400 border-amber-500/30" : "text-rose-400 border-rose-500/30"
+                      )}>{ef}% Efic.</Badge>
+                    ) : (
+                      <p className="text-2xl font-black text-gray-600 italic">—</p>
+                    );
+                  })()}
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/5 overflow-hidden">
+              <Table>
+                <TableHeader className="bg-white/5">
+                  <TableRow className="border-white/5 hover:bg-transparent">
+                    <TableHead className="px-6 py-4 text-[8px] font-black uppercase text-gray-500 tracking-wider">Item Produzido</TableHead>
+                    <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Código</TableHead>
+                    <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Qtd Produzida / Meta</TableHead>
+                    <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Operador</TableHead>
+                    <TableHead className="text-center text-[8px] font-black uppercase text-gray-500 tracking-wider">Horários (I - F)</TableHead>
+                    <TableHead className="text-right px-6 text-[8px] font-black uppercase text-gray-500 tracking-wider">Tempo (min)</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {viewingHistoryProg?.produtos.map((p) => {
+                    const c = calcularLinha(p);
+                    return (
+                      <TableRow key={p.id} className="border-white/5 hover:bg-white/5">
+                        <TableCell className="px-6 py-4 font-bold text-xs uppercase text-white truncate max-w-[200px]">{p.produto}</TableCell>
+                        <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.codigo}</TableCell>
+                        <TableCell className="text-center font-bold text-white text-xs">
+                          {p.qtdProduzida || 0} / {p.qtdNecessaria}
+                        </TableCell>
+                        <TableCell className="text-center font-bold text-amber-400 text-[10px] uppercase">{p.operador || '—'}</TableCell>
+                        <TableCell className="text-center font-mono text-[9px] text-gray-500">{p.horaInicio && p.horaFim ? `${p.horaInicio} - ${p.horaFim}` : '—'}</TableCell>
+                        <TableCell className="text-right px-6 font-bold text-gray-300 text-xs">{c.tempoNecessario.toFixed(1)}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+
+          <div className="border-t border-white/5 pt-6 flex justify-end">
+            <Button 
+              className="bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest px-6"
+              onClick={() => setViewingHistoryProg(null)}
+            >
+              Fechar
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
