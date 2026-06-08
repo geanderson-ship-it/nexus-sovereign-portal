@@ -95,7 +95,7 @@ export default function AlmoxarifadoPage() {
   };
 
   return (
-    <SovereignShowcase moduleName="Dante Almoxarifado" imagePath="/Nexus Empresas/Dante almoxarife.png">
+    <SovereignShowcase moduleName="Módulo Almoxarifado" imagePath="/Nexus Empresas/Dante almoxarife.png">
       <div className="min-h-screen bg-black text-white p-6 space-y-8 font-sans">
 
       {/* HEADER */}
@@ -108,7 +108,7 @@ export default function AlmoxarifadoPage() {
           </Link>
           <div className="space-y-1">
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-black uppercase tracking-tight text-emerald-400 font-headline italic">Dante Almoxarifado</h1>
+              <h1 className="text-2xl font-black uppercase tracking-tight text-emerald-400 font-headline italic">Módulo Almoxarifado</h1>
               <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 italic">Stock Control</Badge>
             </div>
             <p className="text-xs text-gray-500 font-medium uppercase tracking-widest italic tracking-[0.2em]">
@@ -285,7 +285,7 @@ export default function AlmoxarifadoPage() {
         </div>
       )}
 
-      <LegalSafeguard module="DANTE ALMOXARIFADO" protocol="NX-7731-STK" />
+      <LegalSafeguard module="MÓDULO ALMOXARIFADO" protocol="NX-7731-STK" />
 
       {/* DIALOG — CADASTRO */}
       <Dialog open={dialogMode === 'item'} onOpenChange={o => !o && setDialogMode(null)}>

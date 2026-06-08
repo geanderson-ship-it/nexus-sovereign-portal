@@ -354,7 +354,9 @@ export default function PPCPPage() {
 
   const [vendasOps, setVendasOps] = useState<any[]>([]);
   const [cronoEstudos, setCronoEstudos] = useState<any[]>([]);
-  const [activeTab, setActiveTab] = useState<'turnos' | 'planilha' | 'terminal'>('planilha');
+  const [activeTab, setActiveTab] = useState<'capacidade' | 'turnos' | 'planilha' | 'terminal'>('planilha');
+  const [activeCapTab, setActiveCapTab] = useState<'corte' | 'producao'>('corte');
+
   const [setores, setSetores] = useState<string[]>(['CORTE', 'ACABAMENTO', 'SOLDA', 'MONTAGEM']);
   const [activeSectorTab, setActiveSectorTab] = useState<string>('CORTE');
   const [sectorTerminal, setSectorTerminal] = useState<string>('CORTE');
@@ -362,6 +364,50 @@ export default function PPCPPage() {
   const [novoSetorNome, setNovoSetorNome] = useState('');
   const [redeDialogOpen, setRedeDialogOpen] = useState(false);
   const [copiado, setCopiado] = useState(false);
+
+  // Unifica BANCO_ENGENHARIA hardcoded com os estudos de cronoanálise vivos
+  const bancoUnificado = useMemo(() => {
+    const base = [...BANCO_ENGENHARIA];
+    if (cronoEstudos && Array.isArray(cronoEstudos)) {
+      cronoEstudos.forEach((est: any) => {
+        try {
+          const estTomadas = Array.isArray(est?.tomadas) ? est.tomadas : [];
+          const tempos = estTomadas
+            .map((t: any) => {
+              let v = String(t?.tempo || '').trim().replace(',', '.');
+              if (v.startsWith('.')) v = '0' + v;
+              return parseFloat(v) || 0;
+            })
+            .filter((v: number) => v > 0);
+
+          if (tempos.length > 0) {
+            const media = tempos.reduce((a: number, b: number) => a + b, 0) / tempos.length;
+            const fatorVelocidade = parseFloat(String(est.fatorVelocidade || '100').replace(',', '.')) / 100;
+            const fatorTolerancia = parseFloat(String(est.fatorTolerancia || '15').replace(',', '.')) / 100;
+
+            const tempoNormal = media * fatorVelocidade;
+            const tempoPadrao = tempoNormal * (1 + fatorTolerancia);
+            const pecasPorCiclo = parseInt(String(est.pecasPorCiclo || '1'), 10) || 1;
+
+            const existente = base.findIndex(b => b.codigo === est.codigo);
+            const novoItem = {
+              produto: est.operacao || 'SEM NOME',
+              codigo: est.codigo || 'S/C',
+              pecasPorCiclo,
+              tempoPadrao
+            };
+
+            if (existente >= 0) {
+              base[existente] = novoItem;
+            } else {
+              base.push(novoItem);
+            }
+          }
+        } catch (err) {}
+      });
+    }
+    return base;
+  }, [cronoEstudos]);
 
   // Estados do Editor de Estrutura de Produto (BOM)
   const [bomActiveProduct, setBomActiveProduct] = useState<{ nome: string; codigo: string } | null>(null);
@@ -1196,36 +1242,28 @@ export default function PPCPPage() {
     novos[index] = { ...novos[index], [field]: value };
     
     if (field === 'produto') {
-      const match = BANCO_ENGENHARIA.find(i => i.produto === String(value).toUpperCase());
+      const match = bancoUnificado.find(i => i.produto === String(value).toUpperCase());
       if (match) {
-        if (formData.linha.toUpperCase() === 'CORTE') {
-          setTimeout(() => explodirBOM(index, match.codigo), 50);
-        } else {
-          novos[index] = { 
-            ...novos[index], 
-            codigo: match.codigo, 
-            pecasPorCiclo: match.pecasPorCiclo, 
-            tempoPadrao: match.tempoPadrao,
-            auditado: true
-          };
-        }
+        novos[index] = { 
+          ...novos[index], 
+          codigo: match.codigo, 
+          pecasPorCiclo: match.pecasPorCiclo, 
+          tempoPadrao: match.tempoPadrao,
+          auditado: true
+        };
       } else {
         novos[index].auditado = false;
       }
     } else if (field === 'codigo') {
-      const match = BANCO_ENGENHARIA.find(i => i.codigo === String(value).toUpperCase().trim());
+      const match = bancoUnificado.find(i => i.codigo === String(value).toUpperCase().trim());
       if (match) {
-        if (formData.linha.toUpperCase() === 'CORTE') {
-          setTimeout(() => explodirBOM(index, match.codigo), 50);
-        } else {
-          novos[index] = { 
-            ...novos[index], 
-            produto: match.produto, 
-            pecasPorCiclo: match.pecasPorCiclo, 
-            tempoPadrao: match.tempoPadrao,
-            auditado: true
-          };
-        }
+        novos[index] = { 
+          ...novos[index], 
+          produto: match.produto, 
+          pecasPorCiclo: match.pecasPorCiclo, 
+          tempoPadrao: match.tempoPadrao,
+          auditado: true
+        };
       } else {
         novos[index].auditado = false;
       }
@@ -1234,20 +1272,16 @@ export default function PPCPPage() {
   };
 
   const aplicarItemEngenharia = (idx: number, item: typeof BANCO_ENGENHARIA[0]) => {
-    if (formData.linha.toUpperCase() === 'CORTE') {
-      explodirBOM(idx, item.codigo);
-    } else {
-      const novos = [...formData.produtos];
-      novos[idx] = { 
-        ...novos[idx], 
-        produto: item.produto, 
-        codigo: item.codigo, 
-        pecasPorCiclo: item.pecasPorCiclo, 
-        tempoPadrao: item.tempoPadrao,
-        auditado: true 
-      };
-      setFormData(prev => ({ ...prev, produtos: novos }));
-    }
+    const novos = [...formData.produtos];
+    novos[idx] = { 
+      ...novos[idx], 
+      produto: item.produto, 
+      codigo: item.codigo, 
+      pecasPorCiclo: item.pecasPorCiclo, 
+      tempoPadrao: item.tempoPadrao,
+      auditado: true 
+    };
+    setFormData(prev => ({ ...prev, produtos: novos }));
   };
 
   // Proteção suave contra erros de hidratação
@@ -1301,6 +1335,15 @@ export default function PPCPPage() {
           )}
         >
           <Layers className="inline-block mr-2 h-4 w-4" /> Controle de Pedidos
+        </button>
+        <button
+          onClick={() => setActiveTab('capacidade')}
+          className={cn(
+            "pb-4 text-xs font-black uppercase tracking-widest border-b-2 px-2 transition-all flex items-center gap-2",
+            activeTab === 'capacidade' ? "border-violet-500 text-violet-400" : "border-transparent text-gray-500 hover:text-white"
+          )}
+        >
+          <Activity className="h-4 w-4" /> Capacidade Produtiva
         </button>
         <button
           onClick={() => setActiveTab('turnos')}
@@ -2104,6 +2147,204 @@ export default function PPCPPage() {
           </div>
         </div>
       )}
+      {/* ABA: CAPACIDADE PRODUTIVA */}
+      {activeTab === 'capacidade' && (() => {
+        try {
+          if (!Array.isArray(cronoEstudos)) return <div className="p-8 text-red-500">Erro: cronoEstudos não é um array</div>;
+
+          // Calcula métricas de cada estudo de forma super defensiva
+          const linhas = cronoEstudos.map((est: any) => {
+            try {
+              const estTomadas = Array.isArray(est?.tomadas) ? est.tomadas : [];
+              const tempos = estTomadas
+                .map((t: any) => {
+                  let v = String(t?.tempo || '').trim().replace(',', '.');
+                  if (v.startsWith('.')) v = '0' + v;
+                  return parseFloat(v) || 0;
+                })
+                .filter((v: number) => v > 0);
+
+              if (tempos.length === 0) {
+                return { ...est, tempoPadrao: 0, capHora: 0, capTurno: 0, pecasPorCiclo: 1 };
+              }
+
+              const media = tempos.reduce((a: number, b: number) => a + b, 0) / tempos.length;
+              const fatorVelocidade = parseFloat(String(est.fatorVelocidade || '100').replace(',', '.')) / 100;
+              const fatorTolerancia = parseFloat(String(est.fatorTolerancia || '15').replace(',', '.')) / 100;
+
+              const tempoNormal = media * fatorVelocidade;
+              const tempoPadrao = tempoNormal * (1 + fatorTolerancia);
+              const pecasPorCiclo = parseInt(String(est.pecasPorCiclo || '1'), 10) || 1;
+
+              const baseMin = 53;
+              const horasTurno = 8.8;
+              const capHora = (baseMin / tempoPadrao) * pecasPorCiclo;
+              const capTurno = capHora * horasTurno;
+
+              return { ...est, tempoPadrao, capHora, capTurno, pecasPorCiclo };
+            } catch (err) {
+              console.error("Erro ao calcular métricas para estudo:", est, err);
+              return { ...est, tempoPadrao: 0, capHora: 0, capTurno: 0, pecasPorCiclo: 1 };
+            }
+          });
+
+        const isCorte = (l: any) => l.setor === 'CORTE' || String(l.operacao).toUpperCase().includes('CORTE');
+        const linhasCorte = linhas.filter((l: any) => isCorte(l));
+        const linhasProducao = linhas.filter((l: any) => !isCorte(l));
+        const linhasExibir = activeCapTab === 'corte' ? linhasCorte : linhasProducao;
+
+        const setorColor: Record<string, string> = {
+          CORTE:       'text-red-400 bg-red-950/30 border-red-500/30',
+          ACABAMENTO:  'text-amber-400 bg-amber-950/30 border-amber-500/30',
+          SOLDA:       'text-blue-400 bg-blue-950/30 border-blue-500/30',
+          MONTAGEM:    'text-emerald-400 bg-emerald-950/30 border-emerald-500/30',
+        };
+
+        return (
+          <div className="space-y-8">
+            {/* HEADER */}
+            <div className="bg-zinc-950/60 border border-violet-500/10 rounded-[40px] p-8 shadow-2xl backdrop-blur-md">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div>
+                  <h3 className="text-xl font-black uppercase tracking-tight text-white italic flex items-center gap-3">
+                    <Activity className="h-6 w-6 text-violet-400" />
+                    Capacidade Produtiva Analítica
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-1">Alimentada automaticamente pelo Módulo Cronoanálise</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex bg-black/40 border border-violet-500/20 rounded-xl p-1">
+                    <button
+                      onClick={() => setActiveCapTab('corte')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
+                        activeCapTab === 'corte' ? "bg-violet-600 text-white" : "text-gray-500 hover:text-white"
+                      )}
+                    >
+                      Corte - Pacotes
+                    </button>
+                    <button
+                      onClick={() => setActiveCapTab('producao')}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all",
+                        activeCapTab === 'producao' ? "bg-violet-600 text-white" : "text-gray-500 hover:text-white"
+                      )}
+                    >
+                      Produção - Peças
+                    </button>
+                  </div>
+                  <Button onClick={sincronizarPPCP} className="bg-violet-600 hover:bg-violet-500 text-white h-9 rounded-xl text-[10px] font-black uppercase tracking-widest">
+                    <Activity className="mr-2 h-4 w-4 animate-pulse" /> Sincronizar
+                  </Button>
+                </div>
+              </div>
+
+              {/* KPIs */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: 'Estudos na Aba', value: linhasExibir.length, color: 'text-violet-400' },
+                  { label: 'Produtos Únicos', value: new Set(linhasExibir.map((e: any) => e.codigo || e.operacao)).size, color: 'text-amber-400' },
+                  { label: 'Setores Mapeados', value: new Set(linhasExibir.map((e: any) => e.setor)).size, color: 'text-emerald-400' },
+                  { label: activeCapTab === 'corte' ? 'Maior Cap/h (Pacotes)' : 'Maior Cap/h (Peças)', value: linhasExibir.length ? Math.round(Math.max(...linhasExibir.map((l: any) => activeCapTab === 'corte' ? (l.capHora / l.pecasPorCiclo) : l.capHora))) : 0, color: 'text-cyan-400' },
+                ].map((k, i) => (
+                  <div key={i} className="bg-black/30 border border-violet-500/10 rounded-2xl p-4 text-center">
+                    <p className="text-[9px] text-gray-500 uppercase tracking-widest font-black">{k.label}</p>
+                    <p className={`text-2xl font-black italic mt-1 ${k.color}`}>{k.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* TABELA */}
+            {linhasExibir.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-24 gap-4 border-2 border-dashed border-violet-500/20 rounded-[32px]">
+                <Activity className="h-16 w-16 text-violet-500/20" />
+                <p className="text-gray-500 font-bold uppercase tracking-widest text-sm">Nenhum estudo encontrado para {activeCapTab === 'corte' ? 'Corte' : 'Produção'}</p>
+              </div>
+            ) : (
+              <div className="bg-zinc-950/60 border border-violet-500/10 rounded-[40px] overflow-hidden shadow-2xl backdrop-blur-md">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left">
+                    <thead className="bg-violet-950/30 border-b border-violet-500/10">
+                      <tr>
+                        <th className="px-6 py-4 text-[9px] font-black uppercase tracking-[0.2em] text-violet-400">Produto / Peça</th>
+                        <th className="px-4 py-4 text-[9px] font-black uppercase tracking-[0.2em] text-violet-400 text-center">Código</th>
+                        <th className="px-4 py-4 text-[9px] font-black uppercase tracking-[0.2em] text-violet-400 text-center">Setor</th>
+                        <th className="px-4 py-4 text-[9px] font-black uppercase tracking-[0.2em] text-violet-400 text-center">Tempo Base<br/><span className="text-[8px] text-gray-600 normal-case font-normal">(min/ciclo)</span></th>
+                        <th className="px-4 py-4 text-[9px] font-black uppercase tracking-[0.2em] text-violet-400 text-center">Cap. / Hora<br/><span className="text-[8px] text-gray-600 normal-case font-normal">{activeCapTab === 'corte' ? '(pacotes)' : '(peças)'}</span></th>
+                        <th className="px-4 py-4 text-[9px] font-black uppercase tracking-[0.2em] text-violet-400 text-center">Cap. / Turno<br/><span className="text-[8px] text-gray-600 normal-case font-normal">{activeCapTab === 'corte' ? '(pacotes)' : '(peças)'}</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {linhasExibir.map((linha: any, idx: number) => (
+                        <tr key={linha.id} className={cn(
+                          "border-b border-violet-500/5 hover:bg-violet-950/10 transition-colors",
+                          idx % 2 === 0 ? 'bg-transparent' : 'bg-white/[0.01]'
+                        )}>
+                          <td className="px-6 py-4">
+                            <p className="font-black text-white text-sm uppercase leading-tight">{linha.operacao}</p>
+                            <p className="text-[9px] text-gray-600 mt-0.5">{linha.data ? linha.data.split('-').reverse().join('/') : ''}</p>
+                          </td>
+                          <td className="px-4 py-4 text-center">
+                            <span className="font-mono text-[10px] text-violet-300 bg-violet-950/40 border border-violet-500/20 rounded-lg px-2 py-1">
+                              {linha.codigo}
+                            </span>
+                          </td>
+                          <td className="px-4 py-4 text-center">
+                            <span className={cn(
+                              "text-[9px] font-black uppercase border rounded-full px-3 py-1",
+                              setorColor[linha.setor] || 'text-gray-400 bg-gray-900/30 border-gray-500/30'
+                            )}>
+                              {linha.setor}
+                            </span>
+                          </td>
+                          <td className="px-4 py-4 text-center">
+                            <p className="text-lg font-black font-mono text-white">{linha.tempoPadrao.toFixed(2)}</p>
+                          </td>
+                          <td className="px-4 py-4 text-center">
+                            <p className="text-lg font-black text-amber-400">
+                              {activeCapTab === 'corte' ? Math.round(linha.capHora / linha.pecasPorCiclo) : Math.round(linha.capHora)}
+                            </p>
+                          </td>
+                          <td className="px-4 py-4 text-center">
+                            <p className="text-lg font-black text-emerald-400">
+                              {activeCapTab === 'corte' ? Math.round(linha.capTurno / linha.pecasPorCiclo) : Math.round(linha.capTurno)}
+                            </p>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* RODAPÉ */}
+                <div className="p-5 border-t border-violet-500/10 flex flex-wrap items-center gap-6 text-[9px] text-gray-600 uppercase tracking-widest">
+                  {['CORTE','ACABAMENTO','SOLDA','MONTAGEM'].map(s => (
+                    <div key={s} className="flex items-center gap-2">
+                      <div className={cn("w-2 h-2 rounded-full border", setorColor[s])} />
+                      <span>{s}</span>
+                    </div>
+                  ))}
+                  <span className="ml-auto">
+                    {activeCapTab === 'corte' 
+                      ? "Cap/h (Pacotes) = 53 min / Tempo Base  |  Cap/Turno = Cap/h * Horas do Turno" 
+                      : "Cap/h (Peças) = (53 min / Tempo Base) * Peças/Ciclo  |  Cap/Turno = Cap/h * Horas do Turno"}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+        } catch (globalError: any) {
+          console.error("Erro fatal na aba Capacidade Produtiva:", globalError);
+          return (
+            <div className="p-12 border border-red-500/50 bg-red-950/20 rounded-3xl text-center">
+              <h2 className="text-xl font-black text-red-500 mb-2">Falha Crítica na Renderização</h2>
+              <p className="text-red-400 text-sm">{globalError.message}</p>
+            </div>
+          );
+        }
+      })()}
 
       <LegalSafeguard module="DANTE PPCP" protocol="NX-9982-IA" />
 
@@ -2209,7 +2450,7 @@ export default function PPCPPage() {
                         </div>
                         {!p.auditado && p.produto.length > 2 && (
                           <div className="absolute top-11 left-0 w-full bg-zinc-950 border border-amber-500/30 rounded-2xl shadow-2xl z-50 p-2 space-y-1">
-                             {BANCO_ENGENHARIA.filter(i => i.produto.includes(p.produto.toUpperCase())).map(item => (
+                             {bancoUnificado.filter(i => i.produto.includes(p.produto.toUpperCase())).map(item => (
                                <button 
                                  key={item.codigo}
                                  className="w-full text-left p-3 hover:bg-amber-500/10 rounded-xl transition-all flex justify-between items-center group"
@@ -2235,7 +2476,7 @@ export default function PPCPPage() {
                         />
                         {!p.auditado && p.codigo.length >= 1 && (
                           <div className="absolute top-11 left-0 w-full bg-zinc-950 border border-amber-500/30 rounded-2xl shadow-2xl z-50 p-2 space-y-1 min-w-[150px]">
-                             {BANCO_ENGENHARIA.filter(i => i.codigo.toUpperCase().includes(p.codigo.toUpperCase())).map(item => (
+                             {bancoUnificado.filter(i => i.codigo.toUpperCase().includes(p.codigo.toUpperCase())).map(item => (
                                <button 
                                  key={item.codigo}
                                  type="button"

@@ -52,6 +52,7 @@ const gerarTomadasIniciais = (count: number) =>
 export default function CronoanalisePage() {
   const [estudos, setEstudos] = useState<Estudo[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [confirmarEnvioOpen, setConfirmarEnvioOpen] = useState(false);
   const [editando, setEditando] = useState<Estudo | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -186,17 +187,40 @@ export default function CronoanalisePage() {
     setDialogOpen(true);
   };
 
-  const salvar = () => {
-    const novoEstudo = {
-      id: editando ? editando.id : `estudo-${Date.now()}`,
-      operacao, codigo, pecasPorCiclo, setor, liderSetor, operador, matriculaOperador, data, horarioTiragem, fadiga, turnoHoras, tomadas, cronoanalista, matriculaCronoanalista, observacoes
-    };
-    setEstudos(prev => {
-      const next = editando ? prev.map(e => e.id === editando.id ? novoEstudo : e) : [...prev, novoEstudo];
+  const handleConfirmarSalvar = () => {
+    try {
+      const novoEstudo = {
+        id: editando ? editando.id : `estudo-${Date.now()}`,
+        operacao, codigo, pecasPorCiclo, setor, liderSetor, operador, matriculaOperador, data, horarioTiragem, fadiga, turnoHoras, tomadas, cronoanalista, matriculaCronoanalista, observacoes
+      };
+      
+      const saved = localStorage.getItem('nexus_cronoanalise_estudos');
+      let currentEstudos = estudos;
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) currentEstudos = parsed;
+        } catch (e) {
+          console.error("Erro ao ler localStorage, resetando array", e);
+          currentEstudos = [];
+        }
+      }
+
+      const next = editando ? currentEstudos.map((e: any) => e.id === editando.id ? novoEstudo : e) : [...currentEstudos, novoEstudo];
+      
       localStorage.setItem('nexus_cronoanalise_estudos', JSON.stringify(next));
-      return next;
-    });
-    setDialogOpen(false);
+      window.dispatchEvent(new StorageEvent('storage', { key: 'nexus_cronoanalise_estudos' }));
+      
+      setEstudos(next);
+      setConfirmarEnvioOpen(false);
+      setDialogOpen(false);
+      
+      // Feedback visual rústico e inegável
+      alert(`ESTUDO SALVO COM SUCESSO!\n\nCódigo: ${codigo}\nTotal de estudos no seu computador agora: ${next.length}`);
+    } catch (err) {
+      console.error(err);
+      alert("Houve um erro interno ao tentar salvar o estudo. O banco de dados do navegador pode estar bloqueado.");
+    }
   };
 
   const updateTomada = (id: string, tempo: string) => setTomadas(prev => prev.map(t => t.id === id ? { ...t, tempo } : t));
@@ -215,9 +239,29 @@ export default function CronoanalisePage() {
 
   const handleTempoChange = (id: string, value: string) => {
     const processedValue = value.replace(/\./g, ',');
-    if (/^[0-9]{0,3}(?:,[0-9]{0,2})?$/.test(processedValue) || processedValue === '' || processedValue === ',') {
+    // Permite digitar: vazio, vírgula inicial, até 2 dígitos antes da vírgula e 2 após
+    if (/^[0-9]{0,2}(?:,[0-9]{0,2})?$/.test(processedValue) || processedValue === '' || processedValue === ',') {
       updateTomada(id, processedValue);
     }
+  };
+
+  // Auto-formata ao sair do campo: "95" → "0,95" | "101" → "1,01" | ",95" → "0,95"
+  const handleTempoBlur = (id: string, value: string) => {
+    if (!value || value === ',') return;
+    let formatted = value.trim();
+    if (/^[0-9]+$/.test(formatted)) {
+      // Apenas dígitos sem vírgula
+      if (formatted.length === 1) {
+        formatted = '0,0' + formatted;        // "9" → "0,09"
+      } else if (formatted.length === 2) {
+        formatted = '0,' + formatted;          // "95" → "0,95"
+      } else if (formatted.length === 3) {
+        formatted = formatted[0] + ',' + formatted.slice(1); // "101" → "1,01"
+      }
+    } else if (formatted.startsWith(',')) {
+      formatted = '0' + formatted;            // ",95" → "0,95"
+    }
+    updateTomada(id, formatted);
   };
 
   // Proteção suave contra erros de hidratação
@@ -237,7 +281,7 @@ export default function CronoanalisePage() {
           </Link>
           <div className="space-y-1">
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-black uppercase tracking-tight text-violet-400 font-headline italic">Dante Cronoanalista</h1>
+              <h1 className="text-2xl font-black uppercase tracking-tight text-violet-400 font-headline italic">Módulo Cronoanálise</h1>
               <Badge className="bg-violet-500/10 text-violet-400 border border-violet-500/30 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 italic">Technical Audit</Badge>
             </div>
             <p className="text-xs text-gray-500 font-medium uppercase tracking-widest italic tracking-[0.2em]">Memorial de Cálculo Industrial — v6.6</p>
@@ -254,83 +298,15 @@ export default function CronoanalisePage() {
       </div>
 
       {/* DASHBOARD DE ESTUDOS */}
-      <div className="flex flex-wrap gap-10">
-        {estudos.map(estudo => {
-          const c = calcularEstudo(estudo);
-          if (!c) return null;
-          return (
-            <div key={estudo.id} className="rounded-[40px] border border-violet-500/20 bg-zinc-950/60 overflow-hidden shadow-2xl transition-all hover:border-violet-500/40">
-              <div className="px-10 py-8 bg-violet-950/20 border-b border-violet-500/10 text-center">
-                <div className="mb-6">
-                  <span className="text-white font-black text-2xl uppercase italic tracking-tighter">{estudo.operacao || '---'}</span>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 justify-center">
-                  <div className="rounded-full border border-violet-500/30 bg-violet-950/50 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-violet-300">{estudo.codigo || 'SEM CÓDIGO'}</div>
-                  <div className="rounded-full border border-violet-500/30 bg-violet-950/50 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-violet-300">{estudo.setor || '---'}</div>
-                  <button onClick={() => abrirEditar(estudo)} className="rounded-full border border-violet-500/30 bg-violet-950/50 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-violet-300 hover:bg-violet-900/60 transition">
-                    Ajustar
-                  </button>
-                  <button 
-                    onClick={() => {
-                      setEstudos(prev => {
-                        const next = prev.filter(x => x.id !== estudo.id);
-                        localStorage.setItem('nexus_cronoanalise_estudos', JSON.stringify(next));
-                        return next;
-                      });
-                    }}
-                    className="rounded-full border border-rose-500/40 bg-rose-500/10 px-4 py-2 text-[10px] font-black uppercase tracking-[0.35em] text-rose-300 hover:bg-rose-500/15 transition"
-                  >
-                    Excluir
-                  </button>
-                </div>
-              </div>
-
-              <div className="px-10 py-4 grid grid-cols-2 gap-4 border-b border-violet-500/10">
-                <div className="bg-black/20 border border-violet-500/20 rounded-full px-3 py-2 text-center shadow-inner">
-                  <p className="text-[8px] text-violet-300 uppercase tracking-[0.35em] font-black mb-1">Horário</p>
-                  <p className="text-sm font-black text-white uppercase tracking-[0.1em]">{estudo.horarioTiragem || '---'}</p>
-                </div>
-                <div className="bg-black/20 border border-violet-500/20 rounded-full px-3 py-2 text-center shadow-inner">
-                  <p className="text-[8px] text-violet-300 uppercase tracking-[0.35em] font-black mb-1">Fadiga</p>
-                  <p className="text-sm font-black text-white uppercase tracking-[0.1em]">{estudo.fadiga}%</p>
-                </div>
-              </div>
-
-              <div className="px-10 py-4 grid grid-cols-3 gap-4 border-b border-violet-500/10">
-                <div className="bg-black/20 border border-violet-500/20 rounded-full px-3 py-2 text-center shadow-inner">
-                  <p className="text-[8px] text-violet-300 uppercase tracking-[0.35em] font-black mb-1">Líder</p>
-                  <p className="text-sm font-black text-white uppercase tracking-[0.1em]">{estudo.liderSetor || '---'}</p>
-                </div>
-                <div className="bg-black/20 border border-violet-500/20 rounded-full px-3 py-2 text-center shadow-inner">
-                  <p className="text-[8px] text-violet-300 uppercase tracking-[0.35em] font-black mb-1">Operador</p>
-                  <p className="text-sm font-black text-white uppercase tracking-[0.1em]">{estudo.operador || 'José Arrueda'}</p>
-                </div>
-                <div className="bg-black/20 border border-violet-500/20 rounded-full px-3 py-2 text-center shadow-inner">
-                  <p className="text-[8px] text-violet-300 uppercase tracking-[0.35em] font-black mb-1">Data</p>
-                  <p className="text-sm font-black text-white uppercase tracking-[0.1em]">{formatDataBr(estudo.data) || 'dd/mm/aaaa'}</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 p-10">
-                {[
-                  { label: 'Multiplicador', value: `${estudo.pecasPorCiclo} pçs/ciclo`, color: 'text-amber-500' },
-                  { label: 'Tempo Médio sem Fadiga', value: c.tempoMedioSemFadiga.toFixed(3), color: 'text-white' },
-                  { label: 'Tempo Padrão', value: c.tempoPadrao.toFixed(3), color: 'text-amber-400' },
-                  { label: 'Variação', value: `${c.coefVariacao.toFixed(1)}%`, color: c.aprovado ? 'text-emerald-400' : 'text-rose-400' },
-                  { label: 'Capacidade Turno', value: Math.floor(c.pecasPorTurno).toLocaleString(), color: 'text-violet-400' },
-                ].map((r, i) => (
-                  <div key={i} className="bg-black/20 p-6 rounded-[30px] border border-white/5 text-center shadow-inner">
-                    <p className="text-[10px] text-gray-500 uppercase tracking-widest font-black mb-1 italic">{r.label}</p>
-                    <p className={`text-xl font-black ${r.color} italic`}>{r.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        })}
+      <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-violet-500/20 rounded-[40px] bg-zinc-950/60 mt-10">
+        <Activity className="h-16 w-16 text-violet-500/30 mb-4 animate-pulse" />
+        <h3 className="text-xl font-black text-white uppercase tracking-widest italic">Cronoanálises Validadas</h3>
+        <p className="text-sm text-gray-500 max-w-md text-center mt-2 leading-relaxed">
+          Sempre que um estudo é confirmado e salvo, ele é automaticamente direcionado para o módulo <strong className="text-amber-400">PPCP</strong>. Consulte a <strong className="text-violet-400">Capacidade Produtiva</strong> lá para visualizar o banco de tempos padrão.
+        </p>
       </div>
 
-      <LegalSafeguard module="DANTE CRONOANALISTA" protocol="CX-8842-TECH" />
+      <LegalSafeguard module="MÓDULO CRONOANÁLISE" protocol="CX-8842-TECH" />
 
       {/* MODAL DE ESTUDO (BASEADO NO PRINT DO USUÁRIO) */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -444,9 +420,10 @@ export default function CronoanalisePage() {
                           type="text" 
                           inputMode="decimal"
                           value={formatTempoDisplay(t.tempo)} 
-                          onChange={e => handleTempoChange(t.id, e.target.value)} 
+                          onChange={e => handleTempoChange(t.id, e.target.value)}
+                          onBlur={e => handleTempoBlur(t.id, e.target.value)}
                           className="bg-black/60 border-zinc-800 text-center font-mono text-xl font-black text-violet-400 rounded-2xl h-14 focus:border-violet-500" 
-                          placeholder=",00" 
+                          placeholder="0,00" 
                         />
                      </div>
                    ))}
@@ -469,11 +446,11 @@ export default function CronoanalisePage() {
                     <div className="bg-black/40 border border-violet-500/20 rounded-3xl p-6 text-center">
                       <Label className="text-[10px] font-black uppercase text-violet-400/60 tracking-widest mb-2 block">Tempo médio com fadiga</Label>
                       <p className="text-2xl font-black text-amber-400">{previewCalc.tempoMedioComFadiga.toFixed(2)} min</p>
-                      <p className="text-sm text-gray-400 mt-2">10% de acréscimo</p>
+                      <p className="text-sm text-gray-400 mt-2">{fadiga}% de acréscimo</p>
                     </div>
                     <div className="bg-black/40 border border-violet-500/20 rounded-3xl p-6 text-center">
                       <Label className="text-[10px] font-black uppercase text-violet-400/60 tracking-widest mb-2 block">53 min / Tempo</Label>
-                      <p className="text-2xl font-black text-emerald-400">{previewCalc.pecasEm53Min.toFixed(2)} pçs</p>
+                      <p className="text-2xl font-black text-emerald-400">{Math.round(previewCalc.pecasEm53Min)} pçs</p>
                       <p className="text-sm text-gray-500 mt-1">base 53 min</p>
                     </div>
                   </div>
@@ -510,11 +487,50 @@ export default function CronoanalisePage() {
               </div>
               <div className="flex gap-6 items-center">
                  <button className="text-[10px] text-gray-600 hover:text-white font-black uppercase tracking-[0.5em] transition-colors" onClick={() => setDialogOpen(false)}>Cancelar</button>
-                 <Button className="bg-violet-600 hover:bg-violet-500 text-white font-black uppercase tracking-widest px-16 h-16 rounded-[28px] shadow-2xl shadow-violet-600/30 transition-all hover:scale-105" onClick={salvar}>
+                 <Button 
+                   className="bg-violet-600 hover:bg-violet-500 text-white font-black uppercase tracking-widest px-16 h-16 rounded-[28px] shadow-2xl shadow-violet-600/30 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed" 
+                   onClick={() => setConfirmarEnvioOpen(true)}
+                   disabled={previewCalc.ciclosValidos === 0}
+                 >
                    Salvar Estudo
                  </Button>
               </div>
            </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* DIALOG DE CONFIRMAÇÃO DE ENVIO AO PPCP */}
+      <Dialog open={confirmarEnvioOpen} onOpenChange={setConfirmarEnvioOpen}>
+        <DialogContent className="bg-zinc-950/95 backdrop-blur-xl border-violet-500/50 max-w-md p-8 shadow-[0_0_100px_rgba(139,92,246,0.15)] rounded-[40px]">
+          <div className="flex flex-col items-center text-center space-y-6">
+            <div className="h-20 w-20 rounded-full bg-violet-500/10 flex items-center justify-center border-2 border-violet-500/30">
+              <ShieldCheck className="h-10 w-10 text-violet-400" />
+            </div>
+            
+            <div className="space-y-2">
+              <h2 className="text-xl font-black uppercase tracking-tighter text-white">Confirmar Estudo</h2>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Você tem certeza que deseja enviar este estudo para o <strong className="text-violet-400">PPCP</strong>?<br/>
+                Esta ação atualizará o banco de dados de <strong className="text-amber-400">Capacidade Produtiva</strong>.
+              </p>
+            </div>
+
+            <div className="flex flex-col w-full gap-3 mt-4">
+              <Button 
+                onClick={handleConfirmarSalvar} 
+                className="w-full bg-violet-600 hover:bg-violet-500 text-white font-black uppercase tracking-widest h-14 rounded-[20px] shadow-lg shadow-violet-600/20"
+              >
+                Confirmar e Enviar
+              </Button>
+              <Button 
+                onClick={() => setConfirmarEnvioOpen(false)} 
+                variant="ghost" 
+                className="w-full text-gray-400 hover:text-white hover:bg-white/5 font-black uppercase tracking-widest h-14 rounded-[20px]"
+              >
+                Cancelar e Conferir
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
       </div>

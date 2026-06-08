@@ -234,7 +234,7 @@ export default function NexusExpedicaoPage() {
   };
 
   return (
-    <SovereignShowcase moduleName="Dante Expedição" imagePath="/Nexus Empresas/Dante expedição.png">
+    <SovereignShowcase moduleName="Módulo Expedição" imagePath="/Nexus Empresas/Dante expedição.png">
       <div className="space-y-8">
       <div className="flex items-center justify-between">
         <Button

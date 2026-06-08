@@ -342,7 +342,7 @@ export default function DanteComprasDashboardPage() {
                     <DialogContent className="bg-black/80 backdrop-blur-md border-emerald-500/50 text-white max-w-5xl max-h-[90vh] flex flex-col">
                         <DialogHeader>
                             <DialogTitle className="text-emerald-300 font-headline flex items-center gap-2"><ShoppingCart />Plataforma de Intermediação de Cotações.</DialogTitle>
-                            <DialogDescription>Dante analisa o mercado e você negocia com os fornecedores em tempo real.</DialogDescription>
+                            <DialogDescription>O sistema analisa o mercado e você negocia com os fornecedores em tempo real.</DialogDescription>
                         </DialogHeader>
                         <div className="text-sm text-gray-300 space-y-4 overflow-y-auto pr-4">
                         <Card className="bg-emerald-950/30 border-emerald-500/20">
@@ -383,7 +383,7 @@ export default function DanteComprasDashboardPage() {
                         {isQuotationLoading && (
                             <div className="flex justify-center items-center p-8">
                                 <Loader2 className="h-8 w-8 animate-spin text-emerald-300" />
-                                <p className="ml-4 text-emerald-300">Dante está analisando o mercado...</p>
+                                <p className="ml-4 text-emerald-300">A Inteligência Artificial está analisando o mercado...</p>
                             </div>
                         )}
 
@@ -512,7 +512,7 @@ export default function DanteComprasDashboardPage() {
                                 <Card className="bg-emerald-950/50 border-emerald-500/50">
                                     <CardHeader>
                                         <CardTitle className="font-headline text-base flex items-center gap-2 text-emerald-300">
-                                            <Trophy /> Veredito do Dante.
+                                            <Trophy /> Veredito do Sistema.
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="space-y-2">
@@ -533,7 +533,7 @@ export default function DanteComprasDashboardPage() {
                                             <FileSignature /> Registro de Decisão do Comprador.
                                         </CardTitle>
                                         <CardDescription className="text-gray-400">
-                                            Após negociar com Dante, qual fornecedor foi escolhido para executar a ordem? Esta ação é imutável e será registrada para auditoria.
+                                            Após a análise da Inteligência Artificial, qual fornecedor foi escolhido para executar a ordem? Esta ação é imutável e será registrada para auditoria.
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
@@ -610,7 +610,7 @@ export default function DanteComprasDashboardPage() {
                                         Análise de Desvio de Performance.
                                     </CardTitle>
                                     <CardDescription className="text-gray-400">
-                                        Custo ou economia gerado por decisões que divergiram da recomendação do Dante.
+                                        Custo ou economia gerado por decisões que divergiram da recomendação do sistema.
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent className="space-y-4">
@@ -651,7 +651,7 @@ export default function DanteComprasDashboardPage() {
                                     </div>
                                 </CardContent>
                                 <CardFooter>
-                                    <p className="text-xs text-gray-500 italic">Valores baseados no diferencial entre a escolha do comprador e a recomendação ótima do Dante no momento da decisão.</p>
+                                    <p className="text-xs text-gray-500 italic">Valores baseados no diferencial entre a escolha do comprador e a recomendação ótima do sistema no momento da decisão.</p>
                                 </CardFooter>
                             </Card>
 
