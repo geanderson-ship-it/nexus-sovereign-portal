@@ -1,0 +1,43 @@
+﻿      {/* CARDS ENTRADA / ACOMPANHAMENTO / SAÍDA / PEDIDOS */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Link href="/intelligence/almoxarifado/modulo?aba=entrada">
+          <div className="group rounded-[28px] border border-emerald-500/20 bg-emerald-950/20 hover:bg-emerald-950/40 hover:border-emerald-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-emerald-600/20 group-hover:bg-emerald-600/30 transition-all shrink-0">
+              <ArrowDownCircle className="h-7 w-7 text-emerald-400" />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="text-emerald-400 font-black uppercase tracking-widest text-sm leading-tight">Registrar<br/>Entrada</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/intelligence/almoxarifado/acompanhamento">
+          <div className="group rounded-[28px] border border-amber-500/20 bg-amber-950/20 hover:bg-amber-950/40 hover:border-amber-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-amber-600/20 group-hover:bg-amber-600/30 transition-all shrink-0">
+              <Activity className="h-7 w-7 text-amber-400" />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="text-amber-400 font-black uppercase tracking-widest text-sm leading-tight">Acompanhar<br/>Estoque</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/intelligence/almoxarifado/modulo?aba=saida">
+          <div className="group rounded-[28px] border border-rose-500/20 bg-rose-950/20 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-rose-600/20 group-hover:bg-rose-600/30 transition-all shrink-0">
+              <ArrowUpCircle className="h-7 w-7 text-rose-400" />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="text-rose-400 font-black uppercase tracking-widest text-sm leading-tight">Registrar<br/>Saída</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/intelligence/almoxarifado/acompanhamento?aba=saidas">
+          <div className="group rounded-[28px] border border-violet-500/20 bg-violet-950/20 hover:bg-violet-950/40 hover:border-violet-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-violet-600/20 group-hover:bg-violet-600/30 transition-all shrink-0">
+              <CheckCircle className="h-7 w-7 text-violet-400" />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="text-violet-400 font-black uppercase tracking-widest text-sm leading-tight">Pedidos<br/>Entregues</p>
+            </div>
+          </div>
+        </Link>
+      </div>

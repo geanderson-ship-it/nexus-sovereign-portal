@@ -31,7 +31,8 @@ import {
   BarChart3,
   FileCheck,
   Users,
-  CheckCircle
+  CheckCircle,
+  ShoppingBag
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -42,6 +43,8 @@ import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 export default function EstrategiaPage() {
   const [activeTab, setActiveTab] = useState('estrategia');
   const [isSourceModalOpen, setIsSourceModalOpen] = useState(false);
+  const [isDivergenceModalOpen, setIsDivergenceModalOpen] = useState(false);
+  const [isProtocolModalOpen, setIsProtocolModalOpen] = useState(false);
   const [isHomologated, setIsHomologated] = useState(false);
 
   return (
@@ -144,10 +147,8 @@ export default function EstrategiaPage() {
                 </TabsTrigger>
             </TabsList>
 
-            <Button variant="ghost" asChild className="text-slate-500 hover:text-white group bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl px-6 h-12">
-                <Link href="/intelligence">
-                    <ChevronLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" /> Voltar ao Hub
-                </Link>
+            <Button variant="ghost" onClick={() => window.history.back()} className="text-slate-500 hover:text-white group bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl px-6 h-12">
+                <ChevronLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" /> Voltar
             </Button>
         </div>
 
@@ -189,7 +190,10 @@ export default function EstrategiaPage() {
                             </div>
                         </div>
 
-                        <Button className="w-full h-14 bg-violet-600 hover:bg-violet-500 text-white font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-violet-600/20 transition-all">
+                        <Button 
+                          onClick={() => setIsProtocolModalOpen(true)}
+                          className="w-full h-14 bg-violet-600 hover:bg-violet-500 text-white font-black uppercase tracking-widest rounded-2xl shadow-xl shadow-violet-600/20 transition-all"
+                        >
                             Consultar Protocolo de Decisão
                         </Button>
                     </CardContent>
@@ -332,9 +336,15 @@ export default function EstrategiaPage() {
                             <Progress value={96.8} className="h-2 bg-white/5" />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <div 
+                              className="p-4 rounded-xl bg-white/5 border border-white/5 cursor-pointer hover:border-rose-500/50 hover:bg-rose-500/10 transition-all"
+                              onClick={() => setIsDivergenceModalOpen(true)}
+                            >
                                 <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Divergências</p>
-                                <p className="text-xl font-black text-rose-400">02</p>
+                                <div className="flex justify-between items-end">
+                                  <p className="text-xl font-black text-rose-400">02</p>
+                                  <p className="text-[9px] text-rose-500 font-bold uppercase tracking-tighter hover:text-rose-400">Ver detalhes →</p>
+                                </div>
                             </div>
                             <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                                 <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Justificativas</p>
@@ -585,6 +595,157 @@ export default function EstrategiaPage() {
                     ) : (
                       "Homologar Simulação"
                     )}
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL: DIVERGÊNCIAS DE MÉRITO */}
+      <AnimatePresence>
+        {isDivergenceModalOpen && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsDivergenceModalOpen(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-2xl bg-zinc-950 border-2 border-rose-500/30 rounded-[40px] overflow-hidden shadow-[0_0_80px_rgba(243,24,96,0.1)] flex flex-col"
+            >
+              <div className="absolute top-0 right-0 p-6 z-50">
+                <Button variant="ghost" onClick={() => setIsDivergenceModalOpen(false)} className="text-slate-500 hover:text-white bg-black/20 backdrop-blur-md rounded-full">Fechar</Button>
+              </div>
+
+              <div className="p-8 space-y-8">
+                <div className="space-y-2">
+                  <Badge className="bg-rose-500 text-white font-black px-4 py-1 rounded-full text-[10px] uppercase tracking-widest">Alerta de Incoerência</Badge>
+                  <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter">Detalhamento das <span className="text-rose-500">Divergências</span></h2>
+                  <p className="text-slate-400 text-sm">A Inteligência Artificial (Dante) cruzou os dados de produtividade real com as avaliações subjetivas de mérito feitas pelos gestores e encontrou 2 conflitos.</p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="p-5 rounded-2xl bg-rose-500/5 border border-rose-500/20 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-black text-white uppercase">Caso 1: Avaliação Inflada</h4>
+                      <Badge className="bg-rose-500/20 text-rose-400 border-none">ALTO IMPACTO</Badge>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      O gestor de usinagem aprovou "Mérito de Alta Performance" para o operador Carlos Silva. Contudo, o rastreamento da Cronoanálise (Dante) aponta eficiência média de 72% no trimestre e 18% de refugo, muito abaixo da linha base de promoção.
+                    </p>
+                    <div className="pt-2 border-t border-rose-500/10 flex justify-end">
+                      <Button size="sm" variant="outline" className="h-8 text-[10px] text-rose-400 border-rose-500/20 hover:bg-rose-500/10">Bloquear Mérito</Button>
+                    </div>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-amber-500/5 border border-amber-500/20 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-black text-white uppercase">Caso 2: Sub-avaliação Injusta</h4>
+                      <Badge className="bg-amber-500/20 text-amber-400 border-none">ALERTA CULTURAL</Badge>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      O operador Marcos Paulo recebeu avaliação de "Desempenho Regular", mas o rastreamento do sistema mostra que ele liderou a célula com 105% de eficiência e zero atrasos. A IA sugere viés negativo do gestor direto.
+                    </p>
+                    <div className="pt-2 border-t border-amber-500/10 flex justify-end">
+                      <Button size="sm" variant="outline" className="h-8 text-[10px] text-amber-400 border-amber-500/20 hover:bg-amber-500/10">Sinalizar ao RH</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL: PROTOCOLO DE DECISÃO */}
+      <AnimatePresence>
+        {isProtocolModalOpen && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsProtocolModalOpen(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-3xl bg-zinc-950 border-2 border-violet-500/30 rounded-[40px] overflow-hidden shadow-[0_0_80px_rgba(139,92,246,0.1)] flex flex-col max-h-[90vh]"
+            >
+              <div className="absolute top-0 right-0 p-6 z-50">
+                <Button variant="ghost" onClick={() => setIsProtocolModalOpen(false)} className="text-slate-500 hover:text-white bg-black/20 backdrop-blur-md rounded-full">Fechar</Button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-8 md:p-10 space-y-8 scrollbar-thin scrollbar-thumb-violet-500/20">
+                <div className="space-y-2">
+                  <Badge className="bg-violet-500 text-white font-black px-4 py-1 rounded-full text-[10px] uppercase tracking-widest">Trilha Lógica (Audit Trail)</Badge>
+                  <h2 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter leading-none">Protocolo de Decisão <span className="text-violet-500">Dante</span></h2>
+                  <p className="text-slate-400 text-sm">Demonstrativo de cruzamento de dados justificando a recomendação estratégica de Expansão Produtiva.</p>
+                </div>
+
+                <div className="space-y-6">
+                  {/* FATO 1 */}
+                  <div className="flex gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-500/30 transition-all">
+                    <div className="p-3 bg-indigo-500/10 rounded-xl h-fit">
+                      <ShoppingBag className="h-6 w-6 text-indigo-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black text-white uppercase tracking-wider mb-1">Evidência 1: Módulo Vendas</h4>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        A demanda agregada dos canais B2B cresceu <strong>22%</strong> no último trimestre consecutivo. Projeção linear aponta esgotamento de estoque a pronta entrega em 45 dias.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* FATO 2 */}
+                  <div className="flex gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-500/30 transition-all">
+                    <div className="p-3 bg-amber-500/10 rounded-xl h-fit">
+                      <BarChart3 className="h-6 w-6 text-amber-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black text-white uppercase tracking-wider mb-1">Evidência 2: Módulo PPCP</h4>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        A capacidade fabril operou a <strong>94% de ocupação</strong> média (gargalo crítico) nas últimas 4 semanas. Horas extras estão no limite legal, impossibilitando aumento de turnos orgânico sem risco trabalhista.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* FATO 3 */}
+                  <div className="flex gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-all">
+                    <div className="p-3 bg-emerald-500/10 rounded-xl h-fit">
+                      <Activity className="h-6 w-6 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black text-white uppercase tracking-wider mb-1">Evidência 3: Módulo Financeiro & Auditor</h4>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        O capital de giro retido pela eliminação de desperdícios (Auditor) e eficiência de suprimentos (Compras) acumulou margem líquida suficiente para aquisição de <strong>2 Tornos CNC</strong> e contratação de <strong>4 operadores</strong> via Djeny RH sem necessitar de endividamento bancário.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator className="bg-white/10" />
+
+                {/* CONCLUSÃO */}
+                <div className="p-6 rounded-[24px] bg-violet-600/10 border-2 border-violet-500/30">
+                  <div className="flex items-center gap-3 mb-4">
+                    <BrainCircuit className="h-6 w-6 text-violet-400" />
+                    <h3 className="text-lg font-black text-white uppercase italic tracking-tighter">Veredito da Inteligência</h3>
+                  </div>
+                  <p className="text-sm text-slate-300 italic mb-4">
+                    "Considerando a demanda retida de 22%, o teto operacional de 94% e a solvência de caixa aprovada, a expansão fabril (compra de equipamentos) apresenta risco mínimo (Score de Risco: 0.12). <strong>Retorno sobre Investimento (ROI) estimado: 8 meses.</strong> Recomendo aprovação da compra (Capex) imediata."
+                  </p>
+                  <Button className="w-full bg-violet-600 hover:bg-violet-500 text-white font-black uppercase tracking-widest h-12 rounded-xl">
+                    Assinar e Aprovar Orçamento
                   </Button>
                 </div>
               </div>

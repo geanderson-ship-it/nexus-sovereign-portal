@@ -100,6 +100,14 @@ const mockOrders = [
   },
 ];
 
+const mockEstoqueExpedicao = [
+  { id: '1', item: 'Porta Premium 2.10x0.90', codigo: 'PRT-001', cor: 'Branco', quantidade: 15 },
+  { id: '2', item: 'Janela Maxim-Ar 1.20x1.00', codigo: 'JAN-002', cor: 'Preto Fosco', quantidade: 8 },
+  { id: '3', item: 'Parafuso Inox A4', codigo: 'PAR-444', cor: 'N/A', quantidade: 1200 },
+  { id: '4', item: 'Estrutura Metálica', codigo: 'EST-999', cor: 'Cinza', quantidade: 2 },
+  { id: '5', item: 'Fechadura Eletrônica', codigo: 'FEC-101', cor: 'Prata', quantidade: 5 },
+];
+
 const statusConfig = {
   aguardando: { label: 'Aguardando Separação', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30', icon: Clock },
   separacao: { label: 'Em Separação', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30', icon: Box },
@@ -131,6 +139,49 @@ export default function NexusExpedicaoPage() {
     prioridade: 'media',
     produtos: [{ nome: '', qtd: '', un: '' }]
   });
+
+  const [estoqueExpedicao, setEstoqueExpedicao] = useState(mockEstoqueExpedicao);
+  const [novoItemEstoqueOpen, setNovoItemEstoqueOpen] = useState(false);
+  const [saidaEstoqueOpen, setSaidaEstoqueOpen] = useState(false);
+  const [formNovoItem, setFormNovoItem] = useState({ codigo: '', item: '', cor: '', quantidade: 1 });
+  const [formSaida, setFormSaida] = useState({ itemId: '', quantidade: 1, observacao: '' });
+
+  const handleCadastrarItemEstoque = () => {
+    if (!formNovoItem.codigo || !formNovoItem.item) {
+      toast({ title: "Campos obrigatórios", description: "Preencha Código e Item.", variant: "destructive" });
+      return;
+    }
+    const novo = {
+      id: Date.now().toString(),
+      codigo: formNovoItem.codigo.toUpperCase(),
+      item: formNovoItem.item.toUpperCase(),
+      cor: formNovoItem.cor || 'N/A',
+      quantidade: Number(formNovoItem.quantidade)
+    };
+    setEstoqueExpedicao([novo, ...estoqueExpedicao]);
+    toast({ title: "Item cadastrado", description: `${novo.codigo} adicionado ao estoque da expedição.` });
+    setNovoItemEstoqueOpen(false);
+    setFormNovoItem({ codigo: '', item: '', cor: '', quantidade: 1 });
+  };
+
+  const handleSaidaEstoque = () => {
+    if (!formSaida.itemId || !formSaida.quantidade) return;
+    const item = estoqueExpedicao.find(i => i.id === formSaida.itemId);
+    if (!item) return;
+    
+    if (item.quantidade < formSaida.quantidade) {
+      toast({ title: "Estoque insuficiente", description: `Temos apenas ${item.quantidade} de ${item.codigo}.`, variant: "destructive" });
+      return;
+    }
+
+    setEstoqueExpedicao(estoqueExpedicao.map(i => 
+      i.id === item.id ? { ...i, quantidade: i.quantidade - formSaida.quantidade } : i
+    ));
+
+    toast({ title: "Saída registrada", description: `${formSaida.quantidade}x ${item.codigo} removidos do estoque da expedição.` });
+    setSaidaEstoqueOpen(false);
+    setFormSaida({ itemId: '', quantidade: 1, observacao: '' });
+  };
 
   const handleGerarRomaneio = (order: any) => {
     setSelectedOrder(order);
@@ -257,7 +308,7 @@ export default function NexusExpedicaoPage() {
       </div>
 
       {/* CARDS DE RESUMO */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <Card 
           className="bg-yellow-900/20 border-yellow-700/50 cursor-pointer hover:bg-yellow-900/30 transition-all"
           onClick={() => setFiltroStatus(filtroStatus === 'aguardando' ? null : 'aguardando')}
@@ -329,7 +380,23 @@ export default function NexusExpedicaoPage() {
             </p>
           </CardContent>
         </Card>
+
+        <Card 
+          className="bg-amber-900/20 border-amber-700/50 cursor-pointer hover:bg-amber-900/30 transition-all h-full flex flex-col justify-center"
+          onClick={() => setFiltroStatus(filtroStatus === 'estoque' ? null : 'estoque')}
+        >
+          <CardHeader className="pb-3 pt-4">
+            <CardTitle className="text-sm font-medium text-amber-400 flex flex-col items-center justify-center gap-3 relative">
+              <Package className="h-8 w-8" />
+              <span className="text-center">Estoque Expedição</span>
+              {filtroStatus === 'estoque' && <Badge className="absolute -top-2 -right-2 bg-amber-500 text-black text-xs">Ativo</Badge>}
+            </CardTitle>
+          </CardHeader>
+        </Card>
       </div>
+
+      {filtroStatus !== 'estoque' && (
+        <>
 
       {/* FILA DE EXPEDIÇÃO */}
       <Card className="bg-gray-900/50 border-cyan-700/50">
@@ -666,8 +733,127 @@ export default function NexusExpedicaoPage() {
                 </div>
               ))}
           </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </>
+      )}
+
+      {/* ESTOQUE DA EXPEDIÇÃO */}
+      {filtroStatus === 'estoque' && (
+        <Card className="bg-amber-950/20 border-amber-700/50">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="flex items-center gap-3 text-amber-400 font-headline">
+                  <Package />
+                  Estoque da Expedição.
+                </CardTitle>
+                <CardDescription>Gerenciamento de itens e lotes despacháveis.</CardDescription>
+              </div>
+              <div className="flex gap-2">
+                <Dialog open={novoItemEstoqueOpen} onOpenChange={setNovoItemEstoqueOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-amber-600 hover:bg-amber-500 text-black font-bold">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                      Cadastrar Item
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="bg-black/90 border-amber-500/50 text-white">
+                    <DialogHeader>
+                      <DialogTitle className="text-amber-400 font-headline">Novo Item no Estoque</DialogTitle>
+                      <DialogDescription>Adicione peças prontas ao estoque da expedição.</DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 pt-4">
+                      <div className="space-y-2">
+                        <label className="text-xs text-gray-400 uppercase">Código</label>
+                        <input type="text" value={formNovoItem.codigo} onChange={e => setFormNovoItem({...formNovoItem, codigo: e.target.value})} className="w-full bg-black/50 border border-amber-900/50 rounded-lg px-3 py-2 text-white focus:border-amber-500 focus:outline-none" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-xs text-gray-400 uppercase">Descrição do Item</label>
+                        <input type="text" value={formNovoItem.item} onChange={e => setFormNovoItem({...formNovoItem, item: e.target.value})} className="w-full bg-black/50 border border-amber-900/50 rounded-lg px-3 py-2 text-white focus:border-amber-500 focus:outline-none" />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-xs text-gray-400 uppercase">Cor/Acabamento</label>
+                          <input type="text" value={formNovoItem.cor} onChange={e => setFormNovoItem({...formNovoItem, cor: e.target.value})} className="w-full bg-black/50 border border-amber-900/50 rounded-lg px-3 py-2 text-white focus:border-amber-500 focus:outline-none" />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-xs text-gray-400 uppercase">Quantidade</label>
+                          <input type="number" min="1" value={formNovoItem.quantidade} onChange={e => setFormNovoItem({...formNovoItem, quantidade: Number(e.target.value)})} className="w-full bg-black/50 border border-amber-900/50 rounded-lg px-3 py-2 text-white focus:border-amber-500 focus:outline-none" />
+                        </div>
+                      </div>
+                      <Button className="w-full bg-amber-600 hover:bg-amber-500 text-black font-bold" onClick={handleCadastrarItemEstoque}>Confirmar Cadastro</Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                <Dialog open={saidaEstoqueOpen} onOpenChange={setSaidaEstoqueOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="border-amber-600 text-amber-500 hover:bg-amber-950">
+                      <Send className="h-4 w-4 mr-2" />
+                      Registrar Saída
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="bg-black/90 border-amber-500/50 text-white">
+                    <DialogHeader>
+                      <DialogTitle className="text-amber-400 font-headline">Saída do Estoque</DialogTitle>
+                      <DialogDescription>Dê baixa em um item do estoque da expedição.</DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 pt-4">
+                      <div className="space-y-2">
+                        <label className="text-xs text-gray-400 uppercase">Selecione o Item</label>
+                        <select value={formSaida.itemId} onChange={e => setFormSaida({...formSaida, itemId: e.target.value})} className="w-full bg-black/50 border border-amber-900/50 rounded-lg px-3 py-2 text-white focus:border-amber-500 focus:outline-none">
+                          <option value="">Escolha um item...</option>
+                          {estoqueExpedicao.filter(i => i.quantidade > 0).map(i => (
+                            <option key={i.id} value={i.id}>{i.codigo} - {i.item} (Disp: {i.quantidade})</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-xs text-gray-400 uppercase">Quantidade a remover</label>
+                        <input type="number" min="1" value={formSaida.quantidade} onChange={e => setFormSaida({...formSaida, quantidade: Number(e.target.value)})} className="w-full bg-black/50 border border-amber-900/50 rounded-lg px-3 py-2 text-white focus:border-amber-500 focus:outline-none" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-xs text-gray-400 uppercase">Motivo / OS</label>
+                        <input type="text" placeholder="Ex: Despacho direto OP-123" value={formSaida.observacao} onChange={e => setFormSaida({...formSaida, observacao: e.target.value})} className="w-full bg-black/50 border border-amber-900/50 rounded-lg px-3 py-2 text-white focus:border-amber-500 focus:outline-none" />
+                      </div>
+                      <Button className="w-full bg-amber-600 hover:bg-amber-500 text-black font-bold" onClick={handleSaidaEstoque}>Confirmar Saída</Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow className="border-amber-900/20 hover:bg-transparent">
+                  <TableHead className="text-gray-400">Código</TableHead>
+                  <TableHead className="text-gray-400">Item</TableHead>
+                  <TableHead className="text-gray-400">Cor/Acabamento</TableHead>
+                  <TableHead className="text-gray-400 text-center">Quantidade Atual</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {estoqueExpedicao.map((item) => (
+                  <TableRow key={item.id} className="border-amber-900/10 hover:bg-amber-950/20">
+                    <TableCell className="font-mono text-amber-500 font-bold">{item.codigo}</TableCell>
+                    <TableCell className="text-white font-bold">{item.item}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="text-xs border-gray-600 text-gray-300">
+                        {item.cor}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <span className="text-lg font-black text-amber-400">{item.quantidade}</span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      )}
 
       {/* DIALOG ROMANEIO */}
       <Dialog open={romaneioDialogOpen} onOpenChange={setRomaneioDialogOpen}>

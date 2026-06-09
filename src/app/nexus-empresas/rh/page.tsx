@@ -12,7 +12,8 @@ import {
   Activity,
   Heart,
   Target,
-  Zap
+  Zap,
+  ChevronLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
@@ -66,7 +67,9 @@ export default function RHHubPage() {
       <div className="relative z-10 container mx-auto px-4 pt-24">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.3em] text-slate-500 mb-8">
-          <Link href="/intelligence" className="hover:text-primary transition-colors">Intelligence</Link>
+          <button onClick={() => window.history.back()} className="hover:text-primary transition-colors flex items-center gap-2">
+            <ChevronLeft className="h-3 w-3" /> VOLTAR
+          </button>
           <ArrowRight className="h-3 w-3" />
           <span className="text-primary">RH & Pessoas</span>
         </div>

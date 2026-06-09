@@ -1244,10 +1244,11 @@ export default function PPCPPage() {
     if (field === 'produto') {
       const match = bancoUnificado.find(i => i.produto === String(value).toUpperCase());
       if (match) {
+        const isCorte = (formData.linha || '').toUpperCase() === 'CORTE';
         novos[index] = { 
           ...novos[index], 
           codigo: match.codigo, 
-          pecasPorCiclo: match.pecasPorCiclo, 
+          pecasPorCiclo: isCorte ? match.pecasPorCiclo : 1, 
           tempoPadrao: match.tempoPadrao,
           auditado: true
         };
@@ -1257,10 +1258,11 @@ export default function PPCPPage() {
     } else if (field === 'codigo') {
       const match = bancoUnificado.find(i => i.codigo === String(value).toUpperCase().trim());
       if (match) {
+        const isCorte = (formData.linha || '').toUpperCase() === 'CORTE';
         novos[index] = { 
           ...novos[index], 
           produto: match.produto, 
-          pecasPorCiclo: match.pecasPorCiclo, 
+          pecasPorCiclo: isCorte ? match.pecasPorCiclo : 1, 
           tempoPadrao: match.tempoPadrao,
           auditado: true
         };
@@ -1273,11 +1275,12 @@ export default function PPCPPage() {
 
   const aplicarItemEngenharia = (idx: number, item: typeof BANCO_ENGENHARIA[0]) => {
     const novos = [...formData.produtos];
+    const isCorte = (formData.linha || '').toUpperCase() === 'CORTE';
     novos[idx] = { 
       ...novos[idx], 
       produto: item.produto, 
       codigo: item.codigo, 
-      pecasPorCiclo: item.pecasPorCiclo, 
+      pecasPorCiclo: isCorte ? item.pecasPorCiclo : 1, 
       tempoPadrao: item.tempoPadrao,
       auditado: true 
     };
@@ -2450,7 +2453,10 @@ export default function PPCPPage() {
                         </div>
                         {!p.auditado && p.produto.length > 2 && (
                           <div className="absolute top-11 left-0 w-full bg-zinc-950 border border-amber-500/30 rounded-2xl shadow-2xl z-50 p-2 space-y-1">
-                             {bancoUnificado.filter(i => i.produto.includes(p.produto.toUpperCase())).map(item => (
+                             {bancoUnificado
+                               .filter(i => i.produto.includes(p.produto.toUpperCase()))
+                               .filter(i => formData.linha.toUpperCase() === 'MONTAGEM' || !/CONJUNTO|JANELA|PORTA|ESQUADRIA|MONTAGEM/i.test(i.produto))
+                               .map(item => (
                                <button 
                                  key={item.codigo}
                                  className="w-full text-left p-3 hover:bg-amber-500/10 rounded-xl transition-all flex justify-between items-center group"
@@ -2476,7 +2482,10 @@ export default function PPCPPage() {
                         />
                         {!p.auditado && p.codigo.length >= 1 && (
                           <div className="absolute top-11 left-0 w-full bg-zinc-950 border border-amber-500/30 rounded-2xl shadow-2xl z-50 p-2 space-y-1 min-w-[150px]">
-                             {bancoUnificado.filter(i => i.codigo.toUpperCase().includes(p.codigo.toUpperCase())).map(item => (
+                             {bancoUnificado
+                               .filter(i => i.codigo.toUpperCase().includes(p.codigo.toUpperCase()))
+                               .filter(i => formData.linha.toUpperCase() === 'MONTAGEM' || !/CONJUNTO|JANELA|PORTA|ESQUADRIA|MONTAGEM/i.test(i.produto))
+                               .map(item => (
                                <button 
                                  key={item.codigo}
                                  type="button"
@@ -2506,9 +2515,13 @@ export default function PPCPPage() {
                         <Input 
                           type="number"
                           min={1}
-                          value={p.pecasPorCiclo || ''} 
+                          disabled={formData.linha.toUpperCase() !== 'CORTE'}
+                          value={formData.linha.toUpperCase() === 'CORTE' ? (p.pecasPorCiclo || '') : 1} 
                           onChange={e => updateProduto(idx, 'pecasPorCiclo', Number(e.target.value))} 
-                          className="bg-black/40 border-none h-9 text-center text-xs font-black text-amber-500 rounded-xl"
+                          className={cn(
+                            "border-none h-9 text-center text-xs font-black rounded-xl",
+                            formData.linha.toUpperCase() === 'CORTE' ? "bg-black/40 text-amber-500" : "bg-black/10 text-gray-500 cursor-not-allowed opacity-50"
+                          )}
                         />
                       </div>
 

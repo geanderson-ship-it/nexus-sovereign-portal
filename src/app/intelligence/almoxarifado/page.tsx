@@ -25,7 +25,7 @@ type MovType = 'entrada' | 'saida';
 type DialogMode = 'item' | 'movimento' | null;
 
 const itemVazio = (): Omit<ItemEstoque, 'id' | 'movimentos'> => ({
-  codigo: '', descricao: '', unidade: 'UN', estoqueMinimo: 0, estoqueAtual: 0, localizacao: '',
+  codigo: '', descricao: '', unidade: 'UN', estoqueMinimo: 0, estoqueAtual: 0, localizacao: '', custoUnitario: 0
 });
 
 export default function AlmoxarifadoPage() {
@@ -40,6 +40,7 @@ export default function AlmoxarifadoPage() {
   const [movResp, setMovResp] = useState('');
   const [movObs, setMovObs] = useState('');
   const [buscaEstoque, setBuscaEstoque] = useState('');
+  const [buscaFoco, setBuscaFoco] = useState(false);
 
   const abrirNovoItem = () => {
     setEditandoItem(null);
@@ -49,7 +50,7 @@ export default function AlmoxarifadoPage() {
 
   const abrirEditarItem = (item: ItemEstoque) => {
     setEditandoItem(item);
-    setForm({ codigo: item.codigo, descricao: item.descricao, unidade: item.unidade, estoqueMinimo: item.estoqueMinimo, estoqueAtual: item.estoqueAtual, localizacao: item.localizacao });
+    setForm({ codigo: item.codigo, descricao: item.descricao, unidade: item.unidade, estoqueMinimo: item.estoqueMinimo, estoqueAtual: item.estoqueAtual, localizacao: item.localizacao, custoUnitario: item.custoUnitario || 0 });
     setDialogMode('item');
   };
 
@@ -127,27 +128,55 @@ export default function AlmoxarifadoPage() {
         <p className="text-xs text-gray-600 uppercase tracking-widest mt-1">Posição atual do inventário</p>
       </div>
 
-      {/* CARDS ENTRADA / SAÍDA */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Link href="/intelligence/almoxarifado/modulo?aba=entrada">
-          <div className="group rounded-[28px] border border-emerald-500/20 bg-emerald-950/20 hover:bg-emerald-950/40 hover:border-emerald-500/40 transition-all p-6 flex items-center gap-5 cursor-pointer">
-            <div className="p-4 rounded-2xl bg-emerald-600/20 group-hover:bg-emerald-600/30 transition-all">
-              <ArrowDownCircle className="h-8 w-8 text-emerald-400" />
+      {/* CARDS ENTRADA / ACOMPANHAMENTO / SAÍDA / PEDIDOS / NFS */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <Link href="/intelligence/almoxarifado/terminal">
+          <div className="group rounded-[28px] border border-emerald-500/20 bg-emerald-950/20 hover:bg-emerald-950/40 hover:border-emerald-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-emerald-600/20 group-hover:bg-emerald-600/30 transition-all shrink-0">
+              <ArrowDownCircle className="h-7 w-7 text-emerald-400" />
             </div>
-            <div>
-              <p className="text-emerald-400 font-black uppercase tracking-widest text-base">Registrar Entrada</p>
-              <p className="text-gray-500 text-xs mt-0.5">Recebimento de materiais, notas fiscais</p>
+            <div className="text-center md:text-left">
+              <p className="text-emerald-400 font-black uppercase tracking-widest text-sm leading-tight">Terminal de<br/>Entrada</p>
             </div>
           </div>
         </Link>
-        <Link href="/intelligence/almoxarifado/modulo?aba=saida">
-          <div className="group rounded-[28px] border border-rose-500/20 bg-rose-950/20 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all p-6 flex items-center gap-5 cursor-pointer">
-            <div className="p-4 rounded-2xl bg-rose-600/20 group-hover:bg-rose-600/30 transition-all">
-              <ArrowUpCircle className="h-8 w-8 text-rose-400" />
+        <Link href="/intelligence/almoxarifado/acompanhamento">
+          <div className="group rounded-[28px] border border-amber-500/20 bg-amber-950/20 hover:bg-amber-950/40 hover:border-amber-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-amber-600/20 group-hover:bg-amber-600/30 transition-all shrink-0">
+              <Activity className="h-7 w-7 text-amber-400" />
             </div>
-            <div>
-              <p className="text-rose-400 font-black uppercase tracking-widest text-base">Registrar Saída</p>
-              <p className="text-gray-500 text-xs mt-0.5">Requisições, ordens de produção, entregas</p>
+            <div className="text-center md:text-left">
+              <p className="text-amber-400 font-black uppercase tracking-widest text-sm leading-tight">Acompanhar<br/>Estoque</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/intelligence/almoxarifado/terminal">
+          <div className="group rounded-[28px] border border-rose-500/20 bg-rose-950/20 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-rose-600/20 group-hover:bg-rose-600/30 transition-all shrink-0">
+              <ArrowUpCircle className="h-7 w-7 text-rose-400" />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="text-rose-400 font-black uppercase tracking-widest text-sm leading-tight">Terminal de<br/>Saída</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/intelligence/almoxarifado/acompanhamento?aba=saidas">
+          <div className="group rounded-[28px] border border-violet-500/20 bg-violet-950/20 hover:bg-violet-950/40 hover:border-violet-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-violet-600/20 group-hover:bg-violet-600/30 transition-all shrink-0">
+              <CheckCircle className="h-7 w-7 text-violet-400" />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="text-violet-400 font-black uppercase tracking-widest text-sm leading-tight">Pedidos<br/>Entregues</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/intelligence/almoxarifado/notas">
+          <div className="group rounded-[28px] border border-cyan-500/20 bg-cyan-950/20 hover:bg-cyan-950/40 hover:border-cyan-500/40 transition-all p-5 flex flex-col md:flex-row items-center gap-4 cursor-pointer h-full">
+            <div className="p-3 rounded-2xl bg-cyan-600/20 group-hover:bg-cyan-600/30 transition-all shrink-0">
+              <Package className="h-7 w-7 text-cyan-400" />
+            </div>
+            <div className="text-center md:text-left">
+              <p className="text-cyan-400 font-black uppercase tracking-widest text-sm leading-tight">Arquivo de<br/>NFs (DANFE)</p>
             </div>
           </div>
         </Link>
@@ -157,20 +186,22 @@ export default function AlmoxarifadoPage() {
       <div className="space-y-3">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[
-            { label: 'Cadastrados', value: stats.total, icon: Package, color: 'text-emerald-400', border: 'border-emerald-500/20' },
-            { label: 'OK', value: stats.ok, icon: CheckCircle, color: 'text-emerald-400', border: 'border-emerald-500/20' },
-            { label: 'Críticos', value: stats.criticos, icon: AlertTriangle, color: 'text-amber-400', border: 'border-amber-500/20' },
-            { label: 'Moviment.', value: stats.movimentos, icon: Activity, color: 'text-violet-400', border: 'border-violet-500/20' },
+            { label: 'Cadastrados', value: stats.total, icon: Package, color: 'text-emerald-400', border: 'border-emerald-500/20', href: '/intelligence/almoxarifado/acompanhamento?aba=inventario' },
+            { label: 'OK', value: stats.ok, icon: CheckCircle, color: 'text-emerald-400', border: 'border-emerald-500/20', href: '/intelligence/almoxarifado/acompanhamento?aba=inventario' },
+            { label: 'Críticos', value: stats.criticos, icon: AlertTriangle, color: 'text-amber-400', border: 'border-amber-500/20', href: '/intelligence/almoxarifado/acompanhamento?aba=inventario&critico=true' },
+            { label: 'Moviment.', value: stats.movimentos, icon: Activity, color: 'text-violet-400', border: 'border-violet-500/20', href: '/intelligence/almoxarifado/acompanhamento?aba=entradas' },
           ].map((s, i) => (
-            <div key={i} className={cn('rounded-2xl border bg-zinc-950/60 p-3 flex items-center gap-2', s.border)}>
-              <s.icon className={`h-5 w-5 ${s.color} shrink-0`} />
-              <div>
-                <p className="text-[9px] text-gray-600 uppercase tracking-widest leading-none">{s.label}</p>
-                <p className={`text-xl font-black ${s.color} leading-tight`}>{s.value}</p>
+            <Link key={i} href={s.href}>
+              <div className={cn('rounded-2xl border bg-zinc-950/60 p-3 flex items-center gap-2 cursor-pointer transition-all hover:bg-white/5 hover:scale-105', s.border)}>
+                <s.icon className={`h-5 w-5 ${s.color} shrink-0`} />
+                <div>
+                  <p className="text-[9px] text-gray-600 uppercase tracking-widest leading-none">{s.label}</p>
+                  <p className={`text-xl font-black ${s.color} leading-tight`}>{s.value}</p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
-          <button onClick={abrirNovoItem} className="rounded-2xl border border-emerald-500/40 bg-emerald-600/20 hover:bg-emerald-600/40 transition-all p-3 flex items-center justify-center gap-2 group">
+          <button onClick={abrirNovoItem} className="rounded-2xl border border-emerald-500/40 bg-emerald-600/20 hover:bg-emerald-600/40 transition-all p-3 flex items-center justify-center gap-2 group cursor-pointer hover:scale-105">
             <div className="p-1.5 rounded-xl bg-emerald-600/30 group-hover:bg-emerald-600/50 transition-all">
               <Plus className="h-5 w-5 text-emerald-400" />
             </div>
@@ -179,14 +210,41 @@ export default function AlmoxarifadoPage() {
         </div>
 
         {/* BARRA DE PESQUISA */}
-        <div className="relative">
+        <div className="relative z-50">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
           <Input
-            placeholder="Pesquisar por código, produto, cor ou espessura..."
+            placeholder="Pesquisar por código, produto ou nota..."
             value={buscaEstoque}
-            onChange={e => setBuscaEstoque(e.target.value)}
-            className="bg-zinc-950/60 border-white/10 text-white h-11 rounded-2xl pl-11 pr-10 text-sm w-full"
+            onChange={e => setBuscaEstoque(e.target.value.toUpperCase())}
+            onFocus={() => setBuscaFoco(true)}
+            onBlur={() => setTimeout(() => setBuscaFoco(false), 200)}
+            className="bg-zinc-950/60 border-white/10 text-white h-11 rounded-2xl pl-11 pr-10 text-sm w-full focus-visible:ring-amber-500/50"
           />
+          {buscaFoco && (
+            <div className="absolute top-14 left-0 w-full bg-zinc-950 border border-white/10 rounded-2xl shadow-2xl overflow-hidden p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+              <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-2 px-3 pt-2">Onde deseja buscar?</p>
+              
+              <Link href={`/intelligence/almoxarifado/acompanhamento?aba=inventario${buscaEstoque ? `&q=${buscaEstoque}` : ''}`} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-gray-300 hover:text-white">
+                <Package className="h-4 w-4 text-gray-400" />
+                <div className="text-xs font-bold">Todo o Estoque / OK</div>
+              </Link>
+              
+              <Link href={`/intelligence/almoxarifado/acompanhamento?aba=inventario&critico=true${buscaEstoque ? `&q=${buscaEstoque}` : ''}`} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-gray-300 hover:text-rose-400">
+                <AlertTriangle className="h-4 w-4 text-rose-400" />
+                <div className="text-xs font-bold">Estoque Crítico</div>
+              </Link>
+
+              <Link href={`/intelligence/almoxarifado/acompanhamento?aba=entradas${buscaEstoque ? `&q=${buscaEstoque}` : ''}`} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-gray-300 hover:text-emerald-400">
+                <ArrowDownCircle className="h-4 w-4 text-emerald-400" />
+                <div className="text-xs font-bold">Entradas via Nota Fiscal</div>
+              </Link>
+
+              <Link href={`/intelligence/almoxarifado/acompanhamento?aba=saidas${buscaEstoque ? `&q=${buscaEstoque}` : ''}`} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer text-gray-300 hover:text-violet-400">
+                <CheckCircle className="h-4 w-4 text-violet-400" />
+                <div className="text-xs font-bold">Pedidos Entregues (Saídas)</div>
+              </Link>
+            </div>
+          )}
           {buscaEstoque && (
             <button onClick={() => setBuscaEstoque('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white">
               <X className="h-4 w-4" />
@@ -311,7 +369,7 @@ export default function AlmoxarifadoPage() {
               <Label className="text-[10px] text-emerald-400 uppercase tracking-widest font-black">Descrição</Label>
               <Input placeholder="Ex: Parafuso M8 x 25mm" value={form.descricao} onChange={e => setForm(p => ({ ...p, descricao: e.target.value }))} className="bg-black/40 border-emerald-500/20 text-white h-11 rounded-xl uppercase" />
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="space-y-1">
                 <Label className="text-[10px] text-emerald-400 uppercase tracking-widest font-black">Est. Mínimo</Label>
                 <Input type="number" min={0} value={form.estoqueMinimo} onChange={e => setForm(p => ({ ...p, estoqueMinimo: Number(e.target.value) }))} className="bg-black/40 border-emerald-500/20 text-white h-11 rounded-xl text-center font-black" />
@@ -323,6 +381,10 @@ export default function AlmoxarifadoPage() {
               <div className="space-y-1">
                 <Label className="text-[10px] text-emerald-400 uppercase tracking-widest font-black">Localização</Label>
                 <Input placeholder="Ex: A1-P3" value={form.localizacao} onChange={e => setForm(p => ({ ...p, localizacao: e.target.value }))} className="bg-black/40 border-emerald-500/20 text-white h-11 rounded-xl text-center uppercase font-mono" />
+              </div>
+              <div className="space-y-1">
+                <Label className="text-[10px] text-emerald-400 uppercase tracking-widest font-black">Custo Unitário (R$)</Label>
+                <Input type="number" step="0.01" min={0} value={form.custoUnitario || ''} onChange={e => setForm(p => ({ ...p, custoUnitario: Number(e.target.value) }))} className="bg-black/40 border-emerald-500/20 text-white h-11 rounded-xl text-center font-black" />
               </div>
             </div>
           </div>

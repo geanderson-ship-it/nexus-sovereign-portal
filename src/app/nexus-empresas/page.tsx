@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag } from 'lucide-react';
+import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck } from 'lucide-react';
 import * as gtag from '@/lib/gtag';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
@@ -64,7 +64,7 @@ const modules = [
     icon: Shield, color: 'emerald',
     features: ['Auditoria em tempo real de processos críticos', 'Detecção de desvios e riscos', 'Trilha de auditoria imutável', 'Economia de até 15% do faturamento retida'],
     image: '/Nexus Empresas/Dante Auditor.png',
-    gtag: 'nexus_empresas_auditor', licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
+    gtag: 'nexus_empresas_auditor', href: '/intelligence/auditor', licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
     roi: 'Se paga evitando um único desvio.',
   },
   {
@@ -106,6 +106,58 @@ const modules = [
     licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
     roi: 'Se paga eliminando o primeiro erro de entrega.',
   },
+  {
+    id: 'rh',
+    badge: 'HR_INTELLIGENCE',
+    title: '', highlight: 'RH & PESSOAS',
+    subtitle: 'Gestão de Talentos e Liderança com IA',
+    description: 'Recrutamento inteligente, análise comportamental e desenvolvimento humano guiado por dados para reter os melhores talentos.',
+    icon: Users, color: 'pink',
+    features: ['Match preditivo de candidatos', 'Mapeamento de perfil comportamental', 'Identificação de gaps de liderança', 'Automação de onboarding'],
+    image: '/Nexus Intelligence RH/Nexus Intelligence RH.png',
+    gtag: 'nexus_empresas_rh', href: '/nexus-empresas/rh',
+    licenca: 'R$ 2.499,00', suporte: 'R$ 249,00/mês',
+    roi: 'Se paga na redução do primeiro turnover errado.',
+  },
+  {
+    id: 'estrategia',
+    badge: 'STRATEGY_INTELLIGENCE',
+    title: '', highlight: 'ESTRATÉGIA',
+    subtitle: 'Mentoria Executiva e Decision Making',
+    description: 'Inteligência artificial atuando como conselheiro C-Level. Valide cenários, simule impactos e tome decisões blindadas por dados.',
+    icon: BrainCircuit, color: 'violet',
+    features: ['Análise de cenários de mercado', 'Simulador de decisões executivas', 'Desenvolvimento de sucessores', 'Career Advisor C-Level'],
+    image: '/Nexus Intelligence Estratégia e liderança/Nexus Intelligence estratégia e liderança.png',
+    gtag: 'nexus_empresas_estrategia', href: '/nexus-empresas/estrategia',
+    licenca: 'R$ 3.999,00', suporte: 'R$ 399,00/mês',
+    roi: 'Se paga na primeira decisão estratégica assertiva.',
+  },
+  {
+    id: 'engenharia',
+    badge: 'ENGINEERING_DATA',
+    title: '', highlight: 'ENGENHARIA',
+    subtitle: 'O Banco de Dados Master da Fábrica',
+    description: 'Onde os tempos auditados do Dante encontram o planejamento do PPCP. O motor central que garante que o produto saia como projetado.',
+    icon: Database, color: 'emerald',
+    features: ['Estruturação de Ficha Técnica (BOM)', 'Gestão do Banco de Tempos', 'Cálculo dinâmico de capacidade', 'Versionamento de processos'],
+    image: '/Nexus Intelligence Engenharia/Nexus intelligence Engenharia.png',
+    gtag: 'nexus_empresas_engenharia', href: '/nexus-empresas/engenharia',
+    licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
+    roi: 'Se paga eliminando a primeira falha na lista de materiais.',
+  },
+  {
+    id: 'qualidade',
+    badge: 'QUALITY_CONTROL',
+    title: '', highlight: 'QUALIDADE',
+    subtitle: 'Inspeções e Planos de Ação',
+    description: 'A ponte de segurança da fábrica. Garanta que o Almoxarifado receba material perfeito e que a Produção só libere produtos no padrão.',
+    icon: ShieldCheck, color: 'cyan',
+    features: ['Inspeção de Recebimento de Insumos', 'Checklists de Máquina e Liberação de Setup', 'Gestão de Não Conformidades (RNC)', 'Planos de Ação (5W2H)'],
+    image: '/Nexus Intelligence Qualidade/Nexus Qualidade.png',
+    gtag: 'nexus_empresas_qualidade', href: '/intelligence/qualidade',
+    licenca: 'R$ 2.499,00', suporte: 'R$ 249,00/mês',
+    roi: 'Se paga na primeira RNC bloqueada.',
+  },
 ];
 
 const colorMap: Record<string, { border: string; badge: string; text: string; glow: string; bg: string; btn: string }> = {
@@ -117,6 +169,7 @@ const colorMap: Record<string, { border: string; badge: string; text: string; gl
   violet:  { border: 'border-violet-500/30',  badge: 'bg-violet-600',  text: 'text-violet-400',  glow: 'shadow-[0_0_60px_rgba(139,92,246,0.15)]',   bg: 'bg-violet-500/5',  btn: 'border-violet-500/50 text-violet-400 hover:bg-violet-500/10' },
   orange:  { border: 'border-orange-500/30',  badge: 'bg-orange-600',  text: 'text-orange-400',  glow: 'shadow-[0_0_60px_rgba(249,115,22,0.15)]',   bg: 'bg-orange-500/5',  btn: 'border-orange-500/50 text-orange-400 hover:bg-orange-500/10' },
   sky:     { border: 'border-sky-500/30',     badge: 'bg-sky-600',     text: 'text-sky-400',     glow: 'shadow-[0_0_60px_rgba(14,165,233,0.15)]',   bg: 'bg-sky-500/5',     btn: 'border-sky-500/50 text-sky-400 hover:bg-sky-500/10' },
+  pink:    { border: 'border-pink-500/30',    badge: 'bg-pink-600',    text: 'text-pink-400',    glow: 'shadow-[0_0_60px_rgba(236,72,153,0.15)]',   bg: 'bg-pink-500/5',    btn: 'border-pink-500/50 text-pink-400 hover:bg-pink-500/10' },
 };
 
 type Mod = typeof modules[0];

@@ -1,0 +1,36 @@
+﻿      {/* CARDS ENTRADA / ACOMPANHAMENTO / SAÍDA */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Link href="/intelligence/almoxarifado/modulo?aba=entrada">
+          <div className="group rounded-[28px] border border-emerald-500/20 bg-emerald-950/20 hover:bg-emerald-950/40 hover:border-emerald-500/40 transition-all p-6 flex items-center gap-5 cursor-pointer h-full">
+            <div className="p-4 rounded-2xl bg-emerald-600/20 group-hover:bg-emerald-600/30 transition-all">
+              <ArrowDownCircle className="h-8 w-8 text-emerald-400" />
+            </div>
+            <div>
+              <p className="text-emerald-400 font-black uppercase tracking-widest text-base">Registrar Entrada</p>
+              <p className="text-gray-500 text-xs mt-0.5">Recebimento de materiais, notas fiscais</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/intelligence/almoxarifado/acompanhamento">
+          <div className="group rounded-[28px] border border-amber-500/20 bg-amber-950/20 hover:bg-amber-950/40 hover:border-amber-500/40 transition-all p-6 flex items-center gap-5 cursor-pointer h-full">
+            <div className="p-4 rounded-2xl bg-amber-600/20 group-hover:bg-amber-600/30 transition-all">
+              <Activity className="h-8 w-8 text-amber-400" />
+            </div>
+            <div>
+              <p className="text-amber-400 font-black uppercase tracking-widest text-base leading-tight">Acompanhamento<br/>de Estoque</p>
+              <p className="text-gray-500 text-xs mt-1">Gestão, inventário e níveis críticos</p>
+            </div>
+          </div>
+        </Link>
+        <Link href="/intelligence/almoxarifado/modulo?aba=saida">
+          <div className="group rounded-[28px] border border-rose-500/20 bg-rose-950/20 hover:bg-rose-950/40 hover:border-rose-500/40 transition-all p-6 flex items-center gap-5 cursor-pointer h-full">
+            <div className="p-4 rounded-2xl bg-rose-600/20 group-hover:bg-rose-600/30 transition-all">
+              <ArrowUpCircle className="h-8 w-8 text-rose-400" />
+            </div>
+            <div>
+              <p className="text-rose-400 font-black uppercase tracking-widest text-base">Registrar Saída</p>
+              <p className="text-gray-500 text-xs mt-0.5">Requisições, ordens de produção, entregas</p>
+            </div>
+          </div>
+        </Link>
+      </div>

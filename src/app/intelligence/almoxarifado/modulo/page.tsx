@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
@@ -155,19 +155,19 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
               ? <ArrowDownCircle className="h-6 w-6 text-emerald-400" />
               : <ArrowUpCircle className="h-6 w-6 text-rose-400" />}
             <h1 className={cn('text-2xl font-black uppercase tracking-tight font-headline italic', isEntrada ? 'text-emerald-400' : 'text-rose-400')}>
-              {isEntrada ? 'Registrar Entrada' : 'Registrar Saída'}
+              {isEntrada ? 'Registrar Entrada' : 'Registrar SaÃ­da'}
             </h1>
           </div>
           <p className="text-xs text-gray-500 uppercase tracking-widest italic">
-            {isEntrada ? 'Recebimento de materiais e notas fiscais' : 'Requisições, ordens de produção e entregas'}
+            {isEntrada ? 'Recebimento de materiais e notas fiscais' : 'RequisiÃ§Ãµes, ordens de produÃ§Ã£o e entregas'}
           </p>
         </div>
       </div>
 
-      {/* FORMULÁRIO */}
+      {/* FORMULÃRIO */}
       <div className={cn('rounded-[32px] border p-8 space-y-6 bg-zinc-950/60', corClass.border)}>
         <p className={cn('text-[10px] font-black uppercase tracking-[0.3em]', corClass.text)}>
-          {isEntrada ? '— Registrar Entrada de Material' : '— Registrar Saída de Material'}
+          {isEntrada ? 'â€” Registrar Entrada de Material' : 'â€” Registrar SaÃ­da de Material'}
         </p>
 
         {/* LINHA 1 */}
@@ -179,17 +179,17 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
           </div>
           <div className="space-y-1">
             <Label className={cn('text-[10px] font-black uppercase tracking-widest', corClass.text)}>
-              {isEntrada ? 'Responsável' : 'Requisitante (quem pediu a OP)'}
+              {isEntrada ? 'ResponsÃ¡vel' : 'Requisitante (quem pediu a OP)'}
             </Label>
-            <Input placeholder={isEntrada ? 'Nome do responsável' : 'Nome do requisitante'} value={responsavel} onChange={e => setResponsavel(e.target.value)}
+            <Input placeholder={isEntrada ? 'Nome do responsÃ¡vel' : 'Nome do requisitante'} value={responsavel} onChange={e => setResponsavel(e.target.value.toUpperCase())}
               className={cn('bg-black/40 text-white h-11 rounded-xl border uppercase', corClass.border)} />
           </div>
           <div className="space-y-1">
             <Label className="text-[10px] font-black uppercase tracking-widest text-gray-500">
-              {isEntrada ? 'Nota Fiscal / Documento' : 'Requisição / OP'}
+              {isEntrada ? 'Nota Fiscal / Documento' : 'RequisiÃ§Ã£o / OP'}
             </Label>
             <Input placeholder={isEntrada ? 'Ex: NF-001234' : 'Ex: OP-042'} value={documento}
-              onChange={e => setDocumento(e.target.value)}
+              onChange={e => setDocumento(e.target.value.toUpperCase())}
               className="bg-black/40 text-white h-11 rounded-xl border border-white/10 uppercase font-mono" />
           </div>
         </div>
@@ -215,33 +215,33 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
             <div className="space-y-1">
               <Label className="text-[10px] font-black uppercase tracking-widest text-rose-400">Entregue por</Label>
               <Input placeholder="Nome de quem entregou" value={responsavelArmazenamento}
-                onChange={e => setResponsavelArmazenamento(e.target.value)}
+                onChange={e => setResponsavelArmazenamento(e.target.value.toUpperCase())}
                 className="bg-black/40 text-white h-11 rounded-xl border border-rose-500/30 uppercase" />
             </div>
           )}
           {isEntrada ? (
             <div className="space-y-1">
-              <Label className={cn('text-[10px] font-black uppercase tracking-widest', corClass.text)}>Responsável pelo Armazenamento</Label>
+              <Label className={cn('text-[10px] font-black uppercase tracking-widest', corClass.text)}>ResponsÃ¡vel pelo Armazenamento</Label>
               <Input placeholder="Nome de quem armazenou" value={responsavelArmazenamento}
-                onChange={e => setResponsavelArmazenamento(e.target.value)}
+                onChange={e => setResponsavelArmazenamento(e.target.value.toUpperCase())}
                 className={cn('bg-black/40 text-white h-11 rounded-xl border uppercase', corClass.border)} />
             </div>
           ) : (
             <div className="space-y-1">
-              <Label className="text-[10px] font-black uppercase tracking-widest text-rose-400">Responsável pela Entrega</Label>
+              <Label className="text-[10px] font-black uppercase tracking-widest text-rose-400">ResponsÃ¡vel pela Entrega</Label>
               <Input placeholder="Nome de quem entregou" value={entreguePor}
-                onChange={e => setEntreguePor(e.target.value)}
+                onChange={e => setEntreguePor(e.target.value.toUpperCase())}
                 className="bg-black/40 text-white h-11 rounded-xl border border-rose-500/30 uppercase" />
             </div>
           )}
         </div>
 
-        {/* PESQUISA DE ITEM — só na saída */}
+        {/* PESQUISA DE ITEM â€” sÃ³ na saÃ­da */}
         {!isEntrada && (
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-rose-400/50" />
             <Input
-              placeholder="Pesquisar item para adicionar na saída..."
+              placeholder="Pesquisar item para adicionar na saÃ­da..."
               value={buscaItem}
               onChange={e => setBuscaItem(e.target.value)}
               className="bg-black/40 border-rose-500/20 text-white h-12 rounded-2xl pl-11 pr-10 text-sm"
@@ -271,7 +271,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                       >
                         <div>
                           <p className="text-white font-bold text-sm uppercase">{i.descricao}</p>
-                          <p className="text-gray-500 text-xs font-mono">{i.codigo || 'S/CÓD'}</p>
+                          <p className="text-gray-500 text-xs font-mono">{i.codigo || 'S/CÃ“D'}</p>
                         </div>
                         <Badge className="bg-rose-500/10 text-rose-400 border-rose-500/20 text-[9px] font-black">+ Adicionar</Badge>
                       </button>
@@ -285,21 +285,21 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
         {/* ITENS */}
         <div className="space-y-3">
           <div className="grid grid-cols-12 gap-3 px-2 text-[9px] font-black uppercase tracking-widest text-gray-600">
-            <div className="col-span-2">Código</div>
-            <div className="col-span-4">Descrição</div>
+            <div className="col-span-2">CÃ³digo</div>
+            <div className="col-span-4">DescriÃ§Ã£o</div>
             <div className="col-span-2 text-center">Quantidade</div>
             <div className="col-span-1 text-center">Unidade</div>
-            <div className="col-span-2">Observação</div>
+            <div className="col-span-2">ObservaÃ§Ã£o</div>
             <div className="col-span-1" />
           </div>
           {itens.map(item => (
             <div key={item.id} className={cn('grid grid-cols-12 gap-3 items-center p-3 rounded-2xl border bg-black/30', corClass.border)}>
               <div className="col-span-2">
-                <Input placeholder="ALM-001" value={item.codigo} onChange={e => updateLinha(item.id, 'codigo', e.target.value)}
+                <Input placeholder="ALM-001" value={item.codigo} onChange={e => updateLinha(item.id, 'codigo', e.target.value.toUpperCase())}
                   className="bg-black/60 border-white/10 text-white h-9 rounded-xl text-center font-mono text-xs uppercase" />
               </div>
               <div className="col-span-4">
-                <Input placeholder="Descrição do item..." value={item.descricao} onChange={e => updateLinha(item.id, 'descricao', e.target.value)}
+                <Input placeholder="DescriÃ§Ã£o do item..." value={item.descricao} onChange={e => updateLinha(item.id, 'descricao', e.target.value.toUpperCase())}
                   className="bg-black/60 border-white/10 text-white h-9 rounded-xl text-sm uppercase" />
               </div>
               <div className="col-span-2">
@@ -307,11 +307,11 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                   className={cn('bg-black/60 border-white/10 h-9 rounded-xl text-center font-black text-sm', corClass.text)} />
               </div>
               <div className="col-span-1">
-                <Input placeholder="UN" value={item.unidade} onChange={e => updateLinha(item.id, 'unidade', e.target.value)}
+                <Input placeholder="UN" value={item.unidade} onChange={e => updateLinha(item.id, 'unidade', e.target.value.toUpperCase())}
                   className="bg-black/60 border-white/10 text-gray-400 h-9 rounded-xl text-center text-xs uppercase" />
               </div>
               <div className="col-span-2">
-                <Input placeholder="Obs..." value={item.observacao} onChange={e => updateLinha(item.id, 'observacao', e.target.value)}
+                <Input placeholder="Obs..." value={item.observacao} onChange={e => updateLinha(item.id, 'observacao', e.target.value.toUpperCase())}
                   className="bg-black/60 border-white/10 text-gray-400 h-9 rounded-xl text-xs" />
               </div>
               <div className="col-span-1 flex justify-center">
@@ -331,19 +331,19 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
             onClick={salvar}
             disabled={!data || !responsavel || itens.filter(i => i.descricao && i.quantidade > 0).length === 0}>
             <CheckCircle className="mr-2 h-4 w-4" />
-            Salvar {isEntrada ? 'Entrada' : 'Saída'}
+            Salvar {isEntrada ? 'Entrada' : 'SaÃ­da'}
           </Button>
         </div>
       </div>
 
-      {/* HISTÓRICO */}
+      {/* HISTÃ“RICO */}
       {registros.filter(r => r.tipo === aba).length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-2">
               <ClipboardList className="h-3 w-3 text-gray-600" />
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-600">
-                {isEntrada ? 'Recebimentos' : 'Saídas'} — {registrosFiltrados.length} nota(s)
+                {isEntrada ? 'Recebimentos' : 'SaÃ­das'} â€” {registrosFiltrados.length} nota(s)
               </p>
               {isEntrada && totalValor > 0 && (
                 <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 font-black text-xs ml-2">
@@ -360,7 +360,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                     onChange={e => setFiltroDataInicio(e.target.value)}
                     className="bg-black/40 border-white/10 text-white h-9 rounded-xl text-xs w-36"
                   />
-                  <span className="text-gray-600 text-xs">até</span>
+                  <span className="text-gray-600 text-xs">atÃ©</span>
                   <Input
                     type="date"
                     value={filtroDataFim}
@@ -377,7 +377,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3 w-3 text-gray-500" />
                 <Input
-                  placeholder={isEntrada ? 'Pesquisar item, NF, responsável...' : 'Pesquisar item, OP, requisitante, entregue por...'}
+                  placeholder={isEntrada ? 'Pesquisar item, NF, responsÃ¡vel...' : 'Pesquisar item, OP, requisitante, entregue por...'}
                   value={busca}
                   onChange={e => setBusca(e.target.value)}
                   className="bg-black/40 border-white/10 text-white h-9 rounded-xl pl-8 pr-8 text-xs w-80"
@@ -397,7 +397,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                 <TableRow className="border-white/5 hover:bg-transparent bg-white/5">
                   <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500 py-4 pl-6">Data</TableHead>
                   <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500">Documento</TableHead>
-                  <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500">Responsável</TableHead>
+                  <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500">ResponsÃ¡vel</TableHead>
                   {isEntrada
                     ? <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500">Armazenamento</TableHead>
                     : <>
@@ -408,7 +408,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                   <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500 text-center">Itens</TableHead>
                   <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500">Primeiro Item</TableHead>
                   {isEntrada && <TableHead className="text-[10px] font-black uppercase tracking-widest text-emerald-500 text-right pr-6">Valor NF</TableHead>}
-                  <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500 text-center">Ações</TableHead>
+                  <TableHead className="text-[10px] font-black uppercase tracking-widest text-gray-500 text-center">AÃ§Ãµes</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -420,26 +420,26 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                     <TableCell>
                       {reg.documento
                         ? <Badge className={cn('border font-mono text-[9px]', corClass.badge)}>{reg.documento}</Badge>
-                        : <span className="text-gray-600 text-xs">—</span>}
+                        : <span className="text-gray-600 text-xs">â€”</span>}
                     </TableCell>
                     <TableCell className="text-gray-300 text-sm font-bold uppercase">{reg.responsavel}</TableCell>
                     {isEntrada
-                      ? <TableCell className="text-gray-500 text-xs">{reg.responsavelArmazenamento || '—'}</TableCell>
+                      ? <TableCell className="text-gray-500 text-xs">{reg.responsavelArmazenamento || 'â€”'}</TableCell>
                       : <>
-                          <TableCell className="text-gray-500 text-xs">{reg.responsavelArmazenamento || '—'}</TableCell>
-                          <TableCell className="text-gray-500 text-xs">{reg.entreguePor || '—'}</TableCell>
+                          <TableCell className="text-gray-500 text-xs">{reg.responsavelArmazenamento || 'â€”'}</TableCell>
+                          <TableCell className="text-gray-500 text-xs">{reg.entreguePor || 'â€”'}</TableCell>
                         </>
                     }
                     <TableCell className="text-center">
                       <Badge className="bg-white/5 text-gray-400 border-white/10 font-black text-xs">{reg.itens.length}</Badge>
                     </TableCell>
                     <TableCell className="text-gray-300 text-xs max-w-[180px] truncate">
-                      {reg.itens[0]?.descricao || '—'}
+                      {reg.itens[0]?.descricao || 'â€”'}
                       {reg.itens.length > 1 && <span className="text-gray-600 ml-1">+{reg.itens.length - 1}</span>}
                     </TableCell>
                     {isEntrada && (
                       <TableCell className="text-right pr-6 font-black text-emerald-400">
-                        {reg.valorNota ? reg.valorNota.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '—'}
+                        {reg.valorNota ? reg.valorNota.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'â€”'}
                       </TableCell>
                     )}
                     <TableCell className="text-center">
@@ -452,7 +452,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                         <Button size="sm" variant="ghost"
                           className={cn('h-7 w-7 p-0 rounded-xl', reg.confirmado ? 'text-gray-700 cursor-not-allowed' : 'text-rose-400 hover:bg-rose-500/10')}
                           onClick={() => !reg.confirmado && excluirRegistro(reg.id)}
-                          title={reg.confirmado ? 'Registro confirmado — imutável' : 'Excluir'}>
+                          title={reg.confirmado ? 'Registro confirmado â€” imutÃ¡vel' : 'Excluir'}>
                           {reg.confirmado ? <Lock className="h-3 w-3" /> : <Trash2 className="h-3 w-3" />}
                         </Button>
                       </div>
@@ -467,13 +467,13 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
 
       <LegalSafeguard module="DANTE ALMOXARIFADO" protocol="NX-7731-STK" />
 
-      {/* MODAL CONFIRMAÇÃO */}
+      {/* MODAL CONFIRMAÃ‡ÃƒO */}
       <Dialog open={!!pendente} onOpenChange={o => !o && setPendente(null)}>
         <DialogContent className="bg-zinc-950 border-amber-500/30 text-white max-w-lg rounded-[40px]">
           <DialogHeader>
             <DialogTitle className="text-amber-400 font-black uppercase flex items-center gap-3 text-xl italic">
               <AlertTriangle className="h-5 w-5" />
-              Atenção — Confirmar Registro
+              AtenÃ§Ã£o â€” Confirmar Registro
             </DialogTitle>
           </DialogHeader>
           {pendente && (
@@ -482,7 +482,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
               <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3">
                 <Lock className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
                 <p className="text-amber-300 text-sm leading-relaxed">
-                  <strong>Após a confirmação, este registro não poderá ser editado ou excluído.</strong> Confira todas as informações antes de prosseguir.
+                  <strong>ApÃ³s a confirmaÃ§Ã£o, este registro nÃ£o poderÃ¡ ser editado ou excluÃ­do.</strong> Confira todas as informaÃ§Ãµes antes de prosseguir.
                 </p>
               </div>
 
@@ -491,10 +491,10 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                 <p className="text-[9px] text-gray-500 uppercase tracking-widest font-black">Resumo do Registro</p>
                 <div className="grid grid-cols-2 gap-2">
                   {[
-                    { label: 'Tipo', value: pendente.tipo === 'entrada' ? '⬇️ Entrada' : '⬆️ Saída' },
+                    { label: 'Tipo', value: pendente.tipo === 'entrada' ? 'â¬‡ï¸ Entrada' : 'â¬†ï¸ SaÃ­da' },
                     { label: 'Data', value: pendente.data.split('-').reverse().join('/') },
-                    { label: 'Responsável', value: pendente.responsavel },
-                    { label: pendente.tipo === 'entrada' ? 'Documento' : 'Requisição', value: pendente.documento || '—' },
+                    { label: 'ResponsÃ¡vel', value: pendente.responsavel },
+                    { label: pendente.tipo === 'entrada' ? 'Documento' : 'RequisiÃ§Ã£o', value: pendente.documento || 'â€”' },
                     ...(pendente.tipo === 'entrada' && pendente.valorNota ? [{ label: 'Valor NF', value: pendente.valorNota.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }] : []),
                   ].map((f, i) => (
                     <div key={i} className="p-2 rounded-xl bg-black/40 border border-white/5">
@@ -505,14 +505,16 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                 </div>
                 <div className="p-3 rounded-xl bg-black/40 border border-white/5">
                   <p className="text-[9px] text-gray-600 uppercase tracking-widest mb-1">Itens ({pendente.itens.length})</p>
-                  {pendente.itens.map((item, i) => (
-                    <div key={i} className="flex justify-between items-center py-1 border-b border-white/5 last:border-0">
-                      <span className="text-white text-xs font-bold uppercase">{item.descricao}</span>
-                      <span className={cn('font-black text-sm', pendente.tipo === 'entrada' ? 'text-emerald-400' : 'text-rose-400')}>
-                        {pendente.tipo === 'entrada' ? '+' : '-'}{item.quantidade} {item.unidade}
-                      </span>
-                    </div>
-                  ))}
+                  <div className="max-h-[35vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-amber-500/20">
+                    {pendente.itens.map((item, i) => (
+                      <div key={i} className="flex justify-between items-center py-1 border-b border-white/5 last:border-0">
+                        <span className="text-white text-xs font-bold uppercase">{item.descricao}</span>
+                        <span className={cn('font-black text-sm', pendente.tipo === 'entrada' ? 'text-emerald-400' : 'text-rose-400')}>
+                          {pendente.tipo === 'entrada' ? '+' : '-'}{item.quantidade} {item.unidade}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -538,7 +540,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
           <DialogHeader>
             <DialogTitle className="text-emerald-400 font-black uppercase flex items-center gap-3 text-xl italic">
               <FileText className="h-5 w-5" />
-              Detalhe — {detalheAberto?.documento || 'S/N'}
+              Detalhe â€” {detalheAberto?.documento || 'S/N'}
             </DialogTitle>
           </DialogHeader>
           {detalheAberto && (
@@ -546,11 +548,11 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
                   { label: 'Data', value: detalheAberto.data.split('-').reverse().join('/') },
-                  { label: 'Responsável', value: detalheAberto.responsavel },
-                  { label: detalheAberto.tipo === 'entrada' ? 'Armazenamento' : 'Requisitante', value: detalheAberto.responsavelArmazenamento || '—' },
+                  { label: 'ResponsÃ¡vel', value: detalheAberto.responsavel },
+                  { label: detalheAberto.tipo === 'entrada' ? 'Armazenamento' : 'Requisitante', value: detalheAberto.responsavelArmazenamento || 'â€”' },
                   ...(detalheAberto.tipo === 'saida'
-                    ? [{ label: 'Entregue por', value: detalheAberto.entreguePor || '—' }]
-                    : [{ label: 'Valor NF', value: detalheAberto.valorNota ? detalheAberto.valorNota.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '—' }]
+                    ? [{ label: 'Entregue por', value: detalheAberto.entreguePor || 'â€”' }]
+                    : [{ label: 'Valor NF', value: detalheAberto.valorNota ? detalheAberto.valorNota.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'â€”' }]
                   ),
                 ].map((f, i) => (
                   <div key={i} className="p-3 rounded-2xl bg-black/40 border border-white/5 text-center">
@@ -563,7 +565,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                 <Table>
                   <TableHeader>
                     <TableRow className="border-white/5 hover:bg-transparent bg-white/5">
-                      {['#', 'Código', 'Descrição', 'Qtd', 'Unidade', 'Obs'].map(h => (
+                      {['#', 'CÃ³digo', 'DescriÃ§Ã£o', 'Qtd', 'Unidade', 'Obs'].map(h => (
                         <TableHead key={h} className="text-[10px] font-black uppercase tracking-widest text-emerald-400 text-center py-3">{h}</TableHead>
                       ))}
                     </TableRow>
@@ -572,11 +574,11 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
                     {detalheAberto.itens.map((item, idx) => (
                       <TableRow key={item.id} className="border-white/5 hover:bg-emerald-950/10">
                         <TableCell className="text-center text-gray-600 text-xs">{idx + 1}</TableCell>
-                        <TableCell className="text-center font-mono text-xs text-gray-400">{item.codigo || '—'}</TableCell>
+                        <TableCell className="text-center font-mono text-xs text-gray-400">{item.codigo || 'â€”'}</TableCell>
                         <TableCell className="text-white font-bold text-sm uppercase">{item.descricao}</TableCell>
                         <TableCell className="text-center font-black text-emerald-400 text-lg">{item.quantidade}</TableCell>
                         <TableCell className="text-center text-gray-500 text-xs">{item.unidade}</TableCell>
-                        <TableCell className="text-center text-gray-500 text-xs">{item.observacao || '—'}</TableCell>
+                        <TableCell className="text-center text-gray-500 text-xs">{item.observacao || 'â€”'}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -608,3 +610,4 @@ export default function AlmoxarifadoModuloPage() {
     </Suspense>
   );
 }
+
