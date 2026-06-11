@@ -24,7 +24,7 @@ const modules = [
     features: ['Catálogo de produtos com lista de materiais', 'Geração automática de OP', 'Integração direta com PPCP', 'Rastreamento do pedido até a entrega'],
     image: '/Nexus Empresas/Dante Vendas.png',
     gtag: 'nexus_empresas_vendas', href: '/intelligence/vendas',
-    licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
+    licenca: 'R$ 13.500,00', suporte: 'R$ 540,00/mês',
     roi: 'Se paga eliminando o primeiro erro de pedido.',
     frozen: false,
   },
@@ -38,7 +38,7 @@ const modules = [
     features: ['Análise comparativa de fornecedores', 'Auditoria de decisões de compra', 'Relatórios de economia acumulada', 'Redução de até 30% no custo de aquisição'],
     image: '/Nexus Empresas/Dante compras.jpg',
     gtag: 'nexus_empresas_compras', href: '/intelligence/compras',
-    licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
+    licenca: 'R$ 15.000,00', suporte: 'R$ 600,00/mês',
     roi: 'Se paga na primeira cotação.',
   },
 
@@ -52,7 +52,7 @@ const modules = [
     features: ['Planejamento de capacidade produtiva', 'Programação de ordens de produção', 'Alertas de gargalo antes que parem a linha', 'Redução de até 25% no custo de produção'],
     image: '/Nexus Empresas/Dante PPCP.png',
     gtag: 'nexus_empresas_ppcp', href: '/intelligence/ppcp',
-    licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
+    licenca: 'R$ 18.000,00', suporte: 'R$ 720,00/mês',
     roi: 'Se paga na primeira ordem otimizada.',
   },
   {
@@ -64,7 +64,8 @@ const modules = [
     icon: Shield, color: 'emerald',
     features: ['Auditoria em tempo real de processos críticos', 'Detecção de desvios e riscos', 'Trilha de auditoria imutável', 'Economia de até 15% do faturamento retida'],
     image: '/Nexus Empresas/Dante Auditor.png',
-    gtag: 'nexus_empresas_auditor', href: '/intelligence/auditor', licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
+    gtag: 'nexus_empresas_auditor', href: '/intelligence/auditor', 
+    licenca: 'R$ 13.500,00', suporte: 'R$ 540,00/mês',
     roi: 'Se paga evitando um único desvio.',
   },
   {
@@ -77,7 +78,7 @@ const modules = [
     features: ['Cronometragem e tempo padrão por operação', 'Cálculo de eficiência real por operador', 'Identificação de operações gargalo', 'Integração direta com Nexus PPCP'],
     image: '/Nexus Empresas/Dante cronoanalista.png',
     gtag: 'nexus_empresas_cronoanalise', href: '/intelligence/cronoanalise',
-    licenca: 'R$ 1.999,00', suporte: 'R$ 199,00/mês',
+    licenca: 'R$ 10.500,00', suporte: 'R$ 420,00/mês',
     roi: 'Se paga na primeira operação otimizada.',
   },
   {
@@ -90,7 +91,7 @@ const modules = [
     features: ['Controle de entrada e saída de materiais', 'Saldo em tempo real por insumo', 'Alertas de estoque mínimo', 'Integração com Compras e PPCP'],
     image: '/Nexus Empresas/Dante almoxarife.png',
     gtag: 'nexus_empresas_almoxarifado', href: '/intelligence/almoxarifado',
-    licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
+    licenca: 'R$ 10.500,00', suporte: 'R$ 420,00/mês',
     roi: 'Se paga eliminando a primeira parada por falta de material.',
   },
   {
@@ -103,7 +104,7 @@ const modules = [
     features: ['Geração automática de romaneios', 'Controle de saída por pedido', 'Rastreamento de entregas', 'Integração com Almoxarifado e PPCP'],
     image: '/Nexus Empresas/Dante expedição.png',
     gtag: 'nexus_empresas_expedicao', href: '/intelligence/expedicao',
-    licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
+    licenca: 'R$ 10.500,00', suporte: 'R$ 420,00/mês',
     roi: 'Se paga eliminando o primeiro erro de entrega.',
   },
   {
@@ -116,7 +117,7 @@ const modules = [
     features: ['Match preditivo de candidatos', 'Mapeamento de perfil comportamental', 'Identificação de gaps de liderança', 'Automação de onboarding'],
     image: '/Nexus Intelligence RH/Nexus Intelligence RH.png',
     gtag: 'nexus_empresas_rh', href: '/nexus-empresas/rh',
-    licenca: 'R$ 2.499,00', suporte: 'R$ 249,00/mês',
+    licenca: 'R$ 10.500,00', suporte: 'R$ 420,00/mês',
     roi: 'Se paga na redução do primeiro turnover errado.',
   },
   {
@@ -129,7 +130,7 @@ const modules = [
     features: ['Análise de cenários de mercado', 'Simulador de decisões executivas', 'Desenvolvimento de sucessores', 'Career Advisor C-Level'],
     image: '/Nexus Intelligence Estratégia e liderança/Nexus Intelligence estratégia e liderança.png',
     gtag: 'nexus_empresas_estrategia', href: '/nexus-empresas/estrategia',
-    licenca: 'R$ 3.999,00', suporte: 'R$ 399,00/mês',
+    licenca: 'R$ 21.000,00', suporte: 'R$ 840,00/mês',
     roi: 'Se paga na primeira decisão estratégica assertiva.',
   },
   {
@@ -142,7 +143,7 @@ const modules = [
     features: ['Estruturação de Ficha Técnica (BOM)', 'Gestão do Banco de Tempos', 'Cálculo dinâmico de capacidade', 'Versionamento de processos'],
     image: '/Nexus Intelligence Engenharia/Nexus intelligence Engenharia.png',
     gtag: 'nexus_empresas_engenharia', href: '/nexus-empresas/engenharia',
-    licenca: 'R$ 2.999,00', suporte: 'R$ 299,00/mês',
+    licenca: 'R$ 16.000,00', suporte: 'R$ 640,00/mês',
     roi: 'Se paga eliminando a primeira falha na lista de materiais.',
   },
   {
@@ -155,7 +156,7 @@ const modules = [
     features: ['Inspeção de Recebimento de Insumos', 'Checklists de Máquina e Liberação de Setup', 'Gestão de Não Conformidades (RNC)', 'Planos de Ação (5W2H)'],
     image: '/Nexus Intelligence Qualidade/Nexus Qualidade.png',
     gtag: 'nexus_empresas_qualidade', href: '/intelligence/qualidade',
-    licenca: 'R$ 2.499,00', suporte: 'R$ 249,00/mês',
+    licenca: 'R$ 10.500,00', suporte: 'R$ 420,00/mês',
     roi: 'Se paga na primeira RNC bloqueada.',
   },
 ];
@@ -176,6 +177,7 @@ type Mod = typeof modules[0];
 
 export default function NexusEmpresasPage() {
   const [aberto, setAberto] = useState<Mod | null>(null);
+  const [modalTab, setModalTab] = useState<'detalhes' | 'investimento'>('detalhes');
 
   return (
     <div className="w-full min-h-screen bg-[#020A14] text-slate-200 relative overflow-hidden">
@@ -283,7 +285,7 @@ export default function NexusEmpresasPage() {
                   </h3>
                   <p className={`text-xs leading-relaxed line-clamp-2 ${mod.frozen ? 'text-slate-600' : 'text-slate-500'}`}>{mod.subtitle}</p>
                   <div className={`flex items-center justify-between pt-2 border-t ${mod.frozen ? 'border-cyan-500/10' : c.border}`}>
-                    <span className={`text-sm font-black ${mod.frozen ? 'text-slate-400' : c.text}`}>{mod.licenca}</span>
+                    <span className={`text-sm font-black ${mod.frozen ? 'text-slate-400' : c.text}`}>B2B ENTERPRISE</span>
                     <span className={`text-[10px] uppercase tracking-widest ${mod.frozen ? 'text-cyan-500/60' : 'text-slate-600'}`}>
                       {mod.frozen ? 'Suspenso →' : 'Ver detalhes →'}
                     </span>
@@ -347,7 +349,7 @@ export default function NexusEmpresasPage() {
       </div>
 
       {/* MODAL DETALHE */}
-      <Dialog open={!!aberto} onOpenChange={o => !o && setAberto(null)}>
+      <Dialog open={!!aberto} onOpenChange={o => { if(!o) setAberto(null); setModalTab('detalhes'); }}>
         <DialogContent className="bg-[#020A14] border-white/10 text-white max-w-5xl max-h-[90vh] overflow-y-auto rounded-[40px] p-0">
           {aberto && (() => {
             const c = colorMap[aberto.color];
@@ -386,21 +388,51 @@ export default function NexusEmpresasPage() {
                     ))}
                   </div>
 
-                  <div className={`p-4 rounded-2xl border ${c.border} ${c.bg} flex items-center justify-between`}>
-                    <div>
-                      <p className="text-xs text-slate-500 uppercase tracking-widest">Licença</p>
-                      <p className={`text-2xl font-black ${c.text}`}>{aberto.licenca}</p>
-                      <p className="text-xs text-slate-500">pagamento único</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs text-slate-500 uppercase tracking-widest">Suporte</p>
-                      <p className={`text-2xl font-black ${c.text}`}>{aberto.suporte}</p>
-                      <p className="text-xs text-slate-500">mensal</p>
-                    </div>
-                    <div className="text-right">
-                      <p className={`text-[10px] font-black ${c.text} uppercase tracking-wider`}>{aberto.roi}</p>
-                    </div>
+                  <div className={`p-4 rounded-2xl border ${c.border} ${c.bg} flex flex-col sm:flex-row items-center justify-between gap-4`}>
+                    <p className={`text-sm font-black ${c.text} uppercase tracking-widest text-center sm:text-left`}>{aberto.roi}</p>
+                    <Button onClick={() => setModalTab(modalTab === 'investimento' ? 'detalhes' : 'investimento')} variant="outline" className={`shrink-0 border-white/20 text-white hover:bg-white/10 font-black uppercase tracking-widest text-[10px] h-9`}>
+                      {modalTab === 'investimento' ? 'Ocultar Valores' : 'Ver Investimento'}
+                    </Button>
                   </div>
+
+                  {modalTab === 'investimento' && (
+                    <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                      {/* PREÇO AVULSO */}
+                      <div className={`p-6 rounded-2xl border ${c.border} bg-slate-900/50 flex flex-col gap-5`}>
+                        <div className="border-b border-white/10 pb-4 text-center sm:text-left">
+                          <h4 className="text-lg font-black text-white uppercase tracking-tight">
+                            Licença Individual <span className="text-slate-500 font-bold mx-2">-</span> <span className="text-slate-400">Módulo Avulso</span>
+                          </h4>
+                        </div>
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-4">
+                          <div className="text-center sm:text-left flex-1">
+                            <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Implantação Única</p>
+                            <p className={`text-3xl font-black ${c.text}`}>{aberto.licenca}</p>
+                          </div>
+                          <div className="hidden sm:block w-px h-12 bg-white/10 shrink-0"></div>
+                          <div className="text-center sm:text-right flex-1">
+                            <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Manutenção Mensal</p>
+                            <p className={`text-3xl font-black ${c.text}`}>{aberto.suporte}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* PACOTE ENTERPRISE */}
+                      <div className={`p-6 rounded-2xl border border-[#00D4FF]/30 bg-gradient-to-r from-[#00D4FF]/10 to-blue-900/20 relative overflow-hidden`}>
+                        <div className="absolute top-0 right-0 bg-[#00D4FF] text-black text-[9px] font-black tracking-widest px-3 py-1 uppercase rounded-bl-xl">Acesso Full</div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <ShieldCheck className="h-6 w-6 text-[#00D4FF]" />
+                          <h4 className="text-xl font-black text-white uppercase tracking-tight">Pacote Enterprise (11 Módulos)</h4>
+                        </div>
+                        <p className="text-sm text-slate-400 leading-relaxed mb-5">
+                          Adquira a fábrica inteira com até <strong className="text-white">35% de desconto</strong> na implantação e mensalidade unificada.
+                        </p>
+                        <Button onClick={() => gtag.event({ action: 'contact_click', category: 'nexus_empresas', label: 'enterprise_quote' })} asChild className="w-full bg-transparent border border-[#00D4FF]/50 text-[#00D4FF] hover:bg-[#00D4FF]/10 font-black uppercase tracking-widest h-12">
+                          <Link href={WHATSAPP_URL} target="_blank">Consultar Valores e ROI do Pacote</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  )}
 
                   <div className="flex gap-3 w-full">
                     {aberto.frozen ? (

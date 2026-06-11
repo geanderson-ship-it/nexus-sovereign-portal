@@ -1147,3 +1147,200 @@
 .rightCol::-webkit-scrollbar-thumb:hover {
   background: rgba(253, 184, 19, 0.75);
 }
+
+/* ─── Log Download Button ─── */
+.logDownloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 19px; /* alinha com logText */
+  margin-top: 4px;
+  padding: 3px 10px;
+  background: rgba(253, 184, 19, 0.12);
+  border: 1px solid rgba(253, 184, 19, 0.35);
+  border-radius: 100px;
+  color: #FDB813;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logDownloadBtn:hover {
+  background: rgba(253, 184, 19, 0.25);
+  border-color: rgba(253, 184, 19, 0.7);
+  box-shadow: 0 0 12px rgba(253, 184, 19, 0.3);
+  transform: translateY(-1px);
+  color: #FFD050;
+}
+
+.logDownloadBtn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ─── BG Music Control Bar ─── */
+.bgMusicBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(253, 184, 19, 0.06);
+  border: 1px solid rgba(253, 184, 19, 0.2);
+  border-radius: var(--radius-lg);
+  flex-shrink: 0;
+}
+
+.bgMusicLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bgMusicLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(253, 184, 19, 0.8);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: block;
+}
+
+.bgMusicMode {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 1px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Bolinha de status da trilha */
+.bgStatusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.bgStatusActive {
+  background: #22c55e;
+  border-color: #16a34a;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+  animation: bgPulse 2s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(34, 197, 94, 0.5); }
+  50%       { box-shadow: 0 0 14px rgba(34, 197, 94, 0.9); }
+}
+
+.bgMusicRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.bgVolumeIcon {
+  font-size: 13px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.bgVolumeVal {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  color: rgba(253, 184, 19, 0.7);
+  font-weight: 700;
+  min-width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Slider de volume personalizado */
+.bgVolumeSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  min-width: 60px;
+  max-width: 100px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.bgVolumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #FDB813;
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(253, 184, 19, 0.5);
+  transition: box-shadow 0.2s;
+}
+
+.bgVolumeSlider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 12px rgba(253, 184, 19, 0.8);
+}
+
+.bgVolumeSlider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #FDB813;
+  border: none;
+  cursor: pointer;
+}
+
+/* Botão toggle da trilha */
+.bgToggleBtn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.bgToggleBtn:hover {
+  background: rgba(253, 184, 19, 0.15);
+  border-color: rgba(253, 184, 19, 0.4);
+  color: #FDB813;
+}
+
+.bgTogglePlaying {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #22c55e;
+}
+
+.bgTogglePlaying:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #ef4444;
+}
+

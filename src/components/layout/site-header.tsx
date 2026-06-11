@@ -79,7 +79,6 @@ export function SiteHeader() {
 
   const mainNav = useMemo(() => [
     { title: t('navInicio'), href: '/' },
-    { title: t('navIAs'), href: '/ias-nexus' },
     { title: t('navCourses'), href: '/courses' },
     { title: t('navGaleria'), href: '/gallery' },
     { title: t('navPalestras'), href: '/palestras' },
@@ -88,6 +87,7 @@ export function SiteHeader() {
     { title: 'Global', href: '/intelligence/global' },
     { title: 'Agro', href: '/agro' },
     { title: 'Empresas', href: '/nexus-empresas' },
+    { title: 'Premium', href: '/intelligence/premium' },
     { title: t('navSobre'), href: '/about' },
     { title: t('navContato'), href: '/contact' },
     { title: t('navSuporte'), href: '/suporte' },
@@ -116,6 +116,8 @@ export function SiteHeader() {
                     ? 'text-blue-500 font-bold hover:text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] uppercase tracking-wide'
                     : item.href === '/agro'
                     ? 'text-emerald-400 font-bold hover:text-emerald-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.6)] uppercase tracking-wide'
+                    : item.href === '/intelligence/premium'
+                    ? 'text-violet-400 font-black hover:text-violet-300 drop-shadow-[0_0_10px_rgba(139,92,246,0.8)] uppercase tracking-[0.2em] relative before:absolute before:-bottom-1 before:left-0 before:w-full before:h-[2px] before:bg-violet-500 before:opacity-0 hover:before:opacity-100 before:transition-opacity'
                     : item.href === '/nexus-empresas'
                     ? 'text-[#00D4FF] font-bold hover:text-[#00D4FF]/80'
                     : pathname === item.href 
@@ -276,6 +278,8 @@ export function SiteHeader() {
                             ? 'bg-blue-500/10 text-blue-400 font-bold border border-blue-500/30'
                             : item.href === '/agro'
                             ? 'bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/30'
+                            : item.href === '/intelligence/premium'
+                            ? 'bg-violet-500/10 text-violet-400 font-black border border-violet-500/50 uppercase tracking-widest'
                             : item.href === '/intelligence'
                               ? 'bg-primary/10 text-primary border border-primary/20'
                               : pathname === item.href

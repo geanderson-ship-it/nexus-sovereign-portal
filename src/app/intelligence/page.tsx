@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Shield, ArrowRight, Wheat, Paintbrush, Building2, Users, BrainCircuit, Zap, Database, Activity, HeartPulse, Cpu } from 'lucide-react';
+import { Shield, ArrowRight, Wheat, Paintbrush, Building2, Users, BrainCircuit, Zap, Database, Activity, HeartPulse, Cpu, Hammer } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
@@ -16,10 +16,39 @@ import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
 const segments = [
   {
+    id: 'empresas',
+    icon: Building2,
+    label: 'GOVERNANÇA CORPORATIVA & INDÚSTRIA',
+    title: 'Nexus Corporate Suite',
+    slogan: 'A espinha dorsal das indústrias de alta performance.',
+    description: 'A suíte definitiva para B2B. Operações industriais, cadeia de suprimentos, manufatura, auditoria e inteligência estratégica.',
+    color: 'cyan',
+    href: '/nexus-empresas',
+    image: '/Nexus Empresas/Nexus Empresas prata.png',
+    products: ['Vendas', 'Compras', 'PPCP', 'Auditor', 'Cronoanálise', 'Almoxarifado', 'Expedição', 'RH & Pessoas', 'Estratégia', 'Engenharia', 'Qualidade'],
+    badge: 'B2B_INTELLIGENCE',
+    available: true,
+  },
+  {
+    id: 'agronegocio',
+    icon: Wheat,
+    label: 'AGRO-INTELIGÊNCIA DE PRECISÃO',
+    title: 'Ecossistema Dante Safra',
+    slogan: 'Inteligência e precisão. Máxima produtividade em cada safra.',
+    description: 'Inteligência aplicada ao campo. Do planejamento da safra à cotação de commodities em tempo real.',
+    color: 'emerald',
+    href: '/agro',
+    image: '/Nexus Intelligence Agro/Nexus Intelligence Agro.png',
+    products: ['Dante Safra Standard', 'Dante Safra Axis'],
+    badge: 'AGRO_INTELLIGENCE',
+    available: true,
+  },
+  {
     id: 'egide',
     icon: Shield,
-    label: 'SEGURANÇA PÚBLICA',
-    title: 'Nexus Intelligence Égide',
+    label: 'DEFESA & INTELIGÊNCIA TÁTICA',
+    title: 'Nexus Égide',
+    slogan: 'Antecipação e precisão. A sua segurança acima de tudo.',
     description: 'Cerco eletrônico inteligente, inteligência preditiva e integração de forças policiais em tempo real.',
     color: 'blue',
     href: '/intelligence/egide',
@@ -29,89 +58,25 @@ const segments = [
     available: true,
   },
   {
-    id: 'agronegocio',
-    icon: Wheat,
-    label: 'AGRONEGÓCIO',
-    title: 'Agronegócio',
-    description: 'Inteligência aplicada ao campo. Do planejamento da safra à cotação de commodities em tempo real.',
-    color: 'emerald',
-    href: '/intelligence/agronegocio',
-    image: '/Nexus Intelligence Agro/Nexus Intelligence Agro.png',
-    products: ['Dante Safra Standard', 'Dante Safra Axis'],
-    badge: 'AGRO_INTELLIGENCE',
-    available: true,
-  },
-  {
-    id: 'empresas',
-    icon: Building2,
-    label: 'EMPRESAS & INDÚSTRIA',
-    title: 'Nexus Empresas',
-    description: 'Suite completa de IA para operações industriais. Compras, engenharia, produção e auditoria.',
-    color: 'cyan',
-    href: '/nexus-empresas',
-    hrefPpcp: '/intelligence/ppcp',
-    image: '/Nexus Empresas/Nexus Empresas prata.png',
-    products: ['Nexus Vendas', 'Nexus Compras', 'Nexus Builder', 'Nexus PPCP', 'Nexus Auditor'],
-    badge: 'B2B_INTELLIGENCE',
-    available: true,
-  },
-  {
-    id: 'rh',
-    icon: Users,
-    label: 'RH & PESSOAS',
-    title: 'RH & Pessoas',
-    description: 'Gestão de talentos, avaliação de desempenho e desenvolvimento humano com inteligência artificial.',
-    color: 'amber',
-    href: '/intelligence/rh',
-    image: '/Nexus Intelligence RH/Nexus Intelligence RH.png',
-    products: ['Djeny RH', 'Treinamento e Integração'],
-    badge: 'HR_INTELLIGENCE',
-    available: true,
-  },
-  {
-    id: 'estrategia',
-    icon: BrainCircuit,
-    label: 'ESTRATÉGIA & LIDERANÇA',
-    title: 'Estratégia & Liderança',
-    description: 'Mentoria executiva, career advisor e inteligência estratégica para líderes de alta performance.',
-    color: 'violet',
-    href: '/intelligence/estrategia',
-    image: '/Nexus Intelligence Estratégia e liderança/Nexus Intelligence estratégia e liderança.png',
-    products: ['Career Advisor', 'Dante Estratégico', 'Djeny Comercial'],
-    badge: 'STRATEGY_INTELLIGENCE',
-    available: true,
-  },
-  {
-    id: 'pactum',
-    icon: Shield,
-    label: 'NEGOCIAÇÃO & CONTRATOS',
-    title: 'Nexus Pactum',
-    description: 'Inteligência para acordos de alto valor. Detecção de blefe por biometria e auditoria de vulnerabilidade em contratos.',
-    color: 'blue',
-    href: '/intelligence/pactum',
-    image: '/Nexus Pactum/Nexus intelligence Pactum.png',
-    products: ['Deal War Room', 'Pactum Auditor', 'Deal Simulator'],
-    badge: 'DEAL_INTELLIGENCE',
-    available: true,
-  },
-  {
-    id: 'engenharia',
-    icon: Database,
-    label: 'ENGENHARIA DE PROCESSOS',
-    title: 'Engenharia de Processos',
-    description: 'O Banco de Dados Master da fábrica. Onde os tempos auditados do Dante encontram o planejamento do PPCP.',
-    color: 'amber',
-    href: '/intelligence/engenharia',
-    image: '/Nexus Intelligence Engenharia/Nexus intelligence Engenharia.png',
-    products: ['Banco de Tempos Auditados', 'Cálculo de Capacidade 53 min'],
-    badge: 'ENGINEERING_DATA',
+    id: 'health',
+    icon: HeartPulse,
+    label: 'MEDICINA DE PRECISÃO',
+    title: 'Nexus Bio-Intelligence',
+    slogan: 'Antecipação e diagnóstico precoce. A inteligência que salva vidas.',
+    description: 'IA Médica White-label. Triagem avançada, monitoramento e protocolos preventivos. A instituição pode denominar a IA a seu gosto.',
+    color: 'teal',
+    href: '/intelligence/health',
+    image: '/Nexus Intelligence Health(saúde)/Nexus Intelligence Healt com slogan.png',
+    products: ['Triagem IA', 'Protocolo Médico', 'Prevenção'],
+    badge: 'HEALTH_INTELLIGENCE',
     available: true,
   },
   {
     id: 'studio',
     icon: Activity,
-    label: 'BROADCAST & MÍDIA',
-    title: 'Nexus Studio',
+    label: 'BROADCAST & MÍDIA DE MASSA',
+    title: 'Nexus Automation',
+    slogan: 'A evolução da tecnologia em comunicações. O controle absoluto da sua mídia.',
     description: 'Automação inteligente para transmissão e gestão de mídia. O cockpit definitivo para sua estação de rádio.',
     color: 'blue',
     href: '/intelligence/studio',
@@ -121,16 +86,17 @@ const segments = [
     available: true,
   },
   {
-    id: 'health',
-    icon: HeartPulse,
-    label: 'SAÚDE & BEM-ESTAR',
-    title: 'Nexus Health',
-    description: 'Inteligência artificial aplicada à saúde. Monitoramento clínico, protocolos preventivos e gestão de bem-estar com precisão diagnóstica.',
-    color: 'teal',
-    href: '/intelligence/health',
-    image: '/Nexus Intelligence Health(saúde)/Nexus Intelligence Healt com slogan.png',
-    products: ['Diagnóstico Preventivo', 'Monitor Clínico', 'Protocolo IA'],
-    badge: 'HEALTH_INTELLIGENCE',
+    id: 'premium',
+    icon: BrainCircuit,
+    label: 'ALTA PERFORMANCE & HIGH-TICKET',
+    title: 'Nexus Premium',
+    slogan: 'O ápice do intelecto. Onde líderes forjam lendas.',
+    description: 'Nível máximo de inteligência executiva. IAs soberanas moldadas para escalar operações milionárias e acelerar a tomada de decisão.',
+    color: 'violet',
+    href: '/intelligence/premium',
+    image: '/Nexus Intelligence Premium/Nexus premium.png',
+    products: ['Maga Dot', 'Orion', 'Pactum'],
+    badge: 'VIP_ACCESS',
     available: true,
   },
 ];
@@ -139,27 +105,29 @@ const frozenSegments = [
   {
     id: 'design',
     icon: Paintbrush,
-    label: 'DESIGN & INTERIORES',
-    title: 'Design & Interiores',
-    description: 'IA generativa para ambientação, showrooms e identidade visual. Do conceito à imagem em segundos.',
-    color: 'pink',
-    href: '/intelligence/design',
+    label: 'CRIAÇÃO & ESTÉTICA',
+    title: 'Nexus Design AI',
+    slogan: 'A estética perfeita moldando o amanhã.',
+    description: 'Motor de geração gráfica avançada, modelagem paramétrica e criação de interfaces. Atualmente em implantação de infraestrutura cloud.',
+    color: 'cyan',
+    href: '#',
     image: '/Nexus Intelligence Design/Nexus Intelligence Design.png',
-    products: ['Djeny Design Personal', 'Djeny Design Business'],
-    badge: 'DESIGN_INTELLIGENCE',
+    products: ['Vector AI', 'UI/UX Automator'],
+    badge: 'FROZEN',
     available: false,
   },
   {
     id: 'projetos',
-    icon: Cpu,
-    label: 'ENGENHARIA & PROJETOS',
-    title: 'Projetos (Dante Builder)',
-    description: 'Orçamentos técnicos automatizados, listas de materiais detalhadas e representações visuais 3D geradas por inteligência artificial.',
+    icon: Hammer,
+    label: 'ARQUITETURA & ENGENHARIA',
+    title: 'Dante Builder',
+    slogan: 'A arquitetura de infraestruturas implacáveis.',
+    description: 'Gestão de obras pesadas, cálculo estrutural preditivo e gestão de empreiteiras. Integrado à matriz Nexus. Congelado até Q4.',
     color: 'cyan',
-    href: '/intelligence/dante-builder',
+    href: '#',
     image: '/Nexus Empresas/Nexus Empresas prata.png',
-    products: ['Dante Builder Standard', 'Dante Builder Enterprise'],
-    badge: 'ENGINEERING_INTELLIGENCE',
+    products: ['Structural AI', 'Heavy Management'],
+    badge: 'FROZEN',
     available: false,
   },
 ];
@@ -239,7 +207,7 @@ export default function IntelligencePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="flex flex-col gap-10 max-w-6xl mx-auto">
           {segments.map((seg, i) => {
             const c = colorMap[seg.color];
             return (
@@ -250,93 +218,141 @@ export default function IntelligencePage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
                 className={cn(
-                  'relative rounded-[40px] overflow-hidden border bg-slate-900/60 backdrop-blur-xl flex flex-col group transition-all duration-500 hover:-translate-y-2',
+                  'relative rounded-[40px] overflow-hidden border bg-slate-900/60 backdrop-blur-xl flex flex-col md:flex-row group transition-all duration-500 hover:-translate-y-2',
                   c.border, c.glow,
                   !seg.available && 'opacity-60'
                 )}
               >
-                {/* IMAGEM */}
-                <div className="relative h-52 overflow-hidden bg-gradient-to-br from-slate-900 to-transparent">
+                {/* LADO DA IMAGEM */}
+                <div className="relative w-full md:w-5/12 h-64 md:h-auto overflow-hidden bg-gradient-to-br from-slate-900 to-transparent border-b md:border-b-0 md:border-r border-white/5 group-hover:bg-slate-800/30 transition-colors duration-500">
                   {seg.image ? (
                     <Image
                       src={seg.image}
                       alt={seg.title}
                       fill
-                      className="object-contain p-6 transition-transform duration-[2s] group-hover:scale-110"
+                      className="object-contain p-8 md:p-12 transition-transform duration-[2s] group-hover:scale-110"
                     />
                   ) : (
                     <div className="flex items-center justify-center h-full opacity-10">
                       <seg.icon className="h-24 w-24" />
                     </div>
                   )}
-                  <div className="absolute top-4 left-4">
-                    <Badge className={`${c.badge} text-white border-none px-3 py-1 text-[9px] font-black tracking-[0.2em] uppercase`}>
+                  <div className="absolute top-6 left-6 z-20">
+                    <Badge className={`${c.badge} text-white border-none px-3 py-1 text-[10px] font-black tracking-[0.2em] uppercase`}>
                       {seg.badge}
                     </Badge>
                   </div>
                   {!seg.available && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                      <Badge className="bg-white/10 text-white border-white/20 text-sm font-black uppercase tracking-widest px-6 py-2">Em Breve</Badge>
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-30">
+                      <Badge className="bg-white/10 text-white border-white/20 text-sm font-black uppercase tracking-widest px-6 py-2 backdrop-blur-md">Em Breve</Badge>
                     </div>
                   )}
                 </div>
 
-                {/* CONTEÚDO */}
-                <div className="p-8 flex flex-col flex-1 gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className={cn('p-2 rounded-xl', c.bg)}>
-                      <seg.icon className={cn('h-5 w-5', c.text)} />
+                {/* LADO DO CONTEÚDO */}
+                <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center gap-6 relative z-20">
+                  {/* CABEÇALHO */}
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className={cn('p-2 rounded-xl flex-shrink-0', c.bg)}>
+                        <seg.icon className={cn('h-5 w-5', c.text)} />
+                      </div>
+                      <span className={cn('text-[10px] font-black uppercase tracking-[0.3em] line-clamp-1', c.text)}>{seg.label}</span>
                     </div>
-                    <span className={cn('text-[10px] font-black uppercase tracking-[0.3em]', c.text)}>{seg.label}</span>
+                    <div>
+                      <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight leading-none">{seg.title}</h3>
+                      {seg.slogan && (
+                        <p className={cn('text-lg md:text-xl font-light italic mt-2 tracking-wide', c.text)}>{seg.slogan}</p>
+                      )}
+                    </div>
                   </div>
 
-                  <h3 className="text-2xl font-black text-white uppercase tracking-tight">{seg.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed flex-1">{seg.description}</p>
+                  <p className="text-slate-400 text-base md:text-lg leading-relaxed">{seg.description}</p>
 
                   {/* PRODUTOS */}
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mt-2">
                     {seg.products.map((p, pi) => (
-                      <span key={pi} className={cn('text-[10px] font-bold px-2 py-1 rounded-lg border', c.bg, c.border, c.text)}>
+                      <span key={pi} className={cn('text-[11px] font-bold px-3 py-1.5 rounded-lg border', c.bg, c.border, c.text)}>
                         {p}
                       </span>
                     ))}
                   </div>
 
                   {/* CTA */}
-                  {seg.available ? (
-                    <Button asChild className={cn('w-full rounded-2xl font-black uppercase tracking-widest h-12 mt-2', c.btn)}>
-                      <Link href={seg.href} className="flex items-center justify-center gap-2">
-                        Explorar <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  ) : (
-                    <Button disabled className="w-full rounded-2xl font-black uppercase tracking-widest h-12 mt-2 bg-white/5 text-white/30 border border-white/10">
-                      Em Breve
-                    </Button>
-                  )}
+                  <div className="mt-4">
+                    {seg.available ? (
+                      <Button asChild className={cn('w-full md:w-auto rounded-2xl font-black uppercase tracking-widest h-14 px-10', c.btn)}>
+                        <Link href={seg.href} className="flex items-center justify-center gap-2">
+                          Explorar Módulo <ArrowRight className="h-5 w-5" />
+                        </Link>
+                      </Button>
+                    ) : (
+                      <Button disabled className="w-full md:w-auto rounded-2xl font-black uppercase tracking-widest h-14 px-10 bg-white/5 text-white/30 border border-white/10">
+                        Em Breve
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             );
           })}
 
-          {/* CARD CUSTOM */}
+          {/* NOVO CARD: PRODUTO SOB MEDIDA (Movido para cá) */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: segments.length * 0.08 }}
-            className="relative rounded-[40px] overflow-hidden border-2 border-dashed border-white/10 bg-white/0 flex flex-col items-center justify-center p-12 text-center gap-6 group hover:border-blue-500/30 transition-all duration-500"
+            className="relative rounded-[40px] overflow-hidden border border-amber-500/30 bg-slate-900/60 backdrop-blur-xl flex flex-col md:flex-row group shadow-[0_0_80px_rgba(245,158,11,0.05)] mt-12"
           >
-            <div className="p-4 bg-blue-500/10 rounded-2xl group-hover:bg-blue-500/20 transition-colors">
-              <Zap className="h-8 w-8 text-blue-400" />
+            {/* LADO DA IMAGEM */}
+            <div className="relative w-full md:w-5/12 h-64 md:h-auto overflow-hidden bg-zinc-950 border-b md:border-b-0 md:border-r border-white/5">
+              <Image
+                src="/assets/custom-ai-v4.png"
+                alt="IA Sob Medida"
+                fill
+                className="object-cover transition-transform duration-[3s] group-hover:scale-105 opacity-80"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute top-6 left-6 z-20">
+                <Badge className="bg-amber-500/20 text-amber-500 border-none px-3 py-1 text-[10px] font-black tracking-[0.2em] uppercase backdrop-blur-md">
+                  Custom AI
+                </Badge>
+              </div>
             </div>
-            <div>
-              <p className="text-white font-black uppercase tracking-[0.3em] text-lg">Produto Sob Medida</p>
-              <p className="text-slate-500 text-sm mt-2">Precisa de uma IA específica para o seu negócio? Desenvolvemos sob demanda.</p>
+
+            {/* LADO DO CONTEÚDO */}
+            <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center gap-6 relative z-20">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl flex-shrink-0 bg-amber-500/10 text-amber-500">
+                    <Zap className="h-5 w-5" />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500">Bespoke Intelligence</span>
+                </div>
+                <div>
+                  <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight leading-none">Produto Sob Medida</h3>
+                  <p className="text-lg md:text-xl font-light italic mt-2 tracking-wide text-amber-400/80">O poder de forjar a sua própria lenda.</p>
+                </div>
+              </div>
+
+              <p className="text-slate-400 text-base md:text-lg leading-relaxed">
+                Não encontrou a inteligência artificial perfeita para a sua operação monumental? Nós criamos. Uma rede neural arquitetada do zero, com o DNA da sua empresa, para solucionar o seu gargalo mais complexo.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mt-2">
+                <span className="text-[11px] font-bold px-3 py-1.5 rounded-lg border border-amber-500/20 bg-amber-500/10 text-amber-500">LLM Privado</span>
+                <span className="text-[11px] font-bold px-3 py-1.5 rounded-lg border border-amber-500/20 bg-amber-500/10 text-amber-500">Hardware Dedicado</span>
+                <span className="text-[11px] font-bold px-3 py-1.5 rounded-lg border border-amber-500/20 bg-amber-500/10 text-amber-500">Soberania Total</span>
+              </div>
+
+              <div className="mt-4">
+                <Button asChild className="w-full md:w-auto rounded-2xl font-black uppercase tracking-widest h-14 px-10 bg-amber-500 hover:bg-amber-400 text-black">
+                  <Link href="#" className="flex items-center justify-center gap-2">
+                    Falar com Engenharia <ArrowRight className="h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
             </div>
-            <Button asChild variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10 rounded-2xl font-black uppercase tracking-widest">
-              <Link href="/contact?subject=ia-customizada">Falar com Consultor</Link>
-            </Button>
           </motion.div>
 
 
@@ -357,7 +373,7 @@ export default function IntelligencePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="flex flex-col gap-10 max-w-4xl mx-auto">
             {frozenSegments.map((seg, i) => {
               const c = colorMap[seg.color];
               return (
@@ -367,63 +383,65 @@ export default function IntelligencePage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="relative rounded-[40px] overflow-hidden border border-cyan-500/20 bg-slate-950/40 backdrop-blur-xl flex flex-col group transition-all duration-500 shadow-[0_0_50px_rgba(6,182,212,0.05)]"
+                  className="relative rounded-[40px] overflow-hidden border border-cyan-500/20 bg-slate-950/40 backdrop-blur-xl flex flex-col md:flex-row group transition-all duration-500 shadow-[0_0_50px_rgba(6,182,212,0.05)]"
                 >
-                  {/* OVERLAY CONGELADO / NEVE */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-cyan-950/20 via-transparent to-transparent pointer-events-none z-10" />
-                  
-                  {/* IMAGEM DESATURADA */}
-                  <div className="relative h-48 overflow-hidden bg-gradient-to-br from-slate-950 to-transparent opacity-40 grayscale filter blur-[0.5px]">
+                  {/* LADO DA IMAGEM DESATURADA */}
+                  <div className="relative w-full md:w-5/12 h-64 md:h-auto overflow-hidden bg-gradient-to-br from-slate-950 to-transparent border-b md:border-b-0 md:border-r border-white/5 opacity-40 grayscale filter blur-[0.5px]">
                     {seg.image ? (
                       <Image
                         src={seg.image}
                         alt={seg.title}
                         fill
-                        className="object-contain p-6 animate-[pulse_8s_ease-in-out_infinite]"
+                        className="object-contain p-8 animate-[pulse_8s_ease-in-out_infinite]"
                       />
                     ) : (
                       <div className="flex items-center justify-center h-full opacity-10">
                         <seg.icon className="h-20 w-20" />
                       </div>
                     )}
-                    <div className="absolute top-4 left-4">
+                    <div className="absolute top-6 left-6 z-20">
                       <Badge className="bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-[8px] font-black tracking-[0.2em] uppercase">
                         {seg.badge}
                       </Badge>
                     </div>
+                    {/* OVERLAY CONGELADO / NEVE */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-cyan-950/20 via-transparent to-transparent pointer-events-none z-10" />
                   </div>
 
-                  {/* CONTEÚDO */}
-                  <div className="p-8 flex flex-col flex-1 gap-4 relative z-20">
+                  {/* LADO DO CONTEÚDO */}
+                  <div className="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center gap-6 relative z-20">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/20">
+                      <div className="p-2 rounded-xl bg-cyan-950/30 border border-cyan-500/20 flex-shrink-0">
                         <seg.icon className="h-5 w-5 text-cyan-400" />
                       </div>
-                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-400">{seg.label}</span>
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-400 line-clamp-1">{seg.label}</span>
                     </div>
 
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+                    <div className="space-y-2">
+                      <h3 className="text-3xl font-black text-white uppercase tracking-tight flex items-center gap-2 leading-none">
                         {seg.title}
                       </h3>
-                      <Badge className="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[9px] font-black tracking-wider uppercase w-fit">
+                      {seg.slogan && (
+                        <p className="text-lg md:text-xl font-light italic text-cyan-400/80 tracking-wide">{seg.slogan}</p>
+                      )}
+                      <Badge className="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[9px] font-black tracking-wider uppercase w-fit mt-3">
                         Aguardando IA AWS
                       </Badge>
                     </div>
-                    
-                    <p className="text-slate-500 text-xs leading-relaxed flex-1">{seg.description}</p>
+
+                    <p className="text-slate-500 text-sm leading-relaxed">{seg.description}</p>
 
                     {/* PRODUTOS */}
-                    <div className="flex flex-wrap gap-2 opacity-55">
+                    <div className="flex flex-wrap gap-2 mt-2 opacity-55">
                       {seg.products.map((p, pi) => (
-                        <span key={pi} className="text-[9px] font-bold px-2 py-0.5 rounded-lg border border-cyan-500/10 bg-cyan-500/5 text-cyan-400">
+                        <span key={pi} className="text-[10px] font-bold px-3 py-1.5 rounded-lg border border-cyan-500/10 bg-cyan-500/5 text-cyan-400">
                           {p}
                         </span>
                       ))}
                     </div>
 
                     {/* CTA DESABILITADO */}
-                    <Button disabled className="w-full rounded-2xl font-black uppercase tracking-widest h-12 mt-2 bg-slate-900/50 text-slate-500 border border-slate-800 cursor-not-allowed">
+                    <Button disabled className="w-full md:w-auto rounded-2xl font-black uppercase tracking-widest h-14 px-8 mt-4 bg-slate-900/50 text-slate-500 border border-slate-800 cursor-not-allowed">
                       Módulo Suspenso
                     </Button>
                   </div>
@@ -432,6 +450,8 @@ export default function IntelligencePage() {
             })}
           </div>
         </div>
+
+
 
         <div className="max-w-7xl mx-auto px-6 pb-24">
           <LegalSafeguard module="NEXUS GLOBAL" protocol="NX-CORE-00" />

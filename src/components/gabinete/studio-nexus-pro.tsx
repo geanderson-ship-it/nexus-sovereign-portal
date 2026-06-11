@@ -257,16 +257,16 @@ function QueuePanel({ queue, isSpeaking, onStop, playbackTime, playbackStatus, o
   );
 }
 
-function LogPanel({ log }: { log: Array<{ time: string; text: string; type: string }> }) {
+function LogPanel({ log }: { log: Array<{ time: string; text: string; type: string; audioUrl?: string }> }) {
   const typeIcon: Record<string, string> = {
-    music: '🎧',
-    jingle: '🎶',
-    time: '⏰',
+    time: '🕒',
     temp: '🌡️',
     forecast: '🌦️',
     'station-id': '📡',
-    custom: '📢',
     'next-track': '🎵',
+    custom: '📢',
+    music: '🎧',
+    jingle: '🎶',
   };
 
   const typeColor: Record<string, string> = {
@@ -302,11 +302,23 @@ function LogPanel({ log }: { log: Array<{ time: string; text: string; type: stri
             return (
               <div key={i} className={styles.logItem} style={{ borderLeftColor: color }}>
                 <div className={styles.logItemHeader}>
-                  <span className={styles.logIcon}>{icon}</span>
-                  <span className={styles.logTime}>{entry.time}</span>
-                  <span className={styles.logBadge} style={{ background: color + '22', color }}>
-                    {entry.type?.toUpperCase()}
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span className={styles.logIcon}>{icon}</span>
+                    <span className={styles.logTime}>{entry.time}</span>
+                    <span className={styles.logBadge} style={{ background: color + '22', color }}>
+                      {entry.type?.toUpperCase()}
+                    </span>
+                  </div>
+                  {entry.audioUrl && (
+                    <a 
+                      href={entry.audioUrl} 
+                      download={`Locucao-${entry.type}-${entry.time.replace(':', '')}.mp3`}
+                      className={styles.logDownloadBtn}
+                      title="Baixar MP3"
+                    >
+                      ⬇️ Baixar
+                    </a>
+                  )}
                 </div>
                 <span className={styles.logText}>{entry.text}</span>
               </div>
@@ -363,8 +375,16 @@ export function StudioNexusPro() {
   const activeStation: StationConfig = { ...station, manualTemp };
   const {
     queue, weather, isSpeaking, log, enqueue, stop,
-    playbackTime, playbackStatus, togglePause, skipNext, restartTrack
+    playbackTime, playbackStatus, togglePause, skipNext, restartTrack,
+    isBgPlaying, toggleBgMusic, setBgVolume,
   } = useAnnouncer(activeStation);
+
+  const [bgVolume, setBgVolumeState] = useState(50);
+
+  function handleBgVolumeChange(v: number) {
+    setBgVolumeState(v);
+    setBgVolume(v / 100);
+  }
 
   const quickButtons: Array<{ type: AnnounceType; label: string; color: string }> = [
     { type: 'time', label: '⏰ Hora Agora', color: '#3b82f6' },
@@ -457,7 +477,11 @@ export function StudioNexusPro() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
             <span className={styles.voiceLabel} style={{ fontSize: '11px', padding: '4px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: '1.2' }}>
               <span style={{ fontSize: '14px' }}>🎙️</span>
-              <span style={{ whiteSpace: 'nowrap' }}>{station.gender === 'female' ? 'Camila' : 'Ricardo'} · Neural</span>
+              <span style={{ whiteSpace: 'nowrap' }}>
+                {station.voiceEngine === 'elevenlabs' 
+                  ? 'Will (Dante) • Premium' 
+                  : (station.gender === 'female' ? 'Camila' : 'Ricardo') + ' • Neural'}
+              </span>
             </span>
             <button className={styles.settingsBtn} style={{ fontSize: '11px', padding: '6px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: '1.2' }} onClick={() => { setTempStation(station); setShowSettings(true); }}>
               <span style={{ fontSize: '14px' }}>⚙️</span>
@@ -544,6 +568,47 @@ export function StudioNexusPro() {
             onSkip={skipNext}
             onRestart={restartTrack}
           />
+
+          {/* BG Music Control Bar — controle automático da trilha */}
+          {activeStation.bgMusicUrl && (
+            <div className={styles.bgMusicBar}>
+              <div className={styles.bgMusicLeft}>
+                <span
+                  className={`${styles.bgStatusDot} ${isBgPlaying ? styles.bgStatusActive : ''}`}
+                  title={isBgPlaying ? 'Trilha ativa' : 'Trilha inativa'}
+                />
+                <div>
+                  <span className={styles.bgMusicLabel}>🎵 Trilha de Fundo</span>
+                  <span className={styles.bgMusicMode}>
+                    {isBgPlaying
+                      ? isSpeaking ? '↓ DUCKING' : '▶ AUTOMÁTICO'
+                      : '⏸ INATIVA'}
+                  </span>
+                </div>
+              </div>
+              <div className={styles.bgMusicRight}>
+                <span className={styles.bgVolumeIcon}>🔈</span>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={bgVolume}
+                  onChange={e => handleBgVolumeChange(Number(e.target.value))}
+                  className={styles.bgVolumeSlider}
+                  title={`Volume da trilha: ${bgVolume}%`}
+                />
+                <span className={styles.bgVolumeVal}>{bgVolume}%</span>
+                <button
+                  className={`${styles.bgToggleBtn} ${isBgPlaying ? styles.bgTogglePlaying : ''}`}
+                  onClick={toggleBgMusic}
+                  title={isBgPlaying ? '🔇 Silenciar trilha' : '🎵 Ligar trilha'}
+                >
+                  {isBgPlaying ? '🔇' : '🎵'}
+                </button>
+              </div>
+            </div>
+          )}
+
           <LogPanel log={log} />
         </div>
       </main>
@@ -627,25 +692,25 @@ export function StudioNexusPro() {
                   <span style={{ fontSize: '9px', opacity: 0.6 }}>AWS Polly</span>
                 </button>
 
-                {/* ElevenLabs - Voz Clonada */}
+                {/* Will - Voz Clonada (Dante Safra) */}
                 <button
                   className={`${styles.voiceOption} ${tempStation.voiceEngine === 'elevenlabs' ? styles.voiceActive : ''}`}
-                  onClick={() => setTempStation(p => ({ ...p, voiceEngine: 'elevenlabs' }))}
+                  onClick={() => setTempStation(p => ({ ...p, voiceEngine: 'elevenlabs', elevenLabsVoiceId: 'r3KkFedJ4n8aabIZ0RFQ' }))}
                   style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '10px 14px', borderColor: tempStation.voiceEngine === 'elevenlabs' ? '#a855f7' : undefined }}
                 >
-                  <span style={{ fontSize: '20px' }}>✨</span>
-                  <span>ElevenLabs</span>
+                  <span style={{ fontSize: '20px' }}>🎙️</span>
+                  <span>Will (Dante)</span>
                   <span style={{ fontSize: '9px', opacity: 0.6 }}>IA Premium</span>
                 </button>
               </div>
 
-              {/* Campos exclusivos do ElevenLabs */}
+              {/* Campos exclusivos do ElevenLabs (agora opcionais pois usamos o Will por padrão e a key do servidor) */}
               {tempStation.voiceEngine === 'elevenlabs' && (
                 <div style={{ marginTop: '12px', padding: '14px', background: 'rgba(168, 85, 247, 0.08)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '10px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <div style={{ fontSize: '11px', color: '#a855f7', fontWeight: 600, marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    ✨ Configurações ElevenLabs
+                    👾 Configurações ElevenLabs (Opcional)
                   </div>
-                  <label className={styles.formLabel} style={{ marginBottom: '2px' }}>API Key</label>
+                  <label className={styles.formLabel} style={{ marginBottom: '2px' }}>API Key (Opcional se usar a do servidor)</label>
                   <input
                     className={styles.input}
                     type="password"
@@ -657,12 +722,12 @@ export function StudioNexusPro() {
                   <label className={styles.formLabel} style={{ marginBottom: '2px' }}>Voice ID</label>
                   <input
                     className={styles.input}
-                    placeholder="Ex: 21m00Tcm4TlvDq8ikWAM"
+                    placeholder="Ex: r3KkFedJ4n8aabIZ0RFQ"
                     value={tempStation.elevenLabsVoiceId || ''}
                     onChange={e => setTempStation(p => ({ ...p, elevenLabsVoiceId: e.target.value }))}
                   />
                   <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '2px' }}>
-                    Encontre o Voice ID no painel do ElevenLabs → My Voices → clique na voz → copie o ID.
+                    Já preenchido automaticamente com a voz do Will (Dante Safra).
                   </span>
                 </div>
               )}

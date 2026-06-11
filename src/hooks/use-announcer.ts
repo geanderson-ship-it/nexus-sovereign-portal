@@ -53,38 +53,27 @@ function generateId() {
   return Math.random().toString(36).slice(2, 9);
 }
 
-// Dicionário Fonético para forçar a Polly (voz em português) a ler nomes estrangeiros corretamente
 const PRONUNCIATION_DICT: Record<string, string> = {
-  'Erasure': 'Irêijur',
-  'erasure': 'irêijur',
-  'A-ha': 'A-rrá',
-  'a-ha': 'a-rrá',
-  'Queen': 'Cuín',
-  'U2': 'Iu Tchu',
+  'Erasure': 'Erejan', 'erasure': 'erejan',
+  'A-ha': 'A-rrá', 'a-ha': 'a-rrá',
+  'Queen': 'Cuín', 'U2': 'Iu Tchu',
   'Depeche Mode': 'Depéche Moud',
   'Tears for Fears': 'Tíers for Fíers',
   'Pet Shop Boys': 'Pét Chóp Bóis',
-  'New Order': 'Niu Órder',
-  'The Cure': 'Dê Quiúr',
-  'Madonna': 'Madôna',
-  'Michael Jackson': 'Maicou Jécson',
-  'Guns N Roses': 'Gâns en Rôuses',
-  'Bon Jovi': 'Bon Jóvi',
-  'Aerosmith': 'Érousmite',
-  'Nirvana': 'Nirvâna',
+  'New Order': 'Niu Órder', 'The Cure': 'Dê Quiúr',
+  'Madonna': 'Madôna', 'Michael Jackson': 'Maicou Jécson',
+  'Guns N Roses': 'Gâns en Rôuses', 'Bon Jovi': 'Bon Jóvi',
+  'Aerosmith': 'Érousmite', 'Nirvana': 'Nirvâna',
   'Pearl Jam': 'Pãrl Djem',
   'Red Hot Chili Peppers': 'Réd Rót Tchíli Pépers',
-  'Coldplay': 'Coud-plei',
-  'Revival': 'Rivaivol',
-  'revival': 'rivaivol',
-  'Creedence Clearwater Revival': 'Crídence Clíar-uóter Rivaivol',
-  'Nexus': 'Nécsus',
-  'nexus': 'nécsus',
+  'Coldplay': 'Coud-plei', 'Revival': 'Ruivaivol', 'revival': 'ruivaivol',
+  'Creedence Clearwater Revival': 'Crídence Clíar-uóter Ruivaivol',
+  'Sometimes': 'Somtaimes', 'sometimes': 'somtaimes',
+  'Nexus': 'Nécsus', 'nexus': 'nécsus',
 };
 
 function applyPronunciationCorrections(text: string): string {
   let corrected = text;
-  // Substitui cada palavra do dicionário ignorando maiúsculas e minúsculas
   for (const [wrong, right] of Object.entries(PRONUNCIATION_DICT)) {
     const regex = new RegExp(`\\b${wrong}\\b`, 'gi');
     corrected = corrected.replace(regex, right);
@@ -94,14 +83,10 @@ function applyPronunciationCorrections(text: string): string {
 
 function getScheduleLabel(type: AnnounceType): string {
   const labels: Record<AnnounceType, string> = {
-    'time': '⏰ Hora',
-    'temp': '🌡️ Temperatura',
-    'forecast': '🌦️ Previsão',
-    'station-id': '📡 ID da Rádio',
-    'next-track': '🎵 Próxima Faixa',
-    'custom': '📢 Anúncio',
-    'jingle': '🎶 Vinheta',
-    'music': '🎧 Música',
+    'time': '⏰ Hora', 'temp': '🌡️ Temperatura',
+    'forecast': '🌦️ Previsão', 'station-id': '📡 ID da Rádio',
+    'next-track': '🎵 Próxima Faixa', 'custom': '📢 Anúncio',
+    'jingle': '🎶 Vinheta', 'music': '🎧 Música',
   };
   return labels[type];
 }
@@ -110,20 +95,34 @@ export function useAnnouncer(station: StationConfig) {
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [log, setLog] = useState<Array<{ time: string; text: string; type: AnnounceType }>>([]);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const isSpeakingRef = useRef(false);
-  const queueRef = useRef<QueueItem[]>([]);
+  const [log, setLog] = useState<Array<{ time: string; text: string; type: AnnounceType; audioUrl?: string }>>([]);
+  const [isBgPlaying, setIsBgPlaying] = useState(false);
+
+  const audioContextRef  = useRef<AudioContext | null>(null);
+  const isSpeakingRef    = useRef(false);
+  const queueRef         = useRef<QueueItem[]>([]);
+
+  // ─── Persistent BG Music Layer ───────────────────────────────────────────
+  const bgAudioRef   = useRef<HTMLAudioElement | null>(null);
+  const bgSourceRef  = useRef<MediaElementAudioSourceNode | null>(null);
+  const bgGainRef    = useRef<GainNode | null>(null);
+  const bgVolumeRef  = useRef(0.5); // volume alvo (0–1), controlado pelo slider
+  const bgMutedRef   = useRef(false); // true quando silenciado por música/jingle
+  // ─────────────────────────────────────────────────────────────────────────
 
   queueRef.current = queue;
-  const [playbackTime, setPlaybackTime] = useState({ current: 0, duration: 0 });
+
+  const [playbackTime, setPlaybackTime]     = useState({ current: 0, duration: 0 });
   const [playbackStatus, setPlaybackStatus] = useState<'playing' | 'paused' | 'stopped'>('stopped');
-  const activeAudioRef = useRef<HTMLAudioElement | null>(null);
+  const activeAudioRef  = useRef<HTMLAudioElement | null>(null);
   const activeSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
-  const activeGainRef = useRef<GainNode | null>(null);
-  const skipSignalRef = useRef<(() => void) | null>(null);
+  const activeGainRef   = useRef<GainNode | null>(null);
+  const skipSignalRef   = useRef<(() => void) | null>(null);
 
+  const CROSSFADE_TIME  = 3.0;
+  const FADE_DURATION   = 3.0;
 
+  // ─── AudioContext ─────────────────────────────────────────────────────────
   const getAudioContext = useCallback(() => {
     if (typeof window === 'undefined') return null as any;
     if (!audioContextRef.current) {
@@ -135,23 +134,13 @@ export function useAnnouncer(station: StationConfig) {
     return audioContextRef.current;
   }, []);
 
-  // Constants for crossfade
-  const CROSSFADE_TIME = 0; // seconds before end to start next
-  const FADE_DURATION = 0; // duration of volume ramp
-
-
-  // Fetch weather
+  // ─── Fetch Weather ────────────────────────────────────────────────────────
   const fetchWeather = useCallback(async () => {
     if (!station.city) return;
     try {
       const res = await fetch(`/api/weather?city=${encodeURIComponent(station.city)}`);
-      if (res.ok) {
-        const data = await res.json();
-        setWeather(data);
-      }
-    } catch (e) {
-      console.error('Weather fetch error', e);
-    }
+      if (res.ok) setWeather(await res.json());
+    } catch (e) { console.error('Weather fetch error', e); }
   }, [station.city]);
 
   useEffect(() => {
@@ -160,16 +149,14 @@ export function useAnnouncer(station: StationConfig) {
     return () => clearInterval(interval);
   }, [fetchWeather]);
 
-  // Generate announcement text
+  // ─── Generate Announcement Text ───────────────────────────────────────────
   const generateAnnouncement = useCallback(async (
     type: AnnounceType,
     extra?: { artist?: string; song?: string; text?: string }
   ): Promise<string> => {
     const body: Record<string, unknown> = { type, station, ...extra };
-    if (type === 'temp' && station.manualTemp != null) {
-      body.manualTemp = station.manualTemp;
-    }
-    const res = await fetch('/api/announce', {
+    if (type === 'temp' && station.manualTemp != null) body.manualTemp = station.manualTemp;
+    const res  = await fetch('/api/announce', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -179,82 +166,226 @@ export function useAnnouncer(station: StationConfig) {
     return data.announcement as string;
   }, [station]);
 
-  // Play physical audio URL with fading and crossfade support
-  const playAudioUrl = useCallback(async (url: string, type: AnnounceType = 'music'): Promise<void> => {
+  // ─── BG Music: Para e libera recursos ────────────────────────────────────
+  const stopBgMusic = useCallback(() => {
+    if (bgAudioRef.current) bgAudioRef.current.pause();
+    try { bgSourceRef.current?.disconnect(); } catch (_) {}
+    try { bgGainRef.current?.disconnect(); } catch (_) {}
+    bgAudioRef.current  = null;
+    bgSourceRef.current = null;
+    bgGainRef.current   = null;
+    bgMutedRef.current  = false;
+    setIsBgPlaying(false);
+  }, []);
+
+  // ─── BG Music: Inicia a trilha persistente ───────────────────────────────
+  const startBgMusic = useCallback(() => {
+    if (!station.bgMusicUrl || bgAudioRef.current) return;
     const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const audio  = new Audio(station.bgMusicUrl);
+    if (!station.bgMusicUrl.startsWith('blob:')) audio.crossOrigin = 'anonymous';
+    audio.loop   = true;
+
+    const source = ctx.createMediaElementSource(audio);
+    const gain   = ctx.createGain();
+    gain.gain.value = 0; // começa em 0 e faz fade in
+
+    source.connect(gain);
+    gain.connect(ctx.destination);
+
+    bgAudioRef.current  = audio;
+    bgSourceRef.current = source;
+    bgGainRef.current   = gain;
+
+    audio.play()
+      .then(() => {
+        // Fade in suave ao iniciar
+        const now = ctx.currentTime;
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(bgVolumeRef.current, now + 2.0);
+        setIsBgPlaying(true);
+      })
+      .catch(e => console.warn('[BG Music] Aguardando interação do usuário para iniciar.', e));
+  }, [station.bgMusicUrl, getAudioContext]);
+
+  // ─── BG Music: Controle de volume (slider) ───────────────────────────────
+  const setBgVolume = useCallback((v: number) => {
+    const clamped = Math.max(0, Math.min(1, v));
+    bgVolumeRef.current = clamped;
+    // Só aplica se não estiver mutado por música/jingle
+    if (bgGainRef.current && !bgMutedRef.current && !isSpeakingRef.current) {
+      bgGainRef.current.gain.value = clamped;
+    }
+  }, []);
+
+  // ─── BG Music: Toggle manual (emergência) ────────────────────────────────
+  const toggleBgMusic = useCallback(() => {
+    if (bgAudioRef.current) {
+      stopBgMusic();
+    } else {
+      startBgMusic();
+    }
+  }, [stopBgMusic, startBgMusic]);
+
+  // ─── BG Music: Reativo à URL ──────────────────────────────────────────────
+  useEffect(() => {
+    stopBgMusic();
+    if (station.bgMusicUrl) startBgMusic();
+    return () => stopBgMusic();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [station.bgMusicUrl]);
+
+  // ─── Duck: abaixa para 15% — usado ANTES da voz tocar ───────────────────
+  // Chamado APENAS quando o áudio TTS já está baixado e pronto, não durante o fetch
+  const duckBg = useCallback(() => {
+    if (!bgGainRef.current || bgMutedRef.current) return;
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    bgGainRef.current.gain.cancelScheduledValues(now);
+    bgGainRef.current.gain.setValueAtTime(bgGainRef.current.gain.value, now);
+    bgGainRef.current.gain.linearRampToValueAtTime(bgVolumeRef.current * 0.12, now + 0.4);
+  }, [getAudioContext]);
+
+  // ─── Unduck: volta ao volume normal após a voz terminar ──────────────────
+  const unduckBg = useCallback(() => {
+    if (!bgGainRef.current || bgMutedRef.current) return;
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    bgGainRef.current.gain.cancelScheduledValues(now);
+    bgGainRef.current.gain.setValueAtTime(bgGainRef.current.gain.value, now);
+    bgGainRef.current.gain.linearRampToValueAtTime(bgVolumeRef.current, now + 1.8);
+  }, [getAudioContext]);
+
+  // ─── Mute: silencia completamente — usado quando música/jingle toca ──────
+  const muteBg = useCallback(() => {
+    if (!bgGainRef.current) return;
+    bgMutedRef.current = true;
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    bgGainRef.current.gain.cancelScheduledValues(now);
+    bgGainRef.current.gain.setValueAtTime(bgGainRef.current.gain.value, now);
+    bgGainRef.current.gain.linearRampToValueAtTime(0, now + 1.5);
+  }, [getAudioContext]);
+
+  // ─── Unmute: restaura após música/jingle terminar ────────────────────────
+  const unmuteBg = useCallback(() => {
+    if (!bgGainRef.current) return;
+    bgMutedRef.current = false;
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    bgGainRef.current.gain.cancelScheduledValues(now);
+    bgGainRef.current.gain.setValueAtTime(bgGainRef.current.gain.value, now);
+    bgGainRef.current.gain.linearRampToValueAtTime(bgVolumeRef.current, now + 2.0);
+  }, [getAudioContext]);
+
+  // ─── TTS: Fase 1 — Gera e BAIXA o áudio (BG toca em volume normal) ───────
+  const fetchTTSAudio = useCallback(async (
+    text: string,
+    voiceOverride?: 'female' | 'male'
+  ): Promise<string> => {
+    const useElevenLabs = station.voiceEngine === 'elevenlabs' && station.elevenLabsVoiceId;
+    const ttsUrl  = useElevenLabs ? '/api/tts/elevenlabs' : '/api/tts';
+    const ttsBody = useElevenLabs
+      ? { text, apiKey: station.elevenLabsApiKey, voiceId: station.elevenLabsVoiceId }
+      : { text, gender: voiceOverride || station.gender };
+
+    const res = await fetch(ttsUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ttsBody),
+    });
+
+    if (!res.ok) throw new Error('TTS fetch error');
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
+  }, [station]);
+
+  // ─── TTS: Fase 2 — Toca o blob pré-baixado (duck já ativo) ──────────────
+  const playTTSAudio = useCallback(async (blobUrl: string): Promise<string> => {
+    const ctx = getAudioContext();
+
+    return new Promise((resolve, reject) => {
+      const audio  = new Audio(blobUrl);
+      const source = ctx.createMediaElementSource(audio);
+      const gain   = ctx.createGain();
+
+      source.connect(gain);
+      gain.connect(ctx.destination);
+
+      audio.oncanplay = () => {
+        // Fade in suave na voz
+        gain.gain.setValueAtTime(0, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.3);
+        audio.play().catch(reject);
+      };
+
+      audio.onended = () => {
+        // NÃO revogar a URL aqui para que o botão de "Baixar MP3" continue funcionando no histórico
+        try { source.disconnect(); gain.disconnect(); } catch (_) {}
+        resolve(blobUrl);
+      };
+
+      audio.onerror = () => {
+        // Também não revogar em caso de erro, caso contrário quebra a referência
+        reject(new Error('TTS playback error'));
+      };
+    });
+  }, [getAudioContext]);
+
+  // ─── Música/Jingle: Play com fade e crossfade ─────────────────────────────
+  const playAudioUrl = useCallback(async (url: string, type: AnnounceType = 'music'): Promise<void> => {
+    const ctx     = getAudioContext();
     const isMusic = type === 'music';
-    
-    console.log(`[AudioEngine] Playing ${type}: ${url}`);
 
     return new Promise((resolve, reject) => {
       const audio = new Audio(url);
-      audio.crossOrigin = "anonymous";
+      audio.crossOrigin = 'anonymous';
       activeAudioRef.current = audio;
-      
-      const source = ctx.createMediaElementSource(audio);
-      const gain = ctx.createGain();
 
-      // --- AGC (Automatic Gain Control) / Normalizer ---
-      // Boosts quiet sounds and compresses loud peaks
-      const preGain = ctx.createGain();
-      preGain.gain.value = 2.5; // Boost everything to make quiet tracks louder
-
+      const source     = ctx.createMediaElementSource(audio);
+      const gain       = ctx.createGain();
+      const preGain    = ctx.createGain();
       const compressor = ctx.createDynamicsCompressor();
-      compressor.threshold.value = -20; // Start compressing at -20dB
-      compressor.knee.value = 15;       // Soft knee for smooth transition
-      compressor.ratio.value = 8;       // High ratio to heavily squash peaks
-      compressor.attack.value = 0.005;  // Fast attack to catch loud transients quickly
-      compressor.release.value = 0.25;  // Smooth release
+
+      preGain.gain.value          = 2.5;
+      compressor.threshold.value  = -20;
+      compressor.knee.value       = 15;
+      compressor.ratio.value      = 8;
+      compressor.attack.value     = 0.005;
+      compressor.release.value    = 0.25;
 
       activeSourceRef.current = source;
-      activeGainRef.current = gain;
-      
-      // Pipeline: Audio -> Pre-Gain (boost) -> Compressor (squash peaks) -> Fader Gain (crossfades) -> Speakers
+      activeGainRef.current   = gain;
+
       source.connect(preGain);
       preGain.connect(compressor);
       compressor.connect(gain);
       gain.connect(ctx.destination);
 
-      // Dedicated skip signal for this promise (Smart Crossfade Skip)
       skipSignalRef.current = () => {
         if (activeAudioRef.current !== audio) return;
-        
-        const crossfadeOnSkipDuration = 2.5; // Smooth 2.5s crossfade when skipping
-        const now = ctx.currentTime;
-
-        // 1. Start fading out the current song
+        const skipDur = 2.5;
+        const now     = ctx.currentTime;
         gain.gain.setValueAtTime(gain.gain.value, now);
-        gain.gain.linearRampToValueAtTime(0, now + crossfadeOnSkipDuration);
-
-        // 2. Resolve the promise IMMEDIATELY to trigger the next track in the queue
+        gain.gain.linearRampToValueAtTime(0, now + skipDur);
         resolve();
-
-        // 3. Keep the current audio playing in the background until it's fully faded out
         setTimeout(() => {
           audio.pause();
-          try {
-            source.disconnect();
-            preGain.disconnect();
-            compressor.disconnect();
-            gain.disconnect();
-          } catch (e) {
-            // Context might be closed or already disconnected
-          }
-        }, crossfadeOnSkipDuration * 1000);
+          try { source.disconnect(); preGain.disconnect(); compressor.disconnect(); gain.disconnect(); } catch (_) {}
+        }, skipDur * 1000);
       };
 
       audio.oncanplay = () => {
-        const duration = audio.duration;
-        const startTime = ctx.currentTime;
-        
-        // If it's a very short file (< 15s), treat as jingle even if tagged otherwise
+        const duration        = audio.duration;
+        const startTime       = ctx.currentTime;
         const effectiveIsMusic = isMusic && duration > 15;
 
         setPlaybackTime({ current: 0, duration });
         setPlaybackStatus('playing');
-        
+
         if (effectiveIsMusic) {
-          // Fade In only for music
           gain.gain.setValueAtTime(0, startTime);
           gain.gain.linearRampToValueAtTime(1, startTime + FADE_DURATION);
         } else {
@@ -265,17 +396,13 @@ export function useAnnouncer(station: StationConfig) {
           if (activeAudioRef.current === audio) {
             setPlaybackTime({ current: audio.currentTime, duration: audio.duration });
           }
-          
-          // Crossfade only for music
           if (effectiveIsMusic && duration > CROSSFADE_TIME * 2) {
             if (duration - audio.currentTime <= CROSSFADE_TIME) {
               audio.removeEventListener('timeupdate', checkCrossfade);
-              
-              const fadeOutStart = ctx.currentTime;
-              gain.gain.setValueAtTime(gain.gain.value, fadeOutStart);
-              gain.gain.linearRampToValueAtTime(0, fadeOutStart + FADE_DURATION);
-              
-              resolve(); 
+              const fo = ctx.currentTime;
+              gain.gain.setValueAtTime(gain.gain.value, fo);
+              gain.gain.linearRampToValueAtTime(0, fo + FADE_DURATION);
+              resolve();
             }
           }
         };
@@ -285,7 +412,6 @@ export function useAnnouncer(station: StationConfig) {
       };
 
       audio.onended = () => {
-        // CRITICAL: Only clear refs if this audio is still the active one
         if (activeAudioRef.current === audio) {
           skipSignalRef.current = null;
           setPlaybackStatus('stopped');
@@ -293,12 +419,9 @@ export function useAnnouncer(station: StationConfig) {
           activeAudioRef.current = null;
         }
         resolve();
-        source.disconnect();
-        preGain.disconnect();
-        compressor.disconnect();
-        gain.disconnect();
+        try { source.disconnect(); preGain.disconnect(); compressor.disconnect(); gain.disconnect(); } catch (_) {}
       };
-      
+
       audio.onerror = () => {
         if (activeAudioRef.current === audio) {
           skipSignalRef.current = null;
@@ -310,100 +433,7 @@ export function useAnnouncer(station: StationConfig) {
     });
   }, [getAudioContext]);
 
-
-
-
-  // Speak a text via TTS
-  const speakText = useCallback(async (text: string, voiceOverride?: 'female' | 'male'): Promise<void> => {
-    const ctx = getAudioContext();
-    
-    // Determine TTS engine
-    const useElevenLabs = station.voiceEngine === 'elevenlabs' && station.elevenLabsApiKey && station.elevenLabsVoiceId;
-    const ttsUrl = useElevenLabs ? '/api/tts/elevenlabs' : '/api/tts';
-    const ttsBody = useElevenLabs
-      ? { text, apiKey: station.elevenLabsApiKey, voiceId: station.elevenLabsVoiceId }
-      : { text, gender: voiceOverride || station.gender };
-
-    try {
-      const res = await fetch(ttsUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ttsBody),
-      });
-
-      if (!res.ok) throw new Error('TTS error');
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-
-      return new Promise((resolve, reject) => {
-        const audio = new Audio(url);
-        const source = ctx.createMediaElementSource(audio);
-        const gain = ctx.createGain();
-        
-        source.connect(gain);
-        gain.connect(ctx.destination);
-
-        let bgAudio: HTMLAudioElement | null = null;
-        let bgSource: MediaElementAudioSourceNode | null = null;
-        let bgGain: GainNode | null = null;
-
-        if (station.bgMusicUrl) {
-          bgAudio = new Audio(station.bgMusicUrl);
-          if (!station.bgMusicUrl.startsWith('blob:')) {
-            bgAudio.crossOrigin = "anonymous";
-          }
-          bgAudio.loop = true;
-          bgSource = ctx.createMediaElementSource(bgAudio);
-          bgGain = ctx.createGain();
-          
-          if (bgSource && bgGain) {
-            bgSource.connect(bgGain);
-            bgGain.connect(ctx.destination);
-          }
-        }
-
-        // Simple fade in for voice
-        audio.oncanplay = () => {
-          gain.gain.setValueAtTime(0, ctx.currentTime);
-          gain.gain.linearRampToValueAtTime(1, ctx.currentTime + 0.5);
-          audio.play().catch(reject);
-
-          if (bgAudio && bgGain) {
-            bgGain.gain.setValueAtTime(0, ctx.currentTime);
-            bgGain.gain.linearRampToValueAtTime(0.05, ctx.currentTime + 1);
-            bgAudio.play().catch(e => console.warn('BGM play failed', e));
-          }
-        };
-
-        audio.onended = () => {
-          URL.revokeObjectURL(url);
-          source.disconnect();
-          gain.disconnect();
-          
-          if (bgAudio && bgGain) {
-            bgGain.gain.setValueAtTime(bgGain.gain.value, ctx.currentTime);
-            bgGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 2);
-            setTimeout(() => {
-              bgAudio?.pause();
-              bgSource?.disconnect();
-              bgGain?.disconnect();
-              resolve();
-            }, 2000);
-          } else {
-            resolve();
-          }
-        };
-        
-        audio.onerror = () => reject(new Error('TTS playback error'));
-      });
-    } catch (err) {
-      throw err;
-    }
-  }, [getAudioContext, station.gender]);
-
-
-  // Process queue
+  // ─── Process Queue ────────────────────────────────────────────────────────
   const processQueue = useCallback(async () => {
     if (isSpeakingRef.current) return;
     const pending = queueRef.current.find(q => q.status === 'pending');
@@ -411,41 +441,70 @@ export function useAnnouncer(station: StationConfig) {
 
     isSpeakingRef.current = true;
     setIsSpeaking(true);
+    setQueue(prev => prev.map(q => q.id === pending.id ? { ...q, status: 'speaking' } : q));
 
-    setQueue(prev => prev.map(q =>
-      q.id === pending.id ? { ...q, status: 'speaking' } : q
-    ));
+    let text         = pending.announcement || '';
+    let generatedUrl = '';
 
     try {
-      let text = pending.announcement || '';
-
       if (pending.type === 'jingle' || pending.type === 'music') {
+        // ── MÚSICA / JINGLE ──────────────────────────────────────────────
+        // A BG music silencia completamente enquanto o áudio principal toca
         if (!pending.audioUrl) throw new Error('Missing audio URL');
+        muteBg();
         await playAudioUrl(pending.audioUrl, pending.type);
-        text = pending.label; // Just to log
+        // Quando a música termina, a trilha retorna automaticamente
+        unmuteBg();
+        text = pending.label || 'Áudio';
+
       } else {
+        // ── LOCUÇÃO TTS ──────────────────────────────────────────────────
+        // FASE 1: Gera o texto (BG toca em volume NORMAL — sem silêncio!)
         text = pending.announcement || await generateAnnouncement(
           pending.type,
           pending.text ? { text: pending.text } : undefined
         );
-        
-        // Aplica o filtro fonético antes de enviar para a AWS Polly
         const spokenText = applyPronunciationCorrections(text);
-        await speakText(spokenText, pending.voiceOverride);
+
+        // FASE 2: Baixa o áudio TTS (BG AINDA toca em volume NORMAL!)
+        // A espera da API não cria mais silêncio na programação
+        let audioUrl = '';
+        try {
+          audioUrl = await fetchTTSAudio(spokenText, pending.voiceOverride);
+        } catch (e) {
+          console.error('[TTS Fetch Error]', e);
+        }
+
+        if (audioUrl) {
+          // FASE 3: Áudio pronto → duck AGORA (milissegundos antes de tocar)
+          duckBg();
+          // Pequena pausa pra o duck ter efeito antes da voz entrar
+          await new Promise(r => setTimeout(r, 350));
+
+          // FASE 4: Toca a voz pré-baixada
+          try {
+            generatedUrl = await playTTSAudio(audioUrl);
+          } catch (e) {
+            console.error('[TTS Play Error]', e);
+          }
+
+          // FASE 5: Voz terminou → unduck (trilha retorna suavemente)
+          unduckBg();
+        }
       }
 
+      // Log
       const now = new Date();
       setLog(prev => [{
         time: now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
         text: text || pending.label || 'Áudio sem título',
         type: pending.type,
+        audioUrl: generatedUrl || pending.audioUrl,
       }, ...prev].slice(0, 50));
 
       setQueue(prev => prev.map(q =>
         q.id === pending.id ? { ...q, status: 'done', announcement: text } : q
       ));
-
-      // Remove done items after 3s
       setTimeout(() => {
         setQueue(prev => prev.filter(q => q.id !== pending.id));
       }, 3000);
@@ -454,6 +513,9 @@ export function useAnnouncer(station: StationConfig) {
       setQueue(prev => prev.map(q =>
         q.id === pending.id ? { ...q, status: 'error' } : q
       ));
+      // Garante unduck/unmute mesmo em caso de erro
+      unduckBg();
+      unmuteBg();
       setTimeout(() => {
         setQueue(prev => prev.filter(q => q.id !== pending.id));
       }, 5000);
@@ -461,22 +523,22 @@ export function useAnnouncer(station: StationConfig) {
 
     isSpeakingRef.current = false;
     setIsSpeaking(false);
-  }, [generateAnnouncement, speakText]);
+  }, [
+    generateAnnouncement, fetchTTSAudio, playTTSAudio,
+    duckBg, unduckBg, muteBg, unmuteBg, playAudioUrl,
+  ]);
 
   useEffect(() => {
-    if (!isSpeaking) {
-      processQueue();
-    }
+    if (!isSpeaking) processQueue();
   }, [queue, isSpeaking, processQueue]);
 
-  // Enqueue an announcement
+  // ─── Enqueue ──────────────────────────────────────────────────────────────
   const enqueue = useCallback((
     type: AnnounceType,
     extra?: { label?: string; text?: string; artist?: string; song?: string; audioUrl?: string; voiceOverride?: 'female' | 'male' }
   ) => {
     const item: QueueItem = {
-      id: generateId(),
-      type,
+      id: generateId(), type,
       label: extra?.label || getScheduleLabel(type),
       text: extra?.text,
       audioUrl: extra?.audioUrl,
@@ -486,7 +548,7 @@ export function useAnnouncer(station: StationConfig) {
     setQueue(prev => [...prev, item]);
   }, []);
 
-  // Stop all audio
+  // ─── Stop ─────────────────────────────────────────────────────────────────
   const stop = useCallback(() => {
     if (activeAudioRef.current) {
       activeAudioRef.current.pause();
@@ -495,13 +557,19 @@ export function useAnnouncer(station: StationConfig) {
     if (audioContextRef.current) {
       audioContextRef.current.close();
       audioContextRef.current = null;
+      bgAudioRef.current  = null;
+      bgSourceRef.current = null;
+      bgGainRef.current   = null;
+      setIsBgPlaying(false);
     }
     isSpeakingRef.current = false;
+    bgMutedRef.current    = false;
     setIsSpeaking(false);
     setPlaybackStatus('stopped');
     setQueue(prev => prev.filter(q => q.status === 'pending').map(q => ({ ...q })));
   }, []);
 
+  // ─── Player Controls ──────────────────────────────────────────────────────
   const togglePause = useCallback(() => {
     if (!activeAudioRef.current) return;
     if (playbackStatus === 'playing') {
@@ -514,59 +582,37 @@ export function useAnnouncer(station: StationConfig) {
   }, [playbackStatus]);
 
   const skipNext = useCallback(() => {
-    if (skipSignalRef.current) {
-      skipSignalRef.current();
-    }
+    if (skipSignalRef.current) skipSignalRef.current();
   }, []);
 
   const restartTrack = useCallback(() => {
-    if (activeAudioRef.current) {
-      activeAudioRef.current.currentTime = 0;
-    }
+    if (activeAudioRef.current) activeAudioRef.current.currentTime = 0;
   }, []);
 
-  // Scheduler
+  // ─── Scheduler ────────────────────────────────────────────────────────────
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
       const min = now.getMinutes();
       const sec = now.getSeconds();
-
       if (sec !== 0) return;
-
-      // Every hour: temp
-      if (min === 0) {
-        enqueue('temp');
-      }
-
-      // Every 30 min: time + station ID
-      if (min === 0 || min === 30) {
-        if (min !== 0) {
-          enqueue('time');
-        }
-      }
-
-      // Forecast: midnight, 6h, 12h, 18h
-      if (min === 0 && [0, 6, 12, 18].includes(now.getHours())) {
-        enqueue('forecast');
-      }
+      if (min === 0) enqueue('temp');
+      if (min === 0 || min === 30) { if (min !== 0) enqueue('time'); }
+      if (min === 0 && [0, 6, 12, 18].includes(now.getHours())) enqueue('forecast');
     }, 1000);
-
     return () => clearInterval(interval);
   }, [enqueue]);
 
-  return { 
-    queue, 
-    weather, 
-    isSpeaking, 
-    log, 
-    enqueue, 
-    stop, 
-    fetchWeather,
-    playbackTime,
-    playbackStatus,
-    togglePause,
-    skipNext,
-    restartTrack
+  return {
+    queue, weather, isSpeaking, log,
+    enqueue, stop, fetchWeather,
+    playbackTime, playbackStatus,
+    togglePause, skipNext, restartTrack,
+    // ─── BG Music ───
+    isBgPlaying,
+    startBgMusic,
+    stopBgMusic,
+    toggleBgMusic,
+    setBgVolume,
   };
 }

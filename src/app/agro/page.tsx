@@ -5,6 +5,7 @@ import { ArrowLeft, Sprout, Users, Landmark, Check, Sparkles, Shield, ChevronRig
 import Link from 'next/link';
 
 import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
+import { IAPaymentModal } from '@/components/maga/ia-payment-modal';
 
 
 type ProfileType = 'agricultor' | 'cooperativa' | 'gestor_publico';
@@ -17,9 +18,15 @@ interface ProfileData {
   description: string;
   benefits: string[];
   prompts: string[];
+  pricing?: {
+    value: string;
+    subtext: string;
+    cta: string;
+    action: 'pix' | 'consultant';
+  };
 }
 
-function ProfileDetails({ profile }: { profile: ProfileData }) {
+function ProfileDetails({ profile, onOpenPayment }: { profile: ProfileData; onOpenPayment?: () => void }) {
   return (
     <div className="bg-slate-900/30 border border-emerald-800/20 backdrop-blur-xl rounded-2xl md:rounded-[32px] p-4 sm:p-8 md:p-12 shadow-2xl animate-fade-in-down">
       <div className="space-y-6 sm:space-y-8">
@@ -83,6 +90,35 @@ function ProfileDetails({ profile }: { profile: ProfileData }) {
             );
           })}
         </ul>
+
+        {/* Pricing Box */}
+        {profile.pricing && (
+          <div className="mt-10 p-6 sm:p-8 rounded-[24px] border border-emerald-500/30 bg-gradient-to-r from-slate-900/80 to-emerald-950/20 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-[50px] pointer-events-none" />
+            <div className="text-center md:text-left relative z-10">
+              <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Plano Especial — {profile.title}</p>
+              <h4 className="text-3xl md:text-4xl font-black text-white tracking-tighter">{profile.pricing.value}</h4>
+              <p className="text-sm text-gray-400 mt-2 font-medium">{profile.pricing.subtext}</p>
+            </div>
+            <button 
+              className={`relative z-10 w-full md:w-auto px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl ${
+                profile.pricing.action === 'pix' 
+                  ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-emerald-500/20' 
+                  : 'bg-transparent border-2 border-emerald-500/50 text-emerald-400 hover:bg-emerald-950/40 hover:border-emerald-400'
+              }`}
+              onClick={() => {
+                if (profile.pricing?.action === 'pix') {
+                  onOpenPayment?.();
+                } else {
+                  const waText = `Olá, gostaria de falar com um consultor sobre o Dante Safra para ${profile.title}.`;
+                  window.open(`https://wa.me/5551999799582?text=${encodeURIComponent(waText)}`, '_blank');
+                }
+              }}
+            >
+              {profile.pricing?.action === 'pix' ? 'Pagar Agora' : profile.pricing?.cta}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -90,6 +126,7 @@ function ProfileDetails({ profile }: { profile: ProfileData }) {
 
 export default function AgroPage() {
   const [selectedProfile, setSelectedProfile] = useState<ProfileType | null>(null);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const profiles: ProfileData[] = [
     {
@@ -107,7 +144,13 @@ export default function AgroPage() {
         'Dante, como otimizar a calagem para solo argiloso visando o plantio de soja?',
         'Quais os principais ganchos para controle biológico da ferrugem asiática?',
         'Como configurar a telemetria off-line para monitorar umidade do solo?'
-      ]
+      ],
+      pricing: {
+        value: 'R$ 999',
+        subtext: 'Pagamento via PIX. Liberação em até 24 horas após o pagamento.',
+        cta: 'Pagar Agora',
+        action: 'pix'
+      }
     },
     {
       id: 'cooperativa',
@@ -124,7 +167,13 @@ export default function AgroPage() {
         'Dante, como gerar um modelo de previsão de safra consolidado para 50 cooperados?',
         'Quais métricas de ESG agrícolas são cruciais para auditoria externa da cooperativa?',
         'Como o Dante Safra pode otimizar a janela de colheita e logística de recebimento?'
-      ]
+      ],
+      pricing: {
+        value: 'A partir de R$ 14.999 / anual',
+        subtext: 'Pagamento à vista. Pacotes a partir de 30 associados + 5 acessos para técnicos (Até 50% OFF no valor unitário).',
+        cta: 'Solicitar Implantação',
+        action: 'consultant'
+      }
     },
     {
       id: 'gestor_publico',
@@ -141,7 +190,13 @@ export default function AgroPage() {
         'Dante, como estruturar um programa municipal de calagem eficiente e auditável?',
         'Quais culturas de inverno têm maior potencial econômico para pequenas propriedades?',
         'Gerar um relatório de vocação regional focando em transição para agricultura orgânica.'
-      ]
+      ],
+      pricing: {
+        value: 'A partir de R$ 24.999 / anual',
+        subtext: 'Pagamento à vista. Pacotes a partir de 50 licenças para Agricultura Familiar + Relatório de Impacto para o Gestor.',
+        cta: 'Falar com Especialista B2G',
+        action: 'consultant'
+      }
     }
   ];
 
@@ -266,7 +321,7 @@ export default function AgroPage() {
                     {/* Mobile Inline Details Widget */}
                     {isSelected && (
                       <div className="block md:hidden col-span-1 animate-fade-in-down mt-4">
-                        <ProfileDetails profile={profile} />
+                        <ProfileDetails profile={profile} onOpenPayment={() => setIsPaymentModalOpen(true)} />
                       </div>
                     )}
                   </React.Fragment>
@@ -278,7 +333,7 @@ export default function AgroPage() {
           {/* Desktop Details Widget (rendered below all cards) */}
           {selectedProfile && activeProfileData && (
             <div className="hidden md:block animate-fade-in-down mt-4">
-              <ProfileDetails profile={activeProfileData} />
+              <ProfileDetails profile={activeProfileData} onOpenPayment={() => setIsPaymentModalOpen(true)} />
             </div>
           )}
 
@@ -286,6 +341,16 @@ export default function AgroPage() {
         </div>{/* fim z-10 */}
       </div>{/* fim min-h-screen */}
 
+      <IAPaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        iaName="Dante Safra Agro"
+        pixKey="+5551999799582"
+        annualPrice="R$ 999,00"
+        isSinglePrice={true}
+        singlePriceLabel="Licença Anual"
+        onSuccess={() => setIsPaymentModalOpen(false)}
+      />
     </SovereignShowcase>
   );
 }

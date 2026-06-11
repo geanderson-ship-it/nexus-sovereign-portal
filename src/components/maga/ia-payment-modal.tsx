@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   Dialog, 
   DialogContent, 
@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { QrCode } from '@/components/ui/qr-code';
 import { Check, Copy, ShieldCheck, Sparkles, Smartphone, Zap } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, generatePixPayload } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
 interface IAPaymentModalProps {
@@ -21,6 +21,8 @@ interface IAPaymentModalProps {
   pixKey: string;
   monthlyPrice?: string;
   annualPrice?: string;
+  isSinglePrice?: boolean;
+  singlePriceLabel?: string;
   onSuccess?: () => void;
 }
 
@@ -31,6 +33,8 @@ export function IAPaymentModal({
   pixKey, 
   monthlyPrice = 'R$ 149,00', 
   annualPrice = 'R$ 1.500,00',
+  isSinglePrice = false,
+  singlePriceLabel = 'Pagamento Único',
   onSuccess 
 }: IAPaymentModalProps) {
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'annual'>('annual');
@@ -44,12 +48,24 @@ export function IAPaymentModal({
     },
     annual: {
       price: annualPrice,
-      label: 'Plano Anual',
+      label: isSinglePrice ? singlePriceLabel : 'Plano Anual',
     }
   };
 
+  // Converte a string "R$ 999,00" para número 999.00
+  const currentPriceString = plans[selectedPlan].price;
+  const amountNumeric = parseFloat(currentPriceString.replace('R$', '').trim().replace(/\./g, '').replace(',', '.'));
+  
+  // Gera o Payload PIX (Copia e Cola) - Memoizado para não mudar a cada render
+  const fullPixPayload = useMemo(() => {
+    return generatePixPayload({
+      amount: isNaN(amountNumeric) ? 0 : amountNumeric,
+      txid: 'NEX' + Date.now().toString().slice(-6)
+    });
+  }, [amountNumeric]);
+
   const handleCopyPix = () => {
-    navigator.clipboard.writeText(pixKey);
+    navigator.clipboard.writeText(fullPixPayload);
     setCopied(true);
     toast({
       title: "Chave PIX Copiada!",
@@ -61,7 +77,7 @@ export function IAPaymentModal({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="w-[94vw] max-w-[420px] max-h-[92vh] bg-zinc-950 border-zinc-800 text-white p-0 overflow-y-auto shadow-[0_0_120px_rgba(0,0,0,1)] z-[9999] overflow-x-hidden">
-        <div className="relative p-5 sm:p-6">
+        <div className="relative p-5 sm:p-6 w-full max-w-full">
           {/* Header Gradient */}
           <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-500" />
           
@@ -83,8 +99,8 @@ export function IAPaymentModal({
           </DialogHeader>
 
           {/* Plan Selector (Vertical focus) */}
-          <div className="flex flex-col gap-3 mt-8 p-1.5 bg-zinc-900/40 rounded-3xl border border-zinc-800/50">
-            {(['annual', 'monthly'] as const).map((planKey) => (
+          <div className="flex flex-col gap-3 mt-8 p-1.5 bg-zinc-900/40 rounded-3xl border border-zinc-800/50 w-full max-w-full">
+            {(isSinglePrice ? (['annual'] as const) : (['annual', 'monthly'] as const)).map((planKey) => (
               <button
                 key={planKey}
                 onClick={() => setSelectedPlan(planKey)}
@@ -92,7 +108,8 @@ export function IAPaymentModal({
                   "relative flex items-center justify-between px-6 py-5 rounded-2xl transition-all duration-500 group",
                   selectedPlan === planKey 
                     ? "bg-zinc-800 text-white shadow-2xl ring-1 ring-white/10" 
-                    : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20"
+                    : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/20",
+                  isSinglePrice && "cursor-default"
                 )}
               >
                 <div className="flex flex-col items-start translate-z-0">
@@ -103,7 +120,7 @@ export function IAPaymentModal({
                     {plans[planKey].price}
                   </span>
                 </div>
-                {planKey === 'annual' && (
+                {planKey === 'annual' && !isSinglePrice && (
                   <span className="px-3 py-1 bg-primary text-[9px] font-black rounded-full text-white tracking-[0.2em] shadow-lg shadow-primary/40">
                     -16% OFF
                   </span>
@@ -113,13 +130,13 @@ export function IAPaymentModal({
           </div>
 
           {/* Payment Section - PURE VERTICAL */}
-          <div className="mt-8 flex flex-col items-center gap-8 bg-zinc-900/20 p-8 rounded-[40px] border border-zinc-800/60 relative overflow-hidden">
+          <div className="mt-8 flex flex-col items-center gap-8 bg-zinc-900/20 p-6 sm:p-8 rounded-[40px] border border-zinc-800/60 relative overflow-hidden w-full max-w-full">
             <div className="absolute inset-0 bg-blue-500/[0.03] pointer-events-none" />
             
             {/* QR Code */}
             <div className="flex flex-col items-center gap-5 relative z-10 w-full">
               <div className="bg-white p-4 rounded-[32px] shadow-[0_0_50px_rgba(255,255,255,0.08)] transition-transform duration-700 hover:scale-[1.05] inline-block">
-                <QrCode value={pixKey} size={160} />
+                <QrCode value={fullPixPayload} size={160} />
               </div>
               <div className="flex flex-col items-center gap-1.5 text-center mt-1">
                 <div className="flex items-center gap-2 text-[10px] font-black text-zinc-500 uppercase tracking-[0.4em]">
@@ -141,15 +158,15 @@ export function IAPaymentModal({
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 w-full">
                 <p className="text-[10px] text-zinc-600 uppercase font-black tracking-[0.4em] text-center">Pix Copia ou Cola</p>
                 <div className="flex flex-col gap-3 w-full">
-                  <div className="w-full bg-zinc-950 border border-zinc-800 px-5 py-5 rounded-2xl text-[10px] font-mono text-zinc-400 overflow-hidden text-ellipsis whitespace-nowrap shadow-inner text-center">
-                    {pixKey}
+                  <div className="w-full bg-zinc-950 border border-zinc-800 p-4 rounded-2xl text-[9px] sm:text-[10px] font-mono text-zinc-400 shadow-inner text-center break-all">
+                    {fullPixPayload}
                   </div>
                   <Button 
                     variant="outline" 
-                    className="w-full h-14 border-zinc-800 bg-zinc-900 hover:bg-primary hover:border-primary hover:text-white transition-all shadow-xl rounded-2xl flex items-center justify-center gap-3 group text-[10px] font-black uppercase tracking-[0.2em]"
+                    className="w-full h-14 border-zinc-800 bg-zinc-900 hover:bg-primary hover:border-primary hover:text-white transition-all shadow-xl rounded-2xl flex items-center justify-center gap-3 group text-[10px] font-black uppercase tracking-[0.2em] shrink-0"
                     onClick={handleCopyPix}
                   >
                     {copied ? (

@@ -43,12 +43,12 @@ export function QrCode({ value, size = 128, className }: QrCodeProps) {
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ padding: `${size * 0.38}px` }}
       >
-        <div className="bg-white p-0.5 rounded-sm shadow-sm flex items-center justify-center overflow-hidden">
+        <div className="bg-zinc-950 border border-zinc-800 p-0.5 rounded-sm shadow-xl flex items-center justify-center overflow-hidden">
           <img 
-            src="/assets/nexus/logo-icon.png" 
+            src="/assets/nexus/nexus-n-logo.jpg" 
             alt="Nexus Logo" 
             style={{ width: size * 0.18, height: size * 0.18 }}
-            className="object-contain"
+            className="object-cover rounded-[2px]"
           />
         </div>
       </div>
