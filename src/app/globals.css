@@ -226,3 +226,39 @@
   0%, 100% { box-shadow: var(--shadow-glow-blue); }
   50% { box-shadow: 0 0 50px rgba(59, 130, 246, 0.3); }
 }
+
+/* Custom Google Translate Styling - Envelopamento Padrão Atena */
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+} 
+body {
+    top: 0px !important; 
+}
+.goog-logo-link {
+    display:none !important;
+} 
+.goog-te-gadget {
+    color: transparent !important;
+    font-size: 0px !important;
+}
+.goog-te-gadget .goog-te-combo {
+    background-color: rgba(9, 9, 11, 0.8) !important;
+    color: #a855f7 !important;
+    border: 1px solid rgba(139, 92, 246, 0.3) !important;
+    padding: 10px 16px !important;
+    border-radius: 12px !important;
+    outline: none !important;
+    font-family: inherit !important;
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    backdrop-filter: blur(8px) !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.1) !important;
+    transition: all 0.3s ease !important;
+}
+.goog-te-gadget .goog-te-combo:hover {
+    border-color: rgba(139, 92, 246, 0.6) !important;
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3) !important;
+}
