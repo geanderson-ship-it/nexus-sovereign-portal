@@ -297,16 +297,16 @@ export default function AgroPage() {
 
                     <ul className="flex flex-col gap-4">
                       <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
-                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Município Destaque</span>
-                        <span className="text-slate-400 text-xs leading-relaxed">Imagina sua cidade na TV como referência em tecnologia no campo? O Dante Safra vira um projeto pioneiro que coloca a prefeitura no mapa e orgulha cada morador.</span>
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Polo de Tecnologia</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">Sua cidade como destaque mundial através da parceria exclusiva com a Nexus. O Dante Safra coloca o município no mapa da inovação agrícola.</span>
                       </li>
                       <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
-                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Escola do Futuro</span>
-                        <span className="text-slate-400 text-xs leading-relaxed">O jovem que aprende IA na roça não precisa ir pra cidade. Capacite os alunos da rede pública com a profissão que o agro pede. Família unida, campo forte.</span>
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Fim do Êxodo Rural</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">O jovem que tem inteligência artificial na roça não precisa fugir pra cidade grande. É a tecnologia da Nexus mantendo a família unida e forte no campo.</span>
                       </li>
                       <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
-                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Dinheiro que Fica Aqui</span>
-                        <span className="text-slate-400 text-xs leading-relaxed">Produtor que produz mais emite mais nota e movimenta o comércio local. Sem aumentar tributo, a prefeitura vê a arrecadação crescer junto com a lavoura.</span>
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Aumento do PIB e Arrecadação</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">Lavouras monitoradas produzem mais. Produtor faturando mais significa mais dinheiro girando no município, aumentando a arrecadação sem criar novos impostos.</span>
                       </li>
                     </ul>
                   </div>
