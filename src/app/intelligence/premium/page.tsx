@@ -227,8 +227,10 @@ export default function PremiumPage() {
               <div className="aspect-video w-full rounded-2xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm overflow-hidden relative shadow-[0_0_50px_rgba(139,92,246,0.1)]">
                 <video 
                   src="/Video Magadot Premium/Magadot_Nexus.mp4" 
-                  controls 
-                  className="w-full h-full object-cover"
+                  controls
+                  playsInline
+                  webkit-playsinline="true"
+                  className="w-full h-full object-cover pointer-events-auto relative z-50"
                   preload="metadata"
                 >
                   Seu navegador não suporta a tag de vídeo.
@@ -415,8 +417,10 @@ export default function PremiumPage() {
               <div className="aspect-video w-full rounded-2xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm overflow-hidden relative shadow-[0_0_50px_rgba(16,185,129,0.1)]">
                 <video 
                   src="/Video Orion Premium/orion Premium.mp4" 
-                  controls 
-                  className="w-full h-full object-cover"
+                  controls
+                  playsInline
+                  webkit-playsinline="true"
+                  className="w-full h-full object-cover pointer-events-auto relative z-50"
                   preload="metadata"
                 >
                   Seu navegador não suporta a tag de vídeo.

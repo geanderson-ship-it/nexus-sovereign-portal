@@ -1,350 +1,340 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ArrowLeft, Sprout, Users, Landmark, Check, Sparkles, Shield, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChevronLeft, Shield, Sparkles, Sprout, Users, Landmark, Activity, Target, Satellite, ChevronRight, Check } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 import { IAPaymentModal } from '@/components/maga/ia-payment-modal';
 
-
-type ProfileType = 'agricultor' | 'cooperativa' | 'gestor_publico';
-
-interface ProfileData {
-  id: ProfileType;
-  title: string;
-  icon: React.ReactNode;
-  subtitle: string;
-  description: string;
-  benefits: string[];
-  prompts: string[];
-  pricing?: {
-    value: string;
-    subtext: string;
-    cta: string;
-    action: 'pix' | 'consultant';
-  };
-}
-
-function ProfileDetails({ profile, onOpenPayment }: { profile: ProfileData; onOpenPayment?: () => void }) {
-  return (
-    <div className="bg-slate-900/30 border border-emerald-800/20 backdrop-blur-xl rounded-2xl md:rounded-[32px] p-4 sm:p-8 md:p-12 shadow-2xl animate-fade-in-down">
-      <div className="space-y-6 sm:space-y-8">
-        <div>
-          <h4 className="text-lg sm:text-2xl font-bold font-headline uppercase tracking-wider text-emerald-300 flex items-center gap-3">
-            <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-400 shrink-0" />
-            Diretrizes de Impacto & Pilares de Valor
-          </h4>
-          <p className="text-sm text-gray-300 mt-2 ml-0 sm:ml-9 max-w-2xl leading-relaxed">
-            Tecnologia soberana de precisão e inteligência prática desenhadas sob medida para otimizar os resultados e a produtividade no agronegócio moderno.
-          </p>
-        </div>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {profile.benefits.map((benefit, idx) => {
-            const pilarImages: Record<string, string[]> = {
-              agricultor: ['/Agro/Milho.jpg', '/Agro/Soja.jpg', '/Agro/Criação.jpg'],
-              cooperativa: ['/Agro/Milho-caminhao.jpg', '/Agro/Pragas de lavoura.webp', '/Agro/Fomento.png'],
-              gestor_publico: ['/Agro/Municipio-destaque.png', '/Agro/Fim-exodo-rural.png', '/Agro/PIB-municipio.png'],
-            };
-            const images = pilarImages[profile.id ?? ''];
-            const hasImg = !!images?.[idx];
-            return (
-              <li
-                key={idx}
-                className="flex flex-col rounded-2xl overflow-hidden border border-emerald-900/30 hover:border-emerald-600/60 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)] transition-all duration-300 group bg-slate-950/25 backdrop-blur-xl"
-              >
-                {/* Top Image area */}
-                {hasImg ? (
-                  <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
-                    <img
-                      src={images[idx]}
-                      alt={benefit.split(':')[0]}
-                      className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
-                        profile.id === 'gestor_publico' ? 'object-contain p-2' : 'object-cover'
-                      }`}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
-                  </div>
-                ) : (
-                  <div className="p-6 bg-slate-900/20 border-b border-emerald-900/20 shrink-0">
-                    <span className="text-4xl">{benefit.split(' ')[0]}</span>
-                  </div>
-                )}
-
-                {/* Isolated text box below */}
-                <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40">
-                  <div className="space-y-3 text-left">
-                    <p className="text-xl font-bold text-white leading-snug">
-                      {benefit.split(':')[0].replace(/^\S+\s/, '')}
-                    </p>
-                    <p className="text-sm text-gray-300 leading-relaxed">
-                      {benefit.split(':')[1]?.trim()}
-                    </p>
-                  </div>
-                  {/* Pilar indicator at footer */}
-                  <div className="mt-6 pt-4 border-t border-emerald-950/20 text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                    Pilar {idx + 1} — Dante Safra
-                  </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-
-        {/* Pricing Box */}
-        {profile.pricing && (
-          <div className="mt-10 p-6 sm:p-8 rounded-[24px] border border-emerald-500/30 bg-gradient-to-r from-slate-900/80 to-emerald-950/20 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-[50px] pointer-events-none" />
-            <div className="text-center md:text-left relative z-10">
-              <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Plano Especial — {profile.title}</p>
-              <h4 className="text-3xl md:text-4xl font-black text-white tracking-tighter">{profile.pricing.value}</h4>
-              <p className="text-sm text-gray-400 mt-2 font-medium">{profile.pricing.subtext}</p>
-            </div>
-            <button 
-              className={`relative z-10 w-full md:w-auto px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all shadow-xl ${
-                profile.pricing.action === 'pix' 
-                  ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-emerald-500/20' 
-                  : 'bg-transparent border-2 border-emerald-500/50 text-emerald-400 hover:bg-emerald-950/40 hover:border-emerald-400'
-              }`}
-              onClick={() => {
-                if (profile.pricing?.action === 'pix') {
-                  onOpenPayment?.();
-                } else {
-                  const waText = `Olá, gostaria de falar com um consultor sobre o Dante Safra para ${profile.title}.`;
-                  window.open(`https://wa.me/5551999799582?text=${encodeURIComponent(waText)}`, '_blank');
-                }
-              }}
-            >
-              {profile.pricing?.action === 'pix' ? 'Pagar Agora' : profile.pricing?.cta}
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 export default function AgroPage() {
-  const [selectedProfile, setSelectedProfile] = useState<ProfileType | null>(null);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-
-  const profiles: ProfileData[] = [
-    {
-      id: 'agricultor',
-      title: 'Agricultor',
-      subtitle: 'Produtor de Precisão',
-      icon: <Sprout className="h-6 w-6 text-emerald-400" />,
-      description: 'O Dante Safra cuida da sua propriedade de A a Z. Da semente na terra ao dinheiro no bolso.',
-      benefits: [
-        '🌱 Qualquer Cultura: Planta milho, soja, fumo, hortaliça ou pastagem? O Dante fala a língua da sua terra. Sem complicação, sem manual difícil. É só perguntar e ele te responde na hora.',
-        '🩺 Médico da Lavoura: Tirou uma foto da folha doente? Em segundos o Dante identifica a praga ou doença e já te diz exatamente o que fazer. Sem esperar engenheiro, sem perder tempo e sem perder dinheiro.',
-        '🐷 Olho na Criação: Acompanha peso, saúde e consumo de ração do seu rebanho pelo celular. Menos perda, mais resultado. Você cuida melhor sem sair da porteira.'
-      ],
-      prompts: [
-        'Dante, como otimizar a calagem para solo argiloso visando o plantio de soja?',
-        'Quais os principais ganchos para controle biológico da ferrugem asiática?',
-        'Como configurar a telemetria off-line para monitorar umidade do solo?'
-      ],
-      pricing: {
-        value: 'R$ 999',
-        subtext: 'Pagamento via PIX. Liberação em até 24 horas após o pagamento.',
-        cta: 'Pagar Agora',
-        action: 'pix'
-      }
-    },
-    {
-      id: 'cooperativa',
-      title: 'Cooperativa',
-      subtitle: 'Sinergia & Escala',
-      icon: <Users className="h-6 w-6 text-emerald-400" />,
-      description: 'Garantia de safra cheia e padrão de excelência para os seus associados.',
-      benefits: [
-        '🌾 Grãos de Primeira: Seu associado chega no recebimento com produto de qualidade? É porque o Dante Safra acompanhou a lavoura do começo ao fim. Menos perda, menos desconto, mais dinheiro para o produtor e para a cooperativa.',
-        '🛡️ Escudo Contra Pragas: Uma praga não avisa hora de chegar. Mas quando chega, o Dante já sabe. Monitoramento contínuo que protege as lavouras dos seus associados antes que o estrago vire prejuízo grande.',
-        '📈 Fomento Inteligente: Chega de planejar insumos e crédito no achismo. Com dados reais de cada produtor, a cooperativa financia com segurança, compra melhor e entrega mais resultado para quem está na base.'
-      ],
-      prompts: [
-        'Dante, como gerar um modelo de previsão de safra consolidado para 50 cooperados?',
-        'Quais métricas de ESG agrícolas são cruciais para auditoria externa da cooperativa?',
-        'Como o Dante Safra pode otimizar a janela de colheita e logística de recebimento?'
-      ],
-      pricing: {
-        value: 'A partir de R$ 14.999 / anual',
-        subtext: 'Pagamento à vista. Pacotes a partir de 30 associados + 5 acessos para técnicos (Até 50% OFF no valor unitário).',
-        cta: 'Solicitar Implantação',
-        action: 'consultant'
-      }
-    },
-    {
-      id: 'gestor_publico',
-      title: 'Município (Prefeituras)',
-      subtitle: 'Vocação & GovTech',
-      icon: <Landmark className="h-6 w-6 text-emerald-400" />,
-      description: 'Transforme sua cidade no próximo Polo de Tecnologia Agrícola e orgulhe a sua comunidade.',
-      benefits: [
-        '🏆 Município Destaque: Imagina o seu município na televisão como referência em tecnologia no campo? Com o Dante Safra, sua cidade vira exemplo. Um projeto pioneiro que coloca o nome da prefeitura no mapa e orgulha cada morador.',
-        '🎓 Escola do Futuro: O jovem que aprende a usar inteligência artificial na roça não precisa ir embora pra cidade. Capacite os alunos da rede pública com a profissão que o agronegócio está pedindo. Família unida, campo forte.',
-        '💰 Dinheiro que Fica Aqui: Produtor que produz mais emite mais nota, paga mais imposto e movimenta mais o comércio local. Sem aumentar carga tributária, a prefeitura vê a arrecadação crescer junto com a lavoura.'
-      ],
-      prompts: [
-        'Dante, como estruturar um programa municipal de calagem eficiente e auditável?',
-        'Quais culturas de inverno têm maior potencial econômico para pequenas propriedades?',
-        'Gerar um relatório de vocação regional focando em transição para agricultura orgânica.'
-      ],
-      pricing: {
-        value: 'A partir de R$ 24.999 / anual',
-        subtext: 'Pagamento à vista. Pacotes a partir de 50 licenças para Agricultura Familiar + Relatório de Impacto para o Gestor.',
-        cta: 'Falar com Especialista B2G',
-        action: 'consultant'
-      }
-    }
-  ];
-
-
-
-  const activeProfileData = profiles.find(p => p.id === selectedProfile);
 
   return (
     <SovereignShowcase moduleName="Dante Safra" imagePath="/Nexus Empresas/Dante safra axis.png">
-      <div className="min-h-screen text-white flex flex-col pt-14 pb-12 relative">
-        {/* Background image */}
-        <div
-          className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/Agro/agro-bg.png')" }}
+      <div className="min-h-screen text-white font-sans selection:bg-emerald-500/30 relative">
+        {/* BACKGROUND PREMIUM CUSTOMIZADO */}
+        <div 
+          className="fixed inset-0 z-0 pointer-events-none"
+          style={{
+            backgroundImage: "url('/Agro/agro-bg.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
         />
-        {/* Dark overlay para legibilidade */}
-        <div className="fixed inset-0 z-0 bg-[#020617]/85 backdrop-blur-[2px]" />
-        {/* Conteúdo acima do fundo */}
-        <div className="relative z-10 flex flex-col flex-1">
+        {/* FILME ESCURECEDOR SUAVE PARA GARANTIR LEITURA */}
+        <div className="fixed inset-0 z-0 bg-slate-950/85 backdrop-blur-sm pointer-events-none" />
 
-        {/* Header */}
-        <div className="flex items-center gap-4 p-4 sm:p-6 border-b border-emerald-800/30">
-          <Link href="/" className="p-2 hover:bg-white/10 rounded-lg transition-colors shrink-0">
-            <ArrowLeft className="h-6 w-6 hover:text-emerald-400 transition-colors" />
+        {/* NAVEGAÇÃO SUPERIOR (Secundária) */}
+        <nav className="absolute top-20 left-0 w-full z-40 p-6 px-6 md:px-12 flex justify-between items-center pointer-events-none">
+          <Link href="/" className="pointer-events-auto text-emerald-500 hover:text-white transition-colors flex items-center gap-2 text-xs font-black uppercase tracking-[0.3em]">
+            <ChevronLeft className="h-4 w-4" /> Voltar ao Início
           </Link>
-          <div>
-            <h1 className="text-xl sm:text-3xl font-bold tracking-tighter text-emerald-300 font-headline">
-              Portal Dante Safra — Agro
-            </h1>
-            <p className="text-xs sm:text-sm text-gray-400 md:text-base leading-relaxed">
-              Inteligência de precisão, telemetria e expansão tática para o agronegócio soberano.
-            </p>
+          <div className="flex items-center gap-3 pointer-events-auto">
+            <Shield className="h-4 w-4 text-emerald-500" />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 hidden sm:block">Terminal Dante Safra</span>
           </div>
-        </div>
+        </nav>
 
-        {/* Main Content Area */}
-        <div className="flex-1 max-w-6xl w-full mx-auto px-4 py-8 flex flex-col gap-10">
+        <main className="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col gap-32">
           
-          {/* Section 1: Three Target Profiles */}
-          <div className="space-y-6">
-              <h2 className="text-xl font-bold font-headline uppercase tracking-widest text-emerald-400 flex items-center justify-center md:justify-start gap-2">
-                <Sparkles className="h-5 w-5 animate-pulse" /> Matriz de Engajamento e Abordagem Tática
+          {/* HERO SECTION */}
+          <section className="flex flex-col items-center text-center gap-8 mt-12">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="p-3 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-4"
+            >
+              <Target className="h-8 w-8 text-emerald-400" />
+            </motion.div>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+              className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9]"
+            >
+              O Terminal Tático<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-emerald-600">Do Agronegócio</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+              className="text-slate-400 text-lg md:text-2xl font-light tracking-wide max-w-3xl leading-relaxed"
+            >
+              Inteligência Artificial de Precisão e Telemetria Neural. Da semente à exportação, mantenha a sua terra e as suas safras sob controle absoluto.
+            </motion.p>
+          </section>
+
+          {/* MATRIZ DE FORÇA (O Músculo do Dante) */}
+          <section className="flex flex-col gap-12">
+            <div className="text-center">
+              <h2 className="text-3xl font-black uppercase tracking-widest text-emerald-400 flex items-center justify-center gap-3">
+                <Activity className="h-6 w-6" /> Matriz Operacional
               </h2>
-              <p className="text-sm text-gray-300 mt-2 max-w-2xl leading-relaxed">
-                Selecione o perfil do seu interlocutor para estruturar pitches de alto impacto, alinhar as dores do campo à inteligência soberana e acionar os ganchos estratégicos do Dante Safra.
+              <p className="text-sm text-slate-400 mt-4 max-w-2xl mx-auto uppercase tracking-widest">
+                A tecnologia que protege o seu patrimônio no campo
               </p>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {profiles.map((profile) => {
-                const isSelected = selectedProfile === profile.id;
-                const cardImages: Record<string, string> = {
-                  agricultor: '/Agro/Dante safra vídeo.png',
-                  cooperativa: '/Agro/Cooperativismo.png',
-                  gestor_publico: '/Agro/Prefeito-na-lavoura.png',
-                };
-                const hasImage = !!cardImages[profile.id];
-                return (
-                  <React.Fragment key={profile.id}>
-                    <div
-                      onClick={() => setSelectedProfile(isSelected ? null : profile.id)}
-                      className={`relative rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer group backdrop-blur-xl overflow-hidden bg-slate-950/20 ${
-                        isSelected
-                          ? 'border-emerald-400 shadow-[0_0_24px_rgba(16,185,129,0.28)] bg-emerald-950/10'
-                          : 'border-emerald-900/30 hover:border-emerald-700/50 hover:-translate-y-1 hover:shadow-[0_0_16px_rgba(16,185,129,0.12)]'
-                      }`}
-                    >
-                      {/* Top Image area */}
-                      {hasImage ? (
-                        <div className="relative w-full aspect-video overflow-hidden border-b border-emerald-900/20 shrink-0 bg-slate-950/40 flex items-center justify-center">
-                          <img
-                            src={cardImages[profile.id]}
-                            alt={profile.title}
-                            className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
-                              profile.id === 'gestor_publico' ? 'object-contain p-2' : 'object-cover object-top'
-                            }`}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent pointer-events-none" />
-                          {isSelected && (
-                            <span className="absolute top-3 right-3 p-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-400">
-                              <Check className="h-3 w-3" />
-                            </span>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="p-6 bg-slate-900/20 border-b border-emerald-900/20 flex justify-between items-start shrink-0">
-                          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 group-hover:scale-110 transition-transform duration-300">
-                            {profile.icon}
-                          </div>
-                          {isSelected && (
-                            <span className="p-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-400">
-                              <Check className="h-3 w-3" />
-                            </span>
-                          )}
-                        </div>
-                      )}
+              {[
+                { title: "Visão Computacional", desc: "Tire fotos de pragas ou doenças na folha. O Dante identifica a ameaça em segundos e fornece o protocolo de neutralização imediato.", icon: <Sparkles className="h-6 w-6 text-emerald-400" /> },
+                { title: "Sincronia Climática", desc: "Cruzamento de dados meteorológicos globais com o microclima da sua fazenda. Saiba exatamente a janela perfeita de plantio e colheita.", icon: <Satellite className="h-6 w-6 text-emerald-400" /> },
+                { title: "Controle Zootécnico", desc: "Acompanhe pesagem, consumo de ração e índices de saúde do rebanho em tempo real pelo terminal de bolso.", icon: <Activity className="h-6 w-6 text-emerald-400" /> }
+              ].map((feature, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="p-8 rounded-2xl bg-slate-900/50 border border-emerald-900/30 hover:border-emerald-500/50 transition-colors group"
+                >
+                  <div className="p-4 rounded-xl bg-emerald-500/10 w-fit mb-6 group-hover:scale-110 transition-transform">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3 uppercase tracking-wider">{feature.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </section>
 
-                      {/* Isolated text box below */}
-                      <div className="p-6 flex flex-col flex-1 justify-between bg-slate-950/40">
-                        <div>
-                          {hasImage && (
-                            <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit mb-4">
-                              {profile.icon}
+          {/* PERFIS DE ESCALA (Preços e Planos) */}
+          <section className="flex flex-col gap-12 mt-12 relative z-10">
+            <div className="flex flex-col gap-4 relative">
+              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white">
+                Níveis de <span className="text-emerald-500">Acesso</span>
+              </h2>
+              <p className="text-slate-400 text-lg max-w-2xl font-light">
+                Escolha a sua categoria de comando. Soluções dimensionadas para a realidade da sua operação tática.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-8">
+              
+              {/* AGRICULTOR */}
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="w-full p-8 md:p-12 rounded-[40px] bg-gradient-to-r from-slate-900/80 to-slate-950 border border-emerald-500/20 flex flex-col md:flex-row items-center justify-between gap-12 shadow-[0_0_80px_rgba(16,185,129,0.05)] relative overflow-hidden group hover:border-emerald-500/40 transition-all"
+              >
+                <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+                
+                <div className="flex flex-col gap-4 relative z-10 w-full md:w-5/12">
+                  <div className="flex items-center gap-3">
+                    <div className="p-3 rounded-xl bg-emerald-500/20"><Sprout className="h-6 w-6 text-emerald-400" /></div>
+                    <span className="text-emerald-500 text-xs font-black uppercase tracking-[0.4em]">Produtor de Precisão</span>
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-white">Agricultor</h2>
+                  <p className="text-slate-400 mt-2">O Dante Safra cuida da sua propriedade de A a Z. Da semente na terra ao dinheiro no bolso.</p>
+                  <ul className="flex flex-col gap-2 mt-4">
+                    <li className="flex items-start gap-2 text-sm text-slate-300"><Check className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" /> Monitoramento Mobile de Culturas e Pragas</li>
+                    <li className="flex items-start gap-2 text-sm text-slate-300"><Check className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" /> Suporte Inteligente via Chat para decisões rápidas</li>
+                  </ul>
+                </div>
+
+                <div className="hidden md:block w-px h-32 bg-white/10 relative z-10" />
+
+                <div className="flex flex-col relative z-10 w-full md:w-5/12 gap-6 bg-slate-950/50 p-8 rounded-3xl border border-emerald-900/50">
+                  <div>
+                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Licença Anual</p>
+                    <h4 className="text-5xl font-black text-white tracking-tighter">R$ 999,00</h4>
+                    <p className="text-xs text-slate-500 mt-2 font-medium">Pagamento instantâneo via PIX. Setup Imediato.</p>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="w-full h-12 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300 font-bold uppercase tracking-widest text-[10px] rounded-xl transition-all">
+                          Ver Detalhes do Dante Safra
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="bg-slate-950 border border-emerald-900/50 text-white max-w-2xl max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle className="text-2xl font-black uppercase tracking-tight text-emerald-400 flex items-center gap-3 mb-4">
+                            <Sprout className="h-6 w-6" /> O Poder do Dante Safra
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="flex flex-col gap-6">
+                          <p className="text-slate-300 text-sm leading-relaxed border-l-2 border-emerald-500 pl-4">
+                            O Dante Safra não é um aplicativo comum. Ele é o equivalente a ter um engenheiro agrônomo sênior, um veterinário e um analista de mercado disponíveis 24 horas por dia no seu bolso, prontos para responder qualquer pergunta sobre a sua lida no campo.
+                          </p>
+                          <div className="grid grid-cols-1 gap-4">
+                            
+                            <div className="p-5 rounded-xl bg-slate-900/50 border border-emerald-900/30 flex flex-col gap-2">
+                              <h5 className="font-bold text-white uppercase tracking-wider text-xs text-emerald-400 flex items-center gap-2">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> 1. Diagnóstico de Pragas e Doenças (Visão Computacional)
+                              </h5>
+                              <p className="text-xs text-slate-400 leading-relaxed">
+                                Em vez de esperar dias pela visita do técnico e ver a lavoura ser comida, você tira uma foto da folha (soja com ferrugem, milho com lagarta, fumo com mosaico). O Dante cruza a imagem com bancos de dados globais, te dá o diagnóstico exato e recomenda a dosagem do defensivo necessário em segundos.
+                              </p>
                             </div>
-                          )}
-                          <h3 className="text-lg font-bold text-white font-headline tracking-tight group-hover:text-emerald-300 transition-colors">
-                            {profile.title}
-                          </h3>
-                          <p className="text-[10px] font-black uppercase tracking-widest text-emerald-500/80 -mt-0.5">
-                            {profile.subtitle}
-                          </p>
-                          <p className="text-sm text-gray-300 mt-3 leading-relaxed">
-                            {profile.description}
-                          </p>
+
+                            <div className="p-5 rounded-xl bg-slate-900/50 border border-emerald-900/30 flex flex-col gap-2">
+                              <h5 className="font-bold text-white uppercase tracking-wider text-xs text-emerald-400 flex items-center gap-2">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> 2. Consultoria Multicultura (Sua terra, sua regra)
+                              </h5>
+                              <p className="text-xs text-slate-400 leading-relaxed">
+                                Não importa se a sua roça é de soja, arroz, trigo, milho, fumo ou hortaliça. Você pode perguntar como otimizar a calagem para o seu tipo de solo argiloso, qual o espaçamento ideal de sementes, ou como fazer o manejo da irrigação. O Dante formula a resposta adaptada para a sua realidade.
+                              </p>
+                            </div>
+
+                            <div className="p-5 rounded-xl bg-slate-900/50 border border-emerald-900/30 flex flex-col gap-2">
+                              <h5 className="font-bold text-white uppercase tracking-wider text-xs text-emerald-400 flex items-center gap-2">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> 3. Manejo Zootécnico (Gado, Suínos e Aves)
+                              </h5>
+                              <p className="text-xs text-slate-400 leading-relaxed">
+                                Identificou um animal isolado no pasto ou com sintomas anormais? Descreva para o Dante. Ele te ajuda com um pré-diagnóstico veterinário, sugere protocolos de isolamento e até ajuda a formular a ração ideal para ganho de peso, otimizando os insumos que você já tem no galpão.
+                              </p>
+                            </div>
+
+                            <div className="p-5 rounded-xl bg-slate-900/50 border border-emerald-900/30 flex flex-col gap-2">
+                              <h5 className="font-bold text-white uppercase tracking-wider text-xs text-emerald-400 flex items-center gap-2">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> 4. Clima e Decisão de Mercado (Bolsa de Chicago)
+                              </h5>
+                              <p className="text-xs text-slate-400 leading-relaxed">
+                                O produtor muitas vezes perde dinheiro porque vende na hora errada. O Dante analisa as tendências de mercado, o preço do dólar e cruza com os dados climáticos. Pergunte se a janela da próxima semana é boa pro plantio, ou se é melhor segurar a safra no silo esperando o preço subir.
+                              </p>
+                            </div>
+
+                            <div className="p-5 rounded-xl bg-emerald-900/20 border border-emerald-500/30 flex flex-col gap-2">
+                              <h5 className="font-bold text-white uppercase tracking-wider text-xs text-emerald-400 flex items-center gap-2">
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> 5. Simplicidade Absoluta (Acesso Fácil)
+                              </h5>
+                              <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                                O agricultor não precisa ser especialista em computador. Basta abrir o celular e conversar com o Dante Safra pelo chat, mandando foto ou texto, direto da lavoura, de forma tão simples quanto mandar uma mensagem para um vizinho.
+                              </p>
+                            </div>
+
+                          </div>
                         </div>
-                        <div className="mt-6 pt-4 border-t border-emerald-950/20 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                          <span>{isSelected ? 'Ocultar' : 'Ver Abordagem'}</span>
-                          <ChevronRight className={`h-4 w-4 transition-transform duration-300 ${isSelected ? 'rotate-90' : 'group-hover:translate-x-1'}`} />
-                        </div>
-                      </div>
+                      </DialogContent>
+                    </Dialog>
+
+                    <Button 
+                      onClick={() => setIsPaymentModalOpen(true)}
+                      className="w-full h-14 bg-emerald-500 hover:bg-emerald-400 text-black font-black uppercase tracking-widest text-xs transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] rounded-xl"
+                    >
+                      Ativar Terminal Agro via PIX
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* COOPERATIVA E PREFEITURA (Grid Inferior) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                {/* COOPERATIVA */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="p-8 md:p-10 rounded-[40px] bg-slate-900/50 border border-emerald-900/30 flex flex-col gap-8 hover:border-emerald-500/30 transition-all group relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] pointer-events-none group-hover:bg-emerald-500/10 transition-colors" />
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-3 rounded-xl bg-slate-800"><Users className="h-6 w-6 text-emerald-400" /></div>
+                      <span className="text-emerald-500 text-xs font-black uppercase tracking-[0.4em]">Sinergia & Escala</span>
                     </div>
+                    <h3 className="text-3xl font-black uppercase tracking-tight text-white mb-2">Cooperativa</h3>
+                    <p className="text-slate-400 text-sm mb-6">Garantia de safra cheia e padrão de excelência para os seus associados.</p>
+                    
+                    <ul className="flex flex-col gap-4">
+                      <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Grãos de Primeira</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">Seu associado chega no recebimento com produto de qualidade? O Dante acompanhou a lavoura do começo ao fim. Menos perda, menos desconto, mais dinheiro para o produtor e para a cooperativa.</span>
+                      </li>
+                      <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Escudo Contra Pragas</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">Uma praga não avisa hora de chegar. O Dante monitora de forma contínua e protege as lavouras dos seus associados antes que o estrago vire prejuízo grande.</span>
+                      </li>
+                      <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Fomento Inteligente</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">Chega de planejar insumos e crédito no achismo. Com dados reais de cada produtor, a cooperativa financia com segurança, compra melhor e entrega mais resultado.</span>
+                      </li>
+                    </ul>
+                  </div>
 
-                    {/* Mobile Inline Details Widget */}
-                    {isSelected && (
-                      <div className="block md:hidden col-span-1 animate-fade-in-down mt-4">
-                        <ProfileDetails profile={profile} onOpenPayment={() => setIsPaymentModalOpen(true)} />
+                  <div className="relative z-10 mt-auto">
+                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-1">Implementação Corporativa</p>
+                    <h4 className="text-3xl font-black text-white tracking-tighter mb-6">Sob Consulta</h4>
+                    <Link href="https://wa.me/5551999799582?text=%5BDANTE%20SAFRA%20-%20COOPERATIVA%5D%20Ol%C3%A1.%20Gostaria%20de%20discutir%20a%20implanta%C3%A7%C3%A3o%20do%20terminal%20t%C3%A1tico%20Dante%20para%20minha%20rede%20de%20associados." target="_blank" className="w-full block">
+                      <div className="w-full py-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-center transition-all flex items-center justify-center gap-3">
+                        <span className="text-emerald-400 font-black uppercase tracking-[0.2em] text-xs">Acionar Especialista</span>
+                        <ChevronRight className="h-4 w-4 text-emerald-400" />
                       </div>
-                    )}
-                  </React.Fragment>
-                );
-              })}
+                    </Link>
+                  </div>
+                </motion.div>
+
+                {/* PREFEITURA */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                  className="p-8 md:p-10 rounded-[40px] bg-slate-900/50 border border-emerald-900/30 flex flex-col gap-8 hover:border-emerald-500/30 transition-all group relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 blur-[100px] pointer-events-none group-hover:bg-emerald-500/10 transition-colors" />
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-3 rounded-xl bg-slate-800"><Landmark className="h-6 w-6 text-emerald-400" /></div>
+                      <span className="text-emerald-500 text-xs font-black uppercase tracking-[0.4em]">GovTech</span>
+                    </div>
+                    <h3 className="text-3xl font-black uppercase tracking-tight text-white mb-2">Município</h3>
+                    <p className="text-slate-400 text-sm mb-6">Transforme sua cidade no próximo Polo de Tecnologia Agrícola.</p>
+
+                    <ul className="flex flex-col gap-4">
+                      <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Município Destaque</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">Imagina sua cidade na TV como referência em tecnologia no campo? O Dante Safra vira um projeto pioneiro que coloca a prefeitura no mapa e orgulha cada morador.</span>
+                      </li>
+                      <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Escola do Futuro</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">O jovem que aprende IA na roça não precisa ir pra cidade. Capacite os alunos da rede pública com a profissão que o agro pede. Família unida, campo forte.</span>
+                      </li>
+                      <li className="flex flex-col gap-1 border-l-2 border-emerald-500/30 pl-3">
+                        <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">Dinheiro que Fica Aqui</span>
+                        <span className="text-slate-400 text-xs leading-relaxed">Produtor que produz mais emite mais nota e movimenta o comércio local. Sem aumentar tributo, a prefeitura vê a arrecadação crescer junto com a lavoura.</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="relative z-10 mt-auto">
+                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-1">Licitação / B2G</p>
+                    <h4 className="text-3xl font-black text-white tracking-tighter mb-6">Sob Consulta</h4>
+                    <Link href="https://wa.me/5551999799582?text=%5BDANTE%20SAFRA%20-%20GOVTECH%5D%20Ol%C3%A1.%20Tenho%20interesse%20em%20implantar%20a%20intelig%C3%AAncia%20t%C3%A1tica%20Dante%20no%20munic%C3%ADpio%20atrav%C3%A9s%20de%20parceria%20GovTech." target="_blank" className="w-full block">
+                      <div className="w-full py-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-center transition-all flex items-center justify-center gap-3">
+                        <span className="text-emerald-400 font-black uppercase tracking-[0.2em] text-xs">Acionar Setor B2G</span>
+                        <ChevronRight className="h-4 w-4 text-emerald-400" />
+                      </div>
+                    </Link>
+                  </div>
+                </motion.div>
+
+              </div>
             </div>
-          </div>
+          </section>
 
-          {/* Desktop Details Widget (rendered below all cards) */}
-          {selectedProfile && activeProfileData && (
-            <div className="hidden md:block animate-fade-in-down mt-4">
-              <ProfileDetails profile={activeProfileData} onOpenPayment={() => setIsPaymentModalOpen(true)} />
-            </div>
-          )}
+        </main>
+      </div>
 
-        </div>{/* fim flex-1 max-w-6xl */}
-        </div>{/* fim z-10 */}
-      </div>{/* fim min-h-screen */}
-
+      {/* MODAL PIX PARA AGRICULTOR */}
       <IAPaymentModal
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}
-        iaName="Dante Safra Agro"
+        iaName="Dante Safra Agro - Agricultor"
         pixKey="+5551999799582"
         annualPrice="R$ 999,00"
         isSinglePrice={true}
