@@ -26,11 +26,11 @@ export default function PremiumPage() {
       <div className="fixed inset-0 z-0 bg-black/50 pointer-events-none" />
 
       {/* NAVEGAÇÃO SUPERIOR */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center bg-gradient-to-b from-zinc-950 to-transparent">
-        <Link href="/intelligence" className="text-zinc-500 hover:text-white transition-colors flex items-center gap-2 text-xs font-black uppercase tracking-[0.3em]">
+      <nav className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center bg-gradient-to-b from-zinc-950 to-transparent pointer-events-none">
+        <Link href="/intelligence" className="pointer-events-auto text-zinc-500 hover:text-white transition-colors flex items-center gap-2 text-xs font-black uppercase tracking-[0.3em]">
           <ChevronLeft className="h-4 w-4" /> Voltar ao Hub
         </Link>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 pointer-events-auto">
           <Shield className="h-4 w-4 text-violet-500" />
           <span className="text-[10px] font-black uppercase tracking-[0.4em] text-violet-500">Acesso Nível Board</span>
         </div>
