@@ -23,14 +23,22 @@ import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { useLocale } from '@/hooks/use-locale';
 
-function TextLogo({ slogan }: { slogan: string }) {
+function TextLogo() {
+  const pathname = usePathname();
+  const isPremiumPath = pathname?.includes('/energia') || 
+                        pathname?.includes('/agro') || 
+                        pathname?.includes('/intelligence') || 
+                        pathname?.includes('/nexus-empresas');
+
   return (
     <div className="flex flex-col items-center">
-      <span className="font-headline text-lg font-bold uppercase tracking-[0.15em] text-primary">
-        Nexus Treinamento
-      </span>
-      <span className="text-xs font-semibold italic text-amber-500 -mt-1">
-        {slogan}
+      <span className="font-headline text-3xl sm:text-4xl uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3">
+        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600 drop-shadow-[0_0_20px_rgba(37,99,235,0.6)]">
+          Nexus
+        </span>
+        <span className="font-light text-white/90 tracking-[0.15em] sm:tracking-[0.2em] text-xl sm:text-2xl mt-0.5 whitespace-nowrap drop-shadow-sm">
+          {isPremiumPath ? 'Holding Group' : 'Treinamento'}
+        </span>
       </span>
     </div>
   );
@@ -82,12 +90,11 @@ export function SiteHeader() {
     { title: t('navCourses'), href: '/courses' },
     { title: t('navGaleria'), href: '/gallery' },
     { title: t('navPalestras'), href: '/palestras' },
-    { title: t('navConsultoria'), href: '/consulting' },
     { title: t('navIntelligence'), href: '/intelligence' },
-    { title: 'Global', href: '/intelligence/global' },
     { title: 'Agro', href: '/agro' },
-    { title: 'Empresas', href: '/nexus-empresas' },
+    { title: 'Energia', href: '/energia' },
     { title: 'Premium', href: '/intelligence/premium' },
+    { title: 'EMPRESAS', href: '/nexus-empresas' },
     { title: t('navSobre'), href: '/about' },
     { title: t('navContato'), href: '/contact' },
     { title: t('navSuporte'), href: '/suporte' },
@@ -97,45 +104,20 @@ export function SiteHeader() {
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
-        {/* Left: Logo & Nav */}
-        <div className="flex items-center gap-6 md:gap-10">
-          <Link href="/" className="items-center md:flex" onClick={() => setMobileMenuOpen(false)}>
-            <TextLogo slogan={t('footerSlogan')} />
-          </Link>
-          <nav className="hidden md:flex gap-6 text-sm">
-            {mainNav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'transition-all duration-300',
-                  item.href === '/intelligence' 
-                    ? 'text-primary font-bold hover:text-primary/80 neon-text' 
-                    : item.href === '/intelligence/global'
-                    ? 'text-blue-500 font-bold hover:text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.6)] uppercase tracking-wide'
-                    : item.href === '/agro'
-                    ? 'text-emerald-400 font-bold hover:text-emerald-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.6)] uppercase tracking-wide'
-                    : item.href === '/intelligence/premium'
-                    ? 'text-violet-400 font-black hover:text-violet-300 drop-shadow-[0_0_10px_rgba(139,92,246,0.8)] uppercase tracking-[0.2em] relative before:absolute before:-bottom-1 before:left-0 before:w-full before:h-[2px] before:bg-violet-500 before:opacity-0 hover:before:opacity-100 before:transition-opacity'
-                    : item.href === '/nexus-empresas'
-                    ? 'text-[#00D4FF] font-bold hover:text-[#00D4FF]/80'
-                    : pathname === item.href 
-                      ? 'text-foreground font-semibold underline underline-offset-4 decoration-primary decoration-2' 
-                      : 'text-foreground/60 hover:text-foreground'
-                )}
-              >
-                {item.title}
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        {/* Spacer */}
-        <div className="flex-1" />
+      <div className="container flex flex-col py-3">
         
-        {/* Right: Auth & Mobile Menu */}
-        <div className="flex items-center gap-2">
+        {/* TOP ROW: Logo & Controls */}
+        <div className="flex items-center justify-between w-full">
+          {/* Spacer to keep logo strictly centered */}
+          <div className="hidden md:block w-1/3" />
+          
+          <div className="w-1/2 md:w-1/3 flex justify-start md:justify-center">
+            <Link href="/" className="items-center flex" onClick={() => setMobileMenuOpen(false)}>
+              <TextLogo />
+            </Link>
+          </div>
+
+          <div className="w-1/2 md:w-1/3 flex items-center justify-end gap-2">
            {/* Language Selector */}
            <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -251,9 +233,41 @@ export function SiteHeader() {
               </div>
             )}
           </div>
+        </div>
+        {/* End of TOP ROW */}
+        </div>
 
-          {/* Mobile Menu */}
-          <div className="md:hidden">
+        {/* BOTTOM ROW: Navigation Menus (Desktop Only) */}
+        <nav className="hidden md:flex justify-center items-center gap-x-4 lg:gap-x-6 gap-y-3 mt-4 text-[13px] lg:text-sm flex-wrap w-full pb-2">
+            {mainNav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'transition-all duration-300',
+                  item.href === '/intelligence' 
+                    ? 'bg-blue-600/10 border border-blue-600/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.15)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] hover:bg-blue-600/20 text-white font-bold uppercase tracking-widest' 
+                    : item.href === '/energia'
+                    ? 'bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold uppercase tracking-widest'
+                    : item.href === '/agro'
+                    ? 'bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
+                    : item.href === '/intelligence/premium'
+                    ? 'bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold uppercase tracking-widest'
+                    : item.href === '/nexus-empresas'
+                    ? 'bg-cyan-500/10 border border-cyan-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-cyan-500/20 text-white font-bold uppercase tracking-widest'
+                    : pathname === item.href 
+                      ? 'bg-primary/10 border border-primary/30 px-3 py-1.5 rounded-lg shadow-[0_0_10px_rgba(37,99,235,0.15)] text-foreground font-semibold' 
+                      : 'bg-white/5 border border-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium'
+                )}
+              >
+                {item.title}
+              </Link>
+            ))}
+        </nav>
+
+        {/* Mobile Menu */}
+        <div className="md:hidden flex w-full justify-end -mt-10 mb-2 relative z-10 pointer-events-none">
+          <div className="pointer-events-auto">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="sm" className="h-9 px-2 hover:bg-primary/10">
@@ -264,7 +278,7 @@ export function SiteHeader() {
               <SheetContent side="right" className="w-[300px] sm:w-[350px] p-0 border-primary/20 bg-background/98 backdrop-blur-xl">
                 <div className="flex flex-col h-full">
                   <div className="p-6 border-b border-border/50">
-                    <TextLogo slogan={t('footerSlogan')} />
+                    <TextLogo />
                   </div>
                   <nav className="flex-1 overflow-y-auto p-4 flex flex-col gap-1">
                     {mainNav.map((item) => (
@@ -274,14 +288,16 @@ export function SiteHeader() {
                         onClick={() => setMobileMenuOpen(false)}
                         className={cn(
                           'flex items-center justify-between p-3 rounded-lg transition-all duration-200 group',
-                          item.href === '/intelligence/global'
-                            ? 'bg-blue-500/10 text-blue-400 font-bold border border-blue-500/30'
+                          item.href === '/energia'
+                            ? 'bg-amber-500/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 uppercase tracking-widest'
                             : item.href === '/agro'
-                            ? 'bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/30'
+                            ? 'bg-emerald-500/10 text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] font-bold border border-emerald-500/50 uppercase tracking-widest'
                             : item.href === '/intelligence/premium'
-                            ? 'bg-violet-500/10 text-violet-400 font-black border border-violet-500/50 uppercase tracking-widest'
+                            ? 'bg-violet-500/10 text-white drop-shadow-[0_0_8px_rgba(139,92,246,0.8)] font-bold border border-violet-500/50 uppercase tracking-widest'
+                            : item.href === '/nexus-empresas'
+                            ? 'bg-cyan-500/10 text-white drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] font-bold border border-cyan-500/50 uppercase tracking-widest'
                             : item.href === '/intelligence'
-                              ? 'bg-primary/10 text-primary border border-primary/20'
+                              ? 'bg-blue-600/10 text-white drop-shadow-[0_0_8px_rgba(37,99,235,0.8)] font-bold border border-blue-600/50 uppercase tracking-widest'
                               : pathname === item.href
                                 ? 'bg-accent/20 text-foreground font-semibold'
                                 : 'text-foreground/70 hover:bg-accent/10 hover:text-foreground'
