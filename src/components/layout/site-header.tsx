@@ -233,6 +233,12 @@ export function SiteHeader() {
               </div>
             )}
           </div>
+          <div className="md:hidden flex items-center ml-1">
+            <Button variant="ghost" size="sm" className="h-9 px-2 hover:bg-primary/10" onClick={() => setMobileMenuOpen(true)}>
+              <Menu className="h-6 w-6" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </div>
         </div>
         {/* End of TOP ROW */}
         </div>
@@ -265,16 +271,9 @@ export function SiteHeader() {
             ))}
         </nav>
 
-        {/* Mobile Menu */}
-        <div className="md:hidden flex w-full justify-end -mt-10 mb-2 relative z-10 pointer-events-none">
-          <div className="pointer-events-auto">
+        {/* Mobile Menu Sheet */}
+        <div className="md:hidden">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="sm" className="h-9 px-2 hover:bg-primary/10">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[350px] p-0 border-primary/20 bg-background/98 backdrop-blur-xl">
                 <div className="flex flex-col h-full">
                   <div className="p-6 border-b border-border/50">
@@ -367,7 +366,6 @@ export function SiteHeader() {
                 </div>
               </SheetContent>
             </Sheet>
-          </div>
         </div>
       </div>
     </header>
