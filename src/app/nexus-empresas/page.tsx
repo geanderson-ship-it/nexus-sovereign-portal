@@ -7,13 +7,41 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck } from 'lucide-react';
+import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory } from 'lucide-react';
 import * as gtag from '@/lib/gtag';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
 const WHATSAPP_URL = 'https://wa.me/5551999799582';
 
 const modules = [
+  {
+    id: 'distribuicao',
+    badge: 'LOGISTICS_INTELLIGENCE',
+    title: '', highlight: 'DISTRIBUIÇÃO',
+    subtitle: 'Logística Global, Portos e Frotas',
+    description: 'Gestão preditiva de rotas, alocação de contêineres e telemetria de frota rodoviária. A inteligência que impede o seu supply chain de parar.',
+    icon: Truck, color: 'sky',
+    features: ['Roteamento neural em tempo real', 'Gestão automatizada de pátios e portos', 'Manutenção preditiva de frota pesada', 'Arquitetura 100% On-Premise'],
+    image: '/images/portos.jpeg',
+    gtag: 'nexus_empresas_atlas', href: '',
+    licenca: 'Sob Consulta', suporte: 'SLA Enterprise',
+    roi: 'Se paga na primeira frota otimizada ou navio liberado.',
+    frozen: false,
+  },
+  {
+    id: 'preditiva',
+    badge: 'HEAVY_INDUSTRY_AI',
+    title: '', highlight: 'PREDITIVA',
+    subtitle: 'Indústria 4.0 e Mineração',
+    description: 'Conecte nossa IA aos sensores (IoT) existentes da sua fábrica. Preveja falhas mecânicas com dias de antecedência. Zero paradas surpresa na sua operação.',
+    icon: Factory, color: 'amber',
+    features: ['Manutenção Preditiva Neural (Time-Series)', 'Análise de vibração e temperatura', 'Previsão de vida útil de peças críticas', 'Implantação 100% On-Premise (Servidor Local)'],
+    image: '/images/robos.jpg',
+    gtag: 'nexus_empresas_vulcan', href: '',
+    licenca: 'Sob Consulta', suporte: 'SLA Enterprise',
+    roi: 'Se paga evitando a primeira parada não programada da linha de produção.',
+    frozen: false,
+  },
   {
     id: 'vendas',
     badge: 'SALES_INTELLIGENCE',
@@ -219,8 +247,8 @@ export default function NexusEmpresasPage() {
               priority 
             />
           </div>
-          <p className="mt-6 text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto tracking-wide">
-            Inteligência artificial aplicada à operação industrial. Adquira uma vez. Evolua para sempre.
+          <p className="mt-6 text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto tracking-wide font-light">
+            Tecnologia soberana instalada diretamente nos seus servidores. <strong className="text-white">100% On-Premise.</strong> Seus dados industriais nunca saem do seu galpão.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild className="bg-[#00D4FF] text-black hover:bg-[#00D4FF]/90 font-black uppercase tracking-widest px-10 h-14 text-base rounded-2xl shadow-[0_0_40px_rgba(0,212,255,0.3)]"
