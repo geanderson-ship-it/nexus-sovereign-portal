@@ -31,12 +31,12 @@ function TextLogo() {
                         pathname?.includes('/nexus-empresas');
 
   return (
-    <div className="flex flex-col items-center">
-      <span className="font-headline text-3xl sm:text-4xl uppercase tracking-[0.2em] flex items-center gap-2 md:gap-3">
-        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600 drop-shadow-[0_0_20px_rgba(37,99,235,0.6)]">
+    <div className="flex flex-col items-start md:items-center">
+      <span className="font-headline uppercase flex flex-col md:flex-row items-start md:items-center gap-0 md:gap-3 leading-tight md:leading-normal">
+        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600 drop-shadow-[0_0_20px_rgba(37,99,235,0.6)] text-2xl sm:text-4xl tracking-[0.15em] md:tracking-[0.2em]">
           Nexus
         </span>
-        <span className="font-light text-white/90 tracking-[0.15em] sm:tracking-[0.2em] text-xl sm:text-2xl mt-0.5 whitespace-nowrap drop-shadow-sm">
+        <span className="font-light text-white/90 tracking-[0.15em] sm:tracking-[0.2em] text-[10px] sm:text-2xl mt-0 md:mt-0.5 whitespace-nowrap drop-shadow-sm">
           {isPremiumPath ? 'Holding Group' : 'Treinamento'}
         </span>
       </span>
