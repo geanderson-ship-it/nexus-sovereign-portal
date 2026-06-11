@@ -11,6 +11,7 @@ import { Metadata } from 'next';
 import AwsRumAnalytics from '@/components/analytics/aws-rum-analytics';
 import GoogleAnalytics from '@/components/analytics/google-analytics';
 import { GA_TRACKING_ID } from '@/lib/gtag';
+import LanguageSwitcher from '@/components/nexus/LanguageSwitcher';
 
 export const viewport = {
   width: 'device-width',
@@ -129,9 +130,10 @@ export default function RootLayout({
           fontHeadline.variable
         )}
       >
-        <div className="fixed bottom-4 left-4 z-[9999] pointer-events-auto flex items-center justify-center">
-           <div id="google_translate_element"></div>
-        </div>
+        {/* Hidden Google Translate Engine */}
+        <div id="google_translate_element" style={{ display: 'none' }}></div>
+        {/* Custom Luxury Language Switcher */}
+        <LanguageSwitcher />
         <AwsRumAnalytics />
         <GoogleAnalytics />
         <ClientProviders>
