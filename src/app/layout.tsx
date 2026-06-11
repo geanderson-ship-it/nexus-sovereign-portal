@@ -129,7 +129,6 @@ export default function RootLayout({
           fontHeadline.variable
         )}
       >
-        <div id="google_translate_element" className="fixed bottom-4 left-4 z-[9999] opacity-70 hover:opacity-100 transition-opacity bg-slate-950/80 p-2 rounded-lg backdrop-blur-sm border border-white/10 scale-90 origin-bottom-left shadow-2xl"></div>
         <AwsRumAnalytics />
         <GoogleAnalytics />
         <ClientProviders>
@@ -138,22 +137,6 @@ export default function RootLayout({
             </LayoutWrapper>
             <NexusAvatarChat />
         </ClientProviders>
-        
-        <Script id="google-translate-script" strategy="afterInteractive">
-          {`
-            function googleTranslateElementInit() {
-              new google.translate.TranslateElement({
-                pageLanguage: 'pt',
-                includedLanguages: 'en,es,fr,de,zh-CN,ar,ja,ru',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-              }, 'google_translate_element');
-            }
-          `}
-        </Script>
-        <Script
-          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );
