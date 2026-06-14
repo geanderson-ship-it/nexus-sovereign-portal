@@ -86,7 +86,6 @@ export function SiteHeader() {
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
   const mainNav = useMemo(() => [
-    { title: t('navInicio'), href: '/' },
     { title: t('navCourses'), href: '/courses' },
     { title: t('navGaleria'), href: '/gallery' },
     { title: t('navPalestras'), href: '/palestras' },
@@ -95,6 +94,7 @@ export function SiteHeader() {
     { title: 'Energia', href: '/energia' },
     { title: 'Premium', href: '/intelligence/premium' },
     { title: 'EMPRESAS', href: '/nexus-empresas' },
+    { title: 'Social', href: '/proposito' },
     { title: t('navSobre'), href: '/about' },
     { title: t('navContato'), href: '/contact' },
     { title: t('navSuporte'), href: '/suporte' },

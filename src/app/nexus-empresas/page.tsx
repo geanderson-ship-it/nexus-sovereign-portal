@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory } from 'lucide-react';
+import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory, Sparkles } from 'lucide-react';
 import * as gtag from '@/lib/gtag';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
@@ -322,6 +322,28 @@ export default function NexusEmpresasPage() {
               </motion.button>
             );
           })}
+
+          {/* SOB ENCOMENDA CTA */}
+          <div className="col-span-1 lg:col-span-2 xl:col-span-3 relative rounded-[28px] overflow-hidden border border-rose-500/30 shadow-[0_0_40px_rgba(225,29,72,0.15)] bg-rose-500/5 backdrop-blur-xl group flex flex-col justify-center items-center text-center p-8 hover:bg-rose-500/10 hover:-translate-y-1 transition-all duration-300">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 rounded-full blur-[80px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
+            
+            <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 mb-4 relative z-10">
+              <Sparkles className="h-8 w-8 text-rose-500" />
+            </div>
+            <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white mb-2 relative z-10">
+              Não encontrou o que precisava?
+            </h3>
+            <p className="text-slate-400 text-sm md:text-base max-w-lg mx-auto mb-8 relative z-10">
+              Entre em contato com a Nexus e solicite sob encomenda. Seu problema, nossa engenharia, nossa solução. Desenvolvemos módulos exclusivos para a sua operação.
+            </p>
+            <Button asChild className="bg-rose-600 text-white hover:bg-rose-700 font-black uppercase tracking-widest px-8 h-12 rounded-xl shadow-[0_0_30px_rgba(225,29,72,0.3)] transition-all hover:scale-105 relative z-10"
+              onClick={() => gtag.event({ action: 'contact_click', category: 'nexus_empresas', label: 'custom_engineering' })}>
+              <Link href={WHATSAPP_URL} target="_blank">
+                Solicitar Engenharia
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 

@@ -264,6 +264,20 @@ const priceItems: PriceItem[] = [
     startupPrice: 'Sem Startup 🔒',
     monthlyPrice: 'R$ 199/mês'
   },
+  {
+    name: 'Nexus Impacto (Social)',
+    category: 'apps',
+    description: 'Gestão de asilos, métricas do Projeto Inteligência com Alma',
+    icon: HeartPulse,
+    iconColor: 'text-rose-400',
+    iconBg: 'bg-rose-500/10 border-rose-500/20',
+    tag: 'Social Intel',
+    tagBg: 'bg-rose-500/10',
+    tagText: 'text-rose-400',
+    tagBorder: 'border-rose-500/15',
+    startupPrice: 'Gratuito 🤍',
+    monthlyPrice: 'Módulo Interno'
+  },
   
   // Cursos (Preços Fixos)
   {
