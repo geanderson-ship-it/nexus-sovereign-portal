@@ -13,7 +13,7 @@ export function Gallery() {
   const { t, tObject } = useLocale();
 
   return (
-    <section id="gallery" className="w-full py-20 md:py-24 text-white relative min-h-screen">
+    <section id="gallery" className="w-full pt-32 md:pt-48 pb-20 md:pb-24 mt-8 md:mt-12 text-white relative min-h-screen">
       
       {/* FIXED BACKGROUND IMAGE */}
       <div className="fixed inset-0 z-0 pointer-events-none">

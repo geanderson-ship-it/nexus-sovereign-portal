@@ -468,16 +468,28 @@ export default function PremiumPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
           </motion.div>
 
-          {/* BIG MENU PREMIUM PACTUM */}
-          <Link href="https://wa.me/5551999799582?text=%5BNEXUS%20PREMIUM%20-%20PACTUM%5D%20Ol%C3%A1.%20Preciso%20acionar%20a%20Arma%20de%20Negocia%C3%A7%C3%A3o%20%28Pactum%29%20para%20uma%20opera%C3%A7%C3%A3o%20de%20alto%20impacto." target="_blank" className="w-full max-w-4xl -mt-8 block">
-            <div className="w-full py-5 rounded-2xl border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3 shadow-[0_0_30px_rgba(245,158,11,0.15)] hover:shadow-[0_0_50px_rgba(245,158,11,0.3)]">
-              <Lock className="h-5 w-5 text-amber-400 group-hover:scale-110 transition-transform hidden md:block" />
-              <span className="text-amber-300 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-white">
-                Acionar a Arma de Negociação (Pactum)
-              </span>
-              <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-2 transition-transform" />
-            </div>
-          </Link>
+          {/* BOTOES PACTUM */}
+          <div className="w-full max-w-4xl flex flex-col md:flex-row gap-4 -mt-8">
+            <Link href="https://wa.me/5551999799582?text=%5BNEXUS%20PREMIUM%20-%20PACTUM%5D%20Ol%C3%A1.%20Preciso%20acionar%20a%20Arma%20de%20Negocia%C3%A7%C3%A3o%20%28Pactum%29%20para%20uma%20opera%C3%A7%C3%A3o%20de%20alto%20impacto." target="_blank" className="flex-1 block">
+              <div className="w-full py-5 rounded-2xl border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/20 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3 shadow-[0_0_30px_rgba(245,158,11,0.15)] hover:shadow-[0_0_50px_rgba(245,158,11,0.3)]">
+                <Lock className="h-5 w-5 text-amber-400 group-hover:scale-110 transition-transform hidden md:block" />
+                <span className="text-amber-300 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-white">
+                  Acionar a Arma de Negociação (Pactum)
+                </span>
+                <ChevronRight className="h-5 w-5 text-amber-400 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </Link>
+
+            <Link href="/intelligence/pactum" className="flex-1 block">
+              <div className="w-full py-5 rounded-2xl border border-amber-500/30 bg-transparent hover:bg-amber-500/10 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3">
+                <Shield className="h-5 w-5 text-amber-500/70 group-hover:scale-110 transition-transform hidden md:block" />
+                <span className="text-amber-500/70 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-amber-400">
+                  Acessar Simulador
+                </span>
+                <ChevronRight className="h-5 w-5 text-amber-500/70 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </Link>
+          </div>
         </section>
 
         {/* SHOWCASE: ÉGIDE (Apenas Imagem e Chamada) */}
@@ -507,16 +519,28 @@ export default function PremiumPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
           </motion.div>
 
-          {/* BIG MENU PREMIUM ÉGIDE */}
-          <Link href="https://wa.me/5551999799582?text=%5BNEXUS%20PREMIUM%20-%20EGIDE%5D%20Ol%C3%A1.%20Desejo%20implantar%20o%20Cerco%20T%C3%A1tico%20Inteligente%20%28%C3%89gide%29%20em%20meu%20munic%C3%ADpio/complexo." target="_blank" className="w-full max-w-4xl -mt-8 block">
-            <div className="w-full py-5 rounded-2xl border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3 shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_50px_rgba(59,130,246,0.3)]">
-              <Shield className="h-5 w-5 text-blue-400 group-hover:scale-110 transition-transform hidden md:block" />
-              <span className="text-blue-300 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-white">
-                Acionar a Blindagem Tática (Égide)
-              </span>
-              <ChevronRight className="h-5 w-5 text-blue-400 group-hover:translate-x-2 transition-transform" />
-            </div>
-          </Link>
+          {/* BOTOES EGIDE */}
+          <div className="w-full max-w-4xl flex flex-col md:flex-row gap-4 -mt-8">
+            <Link href="https://wa.me/5551999799582?text=%5BNEXUS%20PREMIUM%20-%20EGIDE%5D%20Ol%C3%A1.%20Desejo%20implantar%20o%20Cerco%20T%C3%A1tico%20Inteligente%20%28%C3%89gide%29%20em%20meu%20munic%C3%ADpio/complexo." target="_blank" className="flex-1 block">
+              <div className="w-full py-5 rounded-2xl border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3 shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_50px_rgba(59,130,246,0.3)]">
+                <Shield className="h-5 w-5 text-blue-400 group-hover:scale-110 transition-transform hidden md:block" />
+                <span className="text-blue-300 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-white">
+                  Acionar a Blindagem Tática (Égide)
+                </span>
+                <ChevronRight className="h-5 w-5 text-blue-400 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </Link>
+
+            <Link href="/intelligence/egide" className="flex-1 block">
+              <div className="w-full py-5 rounded-2xl border border-blue-500/30 bg-transparent hover:bg-blue-500/10 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3">
+                <Shield className="h-5 w-5 text-blue-500/70 group-hover:scale-110 transition-transform hidden md:block" />
+                <span className="text-blue-500/70 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-blue-400">
+                  Acessar Simulador
+                </span>
+                <ChevronRight className="h-5 w-5 text-blue-500/70 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </Link>
+          </div>
         </section>
 
         {/* FILOSOFIA SOBERANA (Pilares) */}

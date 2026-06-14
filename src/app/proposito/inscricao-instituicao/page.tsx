@@ -104,15 +104,14 @@ export default function InscricaoInstituicaoPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-bold tracking-wide text-slate-300 uppercase">Natureza da Instituição</label>
+                    <label className="text-sm font-bold tracking-wide text-slate-300 uppercase">Tipo de Acolhimento</label>
                     <select 
                       required
                       className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-colors appearance-none"
                     >
-                      <option value="">Selecione a natureza do local...</option>
-                      <option value="publica_idosos">Pública / Filantrópica (Idosos) - 100% Subsídio</option>
-                      <option value="publica_criancas">Pública / Filantrópica (Crianças) - 100% Subsídio</option>
-                      <option value="privada_idosos">Privada (Idosos) - Elegível a 50% de Desconto</option>
+                      <option value="">Selecione o público atendido...</option>
+                      <option value="idosos">Asilo / Casa de Repouso (Idosos) - Custo Zero</option>
+                      <option value="criancas">Orfanato / Abrigo (Crianças) - Custo Zero</option>
                     </select>
                   </div>
                 </div>

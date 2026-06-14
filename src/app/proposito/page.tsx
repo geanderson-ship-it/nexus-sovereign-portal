@@ -21,7 +21,7 @@ export default function PropositoPage() {
 
       <div className="relative z-10">
 
-      <main className="pt-24 md:pt-32 pb-20">
+      <main className="pt-32 md:pt-48 pb-20 mt-8 md:mt-12">
         
         {/* HERO SECTION */}
         <section className="relative px-4 py-20 overflow-hidden">

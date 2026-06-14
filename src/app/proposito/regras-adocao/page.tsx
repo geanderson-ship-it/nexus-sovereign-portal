@@ -11,8 +11,8 @@ export default function RegrasAdocaoPage() {
   const regras = [
     {
       icon: <Scale className="w-6 h-6 text-indigo-400" />,
-      title: "Natureza da Instituição e Subsídios",
-      desc: "Instituições Públicas ou Filantrópicas recebem 100% de subsídio. Instituições Privadas que comprovarem cumprimento rigoroso das regras também são elegíveis e recebem 50% de desconto na tecnologia. A natureza deve ser declarada sob pena de falsidade ideológica."
+      title: "Natureza da Instituição",
+      desc: "Não há distinção entre instituições públicas, filantrópicas ou privadas. Todas têm os mesmos direitos, deveres e condições de encontrar um padrinho. O objetivo é levar afeto independentemente da natureza jurídica da entidade."
     },
     {
       icon: <ShieldCheck className="w-6 h-6 text-emerald-400" />,
@@ -108,19 +108,19 @@ export default function RegrasAdocaoPage() {
                 </div>
               </div>
               <div className="w-full">
-                <h3 className="text-2xl font-bold text-white mb-4 text-center md:text-left">Estrutura de Custos para a Instituição</h3>
+                <h3 className="text-2xl font-bold text-white mb-4 text-center md:text-left">Estrutura de Custos: Zero para a Instituição</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-[#0f141f] border border-emerald-500/20 rounded-xl p-5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl" />
-                    <h4 className="text-emerald-400 font-bold mb-1 uppercase tracking-wide text-sm relative z-10">Públicas e Filantrópicas</h4>
+                    <h4 className="text-emerald-400 font-bold mb-1 uppercase tracking-wide text-sm relative z-10">Para a Instituição</h4>
                     <p className="text-3xl font-black text-white mb-2 relative z-10">R$ 0,00</p>
-                    <p className="text-slate-400 text-sm relative z-10">100% subsidiado pela Rede de Parceiros da Nexus. Sem custos vitalícios de infraestrutura ou software.</p>
+                    <p className="text-slate-400 text-sm relative z-10">Custo zero para a entidade. A tecnologia chega de forma totalmente gratuita e 100% subsidiada para apoiar o seu trabalho e levar conforto aos residentes.</p>
                   </div>
                   <div className="bg-[#0f141f] border border-blue-500/20 rounded-xl p-5 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
-                    <h4 className="text-blue-400 font-bold mb-1 uppercase tracking-wide text-sm relative z-10">Instituições Privadas</h4>
-                    <p className="text-3xl font-black text-white mb-2 relative z-10">~ R$ 1.000 <span className="text-sm font-medium text-slate-500">/mês</span></p>
-                    <p className="text-slate-400 text-sm relative z-10">Elegíveis a 50% de desconto. Pagam apenas o custo base da infraestrutura tecnológica de streaming ao vivo da Aurora ou do Ravi.</p>
+                    <h4 className="text-blue-400 font-bold mb-1 uppercase tracking-wide text-sm relative z-10">Para o Padrinho/Madrinha</h4>
+                    <p className="text-3xl font-black text-white mb-2 relative z-10">~ R$ 2.000 <span className="text-sm font-medium text-slate-500">/mês</span></p>
+                    <p className="text-slate-400 text-sm relative z-10">O padrinho arca com 100% dos custos operacionais, calculados com base em uma média de 2 horas de uso interativo diário para os acolhidos.</p>
                   </div>
                 </div>
               </div>

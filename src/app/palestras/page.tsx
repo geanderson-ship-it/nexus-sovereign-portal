@@ -57,7 +57,7 @@ export default function PalestrasPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
       </div>
 
-      <div className="relative z-10 container mx-auto py-12 md:py-20">
+      <div className="relative z-10 container mx-auto pt-32 md:pt-48 pb-12 md:pb-20 mt-8 md:mt-12">
       <div className="mb-12 text-center">
         <h1
           className={

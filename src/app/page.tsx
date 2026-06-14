@@ -49,8 +49,8 @@ export default function HomePage() {
             </div>
 
             <div className="relative z-10 text-foreground overflow-x-hidden">
-                <section className="relative min-h-[90dvh] flex flex-col items-center justify-center pt-24 overflow-hidden">
-                <div className="w-full max-w-[1650px] mx-auto px-4 md:px-8 relative z-10">
+                <section className="relative min-h-[90dvh] flex flex-col items-center justify-center pt-32 md:pt-48 overflow-hidden">
+                <div className="w-full max-w-[1650px] mx-auto px-4 md:px-8 relative z-10 mt-8 md:mt-12">
                     <div className="flex flex-col items-center justify-center mb-0 w-full">
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.98 }}
