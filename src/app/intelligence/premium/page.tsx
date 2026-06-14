@@ -480,6 +480,45 @@ export default function PremiumPage() {
           </Link>
         </section>
 
+        {/* SHOWCASE: ÉGIDE (Apenas Imagem e Chamada) */}
+        <section className="flex flex-col items-center gap-16 mt-16">
+          <div className="flex flex-col items-center text-center gap-6 max-w-3xl">
+            <span className="text-blue-500 text-xs font-black uppercase tracking-[0.4em]">Cerco Tático Inteligente</span>
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">Nexus Égide</h2>
+            <p className="text-zinc-400 text-lg leading-relaxed font-light">
+              A blindagem impenetrável de cidades e complexos logísticos. Cerco Eletrônico (LPR), Inteligência Preditiva Criminal e integração nativa com forças de segurança pública para interceptação em milissegundos.
+            </p>
+          </div>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="w-full max-w-4xl h-96 relative rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-900 to-zinc-950 overflow-hidden shadow-[0_0_50px_rgba(59,130,246,0.05)]"
+          >
+            {/* IMAGEM DO ÉGIDE AQUI */}
+            <Image 
+              src="/Nexus Intelligence Édge/Nexus Intelligence Édgi.png" 
+              alt="Nexus Égide" 
+              fill 
+              className="object-contain p-4 scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
+          </motion.div>
+
+          {/* BIG MENU PREMIUM ÉGIDE */}
+          <Link href="https://wa.me/5551999799582?text=%5BNEXUS%20PREMIUM%20-%20EGIDE%5D%20Ol%C3%A1.%20Desejo%20implantar%20o%20Cerco%20T%C3%A1tico%20Inteligente%20%28%C3%89gide%29%20em%20meu%20munic%C3%ADpio/complexo." target="_blank" className="w-full max-w-4xl -mt-8 block">
+            <div className="w-full py-5 rounded-2xl border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3 shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:shadow-[0_0_50px_rgba(59,130,246,0.3)]">
+              <Shield className="h-5 w-5 text-blue-400 group-hover:scale-110 transition-transform hidden md:block" />
+              <span className="text-blue-300 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-white">
+                Acionar a Blindagem Tática (Égide)
+              </span>
+              <ChevronRight className="h-5 w-5 text-blue-400 group-hover:translate-x-2 transition-transform" />
+            </div>
+          </Link>
+        </section>
+
         {/* FILOSOFIA SOBERANA (Pilares) */}
         <section className="flex flex-col gap-12 mt-16 relative z-10">
           <motion.div 
