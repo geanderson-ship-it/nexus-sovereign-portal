@@ -20,7 +20,8 @@ import {
   Target,
   Zap,
   ChevronLeft,
-  Users
+  Users,
+  Phone
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -50,6 +51,41 @@ const simulatorProfiles = [
 export default function NexusPactumCockpit() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'auditor' | 'warroom' | 'simulator'>('dashboard');
   const [deals, setDeals] = useState(initialDeals);
+  const [directCallTarget, setDirectCallTarget] = useState('');
+
+  const handleStartDirectCall = () => {
+    if (!directCallTarget) return;
+
+    // Generate a secure looking token for the link
+    const securityToken = Math.random().toString(36).substring(2, 10).toUpperCase();
+    const secureLink = `https://nexustreinamento.com/pactum-link?token=${securityToken}`;
+
+    // Detect if it's an email or whatsapp
+    const isEmail = directCallTarget.includes('@');
+    
+    if (isEmail) {
+      window.open(`mailto:${directCallTarget}?subject=Nexus Pactum - War Room Invite&body=Acesse o link seguro para iniciarmos nossa negociação biométrica:%0D%0A%0D%0A${secureLink}`, '_blank');
+    } else {
+      // Clean up number
+      const numbersOnly = directCallTarget.replace(/\D/g, '');
+      if (numbersOnly.length >= 8) {
+        // Assume BR code if missing
+        const countryCode = numbersOnly.length <= 11 ? '55' : '';
+        window.open(`https://wa.me/${countryCode}${numbersOnly}?text=Nexus+Pactum:+Acesse+nossa+sala+segura+para+iniciarmos+a+chamada+biométrica:%0A%0A${secureLink}`, '_blank');
+      }
+    }
+
+    const directDeal = {
+      id: Math.random().toString(36).substring(2, 9),
+      name: 'Chamada Ad-hoc / Avulsa',
+      opponent: directCallTarget,
+      value: 'N/A',
+      status: 'Em Ligação',
+      score: null
+    };
+    setSelectedDeal(directDeal);
+    setIsNegotiating(true);
+  };
   const [selectedDeal, setSelectedDeal] = useState<typeof initialDeals[0] | null>(null);
   const [selectedSimulator, setSelectedSimulator] = useState<typeof simulatorProfiles[0] | null>(null);
   const [isNegotiating, setIsNegotiating] = useState(false);
@@ -426,6 +462,29 @@ export default function NexusPactumCockpit() {
                           <ChevronRight className="h-5 w-5 text-slate-500 group-hover:text-blue-400 transition-transform group-hover:translate-x-1" />
                         </button>
                       ))}
+                    </div>
+                  </div>
+
+                  {/* AD-HOC DIRECT CALL SECTION */}
+                  <div className="pt-6 border-t border-white/5 space-y-4">
+                    <p className="text-xs font-black text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-emerald-500" /> Iniciar Ligação Direta (Avulsa)
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <input 
+                        type="text"
+                        placeholder="E-mail ou WhatsApp do contato..."
+                        value={directCallTarget}
+                        onChange={(e) => setDirectCallTarget(e.target.value)}
+                        className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50"
+                      />
+                      <Button 
+                        onClick={handleStartDirectCall}
+                        disabled={!directCallTarget}
+                        className="bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase tracking-widest px-8 rounded-xl h-auto py-3 shadow-lg shadow-emerald-600/20 disabled:opacity-50"
+                      >
+                        <Video className="mr-2 h-4 w-4" /> Ligar Agora
+                      </Button>
                     </div>
                   </div>
 

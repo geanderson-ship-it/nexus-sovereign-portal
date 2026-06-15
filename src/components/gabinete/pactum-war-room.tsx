@@ -124,13 +124,72 @@ export function PactumWarRoom({ dealName, opponentName, dealValue, onClose }: Pa
   const [showLedger, setShowLedger] = useState(false);
   const [danteAdvice, setDanteAdvice] = useState<string>("Conexão estabelecida com sucesso. Analisador de estresse fonético ativado. Aguardando primeira réplica.");
   const { toast } = useToast();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  
+  const [videoDevices, setVideoDevices] = useState<MediaDeviceInfo[]>([]);
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string>('');
 
   useEffect(() => {
+    const getStream = async () => {
+      try {
+        const constraints = selectedDeviceId 
+          ? { video: { deviceId: { exact: selectedDeviceId } }, audio: false }
+          : { video: true, audio: false };
+          
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        streamRef.current = stream;
+        
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play().catch(e => console.log("Auto-play prevented", e));
+        }
+
+        // Now that we definitely have permission and the stream, fetch labels
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const cameras = devices.filter(d => d.kind === 'videoinput');
+        setVideoDevices(cameras);
+        
+        if (!selectedDeviceId && cameras.length > 0) {
+          const activeTrack = stream.getVideoTracks()[0];
+          const activeDevice = cameras.find(c => c.label === activeTrack.label);
+          if (activeDevice) {
+            setSelectedDeviceId(activeDevice.deviceId);
+          }
+        }
+      } catch (err) {
+        console.warn("Webcam error", err);
+        
+        // Even if it fails (e.g. user closed Windows popup), list the devices!
+        try {
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          const cameras = devices.filter(d => d.kind === 'videoinput');
+          setVideoDevices(cameras);
+        } catch (e) {}
+
+        toast({
+          title: "Câmera não iniciada",
+          description: "Selecione manualmente a câmera do seu computador no menu superior direito.",
+          variant: "destructive"
+        });
+      }
+    };
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      getStream();
+    }
+
     const timer = setTimeout(() => {
       setIsConnecting(false);
     }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    
+    return () => {
+      clearTimeout(timer);
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [selectedDeviceId]);
 
   // Simulated dynamic biometric hum
   useEffect(() => {
@@ -198,6 +257,18 @@ export function PactumWarRoom({ dealName, opponentName, dealValue, onClose }: Pa
           </div>
         </div>
         <div className="flex items-center gap-6">
+          <select 
+            value={selectedDeviceId} 
+            onChange={(e) => setSelectedDeviceId(e.target.value)}
+            className="bg-black/50 border border-white/10 text-white text-[10px] uppercase font-bold px-2 py-1 rounded max-w-[150px] outline-none"
+          >
+            {videoDevices.length === 0 && <option value="">Detectando Câmeras...</option>}
+            {videoDevices.map(cam => (
+              <option key={cam.deviceId} value={cam.deviceId}>
+                {cam.label || `Camera ${cam.deviceId.slice(0,5)}`}
+              </option>
+            ))}
+          </select>
           <Badge className="bg-red-500/10 text-red-400 border border-red-500/20 font-black text-[9px] uppercase tracking-widest px-3 py-1">
             Valor: {dealValue}
           </Badge>
@@ -216,15 +287,26 @@ export function PactumWarRoom({ dealName, opponentName, dealValue, onClose }: Pa
         
         {/* Opponent Simulated Stream (Large Frame) */}
         <div className="flex-1 relative rounded-2xl overflow-hidden border-2 border-white/5 bg-zinc-950 shadow-2xl flex flex-col justify-between p-6">
+          
+          {/* Live Webcam Feed Background (Always in DOM so ref works) */}
+          <video 
+            ref={videoRef}
+            autoPlay 
+            playsInline 
+            muted 
+            className="absolute inset-0 w-full h-full object-cover z-0 opacity-90"
+          />
+          <div className="absolute inset-0 bg-blue-900/10 z-0 pointer-events-none mix-blend-overlay" />
+
           {isConnecting ? (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90">
+            <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md">
               <Loader2 className="h-12 w-12 text-blue-500 animate-spin mb-4" />
               <p className="text-blue-400 font-headline tracking-tighter text-xl uppercase">Escaneando Espectro Fônico do Oponente...</p>
             </div>
           ) : (
             <>
               {/* Telemetry Matrix Grid Overlays */}
-              <div className="absolute inset-0 pointer-events-none z-0 opacity-15 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+              <div className="absolute inset-0 pointer-events-none z-10 opacity-15 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
               
               {/* Floating Client Information Card */}
               <div className="absolute top-4 left-4 z-20 bg-black/85 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-4 flex items-center gap-4 shadow-2xl">
