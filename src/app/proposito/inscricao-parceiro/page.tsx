@@ -7,11 +7,35 @@ import Link from 'next/link';
 
 export default function InscricaoParceiroPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aqui integraremos com o backend/CRM da Nexus para capturar a lead B2B
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", "0694c45e-00fa-445e-a06d-3f61973ef4c7"); 
+    formData.append("subject", "Novo Padrinho Corporativo - Inteligência com Alma");
+    formData.append("from_name", "Portal Nexus Social");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        alert("Ops! Ocorreu um erro ao enviar a inscrição. Tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+      alert("Erro de conexão. Verifique sua internet.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -62,6 +86,7 @@ export default function InscricaoParceiroPage() {
                     </div>
                     <input 
                       type="text" 
+                      name="razao_social"
                       required
                       placeholder="Nome oficial no CNPJ" 
                       className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
@@ -78,6 +103,7 @@ export default function InscricaoParceiroPage() {
                       </div>
                       <input 
                         type="text" 
+                        name="nome_fantasia"
                         required
                         placeholder="Nome como a empresa é conhecida" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
@@ -93,6 +119,7 @@ export default function InscricaoParceiroPage() {
                       </div>
                       <input 
                         type="text" 
+                        name="cnpj"
                         required
                         placeholder="Para fins de faturamento e NF" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
@@ -110,6 +137,7 @@ export default function InscricaoParceiroPage() {
                       </div>
                       <input 
                         type="text" 
+                        name="responsavel_esg"
                         required
                         placeholder="Nome do diretor ou responsável" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
@@ -125,6 +153,7 @@ export default function InscricaoParceiroPage() {
                       </div>
                       <input 
                         type="email" 
+                        name="email_corporativo"
                         required
                         placeholder="seu.nome@empresa.com.br" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
@@ -142,6 +171,7 @@ export default function InscricaoParceiroPage() {
                       </div>
                       <input 
                         type="tel" 
+                        name="telefone_corporativo"
                         required
                         placeholder="(00) 00000-0000" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"

@@ -9,11 +9,35 @@ import Link from 'next/link';
 
 export default function InscricaoInstituicaoPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aqui no futuro integraremos com o backend (API / Banco de Dados / Notificação para a Magadot)
-    setIsSubmitted(true);
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", "0694c45e-00fa-445e-a06d-3f61973ef4c7"); 
+    formData.append("subject", "Nova Inscrição de Instituição - Inteligência com Alma");
+    formData.append("from_name", "Portal Nexus Social");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        alert("Ops! Ocorreu um erro ao enviar a inscrição. Tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+      alert("Erro de conexão. Verifique sua internet.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -65,6 +89,7 @@ export default function InscricaoInstituicaoPage() {
                       </div>
                       <input 
                         type="text" 
+                        name="razao_social"
                         required
                         placeholder="Nome oficial no CNPJ" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-colors"
@@ -80,6 +105,7 @@ export default function InscricaoInstituicaoPage() {
                       </div>
                       <input 
                         type="text" 
+                        name="nome_fantasia"
                         placeholder="Como o local é conhecido" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-colors"
                       />
@@ -96,6 +122,7 @@ export default function InscricaoInstituicaoPage() {
                       </div>
                       <input 
                         type="text" 
+                        name="cnpj"
                         required
                         placeholder="00.000.000/0000-00" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-colors"
@@ -106,6 +133,7 @@ export default function InscricaoInstituicaoPage() {
                   <div className="space-y-2">
                     <label className="text-sm font-bold tracking-wide text-slate-300 uppercase">Tipo de Acolhimento</label>
                     <select 
+                      name="tipo_acolhimento"
                       required
                       className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-colors appearance-none"
                     >
@@ -125,6 +153,7 @@ export default function InscricaoInstituicaoPage() {
                       </div>
                       <input 
                         type="text" 
+                        name="responsavel_legal"
                         required
                         placeholder="Nome completo do diretor(a)" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-colors"
@@ -140,6 +169,7 @@ export default function InscricaoInstituicaoPage() {
                       </div>
                       <input 
                         type="tel" 
+                        name="telefone"
                         required
                         placeholder="(00) 00000-0000" 
                         className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-colors"
@@ -156,6 +186,7 @@ export default function InscricaoInstituicaoPage() {
                     </div>
                     <input 
                       type="email" 
+                      name="email"
                       required
                       placeholder="diretoria@instituicao.org" 
                       className="w-full bg-[#0f141f] border border-slate-700 text-white rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition-colors"
@@ -166,6 +197,7 @@ export default function InscricaoInstituicaoPage() {
                 <div className="space-y-2">
                   <label className="text-sm font-bold tracking-wide text-slate-300 uppercase">Por que a sua instituição precisa do Projeto Inteligência com Alma?</label>
                   <textarea 
+                    name="motivo_necessidade"
                     required
                     rows={4}
                     placeholder="Conte-nos brevemente sobre as pessoas que vocês acolhem e como nossos avatares (IAs) trariam alento para elas..." 
@@ -182,8 +214,8 @@ export default function InscricaoInstituicaoPage() {
                   </label>
 
                   <div>
-                    <Button type="submit" className="w-full bg-gradient-to-r from-rose-600 to-blue-600 hover:from-rose-500 hover:to-blue-500 text-white font-bold h-14 rounded-xl text-lg shadow-[0_0_20px_rgba(225,29,72,0.3)] transition-all">
-                      Enviar Inscrição para Auditoria
+                    <Button disabled={isSubmitting} type="submit" className="w-full bg-gradient-to-r from-rose-600 to-blue-600 hover:from-rose-500 hover:to-blue-500 text-white font-bold h-14 rounded-xl text-lg shadow-[0_0_20px_rgba(225,29,72,0.3)] transition-all disabled:opacity-50">
+                      {isSubmitting ? "Enviando e Auditando..." : "Enviar Inscrição para Auditoria"}
                     </Button>
                     <p className="text-center text-xs text-slate-500 mt-4">
                       Ao enviar, você autoriza a checagem rigorosa de Ficha Limpa pela IA Auditora da Nexus Holding Group.
