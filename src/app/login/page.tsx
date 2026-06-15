@@ -16,6 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Eye, EyeOff } from 'lucide-react';
 import { useUser } from '@/auth';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Image from 'next/image';
 
 import { useLocale } from '@/hooks/use-locale';
@@ -32,7 +33,12 @@ export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmittingVendas, setIsSubmittingVendas] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordVendas, setShowPasswordVendas] = useState(false);
+
+  const [vendasEmail, setVendasEmail] = useState('');
+  const [vendasPassword, setVendasPassword] = useState('');
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -78,6 +84,23 @@ export default function LoginPage() {
       setIsSubmitting(false);
     }
   };
+
+  const handleVendasLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingVendas(true);
+    
+    setTimeout(() => {
+      const allowedEmails = ['demo@nexus.com', 'emerson.santoglass@gmail.com'];
+      if (allowedEmails.includes(vendasEmail.toLowerCase().trim()) && vendasPassword === 'vendas2026') {
+        localStorage.setItem('vendas_auth', 'true');
+        toast({ title: 'Acesso Liberado', description: 'Redirecionando para o Portal de Vendas...' });
+        router.push('/gabinete-vendas');
+      } else {
+        toast({ variant: 'destructive', title: 'Erro', description: 'E-mail ou senha de vendas incorretos.' });
+        setIsSubmittingVendas(false);
+      }
+    }, 800);
+  };
   
   if (loading || user) {
     return <div className="flex min-h-screen items-center justify-center bg-background">{t('intelligence.loading' as any) || 'Carregando...'}</div>;
@@ -108,10 +131,17 @@ export default function LoginPage() {
           </div>
           <CardTitle className="text-2xl">{t('login.title')}</CardTitle>
           <CardDescription>
-            {t('login.subtitle')}
+            Acesso Restrito
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <Tabs defaultValue="admin" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-900/50 border border-slate-800">
+              <TabsTrigger value="admin" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-slate-400">Diretoria</TabsTrigger>
+              <TabsTrigger value="vendas" className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white text-slate-400">Vendedores</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="admin" className="space-y-4 focus:outline-none">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -154,17 +184,58 @@ export default function LoginPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={isSubmitting}>
                 {isSubmitting ? t('login.submitting') : t('login.submit')}
               </Button>
             </form>
           </Form>
           <div className="mt-4 text-center text-sm">
             {t('login.noAccount')} {' '}
-            <Link href="/signup" className="text-primary hover:underline">
+            <Link href="/signup" className="text-blue-500 hover:underline">
               {t('login.createAccountLink')}
             </Link>
           </div>
+            </TabsContent>
+
+            <TabsContent value="vendas" className="space-y-4 focus:outline-none">
+              <form onSubmit={handleVendasLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label>E-mail Corporativo</Label>
+                  <Input 
+                    type="email" 
+                    placeholder="vendedor@nexus.com" 
+                    value={vendasEmail}
+                    onChange={(e) => setVendasEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Senha de Acesso</Label>
+                  <div className="relative">
+                    <Input 
+                      type={showPasswordVendas ? 'text' : 'password'} 
+                      value={vendasPassword}
+                      onChange={(e) => setVendasPassword(e.target.value)}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPasswordVendas(!showPasswordVendas)}
+                      className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground"
+                    >
+                        {showPasswordVendas ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    </button>
+                  </div>
+                </div>
+                <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white mt-4" disabled={isSubmittingVendas}>
+                  {isSubmittingVendas ? 'Autenticando...' : 'Acessar Showroom'}
+                </Button>
+              </form>
+              <div className="mt-4 text-center text-xs text-slate-500">
+                Acesso exclusivo para parceiros comerciais autorizados.
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
       </div>
