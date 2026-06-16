@@ -32,6 +32,7 @@ import {
   Compass, 
   CheckCircle2 
 } from 'lucide-react';
+import { WhiteLabelHeader } from '@/components/nexus/white-label-header';
 
 interface LprLog {
   id: number;
@@ -553,10 +554,15 @@ export default function EgidePage() {
                 MÓDULO SEGURANÇA
               </Badge>
             </div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight uppercase font-headline">
-              Nexus Intelligence <span className="text-blue-500">Égide</span>
-            </h1>
-            <p className="text-slate-400 text-sm">Painel de Controle Municipal e Cerco Eletrônico Serverless</p>
+            <div className="pt-4 w-full">
+              <WhiteLabelHeader
+                defaultTitle="Nexus Intelligence Égide"
+                defaultSlogan="Painel de Controle de Segurança e Cerco Eletrônico Inteligente"
+                defaultLogo="/logo-nexus-shield.png"
+                storageKeyPrefix="egide"
+                themeColor="blue"
+              />
+            </div>
           </div>
           
           <div className="flex gap-2">
@@ -826,25 +832,11 @@ export default function EgidePage() {
                 <Shield className="w-48 h-48 text-blue-500" />
               </div>
               <CardContent className="p-6 relative z-10 flex flex-col gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full border-2 border-blue-500/50 shrink-0 overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-                    <Image 
-                      src="/atena/Atena segunda.png" 
-                      alt="Atena Auxiliar Executiva" 
-                      width={64} 
-                      height={64} 
-                      className="w-full h-full object-cover"
-                      priority
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-headline text-white flex items-center gap-2">
-                      Atena
-                    </h3>
-                    <Badge variant="outline" className="text-[9px] uppercase tracking-widest text-blue-400 border-blue-500/50 bg-blue-500/5">
-                      Inteligência Analítica Égide
-                    </Badge>
-                  </div>
+                <div className="flex items-center pb-2 border-b border-blue-500/20">
+                  <h3 className="text-xl font-black font-headline text-blue-400 flex items-center gap-3 uppercase tracking-tighter">
+                    <Shield className="w-6 h-6 text-blue-500 animate-pulse" />
+                    Inteligência Analítica Égide
+                  </h3>
                 </div>
 
                 <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">

@@ -152,7 +152,7 @@ export default function ArquivoNotasFiscaisPage() {
         </div>
       </div>
 
-      <LegalSafeguard module="DANTE ARQUIVO FISCAL" protocol="NX-DOC-99" />
+      <LegalSafeguard module="GED FISCAL INTELIGENTE" protocol="NX-DOC-99" />
 
       {/* MODAL VISUALIZADOR DE DANFE */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>

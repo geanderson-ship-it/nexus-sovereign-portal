@@ -42,63 +42,63 @@ const simulatorDialogueTrees = {
   wall: [
     {
       round: 0,
-      opponentLine: "Ficamos em silêncio analisando a proposta de vocês. Francamente, achamos que a sua precificação operacional de $85M está desconectada da nossa realidade logística. Qual o seu posicionamento?",
+      opponentLine: "Ficamos em silêncio analisando a proposta de vocês. Francamente, achamos que a sua precificação operacional de $85M está além da nossa realidade logística de mercado. Qual o racional de vocês?",
       options: [
         { 
-          text: "Manter o valor de $85M e permanecer em silêncio absoluto.", 
-          outcome: "Oponente piscou primeiro. Diante do silêncio, ele começou a hesitar sobre a própria capacidade logística de nos substituir. Margem de lucro protegida.",
+          text: "Manter o valor de $85M e aguardar a avaliação deles.", 
+          outcome: "A outra parte recuou primeiro. Diante do silêncio analítico, eles começaram a hesitar sobre a própria capacidade logística de nos substituir. Margem mantida.",
           power: 15, closing: -5, margin: 2, nextRound: 1 
         },
         { 
-          text: "Oferecer um desconto inicial e baixar para $82M para avançar.", 
-          outcome: "Sinal de fraqueza detectado. The Wall percebeu nossa pressa e vai pressionar por mais concessões nos próximos itens.",
+          text: "Oferecer uma readequação inicial e baixar para $82M para avançar.", 
+          outcome: "Sinal de excesso de flexibilidade. O Perfil Analítico percebeu nossa pressa e vai focar em maiores descontos nos próximos itens.",
           power: -15, closing: 15, margin: -3, nextRound: 1 
         },
         { 
-          text: "Explicar em detalhes técnicos a eficiência gerada pelo Dante Safra.", 
-          outcome: "Defesa técnica razoável. Eles aceitaram a justificativa de eficiência, mas mantêm-se céticos no preço básico.",
+          text: "Explicar em detalhes técnicos a eficiência gerada pelo nosso algoritmo.", 
+          outcome: "Defesa técnica embasada. Eles aceitaram a justificativa de eficiência, mas mantêm-se criteriosos quanto ao orçamento básico.",
           power: 5, closing: 5, margin: 0, nextRound: 1 
         }
       ]
     },
     {
       round: 1,
-      opponentLine: "Aceitamos o valor base de $85M, porém somente sob a condição de que toda PI gerada na joint venture pertença a nós. Sem isso, nos retiramos da mesa.",
+      opponentLine: "Validamos o valor base de $85M, porém somente sob a condição de que toda a Propriedade Intelectual (PI) gerada na joint venture pertença a nós. Do contrário, o projeto fica inviável.",
       options: [
         { 
-          text: "Recusar e ameaçar encerrar a parceria imediatamente.", 
-          outcome: "Aposta de alto risco. The Wall sentiu a ameaça à viabilidade da operação e recuou, mas a chance de fechamento caiu perigosamente.",
+          text: "Recusar firmemente e sugerir a suspensão das conversas.", 
+          outcome: "Posicionamento de alto risco. O Perfil Analítico sentiu o risco à viabilidade da operação e recuou, mas a fluidez do debate caiu.",
           power: 25, closing: -25, margin: 5, nextRound: 2 
         },
         { 
           text: "Propor copropriedade intelectual com royalties recíprocos.", 
-          outcome: "Tática balanceada. Eles concordam com a copropriedade se o royalty for ligeiramente maior em favor deles.",
+          outcome: "Tática colaborativa balanceada. Eles concordam com a copropriedade se o royalty for ligeiramente maior em favor deles.",
           power: 5, closing: 10, margin: -1, nextRound: 2 
         },
         { 
           text: "Ceder a PI contanto que mantenhamos a licença de uso vitalícia.", 
-          outcome: "Concessão excessiva. Perdemos o controle intelectual, embora tenhamos mantido a funcionalidade local do software.",
+          outcome: "Concessão excessiva. Cedemos o controle intelectual, embora tenhamos mantido a funcionalidade local do software.",
           power: -20, closing: 25, margin: -5, nextRound: 2 
         }
       ]
     },
     {
       round: 2,
-      opponentLine: "Para finalizarmos, o foro jurídico de Vladivostok sob leis siberianas locais é inegociável. Concordam com este termo final?",
+      opponentLine: "Para finalizarmos, o foro jurídico de Vladivostok sob leis siberianas locais é fundamental para nosso compliance. Podemos concordar com este termo final?",
       options: [
         { 
-          text: "Exigir foro neutro em Genebra (Suíça) sob a ICC.", 
-          outcome: "Excelente fechamento soberano! A Siberian cedeu à neutralidade suíça para não perder a tecnologia de ponta do Dante.",
+          text: "Propor foro neutro em Genebra (Suíça) sob a ICC.", 
+          outcome: "Excelente fechamento soberano! A Siberian concordou com a neutralidade suíça para viabilizar nossa tecnologia de ponta.",
           power: 20, closing: 10, margin: 3, nextRound: 3 
         },
         { 
           text: "Aceitar Vladivostok contanto que a câmara arbitral seja mista.", 
-          outcome: "Acordo selado com risco jurisdicional médio. Uma arbitragem mista mitiga ligeiramente o protecionismo local.",
+          outcome: "Acordo selado com risco jurisdicional médio. Uma arbitragem mista mitiga ligeiramente o impacto do foro local.",
           power: -5, closing: 20, margin: -1, nextRound: 3 
         },
         { 
-          text: "Ceder integralmente e assinar a comarca siberiana.", 
-          outcome: "Risco de litígio exposto. Aceitamos a pior comarca arbitral possível apenas para fechar o negócio rápido.",
+          text: "Concordar integralmente com a comarca siberiana.", 
+          outcome: "Risco de compliance elevado. Aceitamos o foro de maior exposição apenas para fechar o negócio com agilidade.",
           power: -25, closing: 30, margin: -4, nextRound: 3 
         }
       ]
@@ -107,63 +107,63 @@ const simulatorDialogueTrees = {
   aggressor: [
     {
       round: 0,
-      opponentLine: "Temos outras três propostas na mesa, duas delas abaixo de $78M. Se vocês não baixarem esse preço agora, encerraremos esta call de alinhamento em 2 minutos. O que vocês fazem?",
+      opponentLine: "Temos outras três propostas na mesa, duas delas abaixo de $78M. Precisamos que reavaliem esse preço agora, ou teremos que encerrar esta pauta em breve. Como podemos avançar?",
       options: [
         { 
-          text: "Desmascarar o blefe informando que a concorrência não tem a tecnologia do Dante.", 
-          outcome: "Cirúrgico. O Agressivo sentiu o contra-ataque. Ele mudou o tom e recuou da ameaça de desligar, mas a tensão subiu.",
+          text: "Argumentar que a concorrência não possui nossa tecnologia avançada.", 
+          outcome: "Cirúrgico. O Perfil Assertivo recalculou o cenário. A abordagem direta evitou concessões precipitadas, mas o debate segue firme.",
           power: 20, closing: -5, margin: 4, nextRound: 1 
         },
         { 
-          text: "Ceder ao pânico e igualar a oferta concorrente em $78M.", 
-          outcome: "Quebra de margem severa. O Agressivo farejou o desespero e continuará nos atacando nos próximos tópicos.",
+          text: "Ceder à pressão e igualar a oferta concorrente em $78M.", 
+          outcome: "Queda brusca de margem. O Perfil Assertivo notou grande flexibilidade e continuará buscando reduções nos próximos tópicos.",
           power: -25, closing: 25, margin: -8, nextRound: 1 
         },
         { 
-          text: "Ignorar as ameaças e focar na entrega de valor operacional em PPCP.", 
-          outcome: "Foco técnico estável. Oponente percebeu que ameaças vazias não nos afetam de forma emocional.",
+          text: "Ignorar a pressão e focar na entrega de valor operacional em PPCP.", 
+          outcome: "Foco técnico muito estável. A outra parte percebeu que pressões de prazo não afetam nossa avaliação.",
           power: 10, closing: 10, margin: 0, nextRound: 1 
         }
       ]
     },
     {
       round: 1,
-      opponentLine: "Aceitamos o valor, mas exigimos que a sua equipe técnica arque com toda a responsabilidade de instalação, e caso atrase 1 dia, pagará multa diária de 2% do contrato.",
+      opponentLine: "Podemos seguir com o valor, mas precisamos que a sua equipe assuma toda a responsabilidade de instalação. Caso haja atraso, propomos multa diária de 2% do contrato.",
       options: [
         { 
-          text: "Impor limite de multa logístico (Cap de $200k) e prazo de carência de 15 dias.", 
-          outcome: "Excelente contraproposta. Limita nosso passivo judicial e impede penalidades diárias ruinosas.",
+          text: "Sugerir teto de multa (Cap de $200k) e prazo de carência de 15 dias.", 
+          outcome: "Excelente contraproposta. Limita nossa exposição e traz razoabilidade para penalidades diárias agressivas.",
           power: 15, closing: 10, margin: 2, nextRound: 2 
         },
         { 
-          text: "Aceitar a multa integral contanto que eles forneçam os servidores locais.", 
-          outcome: "Acordo arriscado. A multa diária de 2% é altíssima e pode inviabilizar o lucro líquido da nossa joint venture.",
+          text: "Aceitar a multa integral contanto que eles forneçam a infraestrutura local.", 
+          outcome: "Acordo de alta tensão. A multa diária de 2% é arriscada e pode impactar o lucro líquido da nossa joint venture.",
           power: -15, closing: 20, margin: -4, nextRound: 2 
         },
         { 
-          text: "Negar qualquer multa contratual sob risco de cancelamento unilateral.", 
-          outcome: "Agressividade mútua. Oponente recuou da multa diária abusiva, porém a relação ficou extremamente desgastada.",
+          text: "Recusar a inclusão de multa contratual e sugerir revisão do cronograma.", 
+          outcome: "Tensão na mesa. A outra parte recuou da multa diária rigorosa, porém o alinhamento de expectativas ficou mais frio.",
           power: 10, closing: -20, margin: 3, nextRound: 2 
         }
       ]
     },
     {
       round: 2,
-      opponentLine: "Vocês são difíceis de dobrar. Para fecharmos: foro em Vladivostok ou sem acordo. Qual a resposta final da diretoria?",
+      opponentLine: "Vocês são muito firmes nas posições. Para fecharmos o escopo: foro em Vladivostok. Qual a posição final da diretoria?",
       options: [
         { 
-          text: "Exigir foro neutro em Genebra perante a ICC.", 
-          outcome: "Vitória espetacular. Neutralidade suíça garantida contra o negociador agressor mais severo.",
+          text: "Reiterar necessidade de foro neutro em Genebra perante a ICC.", 
+          outcome: "Acordo diplomático de alto nível. Neutralidade suíça garantida, superando o estilo incisivo da outra parte.",
           power: 20, closing: 15, margin: 4, nextRound: 3 
         },
         { 
-          text: "Aceitar foro siberiano com cláusula de desempate neutro.", 
-          outcome: "Termo aceito. Foro siberiano ativo, com uma pequena brecha que nos dá chance razoável de defesa jurídica.",
+          text: "Aceitar foro siberiano com cláusula de mediação internacional prévia.", 
+          outcome: "Termo aceito de forma balanceada. Foro siberiano mantido, com uma brecha razoável de mediação internacional.",
           power: -5, closing: 20, margin: -1, nextRound: 3 
         },
         { 
-          text: "Assinar o foro siberiano incondicionalmente.", 
-          outcome: "Rendição jurídica na prorrogação. Oponente comemora vitória processual completa no foro deVladivostok.",
+          text: "Aprovar o foro siberiano incondicionalmente.", 
+          outcome: "Concessão excessiva no fechamento. A outra parte assegura a jurisdição local de Vladivostok.",
           power: -25, closing: 25, margin: -5, nextRound: 3 
         }
       ]
@@ -172,63 +172,63 @@ const simulatorDialogueTrees = {
   mirror: [
     {
       round: 0,
-      opponentLine: "Adoramos a apresentação de vocês! A equipe técnica está super entusiasmada com o Dante. O preço de $85M nos parece ótimo. Que tal assinarmos a minuta padrão da nossa holding agora mesmo?",
+      opponentLine: "Gostamos muito da apresentação de vocês! A equipe técnica está super alinhada com nosso algoritmo. O valor nos parece justo. Que tal utilizarmos a minuta padrão da nossa holding para agilizar?",
       options: [
         { 
-          text: "Recusar assinatura imediata e exigir auditoria detalhada de cláusulas.", 
-          outcome: "Tática preventiva excelente. O oponente se mostrou surpreso. Nosso Dante Auditor local identificou assimetria oculta na minuta padrão deles.",
+          text: "Agradecer e sugerir auditoria detalhada das cláusulas antes de avançar.", 
+          outcome: "Tática preventiva excelente. O nosso algoritmo identificou termos assimétricos ocultos na minuta padrão que passariam despercebidos.",
           power: 20, closing: -10, margin: 2, nextRound: 1 
         },
         { 
-          text: "Aceitar e assinar a minuta padrão para agilizar o deal.", 
-          outcome: "ERRO GRAVE DE ANÁLISE! O oponente foi amigável para nos induzir a assinar termos padrão extremamente desvantajosos em PI.",
+          text: "Aceitar e seguir com a minuta padrão deles visando eficiência.", 
+          outcome: "ALERTA DE DESVIO! A abordagem amigável nos induziu a aceitar termos padrão que possuem alto risco em Propriedade Intelectual.",
           power: -30, closing: 30, margin: -10, nextRound: 1 
         },
         { 
-          text: "Agradecer e propor envio da nossa própria minuta customizada da Nexus.", 
-          outcome: "Ação assertiva. Ao tomarmos as rédeas da redação inicial, forçamos o oponente a negociar sob nossas premissas.",
+          text: "Agradecer e propor que utilizemos a minuta customizada da Nexus.", 
+          outcome: "Ação de liderança muito assertiva. Ao propor nosso documento base, asseguramos um ambiente mais equilibrado para o debate.",
           power: 15, closing: 5, margin: 4, nextRound: 1 
         }
       ]
     },
     {
       round: 1,
-      opponentLine: "Compreendo a cautela. Na nossa minuta padrão, há apenas um pequeno detalhe que aloca a patente mestre dos dados à nossa empresa apenas por questões contábeis de balanço. Sem relevância operacional. Concordam?",
+      opponentLine: "Compreendo a cautela. Na nossa minuta padrão, há apenas uma formalidade contábil que aloca a patente técnica de dados à nossa empresa. É um detalhe administrativo, concordam?",
       options: [
         { 
-          text: "Rejeitar categoricamente qualquer cessão de patente ou PI de dados.", 
-          outcome: "Bloqueio tático cirúrgico. Mantivemos o core operacional sob nosso domínio restrito. Oponente aceitou sem contra-argumentar.",
+          text: "Rejeitar a transferência de patente ou PI sobre os dados.", 
+          outcome: "Posicionamento assertivo e cirúrgico. Mantivemos o core tecnológico sob nosso domínio e o Perfil Conciliador ajustou os termos.",
           power: 25, closing: 5, margin: 5, nextRound: 2 
         },
         { 
-          text: "Aceitar a cessão de dados desde que haja compensação anual fixa.", 
-          outcome: "Compensação moderada. Ganhamos receita constante, mas perdemos a soberania sobre os insights e base de dados industriais.",
+          text: "Aceitar a alocação de dados mediante uma compensação anual fixa.", 
+          outcome: "Troca financeira justa. Garantimos receita constante, mas abrimos mão do controle absoluto sobre os insights gerados.",
           power: -5, closing: 15, margin: -2, nextRound: 2 
         },
         { 
-          text: "Aceitar a redação contábil sugerida por eles.", 
-          outcome: "Assimetria consumada. Cedemos a patente sob pretexto 'contábil', deixando o core de dados sob domínio do oponente.",
+          text: "Aprovar a formalidade administrativa sugerida por eles.", 
+          outcome: "Assimetria validada. A redação 'contábil' disfarçava uma concessão grave, deixando a tecnologia central sob controle deles.",
           power: -25, closing: 25, margin: -8, nextRound: 2 
         }
       ]
     },
     {
       round: 2,
-      opponentLine: "Para fecharmos com chave de ouro este grande projeto amigável: assinamos sob o foro neutro de Genebra (ICC)? Isso atende a ambas as partes, correto?",
+      opponentLine: "Para coroarmos esta excelente parceria: adotamos o foro neutro de Genebra (ICC)? Acreditamos que atende perfeitamente a ambas as partes, correto?",
       options: [
         { 
-          text: "Aceitar foro neutro de Genebra (ICC) incondicionalmente.", 
-          outcome: "Acordo neutro fechado com maestria. Genebra protege ambos e coroa nossa negociação estratégica soberana.",
+          text: "Confirmar foro neutro de Genebra (ICC) prontamente.", 
+          outcome: "Acordo neutro fechado com maestria. Genebra protege ambos e valida nossa avaliação estratégica cooperativa.",
           power: 20, closing: 20, margin: 4, nextRound: 3 
         },
         { 
-          text: "Exigir foro neutro de Nova York perante a AAA.", 
-          outcome: "Pequeno preciosismo logístico. Foro de NY aceito, mas com custas processuais levemente superiores.",
+          text: "Sugerir foro neutro alternativo em Nova York perante a AAA.", 
+          outcome: "Ajuste logístico aceito. Foro de NY confirmado, demandando apenas uma ligeira adaptação processual posterior.",
           power: 5, closing: 10, margin: 0, nextRound: 3 
         },
         { 
-          text: "Ceder a qualquer foro sugerido nas negociações de fechamento.", 
-          outcome: "Pequeno relaxamento final. Termo aceito, mas enfraquece nossa posição processual em favor do oponente.",
+          text: "Acompanhar qualquer sugestão de foro da outra parte.", 
+          outcome: "Acordo suave. Termo aceito, embora deleguemos a condução jurisdicional final ao critério deles.",
           power: -10, closing: 25, margin: -2, nextRound: 3 
         }
       ]
@@ -246,7 +246,7 @@ export function PactumSimulator({ profile, onClose }: PactumSimulatorProps) {
     { sender: 'opponent', text: simulatorDialogueTrees[profile.id as 'wall' | 'aggressor' | 'mirror'][0].opponentLine }
   ]);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [danteReview, setDanteReview] = useState<string>("Início de treinamento tático. Oponente inicializado perante modelagem comportamental do Dante.");
+  const [danteReview, setDanteReview] = useState<string>("Início da avaliação tática. Perfil inicializado perante modelagem comportamental do nosso algoritmo.");
   const { toast } = useToast();
 
   const dataTree = simulatorDialogueTrees[profile.id as 'wall' | 'aggressor' | 'mirror'];
@@ -303,7 +303,7 @@ export function PactumSimulator({ profile, onClose }: PactumSimulatorProps) {
       <div className="h-14 bg-zinc-950/90 border-b border-white/5 flex items-center justify-between px-6 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="h-3 w-3 rounded-full bg-blue-500 animate-pulse" />
-          <span className="text-white font-headline tracking-[0.2em] text-xs uppercase font-black">Arena de Simulação // Dante Deals Coach</span>
+          <span className="text-white font-headline tracking-[0.2em] text-xs uppercase font-black">Sala de Avaliação // Pactum Coach</span>
         </div>
         <div className="flex items-center gap-4">
           <Badge className="bg-blue-600/10 text-blue-400 border border-blue-600/20 font-black text-[9px] uppercase tracking-widest px-3 py-1">
@@ -356,7 +356,7 @@ export function PactumSimulator({ profile, onClose }: PactumSimulatorProps) {
                   </p>
                   {item.outcome && (
                     <div className="p-2 bg-emerald-500/5 border border-emerald-500/10 rounded-xl mt-3 text-[10px] text-emerald-400 italic text-left">
-                      <strong>Feedback do Dante:</strong> {item.outcome}
+                      <strong>Feedback do Algoritmo:</strong> {item.outcome}
                     </div>
                   )}
                 </div>
@@ -453,7 +453,7 @@ export function PactumSimulator({ profile, onClose }: PactumSimulatorProps) {
                         <Award className="h-8 w-8 text-emerald-400" />
                       </div>
                     </div>
-                    <CardTitle className="text-2xl font-black text-white font-headline uppercase tracking-tighter">Veredito do Dante</CardTitle>
+                    <CardTitle className="text-2xl font-black text-white font-headline uppercase tracking-tighter">Veredito do Algoritmo</CardTitle>
                     <CardDescription className="text-emerald-400 font-mono tracking-widest text-[9px] uppercase mt-1">Análise de Rendimento do Fechamento</CardDescription>
                   </CardHeader>
                   <CardContent className="p-8 pt-0 space-y-6">

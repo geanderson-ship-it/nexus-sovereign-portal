@@ -38,7 +38,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col">
       <SiteHeader />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pt-32">{children}</main>
       <SiteFooter />
       {!pathname?.startsWith('/atena') && !pathname?.startsWith('/intelligence/global') && <FloatingSupport />}
       {user && !hasAsked && (

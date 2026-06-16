@@ -21,9 +21,7 @@ export default function DanteComprasAccessPage() {
             <h1 className="text-3xl font-bold tracking-tighter text-blue-300 font-headline">
               Módulo Compras.
             </h1>
-            <p className="text-sm text-gray-400">
-              Inteligência Estratégica de Suprimentos & Teoria dos Jogos.
-            </p>
+            <DialogDescription>O Auditor analisa o mercado e você negocia com os fornecedores em tempo real.</DialogDescription>
           </div>
         </div>
 
@@ -46,6 +44,7 @@ export default function DanteComprasAccessPage() {
                 <Landmark className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-sm text-gray-200">Alta Ancoragem Patrimonial</h4>
+                  <p className="ml-4 text-emerald-300">O Auditor está analisando o mercado...</p>
                   <p className="text-xs text-gray-400">Desenvolvido sob medida para auditorias de minutas industriais e intermediação inteligente de fornecedores.</p>
                 </div>
               </div>

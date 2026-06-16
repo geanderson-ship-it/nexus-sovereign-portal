@@ -35,10 +35,12 @@ export default function AgroPage() {
           <Link href="/" className="pointer-events-auto text-emerald-500 hover:text-white transition-colors flex items-center gap-2 text-xs font-black uppercase tracking-[0.3em]">
             <ChevronLeft className="h-4 w-4" /> Voltar ao Início
           </Link>
-          <div className="flex items-center gap-3 pointer-events-auto">
-            <Shield className="h-4 w-4 text-emerald-500" />
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 hidden sm:block">Terminal Dante Safra</span>
-          </div>
+          <Link href="/dante-safra" className="pointer-events-auto">
+            <Button variant="outline" className="bg-emerald-500/10 border-emerald-500/40 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 gap-3 font-black uppercase tracking-[0.2em] text-xs h-12 px-6 shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] transition-all">
+              <Shield className="h-5 w-5" />
+              <span className="hidden sm:block">Acessar Terminal</span>
+            </Button>
+          </Link>
         </nav>
 
         <main className="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col gap-32">

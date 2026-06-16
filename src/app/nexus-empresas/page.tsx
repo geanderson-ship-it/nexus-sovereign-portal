@@ -10,6 +10,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory, Sparkles } from 'lucide-react';
 import * as gtag from '@/lib/gtag';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { WhiteLabelHeader } from '@/components/nexus/white-label-header';
 
 const WHATSAPP_URL = 'https://wa.me/5551999799582';
 
@@ -237,19 +238,15 @@ export default function NexusEmpresasPage() {
         </div>
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20 px-6 py-1.5 tracking-[0.3em] font-mono text-[10px] mb-8">B2B_INTELLIGENCE_SUITE</Badge>
-          <div className="flex justify-center mb-6">
-            <Image 
-              src="/Nexus Empresas/Nexus Empresas prata.png" 
-              alt="Nexus Empresas" 
-              width={700} 
-              height={200} 
-              className="object-contain w-[300px] sm:w-[450px] md:w-[600px] lg:w-[700px] h-auto drop-shadow-[0_0_40px_rgba(200,200,200,0.3)] transition-transform duration-500 hover:scale-105" 
-              priority 
+          <div className="w-full flex justify-center mb-6">
+            <WhiteLabelHeader
+              defaultTitle="Nexus Empresas"
+              defaultSlogan="Tecnologia soberana instalada diretamente nos seus servidores. 100% On-Premise. Seus dados industriais nunca saem do seu galpão."
+              defaultLogo="/logo-nexus-shield.png"
+              storageKeyPrefix="empresas"
+              themeColor="blue"
             />
           </div>
-          <p className="mt-6 text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto tracking-wide font-light">
-            Tecnologia soberana instalada diretamente nos seus servidores. <strong className="text-white">100% On-Premise.</strong> Seus dados industriais nunca saem do seu galpão.
-          </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild className="bg-[#00D4FF] text-black hover:bg-[#00D4FF]/90 font-black uppercase tracking-widest px-10 h-14 text-base rounded-2xl shadow-[0_0_40px_rgba(0,212,255,0.3)]"
               onClick={() => gtag.event({ action: 'contact_click', category: 'nexus_empresas', label: 'hero_cta' })}>

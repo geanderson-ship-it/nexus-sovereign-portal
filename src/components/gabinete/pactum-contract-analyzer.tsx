@@ -42,7 +42,7 @@ const contractsTemplates = {
         type: 'asymmetric',
         risk: 'Alto Risk',
         text: "Toda e qualquer tecnologia de inteligência artificial ou algoritmo de tomada de decisão embarcado nos ativos conjuntos, desenvolvidos antes ou durante a vigência deste acordo, será de propriedade exclusiva e irrestrita da Siberian Steel Corp, restando à Nexus Core apenas a licença operacional não transferível.",
-        analysis: "Esta cláusula configura uma assimetria intelectual severa. Ela absorve permanentemente os algoritmos proprietários da Nexus Core (incluindo o core do Dante) sem compensação proporcional, deixando nossa empresa vulnerável e sem direitos sobre inovações futuras.",
+        analysis: "Esta cláusula configura uma assimetria intelectual severa. Ela absorve permanentemente os algoritmos proprietários da Nexus Core (incluindo o core do nosso algoritmo) sem compensação proporcional, deixando nossa empresa vulnerável e sem direitos sobre inovações futuras.",
         redraft: "Toda tecnologia de propriedade intelectual pré-existente continuará de propriedade única e exclusiva de suas respectivas partes criadoras. Qualquer algoritmo desenvolvido conjuntamente no escopo da joint venture será patenteado em copropriedade (50/50), garantindo licenças mútuas perpétuas, globais e livres de royalties."
       },
       {
@@ -68,8 +68,8 @@ const contractsTemplates = {
         title: "Cláusula 22.1 — Direito de Retirada Unilateral",
         type: 'leverage',
         risk: 'Ponto de Barganha',
-        text: "Nexus Core reserva-se o direito de rescindir a Joint Venture unilateralmente sem ônus de multa caso os relatórios semestrais de produção do Dante Safra apontem margem operacional inferior a 18.5% por dois trimestres consecutivos.",
-        analysis: "Este é um forte ponto de alavancagem operacional da Nexus. O Dante monitora os números em tempo real e nos concede uma saída estratégica segura caso a Siberian Steel seja ineficiente.",
+        text: "Nexus Core reserva-se o direito de rescindir a Joint Venture unilateralmente sem ônus de multa caso os relatórios semestrais de produção do nosso algoritmo apontem margem operacional inferior a 18.5% por dois trimestres consecutivos.",
+        analysis: "Este é um forte ponto de alavancagem operacional da Nexus. O algoritmo monitora os números em tempo real e nos concede uma saída estratégica segura caso a Siberian Steel seja ineficiente.",
         redraft: "Excelente redação. Mantém-se inalterada para garantir a segurança operacional e resiliência financeira da Nexus Core."
       }
     ]
@@ -85,7 +85,7 @@ const contractsTemplates = {
         title: "Cláusula 3.2 — Ajuste Dinâmico de Preços",
         type: 'leverage',
         risk: 'Ponto de Barganha',
-        text: "O preço fixado da semente de soja híbrida será reajustado quinzenalmente de forma automatizada via feed de dados da Bolsa de Chicago integrado ao Dante Safra, operando em hedge cambial permanente.",
+        text: "O preço fixado da semente de soja híbrida será reajustado quinzenalmente de forma automatizada via feed de dados da Bolsa de Chicago integrado ao nosso ecossistema, operando em hedge cambial permanente.",
         analysis: "Altíssima segurança operacional. Evita perdas por flutuação cambial ou desvalorização repentina de commodities agrícolas no mercado brasileiro.",
         redraft: "Mantenha a redação original. Ela confere proteção integral contra inflação e perdas de estoque."
       },
@@ -119,7 +119,7 @@ export function PactumContractAnalyzer() {
     
     toast({
       title: "Cláusula Copiada!",
-      description: "A redação soberana reescrita pela IA foi copiada para sua área de transferência.",
+      description: "A redação estratégica reescrita pela IA foi copiada para sua área de transferência.",
     });
 
     setTimeout(() => {
@@ -170,7 +170,7 @@ export function PactumContractAnalyzer() {
         {/* Risk Score Widget */}
         <Card className="bg-zinc-950/60 border-2 border-blue-500/20 backdrop-blur-md shadow-xl flex items-center justify-center p-6 rounded-3xl">
           <div className="text-center space-y-2">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">Sovereign Risk Score</p>
+            <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">Índice de Governança de Risco</p>
             <div className="relative inline-flex items-center justify-center">
               <span className={cn(
                 "text-5xl font-black font-mono tracking-tighter",
@@ -191,7 +191,7 @@ export function PactumContractAnalyzer() {
 
         {/* Counter Widgets */}
         {[
-          { title: "Nível de Risco Geral", value: data.metrics.riskLevel, desc: "Avaliado pelo motor Dante", icon: AlertTriangle, color: data.metrics.riskLevel === 'Alto' ? "text-red-400" : "text-emerald-400" },
+          { title: "Nível de Risco Geral", value: data.metrics.riskLevel, desc: "Avaliado pelo nosso algoritmo", icon: AlertTriangle, color: data.metrics.riskLevel === 'Alto' ? "text-red-400" : "text-emerald-400" },
           { title: "Cláusulas Assecutórias", value: data.metrics.asymmetricCount, desc: "Cláusulas com alta assimetria", icon: ShieldAlert, color: "text-amber-400" },
           { title: "Pontos de Alavancagem", value: data.metrics.leveragePoints, desc: "Margens de manobra a nosso favor", icon: Scale, color: "text-blue-400" }
         ].map((met, idx) => (
@@ -281,7 +281,7 @@ export function PactumContractAnalyzer() {
         <Card className="bg-zinc-950/70 border-2 border-violet-500/20 backdrop-blur-xl rounded-3xl flex flex-col overflow-hidden">
           <CardHeader className="p-6 border-b border-white/5 bg-violet-500/5 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-headline text-violet-400 flex items-center gap-2 uppercase tracking-widest">
-              <Sparkles className="h-4 w-4 text-violet-400 animate-spin" /> Diagnóstico do Dante Deals
+              <Sparkles className="h-4 w-4 text-violet-400 animate-spin" /> Diagnóstico do Algoritmo
             </CardTitle>
             <Badge className="bg-violet-950 border border-violet-500/30 text-violet-400 font-black text-[9px] uppercase tracking-widest">Análise Ativa</Badge>
           </CardHeader>
@@ -309,13 +309,13 @@ export function PactumContractAnalyzer() {
                 </p>
               </div>
 
-              {/* Sovereign Redraft Option */}
+              {/* Opção de Re-redação Estratégica */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest flex items-center gap-1.5 font-headline">
-                    <Sparkles className="h-3 w-3" /> Re-redação Soberana Sugerida:
+                    <Sparkles className="h-3 w-3" /> Re-redação Estratégica Sugerida:
                   </span>
-                  <Badge className="bg-emerald-500/10 text-emerald-400 border-none font-bold text-[8px]">Balanced Offer</Badge>
+                  <Badge className="bg-emerald-500/10 text-emerald-400 border-none font-bold text-[8px]">Oferta Balanceada</Badge>
                 </div>
                 <div className="relative p-5 rounded-2xl bg-slate-950 border border-emerald-500/20 font-mono text-xs text-emerald-400 leading-relaxed shadow-inner group">
                   <div className="absolute top-3 right-3 opacity-30 group-hover:opacity-100 transition-opacity">

@@ -5,7 +5,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database } from 'lucide-react';
+import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -71,6 +71,50 @@ export default function GabineteHubPage() {
         {/* Módulos do Gabinete */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           
+          {/* Faturamento e Vendas */}
+          <Link href="/gabinete/produtos-vendidos">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-emerald-500/20">
+                  <Coins className="w-6 h-6 text-emerald-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-emerald-400 transition-colors font-headline">Faturamento & Contratos</CardTitle>
+                <CardDescription>Produtos Vendidos e Receita</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Acesso restrito à diretoria. Visualize todas as vendas e contratos submetidos pelos representantes comerciais em tempo real.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
+                  Acessar Cofre <Coins className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Portal de Vendas (Simulador de Contratos) */}
+          <Link href="/gabinete-vendas">
+            <Card className="bg-slate-900/40 border-emerald-950 hover:border-emerald-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden shadow-[0_0_20px_rgba(16,185,129,0.02)]">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-emerald-500/20">
+                  <Briefcase className="w-6 h-6 text-emerald-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-emerald-400 transition-colors font-headline">Portal Comercial</CardTitle>
+                <CardDescription>Lançador de Contratos & Vendas</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Acesse o painel dos representantes de vendas. Simule o lançamento de novos contratos com múltiplos módulos e cálculo de comissões.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
+                  Acessar Portal <Briefcase className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
           {/* Card Prospector IBGE */}
           <Link href="/gabinete/prospector">
             <Card className="bg-slate-900/40 border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">

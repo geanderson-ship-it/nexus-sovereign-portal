@@ -298,7 +298,7 @@ A Vix deve configurar o gatilho de interrupção amigável. Se um usuário digit
     category: 'Liderança e Performance',
     internalValue: 5000,
     image: {
-        "src": "/Palestras/Dante e Djeny palestrante 6.png",
+        "src": "/Palestras/Dante e Djeny palestrantes..png",
         "alt": "Dante e Djeny, as IAs da Nexus, como palestrantes em um evento corporativo.",
         "hint": "AI speakers"
       },

@@ -40,7 +40,7 @@ const negotiationSteps = [
   {
     id: 0,
     topic: "Propriedade Intelectual (PI)",
-    opponentClaim: "Exige propriedade única e irrestrita sobre toda PI dos algoritmos do Dante desenvolvida conjuntamente.",
+    opponentClaim: "Exige propriedade única e irrestrita sobre toda PI dos nossos algoritmos desenvolvida conjuntamente.",
     userOptions: [
       { 
         label: "Exigir Copropriedade (50/50) com Arbitragem", 
@@ -253,7 +253,7 @@ export function PactumWarRoom({ dealName, opponentName, dealValue, onClose }: Pa
           <Separator orientation="vertical" className="h-5 bg-white/10" />
           <div className="flex items-center gap-3">
             <div className="h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-            <span className="text-white font-headline tracking-[0.2em] text-[10px] sm:text-xs uppercase font-black">Deal War Room // Telemetria de Blefe Ativa</span>
+            <span className="text-white font-headline tracking-[0.2em] text-[10px] sm:text-xs uppercase font-black">Gabinete de Negociação // Telemetria de Blefe Ativa</span>
           </div>
         </div>
         <div className="flex items-center gap-6">
@@ -491,7 +491,7 @@ export function PactumWarRoom({ dealName, opponentName, dealValue, onClose }: Pa
               
               <div className="flex items-center gap-2">
                 <BrainCircuit className="h-5 w-5 text-violet-400 animate-pulse" />
-                <span className="text-xs font-black text-violet-400 uppercase tracking-widest font-headline">Aconselhamento do Dante</span>
+                <span className="text-xs font-black text-violet-400 uppercase tracking-widest font-headline">Aconselhamento do Algoritmo</span>
               </div>
 
               {/* Live biometric values tracker progress */}
@@ -589,7 +589,7 @@ export function PactumWarRoom({ dealName, opponentName, dealValue, onClose }: Pa
                 </div>
               </div>
               <CardTitle className="text-3xl font-black text-white font-headline tracking-tighter uppercase">Minuta Final de Acordo</CardTitle>
-              <CardDescription className="text-blue-400 font-mono tracking-widest text-[10px] uppercase mt-1">Auditado por Dante Deals // NX-ACT-99</CardDescription>
+              <CardDescription className="text-blue-400 font-mono tracking-widest text-[10px] uppercase mt-1">Auditado pelo Algoritmo // NX-ACT-99</CardDescription>
             </CardHeader>
             
             <CardContent className="p-10 space-y-8 max-h-[450px] overflow-y-auto">
@@ -599,7 +599,7 @@ export function PactumWarRoom({ dealName, opponentName, dealValue, onClose }: Pa
                   <h4 className="font-bold text-white text-sm mt-1">{dealName}</h4>
                 </div>
                 <div className="p-4 bg-white/5 border border-white/5 rounded-2xl">
-                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Veredito do Dante</span>
+                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest block">Veredito do Algoritmo</span>
                   <h4 className={cn(
                     "font-black text-xs uppercase tracking-wider mt-1",
                     getOverallVerdict().includes('APROVADO') ? "text-emerald-400" : "text-amber-400"

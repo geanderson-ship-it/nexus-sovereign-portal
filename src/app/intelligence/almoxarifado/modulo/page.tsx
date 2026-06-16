@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
@@ -465,7 +465,7 @@ function ModuloContent({ abaInicial }: { abaInicial: Aba }) {
         </div>
       )}
 
-      <LegalSafeguard module="DANTE ALMOXARIFADO" protocol="NX-7731-STK" />
+      <LegalSafeguard module="ALMOXARIFADO INTELIGENTE" protocol="NX-7731-STK" />
 
       {/* MODAL CONFIRMAÃ‡ÃƒO */}
       <Dialog open={!!pendente} onOpenChange={o => !o && setPendente(null)}>

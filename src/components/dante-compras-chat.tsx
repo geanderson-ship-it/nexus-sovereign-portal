@@ -64,7 +64,7 @@ export default function DanteComprasChat({ quotationAnalysis, onClose, isEmbedde
         data: {
           response: quotationAnalysis
             ? `Análise da cotação carregada. Estou pronto para discutir a estratégia de negociação.`
-            : `Central de Suprimentos ativa. Sou Dante, sua IA de negociação. Apresente o cenário da cotação ou o desafio de compra. Serei direto e analítico.`,
+            : `Central de Suprimentos ativa. Sou o Auditor, sua IA de negociação. Apresente o cenário da cotação e eu validarei a viabilidade técnica e financeira em tempo real.`,
         },
       };
       setMessages([initialMessage]);
@@ -283,7 +283,7 @@ export default function DanteComprasChat({ quotationAnalysis, onClose, isEmbedde
                   <span className="sr-only">Gravar Voz</span>
               </Button>
             </form>
-            <p className="w-full pt-1 text-center text-xs text-gray-500">O Dante é uma IA e pode cometer erros. Confira as respostas. Devido ao alto fluxo, o áudio pode demorar alguns instantes.</p>
+            <p className="w-full pt-1 text-center text-xs text-gray-500">O Auditor é uma IA e pode cometer erros de cálculo. Sempre valide com sua diretoria.</p>
           </div>
         </CardFooter>
       </div>

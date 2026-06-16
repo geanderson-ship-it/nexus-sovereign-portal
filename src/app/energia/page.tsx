@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { WhiteLabelHeader } from '@/components/nexus/white-label-header';
 
 // Tipagem dos Perfis
 interface ProfileData {
@@ -185,24 +186,14 @@ export default function EnergiaPage() {
       <main className="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col gap-24">
         
         {/* HERO SECTION HELIOS */}
-        <section className="flex flex-col items-center text-center gap-8 mt-12">
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-            className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9]"
-          >
-            Nexus <span className="text-transparent bg-clip-text bg-gradient-to-br from-amber-300 via-amber-500 to-orange-600">Helios</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-            className="text-zinc-400 text-lg md:text-2xl font-light tracking-wide max-w-3xl leading-relaxed"
-          >
-            O Cérebro da Matriz Energética. Previsões Exatas no Mercado Livre e Visão Computacional para Manutenção Preditiva em Infraestruturas Críticas.
-          </motion.p>
+        <section className="flex flex-col items-center text-center gap-8 mt-12 w-full">
+          <WhiteLabelHeader
+            defaultTitle="Nexus Helios"
+            defaultSlogan="O Cérebro da Matriz Energética. Previsões Exatas no Mercado Livre e Visão Computacional para Manutenção Preditiva em Infraestruturas Críticas."
+            defaultLogo="/logo-nexus-shield.png"
+            storageKeyPrefix="energia"
+            themeColor="amber"
+          />
         </section>
 
         {/* EIXO DE VALOR (PERFIS) */}

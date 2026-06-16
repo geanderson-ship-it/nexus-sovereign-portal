@@ -34,6 +34,7 @@ import { PactumContractAnalyzer } from '@/components/gabinete/pactum-contract-an
 import { PactumWarRoom } from '@/components/gabinete/pactum-war-room';
 import { PactumSimulator } from '@/components/gabinete/pactum-simulator';
 import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
+import { WhiteLabelHeader } from '@/components/nexus/white-label-header';
 
 // Active simulated high-stakes contracts
 const initialDeals = [
@@ -43,9 +44,9 @@ const initialDeals = [
 ];
 
 const simulatorProfiles = [
-  { id: 'wall', name: 'O Muro (The Wall)', role: 'Negociador Chefe Inflexible', trait: 'Resposta ultralenta, âncoras extremamente baixas, alta resistência.', diff: 'Difícil' },
-  { id: 'aggressor', name: 'O Agressivo (The Aggressor)', role: 'Diretor Comercial Agressor', trait: 'Pressiona prazos, blefes constantes, ataques ao histórico.', diff: 'Muito Difícil' },
-  { id: 'mirror', name: 'O Espelho (The Mirror)', role: 'Advogado Corporativo Amigável', trait: 'Super concordante, mestre em inserir cláusulas sorrateiras nas entrelinhas.', diff: 'Médio' }
+  { id: 'wall', name: 'Perfil Analítico', role: 'Conselheiro de Risco Conservador', trait: 'Processo meticuloso, avaliações rígidas de risco e alta ponderação antes de ceder.', diff: 'Difícil' },
+  { id: 'aggressor', name: 'Perfil Assertivo', role: 'Diretor Focado em Resultados', trait: 'Pressiona por agilidade, foco estrito no ROI e negociações de ritmo acelerado.', diff: 'Muito Difícil' },
+  { id: 'mirror', name: 'Perfil Conciliador', role: 'Consultor Legal Colaborativo', trait: 'Foco em consenso inicial, com forte habilidade em embutir contrapartidas complexas.', diff: 'Médio' }
 ];
 
 export default function NexusPactumCockpit() {
@@ -149,6 +150,15 @@ export default function NexusPactumCockpit() {
   return (
     <SovereignShowcase moduleName="Nexus Pactum" imagePath="/Nexus Pactum/Nexus intelligence Pactum.png">
       <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-12 relative overflow-hidden">
+        
+        {/* White-Label Custom Header */}
+        <WhiteLabelHeader
+          defaultTitle="Nexus Pactum"
+          defaultSlogan="Auditoria avançada de vulnerabilidades em contratos e análise biométrica de blefes baseada em Teoria dos Jogos."
+          defaultLogo="/logo-nexus-shield.png"
+          storageKeyPrefix="pactum"
+          themeColor="violet"
+        />
       
       {/* BACKGROUND EFFECTS */}
       <div className="absolute inset-0 z-0">
@@ -168,16 +178,15 @@ export default function NexusPactumCockpit() {
             <div className="space-y-4">
               <div className="flex items-center justify-center lg:justify-start gap-3">
                 <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 px-4 py-1 text-[10px] font-black uppercase tracking-widest italic">
-                  Sovereign Deal Intelligence
+                  Alta Governança de Acordos
                 </Badge>
                 <div className="h-[1px] w-12 bg-blue-500/30" />
               </div>
-              <h1 className="text-5xl lg:text-7xl font-black tracking-tighter text-white font-headline uppercase leading-none">
-                Nexus <br />
-                <span className="text-blue-400 italic">Pactum</span>
-              </h1>
-              <p className="text-lg lg:text-xl text-slate-400 max-w-2xl font-medium leading-relaxed">
-                Auditoria avançada de vulnerabilidades em contratos e análise biométrica de blefes baseada em Teoria dos Jogos.
+              <h2 className="text-3xl lg:text-4xl font-black tracking-tight text-white font-headline uppercase leading-none">
+                Contratos & Negociações Táticas
+              </h2>
+              <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
+                Painel analítico para detecção de anomalias em cláusulas legais e simulação em tempo real com negociadores virtuais.
               </p>
             </div>
 
@@ -189,7 +198,7 @@ export default function NexusPactumCockpit() {
                 }} 
                 className="bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest h-14 px-8 rounded-2xl shadow-xl shadow-blue-600/20"
               >
-                <Video className="mr-2 h-5 w-5 animate-pulse" /> Abrir Deal War Room
+                <Video className="mr-2 h-5 w-5 animate-pulse" /> Abrir Gabinete de Negociação
               </Button>
               <Button 
                 variant="outline" 
@@ -218,8 +227,8 @@ export default function NexusPactumCockpit() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="flex items-center justify-between p-4 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Operação Dante Pactum</span>
-                  <Badge className="bg-blue-500 text-white border-none font-black text-[9px] uppercase">Active Protocol</Badge>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Inteligência Pactum</span>
+                  <Badge className="bg-blue-500 text-white border-none font-black text-[9px] uppercase">Protocolo Ativo</Badge>
                 </div>
               </div>
             </div>
@@ -234,7 +243,7 @@ export default function NexusPactumCockpit() {
             <BrainCircuit className="h-6 w-6 text-blue-400" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-2xl font-black tracking-tight text-white font-headline uppercase italic">Cockpit do Pactum</h2>
+            <h2 className="text-2xl font-black tracking-tight text-white font-headline uppercase italic">Central de Comando Pactum</h2>
             <p className="text-xs text-slate-500 uppercase tracking-[0.2em] font-bold">Painel Geral de Negociações Bilionárias</p>
           </div>
         </div>
@@ -242,10 +251,10 @@ export default function NexusPactumCockpit() {
         {/* Custom Navigation Tab-buttons */}
         <div className="flex items-center gap-2 bg-slate-950/80 border border-white/10 rounded-2xl p-1.5 backdrop-blur-xl shadow-inner">
           {[
-            { id: 'dashboard', label: 'Dashboard', icon: Activity },
+            { id: 'dashboard', label: 'Painel Geral', icon: Activity },
             { id: 'auditor', label: 'Auditoria de Contratos', icon: FileText },
-            { id: 'warroom', label: 'War Room Hub', icon: Video },
-            { id: 'simulator', label: 'Simulador Arena', icon: Target }
+            { id: 'warroom', label: 'Gabinete de Crise', icon: Video },
+            { id: 'simulator', label: 'Sala de Avaliação', icon: Target }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -312,7 +321,7 @@ export default function NexusPactumCockpit() {
                             <div>
                               <p className="font-bold text-white tracking-tight">{deal.name}</p>
                               <p className="text-xs text-gray-500 font-mono flex items-center gap-2 mt-1 uppercase">
-                                <span>Oponente: <strong className="text-slate-300">{deal.opponent}</strong></span>
+                                <span>Parte Interessada: <strong className="text-slate-300">{deal.opponent}</strong></span>
                                 <span className="h-1 w-1 rounded-full bg-slate-700" />
                                 <span>Valor: <strong className="text-blue-400">{deal.value}</strong></span>
                               </p>
@@ -369,12 +378,12 @@ export default function NexusPactumCockpit() {
                     <CardTitle className="text-lg font-headline text-violet-400 flex items-center gap-2 uppercase tracking-tighter">
                       <ShieldCheck className="h-5 w-5" /> Inteligência Soberana
                     </CardTitle>
-                    <CardDescription className="text-slate-400 text-xs">Veredito operacional gerado pelo Dante.</CardDescription>
+                    <CardDescription className="text-slate-400 text-xs">Veredito operacional gerado pelo nosso algoritmo.</CardDescription>
                   </CardHeader>
                   <CardContent className="p-6 space-y-6">
                     <div className="p-4 rounded-xl bg-violet-500/5 border border-violet-500/15">
                       <h4 className="font-bold text-violet-400 text-xs flex items-center gap-2 uppercase tracking-widest font-headline">
-                        <Zap className="h-4 w-4 animate-bounce" /> Dante Deals v4.1 Ready
+                        <Zap className="h-4 w-4 animate-bounce" /> Algoritmo Pactum v4.1 Ready
                       </h4>
                       <p className="text-xs text-gray-400 mt-2 leading-relaxed">
                         Algoritmos de teoria dos jogos ativos. Carregue um documento contratual para analisar riscos de perdas e assimetrias ocultas em segundos.
@@ -439,7 +448,7 @@ export default function NexusPactumCockpit() {
                       <Video className="h-8 w-8 text-blue-400" />
                     </div>
                   </div>
-                  <CardTitle className="text-3xl font-black text-white font-headline uppercase tracking-tighter">Deal War Room Hub</CardTitle>
+                  <CardTitle className="text-3xl font-black text-white font-headline uppercase tracking-tighter">Gabinete de Negociação Estratégica</CardTitle>
                   <CardDescription className="text-slate-400 mt-2">
                     Ligue a biometria para sessões de negociação em tempo real de altíssima relevância estratégica.
                   </CardDescription>
@@ -455,7 +464,7 @@ export default function NexusPactumCockpit() {
                           className="flex items-center justify-between p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-500/50 hover:bg-blue-500/10 text-left transition-all duration-300 group"
                         >
                           <div className="space-y-1">
-                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Oponente: {deal.opponent}</span>
+                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Parte Interessada: {deal.opponent}</span>
                             <h4 className="font-bold text-white text-sm group-hover:text-blue-400 transition-colors">{deal.name}</h4>
                             <span className="text-xs text-slate-500 font-mono block mt-1">{deal.value}</span>
                           </div>
@@ -508,9 +517,9 @@ export default function NexusPactumCockpit() {
               className="space-y-6"
             >
               <div className="text-center max-w-2xl mx-auto space-y-4 mb-10">
-                <h3 className="text-3xl font-black uppercase tracking-tighter text-white">Arena de Treinamento e Simulação</h3>
+                <h3 className="text-3xl font-black uppercase tracking-tighter text-white">Sala de Treinamento e Avaliação</h3>
                 <p className="text-slate-400 text-sm">
-                  Escolha um oponente virtual baseado em algoritmos sofisticados e afie seu arsenal estratégico de negociação com feedbacks instantâneos do Dante.
+                  Escolha uma parte negociadora virtual baseada em algoritmos sofisticados e afie seu arsenal estratégico de negociação com feedbacks instantâneos do nosso algoritmo.
                 </p>
               </div>
 
@@ -543,7 +552,7 @@ export default function NexusPactumCockpit() {
                         onClick={() => handleStartSimulation(profile)}
                         className="w-full bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/20 group-hover:border-blue-500 transition-all font-black text-xs uppercase tracking-widest h-11 rounded-xl"
                       >
-                        Iniciar Batalha
+                        Iniciar Debate
                       </Button>
                     </CardContent>
                   </Card>
@@ -576,7 +585,7 @@ export default function NexusPactumCockpit() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Oponente / Outra Parte</label>
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest">Parte Interessada / Segunda Parte</label>
                 <input 
                   value={newOpponent}
                   onChange={(e) => setNewOpponent(e.target.value)}
