@@ -1,0 +1,254 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+
+export default function InovaModaPage() {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [activeOutfit, setActiveOutfit] = useState('default');
+  const [renderProgress, setRenderProgress] = useState(0);
+
+  // Simulador de Renderização da IA (AWS SageMaker Mock)
+  const handleTryOn = (outfitId: string) => {
+    if (isProcessing || activeOutfit === outfitId) return;
+    
+    setIsProcessing(true);
+    setRenderProgress(0);
+    
+    // Animação de progresso da IA
+    const interval = setInterval(() => {
+      setRenderProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setActiveOutfit(outfitId);
+          setIsProcessing(false);
+          return 100;
+        }
+        return prev + 5;
+      });
+    }, 100);
+  };
+
+  // Imagens (Mockups de alta qualidade usando Unsplash)
+  const getModelImage = () => {
+    switch (activeOutfit) {
+      case 'jacket':
+        return 'https://images.unsplash.com/photo-1550614000-4b95dd2475a8?q=80&w=800&auto=format&fit=crop';
+      case 'dress':
+        return 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=800&auto=format&fit=crop';
+      case 'casual':
+        return 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop';
+      default: // 'default'
+        return 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#080b10] text-slate-200 pt-28 pb-20 relative overflow-hidden">
+      
+      {/* BACKGROUND PREMIUM FASHION THEME */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-pink-600/10 rounded-full blur-[120px] opacity-50" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] opacity-50" />
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
+      </div>
+
+      <div className="container relative z-10 mx-auto px-4 max-w-7xl">
+        
+        {/* HEADER HERO */}
+        <div className="text-center max-w-4xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold uppercase tracking-widest mb-6">
+            <SparkleIcon className="w-4 h-4" /> Nexus Innovation
+          </div>
+          <h1 className="text-5xl md:text-7xl font-headline font-black text-white mb-6 tracking-tight">
+            InovaModa <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">360</span>
+          </h1>
+          <p className="text-xl text-slate-400 font-light leading-relaxed mb-8">
+            O &quot;Santo Graal&quot; do E-commerce de Moda. O Provador Virtual 3D alimentado por Inteligência Artificial Soberana. Reduza a logística reversa a quase zero.
+          </p>
+          
+          <div className="flex flex-wrap justify-center gap-4 text-sm font-medium">
+            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Conversão +40%
+            </div>
+            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
+              <RefreshCw className="w-4 h-4 text-pink-500" /> Devoluções -70%
+            </div>
+            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
+              <ShieldCheck className="w-4 h-4 text-blue-500" /> AWS Privacy
+            </div>
+          </div>
+        </div>
+
+        {/* DEMO INTERATIVA (O PROVADOR) */}
+        <div className="grid lg:grid-cols-12 gap-8 items-start mb-20">
+          
+          {/* LADO ESQUERDO: O Espelho / Avatar */}
+          <div className="lg:col-span-5 relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+            <Card className="relative bg-slate-900 border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[600px] w-full">
+              
+              {/* Imagem do Avatar */}
+              <div className="absolute inset-0 transition-opacity duration-1000">
+                <Image
+                  src={getModelImage()}
+                  alt="Virtual Try-On Model"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                />
+              </div>
+
+              {/* Camada de Processamento IA */}
+              {isProcessing && (
+                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm flex flex-col items-center justify-center z-20">
+                  <Cpu className="w-16 h-16 text-pink-500 animate-pulse mb-4" />
+                  <h3 className="text-white font-headline text-xl mb-2">Processando Mesh 3D...</h3>
+                  <div className="w-64 h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-pink-500 to-purple-500 transition-all duration-100 ease-out"
+                      style={{ width: `${renderProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-pink-400 mt-2 font-mono text-sm">{renderProgress}% concluído</p>
+                </div>
+              )}
+
+              {/* HUD / Interface de Câmera */}
+              <div className="absolute top-4 left-4 flex gap-2 z-10">
+                <div className="bg-black/50 backdrop-blur px-3 py-1.5 rounded text-[10px] font-bold text-white uppercase tracking-widest border border-white/10 flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                  Nexus Mirror
+                </div>
+                <div className="bg-black/50 backdrop-blur px-3 py-1.5 rounded text-[10px] font-bold text-pink-400 uppercase tracking-widest border border-white/10 flex items-center gap-2">
+                  360º Avatar
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* LADO DIREITO: Catálogo e Controles */}
+          <div className="lg:col-span-7 flex flex-col justify-center h-full">
+            <h2 className="text-3xl font-headline font-bold text-white mb-2">Simulador de Loja B2B</h2>
+            <p className="text-slate-400 mb-8">
+              Selecione as peças do catálogo abaixo. A IA InovaModa mapeia a postura corporal, ajusta a iluminação dinâmica e sobrepõe as peças respeitando a física do tecido.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
+              
+              <OutfitCard 
+                title="Look Casual Inverno"
+                description="Jaqueta de couro + blusa de lã"
+                icon={<Shirt className="w-5 h-5 text-pink-400" />}
+                isActive={activeOutfit === 'jacket'}
+                onClick={() => handleTryOn('jacket')}
+                disabled={isProcessing}
+              />
+              
+              <OutfitCard 
+                title="Vestido de Gala (Seda)"
+                description="Simulação de caimento de tecido fino"
+                icon={<Shirt className="w-5 h-5 text-purple-400" />}
+                isActive={activeOutfit === 'dress'}
+                onClick={() => handleTryOn('dress')}
+                disabled={isProcessing}
+              />
+
+              <OutfitCard 
+                title="Streetwear Verão"
+                description="Camiseta e óculos de sol"
+                icon={<Shirt className="w-5 h-5 text-blue-400" />}
+                isActive={activeOutfit === 'casual'}
+                onClick={() => handleTryOn('casual')}
+                disabled={isProcessing}
+              />
+
+              <OutfitCard 
+                title="Coleção Outono Base"
+                description="Blusa manga longa e acessórios"
+                icon={<Shirt className="w-5 h-5 text-amber-400" />}
+                isActive={activeOutfit === 'default'}
+                onClick={() => handleTryOn('default')}
+                disabled={isProcessing}
+              />
+
+            </div>
+
+            {/* Painel de Arquitetura AWS */}
+            <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+              <h4 className="text-sm font-bold uppercase tracking-widest text-slate-300 mb-4 flex items-center gap-2">
+                <Box className="w-4 h-4 text-slate-500" /> Infraestrutura Tecnológica
+              </h4>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="w-10 h-10 mx-auto bg-orange-500/10 rounded flex items-center justify-center mb-2 border border-orange-500/20">
+                    <Cpu className="w-5 h-5 text-orange-400" />
+                  </div>
+                  <div className="text-xs font-bold text-white">AWS SageMaker</div>
+                  <div className="text-[10px] text-slate-500">GPU Inferência</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-10 h-10 mx-auto bg-blue-500/10 rounded flex items-center justify-center mb-2 border border-blue-500/20">
+                    <Activity className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <div className="text-xs font-bold text-white">SMPL Mesh</div>
+                  <div className="text-[10px] text-slate-500">Mapeamento 3D</div>
+                </div>
+                <div className="text-center">
+                  <div className="w-10 h-10 mx-auto bg-emerald-500/10 rounded flex items-center justify-center mb-2 border border-emerald-500/20">
+                    <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div className="text-xs font-bold text-white">LGPD Compliant</div>
+                  <div className="text-[10px] text-slate-500">Zero Retenção Facial</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// Componente Interno para os Cards de Roupa
+function OutfitCard({ title, description, icon, isActive, onClick, disabled }: any) {
+  return (
+    <div 
+      onClick={disabled ? undefined : onClick}
+      className={`relative overflow-hidden rounded-xl border p-4 transition-all duration-300 ${
+        isActive 
+          ? 'bg-pink-500/10 border-pink-500/50 shadow-[0_0_20px_rgba(236,72,153,0.15)] cursor-default' 
+          : 'bg-slate-900/60 border-slate-800 hover:border-slate-600 hover:bg-slate-800 cursor-pointer opacity-80 hover:opacity-100'
+      } ${disabled && !isActive ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
+      {isActive && (
+        <div className="absolute top-0 right-0 w-16 h-16 bg-pink-500/20 rounded-bl-full flex items-start justify-end p-2">
+          <CheckCircle2 className="w-4 h-4 text-pink-400" />
+        </div>
+      )}
+      <div className="flex items-center gap-3 mb-2">
+        <div className={`w-8 h-8 rounded bg-slate-950 flex items-center justify-center border ${isActive ? 'border-pink-500/30' : 'border-slate-800'}`}>
+          {icon}
+        </div>
+        <h4 className={`font-bold text-sm ${isActive ? 'text-white' : 'text-slate-300'}`}>{title}</h4>
+      </div>
+      <p className="text-xs text-slate-500">{description}</p>
+    </div>
+  );
+}
+
+function SparkleIcon(props: any) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 3v18" />
+      <path d="m4.93 4.93 14.14 14.14" />
+      <path d="M3 12h18" />
+      <path d="m4.93 19.07 14.14-14.14" />
+    </svg>
+  );
+}

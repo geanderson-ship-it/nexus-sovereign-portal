@@ -92,6 +92,7 @@ export function SiteHeader() {
     { title: t('navIntelligence'), href: '/intelligence' },
     { title: 'Agro', href: '/agro' },
     { title: 'Energia', href: '/energia' },
+    { title: 'Moda 3D', href: '/inovamoda' },
     { title: 'Premium', href: '/intelligence/premium' },
     { title: 'EMPRESAS', href: '/nexus-empresas' },
     { title: 'Social', href: '/proposito' },
@@ -268,6 +269,8 @@ export function SiteHeader() {
                     ? 'bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold uppercase tracking-widest'
                     : item.href === '/agro'
                     ? 'bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
+                    : item.href === '/inovamoda'
+                    ? 'bg-pink-500/10 border border-pink-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:bg-pink-500/20 text-white font-bold uppercase tracking-widest'
                     : item.href === '/intelligence/premium'
                     ? 'bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold uppercase tracking-widest'
                     : item.href === '/nexus-empresas'
