@@ -36,7 +36,7 @@
 ## PARTE 2: Blindagem Jurídica e Operacional
 
 ### 7. Cláusula de Confidencialidade Absoluta (NDA) e LGPD
-* O manuseio de dados sensíveis de clientes, sejam órgãos governamentais ou empresas privadas, exige sigilo absoluto sob pena de multa. Conformidade obrigatória e estrita com a LGPD.
+* O manuseio de dados sensíveis de clientes de qualquer segmento (órgãos governamentais, empresas corporativas, agronegócio, emissoras de rádio/mídia ou pessoas físicas) exige sigilo absoluto sob pena de multa. Conformidade obrigatória e estrita com a LGPD.
 
 ### 8. Defesa da Propriedade Intelectual (IP)
 * A marca Nexus, logotipos, código-fonte e banco de dados (ex: Magadot) são de propriedade exclusiva da Nexus Holding. 

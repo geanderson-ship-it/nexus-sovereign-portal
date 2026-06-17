@@ -197,7 +197,7 @@ export default function GabineteHubPage() {
                   <span className="w-4 h-4 rounded bg-blue-500/20 flex items-center justify-center text-[10px]">7</span>
                   Confidencialidade e LGPD
                 </h3>
-                <p className="text-slate-400 mb-6 leading-relaxed">O manuseio de dados sensíveis de clientes exige sigilo absoluto sob pena de multa. Conformidade obrigatória com a LGPD.</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">O manuseio de dados sensíveis de clientes (Governos, Empresas, Agro, Mídia ou PF) exige sigilo absoluto sob pena de multa. Conformidade obrigatória com a LGPD.</p>
 
                 <h3 className="text-blue-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-blue-500/20 flex items-center justify-center text-[10px]">8</span>
