@@ -221,7 +221,27 @@ export default function GabineteHubPage() {
                   <span className="w-4 h-4 rounded bg-blue-500/20 flex items-center justify-center text-[10px]">11</span>
                   Política de Descontos
                 </h3>
-                <p className="text-slate-400 leading-relaxed">Qualquer desconto concedido incidirá total ou proporcionalmente sobre a coluna de Setup. O desconto é absorvido pela margem da terceirizada.</p>
+                <p className="text-slate-400 mb-8 leading-relaxed">Qualquer desconto concedido incidirá total ou proporcionalmente sobre a coluna de Setup. O desconto é absorvido pela margem da terceirizada.</p>
+
+                <h3 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4 pb-2 border-b border-slate-800">Parte 3: Disposições Finais</h3>
+
+                <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">12</span>
+                  Sem Vínculo Empregatício
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">Natureza estritamente comercial. Não há subordinação jurídica, vínculo trabalhista ou societário com os corretores da terceirizada.</p>
+
+                <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">13</span>
+                  Não-Exclusividade Territorial
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">A Nexus pode nomear múltiplas terceirizadas para vender os mesmos produtos na mesma região. Não há reserva de mercado: quem fechar a venda primeiro, ganha.</p>
+
+                <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">14</span>
+                  Foro de Eleição
+                </h3>
+                <p className="text-slate-400 leading-relaxed">Qualquer conflito judicial ou litígio será dirimido única e exclusivamente na comarca sede da Nexus Holding.</p>
               </div>
             </div>
             

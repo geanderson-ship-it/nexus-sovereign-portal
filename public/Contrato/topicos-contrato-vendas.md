@@ -53,3 +53,15 @@
 ### 11. Política de Descontos Autônomos
 * Qualquer concessão de desconto aos clientes finais pela terceirizada (dentro de limites pré-estabelecidos) incidirá total ou proporcionalmente sobre a coluna de Setup.
 * Ou seja, o desconto é absorvido pela margem de comissionamento da terceirizada, mantendo a receita recorrente da Nexus protegida e intacta.
+
+## PARTE 3: Disposições Finais e Concorrência
+
+### 12. Inexistência de Vínculo Empregatício ou Societário
+* O contrato tem natureza estritamente comercial/cível. Não há qualquer subordinação jurídica, vínculo trabalhista, previdenciário ou societário entre a terceirizada (e seus corretores) e a Nexus.
+
+### 13. Não-Exclusividade Territorial e Comercial
+* A Nexus retém o direito absoluto e irrestrito de nomear múltiplos parceiros, distribuidores e outras terceirizadas para comercializar os mesmos produtos e sistemas (inclusive no mesmo município, estado ou região).
+* Não há reserva de mercado ou garantia de exclusividade de região para a terceirizada. Quem fechar a venda e registrar o Setup primeiro, fatura.
+
+### 14. Foro de Eleição (Jurisdição)
+* Em caso de qualquer conflito judicial, litígios ou cobranças, o foro competente para dirimir a questão será única e exclusivamente a comarca sede da Nexus Holding.
