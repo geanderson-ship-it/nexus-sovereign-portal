@@ -247,7 +247,7 @@ export default function GabineteHubPage() {
                   <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">15</span>
                   Valores Fundamentais Nexus
                 </h3>
-                <p className="text-slate-400 leading-relaxed">A parceira compromete-se a atuar sob os 4 pilares: <strong className="text-white">Humanidade, Respeito, Ética e Confiança</strong>. A quebra desses princípios rescinde o contrato imediatamente.</p>
+                <p className="text-slate-400 leading-relaxed">A parceira compromete-se a atuar sob os 4 pilares: <strong className="text-white">Humanidade, Respeito, Ética e Confiança</strong> em qualquer segmento (Governo, Empresas, Agro, Mídia ou PF). A quebra rescinde o contrato imediatamente.</p>
               </div>
             </div>
             

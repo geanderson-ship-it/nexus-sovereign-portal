@@ -68,4 +68,4 @@
 
 ### 15. Código de Conduta e Valores Nexus
 * A terceirizada e todos os seus representantes comprometem-se a atuar invariavelmente sob os quatro pilares fundamentais do ecossistema Nexus: **Humanidade, Respeito, Ética e Confiança**.
-* Qualquer violação grave a esses princípios nas relações comerciais e negociações com os clientes ensejará a quebra imediata do contrato, independentemente de metas atingidas.
+* Qualquer violação grave a esses princípios nas relações comerciais e negociações com clientes de qualquer segmento (órgãos governamentais, empresas corporativas, agronegócio, emissoras de rádio/mídia ou pessoas físicas) ensejará a quebra imediata do contrato, independentemente de resultados atingidos.
