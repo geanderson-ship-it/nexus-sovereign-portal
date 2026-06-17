@@ -253,7 +253,25 @@ export default function GabineteHubPage() {
                   <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">16</span>
                   Isenção de Reembolsos
                 </h3>
-                <p className="text-slate-400 leading-relaxed">A terceirizada assume todos os seus riscos e custos (viagens, combustível, marketing). A Nexus não reembolsa nenhuma despesa comercial sob hipótese alguma.</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">A terceirizada assume todos os seus riscos e custos (viagens, combustível, marketing). A Nexus não reembolsa nenhuma despesa comercial sob hipótese alguma.</p>
+
+                <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">17</span>
+                  Customizações e Escopo
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">Promessas de novos desenvolvimentos e ajustes devem constar explicitamente nas Observações da Ficha Contratual. Promessas verbais não oficializadas são nulas e de risco da parceira.</p>
+
+                <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">18</span>
+                  Compliance e Anticorrupção
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">Tolerância zero a vantagens indevidas. A terceirizada responde criminal e civilmente por atos de corrupção, isentando totalmente a Nexus Holding.</p>
+
+                <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">19</span>
+                  Cláusula de Indenidade
+                </h3>
+                <p className="text-slate-400 leading-relaxed">A terceirizada obriga-se a reembolsar a Nexus de todos os custos caso a Nexus seja acionada judicialmente por dívidas trabalhistas ou cíveis de responsabilidade da parceira.</p>
               </div>
             </div>
             

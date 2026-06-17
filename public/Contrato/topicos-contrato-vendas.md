@@ -73,3 +73,14 @@
 ### 16. Isenção Absoluta de Reembolsos e Despesas (CAC)
 * A terceirizada assume integralmente todos os seus riscos, custos e despesas operacionais atrelados à prospecção (viagens, alimentação, marketing, combustíveis, stands em eventos, etc.).
 * A Nexus não fará, sob nenhuma hipótese, o reembolso de despesas ou Custos de Aquisição de Clientes (CAC), ficando claro que a comissão de 15% já engloba e remunera toda a atividade comercial.
+
+### 17. Alinhamento de Escopo e Customizações Sistêmicas
+* Embora a Nexus possua plena capacidade de criar e ajustar tecnologias sob demanda, toda promessa de nova funcionalidade ou customização deve constar de forma explícita e detalhada no campo de "Observações" da Ficha Contratual para validação técnica da Diretoria.
+* Promessas verbais feitas pela terceirizada que não forem oficializadas na Ficha Contratual não são reconhecidas pela Nexus e, caso gerem cancelamento por parte do cliente, configurarão quebra contratual e estorno imediato de comissão.
+
+### 18. Compliance e Diretrizes Anticorrupção (Lei nº 12.846/2013)
+* Fica terminantemente proibida a oferta de qualquer vantagem indevida, suborno ou facilitação ilícita a servidores públicos ou agentes privados.
+* A terceirizada responderá civil e criminalmente de forma isolada por qualquer ato de corrupção, isentando a Nexus Holding de qualquer solidariedade ou responsabilidade perante a lei.
+
+### 19. Cláusula de Indenidade (Hold Harmless Trabalhista e Cível)
+* A terceirizada concorda em indenizar e isentar a Nexus de quaisquer perdas, danos, multas ou custos com advogados resultantes de processos judiciais, especialmente ações trabalhistas, movidos por ex-funcionários, corretores ou subcontratados da própria terceirizada.
