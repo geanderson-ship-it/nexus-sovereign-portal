@@ -235,7 +235,7 @@ export default function GabineteHubPage() {
                   <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">13</span>
                   Não-Exclusividade Territorial
                 </h3>
-                <p className="text-slate-400 mb-6 leading-relaxed">A Nexus pode nomear múltiplas terceirizadas para vender os mesmos produtos na mesma região. Não há reserva de mercado: quem fechar a venda primeiro, ganha.</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">A Nexus preserva o direito de atuar com múltiplos parceiros na mesma região. O comissionamento será devido à representante que efetivar oficialmente a contratação do Setup.</p>
 
                 <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">14</span>
