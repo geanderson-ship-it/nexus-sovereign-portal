@@ -241,7 +241,13 @@ export default function GabineteHubPage() {
                   <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">14</span>
                   Foro de Eleição
                 </h3>
-                <p className="text-slate-400 leading-relaxed">Qualquer conflito judicial ou litígio será dirimido única e exclusivamente na comarca sede da Nexus Holding.</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">Qualquer conflito judicial ou litígio será dirimido única e exclusivamente na comarca sede da Nexus Holding.</p>
+
+                <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">15</span>
+                  Valores Fundamentais Nexus
+                </h3>
+                <p className="text-slate-400 leading-relaxed">A parceira compromete-se a atuar sob os 4 pilares: <strong className="text-white">Humanidade, Respeito, Ética e Confiança</strong>. A quebra desses princípios rescinde o contrato imediatamente.</p>
               </div>
             </div>
             

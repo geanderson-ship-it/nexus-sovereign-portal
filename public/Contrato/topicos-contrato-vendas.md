@@ -65,3 +65,7 @@
 
 ### 14. Foro de Eleição (Jurisdição)
 * Em caso de qualquer conflito judicial, litígios ou cobranças, o foro competente para dirimir a questão será única e exclusivamente a comarca sede da Nexus Holding.
+
+### 15. Código de Conduta e Valores Nexus
+* A terceirizada e todos os seus representantes comprometem-se a atuar invariavelmente sob os quatro pilares fundamentais do ecossistema Nexus: **Humanidade, Respeito, Ética e Confiança**.
+* Qualquer violação grave a esses princípios nas negociações com os municípios ensejará a quebra imediata do contrato, independentemente de metas atingidas.
