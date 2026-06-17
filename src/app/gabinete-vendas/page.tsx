@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase } from 'lucide-react';
+import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase, FileText } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useUser } from '@/auth';
@@ -222,6 +222,28 @@ export default function GabineteVendasPage() {
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-rose-500">
                   Acessar Painel <Activity className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Regras e Contrato */}
+          <Link href="/Contrato/topicos-contrato-vendas.md" target="_blank" rel="noopener noreferrer">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-amber-500/20">
+                  <FileText className="w-6 h-6 text-amber-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-amber-400 transition-colors font-headline">Código de Conduta</CardTitle>
+                <CardDescription>Regras e Contrato Comercial</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Acesso completo ao contrato de parceria (15%), diretrizes éticas e regras de comercialização da Nexus.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-amber-500">
+                  Ler Documento <FileText className="w-3 h-3" />
                 </div>
               </CardContent>
             </Card>
