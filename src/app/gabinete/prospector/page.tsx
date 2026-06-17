@@ -4,11 +4,13 @@ import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Shield, ArrowLeft } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Lock, Search, Briefcase, Calendar, Users, Coins, Database, Activity, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { IbgeProspector } from '@/components/gabinete/ibge-prospector';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
-export default function ProspectorPage() {
+export default function ProspectorHubPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -26,34 +28,208 @@ export default function ProspectorPage() {
   if (isUserLoading || !isAuthorized) {
     return (
       <div className="min-h-screen bg-[#080b10] flex flex-col items-center justify-center text-primary">
-        <h2 className="text-xl font-headline tracking-widest text-white/50 uppercase animate-pulse">Carregando Módulo de Prospecção</h2>
+        <Lock className="w-12 h-12 mb-4 animate-pulse text-primary/50" />
+        <h2 className="text-xl font-headline tracking-widest text-white/50 uppercase">Autenticando Hub</h2>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen relative text-slate-200 py-12 px-4 bg-slate-950 overflow-hidden">
-      {/* Background Image with geodemographic glow */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 opacity-25 pointer-events-none" 
-        style={{ backgroundImage: "url('/nexus-prospector-bg.png')" }} 
-      />
-      {/* Radial Gradient for smooth edge fade */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(2,6,23,0.95)_100%)] z-0 pointer-events-none" />
-      <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-[1px] z-0 pointer-events-none" />
+    <div className="min-h-screen text-slate-200 pt-32 pb-20 px-4 relative">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/nexus-prospector-bg.png"
+          alt="Background"
+          fill
+          priority
+          className="object-cover opacity-20"
+          style={{ objectPosition: 'center center' }}
+        />
+        <div className="absolute inset-0 bg-[#080b10]/80 backdrop-blur-sm" />
+      </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        <Link href="/gabinete" className="inline-flex items-center text-sm text-slate-400 hover:text-white transition-colors mb-8 bg-slate-900/50 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800/80 hover:border-slate-700/80">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Voltar para o Gabinete
-        </Link>
-        
-        <div className="flex items-center gap-3 mb-10">
-          <Shield className="w-6 h-6 text-primary" />
-          <span className="text-xs font-bold uppercase tracking-widest text-primary/80">Sistema Exclusivo Diretoria</span>
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8 border-b border-slate-800 pb-8">
+          <div className="flex items-center gap-4">
+            <Link href="/gabinete">
+              <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full bg-slate-900 border border-slate-700 hover:bg-slate-800 hover:text-blue-400">
+                <ChevronLeft className="w-5 h-5" />
+              </Button>
+            </Link>
+            <div className="w-16 h-16 rounded-full bg-slate-900 border border-blue-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.15)]">
+              <Search className="w-8 h-8 text-blue-500" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold font-headline text-white">Hub Prospector & Operações</h1>
+              <p className="text-slate-400">Módulos Operacionais e Ecossistema B2B</p>
+            </div>
+          </div>
         </div>
 
-        <IbgeProspector />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          {/* Prospector IBGE Core */}
+          <Link href="/gabinete/prospector/core">
+            <Card className="bg-slate-900/40 border-blue-900/50 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-blue-500/20">
+                  <Search className="w-6 h-6 text-blue-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-blue-400 transition-colors font-headline">Mapeamento IBGE</CardTitle>
+                <CardDescription>Cidades do Futuro</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Integração direta com o banco de dados do IBGE para mapear municípios-alvo com base em filtros geográficos e indicadores sociais.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-blue-500">
+                  Acessar Ferramenta <Search className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Portal Comercial */}
+          <Link href="/gabinete-vendas">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-emerald-500/20">
+                  <Briefcase className="w-6 h-6 text-emerald-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-emerald-400 transition-colors font-headline">Portal Comercial</CardTitle>
+                <CardDescription>Lançador de Contratos & Vendas</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Acesse o painel dos representantes de vendas. Simule o lançamento de novos contratos com múltiplos módulos e cálculo de comissões.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
+                  Acessar Portal <Briefcase className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Agenda Estratégica */}
+          <Link href="/gabinete/agenda">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-emerald-500/20">
+                  <Calendar className="w-6 h-6 text-emerald-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-emerald-400 transition-colors font-headline">Agenda Tática</CardTitle>
+                <CardDescription>Painel de Controle de Reuniões</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Organize suas visitas, gerencie os anfitriões e defina a estratégia de ataque para cada prefeitura mapeada.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
+                  Acessar Módulo <Calendar className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Central de Leads */}
+          <Link href="/gabinete/leads">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-indigo-500/20">
+                  <Users className="w-6 h-6 text-indigo-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-indigo-400 transition-colors font-headline">Contatos & Leads</CardTitle>
+                <CardDescription>Gerenciador de Oportunidades</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Monitore em tempo real as pessoas que preencheram o formulário no portal da Nexus. Nunca perca um contato.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-indigo-500">
+                  Gerenciar Oportunidades <Users className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Portfólio de Precificação */}
+          <Link href="/gabinete/precificacao">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-amber-500/20">
+                  <Coins className="w-6 h-6 text-amber-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-amber-400 transition-colors font-headline">Tabela de Preços</CardTitle>
+                <CardDescription>Catálogo GovTech & B2B</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Tabela oficial de valores de referência (SaaS e Setups) para todas as linhas de software da Nexus, incluindo o Sovereign Premium.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-amber-500">
+                  Abrir Portfólio <Coins className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Magadot Auditoria */}
+          <Link href="/gabinete/magadot">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-3xl group-hover:bg-violet-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-violet-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-violet-500/20">
+                  <Database className="w-6 h-6 text-violet-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-violet-400 transition-colors font-headline">Sistema Magadot</CardTitle>
+                <CardDescription>Auditoria de Estado & Rastros</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Módulo de auditoria fiscal, financeira e de fraudes (Filtro Pactum). Análises criptografadas do fluxo monetário municipal.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-violet-500">
+                  Iniciar Rastreamento <Database className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Égide Segurança */}
+          <Link href="/gabinete/egide">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-rose-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl group-hover:bg-rose-500/10 transition-colors" />
+              <div className="absolute top-4 right-4 flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+                </span>
+                <span className="text-[8px] font-mono text-rose-500 tracking-widest uppercase">Live</span>
+              </div>
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-rose-500/20">
+                  <Activity className="w-6 h-6 text-rose-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-rose-400 transition-colors font-headline">Cerco Égide</CardTitle>
+                <CardDescription>Segurança & Biometria Cidadã</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Painel de monitoramento inteligente (LPR), alertas do Dante's Safe e métricas de criminalidade em tempo real.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-rose-500">
+                  Acessar Câmeras <Activity className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+        </div>
       </div>
     </div>
   );
