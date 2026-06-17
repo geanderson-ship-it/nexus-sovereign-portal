@@ -148,43 +148,80 @@ export default function GabineteHubPage() {
           </div>
           <div className="p-6 text-sm text-slate-300">
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">
+              {/* Parte 1: Escopo e Faturamento */}
               <div>
+                <h3 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4 pb-2 border-b border-slate-800">Parte 1: Escopo e Faturamento</h3>
+                
                 <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">1</span>
                   Objeto e Escopo Diferenciado
                 </h3>
-                <p className="text-slate-400 mb-6 leading-relaxed">A atividade da terceirizada é estritamente comercial. Fica estabelecida a divisão explícita entre a Taxa de Setup (Venda Inicial) e a Taxa de Manutenção e Suporte Técnico.</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">A atividade é estritamente comercial. Fica estabelecida a divisão explícita entre a Taxa de Setup (Venda Inicial) e a Taxa de Manutenção/Suporte.</p>
                 
                 <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">2</span>
-                  Base de Cálculo Fixa
+                  Base de Cálculo Fixa (15%)
                 </h3>
-                <p className="text-slate-400 mb-6 leading-relaxed">Comissão fixada e irreajustável em 15%, incidindo única e exclusivamente sobre o valor líquido do Setup. Exclui-se, em caráter definitivo, qualquer valor de mensalidade recorrente (100% da Nexus).</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">Comissão irreajustável em 15%, incidindo única e exclusivamente sobre o Setup. Exclui-se qualquer valor de mensalidade recorrente (100% Nexus).</p>
 
                 <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">3</span>
                   Faturamento e Transparência
                 </h3>
-                <p className="text-slate-400 leading-relaxed">A terceirizada deve apresentar a tabela completa ao cliente (Setup + Recorrente). A visibilidade do recorrente tem fim estritamente informativo e não gera direito a comissionamento residual ou de carteira.</p>
-              </div>
-              <div>
+                <p className="text-slate-400 mb-6 leading-relaxed">A terceirizada deve apresentar a tabela completa. A visibilidade do recorrente tem fim informativo, sem gerar direito a comissionamento residual.</p>
+
                 <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">4</span>
                   Auditoria e Quitação
                 </h3>
-                <p className="text-slate-400 mb-6 leading-relaxed">Relatório enviado mensalmente pela Nexus. Prazo decadencial de 5 dias úteis para divergências, gerando quitação plena automática. Estornos aplicáveis em caso de cancelamento.</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">Relatório enviado mensalmente. Prazo decadencial de 5 dias úteis para divergências, gerando quitação plena automática. Estornos aplicáveis em cancelamento.</p>
 
                 <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">5</span>
-                  Regras de Pós-Venda e Upsell
+                  Pós-Venda e Upsell
                 </h3>
-                <p className="text-slate-400 mb-6 leading-relaxed">Suporte técnico exclusivo da Nexus. A terceirizada canaliza reclamações e foca ações de relacionamento em Upsell, o qual remunerará novos 15% apenas sobre o Setup contratado.</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">Suporte exclusivo da Nexus. Terceirizada foca em Upsell, o qual remunerará novos 15% apenas sobre o novo Setup contratado.</p>
 
                 <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">6</span>
                   Autonomia e Rescisão
                 </h3>
-                <p className="text-slate-400 leading-relaxed">Bloqueio total à infraestrutura (AWS/GitHub) e painéis admin. Acesso restrito ao painel de vendas. Rescisão imotivada com 30 dias de aviso prévio, sem multas rescisórias.</p>
+                <p className="text-slate-400 leading-relaxed">Bloqueio total à infraestrutura (AWS/GitHub) e painéis admin. Rescisão imotivada com 30 dias de aviso prévio, sem multas rescisórias.</p>
+              </div>
+
+              {/* Parte 2: Blindagem Jurídica */}
+              <div>
+                <h3 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4 pb-2 border-b border-slate-800">Parte 2: Blindagem Jurídica e Operacional</h3>
+                
+                <h3 className="text-blue-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-blue-500/20 flex items-center justify-center text-[10px]">7</span>
+                  Confidencialidade e LGPD
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">O manuseio de dados sensíveis de prefeituras exige sigilo absoluto sob pena de multa. Conformidade obrigatória com a LGPD.</p>
+
+                <h3 className="text-blue-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-blue-500/20 flex items-center justify-center text-[10px]">8</span>
+                  Propriedade Intelectual (IP)
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">A marca Nexus, código-fonte e banco de dados são propriedade 100% da Nexus Holding. É vedado o registro de domínios ou redes não oficiais.</p>
+
+                <h3 className="text-blue-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-blue-500/20 flex items-center justify-center text-[10px]">9</span>
+                  Não-Concorrência (Non-Compete)
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">Proibição de representar ERPs governamentais concorrentes. Quarentena de 12 meses após a rescisão para atuar na mesma carteira prospectada.</p>
+
+                <h3 className="text-blue-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-blue-500/20 flex items-center justify-center text-[10px]">10</span>
+                  Gatilho de Pagamento
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">A comissão só é repassada após a efetiva compensação bancária do Setup. Sem pagamento do cliente, não há comissão, protegendo o caixa.</p>
+
+                <h3 className="text-blue-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-blue-500/20 flex items-center justify-center text-[10px]">11</span>
+                  Política de Descontos
+                </h3>
+                <p className="text-slate-400 leading-relaxed">Qualquer desconto concedido incidirá total ou proporcionalmente sobre a coluna de Setup. O desconto é absorvido pela margem da terceirizada.</p>
               </div>
             </div>
             
