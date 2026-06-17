@@ -41,6 +41,16 @@ export default function InovaModaPage() {
         return 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?q=80&w=800&auto=format&fit=crop';
       case 'casual':
         return 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop';
+      case 'beach':
+        return 'https://images.unsplash.com/photo-1516483638261-f4efa33cc2b6?q=80&w=800&auto=format&fit=crop';
+      case 'lingerie':
+        return 'https://images.unsplash.com/photo-1520021676839-869f21226162?q=80&w=800&auto=format&fit=crop';
+      case 'nightwear':
+        return 'https://images.unsplash.com/photo-1515347619246-814986797b5e?q=80&w=800&auto=format&fit=crop';
+      case 'fitness':
+        return 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=800&auto=format&fit=crop';
+      case 'executive':
+        return 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=800&auto=format&fit=crop';
       default: // 'default'
         return 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop';
     }
@@ -140,14 +150,32 @@ export default function InovaModaPage() {
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
               
               <OutfitCard 
-                title="Look Casual Inverno"
-                description="Jaqueta de couro + blusa de lã"
-                icon={<Shirt className="w-5 h-5 text-pink-400" />}
-                isActive={activeOutfit === 'jacket'}
-                onClick={() => handleTryOn('jacket')}
+                title="Moda Praia (Summer)"
+                description="Biquínis, maiôs e saídas de praia"
+                icon={<Shirt className="w-5 h-5 text-cyan-400" />}
+                isActive={activeOutfit === 'beach'}
+                onClick={() => handleTryOn('beach')}
                 disabled={isProcessing}
               />
-              
+
+              <OutfitCard 
+                title="Roupa Íntima (Lingerie)"
+                description="Conjuntos rendados e peças delicadas"
+                icon={<Shirt className="w-5 h-5 text-rose-400" />}
+                isActive={activeOutfit === 'lingerie'}
+                onClick={() => handleTryOn('lingerie')}
+                disabled={isProcessing}
+              />
+
+              <OutfitCard 
+                title="Linha Night (Camisolas)"
+                description="Pijamas de seda e camisolas"
+                icon={<Shirt className="w-5 h-5 text-indigo-400" />}
+                isActive={activeOutfit === 'nightwear'}
+                onClick={() => handleTryOn('nightwear')}
+                disabled={isProcessing}
+              />
+
               <OutfitCard 
                 title="Vestido de Gala (Seda)"
                 description="Simulação de caimento de tecido fino"
@@ -158,20 +186,38 @@ export default function InovaModaPage() {
               />
 
               <OutfitCard 
+                title="Moda Fitness"
+                description="Leggings, tops e compressão esportiva"
+                icon={<Shirt className="w-5 h-5 text-emerald-400" />}
+                isActive={activeOutfit === 'fitness'}
+                onClick={() => handleTryOn('fitness')}
+                disabled={isProcessing}
+              />
+
+              <OutfitCard 
+                title="Look Executivo"
+                description="Alfaiataria, blazers e ternos femininos"
+                icon={<Shirt className="w-5 h-5 text-slate-300" />}
+                isActive={activeOutfit === 'executive'}
+                onClick={() => handleTryOn('executive')}
+                disabled={isProcessing}
+              />
+
+              <OutfitCard 
+                title="Look Casual Inverno"
+                description="Jaqueta de couro + blusa de lã"
+                icon={<Shirt className="w-5 h-5 text-pink-400" />}
+                isActive={activeOutfit === 'jacket'}
+                onClick={() => handleTryOn('jacket')}
+                disabled={isProcessing}
+              />
+
+              <OutfitCard 
                 title="Streetwear Verão"
                 description="Camiseta e óculos de sol"
                 icon={<Shirt className="w-5 h-5 text-blue-400" />}
                 isActive={activeOutfit === 'casual'}
                 onClick={() => handleTryOn('casual')}
-                disabled={isProcessing}
-              />
-
-              <OutfitCard 
-                title="Coleção Outono Base"
-                description="Blusa manga longa e acessórios"
-                icon={<Shirt className="w-5 h-5 text-amber-400" />}
-                isActive={activeOutfit === 'default'}
-                onClick={() => handleTryOn('default')}
                 disabled={isProcessing}
               />
 
