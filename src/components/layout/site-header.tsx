@@ -214,12 +214,7 @@ export function SiteHeader() {
                             <span>Dante Safra (Terminal)</span>
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10 text-emerald-400 font-medium">
-                          <Link href="/propostas/cidades-do-futuro" className="flex items-center w-full">
-                            <Globe className="mr-2 h-4 w-4" />
-                            <span>Cidades do Futuro</span>
-                          </Link>
-                        </DropdownMenuItem>
+
                       </>
                     )}
                     <DropdownMenuSeparator className="bg-border/50" />
@@ -365,9 +360,7 @@ export function SiteHeader() {
                                 <Button variant="ghost" className="w-full justify-start text-red-400 font-bold hover:bg-red-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
                                   <Link href="/dante-safra"><Sparkles className="mr-2 h-4 w-4" /> Dante Safra (Terminal)</Link>
                                 </Button>
-                                <Button variant="ghost" className="w-full justify-start text-emerald-400 font-medium hover:bg-emerald-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                  <Link href="/propostas/cidades-do-futuro"><Globe className="mr-2 h-4 w-4" /> Cidades do Futuro</Link>
-                                </Button>
+
                               </div>
                             </details>
                           )}
