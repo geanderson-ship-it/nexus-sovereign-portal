@@ -5,7 +5,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase } from 'lucide-react';
+import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase, FileText, DollarSign } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -71,23 +71,45 @@ export default function GabineteHubPage() {
         {/* Módulos do Gabinete */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           
-          {/* Faturamento e Vendas */}
-          <Link href="/gabinete/produtos-vendidos">
+          {/* Contratos Lançados */}
+          <Link href="/gabinete/contratos">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-amber-500/20">
+                  <FileText className="w-6 h-6 text-amber-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-amber-400 transition-colors font-headline">Contratos Lançados</CardTitle>
+                <CardDescription>Aprovações e Módulos Vendidos</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Valide e aprove as vendas submetidas pela equipe comercial. Acompanhe os módulos adquiridos por cada novo cliente.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-amber-500">
+                  Auditar Contratos <FileText className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Faturamento */}
+          <Link href="/gabinete/faturamento">
             <Card className="bg-slate-900/40 border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors" />
               <CardHeader>
                 <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-emerald-500/20">
-                  <Coins className="w-6 h-6 text-emerald-400" />
+                  <DollarSign className="w-6 h-6 text-emerald-400" />
                 </div>
-                <CardTitle className="text-xl text-white group-hover:text-emerald-400 transition-colors font-headline">Faturamento & Contratos</CardTitle>
-                <CardDescription>Produtos Vendidos e Receita</CardDescription>
+                <CardTitle className="text-xl text-white group-hover:text-emerald-400 transition-colors font-headline">Faturamento Inteligente</CardTitle>
+                <CardDescription>Receita, Inadimplência e Fluxo</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-slate-400">
-                  Acesso restrito à diretoria. Visualize todas as vendas e contratos submetidos pelos representantes comerciais em tempo real.
+                  Painel financeiro C-Level. Visualize pagamentos confirmados, inadimplência em tempo real e previsão de recebíveis.
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
-                  Acessar Cofre <Coins className="w-3 h-3" />
+                  Acessar Tesouraria <DollarSign className="w-3 h-3" />
                 </div>
               </CardContent>
             </Card>
