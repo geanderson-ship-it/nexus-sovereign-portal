@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { LogOut, Menu, User as UserIcon, Shield, Globe, ArrowRight, Sparkles, Briefcase } from 'lucide-react';
+import { LogOut, Menu, User as UserIcon, Shield, Globe, ArrowRight, Sparkles, Briefcase, Coins } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -190,16 +190,12 @@ export function SiteHeader() {
                     </DropdownMenuItem>
                     {isAdmin && (
                       <>
+                        <DropdownMenuSeparator className="bg-border/50" />
+                        <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary/70">Gabinete Diretoria</div>
                         <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10 text-primary font-medium">
                           <Link href="/gabinete" className="flex items-center w-full">
                             <Shield className="mr-2 h-4 w-4" />
                             <span>{t('navGabinete')}</span>
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
-                          <Link href="/gabinete-vendas" className="flex items-center w-full">
-                            <Briefcase className="mr-2 h-4 w-4" />
-                            <span>Showroom Comercial</span>
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild className="cursor-pointer hover:bg-blue-500/10 text-blue-400 font-bold">
@@ -208,13 +204,21 @@ export function SiteHeader() {
                             <span>Atena (IA Exclusiva)</span>
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-red-500/10 text-red-400 font-bold">
-                          <Link href="/dante-safra" className="flex items-center w-full">
-                            <Sparkles className="mr-2 h-4 w-4" />
-                            <span>Dante Safra (Terminal)</span>
+                        
+                        <DropdownMenuSeparator className="bg-border/50" />
+                        <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500/70">Área Comercial</div>
+                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
+                          <Link href="/gabinete-vendas" className="flex items-center w-full">
+                            <Briefcase className="mr-2 h-4 w-4" />
+                            <span>Showroom Comercial</span>
                           </Link>
                         </DropdownMenuItem>
-
+                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
+                          <Link href="/gabinete/precificacao" className="flex items-center w-full">
+                            <Coins className="mr-2 h-4 w-4" />
+                            <span>Catálogo de Produtos</span>
+                          </Link>
+                        </DropdownMenuItem>
                       </>
                     )}
                     <DropdownMenuSeparator className="bg-border/50" />
@@ -345,24 +349,37 @@ export function SiteHeader() {
                             <Link href="/profile"><UserIcon className="mr-2 h-4 w-4" /> {t('userArea')}</Link>
                           </Button>
                           {isAdmin && (
-                            <details className="group border border-primary/20 rounded-md bg-background/50 overflow-hidden">
-                              <summary className="cursor-pointer p-3 text-sm font-medium text-primary hover:bg-primary/10 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
-                                <span className="flex items-center gap-2"><Briefcase className="h-4 w-4" /> Área Administrativa</span>
-                                <ArrowRight className="h-4 w-4 transition-transform group-open:rotate-90" />
-                              </summary>
-                              <div className="p-2 flex flex-col gap-2 border-t border-primary/10 bg-black/20">
-                                <Button variant="ghost" className="w-full justify-start text-primary font-medium hover:bg-primary/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                  <Link href="/gabinete"><Shield className="mr-2 h-4 w-4" /> {t('navGabinete')}</Link>
-                                </Button>
-                                <Button variant="ghost" className="w-full justify-start text-blue-400 font-bold hover:bg-blue-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                  <Link href="/atena"><Sparkles className="mr-2 h-4 w-4" /> Atena (IA Exclusiva)</Link>
-                                </Button>
-                                <Button variant="ghost" className="w-full justify-start text-red-400 font-bold hover:bg-red-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                  <Link href="/dante-safra"><Sparkles className="mr-2 h-4 w-4" /> Dante Safra (Terminal)</Link>
-                                </Button>
+                            <>
+                              <details className="group border border-primary/20 rounded-md bg-background/50 overflow-hidden">
+                                <summary className="cursor-pointer p-3 text-sm font-medium text-primary hover:bg-primary/10 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
+                                  <span className="flex items-center gap-2"><Shield className="h-4 w-4" /> Gabinete Diretoria</span>
+                                  <ArrowRight className="h-4 w-4 transition-transform group-open:rotate-90" />
+                                </summary>
+                                <div className="p-2 flex flex-col gap-2 border-t border-primary/10 bg-black/20">
+                                  <Button variant="ghost" className="w-full justify-start text-primary font-medium hover:bg-primary/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                    <Link href="/gabinete"><Shield className="mr-2 h-4 w-4" /> {t('navGabinete')}</Link>
+                                  </Button>
+                                  <Button variant="ghost" className="w-full justify-start text-blue-400 font-bold hover:bg-blue-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                    <Link href="/atena"><Sparkles className="mr-2 h-4 w-4" /> Atena (IA Exclusiva)</Link>
+                                  </Button>
+                                </div>
+                              </details>
 
-                              </div>
-                            </details>
+                              <details className="group mt-2 border border-emerald-500/20 rounded-md bg-background/50 overflow-hidden">
+                                <summary className="cursor-pointer p-3 text-sm font-medium text-emerald-400 hover:bg-emerald-500/10 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
+                                  <span className="flex items-center gap-2"><Briefcase className="h-4 w-4" /> Área Comercial</span>
+                                  <ArrowRight className="h-4 w-4 transition-transform group-open:rotate-90" />
+                                </summary>
+                                <div className="p-2 flex flex-col gap-2 border-t border-emerald-500/10 bg-black/20">
+                                  <Button variant="ghost" className="w-full justify-start text-emerald-400 font-bold hover:bg-emerald-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                    <Link href="/gabinete-vendas"><Briefcase className="mr-2 h-4 w-4" /> Showroom Comercial</Link>
+                                  </Button>
+                                  <Button variant="ghost" className="w-full justify-start text-emerald-400 font-bold hover:bg-emerald-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                    <Link href="/gabinete/precificacao"><Coins className="mr-2 h-4 w-4" /> Catálogo de Produtos</Link>
+                                  </Button>
+                                </div>
+                              </details>
+                            </>
                           )}
                           <Button variant="destructive" className="w-full justify-start mt-2" onClick={handleLogout}>
                             <LogOut className="mr-2 h-4 w-4" /> {t('logout')}
