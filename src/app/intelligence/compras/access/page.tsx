@@ -21,7 +21,7 @@ export default function DanteComprasAccessPage() {
             <h1 className="text-3xl font-bold tracking-tighter text-blue-300 font-headline">
               Módulo Compras.
             </h1>
-            <DialogDescription>O Auditor analisa o mercado e você negocia com os fornecedores em tempo real.</DialogDescription>
+            <p className="text-sm text-gray-400">O Auditor analisa o mercado e você negocia com os fornecedores em tempo real.</p>
           </div>
         </div>
 
