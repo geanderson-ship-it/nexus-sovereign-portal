@@ -12,6 +12,8 @@ import {
   Search, Plus, Trash2, Calculator, Info, Calendar, Building2, User 
 } from 'lucide-react';
 import Link from 'next/link';
+import { useUser } from '@/auth';
+import { isAdminUser } from '@/lib/constants';
 
 interface Product {
   id: string;
@@ -64,6 +66,7 @@ interface SelectedProduct {
 
 export default function LancamentoVendaPage() {
   const router = useRouter();
+  const { user, isUserLoading } = useUser();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -83,15 +86,19 @@ export default function LancamentoVendaPage() {
   const [activeTab, setActiveTab] = useState<'todos' | 'premium' | 'empresas' | 'segmentos' | 'cursos'>('todos');
 
   useEffect(() => {
-    const isVendasAuth = localStorage.getItem('vendas_auth') === 'true';
-    if (!isVendasAuth) {
-      router.push('/login');
-    } else {
-      setIsAuthorized(true);
+    if (!isUserLoading) {
+      const isVendasAuth = localStorage.getItem('vendas_auth') === 'true';
+      const isSystemAdmin = user && isAdminUser(user);
+      
+      if (!isVendasAuth && !isSystemAdmin) {
+        router.push('/login');
+      } else {
+        setIsAuthorized(true);
+      }
     }
-  }, [router]);
+  }, [user, isUserLoading, router]);
 
-  if (!isAuthorized) {
+  if (isUserLoading || !isAuthorized) {
     return (
       <div className="min-h-screen bg-[#080b10] flex flex-col items-center justify-center text-primary">
         <Lock className="w-12 h-12 mb-4 animate-pulse text-primary/50" />
