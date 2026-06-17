@@ -26,8 +26,8 @@
 ### 5. Regras de Pós-Venda, Suporte e Novas Vendas (Upsell)
 * **Exclusividade Nexus:** Exclusividade da Nexus Treinamento na execução de suporte técnico e manutenção.
 * **Canalização de suporte:** Obrigação da terceirizada de apenas canalizar reclamações técnicas para os meios oficiais da Nexus.
-* **Pós-venda:** Definição de que ações de relacionamento pós-venda visam apenas novas vendas.
-* **Novas vendas (Upsell):** Regra de remuneração para novas vendas na base existente: novos 15% aplicados exclusivamente sobre o setup do novo produto/módulo contratado.
+* **Novas vendas (Upsell Ativo):** Regra de remuneração para novas vendas na base existente: novos 15% aplicados exclusivamente sobre o setup do novo produto contratado, **desde que** a terceirizada intermedeie ativamente a venda.
+* **Upsell Passivo (Sistêmico):** Upgrades ou contratações de módulos extras feitos de forma autônoma pelo cliente via sistema não geram comissionamento residual para a terceirizada.
 
 ### 6. Autonomia de Acessos e Rescisão Sem Ônus
 * **Bloqueio de infraestrutura:** Bloqueio total de acesso da terceirizada à infraestrutura (AWS/GitHub) e painéis administrativos (restritos apenas ao painel de vendas via e-mail corporativo gerenciado pela Nexus).
@@ -69,3 +69,7 @@
 ### 15. Código de Conduta e Valores Nexus
 * A terceirizada e todos os seus representantes comprometem-se a atuar invariavelmente sob os quatro pilares fundamentais do ecossistema Nexus: **Humanidade, Respeito, Ética e Confiança**.
 * Qualquer violação grave a esses princípios nas relações comerciais e negociações com clientes de qualquer segmento (órgãos governamentais, empresas corporativas, agronegócio, emissoras de rádio/mídia ou pessoas físicas) ensejará a quebra imediata do contrato, independentemente de resultados atingidos.
+
+### 16. Isenção Absoluta de Reembolsos e Despesas (CAC)
+* A terceirizada assume integralmente todos os seus riscos, custos e despesas operacionais atrelados à prospecção (viagens, alimentação, marketing, combustíveis, stands em eventos, etc.).
+* A Nexus não fará, sob nenhuma hipótese, o reembolso de despesas ou Custos de Aquisição de Clientes (CAC), ficando claro que a comissão de 15% já engloba e remunera toda a atividade comercial.
