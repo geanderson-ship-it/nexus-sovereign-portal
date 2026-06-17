@@ -138,6 +138,65 @@ export default function GabineteHubPage() {
           </Link>
 
         </div>
+
+        {/* Cofre Administrativo: Regras de Contrato */}
+        <div className="mt-12 border border-slate-800 bg-slate-900/30 rounded-xl overflow-hidden backdrop-blur-md">
+          <div className="bg-slate-800/50 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
+            <Lock className="w-5 h-5 text-amber-500" />
+            <h2 className="text-lg font-headline text-white">Cofre Administrativo: Diretrizes de Contratos Terceirizados (15%)</h2>
+          </div>
+          <div className="p-6 text-sm text-slate-300">
+            <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">
+              <div>
+                <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">1</span>
+                  Objeto e Escopo Diferenciado
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">A atividade da terceirizada é estritamente comercial. Fica estabelecida a divisão explícita entre a Taxa de Setup (Venda Inicial) e a Taxa de Manutenção e Suporte Técnico.</p>
+                
+                <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">2</span>
+                  Base de Cálculo Fixa
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">Comissão fixada e irreajustável em 15%, incidindo única e exclusivamente sobre o valor líquido do Setup. Exclui-se, em caráter definitivo, qualquer valor de mensalidade recorrente (100% da Nexus).</p>
+
+                <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">3</span>
+                  Faturamento e Transparência
+                </h3>
+                <p className="text-slate-400 leading-relaxed">A terceirizada deve apresentar a tabela completa ao cliente (Setup + Recorrente). A visibilidade do recorrente tem fim estritamente informativo e não gera direito a comissionamento residual ou de carteira.</p>
+              </div>
+              <div>
+                <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">4</span>
+                  Auditoria e Quitação
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">Relatório enviado mensalmente pela Nexus. Prazo decadencial de 5 dias úteis para divergências, gerando quitação plena automática. Estornos aplicáveis em caso de cancelamento.</p>
+
+                <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">5</span>
+                  Regras de Pós-Venda e Upsell
+                </h3>
+                <p className="text-slate-400 mb-6 leading-relaxed">Suporte técnico exclusivo da Nexus. A terceirizada canaliza reclamações e foca ações de relacionamento em Upsell, o qual remunerará novos 15% apenas sobre o Setup contratado.</p>
+
+                <h3 className="text-amber-500 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">6</span>
+                  Autonomia e Rescisão
+                </h3>
+                <p className="text-slate-400 leading-relaxed">Bloqueio total à infraestrutura (AWS/GitHub) e painéis admin. Acesso restrito ao painel de vendas. Rescisão imotivada com 30 dias de aviso prévio, sem multas rescisórias.</p>
+              </div>
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-slate-800 flex justify-end">
+              <Link href="/Contrato/topicos-contrato-vendas.md" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" className="border-slate-700 hover:bg-slate-800 text-slate-300">
+                  <FileText className="w-4 h-4 mr-2 text-amber-500" />
+                  Abrir Arquivo do Contrato
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
