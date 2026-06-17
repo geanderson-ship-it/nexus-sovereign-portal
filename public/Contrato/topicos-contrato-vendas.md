@@ -36,15 +36,15 @@
 ## PARTE 2: Blindagem Jurídica e Operacional
 
 ### 7. Cláusula de Confidencialidade Absoluta (NDA) e LGPD
-* O manuseio de dados sensíveis de prefeituras, governos e secretários exige sigilo absoluto sob pena de multa. Conformidade obrigatória e estrita com a LGPD.
+* O manuseio de dados sensíveis de clientes, sejam órgãos governamentais ou empresas privadas, exige sigilo absoluto sob pena de multa. Conformidade obrigatória e estrita com a LGPD.
 
 ### 8. Defesa da Propriedade Intelectual (IP)
 * A marca Nexus, logotipos, código-fonte e banco de dados (ex: Magadot) são de propriedade exclusiva da Nexus Holding. 
 * Fica vedado o registro de domínios similares, criação de redes sociais não-oficiais ou a apresentação da terceirizada como "sócia" ou proprietária da tecnologia.
 
 ### 9. Cláusula de Não-Concorrência (Non-Compete)
-* Proibição de representar, comercializar ou firmar parceria com softwares ou ERPs governamentais concorrentes durante a vigência do contrato.
-* Aplicação de quarentena (ex: 12 meses após a rescisão) para atuação no mesmo nicho governamental explorando a carteira de clientes inicialmente prospectada pela Nexus.
+* Proibição de representar, comercializar ou firmar parceria com softwares ou ERPs concorrentes durante a vigência do contrato.
+* Aplicação de quarentena (ex: 12 meses após a rescisão) para atuação no mesmo nicho de mercado explorando a carteira de clientes inicialmente prospectada pela Nexus.
 
 ### 10. Critério de Gatilho para Pagamento (Prevenção contra Inadimplência)
 * A comissão de 15% será repassada única e exclusivamente após a efetiva compensação bancária do pagamento do cliente (liquidação da Taxa de Setup).
@@ -68,4 +68,4 @@
 
 ### 15. Código de Conduta e Valores Nexus
 * A terceirizada e todos os seus representantes comprometem-se a atuar invariavelmente sob os quatro pilares fundamentais do ecossistema Nexus: **Humanidade, Respeito, Ética e Confiança**.
-* Qualquer violação grave a esses princípios nas negociações com os municípios ensejará a quebra imediata do contrato, independentemente de metas atingidas.
+* Qualquer violação grave a esses princípios nas relações comerciais e negociações com os clientes ensejará a quebra imediata do contrato, independentemente de metas atingidas.
