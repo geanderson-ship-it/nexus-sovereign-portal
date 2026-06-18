@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag } from 'lucide-react';
+import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag, Camera, Upload, Video, ScanLine } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -11,8 +11,34 @@ export default function InovaModaPage() {
   const [activeOutfit, setActiveOutfit] = useState('default');
   const [renderProgress, setRenderProgress] = useState(0);
 
+  // Estados do Scanner 360
+  const [hasScanned, setHasScanned] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanType, setScanType] = useState<'record' | 'upload' | null>(null);
+
+  // Simulador de Escaneamento Inicial (Vídeo / Upload)
+  const handleStartScan = (type: 'record' | 'upload') => {
+    setScanType(type);
+    setIsScanning(true);
+    setRenderProgress(0);
+
+    // Animação de captura e geração do Digital Twin
+    const interval = setInterval(() => {
+      setRenderProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setHasScanned(true);
+          setIsScanning(false);
+          return 100;
+        }
+        return prev + 2; // Leva 5 segundos
+      });
+    }, 100);
+  };
+
   // Simulador de Renderização da IA (AWS SageMaker Mock)
   const handleTryOn = (outfitId: string) => {
+    if (!hasScanned) return;
     if (isProcessing || activeOutfit === outfitId) return;
     
     setIsProcessing(true);
@@ -99,17 +125,96 @@ export default function InovaModaPage() {
           {/* LADO ESQUERDO: O Espelho / Avatar */}
           <div className="lg:col-span-5 relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-            <Card className="relative bg-slate-900 border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[600px] w-full">
+            <Card className="relative bg-slate-900 border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[600px] w-full flex items-center justify-center">
               
-              {/* Imagem do Avatar */}
-              <div className="absolute inset-0 transition-opacity duration-1000">
-                <Image
-                  src={getModelImage()}
-                  alt="Virtual Try-On Model"
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
+              {!hasScanned && !isScanning && (
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-900/90 backdrop-blur-md p-8 text-center">
+                  <div className="w-20 h-20 rounded-full bg-pink-500/10 flex items-center justify-center mb-6 border border-pink-500/30">
+                    <ScanLine className="w-10 h-10 text-pink-400" />
+                  </div>
+                  <h3 className="text-2xl font-headline font-bold text-white mb-2">Construir Avatar 3D</h3>
+                  <p className="text-slate-400 text-sm mb-8 max-w-xs">
+                    Para provar as roupas, precisamos de um vídeo 360º do cliente para criar o "Gêmeo Digital".
+                  </p>
+                  
+                  <div className="flex flex-col gap-4 w-full max-w-xs">
+                    <Button 
+                      onClick={() => handleStartScan('record')}
+                      className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border-0 py-6"
+                    >
+                      <Camera className="w-5 h-5 mr-2" />
+                      Gravar Vídeo Agora (360º)
+                    </Button>
+                    
+                    <div className="flex items-center gap-4 w-full">
+                      <div className="h-px bg-slate-700 flex-1"></div>
+                      <span className="text-xs text-slate-500 uppercase">ou</span>
+                      <div className="h-px bg-slate-700 flex-1"></div>
+                    </div>
+                    
+                    <Button 
+                      onClick={() => handleStartScan('upload')}
+                      variant="outline" 
+                      className="border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-slate-300 py-6"
+                    >
+                      <Upload className="w-5 h-5 mr-2" />
+                      Fazer Upload de Vídeo
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {isScanning && (
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-900/95 backdrop-blur-md p-8 text-center">
+                  <div className="relative mb-8">
+                    {scanType === 'record' ? (
+                      <>
+                        <div className="w-24 h-24 rounded-full border-4 border-slate-700 flex items-center justify-center">
+                          <div className="w-16 h-16 bg-red-500 rounded-full animate-pulse shadow-[0_0_30px_rgba(239,68,68,0.6)]"></div>
+                        </div>
+                        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-mono text-red-400 font-bold tracking-widest whitespace-nowrap flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div> GRAVANDO
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="w-24 h-24 rounded-full border-4 border-slate-700 flex items-center justify-center relative overflow-hidden">
+                          <Video className="w-10 h-10 text-slate-400" />
+                          <div className="absolute bottom-0 left-0 right-0 bg-blue-500/30 transition-all duration-100 ease-linear" style={{ height: `${renderProgress}%` }}></div>
+                        </div>
+                        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-mono text-blue-400 font-bold tracking-widest whitespace-nowrap flex items-center gap-2">
+                          <Upload className="w-3 h-3" /> UPLOADING
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  
+                  <h3 className="text-xl font-headline font-bold text-white mb-2">
+                    {renderProgress < 40 ? 'Capturando Imagens...' : renderProgress < 70 ? 'Mapeando Mesh 3D...' : 'Gerando Digital Twin...'}
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-6">AWS SageMaker Computer Vision</p>
+                  
+                  <div className="w-64 h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full transition-all duration-100 ease-linear ${scanType === 'record' ? 'bg-gradient-to-r from-red-500 to-pink-500' : 'bg-gradient-to-r from-blue-500 to-indigo-500'}`}
+                      style={{ width: `${renderProgress}%` }}
+                    />
+                  </div>
+                  <p className="text-slate-500 mt-2 font-mono text-xs">{renderProgress}%</p>
+                </div>
+              )}
+
+              {/* Imagem do Avatar (Sempre oculta até escanear) */}
+              <div className={`absolute inset-0 transition-opacity duration-1000 ${hasScanned ? 'opacity-100' : 'opacity-0'}`}>
+                {hasScanned && (
+                  <Image
+                    src={getModelImage()}
+                    alt="Virtual Try-On Model"
+                    fill
+                    className="object-cover object-center"
+                    priority
+                  />
+                )}
               </div>
 
               {/* Camada de Processamento IA */}
@@ -155,7 +260,7 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-cyan-400" />}
                 isActive={activeOutfit === 'beach'}
                 onClick={() => handleTryOn('beach')}
-                disabled={isProcessing}
+                disabled={isProcessing || !hasScanned}
               />
 
               <OutfitCard 
@@ -164,7 +269,7 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-rose-400" />}
                 isActive={activeOutfit === 'lingerie'}
                 onClick={() => handleTryOn('lingerie')}
-                disabled={isProcessing}
+                disabled={isProcessing || !hasScanned}
               />
 
               <OutfitCard 
@@ -173,7 +278,7 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-indigo-400" />}
                 isActive={activeOutfit === 'nightwear'}
                 onClick={() => handleTryOn('nightwear')}
-                disabled={isProcessing}
+                disabled={isProcessing || !hasScanned}
               />
 
               <OutfitCard 
@@ -182,7 +287,7 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-purple-400" />}
                 isActive={activeOutfit === 'dress'}
                 onClick={() => handleTryOn('dress')}
-                disabled={isProcessing}
+                disabled={isProcessing || !hasScanned}
               />
 
               <OutfitCard 
@@ -191,7 +296,7 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-emerald-400" />}
                 isActive={activeOutfit === 'fitness'}
                 onClick={() => handleTryOn('fitness')}
-                disabled={isProcessing}
+                disabled={isProcessing || !hasScanned}
               />
 
               <OutfitCard 
@@ -200,7 +305,7 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-slate-300" />}
                 isActive={activeOutfit === 'executive'}
                 onClick={() => handleTryOn('executive')}
-                disabled={isProcessing}
+                disabled={isProcessing || !hasScanned}
               />
 
               <OutfitCard 
@@ -209,7 +314,7 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-pink-400" />}
                 isActive={activeOutfit === 'jacket'}
                 onClick={() => handleTryOn('jacket')}
-                disabled={isProcessing}
+                disabled={isProcessing || !hasScanned}
               />
 
               <OutfitCard 
@@ -218,7 +323,7 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-blue-400" />}
                 isActive={activeOutfit === 'casual'}
                 onClick={() => handleTryOn('casual')}
-                disabled={isProcessing}
+                disabled={isProcessing || !hasScanned}
               />
 
             </div>
