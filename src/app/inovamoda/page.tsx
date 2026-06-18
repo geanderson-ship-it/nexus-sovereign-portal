@@ -172,16 +172,21 @@ export default function InovaModaPage() {
                   
                   <div className="flex flex-col gap-4 w-full max-w-xs">
                     <Button 
-                      onClick={() => handleStartScan('record')}
-                      className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border-0 py-6"
+                      onClick={() => {
+                        setUploadedImage(null);
+                        setUploadMediaType(null);
+                        setActiveOutfit('default');
+                        handleStartScan('record');
+                      }}
+                      className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border-0 py-6 shadow-[0_0_20px_rgba(219,39,119,0.4)]"
                     >
                       <Camera className="w-5 h-5 mr-2" />
-                      Gravar Vídeo Agora (360º)
+                      Iniciar Demonstração (Modelo Padrão)
                     </Button>
                     
                     <div className="flex items-center gap-4 w-full">
                       <div className="h-px bg-slate-700 flex-1"></div>
-                      <span className="text-xs text-slate-500 uppercase">ou</span>
+                      <span className="text-[10px] text-slate-500 uppercase tracking-widest">Opções de Teste Local</span>
                       <div className="h-px bg-slate-700 flex-1"></div>
                     </div>
                     
@@ -333,8 +338,8 @@ export default function InovaModaPage() {
                   <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
                   Nexus Mirror
                 </div>
-                <div className="bg-black/50 backdrop-blur px-3 py-1.5 rounded text-[10px] font-bold text-pink-400 uppercase tracking-widest border border-white/10 flex items-center gap-2">
-                  360º Avatar
+                <div className="bg-pink-600/80 backdrop-blur px-3 py-1.5 rounded text-[10px] font-bold text-white uppercase tracking-widest border border-pink-400/50 flex items-center gap-2">
+                  Modo de Demonstração Comercial
                 </div>
               </div>
             </Card>
