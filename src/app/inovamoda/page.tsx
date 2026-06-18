@@ -77,6 +77,14 @@ export default function InovaModaPage() {
         return 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=800&auto=format&fit=crop';
       case 'executive':
         return 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=800&auto=format&fit=crop';
+      case 'male-suit':
+        return 'https://images.unsplash.com/photo-1593030731557-41a4a408e01b?q=80&w=800&auto=format&fit=crop';
+      case 'male-casual':
+        return 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=800&auto=format&fit=crop';
+      case 'kids-play':
+        return 'https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?q=80&w=800&auto=format&fit=crop';
+      case 'kids-winter':
+        return 'https://images.unsplash.com/photo-1503919005314-30d93d07d823?q=80&w=800&auto=format&fit=crop';
       default: // 'default'
         return 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop';
     }
@@ -334,6 +342,42 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-blue-400" />}
                 isActive={activeOutfit === 'casual'}
                 onClick={() => handleTryOn('casual')}
+                disabled={isProcessing || !hasScanned}
+              />
+
+              <OutfitCard 
+                title="Alfaiataria Masculina"
+                description="Ternos e moda social para homens"
+                icon={<Shirt className="w-5 h-5 text-amber-500" />}
+                isActive={activeOutfit === 'male-suit'}
+                onClick={() => handleTryOn('male-suit')}
+                disabled={isProcessing || !hasScanned}
+              />
+
+              <OutfitCard 
+                title="Masculino Casual"
+                description="Camisas pólo, jeans e jaquetas"
+                icon={<Shirt className="w-5 h-5 text-slate-400" />}
+                isActive={activeOutfit === 'male-casual'}
+                onClick={() => handleTryOn('male-casual')}
+                disabled={isProcessing || !hasScanned}
+              />
+
+              <OutfitCard 
+                title="Infantil (Kids Casual)"
+                description="Roupas leves para brincar"
+                icon={<Shirt className="w-5 h-5 text-orange-400" />}
+                isActive={activeOutfit === 'kids-play'}
+                onClick={() => handleTryOn('kids-play')}
+                disabled={isProcessing || !hasScanned}
+              />
+
+              <OutfitCard 
+                title="Infantil Inverno"
+                description="Casacos e moletons infantis"
+                icon={<Shirt className="w-5 h-5 text-cyan-500" />}
+                isActive={activeOutfit === 'kids-winter'}
+                onClick={() => handleTryOn('kids-winter')}
                 disabled={isProcessing || !hasScanned}
               />
 
