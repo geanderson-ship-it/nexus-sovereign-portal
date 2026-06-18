@@ -152,14 +152,25 @@ export default function InovaModaPage() {
                       <div className="h-px bg-slate-700 flex-1"></div>
                     </div>
                     
-                    <Button 
-                      onClick={() => handleStartScan('upload')}
-                      variant="outline" 
-                      className="border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-slate-300 py-6"
-                    >
-                      <Upload className="w-5 h-5 mr-2" />
-                      Fazer Upload de Vídeo
-                    </Button>
+                    <div className="relative w-full">
+                      <input 
+                        type="file" 
+                        accept="video/*,image/*"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files.length > 0) {
+                            handleStartScan('upload');
+                          }
+                        }}
+                      />
+                      <Button 
+                        variant="outline" 
+                        className="w-full border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-slate-300 py-6 relative z-0"
+                      >
+                        <Upload className="w-5 h-5 mr-2" />
+                        Fazer Upload de Vídeo
+                      </Button>
+                    </div>
                   </div>
                 </div>
               )}
