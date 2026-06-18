@@ -15,6 +15,7 @@ export default function InovaModaPage() {
   const [hasScanned, setHasScanned] = useState(false);
   const [isScanning, setIsScanning] = useState(false);
   const [scanType, setScanType] = useState<'record' | 'upload' | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
   // Estados de Interação 3D (Zoom e Giro)
   const [isDragging, setIsDragging] = useState(false);
@@ -107,7 +108,7 @@ export default function InovaModaPage() {
       case 'kids-winter':
         return 'https://images.unsplash.com/photo-1503919005314-30d93d07d823?q=80&w=800&auto=format&fit=crop';
       default: // 'default'
-        return 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop';
+        return uploadedImage || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop';
     }
   };
 
@@ -188,6 +189,10 @@ export default function InovaModaPage() {
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         onChange={(e) => {
                           if (e.target.files && e.target.files.length > 0) {
+                            const file = e.target.files[0];
+                            const url = URL.createObjectURL(file);
+                            setUploadedImage(url);
+                            setActiveOutfit('default');
                             handleStartScan('upload');
                           }
                         }}
@@ -270,6 +275,7 @@ export default function InovaModaPage() {
                       className="object-cover object-center pointer-events-none"
                       priority
                       draggable={false}
+                      unoptimized={getModelImage()?.startsWith('blob:')}
                     />
                     
                     {isDragging && (
