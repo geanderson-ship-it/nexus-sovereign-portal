@@ -108,6 +108,8 @@ export default function InovaModaPage() {
         return 'https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?q=80&w=800&auto=format&fit=crop';
       case 'kids-winter':
         return 'https://images.unsplash.com/photo-1503919005314-30d93d07d823?q=80&w=800&auto=format&fit=crop';
+      case 'sneakers':
+        return 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop';
       default: // 'default'
         return uploadedImage || 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=800&auto=format&fit=crop';
     }
@@ -452,6 +454,15 @@ export default function InovaModaPage() {
                 icon={<Shirt className="w-5 h-5 text-cyan-500" />}
                 isActive={activeOutfit === 'kids-winter'}
                 onClick={() => handleTryOn('kids-winter')}
+                disabled={isProcessing || !hasScanned}
+              />
+
+              <OutfitCard 
+                title="Calçados (Sneakers)"
+                description="Tênis e calçados em 3D"
+                icon={<Shirt className="w-5 h-5 text-red-500" />}
+                isActive={activeOutfit === 'sneakers'}
+                onClick={() => handleTryOn('sneakers')}
                 disabled={isProcessing || !hasScanned}
               />
 
