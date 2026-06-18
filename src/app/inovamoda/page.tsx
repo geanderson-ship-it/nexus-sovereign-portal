@@ -16,6 +16,7 @@ export default function InovaModaPage() {
   const [isScanning, setIsScanning] = useState(false);
   const [scanType, setScanType] = useState<'record' | 'upload' | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [uploadMediaType, setUploadMediaType] = useState<'video' | 'image' | null>(null);
 
   // Estados de Interação 3D (Zoom e Giro)
   const [isDragging, setIsDragging] = useState(false);
@@ -192,6 +193,7 @@ export default function InovaModaPage() {
                             const file = e.target.files[0];
                             const url = URL.createObjectURL(file);
                             setUploadedImage(url);
+                            setUploadMediaType(file.type.startsWith('video/') ? 'video' : 'image');
                             setActiveOutfit('default');
                             handleStartScan('upload');
                           }
@@ -268,15 +270,26 @@ export default function InovaModaPage() {
                       transformOrigin: `${mousePos.x}% ${mousePos.y}%`
                     }}
                   >
-                    <Image
-                      src={getModelImage()}
-                      alt="Virtual Try-On Model"
-                      fill
-                      className="object-cover object-center pointer-events-none"
-                      priority
-                      draggable={false}
-                      unoptimized={getModelImage()?.startsWith('blob:')}
-                    />
+                    {uploadMediaType === 'video' && activeOutfit === 'default' ? (
+                      <video 
+                        src={uploadedImage!}
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
+                        className="object-cover w-full h-full pointer-events-none"
+                      />
+                    ) : (
+                      <Image
+                        src={getModelImage()}
+                        alt="Virtual Try-On Model"
+                        fill
+                        className="object-cover object-center pointer-events-none"
+                        priority
+                        draggable={false}
+                        unoptimized={getModelImage()?.startsWith('blob:')}
+                      />
+                    )}
                     
                     {isDragging && (
                       <div className="absolute inset-0 flex items-end justify-center pb-10 bg-black/10 z-10 pointer-events-none">
