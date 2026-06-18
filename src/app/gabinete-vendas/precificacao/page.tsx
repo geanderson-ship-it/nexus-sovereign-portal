@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Shield, Search, Lock, MapPin, Coins, Zap, Wheat, Paintbrush, Building2, Users, BrainCircuit, Database, Activity, HeartPulse, BookOpen, TrendingUp, Mic, ShoppingBag, ShoppingCart, Cpu, BarChart3, Timer, Package, Truck, Factory } from 'lucide-react';
+import { Shield, Search, Lock, MapPin, Coins, Zap, Wheat, Paintbrush, Building2, Users, BrainCircuit, Database, Activity, HeartPulse, BookOpen, TrendingUp, Mic, ShoppingBag, ShoppingCart, Cpu, BarChart3, Timer, Package, Truck, Factory, Shirt } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -107,6 +107,20 @@ const priceItems: PriceItem[] = [
     tagBorder: 'border-emerald-500/15',
     startupPrice: 'R$ 150.000',
     monthlyPrice: 'De R$ 12.500 (-20%) por R$ 9.999/mês'
+  },
+  {
+    name: 'InovaModa 360 (Virtual Try-On)',
+    category: 'premium',
+    description: 'Provador Virtual 3D com IA, Avatar Digital e Integração B2B',
+    icon: Shirt,
+    iconColor: 'text-pink-400',
+    iconBg: 'bg-pink-500/10 border-pink-500/20',
+    tag: 'Retail Intel',
+    tagBg: 'bg-pink-500/10',
+    tagText: 'text-pink-400',
+    tagBorder: 'border-pink-500/15',
+    startupPrice: 'R$ 100.000',
+    monthlyPrice: 'De R$ 18.000 por R$ 15.000/mês'
   },
 
   // Empresas (B2B)
