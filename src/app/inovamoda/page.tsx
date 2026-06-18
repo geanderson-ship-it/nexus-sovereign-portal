@@ -16,6 +16,27 @@ export default function InovaModaPage() {
   const [isScanning, setIsScanning] = useState(false);
   const [scanType, setScanType] = useState<'record' | 'upload' | null>(null);
 
+  // Estados de Interação 3D (Zoom e Giro)
+  const [isDragging, setIsDragging] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !hasScanned) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setMousePos({ x, y });
+    
+    // Calcula o tilt 3D baseado no centro (50,50)
+    const rotateX = ((y - 50) / 50) * -20; // max 20 graus
+    const rotateY = ((x - 50) / 50) * 20;  // max 20 graus
+    
+    setRotate({ x: rotateX, y: rotateY });
+  };
+
   // Simulador de Escaneamento Inicial (Vídeo / Upload)
   const handleStartScan = (type: 'record' | 'upload') => {
     setScanType(type);
@@ -224,17 +245,51 @@ export default function InovaModaPage() {
               )}
 
               {/* Imagem do Avatar (Sempre oculta até escanear) */}
-              <div className={`absolute inset-0 transition-opacity duration-1000 ${hasScanned ? 'opacity-100' : 'opacity-0'}`}>
+              <div 
+                className={`absolute inset-0 transition-opacity duration-1000 ${hasScanned ? 'opacity-100' : 'opacity-0'} overflow-hidden cursor-crosshair`}
+                style={{ perspective: '1000px' }}
+                onMouseDown={() => setIsDragging(true)}
+                onMouseUp={() => setIsDragging(false)}
+                onMouseLeave={() => { setIsDragging(false); setRotate({x: 0, y: 0}); }}
+                onMouseMove={handleMouseMove}
+              >
                 {hasScanned && (
-                  <Image
-                    src={getModelImage()}
-                    alt="Virtual Try-On Model"
-                    fill
-                    className="object-cover object-center"
-                    priority
-                  />
+                  <div 
+                    className="relative w-full h-full transition-transform duration-100 ease-linear"
+                    style={{
+                      transform: isDragging 
+                        ? `scale(1.5) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)` 
+                        : 'scale(1) rotateX(0deg) rotateY(0deg)',
+                      transformOrigin: `${mousePos.x}% ${mousePos.y}%`
+                    }}
+                  >
+                    <Image
+                      src={getModelImage()}
+                      alt="Virtual Try-On Model"
+                      fill
+                      className="object-cover object-center pointer-events-none"
+                      priority
+                      draggable={false}
+                    />
+                    
+                    {isDragging && (
+                      <div className="absolute inset-0 flex items-end justify-center pb-10 bg-black/10 z-10 pointer-events-none">
+                        <div className="px-4 py-2 bg-black/60 backdrop-blur rounded-full text-white font-mono text-xs tracking-widest border border-white/20">
+                          <RefreshCw className="w-4 h-4 inline-block animate-spin mr-2"/>
+                          RENDERIZANDO MESH 360º
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
+
+              {/* Dica de UI flutuante */}
+              {hasScanned && !isDragging && (
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-slate-900/80 backdrop-blur border border-pink-500/30 rounded-full text-[10px] font-bold text-pink-400 uppercase tracking-widest animate-pulse pointer-events-none z-10 flex items-center gap-2">
+                  <ScanLine className="w-4 h-4" /> Clique e Segure para Visualização 360º
+                </div>
+              )}
 
               {/* Camada de Processamento IA */}
               {isProcessing && (
