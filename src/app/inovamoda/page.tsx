@@ -277,14 +277,14 @@ export default function InovaModaPage() {
                         loop 
                         muted 
                         playsInline
-                        className="object-cover w-full h-full pointer-events-none"
+                        className="object-contain w-full h-full pointer-events-none bg-black/40"
                       />
                     ) : (
                       <Image
                         src={getModelImage()}
                         alt="Virtual Try-On Model"
                         fill
-                        className="object-cover object-center pointer-events-none"
+                        className="object-contain object-center pointer-events-none"
                         priority
                         draggable={false}
                         unoptimized={getModelImage()?.startsWith('blob:')}
