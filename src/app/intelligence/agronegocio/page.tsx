@@ -89,9 +89,9 @@ export default function AgronegocioPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center w-full mt-8">
-                    <Button asChild className="bg-emerald-600 text-white hover:bg-emerald-500 h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-bold uppercase tracking-wide text-xs sm:text-sm flex-1 max-w-xs border border-emerald-400/30">
-                      <Link href="/intelligence/dante-safra">ACESSAR MÓDULO</Link>
+                  <div className="flex flex-col gap-4 justify-center w-full mt-8">
+                    <Button asChild className="bg-emerald-600 text-white hover:bg-emerald-500 h-16 sm:h-20 w-full max-w-lg mx-auto rounded-2xl font-black uppercase tracking-widest text-base sm:text-xl border-2 border-emerald-400/50 shadow-[0_0_50px_rgba(16,185,129,0.5)] transition-all hover:scale-105">
+                      <Link href="/intelligence/dante-safra">ACESSAR TERMINAL</Link>
                     </Button>
                     <Button asChild className="bg-transparent text-emerald-400 border-2 border-emerald-500/50 hover:bg-emerald-500/10 h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-bold uppercase tracking-wide text-xs sm:text-sm flex-1 max-w-xs"
                       onClick={() => gtag.event({ action: 'contact_click', category: 'engagement', label: 'consultant_dante_standard' })}>
@@ -155,9 +155,9 @@ export default function AgronegocioPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center w-full mt-10">
-                    <Button asChild className="bg-emerald-700 text-white hover:bg-emerald-600 h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-bold uppercase tracking-wide text-xs sm:text-sm flex-1 max-w-xs border border-emerald-400/30">
-                      <Link href="/intelligence/dante-safra">ACESSAR MÓDULO</Link>
+                  <div className="flex flex-col gap-4 justify-center w-full mt-10">
+                    <Button asChild className="bg-emerald-700 text-white hover:bg-emerald-600 h-16 sm:h-20 w-full max-w-lg mx-auto rounded-2xl font-black uppercase tracking-widest text-base sm:text-xl border-2 border-emerald-400/50 shadow-[0_0_60px_rgba(16,185,129,0.6)] transition-all hover:scale-105">
+                      <Link href="/intelligence/dante-safra">ACESSAR TERMINAL</Link>
                     </Button>
                     <Button asChild className="bg-transparent text-emerald-400 border-2 border-emerald-500/50 hover:bg-emerald-500/10 h-12 sm:h-14 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-bold uppercase tracking-wide text-xs sm:text-sm flex-1 max-w-xs"
                       onClick={() => gtag.event({ action: 'contact_click', category: 'engagement', label: 'consultant_dante_axis' })}>

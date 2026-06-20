@@ -10,7 +10,6 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory, Sparkles } from 'lucide-react';
 import * as gtag from '@/lib/gtag';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
-import { WhiteLabelHeader } from '@/components/nexus/white-label-header';
 
 const WHATSAPP_URL = 'https://wa.me/5551999799582';
 
@@ -238,14 +237,27 @@ export default function NexusEmpresasPage() {
         </div>
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20 px-6 py-1.5 tracking-[0.3em] font-mono text-[10px] mb-8">B2B_INTELLIGENCE_SUITE</Badge>
-          <div className="w-full flex justify-center mb-6">
-            <WhiteLabelHeader
-              defaultTitle="Nexus Empresas"
-              defaultSlogan="Tecnologia soberana instalada diretamente nos seus servidores. 100% On-Premise. Seus dados industriais nunca saem do seu galpão."
-              defaultLogo="/logo-nexus-shield.png"
-              storageKeyPrefix="empresas"
-              themeColor="blue"
-            />
+          <div className="w-full flex flex-col items-center text-center gap-6 mt-12 mb-6 max-w-4xl px-4 mx-auto">
+            {/* LOGO */}
+            <div className="relative w-full max-w-[800px] h-[500px] flex items-center justify-center">
+              <div className="w-full h-full rounded-[40px] flex items-center justify-center border border-blue-500/20 bg-blue-500/5 shadow-[0_0_80px_rgba(255,255,255,0.06)]">
+                <img
+                  src="/Nexus Empresas/Nexus Empresas azul.png"
+                  alt="Nexus Logo Shield"
+                  className="w-full h-full object-contain filter brightness-110 p-2"
+                />
+              </div>
+            </div>
+
+            {/* NOME DA EMPRESA */}
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-white">
+              Nexus <span className="text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-indigo-600">Empresas</span>
+            </h1>
+
+            {/* SLOGAN */}
+            <p className="text-zinc-400 text-sm sm:text-base md:text-xl font-light tracking-wide max-w-2xl leading-relaxed mx-auto">
+              Tecnologia soberana instalada diretamente nos seus servidores. 100% On-Premise. Seus dados industriais nunca saem do seu galpão.
+            </p>
           </div>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild className="bg-[#00D4FF] text-black hover:bg-[#00D4FF]/90 font-black uppercase tracking-widest px-10 h-14 text-base rounded-2xl shadow-[0_0_40px_rgba(0,212,255,0.3)]"

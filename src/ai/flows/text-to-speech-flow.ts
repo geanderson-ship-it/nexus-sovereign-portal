@@ -96,6 +96,7 @@ const textToSpeechFlow = ai.defineFlow(
       const isDante = voiceNameLower === 'dante';
       const isAtena = voiceNameLower === 'atena' || voiceNameLower === 'athena';
       const isOrion = voiceNameLower === 'orion';
+      const isDjeny = voiceNameLower === 'djeny';
       
       let targetElevenLabsVoiceId = null;
       if (isDante && process.env.DANTE_ELEVENLABS_VOICE_ID) {
@@ -104,6 +105,8 @@ const textToSpeechFlow = ai.defineFlow(
         targetElevenLabsVoiceId = process.env.ATENA_ELEVENLABS_VOICE_ID;
       } else if (isOrion && process.env.ORION_ELEVENLABS_VOICE_ID) {
         targetElevenLabsVoiceId = process.env.ORION_ELEVENLABS_VOICE_ID;
+      } else if (isDjeny && process.env.DJENY_ELEVENLABS_VOICE_ID) {
+        targetElevenLabsVoiceId = process.env.DJENY_ELEVENLABS_VOICE_ID;
       }
 
       if (targetElevenLabsVoiceId && process.env.ELEVENLABS_API_KEY) {
@@ -118,7 +121,7 @@ const textToSpeechFlow = ai.defineFlow(
               .replace(/(?<=^|[^a-zA-Z0-9À-ÿ])çã(?=$|[^a-zA-Z0-9À-ÿ])/gi,  'massan');
           };
 
-          const ttsText = isDante ? sanitizeForWillVoice(text.trim()) : text.trim();
+          const ttsText = (isDante || isDjeny) ? sanitizeForWillVoice(text.trim()) : text.trim();
           
           console.log(`[ElevenLabs TTS] Generating voice clone for "${voiceNameLower}". Raw text: "${text.trim()}" | Sent text: "${ttsText}" | Voice ID: ${targetElevenLabsVoiceId}`);
 
@@ -136,10 +139,10 @@ const textToSpeechFlow = ai.defineFlow(
                 model_id: 'eleven_multilingual_v2',
                 voice_settings: {
                   stability: 0.45,
-                  similarity_boost: 0.80,
-                  style: 0.3,
+                  similarity_boost: 0.85,
+                  style: 0.5,
                   use_speaker_boost: true,
-                  speed: 1.0,
+                  speed: isDjeny ? 1.10 : 1.0,
                 },
               }),
             }

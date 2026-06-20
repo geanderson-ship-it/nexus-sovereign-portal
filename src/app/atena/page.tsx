@@ -11,23 +11,12 @@ import { orionChat } from '@/ai/flows/orion-chat-flow';
 import { useLocale } from '@/hooks/use-locale';
 import { useUser } from '@/auth';
 import type { AwsRumConfig } from 'aws-rum-web';
-import { isAdminUser } from '@/lib/constants';
 import { extractVideoFrames } from '@/lib/video-frames';
+import AuthGate from '@/components/auth-gate';
 
 function AtenaContent() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
-  const [isAuthorized, setIsAuthorized] = useState(false);
-
-  useEffect(() => {
-    if (!isUserLoading) {
-      if (!user || !isAdminUser(user)) {
-        router.push('/login');
-      } else {
-        setIsAuthorized(true);
-      }
-    }
-  }, [user, isUserLoading, router]);
   const { locale } = useLocale();
   const searchParams = useSearchParams();
   const [isLive, setIsLive] = useState(false);
@@ -319,11 +308,11 @@ function AtenaContent() {
     }
   };
 
-  if (isUserLoading || !isAuthorized) {
+  if (isUserLoading) {
     return (
       <div className="min-h-screen bg-[#020617] flex flex-col items-center justify-center text-violet-400">
         <Loader2 className="w-12 h-12 mb-4 animate-spin text-violet-500/50" />
-        <h2 className="text-xl font-headline tracking-widest text-white/50 uppercase">Verificando Credenciais</h2>
+        <h2 className="text-xl font-headline tracking-widest text-white/50 uppercase">Carregando Atena...</h2>
       </div>
     );
   }
@@ -630,7 +619,9 @@ function AtenaContent() {
 export default function AtenaPage() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#020617] flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-blue-500" /></div>}>
-      <AtenaContent />
+      <AuthGate requiredLevel="ADMIN">
+        <AtenaContent />
+      </AuthGate>
     </Suspense>
   );
 }

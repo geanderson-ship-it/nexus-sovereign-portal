@@ -90,12 +90,11 @@ export function SiteHeader() {
     { title: t('navGaleria'), href: '/gallery' },
     { title: t('navPalestras'), href: '/palestras' },
     { title: t('navIntelligence'), href: '/intelligence' },
-    { title: 'Agro', href: '/agro' },
-    { title: 'Energia', href: '/energia' },
-    { title: 'Moda 3D', href: '/inovamoda' },
-    { title: 'Premium', href: '/intelligence/premium' },
-    { title: 'EMPRESAS', href: '/nexus-empresas' },
-    { title: 'Social', href: '/proposito' },
+    { title: t('navAgro') || 'Agro', href: '/agro' },
+    { title: t('navEnergia') || 'Energia', href: '/energia' },
+    { title: t('navPremium') || 'Premium', href: '/intelligence/premium' },
+    { title: t('navEmpresas') || 'Empresas', href: '/nexus-empresas' },
+    { title: t('navSocial') || 'Social', href: '/proposito' },
     { title: t('navSobre'), href: '/about' },
     { title: t('navContato'), href: '/contact' },
     { title: t('navSuporte'), href: '/suporte' },
@@ -109,8 +108,8 @@ export function SiteHeader() {
         
         {/* TOP ROW: Logo & Controls */}
         <div className="flex items-center justify-between w-full">
-          {/* Spacer to keep logo strictly centered */}
-          <div className="hidden md:block w-1/3" />
+          {/* Top Left Spacer */}
+          <div className="hidden md:flex w-1/3"></div>
           
           <div className="w-1/2 md:w-1/3 flex justify-start md:justify-center">
             <Link href="/" className="items-center flex" onClick={() => setMobileMenuOpen(false)}>

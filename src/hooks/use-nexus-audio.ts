@@ -39,6 +39,43 @@ function getCacheKey(text: string, voice: string, locale: string): string {
 }
 
 
+function preprocessAudioText(text: string | undefined): string {
+    if (!text) return '';
+    let processedText = text.trim();
+    if (!processedText) return '';
+
+    processedText = processedText.replace(/\b(Jean|Gean)\b/gi, 'Gian');
+    processedText = processedText.replace(/\bNexus\b/gi, 'Nécsus');
+    processedText = processedText.replace(/\b(Djeny|Djenny|Djeni|Dieny)\b/gi, 'Diêni');
+
+    processedText = processedText.replace(/o\(a\)/gi, 'o');
+    processedText = processedText.replace(/a\(o\)/gi, 'a');
+
+    processedText = processedText.replace(/\*\*/g, '');
+    processedText = processedText.replace(/\*/g, '');
+    processedText = processedText.replace(/__/g, '');
+    processedText = processedText.replace(/_/g, '');
+    processedText = processedText.replace(/#/g, '');
+    processedText = processedText.replace(/`+/g, '');
+    processedText = processedText.replace(/[\[\]]/g, '');
+
+    processedText = processedText.replace(/\.{2,}/g, '. ');
+    processedText = processedText.replace(/([.?!])\s/g, '$1 ... ');
+    processedText = processedText.replace(/([.?!])$/g, '$1 ...');
+    processedText = processedText.replace(/:/g, ', ');
+    processedText = processedText.replace(/;/g, ', ');
+    processedText = processedText.replace(/[\(\)]/g, '');
+
+    processedText = processedText.replace(/[\u{1F300}-\u{1F9FF}]/gu, '');
+    processedText = processedText.replace(/[\u{1F600}-\u{1F64F}]/gu, '');
+    processedText = processedText.replace(/[\u{2700}-\u{27BF}]/gu, '');
+    processedText = processedText.replace(/[\u{1F680}-\u{1F6FF}]/gu, '');
+    processedText = processedText.replace(/[\u{2600}-\u{26FF}]/gu, '');
+    processedText = processedText.replace(/[\u{1F1E0}-\u{1F1FF}]/gu, '');
+
+    return processedText.replace(/\s+/g, ' ').trim();
+}
+
 export function useNexusAudio() {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -100,7 +137,7 @@ export function useNexusAudio() {
     }, []);
 
     const playAudio = useCallback(async (input: UseNexusAudioInput) => {
-        const { text, voice, id, onEnded } = input;
+        const { text, voice, id, onEnded, nextTrack } = input;
         
         const context = getAudioContext();
         if (!context) {
@@ -117,49 +154,11 @@ export function useNexusAudio() {
         
         stopAudio();
         
-        let processedText = text?.trim();
+        const processedText = preprocessAudioText(text);
         if (!processedText) {
             onEnded?.();
             return;
         }
-
-        // 1. Substituir pronúncias comuns
-        processedText = processedText.replace(/\b(Jean|Gean)\b/gi, 'Gian');
-        processedText = processedText.replace(/\bNexus\b/gi, 'Nécsus');
-        processedText = processedText.replace(/\b(Djeny|Djenny|Djeni|Dieny)\b/gi, 'Diêni');
-
-        // 2. Normalizar gêneros gramaticais e abreviações
-        processedText = processedText.replace(/o\(a\)/gi, 'o');
-        processedText = processedText.replace(/a\(o\)/gi, 'a');
-
-        // 3. Remover siglas de estados para evitar gagueira
-        processedText = processedText.replace(/\b(rs|sc|pr|sp|rj|mg|go|mt|ms|ba|pe|ce|rn|pb|al|se|ma|pi|pa|am|ac|ro|rr|ap|to|df)\b/gi, '');
-
-        // 4. Limpar formatação Markdown (negrito, itálico, títulos, listas)
-        processedText = processedText.replace(/\*\*/g, '');
-        processedText = processedText.replace(/\*/g, '');
-        processedText = processedText.replace(/__/g, '');
-        processedText = processedText.replace(/_/g, '');
-        processedText = processedText.replace(/#/g, '');
-        processedText = processedText.replace(/`+/g, '');
-        processedText = processedText.replace(/[\[\]]/g, '');
-
-        // 5. Normalizar pontuações complexas ou causadoras de gagueira (reticências, dois pontos, parênteses)
-        processedText = processedText.replace(/\.{2,}/g, '. ');
-        processedText = processedText.replace(/:/g, ', ');
-        processedText = processedText.replace(/;/g, ', ');
-        processedText = processedText.replace(/[\(\)]/g, '');
-
-        // 6. Remover todos os tipos de Emojis
-        processedText = processedText.replace(/[\u{1F300}-\u{1F9FF}]/gu, '');
-        processedText = processedText.replace(/[\u{1F600}-\u{1F64F}]/gu, '');
-        processedText = processedText.replace(/[\u{2700}-\u{27BF}]/gu, '');
-        processedText = processedText.replace(/[\u{1F680}-\u{1F6FF}]/gu, '');
-        processedText = processedText.replace(/[\u{2600}-\u{26FF}]/gu, '');
-        processedText = processedText.replace(/[\u{1F1E0}-\u{1F1FF}]/gu, '');
-
-        // 7. Normalizar espaços em branco
-        processedText = processedText.replace(/\s+/g, ' ').trim();
 
         const newAbortController = new AbortController();
         abortControllerRef.current = newAbortController;
@@ -244,6 +243,20 @@ export function useNexusAudio() {
             
             source.start(0);
 
+            // Sequential Prefetch: Agora que o áudio atual começou, 
+            // pré-carregamos o próximo *sequencialmente* para evitar erros de concorrência na API.
+            if (nextTrack) {
+                const nextProcessed = preprocessAudioText(nextTrack.text);
+                if (nextProcessed) {
+                    const nextKey = getCacheKey(nextProcessed, nextTrack.voice, locale);
+                    if (!audioCache.has(nextKey)) {
+                        textToSpeech({ text: nextProcessed, voice: nextTrack.voice, locale })
+                            .then(data => audioCache.set(nextKey, data))
+                            .catch(e => console.warn("Prefetch sequencial falhou", e));
+                    }
+                }
+            }
+
         } catch (err: any) {
             if (!newAbortController.signal.aborted) {
                 console.error(`VIX DIAGNOSTIC: Falha no processamento de áudio.`, err);
@@ -286,6 +299,22 @@ export function useNexusAudio() {
         getAudioContext();
     }, [getAudioContext]);
 
+    const preloadAudioCache = useCallback(async (input: UseNexusAudioInput) => {
+        const { text, voice } = input;
+        const processedText = preprocessAudioText(text);
+        if (!processedText) return;
+        const cacheKey = getCacheKey(processedText, voice, locale);
+        if (audioCache.has(cacheKey)) return;
+        
+        try {
+            const audioData = await textToSpeech({ text: processedText, voice, locale });
+            audioCache.set(cacheKey, audioData);
+        } catch (e) {
+            // Silently fail preload
+            console.warn("Preload falhou silenciosamente", e);
+        }
+    }, [locale]);
+
     useEffect(() => {
         return () => stopAudio();
     }, [stopAudio]);
@@ -299,6 +328,7 @@ export function useNexusAudio() {
         playingId,
         isSpeaking: isPlaying,
         warmUpAudio,
+        preloadAudioCache,
         currentViseme,
     };
 }

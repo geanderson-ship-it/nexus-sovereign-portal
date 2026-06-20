@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
 import React, { useMemo, useState } from 'react';
 import { useUser } from '@/auth';
-import { isAdminUser } from '@/lib/constants';
+import { useAccessLevel } from '@/hooks/use-access-level';
 import RelacionamentoInicianteContent from '@/components/course-content/relacionamento-iniciante';
 import RelacionamentoIntermediarioContent from '@/components/course-content/relacionamento-intermediario';
 import PreparandoEquipesIntermediarioContent from '@/components/course-content/preparando-equipes-intermediario';
@@ -69,7 +69,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
   const course = getCourseBySlug(slug);
   const router = useRouter();
   const { toast } = useToast();
-  const { user, isUserLoading } = useUser();
+  const { hasSalesAccess, user } = useAccessLevel();
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [showPaymentPanel, setShowPaymentPanel] = useState(false);
@@ -94,9 +94,9 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
     return () => clearInterval(timer);
   }, []);
 
-  const isAdmin = useMemo(() => isAdminUser(user), [user]);
-  const isPurchased = isAdmin;
-  const purchaseId = isAdmin ? `admin-access-${course?.slug}` : null;
+  const { hasSalesAccess, hasAdminAccess } = useAccessLevel();
+  const isPurchased = hasSalesAccess;
+  const purchaseId = hasAdminAccess ? `admin-access-${course?.slug}` : null;
   const purchasesLoading = false;
   
     const pixPayload = useMemo(() => {
@@ -193,7 +193,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
 
           <div className="prose prose-invert max-w-none text-foreground">
               {ContentComponent ? (
-                <ContentComponent course={course} isPurchased={isPurchased || isAdmin} />
+                <ContentComponent course={course} isPurchased={isPurchased} />
               ) : (
                 <>
                   <h2 className={cn("text-2xl font-bold text-primary", "font-headline")}>{t('courseDetail.learningTitle')}</h2>
@@ -364,7 +364,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
                             </CardFooter>
                         </Card>
                     </div>
-                    {isAdmin && !isPurchased && (
+                    {hasAdminAccess && !isPurchased && (
                         <div className="mt-4 border-t pt-4">
                              <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/10" onClick={handlePurchase} disabled={isSubmitting}>
                                 <Key className="mr-2 h-4 w-4" />

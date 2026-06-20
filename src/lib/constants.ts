@@ -1,3 +1,4 @@
+export type UserLevel = 'ADMIN' | 'SALES' | 'USER';
 
 export const ADMIN_EMAILS = [
     'geanderson@nexustreinamento.com',

@@ -23,6 +23,14 @@ export default function ContratosLancadosPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'approved' | 'pending'>('all');
+
+  const filteredContratos = MOCK_CONTRATOS.filter(c => {
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'approved') return c.status === 'Aprovado';
+    if (activeFilter === 'pending') return c.status !== 'Aprovado';
+    return true;
+  });
 
   useEffect(() => {
     if (!isUserLoading) {
@@ -85,19 +93,28 @@ export default function ContratosLancadosPage() {
 
         {/* Mocks Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-slate-900/40 border-slate-800">
+          <Card 
+            className={`cursor-pointer transition-all ${activeFilter === 'all' ? 'bg-slate-800/80 border-slate-500 shadow-[0_0_15px_rgba(255,255,255,0.1)]' : 'bg-slate-900/40 border-slate-800 hover:bg-slate-800/40'}`}
+            onClick={() => setActiveFilter('all')}
+          >
             <CardHeader className="pb-2">
               <CardDescription className="text-xs uppercase tracking-widest font-bold text-slate-400">Total de Contratos</CardDescription>
               <CardTitle className="text-3xl font-headline text-white">412</CardTitle>
             </CardHeader>
           </Card>
-          <Card className="bg-slate-900/40 border-emerald-900/50">
+          <Card 
+            className={`cursor-pointer transition-all ${activeFilter === 'approved' ? 'bg-emerald-900/30 border-emerald-500/80 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : 'bg-slate-900/40 border-emerald-900/50 hover:bg-emerald-900/20'}`}
+            onClick={() => setActiveFilter('approved')}
+          >
             <CardHeader className="pb-2">
               <CardDescription className="text-xs uppercase tracking-widest font-bold text-emerald-500">Aprovados / Ativos</CardDescription>
               <CardTitle className="text-3xl font-headline text-emerald-400">388</CardTitle>
             </CardHeader>
           </Card>
-          <Card className="bg-slate-900/40 border-amber-900/50">
+          <Card 
+            className={`cursor-pointer transition-all ${activeFilter === 'pending' ? 'bg-amber-900/30 border-amber-500/80 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : 'bg-slate-900/40 border-amber-900/50 hover:bg-amber-900/20'}`}
+            onClick={() => setActiveFilter('pending')}
+          >
             <CardHeader className="pb-2">
               <CardDescription className="text-xs uppercase tracking-widest font-bold text-amber-500">Aguardando Auditoria</CardDescription>
               <CardTitle className="text-3xl font-headline text-amber-400">24</CardTitle>
@@ -126,7 +143,7 @@ export default function ContratosLancadosPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {MOCK_CONTRATOS.map((contrato, i) => (
+                  {filteredContratos.map((contrato, i) => (
                     <tr key={i} className="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
                       <td className="px-4 py-4 font-mono text-amber-400/80">{contrato.id}</td>
                       <td className="px-4 py-4 font-bold text-white">{contrato.cliente}</td>

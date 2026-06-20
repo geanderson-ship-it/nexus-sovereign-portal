@@ -13,11 +13,12 @@ import { Volume2, Pause, Loader2, Play, ArrowLeft, BotMessageSquare, Lock } from
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { lectureScripts, LectureScriptItem } from '@/lib/lecture-scripts';
-import { useUser } from '@/auth';
+import { useAccessLevel } from '@/hooks/use-access-level';
 import { Skeleton } from '@/components/ui/skeleton';
-import { isAdminUser } from '@/lib/constants';
 import { palestras as allPalestras } from '@/lib/courses-data';
 import { useLocale } from '@/hooks/use-locale';
+import { useHeyGenStream } from '@/hooks/use-heygen-stream';
+import { NexusStage } from '@/components/ui/nexus-stage';
 
 export default function ClientPage({ params: routeParams }: { params: { slug: string } }) {
     const { t } = useLocale();
@@ -29,13 +30,14 @@ export default function ClientPage({ params: routeParams }: { params: { slug: st
     const course = getCourseBySlug(slug) as Course | undefined;
     const lectureScript = lectureScripts[slug];
     
-    const { user, isUserLoading } = useUser();
-
-    const isAdmin = isAdminUser(user);
-    const isPurchased = isAdmin;
+    const { user, hasSalesAccess, isLoading } = useAccessLevel();
+    const isPurchased = hasSalesAccess;
+    const isUserLoading = isLoading;
     const purchasesLoading = false;
 
-    const { playAudio, stopAudio, isPlaying, isLoadingAudio, playingId } = useNexusAudio();
+    const { playAudio, stopAudio, isPlaying: isAudioPlaying, isLoadingAudio, playingId } = useNexusAudio();
+    const { stream, isConnecting, isConnected, isSpeaking: isAvatarSpeaking, initializeSession, speak, closeSession } = useHeyGenStream();
+    
     const [isPlaylistActive, setIsPlaylistActive] = useState(false);
     const [currentTrackIndex, setCurrentTrackIndex] = useState<number | null>(null);
 
@@ -44,7 +46,7 @@ export default function ClientPage({ params: routeParams }: { params: { slug: st
         isPlaylistActiveRef.current = isPlaylistActive;
     }, [isPlaylistActive]);
 
-    const playTrack = useCallback((index: number) => {
+    const playTrack = useCallback(async (index: number) => {
         if (!lectureScript || index >= lectureScript.length || !isPurchased) {
             setIsPlaylistActive(false);
             setCurrentTrackIndex(null);
@@ -59,27 +61,49 @@ export default function ClientPage({ params: routeParams }: { params: { slug: st
             return;
         }
 
-        playAudio({
-            text: t(track.text as any),
-            voice: track.speaker as 'dante' | 'djeny',
-            id: index,
-            audioUrl: track.audioUrl,
-            onEnded: () => {
-                if (isPlaylistActiveRef.current) {
-                    playTrack(index + 1);
-                }
-            },
-        });
-    }, [playAudio, lectureScript]); // eslint-disable-line react-hooks/exhaustive-deps
+        const nextTrack = lectureScript[index + 1];
+        const textToSpeak = t(track.text as any);
+
+        // Tentativa de usar HeyGen Streaming (Fase 4/Phase 3 Fallback)
+        if (isConnected) {
+            await speak(textToSpeak);
+            // We would need to handle onEnded for HeyGen, but since it's sync mode we might need to listen to Avatar events or estimate time.
+            // For now, if connected, we just speak. In the future we handle the sequence queue better via SDK events.
+        } else {
+            // Fallback para Áudio TTS
+            playAudio({
+                text: textToSpeak,
+                voice: track.speaker as 'dante' | 'djeny',
+                id: index,
+                audioUrl: track.audioUrl,
+                nextTrack: (nextTrack && nextTrack.text) ? {
+                    text: t(nextTrack.text as any),
+                    voice: nextTrack.speaker as 'dante' | 'djeny'
+                } : undefined,
+                onEnded: () => {
+                    if (isPlaylistActiveRef.current) {
+                        playTrack(index + 1);
+                    }
+                },
+            });
+        }
+    }, [playAudio, lectureScript, isPurchased, t, isConnected, speak]);
 
 
-    const handlePlayAllToggle = () => {
+    const handlePlayAllToggle = async () => {
         if (isPlaylistActive) {
             stopAudio();
+            closeSession();
             setIsPlaylistActive(false);
             setCurrentTrackIndex(null);
         } else {
             setIsPlaylistActive(true);
+            
+            // Tenta inicializar a sessão do Avatar WebRTC com um ID provisório (fallback para áudio vai ocorrer se falhar)
+            if (!isConnected) {
+                 await initializeSession('dante_avatar_id'); // Será configurado na Phase 4
+            }
+            
             playTrack(0);
         }
     };
@@ -139,18 +163,15 @@ export default function ClientPage({ params: routeParams }: { params: { slug: st
                             </div>
                         ) : (
                             <>
-                                <div className="relative h-64 w-full max-w-4xl mx-auto rounded-lg overflow-hidden bg-black flex items-center justify-center p-4 border border-primary/20">
-                                    <div className="absolute inset-0 z-0">
-                                        <Image 
-                                            src={course.image.src}
-                                            alt={course.image.alt || "Palco da palestra"}
-                                            fill
-                                            sizes="100vw"
-                                            style={{ objectFit: 'cover' }}
-                                            className="opacity-90"
-                                            quality={100}
-                                        />
-                                    </div>
+                                <div className="mb-8">
+                                    <NexusStage 
+                                        stream={stream}
+                                        isConnecting={isConnecting}
+                                        isConnected={isConnected}
+                                        fallbackImageSrc={course.image.src}
+                                        speakerName={currentTrackIndex !== null ? lectureScript[currentTrackIndex]?.speaker === 'dante' ? 'Dante Safra' : 'Djeny' : undefined}
+                                        isSpeaking={isAvatarSpeaking || isAudioPlaying}
+                                    />
                                 </div>
 
                                 <div className="text-center my-6">
@@ -166,20 +187,20 @@ export default function ClientPage({ params: routeParams }: { params: { slug: st
                                     </Button>
                                 </div>
 
-                                <ScrollArea className="h-[400px] mt-4 p-4 border rounded-lg border-secondary">
+                                <ScrollArea className="h-[400px] mt-4 p-4 border rounded-xl border-secondary/50 bg-black/50 backdrop-blur-md">
                                     <div className="space-y-6">
                                         {lectureScript.map((line, index) => {
-                                            const isCurrentlyPlaying = playingId === index;
+                                            const isCurrentlyPlaying = (playingId === index) || (currentTrackIndex === index);
                                             const translatedText = t(line.text as any);
                                             const translatedQuestion = line.question ? t(line.question as any) : undefined;
                                             
                                             return (
-                                                <div key={index} className={cn("flex items-start gap-4 p-3 rounded-lg transition-all", isCurrentlyPlaying && "bg-primary/10")}>
-                                                    <div className="flex-1 space-y-2">
+                                                <div key={index} className={cn("flex items-start gap-4 p-4 rounded-xl transition-all duration-500", isCurrentlyPlaying && "bg-primary/20 border border-primary/30 shadow-[0_0_15px_rgba(0,100,255,0.1)]")}>
+                                                    <div className="flex-1 space-y-3">
                                                         {translatedQuestion && (
-                                                            <p className="text-sm italic text-muted-foreground flex gap-2 items-center"><BotMessageSquare className="h-4 w-4 shrink-0" /> {translatedQuestion}</p>
+                                                            <p className="text-sm italic text-primary/80 flex gap-2 items-center font-medium"><BotMessageSquare className="h-4 w-4 shrink-0" /> {translatedQuestion}</p>
                                                         )}
-                                                        <p className="text-gray-300 leading-relaxed">{translatedText}</p>
+                                                        <p className={cn("leading-relaxed", isCurrentlyPlaying ? "text-white" : "text-gray-400")}>{translatedText}</p>
                                                     </div>
                                                 </div>
                                             )

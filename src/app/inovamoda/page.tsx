@@ -2,11 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag, Camera, Upload, Video, ScanLine } from 'lucide-react';
+import Link from 'next/link';
+import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag, Camera, Upload, Video, ScanLine, ChevronLeft } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/use-locale';
 
 export default function InovaModaPage() {
+  const { t } = useLocale();
   const [isProcessing, setIsProcessing] = useState(false);
   const [activeOutfit, setActiveOutfit] = useState('default');
   const [renderProgress, setRenderProgress] = useState(0);
@@ -127,6 +130,16 @@ export default function InovaModaPage() {
 
       <div className="container relative z-10 mx-auto px-4 max-w-7xl">
         
+        {/* BOTÃO DE VOLTAR PARA PREMIUM */}
+        <div className="absolute top-0 left-4 md:left-8 mt-4 md:mt-0">
+          <Link href="/intelligence/premium" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors group">
+            <div className="h-10 w-10 rounded-full bg-zinc-900/50 border border-zinc-800 flex items-center justify-center group-hover:bg-zinc-800 transition-colors shadow-lg backdrop-blur-md">
+              <ChevronLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
+            </div>
+            <span className="text-[10px] font-black uppercase tracking-widest hidden md:block">{t('inovamoda.backToPremium') || 'Voltar para Premium'}</span>
+          </Link>
+        </div>
+
         {/* HEADER HERO */}
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold uppercase tracking-widest mb-6">
@@ -135,8 +148,11 @@ export default function InovaModaPage() {
           <h1 className="text-5xl md:text-7xl font-headline font-black text-white mb-6 tracking-tight">
             InovaModa <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">360</span>
           </h1>
+          <p className="text-lg md:text-xl text-zinc-300 font-light mt-4 max-w-2xl mx-auto italic tracking-wide">
+            "{t('inovamoda.slogan') || 'Em tempo real, revele todos os estilos que existem em você.'}"
+          </p>
           <p className="text-xl text-slate-400 font-light leading-relaxed mb-8">
-            O &quot;Santo Graal&quot; do E-commerce de Moda. O Provador Virtual 3D alimentado por Inteligência Artificial Soberana. Reduza a logística reversa a quase zero.
+            {t('inovamoda.descSimulator') || 'A evolução definitiva do E-commerce de Moda. O Provador Virtual 3D alimentado por Inteligência Artificial Soberana. Reduza a logística reversa a quase zero.'}
           </p>
           
           <div className="flex flex-wrap justify-center gap-4 text-sm font-medium">

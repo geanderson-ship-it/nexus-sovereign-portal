@@ -4,10 +4,12 @@ import DanteSafraChat from '@/components/dante-safra-chat';
 import { ShieldCheck, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import AuthGate from '@/components/auth-gate';
 
 export default function DanteSafraStandalone() {
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
+    <AuthGate requiredLevel="SALES">
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
       
       {/* HUD Header for Standalone */}
       <div className="w-full max-w-4xl flex items-center justify-between mb-4 px-2">
@@ -29,6 +31,7 @@ export default function DanteSafraStandalone() {
        <p className="mt-4 text-[10px] text-gray-600 uppercase tracking-widest">
          Nexus Intelligence // Standalone Version 1.2
        </p>
-    </div>
+      </div>
+    </AuthGate>
   );
 }

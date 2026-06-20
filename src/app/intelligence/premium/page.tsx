@@ -2,14 +2,16 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Play, Shield, Lock, Fingerprint, BrainCircuit, Activity, ChevronRight } from 'lucide-react';
+import { ChevronLeft, Play, Shield, Lock, Fingerprint, BrainCircuit, Activity, ChevronRight, Shirt } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { useLocale } from '@/hooks/use-locale';
 
 export default function PremiumPage() {
+  const { t } = useLocale();
   return (
     <div className="min-h-screen text-white font-sans selection:bg-violet-500/30 relative">
       {/* BACKGROUND PREMIUM CUSTOMIZADO */}
@@ -540,6 +542,98 @@ export default function PremiumPage() {
                 <ChevronRight className="h-5 w-5 text-blue-500/70 group-hover:translate-x-2 transition-transform" />
               </div>
             </Link>
+          </div>
+        </section>
+
+        {/* SHOWCASE: INOVAMODA 360 */}
+        <section className="flex flex-col items-center gap-16 mt-16">
+          <div className="flex flex-col items-center text-center gap-6 max-w-3xl">
+            <span className="text-pink-500 text-xs font-black uppercase tracking-[0.4em]">Virtual Try-On & E-Commerce</span>
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">InovaModa 360</h2>
+            <p className="text-zinc-300 text-xl md:text-2xl font-light italic tracking-wide">
+              "{t('inovamoda.slogan') || 'Em tempo real, revele todos os estilos que existem em você.'}"
+            </p>
+            <p className="text-zinc-400 text-lg leading-relaxed font-light">
+              {t('inovamoda.descPremium') || 'A revolução do varejo digital de moda. Aumente as suas conversões e reduza a taxa de devoluções a zero com um provador virtual 3D interativo, dinâmico e de altíssimo padrão fotorealista.'}
+            </p>
+          </div>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="w-full max-w-4xl h-96 relative rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-900 to-zinc-950 overflow-hidden shadow-[0_0_50px_rgba(236,72,153,0.05)] flex items-center justify-center group"
+          >
+            {/* IMAGEM DO INOVAMODA AQUI */}
+            <Image 
+              src="/images/inovamoda-wide.png" 
+              alt="InovaModa 360" 
+              fill 
+              className="object-cover p-0 opacity-70 group-hover:opacity-100 transition-all duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-pink-500/10 pointer-events-none mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <h3 className="relative z-10 text-white/5 font-black uppercase tracking-widest text-6xl md:text-8xl select-none mix-blend-overlay group-hover:text-white/10 transition-colors duration-700">INOVAMODA</h3>
+          </motion.div>
+
+          {/* BOTOES INOVAMODA */}
+          <div className="w-full max-w-4xl flex flex-col md:flex-row gap-4 -mt-8 relative z-20">
+            <Link href="https://wa.me/5551999799582?text=%5BNEXUS%20PREMIUM%20-%20INOVAMODA%5D%20Ol%C3%A1.%20Desejo%20implantar%20o%20Provador%20Virtual%203D%20%28InovaModa%20360%29%20em%20minha%20opera%C3%A7%C3%A3o%20de%20E-commerce." target="_blank" className="flex-1 block">
+              <div className="w-full py-5 rounded-2xl border border-pink-500/30 bg-pink-500/10 hover:bg-pink-500/20 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3 shadow-[0_0_30px_rgba(236,72,153,0.15)] hover:shadow-[0_0_50px_rgba(236,72,153,0.3)] backdrop-blur-md">
+                <Shirt className="h-5 w-5 text-pink-400 group-hover:scale-110 transition-transform hidden md:block" />
+                <span className="text-pink-300 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-white">
+                  {t('inovamoda.btnAcionar') || 'Acionar o InovaModa 360'}
+                </span>
+                <ChevronRight className="h-5 w-5 text-pink-400 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </Link>
+
+            <Link href="/inovamoda" className="flex-1 block">
+              <div className="w-full py-5 rounded-2xl border border-pink-500/30 bg-zinc-900/50 hover:bg-pink-500/10 text-center transition-all group flex flex-col md:flex-row items-center justify-center gap-3 backdrop-blur-md">
+                <Shirt className="h-5 w-5 text-pink-500/70 group-hover:scale-110 transition-transform hidden md:block" />
+                <span className="text-pink-500/70 font-black uppercase tracking-[0.2em] text-xs md:text-sm group-hover:text-pink-400">
+                  {t('inovamoda.btnSimulator') || 'Acessar Simulador'}
+                </span>
+                <ChevronRight className="h-5 w-5 text-pink-500/70 group-hover:translate-x-2 transition-transform" />
+              </div>
+            </Link>
+          </div>
+
+          {/* DESTAQUES INOVAMODA (3 CARDS) */}
+          <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 relative z-20">
+            {/* DESTAQUE 1 */}
+            <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-pink-500/30 hover:bg-zinc-900 transition-all flex flex-col items-start gap-4">
+              <div className="h-10 w-10 rounded-full bg-pink-500/10 flex items-center justify-center">
+                <Shirt className="h-5 w-5 text-pink-400" />
+              </div>
+              <div>
+                <h4 className="text-zinc-200 font-bold tracking-wide mb-2 text-sm uppercase">{t('inovamoda.reductionTitle') || 'Redução de Devoluções'}</h4>
+                <p className="text-zinc-500 text-xs leading-relaxed font-light">{t('inovamoda.reductionDesc') || 'Elimine a logística reversa. O provador virtual garante que a peça caiba perfeitamente no corpo do cliente antes do checkout.'}</p>
+              </div>
+            </div>
+
+            {/* DESTAQUE 2 */}
+            <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-pink-500/30 hover:bg-zinc-900 transition-all flex flex-col items-start gap-4">
+              <div className="h-10 w-10 rounded-full bg-pink-500/10 flex items-center justify-center">
+                <Activity className="h-5 w-5 text-pink-400" />
+              </div>
+              <div>
+                <h4 className="text-zinc-200 font-bold tracking-wide mb-2 text-sm uppercase">{t('inovamoda.engagementTitle') || 'Engajamento Máximo'}</h4>
+                <p className="text-zinc-500 text-xs leading-relaxed font-light">{t('inovamoda.engagementDesc') || 'Transforme a compra em uma experiência imersiva. Clientes passam até 3x mais tempo na sua loja testando combinações e looks.'}</p>
+              </div>
+            </div>
+
+            {/* DESTAQUE 3 */}
+            <div className="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-pink-500/30 hover:bg-zinc-900 transition-all flex flex-col items-start gap-4">
+              <div className="h-10 w-10 rounded-full bg-pink-500/10 flex items-center justify-center">
+                <BrainCircuit className="h-5 w-5 text-pink-400" />
+              </div>
+              <div>
+                <h4 className="text-zinc-200 font-bold tracking-wide mb-2 text-sm uppercase">{t('inovamoda.realismTitle') || 'Hiper-Realismo 3D'}</h4>
+                <p className="text-zinc-500 text-xs leading-relaxed font-light">{t('inovamoda.realismDesc') || 'Renderização fotorealista de tecidos e caimentos. A Inteligência Artificial interpreta o volume da roupa no biotipo exato do cliente.'}</p>
+              </div>
+            </div>
           </div>
         </section>
 

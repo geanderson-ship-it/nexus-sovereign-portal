@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import AuthGate from '@/components/auth-gate';
 
 export default function IntelligenceLayout({
   children,
@@ -8,8 +9,10 @@ export default function IntelligenceLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex-1 overflow-y-auto bg-black border-l border-white/5 pt-14 scrollbar-hide min-h-screen">
-       {children}
-    </div>
+    <AuthGate requiredLevel="SALES">
+      <div className="flex-1 overflow-y-auto bg-black border-l border-white/5 pt-14 scrollbar-hide min-h-screen">
+         {children}
+      </div>
+    </AuthGate>
   );
 }

@@ -1,15 +1,15 @@
 
 'use client';
 
-import React, { useMemo } from 'react';
-import { useUser } from '@/auth';
-import { isAdminUser } from '@/lib/constants';
+import { useLocale } from '@/hooks/use-locale';
+import { useAccessLevel } from '@/hooks/use-access-level';
+import { UserLevel } from '@/lib/constants';
 import { Loader2, ShieldAlert } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { signOut } from 'aws-amplify/auth';
-import { useLocale } from '@/hooks/use-locale';
+import React from 'react';
 
 const LoadingScreen = ({ message }: { message: string }) => {
     const { t } = useLocale();
@@ -83,27 +83,36 @@ const AccessDeniedScreen = () => {
 
 interface AuthGateProps {
     children: React.ReactNode;
-    adminOnly?: boolean;
+    adminOnly?: boolean; // deprecated, use requiredLevel
+    requiredLevel?: UserLevel;
 }
 
-export default function AuthGate({ children, adminOnly = false }: AuthGateProps) {
-  const { user, isUserLoading } = useUser();
+export default function AuthGate({ children, adminOnly = false, requiredLevel }: AuthGateProps) {
+  const { user, isSalesAuth, isLoading, hasAdminAccess, hasSalesAccess } = useAccessLevel();
   const { t } = useLocale();
-  const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
-  if (isUserLoading) {
+  if (isLoading) {
     return <LoadingScreen message={t('authGate.loading')} />;
   }
 
-  if (!user) {
+  // Se não tem user do Cognito e não tem localStorage de vendas, tá fora.
+  if (!user && !isSalesAuth) {
     return <AccessDeniedScreen />;
   }
 
-  if (adminOnly && !isAdmin) {
+  // Retro-compatibilidade com adminOnly
+  if (adminOnly && !hasAdminAccess) {
+    return <AccessDeniedScreen />;
+  }
+
+  if (requiredLevel === 'ADMIN' && !hasAdminAccess) {
+    return <AccessDeniedScreen />;
+  }
+
+  if (requiredLevel === 'SALES' && !hasSalesAccess) {
     return <AccessDeniedScreen />;
   }
 
   return <>{children}</>;
 }
-
     

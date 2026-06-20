@@ -4,10 +4,12 @@ import { DjenyDesignModule } from '@/components/gabinete/djeny-design-module';
 import { Sparkles, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import AuthGate from '@/components/auth-gate';
 
 export default function DjenyDesignStandalone() {
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
+    <AuthGate requiredLevel="ADMIN">
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
       
       {/* HUD Header for Standalone */}
       <div className="w-full max-w-4xl flex items-center justify-between mb-4 px-2">
@@ -29,6 +31,7 @@ export default function DjenyDesignStandalone() {
        <p className="mt-4 text-[10px] text-gray-600 uppercase tracking-widest">
          Nexus Intelligence // Retrofit Edition
        </p>
-    </div>
+      </div>
+    </AuthGate>
   );
 }

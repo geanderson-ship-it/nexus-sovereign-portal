@@ -36,8 +36,8 @@ export default function AgroPage() {
             <ChevronLeft className="h-4 w-4" /> Voltar ao Início
           </Link>
           <Link href="/dante-safra" className="pointer-events-auto">
-            <Button variant="outline" className="bg-emerald-500/10 border-emerald-500/40 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 gap-3 font-black uppercase tracking-[0.2em] text-xs h-12 px-6 shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] transition-all">
-              <Shield className="h-5 w-5" />
+            <Button variant="outline" className="group bg-emerald-500/10 border-2 border-emerald-500/60 hover:bg-emerald-500 text-emerald-400 hover:text-slate-950 gap-3 font-black uppercase tracking-[0.25em] text-xs md:text-sm h-14 md:h-16 px-8 md:px-10 rounded-xl shadow-[0_0_25px_rgba(16,185,129,0.3)] hover:shadow-[0_0_50px_rgba(16,185,129,0.7)] transition-all duration-300 hover:scale-[1.03] active:scale-95">
+              <Shield className="h-5 w-5 md:h-6 md:w-6 text-emerald-400 group-hover:text-slate-950 transition-colors shrink-0" />
               <span className="hidden sm:block">Acessar Terminal</span>
             </Button>
           </Link>

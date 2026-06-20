@@ -17,23 +17,19 @@ import Image from 'next/image';
 import { useLocale } from '@/hooks/use-locale';
 import { palestras } from '@/lib/courses-data';
 import { cn } from '@/lib/utils';
-import { useUser, useMemoAuth } from '@/auth';
+import { useAccessLevel } from '@/hooks/use-access-level';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { Lock, Sparkles } from 'lucide-react';
-import { isAdminUser } from '@/lib/constants';
 
 const WHATSAPP_NUMBER = '5551999799582';
 
 export default function PalestrasPage() {
   const { t, tArray } = useLocale();
-  const { user, isUserLoading } = useUser();
-
-  const isAdmin = useMemo(() => isAdminUser(user), [user]);
+  const { hasSalesAccess, isLoading } = useAccessLevel();
   const purchasesLoading = false;
-  const isLoading = isUserLoading;
 
-  const getIsPurchased = (slug: string) => isAdmin;
+  const getIsPurchased = (slug: string) => hasSalesAccess;
 
   const generateWhatsAppLink = (palestraTitle: string) => {
     const message = t('lectures.whatsapp.message', { title: palestraTitle });

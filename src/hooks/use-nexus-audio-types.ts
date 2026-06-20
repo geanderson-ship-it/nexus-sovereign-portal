@@ -11,6 +11,7 @@ export interface UseNexusAudioInput {
   id: string | number;
   audioUrl?: string; // Add support for pre-recorded audio files
   onEnded?: () => void;
+  nextTrack?: { text: string; voice: string };
 }
 
 // Re-export types that the hook might expose or use internally,

@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Shield, ArrowRight, Wheat, Paintbrush, Building2, Users, BrainCircuit, Zap, Database, Activity, HeartPulse, Cpu, Hammer } from 'lucide-react';
+import { Shield, ArrowRight, Wheat, Paintbrush, Building2, Users, BrainCircuit, Zap, Database, Activity, HeartPulse, Cpu, Hammer, Shirt } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
@@ -56,6 +56,20 @@ const segments = [
     image: '/Nexus Intelligence Health(saúde)/Nexus Intelligence Healt com slogan.png',
     products: ['Triagem IA', 'Protocolo Médico', 'Prevenção'],
     badge: 'HEALTH_INTELLIGENCE',
+    available: true,
+  },
+  {
+    id: 'inovamoda',
+    icon: Shirt,
+    label: 'VIRTUAL TRY-ON & RETAIL',
+    title: 'InovaModa 360',
+    slogan: 'Em tempo real, revele todos os estilos que existem em você.',
+    description: 'Experimentação virtual com avatares dinâmicos de alto padrão. Eleve as conversões e reduza a taxa de devoluções a zero.',
+    color: 'pink',
+    href: '/inovamoda',
+    image: '/images/inovamoda-wide.png',
+    products: ['Virtual Try-On', '3D Avatar'],
+    badge: 'RETAIL_INTELLIGENCE',
     available: true,
   },
   {

@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useUser } from '@/auth';
-import { isAdminUser } from '@/lib/constants';
+import { useAccessLevel } from '@/hooks/use-access-level';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Shield, Eye, Lock, Phone, HelpCircle, CheckCircle, RefreshCw, Sprout, Users, Landmark, Camera, Database, WifiOff, Volume2 } from 'lucide-react';
@@ -25,8 +24,7 @@ export function SovereignShowcase({
   whatsappUrl = 'https://wa.me/5551999799582',
   whatsappMessage
 }: SovereignShowcaseProps) {
-  const { user } = useUser();
-  const isAdmin = isAdminUser(user);
+  const { hasSalesAccess } = useAccessLevel();
   
   // State to toggle visual demo mode vs interactive mode for Admin only
   const [showDemoOnly, setShowDemoOnly] = useState(true);
@@ -37,12 +35,12 @@ export function SovereignShowcase({
 
   // Set default view: clients only see demo, admins can toggle but start with interactive view
   useEffect(() => {
-    if (isAdmin) {
+    if (hasSalesAccess) {
       setShowDemoOnly(false);
     } else {
       setShowDemoOnly(true);
     }
-  }, [isAdmin]);
+  }, [hasSalesAccess]);
 
   // If user is Admin and toggles to interactive, or if we want interactive
   if (!showDemoOnly) {
@@ -87,7 +85,7 @@ export function SovereignShowcase({
           </div>
 
           <div className="flex items-center gap-3">
-            {isAdmin && (
+            {hasSalesAccess && (
               <Button 
                 onClick={() => setShowDemoOnly(false)}
                 className="bg-amber-600/10 hover:bg-amber-600/30 text-amber-400 border border-amber-500/30 font-black text-[9px] uppercase tracking-widest h-10 px-4 rounded-xl"
