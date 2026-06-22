@@ -69,7 +69,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
   const course = getCourseBySlug(slug);
   const router = useRouter();
   const { toast } = useToast();
-  const { hasSalesAccess, user } = useAccessLevel();
+  const { hasSalesAccess, hasAdminAccess, user, isLoading: isAccessLoading } = useAccessLevel();
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [showPaymentPanel, setShowPaymentPanel] = useState(false);
@@ -94,7 +94,6 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
     return () => clearInterval(timer);
   }, []);
 
-  const { hasSalesAccess, hasAdminAccess } = useAccessLevel();
   const isPurchased = hasSalesAccess;
   const purchaseId = hasAdminAccess ? `admin-access-${course?.slug}` : null;
   const purchasesLoading = false;
@@ -136,7 +135,7 @@ export default function CourseDetailPage({ params }: { params: { slug: string } 
 
   const ContentComponent = courseContentComponents[course.slug];
   
-  const isLoading = isUserLoading || purchasesLoading;
+  const isLoading = isAccessLoading || purchasesLoading;
 
   return (
     <div className="container mx-auto max-w-6xl py-12 md:py-20">
