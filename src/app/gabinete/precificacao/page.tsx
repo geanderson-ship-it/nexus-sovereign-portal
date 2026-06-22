@@ -387,18 +387,32 @@ const priceItems: PriceItem[] = [
     monthlyPrice: 'Sob Consulta 💬'
   },
   {
-    name: 'Palestras Dante & Djeny',
+    name: 'Formação Completa de Líderes (7 Palestras)',
     category: 'consulta',
-    description: 'Palestra corporativa imersiva conduzida pelos nossos mentores virtuais',
+    description: 'Pacote Corporativo B2B Anual. Acesso ao roadmap completo das 7 palestras com Q&A ao vivo por IA.',
     icon: Mic,
     iconColor: 'text-pink-400',
     iconBg: 'bg-pink-500/10 border-pink-500/20',
-    tag: 'Imersão Nexus',
+    tag: 'Roadmap Premium',
     tagBg: 'bg-pink-500/10',
     tagText: 'text-pink-400',
     tagBorder: 'border-pink-500/15',
-    startupPrice: 'Sob Consulta 💬',
-    monthlyPrice: 'Sob Consulta 💬'
+    startupPrice: 'R$ 80.000',
+    monthlyPrice: 'Sem Recorrência'
+  },
+  {
+    name: 'Palestra Corporativa Avulsa (Tema Único)',
+    category: 'consulta',
+    description: 'Licença para 1 Palestra imersiva (ex: Comunicação que Conecta) para times ou eventos.',
+    icon: Mic,
+    iconColor: 'text-rose-400',
+    iconBg: 'bg-rose-500/10 border-rose-500/20',
+    tag: 'Imersão Nexus',
+    tagBg: 'bg-rose-500/10',
+    tagText: 'text-rose-400',
+    tagBorder: 'border-rose-500/15',
+    startupPrice: 'R$ 15.000',
+    monthlyPrice: 'Sem Recorrência'
   }
 ];
 

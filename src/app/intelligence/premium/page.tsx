@@ -196,7 +196,7 @@ export default function PremiumPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800/50">
                             <h5 className="font-bold text-zinc-300 uppercase tracking-wider text-xs mb-2">1. Brainstorming Silencioso</h5>
-                            <p className="text-xs text-zinc-500">Discuta fusões, aquisições e demissões em estágio de concepção. A Maga ouve as suas ideias e atua como um "advogado do diabo" para testar a sua tese.</p>
+                            <p className="text-xs text-zinc-500">Discuta fusões, aquisições e demissões em estágio de concepção. A Maga ouve as suas ideias e atua como um "contraponto estratégico" para testar a sua tese.</p>
                           </div>
                           <div className="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800/50">
                             <h5 className="font-bold text-zinc-300 uppercase tracking-wider text-xs mb-2">2. Simulador de Crise</h5>

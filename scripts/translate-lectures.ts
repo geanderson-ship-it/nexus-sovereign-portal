@@ -31,7 +31,8 @@ const targetLectures = [
     'inteligencia-emocional',
     'seguranca-psicologica',
     'cultura-de-alta-performance',
-    'gestao-de-conflitos'
+    'gestao-de-conflitos',
+    'nexus-intelligence-agro-design'
 ];
 
 async function translateChunk(chunk: Record<string, string>, langInfo: { code: string, name: string }): Promise<Record<string, string> | null> {
