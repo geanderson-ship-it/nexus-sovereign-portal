@@ -91,9 +91,65 @@ const textToSpeechFlow = ai.defineFlow(
         throw new Error("O texto para síntese está vazio.");
       }
 
-      // ElevenLabs Custom Voice Integration for Dante Safra, Athena, and Orion
       const voiceNameLower = (voice || '').toLowerCase();
       const isDante = voiceNameLower === 'dante';
+
+      // =========================================================================
+      // AZURE TTS INTEGRATION FOR DANTE SAFRA (Prioridade Máxima)
+      // =========================================================================
+      if (isDante) {
+        try {
+          console.log(`[Azure TTS] Generating voice for Dante Safra via Microsoft Azure. Text: "${text.substring(0,50)}..."`);
+          const apiKey = process.env.AZURE_SPEECH_KEY;
+          if (!apiKey) {
+             throw new Error("Missing AZURE_SPEECH_KEY in environment variables.");
+          }
+          const endpoint = "https://eastus.tts.speech.microsoft.com/cognitiveservices/v1";
+          
+          // O frontend injeta "..." para forçar pausas longas.
+          // Removemos as reticências ("..."), e removemos também a vírgula antes de "comandante" ou "patrão"
+          // para evitar pausas antes do vocativo, que cortam a ênfase e fluidez da frase.
+          let ttsText = text.replace(/\.\.\./g, '');
+          ttsText = ttsText.replace(/,\s*comandante/gi, ' comandante');
+          ttsText = ttsText.replace(/,\s*patrão/gi, ' patrão');
+          ttsText = ttsText.replace(/,\s*patrao/gi, ' patrao');
+          ttsText = ttsText.replace(/\s+/g, ' ').trim();
+          
+          // Configuração do Antônio com timbre -2% (mais grave) e velocidade +5% (um pouco menos frenético)
+          const ssml = `<speak version='1.0' xml:lang='pt-BR'><voice xml:lang='pt-BR' xml:gender='Male' name='pt-BR-AntonioNeural'><prosody rate="+5%" pitch="-2%">${ttsText}</prosody></voice></speak>`;
+
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Ocp-Apim-Subscription-Key': apiKey,
+              'Content-Type': 'application/ssml+xml; charset=utf-8',
+              'X-Microsoft-OutputFormat': 'audio-16khz-32kbitrate-mono-mp3',
+              'User-Agent': 'NexusTTS'
+            },
+            body: ssml
+          });
+
+          if (!response.ok) {
+            const errorData = await response.text();
+            throw new Error(`Erro do Azure: ${response.status} - ${errorData}`);
+          }
+
+          const audioArray = await response.arrayBuffer();
+          const audioBuffer = Buffer.from(audioArray);
+          const audioDataUri = `data:audio/mp3;base64,${audioBuffer.toString('base64')}`;
+
+          return {
+            audioDataUri,
+            speechMarks: [] // AWS Polly retorna visemas, Azure suporta via SSML diferente, mantendo vazio por agora.
+          };
+        } catch (azureErr: any) {
+          console.error("VIX DIAGNOSTIC: Falha ao gerar áudio com Azure para Dante. Fazendo fallback para ElevenLabs/Polly...", azureErr);
+          // O fluxo continua abaixo (ElevenLabs ou Polly) caso a Azure caia
+        }
+      }
+      // =========================================================================
+
+      // ElevenLabs Custom Voice Integration for Athena, and Orion
       const isAtena = voiceNameLower === 'atena' || voiceNameLower === 'athena';
       const isOrion = voiceNameLower === 'orion';
       const isDjeny = voiceNameLower === 'djeny';
