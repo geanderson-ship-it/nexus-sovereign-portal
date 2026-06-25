@@ -201,7 +201,7 @@ export function WhiteLabelHeader({
       {/* Main Header Presentation */}
       <div className="flex flex-col items-center text-center gap-6 mt-12 w-full max-w-4xl px-4">
         {/* LOGO */}
-        <div className="relative w-full max-w-[450px] h-[300px] flex items-center justify-center">
+        <div className="relative w-full max-w-[900px] h-[400px] md:h-[550px] flex items-center justify-center">
           {logo ? (
             <img
               src={logo}
@@ -213,7 +213,7 @@ export function WhiteLabelHeader({
               <img
                 src={defaultLogo}
                 alt="Nexus Logo Shield"
-                className="w-56 h-56 object-contain filter brightness-110"
+                className="w-full h-full object-contain filter brightness-110 p-8 md:p-16"
               />
             </div>
           )}

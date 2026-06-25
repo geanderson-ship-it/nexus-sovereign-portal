@@ -190,7 +190,7 @@ export default function EnergiaPage() {
           <WhiteLabelHeader
             defaultTitle="Nexus Helios"
             defaultSlogan="O Cérebro da Matriz Energética. Previsões Exatas no Mercado Livre e Visão Computacional para Manutenção Preditiva em Infraestruturas Críticas."
-            defaultLogo="/logo-nexus-shield.png"
+            defaultLogo="/Nexus Intelligence Energy/Nexus Intelligence Energy.png"
             storageKeyPrefix="energia"
             themeColor="amber"
           />
