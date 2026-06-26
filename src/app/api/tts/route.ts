@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { synthesizeSpeech, VoiceGender } from '@/lib/polly';
+import { synthesizeSpeech, VoiceGender } from '@/lib/azure-tts';
 
 export async function POST(req: NextRequest) {
   try {

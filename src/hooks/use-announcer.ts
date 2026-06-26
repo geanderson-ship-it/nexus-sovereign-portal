@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-export type VoiceEngine = 'polly' | 'elevenlabs';
+export type VoiceEngine = 'polly' | 'azure' | 'elevenlabs';
 
 export interface StationConfig {
   name: string;

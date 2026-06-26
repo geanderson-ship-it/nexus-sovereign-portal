@@ -71,6 +71,29 @@ export default function GabineteHubPage() {
 
         {/* Módulos do Gabinete */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          {/* Central IA: Atena Autônoma */}
+          <Link href="/gabinete/atena">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden ring-1 ring-indigo-500/20">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                  <Activity className="w-6 h-6 text-indigo-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-indigo-400 transition-colors font-headline">Atena Autônoma</CardTitle>
+                <CardDescription className="text-indigo-200/50">Inteligência Soberana Nexus</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Painel de orquestração e terminal interativo da IA exclusiva (AWS Bedrock). Comunicação direta e independente.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-indigo-500">
+                  Iniciar Link Neural <Activity className="w-3 h-3 animate-pulse" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
           
           {/* Contratos Lançados */}
           <Link href="/gabinete/contratos">
@@ -125,14 +148,58 @@ export default function GabineteHubPage() {
                   <Search className="w-6 h-6 text-blue-400" />
                 </div>
                 <CardTitle className="text-xl text-white group-hover:text-blue-400 transition-colors font-headline">Prospector & Hub</CardTitle>
-                <CardDescription>Mapeamento e Ecossistema Operacional</CardDescription>
+                <CardDescription>Mapeamento e Ecossistema</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-slate-400">
-                  Integração com IBGE, controle de leads, agenda tática, simuladores comerciais, Magadot e monitoramento Égide. Todas as ferramentas em um só lugar.
+                  Integração com IBGE, controle de leads e agenda tática. Todas as ferramentas em um só lugar.
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-blue-500">
-                  Acessar Hub Operacional <Search className="w-3 h-3" />
+                  Acessar Hub <Search className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* NOVO CARD: Showroom de Avatares */}
+          <Link href="/gabinete/showroom">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-purple-500/20">
+                  <Users className="w-6 h-6 text-purple-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-purple-400 transition-colors font-headline">Showroom de Avatares</CardTitle>
+                <CardDescription>Galeria de Apresentação (Demos)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Acesse o painel visual com a Embaixadora Digital e o cardápio interativo das nossas IAs (Aurora, Magadot, etc).
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-purple-500">
+                  Abrir Showroom <Users className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Propostas Comerciais */}
+          <Link href="/gabinete/propostas">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-rose-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl group-hover:bg-rose-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-rose-500/20">
+                  <Briefcase className="w-6 h-6 text-rose-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-rose-400 transition-colors font-headline">Propostas Comerciais</CardTitle>
+                <CardDescription>Cenários de Preços e Fechamentos</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Módulo de ancoragem. Apresente os pacotes modulares (Atendente, ÉGIDE e Combo) e consolide negócios de alto impacto.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-rose-500">
+                  Acessar Acervo <Briefcase className="w-3 h-3" />
                 </div>
               </CardContent>
             </Card>

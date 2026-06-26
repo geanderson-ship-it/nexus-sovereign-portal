@@ -5,7 +5,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Shield, Search, Lock, MapPin, Coins, Zap, Wheat, Paintbrush, Building2, Users, BrainCircuit, Database, Activity, HeartPulse, BookOpen, TrendingUp, Mic, ShoppingBag, ShoppingCart, Cpu, BarChart3, Timer, Package, Truck, Factory } from 'lucide-react';
+import { Shield, Search, Lock, MapPin, Coins, Zap, Wheat, Paintbrush, Building2, Users, BrainCircuit, Database, Activity, HeartPulse, BookOpen, TrendingUp, Mic, ShoppingBag, ShoppingCart, Cpu, BarChart3, Timer, Package, Truck, Factory, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -109,6 +109,34 @@ const priceItems: PriceItem[] = [
     tagBorder: 'border-emerald-500/15',
     startupPrice: 'R$ 150.000',
     monthlyPrice: 'De R$ 12.500 (-20%) por R$ 9.999/mês'
+  },
+  {
+    name: 'InovaModa 360 (Virtual Try-On)',
+    category: 'premium',
+    description: 'Motor VTON 360º. Franquias por Média Diária Mensal. Perdoa picos isolados de Black Friday e Dia das Mães.',
+    icon: Sparkles,
+    iconColor: 'text-fuchsia-400',
+    iconBg: 'bg-fuchsia-500/10 border-fuchsia-500/20',
+    tag: 'VTON 360º',
+    tagBg: 'bg-fuchsia-500/10',
+    tagText: 'text-fuchsia-400',
+    tagBorder: 'border-fuchsia-500/15',
+    startupPrice: 'R$ 45.000',
+    monthlyPrice: 'R$ 15.000/mês'
+  },
+  {
+    name: 'Embaixadora Digital (GovTech B2G)',
+    category: 'premium',
+    description: 'Servidor Digital Autônomo com Avatar de Vídeo (Live Avatar) para Prefeituras e Turismo.',
+    icon: Building2,
+    iconColor: 'text-rose-400',
+    iconBg: 'bg-rose-500/10 border-rose-500/20',
+    tag: 'Dispensa Licitação',
+    tagBg: 'bg-rose-500/10',
+    tagText: 'text-rose-400',
+    tagBorder: 'border-rose-500/15',
+    startupPrice: 'R$ 40.000',
+    monthlyPrice: 'R$ 10.000/mês'
   },
 
   // Empresas (B2B)

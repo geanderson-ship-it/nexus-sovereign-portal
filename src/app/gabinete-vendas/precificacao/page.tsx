@@ -119,8 +119,22 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-pink-500/10',
     tagText: 'text-pink-400',
     tagBorder: 'border-pink-500/15',
-    startupPrice: 'R$ 100.000',
-    monthlyPrice: 'De R$ 18.000 por R$ 15.000/mês'
+    startupPrice: 'R$ 45.000',
+    monthlyPrice: 'R$ 15.000/mês'
+  },
+  {
+    name: 'Embaixadora Digital (GovTech B2G)',
+    category: 'premium',
+    description: 'Servidor Digital Autônomo com Avatar de Vídeo (Live Avatar) para Prefeituras e Turismo.',
+    icon: Building2,
+    iconColor: 'text-rose-400',
+    iconBg: 'bg-rose-500/10 border-rose-500/20',
+    tag: 'Dispensa Licitação',
+    tagBg: 'bg-rose-500/10',
+    tagText: 'text-rose-400',
+    tagBorder: 'border-rose-500/15',
+    startupPrice: 'R$ 40.000',
+    monthlyPrice: 'R$ 10.000/mês'
   },
 
   // Empresas (B2B)

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag, Camera, Upload, Video, ScanLine, ChevronLeft } from 'lucide-react';
+import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag, Camera, Upload, Video, ScanLine, ChevronLeft, Info, Sun } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/use-locale';
@@ -13,6 +13,7 @@ export default function InovaModaPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [activeOutfit, setActiveOutfit] = useState('default');
   const [renderProgress, setRenderProgress] = useState(0);
+  const [lgpdAccepted, setLgpdAccepted] = useState(false);
 
   // Estados do Scanner 360
   const [hasScanned, setHasScanned] = useState(false);
@@ -182,22 +183,64 @@ export default function InovaModaPage() {
                     <ScanLine className="w-10 h-10 text-pink-400" />
                   </div>
                   <h3 className="text-2xl font-headline font-bold text-white mb-2">Construir Avatar 3D</h3>
-                  <p className="text-slate-400 text-sm mb-8 max-w-xs">
+                  <p className="text-slate-400 text-sm mb-4 max-w-xs">
                     Para provar as roupas, precisamos de um vídeo 360º do cliente para criar o "Gêmeo Digital".
                   </p>
+
+                  {/* Dicas de Gravação */}
+                  <div className="w-full max-w-xs mb-6 bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-left">
+                    <h4 className="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center gap-1">
+                      <Info className="w-3 h-3" /> Requisitos do Vídeo
+                    </h4>
+                    <ul className="text-xs text-slate-300 space-y-2">
+                      <li className="flex items-start gap-1.5">
+                        <Sun className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-amber-400" />
+                        <span><strong>Iluminação:</strong> Grave em ambiente claro e bem iluminado.</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Shirt className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-pink-400" />
+                        <span><strong>Roupa Atual:</strong> Use roupas justas para a IA ler o formato do corpo (evite roupas largas).</span>
+                      </li>
+                      <li className="flex items-start gap-1.5">
+                        <Smartphone className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-blue-400" />
+                        <span><strong>Posição:</strong> Câmera na altura do peito/cintura, com o celular <strong>de pé (na vertical)</strong>.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  {/* Selo LGPD / Aceite */}
+                  <div 
+                    className="flex items-start gap-3 w-full max-w-xs mb-6 bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-xl text-left cursor-pointer hover:bg-emerald-500/20 transition-colors" 
+                    onClick={() => setLgpdAccepted(!lgpdAccepted)}
+                  >
+                    <div className={`w-5 h-5 rounded border flex-shrink-0 flex items-center justify-center mt-0.5 transition-colors ${lgpdAccepted ? 'bg-emerald-500 border-emerald-500' : 'bg-slate-900 border-slate-600'}`}>
+                      {lgpdAccepted && <CheckCircle2 className="w-3 h-3 text-slate-900" />}
+                    </div>
+                    <div>
+                      <h4 className="text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-1 flex items-center gap-1">
+                        <ShieldCheck className="w-3 h-3" /> Termo LGPD 100%
+                      </h4>
+                      <p className="text-slate-300 text-xs leading-tight">
+                        Autorizo gerar meu avatar. <strong>Meus dados serão apagados instantaneamente ao fechar o app.</strong>
+                      </p>
+                    </div>
+                  </div>
                   
                   <div className="flex flex-col gap-4 w-full max-w-xs">
                     <Button 
+                      disabled={!lgpdAccepted}
                       onClick={() => {
                         setUploadedImage(null);
                         setUploadMediaType(null);
                         setActiveOutfit('default');
                         handleStartScan('record');
                       }}
-                      className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white border-0 py-6 shadow-[0_0_20px_rgba(219,39,119,0.4)]"
+                      className={`bg-gradient-to-r from-pink-600 to-purple-600 text-white border-0 py-6 ${
+                        !lgpdAccepted ? 'opacity-50 cursor-not-allowed grayscale' : 'hover:from-pink-500 hover:to-purple-500 shadow-[0_0_20px_rgba(219,39,119,0.4)]'
+                      }`}
                     >
                       <Camera className="w-5 h-5 mr-2" />
-                      Iniciar Demonstração (Modelo Padrão)
+                      Iniciar Demonstração (Câmera)
                     </Button>
                     
                     <div className="flex items-center gap-4 w-full">
@@ -210,7 +253,8 @@ export default function InovaModaPage() {
                       <input 
                         type="file" 
                         accept="video/*,image/*"
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        disabled={!lgpdAccepted}
+                        className={`absolute inset-0 w-full h-full opacity-0 z-10 ${lgpdAccepted ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                         onChange={(e) => {
                           if (e.target.files && e.target.files.length > 0) {
                             const file = e.target.files[0];
@@ -223,8 +267,9 @@ export default function InovaModaPage() {
                         }}
                       />
                       <Button 
+                        disabled={!lgpdAccepted}
                         variant="outline" 
-                        className="w-full border-slate-700 bg-slate-800/50 hover:bg-slate-800 text-slate-300 py-6 relative z-0"
+                        className={`w-full border-slate-700 bg-slate-800/50 text-slate-300 py-6 relative z-0 ${lgpdAccepted ? 'hover:bg-slate-800' : 'opacity-50'}`}
                       >
                         <Upload className="w-5 h-5 mr-2" />
                         Fazer Upload de Vídeo

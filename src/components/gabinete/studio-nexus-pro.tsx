@@ -670,26 +670,26 @@ export function StudioNexusPro() {
               {/* --- Motor de Voz --- */}
               <label className={styles.formLabel}>Motor de Voz do Locutor</label>
               <div className={styles.voiceSelect} style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {/* Camila - AWS Polly (Feminina) */}
+                {/* Brenda - Azure Neural (Feminina) */}
                 <button
                   className={`${styles.voiceOption} ${tempStation.voiceEngine !== 'elevenlabs' && tempStation.gender === 'female' ? styles.voiceActive : ''}`}
-                  onClick={() => setTempStation(p => ({ ...p, gender: 'female', voiceEngine: 'polly' }))}
+                  onClick={() => setTempStation(p => ({ ...p, gender: 'female', voiceEngine: 'azure' }))}
                   style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '10px 14px' }}
                 >
                   <span style={{ fontSize: '20px' }}>🎙️</span>
-                  <span>Camila</span>
-                  <span style={{ fontSize: '9px', opacity: 0.6 }}>AWS Polly</span>
+                  <span>Brenda</span>
+                  <span style={{ fontSize: '9px', opacity: 0.6 }}>Azure Neural</span>
                 </button>
 
-                {/* Ricardo - AWS Polly (Masculino) */}
+                {/* Julio - Azure Neural (Masculino) */}
                 <button
                   className={`${styles.voiceOption} ${tempStation.voiceEngine !== 'elevenlabs' && tempStation.gender === 'male' ? styles.voiceActive : ''}`}
-                  onClick={() => setTempStation(p => ({ ...p, gender: 'male', voiceEngine: 'polly' }))}
+                  onClick={() => setTempStation(p => ({ ...p, gender: 'male', voiceEngine: 'azure' }))}
                   style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '10px 14px' }}
                 >
                   <span style={{ fontSize: '20px' }}>🎙️</span>
-                  <span>Ricardo</span>
-                  <span style={{ fontSize: '9px', opacity: 0.6 }}>AWS Polly</span>
+                  <span>Júlio</span>
+                  <span style={{ fontSize: '9px', opacity: 0.6 }}>Azure Neural</span>
                 </button>
 
                 {/* Will - Voz Clonada (Dante Safra) */}
