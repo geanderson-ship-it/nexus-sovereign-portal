@@ -37,8 +37,8 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-red-400/10',
     tagText: 'text-red-400',
     tagBorder: 'border-red-500/15',
-    startupPrice: 'R$ 150.000',
-    monthlyPrice: 'De R$ 12.500 (-20%) por R$ 9.999/mês'
+    startupPrice: 'R$ 45.000',
+    monthlyPrice: 'R$ 10.000/mês'
   },
   {
     name: 'Nexus Pactum',
@@ -51,8 +51,8 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-blue-500/10',
     tagText: 'text-blue-400',
     tagBorder: 'border-blue-500/15',
-    startupPrice: 'R$ 150.000',
-    monthlyPrice: 'De R$ 12.500 (-20%) por R$ 9.999/mês'
+    startupPrice: 'R$ 45.000',
+    monthlyPrice: 'R$ 10.000/mês'
   },
   {
     name: 'Nexus Atlas (Logística e Portos)',
@@ -65,8 +65,8 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-sky-500/10',
     tagText: 'text-sky-400',
     tagBorder: 'border-sky-500/15',
-    startupPrice: 'R$ 150.000',
-    monthlyPrice: 'De R$ 12.500 (-20%) por R$ 9.999/mês'
+    startupPrice: 'R$ 45.000',
+    monthlyPrice: 'R$ 10.000/mês'
   },
   {
     name: 'Nexus Vulcan (Preditiva & Indústria Pesada)',
@@ -79,8 +79,8 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-amber-500/10',
     tagText: 'text-amber-400',
     tagBorder: 'border-amber-500/15',
-    startupPrice: 'R$ 150.000',
-    monthlyPrice: 'De R$ 12.500 (-20%) por R$ 9.999/mês'
+    startupPrice: 'R$ 45.000',
+    monthlyPrice: 'R$ 10.000/mês'
   },
   {
     name: 'Nexus Governança (Orion)',
@@ -93,8 +93,8 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-violet-500/10',
     tagText: 'text-violet-400',
     tagBorder: 'border-violet-500/15',
-    startupPrice: 'R$ 150.000',
-    monthlyPrice: 'De R$ 12.500 (-20%) por R$ 9.999/mês'
+    startupPrice: 'R$ 45.000',
+    monthlyPrice: 'R$ 10.000/mês'
   },
   {
     name: 'Nexus Auditoria (Magadot)',
@@ -107,8 +107,8 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-emerald-500/10',
     tagText: 'text-emerald-400',
     tagBorder: 'border-emerald-500/15',
-    startupPrice: 'R$ 150.000',
-    monthlyPrice: 'De R$ 12.500 (-20%) por R$ 9.999/mês'
+    startupPrice: 'R$ 45.000',
+    monthlyPrice: 'R$ 10.000/mês'
   },
   {
     name: 'InovaModa 360 (Virtual Try-On)',
