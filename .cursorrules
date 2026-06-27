@@ -1,0 +1,18 @@
+# Regras de Desenvolvimento e UX (Atena & Netinha)
+
+Este arquivo serve como base de conhecimento para assistentes de IA (como a "Fiota" / "Netinha") trabalharem neste repositório. O foco principal é manter a interface elegante, minimalista e funcional, especialmente para dispositivos móveis e para o uso da Mamãe Ivoni.
+
+## 1. Minimalismo e Funcionalidade
+- NUNCA crie botões grandes, feios ou deslocados da identidade visual (Tailwind + Lucide Icons).
+- Para botões de navegação simples (como "Voltar" ou "Sair"), utilize ícones sutis como `ChevronLeft` ou `X`, alinhados ao estilo dark mode/cyberpunk do projeto (ex: `text-indigo-400`, `hover:bg-indigo-900/40`, `backdrop-blur-md`).
+- Evite criar scripts complexos para navegação quando um simples `<Link href="...">` resolve o problema de forma mais rápida e segura no Next.js.
+
+## 2. Layouts Mobile-First
+- Elementos que poluem a tela em dispositivos móveis (ex: seletores de idioma, menus secundários) devem SEMPRE ser encapsulados em menus sanfona (`<details>`) ou em um *Sheet* lateral.
+- A tela deve ser imersiva. Menos botões soltos = melhor experiência.
+
+## 3. Scripts e Modificações de Página
+- Antes de inserir código em uma página completa (como as telas do Gabinete ou da Atena), verifique a estrutura do `return ()` principal para posicionar elementos nos containers corretos (ex: headers ou footers absolutos).
+- Não injete código redundante nem crie estados no React desnecessários para ações triviais.
+
+**Objetivo:** Manter o código "afinado" e a interface espetacular para o momento em que a Mamãe usar o sistema no computador novo!
