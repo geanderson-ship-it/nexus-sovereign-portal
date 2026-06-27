@@ -61,8 +61,8 @@ export function SiteHeader() {
     try {
       await signOut();
       toast({
-        title: t('common.advanceOrder') || 'Ordem de Avanço.',
-        description: t('common.logoutSuccess') || 'Missão cumprida. Desconectado com sucesso.',
+        title: t('common.advanceOrder') || 'Ordem de AvanÃ§o.',
+        description: t('common.logoutSuccess') || 'MissÃ£o cumprida. Desconectado com sucesso.',
       });
       if (mobileMenuOpen) setMobileMenuOpen(false);
       router.push('/');
@@ -86,16 +86,16 @@ export function SiteHeader() {
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
   const mainNav = useMemo(() => [
-    { title: t('navCourses'), href: '/courses' },
-    { title: t('navGaleria'), href: '/gallery' },
-    { title: t('navPalestras'), href: '/palestras' },
-    { title: t('navIntelligence'), href: '/intelligence' },
+    { title: t('navCourses') || 'Cursos', href: '/courses' },
+    { title: t('navGaleria') || 'Galeria', href: '/gallery' },
+    { title: t('navPalestras') || 'Palestras', href: '/palestras' },
+    { title: t('navIntelligence') || 'Intelligence', href: '/intelligence' },
     { title: t('navAgro') || 'Agro', href: '/agro' },
     { title: t('navPremium') || 'Premium', href: '/intelligence/premium' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
-    { title: t('navSobre'), href: '/about' },
-    { title: t('navContato'), href: '/contact' },
-    { title: t('navSuporte'), href: '/suporte' },
+    { title: t('navSobre') || 'Sobre', href: '/about' },
+    { title: t('navContato') || 'Contato', href: '/contact' },
+    { title: t('navSuporte') || 'Suporte', href: '/suporte' },
   ], [t]);
 
   if (!isClient) return null;
@@ -115,7 +115,7 @@ export function SiteHeader() {
             </Link>
           </div>
 
-          <div className="w-1/2 md:w-1/3 flex items-center justify-end gap-2">
+          <div className="flex-1 flex items-center justify-end gap-1 sm:gap-2">
            {/* Language Selector */}
            <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -134,15 +134,15 @@ export function SiteHeader() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur border-primary/20">
               {[
-                { code: 'pt-BR', name: 'Português', sub: 'Brasil', flag: 'br' },
+                { code: 'pt-BR', name: 'PortuguÃªs', sub: 'Brasil', flag: 'br' },
                 { code: 'en-US', name: 'English', sub: 'United States', flag: 'us' },
-                { code: 'es-ES', name: 'Español', sub: 'España', flag: 'es' },
+                { code: 'es-ES', name: 'EspaÃ±ol', sub: 'EspaÃ±a', flag: 'es' },
                 { code: 'de-DE', name: 'Deutsch', sub: 'Deutschland', flag: 'de' },
-                { code: 'fr-FR', name: 'Français', sub: 'France', flag: 'fr' },
-                { code: 'ja-JP', name: '日本語', sub: '日本', flag: 'jp' },
-                { code: 'zh-CN', name: '简体中文', sub: '中国', flag: 'cn' },
-                { code: 'ar-AE', name: 'العربية', sub: 'دبي', flag: 'ae' },
-                { code: 'ru-RU', name: 'Русский', sub: 'Россия', flag: 'ru' }
+                { code: 'fr-FR', name: 'FranÃ§ais', sub: 'France', flag: 'fr' },
+                { code: 'ja-JP', name: 'æ—¥æœ¬èªž', sub: 'æ—¥æœ¬', flag: 'jp' },
+                { code: 'zh-CN', name: 'ç®€ä½“ä¸­æ–‡', sub: 'ä¸­å›½', flag: 'cn' },
+                { code: 'ar-AE', name: 'Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©', sub: 'Ø¯Ø¨ÙŠ', flag: 'ae' },
+                { code: 'ru-RU', name: 'Ð ÑƒÑÑÐºÐ¸Ð¹', sub: 'Ð Ð¾ÑÑÐ¸Ñ', flag: 'ru' }
               ].map((lang) => (
                 <DropdownMenuItem key={lang.code} onClick={() => setLocale(lang.code as any)} className="flex items-center gap-3 cursor-pointer hover:bg-primary/10 transition-colors">
                   <img src={`https://flagcdn.com/w20/${lang.flag}.png`} width="20" alt={lang.code} className="rounded-xs" />
@@ -204,7 +204,7 @@ export function SiteHeader() {
                         </DropdownMenuItem>
                         
                         <DropdownMenuSeparator className="bg-border/50" />
-                        <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500/70">Área Comercial</div>
+                        <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500/70">Ãrea Comercial</div>
                         <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
                           <Link href="/gabinete-vendas" className="flex items-center w-full">
                             <Briefcase className="mr-2 h-4 w-4" />
@@ -214,7 +214,7 @@ export function SiteHeader() {
                         <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
                           <Link href="/gabinete/precificacao" className="flex items-center w-full">
                             <Coins className="mr-2 h-4 w-4" />
-                            <span>Catálogo de Produtos</span>
+                            <span>CatÃ¡logo de Produtos</span>
                           </Link>
                         </DropdownMenuItem>
                       </>
@@ -273,20 +273,20 @@ export function SiteHeader() {
                       <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-2 py-1 mb-2 border-b border-border/50">Ecossistema Corporativo</div>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-blue-500/10 mb-1 p-3 rounded-lg focus:bg-blue-500/20">
                         <Link href="/intelligence" className="flex flex-col">
-                          <span className="font-black text-blue-400 uppercase tracking-wider text-sm">Visão Geral Intelligence</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">O coração da inteligência Nexus</span>
+                          <span className="font-black text-blue-400 uppercase tracking-wider text-sm">VisÃ£o Geral Intelligence</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">O coraÃ§Ã£o da inteligÃªncia Nexus</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-cyan-500/10 mb-1 p-3 rounded-lg focus:bg-cyan-500/20">
                         <Link href="/nexus-empresas" className="flex flex-col">
                           <span className="font-black text-cyan-400 uppercase tracking-wider text-sm">Nexus Empresas</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">Automação para a indústria (B2B)</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">AutomaÃ§Ã£o para a indÃºstria (B2B)</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-pink-500/10 mb-1 p-3 rounded-lg focus:bg-pink-500/20">
                         <Link href="/inova-revenda" className="flex flex-col">
                           <span className="font-black text-pink-500 uppercase tracking-wider text-sm">Inova Revenda</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">Concessionárias guiadas por IA</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">ConcessionÃ¡rias guiadas por IA</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-purple-500/10 mb-1 p-3 rounded-lg focus:bg-purple-500/20">
@@ -304,7 +304,7 @@ export function SiteHeader() {
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-amber-500/10 p-3 rounded-lg focus:bg-amber-500/20">
                         <Link href="/energia" className="flex flex-col">
                           <span className="font-black text-amber-500 uppercase tracking-wider text-sm">Nexus Energia</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">IA e Otimização para o setor elétrico</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">IA e OtimizaÃ§Ã£o para o setor elÃ©trico</span>
                         </Link>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -353,7 +353,7 @@ export function SiteHeader() {
                               <svg className="w-4 h-4 transition-transform group-open:rotate-180 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                             </summary>
                             <div className="flex flex-col p-2 bg-black/40 gap-1 border-t border-blue-500/20">
-                              <Link href="/intelligence" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-blue-400 hover:bg-blue-500/10 rounded-md">Visão Geral Intelligence</Link>
+                              <Link href="/intelligence" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-blue-400 hover:bg-blue-500/10 rounded-md">VisÃ£o Geral Intelligence</Link>
                               <Link href="/nexus-empresas" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-cyan-400 hover:bg-cyan-500/10 rounded-md">Nexus Empresas (B2B)</Link>
                               <Link href="/inova-revenda" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-pink-500 hover:bg-pink-500/10 rounded-md">Inova Revenda</Link>
                               <Link href="/inova-moda" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-purple-400 hover:bg-purple-500/10 rounded-md">Inova Moda</Link>
@@ -390,77 +390,102 @@ export function SiteHeader() {
                     })}
                   </nav>
                   <div className="p-4 mt-auto border-t border-border/50">
-                      <div className="grid grid-cols-2 gap-3 mb-4">
-                        {[
-                          { code: 'pt-BR', flag: 'br', label: 'PT-BR' },
-                          { code: 'en-US', flag: 'us', label: 'EN-US' },
-                          { code: 'es-ES', flag: 'es', label: 'ES-ES' },
-                          { code: 'ru-RU', flag: 'ru', label: 'RU-RU' }
-                        ].map((lang) => (
-                          <Button 
-                            key={lang.code}
-                            variant={locale === lang.code ? 'default' : 'outline'} 
-                            size="sm" 
-                            onClick={() => { setLocale(lang.code as any); setMobileMenuOpen(false); }} 
-                            className="gap-3 h-auto py-3 justify-start px-4 border-border/40"
-                          >
-                            <img src={`https://flagcdn.com/w40/${lang.flag}.png`} width="24" alt={lang.label} className="rounded-sm" />
-                            <span className="text-sm font-bold">{lang.label}</span>
-                          </Button>
-                        ))}
-                      </div>
-                      {isUserLoading ? (
-                        <Skeleton className="h-10 w-full" />
-                      ) : user ? (
-                        <div className="flex flex-col gap-2">
-                          <Button variant="outline" className="w-full justify-start border-border/40" asChild onClick={() => setMobileMenuOpen(false)}>
-                            <Link href="/profile"><UserIcon className="mr-2 h-4 w-4" /> {t('userArea')}</Link>
-                          </Button>
-                          {isAdmin && (
+                    <details className="group border border-primary/20 rounded-lg bg-background/50 overflow-hidden">
+                      <summary className="cursor-pointer flex items-center justify-between p-3 text-foreground font-bold hover:bg-primary/10 transition-colors list-none [&::-webkit-details-marker]:hidden">
+                        <div className="flex items-center gap-3">
+                          {user ? (
                             <>
-                              <details className="group border border-primary/20 rounded-md bg-background/50 overflow-hidden">
-                                <summary className="cursor-pointer p-3 text-sm font-medium text-primary hover:bg-primary/10 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
-                                  <span className="flex items-center gap-2"><Shield className="h-4 w-4" /> Gabinete Diretoria</span>
-                                  <ArrowRight className="h-4 w-4 transition-transform group-open:rotate-90" />
-                                </summary>
-                                <div className="p-2 flex flex-col gap-2 border-t border-primary/10 bg-black/20">
-                                  <Button variant="ghost" className="w-full justify-start text-primary font-medium hover:bg-primary/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                    <Link href="/gabinete"><Shield className="mr-2 h-4 w-4" /> {t('navGabinete')}</Link>
-                                  </Button>
-                                  <Button variant="ghost" className="w-full justify-start text-blue-400 font-bold hover:bg-blue-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                    <Link href="/atena"><Sparkles className="mr-2 h-4 w-4" /> Atena (IA Exclusiva)</Link>
-                                  </Button>
-                                </div>
-                              </details>
-
-                              <details className="group mt-2 border border-emerald-500/20 rounded-md bg-background/50 overflow-hidden">
-                                <summary className="cursor-pointer p-3 text-sm font-medium text-emerald-400 hover:bg-emerald-500/10 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
-                                  <span className="flex items-center gap-2"><Briefcase className="h-4 w-4" /> Área Comercial</span>
-                                  <ArrowRight className="h-4 w-4 transition-transform group-open:rotate-90" />
-                                </summary>
-                                <div className="p-2 flex flex-col gap-2 border-t border-emerald-500/10 bg-black/20">
-                                  <Button variant="ghost" className="w-full justify-start text-emerald-400 font-bold hover:bg-emerald-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                    <Link href="/gabinete-vendas"><Briefcase className="mr-2 h-4 w-4" /> Showroom Comercial</Link>
-                                  </Button>
-                                  <Button variant="ghost" className="w-full justify-start text-emerald-400 font-bold hover:bg-emerald-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                    <Link href="/gabinete/precificacao"><Coins className="mr-2 h-4 w-4" /> Catálogo de Produtos</Link>
-                                  </Button>
-                                </div>
-                              </details>
+                              <Avatar className="h-8 w-8 border border-primary/20">
+                                <AvatarImage src={user.photoURL || ''} alt={user.displayName || ''} />
+                                <AvatarFallback className="bg-primary/10 text-primary text-xs">{userInitials}</AvatarFallback>
+                              </Avatar>
+                              <span className="truncate max-w-[150px]">{user.displayName || 'Usuário'}</span>
+                            </>
+                          ) : (
+                            <>
+                              <UserIcon className="h-5 w-5 text-primary" />
+                              <span>Configurações</span>
                             </>
                           )}
-                          <Button variant="destructive" className="w-full justify-start mt-2" onClick={handleLogout}>
-                            <LogOut className="mr-2 h-4 w-4" /> {t('logout')}
-                          </Button>
                         </div>
-                      ) : (
-                        <div className="flex flex-col space-y-2">
-                          <Link href="/login" onClick={() => setMobileMenuOpen(false)} className={cn(buttonVariants({ variant: 'default', className: 'w-full shadow-[0_0_15px_rgba(37,99,235,0.3)]' }))}>
-                            <UserIcon className="mr-2 h-4 w-4" />
-                            {t('login')}
-                          </Link>
+                        <ArrowRight className="h-4 w-4 transition-transform group-open:rotate-90 text-primary" />
+                      </summary>
+                      
+                      <div className="flex flex-col p-3 bg-black/30 border-t border-primary/20 gap-4">
+                        <div className="grid grid-cols-2 gap-2">
+                          {[
+                            { code: 'pt-BR', flag: 'br', label: 'PT-BR' },
+                            { code: 'en-US', flag: 'us', label: 'EN-US' },
+                            { code: 'es-ES', flag: 'es', label: 'ES-ES' },
+                            { code: 'ru-RU', flag: 'ru', label: 'RU-RU' }
+                          ].map((lang) => (
+                            <Button 
+                              key={lang.code}
+                              variant={locale === lang.code ? 'default' : 'outline'} 
+                              size="sm" 
+                              onClick={() => { setLocale(lang.code as any); setMobileMenuOpen(false); }} 
+                              className="gap-2 h-auto py-2 justify-start px-3 border-border/40 text-xs"
+                            >
+                              <img src={`https://flagcdn.com/w40/${lang.flag}.png`} width="20" alt={lang.label} className="rounded-sm" />
+                              <span className="font-bold">{lang.label}</span>
+                            </Button>
+                          ))}
                         </div>
-                      )}
+
+                        {isUserLoading ? (
+                          <Skeleton className="h-10 w-full" />
+                        ) : user ? (
+                          <div className="flex flex-col gap-2 border-t border-border/30 pt-4">
+                            <Button variant="outline" className="w-full justify-start border-border/40" asChild onClick={() => setMobileMenuOpen(false)}>
+                              <Link href="/profile"><UserIcon className="mr-2 h-4 w-4" /> {t('userArea')}</Link>
+                            </Button>
+                            {isAdmin && (
+                              <>
+                                <details className="group/gabinete border border-primary/20 rounded-md bg-background/50 overflow-hidden">
+                                  <summary className="cursor-pointer p-3 text-sm font-medium text-primary hover:bg-primary/10 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
+                                    <span className="flex items-center gap-2"><Shield className="h-4 w-4" /> Gabinete Diretoria</span>
+                                    <ArrowRight className="h-4 w-4 transition-transform group-open/gabinete:rotate-90" />
+                                  </summary>
+                                  <div className="p-2 flex flex-col gap-2 border-t border-primary/10 bg-black/20">
+                                    <Button variant="ghost" className="w-full justify-start text-primary font-medium hover:bg-primary/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                      <Link href="/gabinete"><Shield className="mr-2 h-4 w-4" /> {t('navGabinete')}</Link>
+                                    </Button>
+                                    <Button variant="ghost" className="w-full justify-start text-blue-400 font-bold hover:bg-blue-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                      <Link href="/atena"><Sparkles className="mr-2 h-4 w-4" /> Atena (IA Exclusiva)</Link>
+                                    </Button>
+                                  </div>
+                                </details>
+
+                                <details className="group/comercial mt-2 border border-emerald-500/20 rounded-md bg-background/50 overflow-hidden">
+                                  <summary className="cursor-pointer p-3 text-sm font-medium text-emerald-400 hover:bg-emerald-500/10 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
+                                    <span className="flex items-center gap-2"><Briefcase className="h-4 w-4" /> Área Comercial</span>
+                                    <ArrowRight className="h-4 w-4 transition-transform group-open/comercial:rotate-90" />
+                                  </summary>
+                                  <div className="p-2 flex flex-col gap-2 border-t border-emerald-500/10 bg-black/20">
+                                    <Button variant="ghost" className="w-full justify-start text-emerald-400 font-bold hover:bg-emerald-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                      <Link href="/gabinete-vendas"><Briefcase className="mr-2 h-4 w-4" /> Showroom Comercial</Link>
+                                    </Button>
+                                    <Button variant="ghost" className="w-full justify-start text-emerald-400 font-bold hover:bg-emerald-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
+                                      <Link href="/gabinete/precificacao"><Coins className="mr-2 h-4 w-4" /> Catálogo de Produtos</Link>
+                                    </Button>
+                                  </div>
+                                </details>
+                              </>
+                            )}
+                            <Button variant="destructive" className="w-full justify-start mt-2" onClick={handleLogout}>
+                              <LogOut className="mr-2 h-4 w-4" /> {t('logout')}
+                            </Button>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col space-y-2 border-t border-border/30 pt-4">
+                            <Link href="/login" onClick={() => setMobileMenuOpen(false)} className={cn(buttonVariants({ variant: 'default', className: 'w-full shadow-[0_0_15px_rgba(37,99,235,0.3)]' }))}>
+                              <UserIcon className="mr-2 h-4 w-4" />
+                              {t('login')}
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </details>
                   </div>
                 </div>
               </SheetContent>
