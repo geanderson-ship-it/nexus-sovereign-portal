@@ -231,9 +231,9 @@ export default function AtenaTerminalPage() {
     e?.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    if (viewMode === 'fullscreen') {
-      setViewMode('split');
-    }
+    // if (viewMode === 'fullscreen') {
+    //   setViewMode('split');
+    // }
 
     const userMessage = input.trim();
     setInput('');
