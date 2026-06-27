@@ -69,31 +69,38 @@ export default function GabineteHubPage() {
           </div>
         </div>
 
+        {/* HERO CARD: ATENA */}
+        <Link href="/gabinete/atena" className="block mb-8">
+          <Card className="bg-slate-900/60 border-indigo-500/30 hover:border-indigo-400/60 hover:bg-slate-900/80 transition-all cursor-pointer group relative overflow-hidden ring-1 ring-indigo-500/30 w-full shadow-[0_0_40px_rgba(99,102,241,0.1)]">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
+            
+            <div className="flex flex-col md:flex-row items-center gap-8 p-8 relative z-10">
+              <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.3)] group-hover:scale-105 transition-transform flex-shrink-0 bg-indigo-950">
+                <Image src="/atena-avatar.png" alt="Atena Avatar" fill className="object-cover" />
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-4 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                  <Activity className="w-4 h-4 text-indigo-400 animate-pulse" />
+                  <span className="text-xs font-bold uppercase tracking-widest text-indigo-300">Acesso Nível Soberano</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl text-white font-headline font-bold mb-3 group-hover:text-indigo-300 transition-colors drop-shadow-md">
+                  Atena - A inteligência exclusiva da Nexus
+                </h2>
+                <p className="text-slate-300 max-w-3xl text-base md:text-lg leading-relaxed">
+                  Painel de orquestração avançado e terminal interativo da IA Soberana. Conectada diretamente ao núcleo AWS Bedrock, operando com total autonomia e controle estratégico.
+                </p>
+                <div className="mt-8 flex items-center justify-center md:justify-start gap-2 text-sm font-bold uppercase tracking-widest text-indigo-400 group-hover:text-indigo-300">
+                  Abrir Conexão Neural <Activity className="w-5 h-5 animate-pulse ml-2" />
+                </div>
+              </div>
+            </div>
+          </Card>
+        </Link>
+
         {/* Módulos do Gabinete */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-          {/* Central IA: Atena Autônoma */}
-          <Link href="/gabinete/atena">
-            <Card className="bg-slate-900/40 border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden ring-1 ring-indigo-500/20">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors" />
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
-                  <Activity className="w-6 h-6 text-indigo-400" />
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-indigo-400 transition-colors font-headline">Atena Autônoma</CardTitle>
-                <CardDescription className="text-indigo-200/50">Inteligência Soberana Nexus</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-400">
-                  Painel de orquestração e terminal interativo da IA exclusiva (AWS Bedrock). Comunicação direta e independente.
-                </p>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-indigo-500">
-                  Iniciar Link Neural <Activity className="w-3 h-3 animate-pulse" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
           
           {/* Contratos Lançados */}
           <Link href="/gabinete/contratos">
@@ -204,6 +211,27 @@ export default function GabineteHubPage() {
               </CardContent>
             </Card>
           </Link>
+          {/* Cases de Sucesso */}
+          <Link href="/gabinete/cases">
+            <Card className="bg-slate-900/40 border-slate-800 hover:border-yellow-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/5 rounded-full blur-3xl group-hover:bg-yellow-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-yellow-500/20">
+                  <MapPin className="w-6 h-6 text-yellow-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-yellow-400 transition-colors font-headline">Cases de Sucesso</CardTitle>
+                <CardDescription>Cidades e Embaixadoras</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Mural oficial de acompanhamento das cidades que já possuem o programa de Embaixadoras Digitais implementado e ativo.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-yellow-500">
+                  Ver Mapa <MapPin className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
 
         </div>
 
@@ -253,7 +281,7 @@ export default function GabineteHubPage() {
                   <span className="w-4 h-4 rounded bg-amber-500/20 flex items-center justify-center text-[10px]">6</span>
                   Autonomia e Rescisão
                 </h3>
-                <p className="text-slate-400 leading-relaxed">Bloqueio total à infraestrutura (AWS/GitHub) e painéis admin. Rescisão imotivada com 30 dias de aviso prévio, sem multas rescisórias.</p>
+                <p className="text-slate-400 leading-relaxed">Bloqueio total à  infraestrutura (AWS/GitHub) e painéis admin. Rescisão imotivada com 30 dias de aviso prévio, sem multas rescisórias.</p>
               </div>
 
               {/* Parte 2: Blindagem Jurídica */}
@@ -302,7 +330,7 @@ export default function GabineteHubPage() {
                   <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">13</span>
                   Não-Exclusividade Territorial
                 </h3>
-                <p className="text-slate-400 mb-6 leading-relaxed">A Nexus preserva o direito de atuar com múltiplos parceiros na mesma região. O comissionamento será devido à representante que efetivar oficialmente a contratação do Setup.</p>
+                <p className="text-slate-400 mb-6 leading-relaxed">A Nexus preserva o direito de atuar com múltiplos parceiros na mesma região. O comissionamento será devido à  representante que efetivar oficialmente a contratação do Setup.</p>
 
                 <h3 className="text-emerald-400 font-bold uppercase tracking-wider text-xs mb-2 flex items-center gap-2">
                   <span className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-[10px]">14</span>
