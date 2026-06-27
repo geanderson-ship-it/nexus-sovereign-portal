@@ -19,6 +19,8 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   // Define as rotas que NÃO devem ter Header e Footer (PWA / Standalone Apps / Live Modes)
   const isStandalone = pathname?.startsWith('/app/') || 
                        pathname?.startsWith('/standalone/') || 
+                       pathname?.startsWith('/vitrine-inovadora') ||
+                       pathname?.startsWith('/inova-moda') ||
                        pathname?.startsWith('/dante-safra') ||
                        pathname?.startsWith('/djeny-design') ||
                        pathname?.startsWith('/atena') ||

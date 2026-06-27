@@ -3,6 +3,7 @@ import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-r
 import { PollyClient } from "@aws-sdk/client-polly";
 import { checkEmails } from '@/lib/email-reader';
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
+import { pesquisarInternet } from '@/lib/web-search';
 
 const awsConfig = {
   region: process.env.AWS_REGION || "us-east-1",
@@ -82,6 +83,24 @@ export async function POST(req: NextRequest) {
               }
             }
           }
+        },
+        {
+          toolSpec: {
+            name: "pesquisar_internet",
+            description: "Realiza uma pesquisa no Google (Internet) para encontrar notícias, cotações, dados em tempo real ou fatos recentes. Use essa ferramenta sempre que a informação não estiver na sua base de dados, for sobre o mundo externo ou eventos atuais.",
+            inputSchema: {
+              json: {
+                type: "object",
+                properties: {
+                  query: {
+                    type: "string",
+                    description: "O termo ou frase exata a ser pesquisada no Google."
+                  }
+                },
+                required: ["query"]
+              }
+            }
+          }
         }
       ]
     };
@@ -140,6 +159,27 @@ export async function POST(req: NextRequest) {
                 toolResult: {
                   toolUseId: toolUse.toolUseId,
                   content: [{ text: `Erro ao acessar BD: ${e.message}` }],
+                  status: 'error'
+                }
+              });
+           }
+        }
+
+        if (toolUse.name === 'pesquisar_internet') {
+           try {
+              const { query } = toolUse.input;
+              const resultados = await pesquisarInternet(query);
+              toolResults.push({
+                toolResult: {
+                  toolUseId: toolUse.toolUseId,
+                  content: [{ text: resultados }]
+                }
+              });
+           } catch (e: any) {
+              toolResults.push({
+                toolResult: {
+                  toolUseId: toolUse.toolUseId,
+                  content: [{ text: `Erro ao pesquisar na web: ${e.message}` }],
                   status: 'error'
                 }
               });

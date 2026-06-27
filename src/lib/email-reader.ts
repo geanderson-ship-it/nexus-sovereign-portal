@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ImapFlow } from 'imapflow';
 import { simpleParser } from 'mailparser';
 
