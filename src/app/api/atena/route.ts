@@ -37,9 +37,17 @@ export async function POST(req: NextRequest) {
     const formattedMessages = messages.map((m: any) => {
       const contentBlocks: any[] = [];
       if (m.imageBase64) {
+        // Detect image format from base64 header
+        const match = m.imageBase64.match(/^data:image\/(\w+);base64,/);
+        let format = 'jpeg';
+        if (match && match[1]) {
+          format = match[1].toLowerCase();
+          if (format === 'jpg') format = 'jpeg';
+        }
+        
         const base64Data = m.imageBase64.replace(/^data:image\/\w+;base64,/, "");
         contentBlocks.push({
-          image: { format: 'jpeg', source: { bytes: Buffer.from(base64Data, 'base64') } }
+          image: { format, source: { bytes: Buffer.from(base64Data, 'base64') } }
         });
       }
       contentBlocks.push({ text: m.content });

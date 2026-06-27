@@ -4,7 +4,7 @@ import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
-import { Shield, Terminal, Mic, Send, Activity, MonitorPlay, ChevronLeft, Video, VideoOff } from 'lucide-react';
+import { Shield, Terminal, Mic, Send, Activity, MonitorPlay, ChevronLeft, Video, VideoOff, Paperclip, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -133,6 +133,19 @@ export default function AtenaTerminalPage() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -238,12 +251,13 @@ export default function AtenaTerminalPage() {
     const userMessage = input.trim();
     setInput('');
     
-    // Capturar olho da Atena (Visão) se a câmera estiver ligada
-    let imageBase64 = undefined;
-    if (isCameraActive) {
+    // Envia imagem anexada ou captura a cǽmera
+    let imageBase64 = selectedImage || undefined;
+    if (!imageBase64 && isCameraActive) {
       const b64 = captureFrame();
       if (b64) imageBase64 = b64;
     }
+    setSelectedImage(null); // limpa o anexo
     
     const newMessage: Message = { role: 'user', content: userMessage, imageBase64 };
     setMessages(prev => [...prev, newMessage]);
@@ -480,9 +494,45 @@ export default function AtenaTerminalPage() {
         ${viewMode === 'fullscreen' ? 'w-full max-w-2xl left-1/2 -translate-x-1/2' : 'w-[calc(50%-4rem)] left-[2rem]'}
       `}>
         <form onSubmit={handleSendMessage} className="relative group">
+          {/* Image Preview */}
+          {selectedImage && (
+            <div className="absolute bottom-[calc(100%+10px)] left-8 w-24 h-24 rounded-lg overflow-hidden border-2 border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.3)] bg-black group-hover:opacity-100 transition-opacity">
+              <img src={selectedImage} alt="Anexo" className="w-full h-full object-cover" />
+              <button 
+                type="button" 
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-red-500 transition-colors"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </div>
+          )}
+
+          {/* Hidden File Input */}
+          <input 
+            type="file" 
+            ref={fileInputRef}
+            onChange={handleImageSelect}
+            accept="image/*"
+            className="hidden" 
+          />
+
           <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
           <div className="relative flex items-center gap-2 bg-[#050505]/80 backdrop-blur-xl border border-indigo-900/50 rounded-full p-2 shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
             
+            {/* BOTǟO DE ANEXO (IMAGEM) */}
+            <button 
+              type="button" 
+              onClick={() => fileInputRef.current?.click()}
+              title="Anexar Imagem"
+              className={`p-3 rounded-full transition-colors ${
+                selectedImage 
+                ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.5)]' 
+                : 'bg-indigo-950/50 text-indigo-400 hover:text-white hover:bg-indigo-900'
+              }`}
+            >
+              <Paperclip className="w-5 h-5" />
+            </button>
             {/* BOTÃO DA CAMERA */}
             <button 
               type="button" 
