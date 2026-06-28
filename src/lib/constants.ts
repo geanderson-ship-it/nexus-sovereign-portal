@@ -3,6 +3,7 @@ export type UserLevel = 'ADMIN' | 'SALES' | 'USER';
 export const ADMIN_EMAILS = [
     'geanderson@nexustreinamento.com',
     'geandersonleo@gmail.com',
+    'ivonisevero4@gmail.com',
 ];
 
 export const isAdminUser = (user: any): boolean => {
