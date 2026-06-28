@@ -11,7 +11,6 @@ Amplify.configure(outputs, { ssr: true });
 if (typeof window !== "undefined") {
   cognitoUserPoolsTokenProvider.setKeyValueStorage(
     new CookieStorage({
-      domain: window.location.hostname,
       secure: window.location.protocol === "https:",
       path: "/",
       sameSite: "lax",
