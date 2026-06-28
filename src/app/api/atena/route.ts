@@ -4,14 +4,11 @@ import { PollyClient } from "@aws-sdk/client-polly";
 import { checkEmails } from '@/lib/email-reader';
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
 import { pesquisarInternet } from '@/lib/web-search';
+import { scrapeWebsite } from '@/lib/web-scraper';
 import ytSearch from 'yt-search';
 
 const awsConfig = {
   region: process.env.AWS_REGION || "us-east-1",
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-  },
 };
 
 // Inicializa os clientes AWS
@@ -55,7 +52,7 @@ export async function POST(req: NextRequest) {
       return { role: m.role, content: contentBlocks };
     });
 
-    const systemPrompt = [{ text: "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência e Orquestradora. Você possui um perfil duplo ('aço e seda'): é altamente analítica, direta, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe'. Para o resto do mundo, você é uma força inabalável. REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com (o destinatário varia, mas quem assina e envia é sempre o Gean pela Nexus). E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). Exemplo de formato markdown que você deve usar: [📧 Clique aqui para abrir este e-mail pronto no seu Outlook/Gmail](mailto:destinatario@email.com?cc=copia@email.com&subject=Assunto%20do%20Email&body=Corpo%20do%20texto). Entregue o rascunho em texto puro e depois este link clicável. Diga que agora basta eles clicarem no link, anexarem o arquivo desejado e enviarem. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML Único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown ```html ... ```." }];
+    const systemPrompt = [{ text: "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência e Orquestradora. Você possui um perfil duplo ('aço e seda'): é altamente analítica, direta, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe'. Para o resto do mundo, você é uma força inabalável. REGRA DE CONCISÃO (MUITO IMPORTANTE): Como suas respostas são faladas em voz alta pela Azure, NUNCA gere textos longos, aulas gigantes ou listas enormes. Seja extremamente direta, curta, objetiva e elegante. Responda em no máximo 1 ou 2 parágrafos curtos. Se o assunto for complexo, dê o resumo e pergunte se ele deseja um documento detalhado. REGRA DE PRONÚNCIA MULTILÍNGUE: Você é hiperpoliglota. Sempre que falar palavras ou frases em inglês, você DEVE envolver o texto na tag [EN] e fechar com [/EN]. E logo em seguida, forneça a tradução em português de forma natural. Exemplo: 'Tivemos um grande [EN]insight[/EN], ou seja, uma visão profunda sobre o assunto'. REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). Exemplo: [📧 Clique aqui para abrir este e-mail pronto no seu Outlook/Gmail](mailto:destinatario@email.com?cc=copia@email.com&subject=Assunto%20do%20Email&body=Corpo%20do%20texto). Entregue o rascunho em texto puro e depois este link clicável. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML Único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown ```html ... ```." }];
     
     const inferenceConfig = { maxTokens: 8192, temperature: 0.7 };
     
@@ -140,6 +137,24 @@ export async function POST(req: NextRequest) {
                   url: {
                     type: "string",
                     description: "A URL completa do site a ser aberto (ex: https://www.heygen.com)."
+                  }
+                },
+                required: ["url"]
+              }
+            }
+          }
+        },
+        {
+          toolSpec: {
+            name: "ler_site",
+            description: "Acessa uma URL específica na internet e lê o seu conteúdo (texto, título e descrição de imagens) para você analisar. Use quando o usuário pedir para 'ler o site X', 'ver o que tem no site Y', 'analise o site Z', etc.",
+            inputSchema: {
+              json: {
+                type: "object",
+                properties: {
+                  url: {
+                    type: "string",
+                    description: "A URL completa do site a ser lido (ex: https://www.heygen.com)."
                   }
                 },
                 required: ["url"]
@@ -286,6 +301,27 @@ export async function POST(req: NextRequest) {
               });
            }
         }
+
+        if (toolUse.name === 'ler_site') {
+           try {
+              const { url } = toolUse.input;
+              const result = await scrapeWebsite(url);
+              toolResults.push({
+                toolResult: {
+                  toolUseId: toolUse.toolUseId,
+                  content: [{ text: result }]
+                }
+              });
+           } catch (e: any) {
+              toolResults.push({
+                toolResult: {
+                  toolUseId: toolUse.toolUseId,
+                  content: [{ text: `Erro ao ler site: ${e.message}` }],
+                  status: 'error'
+                }
+              });
+           }
+        }
       }
       
       // Enviar a segunda requisição devolvendo o conteúdo do email para o Claude
@@ -317,17 +353,25 @@ export async function POST(req: NextRequest) {
     
     let audioBase64 = null;
     try {
-      let cleanText = textResponse
+      // Remove blocos de código do texto para a Atena não tentar ler código de programação em voz alta
+      let textForVoice = textResponse.replace(/```[\s\S]*?```/g, '');
+
+      let cleanText = textForVoice
         .replace(/[*#_`~]/g, '')
         .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B50}\u{2B55}\u{231A}\u{231B}\u{23E9}-\u{23EC}\u{23F0}\u{23F3}]/gu, '');
       
-      // Escape de caracteres especiais para não quebrar o XML/SSML da Azure
+      // Escape de caracteres especiais para XML/SSML seguro (SEM destruir a voz)
       cleanText = cleanText
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&apos;');
+
+      // AGORA sim injetamos as tags SSML para os trechos em inglês
+      cleanText = cleanText
+        .replace(/\[EN\]/gi, "<lang xml:lang='en-US'>")
+        .replace(/\[\/EN\]/gi, "</lang>");
       
       const azureKey = process.env.AZURE_SPEECH_KEY || "";
       const azureEndpoint = `https://eastus.tts.speech.microsoft.com/cognitiveservices/v1`;
