@@ -449,7 +449,7 @@ export default function AtenaTerminalPage() {
               src="/atena/atena-autonoma-digital.png" 
               alt="Atena Avatar" 
               fill
-              className="object-contain md:object-cover object-[center_15%] md:object-[center_20%]"
+              className="object-cover object-top md:object-[center_20%]"
               priority
             />
             {/* Gradiente para escurecer as bordas e dar contraste para o texto/input */}
