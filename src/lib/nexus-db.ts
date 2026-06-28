@@ -46,6 +46,26 @@ export const tabelaPrecosNexus = [
     custoEstimado: 3000.00,
     moeda: "BRL",
     status: "Ativo"
+  },
+  {
+    id: "NEX-006",
+    nome: "Inova Moda 360",
+    categoria: "SaaS Enterprise",
+    precoVenda: 45000.00,
+    mensalidade: 15000.00,
+    custoEstimado: 5000.00,
+    moeda: "BRL",
+    status: "Ativo"
+  },
+  {
+    id: "NEX-007",
+    nome: "Vitrine Inovadora",
+    categoria: "SaaS Enterprise",
+    precoVenda: 45000.00,
+    mensalidade: 15000.00,
+    custoEstimado: 5000.00,
+    moeda: "BRL",
+    status: "Ativo"
   }
 ];
 
