@@ -73,6 +73,13 @@ export default function LoginPage() {
       handleSuccessfulLogin();
     } catch (error: any) {
       let errorMessage = error.message;
+      
+      // Auto-redirect if session already exists
+      if (errorMessage?.toLowerCase().includes('already a signed in user')) {
+         handleSuccessfulLogin();
+         return;
+      }
+
       if (error.name === 'UserNotFoundException' || error.name === 'NotAuthorizedException') {
          errorMessage = t('login.toast.error.invalidCredentials');
       }

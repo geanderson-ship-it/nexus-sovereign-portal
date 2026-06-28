@@ -25,7 +25,7 @@ export function MiniYouTubePlayer() {
   if (!videoId) return null;
 
   return (
-    <div className="fixed bottom-0 right-0 z-0 opacity-0 pointer-events-none w-[1px] h-[1px] overflow-hidden">
+    <div className="fixed top-20 right-4 z-50 animate-in slide-in-from-right-5 fade-in duration-500 shadow-2xl rounded-2xl overflow-hidden border border-white/10 bg-black/80 backdrop-blur-md">
       <div className="w-[320px] max-w-[calc(100vw-32px)]">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-2 bg-white/5 border-b border-white/5">
