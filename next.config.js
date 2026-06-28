@@ -36,7 +36,9 @@ const nextConfig = {
       'genkit',
       'genkitx-aws-bedrock',
       '@genkit-ai/core',
-      '@genkit-ai/ai'
+      '@genkit-ai/ai',
+      'yt-search',
+      'cheerio'
     ],
   },
   async redirects() {
