@@ -7,10 +7,15 @@ import {
 } from "@aws-sdk/client-rekognition";
 
 const awsConfig: any = {
-  region: process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
+  region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
 };
 
-if (process.env.BEDROCK_ACCESS_KEY_ID && process.env.BEDROCK_SECRET_ACCESS_KEY) {
+if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) {
+  awsConfig.credentials = {
+    accessKeyId: process.env.AMPLIFY_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AMPLIFY_SECRET_ACCESS_KEY,
+  };
+} else if (process.env.BEDROCK_ACCESS_KEY_ID && process.env.BEDROCK_SECRET_ACCESS_KEY) {
   awsConfig.credentials = {
     accessKeyId: process.env.BEDROCK_ACCESS_KEY_ID,
     secretAccessKey: process.env.BEDROCK_SECRET_ACCESS_KEY,
