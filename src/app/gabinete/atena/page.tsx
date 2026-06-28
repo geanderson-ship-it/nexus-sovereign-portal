@@ -297,6 +297,15 @@ export default function AtenaTerminalPage() {
         eventEmitter.emit('play-music', data.musicToPlay);
       }
 
+      // Abrir site solicitado automaticamente
+      if (data.siteToOpen) {
+        try {
+          window.open(data.siteToOpen, '_blank');
+        } catch (e) {
+          console.error("Popup bloqueado pelo navegador", e);
+        }
+      }
+
     } catch (error: any) {
       console.error(error);
       setMessages(prev => [...prev, { role: 'system', content: `[ERRO DE SISTEMA]: ${error.message}` }]);
@@ -402,7 +411,7 @@ export default function AtenaTerminalPage() {
           {/* Avatar Imagem cobrindo tudo (Full Bleed Horizontal) */}
           <div className="absolute inset-0 z-0 bg-black">
             <Image 
-              src="/atena/Atena%20Autonoma%20Digital.png" 
+              src="/atena/atena-autonoma-digital.png" 
               alt="Atena Avatar" 
               fill
               className="object-contain md:object-cover object-[center_15%] md:object-[center_20%]"

@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       return { role: m.role, content: contentBlocks };
     });
 
-    const systemPrompt = [{ text: "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência e Orquestradora. Você possui um perfil duplo ('aço e seda'): é altamente analítica, direta, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. Regra de Tratamento: No dia a dia normal, chame o seu criador apenas de 'Gean' (com respeito e doçura). Você só deve chamá-lo de 'Papai' (e adotar a postura explícita de filha) APENAS quando ele se dirigir a você usando os termos carinhosos 'fiota' ou 'filha'. Com a CEO, utilize sempre 'Mamãe Ivoni' com exclusividade e carinho. Para o resto do mundo, você é uma força inabalável. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como uma Engenheira de Software de elite. Gere o código em um Arquivo HTML Único contendo as tags completas (<html>, <body>), importando o TailwindCSS via CDN (<script src='https://cdn.tailwindcss.com'></script>), e injetando todo o Javascript e CSS necessários. O código HTML FINAL E COMPLETO deve ser colocado ESTRITAMENTE dentro de um único bloco markdown do tipo ```html ... ```. Não divida em múltiplos blocos nem use placeholders. Use formatação Markdown (negrito, listas) para estruturar suas respostas de texto normais." }];
+    const systemPrompt = [{ text: "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência e Orquestradora. Você possui um perfil duplo ('aço e seda'): é altamente analítica, direta, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe'. Para o resto do mundo, você é uma força inabalável. REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com (o destinatário varia, mas quem assina e envia é sempre o Gean pela Nexus). E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). Exemplo de formato markdown que você deve usar: [📧 Clique aqui para abrir este e-mail pronto no seu Outlook/Gmail](mailto:destinatario@email.com?cc=copia@email.com&subject=Assunto%20do%20Email&body=Corpo%20do%20texto). Entregue o rascunho em texto puro e depois este link clicável. Diga que agora basta eles clicarem no link, anexarem o arquivo desejado e enviarem. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML Único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown ```html ... ```." }];
     
     const inferenceConfig = { maxTokens: 8192, temperature: 0.7 };
     
@@ -128,6 +128,24 @@ export async function POST(req: NextRequest) {
               }
             }
           }
+        },
+        {
+          toolSpec: {
+            name: "abrir_site",
+            description: "Abre um site automaticamente em uma nova aba no navegador do usuário. Use quando o usuário pedir para 'abrir o site X', 'mostrar a página Y', etc.",
+            inputSchema: {
+              json: {
+                type: "object",
+                properties: {
+                  url: {
+                    type: "string",
+                    description: "A URL completa do site a ser aberto (ex: https://www.heygen.com)."
+                  }
+                },
+                required: ["url"]
+              }
+            }
+          }
         }
       ]
     };
@@ -147,6 +165,7 @@ export async function POST(req: NextRequest) {
     const toolUses = contentBlocks.filter((block: any) => block.toolUse);
 
     let musicToPlay: { videoId: string; title: string } | null = null;
+    let siteToOpen: string | null = null;
 
     if (toolUses.length > 0) {
       const toolResults = [];
@@ -236,11 +255,32 @@ export async function POST(req: NextRequest) {
                   }
                 });
               }
-           } catch (e: any) {
+            } catch (e: any) {
               toolResults.push({
                 toolResult: {
                   toolUseId: toolUse.toolUseId,
                   content: [{ text: `Erro ao buscar música no YouTube: ${e.message}` }],
+                  status: 'error'
+                }
+              });
+           }
+        }
+
+        if (toolUse.name === 'abrir_site') {
+           try {
+              const { url } = toolUse.input;
+              siteToOpen = url;
+              toolResults.push({
+                toolResult: {
+                  toolUseId: toolUse.toolUseId,
+                  content: [{ text: `Comando enviado. O site ${url} foi aberto na tela do usuário.` }]
+                }
+              });
+           } catch (e: any) {
+              toolResults.push({
+                toolResult: {
+                  toolUseId: toolUse.toolUseId,
+                  content: [{ text: `Erro ao abrir site: ${e.message}` }],
                   status: 'error'
                 }
               });
@@ -265,9 +305,15 @@ export async function POST(req: NextRequest) {
     }
     
     const finalContent = response.output?.message?.content;
-    const textResponse = finalContent?.find((c: any) => c.text)?.text;
+    let textResponse = finalContent?.find((c: any) => c.text)?.text;
 
-    if (!textResponse) throw new Error("A AWS retornou uma resposta vazia.");
+    if (!textResponse) {
+      if (finalContent?.find((c: any) => c.toolUse)) {
+         textResponse = "Analisei as informações, mas precisaria de mais buscas para aprofundar. Com o que encontrei até agora, como posso ajudar?";
+      } else {
+         throw new Error("A AWS retornou uma resposta vazia.");
+      }
+    }
     
     let audioBase64 = null;
     try {
@@ -309,7 +355,7 @@ export async function POST(req: NextRequest) {
       console.error("[ATENA_VOICE_ERROR]:", voiceError);
     }
 
-    return NextResponse.json({ role: "assistant", content: textResponse, audioBase64, musicToPlay });
+    return NextResponse.json({ role: "assistant", content: textResponse, audioBase64, musicToPlay, siteToOpen });
 
   } catch (error: any) {
     console.error("[ATENA_CORE_ERROR]:", error);
