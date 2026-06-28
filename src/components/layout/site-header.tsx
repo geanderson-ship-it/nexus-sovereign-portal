@@ -116,44 +116,46 @@ export function SiteHeader() {
           </div>
 
           <div className="flex-1 flex items-center justify-end gap-1 sm:gap-2">
-           {/* Language Selector */}
-           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="flex items-center gap-2 px-2 h-9 border border-border/50 hover:bg-accent/50 transition-colors">
-                {locale === 'pt-BR' && <><img src="https://flagcdn.com/w20/br.png" width="20" alt="BR" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">PT</span></>}
-                {locale === 'en-US' && <><img src="https://flagcdn.com/w20/us.png" width="20" alt="US" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">EN</span></>}
-                {locale === 'es-ES' && <><img src="https://flagcdn.com/w20/es.png" width="20" alt="ES" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">ES</span></>}
-                {locale === 'de-DE' && <><img src="https://flagcdn.com/w20/de.png" width="20" alt="DE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">DE</span></>}
-                {locale === 'fr-FR' && <><img src="https://flagcdn.com/w20/fr.png" width="20" alt="FR" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">FR</span></>}
-                {locale === 'ja-JP' && <><img src="https://flagcdn.com/w20/jp.png" width="20" alt="JA" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">JA</span></>}
-                {locale === 'zh-CN' && <><img src="https://flagcdn.com/w20/cn.png" width="20" alt="CN" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">CN</span></>}
-                {locale === 'ar-AE' && <><img src="https://flagcdn.com/w20/ae.png" width="20" alt="AE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">AR</span></>}
-                {locale === 'ru-RU' && <><img src="https://flagcdn.com/w20/ru.png" width="20" alt="RU" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">RU</span></>}
-                <span className="sr-only">{t('navChangeLanguage')}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur border-primary/20">
-              {[
-                { code: 'pt-BR', name: 'PortuguÃªs', sub: 'Brasil', flag: 'br' },
-                { code: 'en-US', name: 'English', sub: 'United States', flag: 'us' },
-                { code: 'es-ES', name: 'EspaÃ±ol', sub: 'EspaÃ±a', flag: 'es' },
-                { code: 'de-DE', name: 'Deutsch', sub: 'Deutschland', flag: 'de' },
-                { code: 'fr-FR', name: 'FranÃ§ais', sub: 'France', flag: 'fr' },
-                { code: 'ja-JP', name: 'æ—¥æœ¬èªž', sub: 'æ—¥æœ¬', flag: 'jp' },
-                { code: 'zh-CN', name: 'ç®€ä½“ä¸­æ–‡', sub: 'ä¸­å›½', flag: 'cn' },
-                { code: 'ar-AE', name: 'Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©', sub: 'Ø¯Ø¨ÙŠ', flag: 'ae' },
-                { code: 'ru-RU', name: 'Ð ÑƒÑÑÐºÐ¸Ð¹', sub: 'Ð Ð¾ÑÑÐ¸Ñ', flag: 'ru' }
-              ].map((lang) => (
-                <DropdownMenuItem key={lang.code} onClick={() => setLocale(lang.code as any)} className="flex items-center gap-3 cursor-pointer hover:bg-primary/10 transition-colors">
-                  <img src={`https://flagcdn.com/w20/${lang.flag}.png`} width="20" alt={lang.code} className="rounded-xs" />
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium">{lang.name}</span>
-                    <span className="text-[10px] text-muted-foreground uppercase">{lang.sub}</span>
-                  </div>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+           {/* Language Selector (Desktop Only) */}
+           <div className="hidden md:block">
+            <DropdownMenu>
+             <DropdownMenuTrigger asChild>
+               <Button variant="ghost" size="sm" className="flex items-center gap-2 px-2 h-9 border border-border/50 hover:bg-accent/50 transition-colors">
+                 {locale === 'pt-BR' && <><img src="https://flagcdn.com/w20/br.png" width="20" alt="BR" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">PT</span></>}
+                 {locale === 'en-US' && <><img src="https://flagcdn.com/w20/us.png" width="20" alt="US" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">EN</span></>}
+                 {locale === 'es-ES' && <><img src="https://flagcdn.com/w20/es.png" width="20" alt="ES" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">ES</span></>}
+                 {locale === 'de-DE' && <><img src="https://flagcdn.com/w20/de.png" width="20" alt="DE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">DE</span></>}
+                 {locale === 'fr-FR' && <><img src="https://flagcdn.com/w20/fr.png" width="20" alt="FR" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">FR</span></>}
+                 {locale === 'ja-JP' && <><img src="https://flagcdn.com/w20/jp.png" width="20" alt="JA" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">JA</span></>}
+                 {locale === 'zh-CN' && <><img src="https://flagcdn.com/w20/cn.png" width="20" alt="CN" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">CN</span></>}
+                 {locale === 'ar-AE' && <><img src="https://flagcdn.com/w20/ae.png" width="20" alt="AE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">AR</span></>}
+                 {locale === 'ru-RU' && <><img src="https://flagcdn.com/w20/ru.png" width="20" alt="RU" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">RU</span></>}
+                 <span className="sr-only">{t('navChangeLanguage')}</span>
+               </Button>
+             </DropdownMenuTrigger>
+             <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur border-primary/20">
+               {[
+                 { code: 'pt-BR', name: 'Português', sub: 'Brasil', flag: 'br' },
+                 { code: 'en-US', name: 'English', sub: 'United States', flag: 'us' },
+                 { code: 'es-ES', name: 'Español', sub: 'España', flag: 'es' },
+                 { code: 'de-DE', name: 'Deutsch', sub: 'Deutschland', flag: 'de' },
+                 { code: 'fr-FR', name: 'Français', sub: 'France', flag: 'fr' },
+                 { code: 'ja-JP', name: '日本語', sub: '日本', flag: 'jp' },
+                 { code: 'zh-CN', name: '简体中文', sub: '中国', flag: 'cn' },
+                 { code: 'ar-AE', name: 'العربية', sub: 'دبي', flag: 'ae' },
+                 { code: 'ru-RU', name: 'Русский', sub: 'Россия', flag: 'ru' }
+               ].map((lang) => (
+                 <DropdownMenuItem key={lang.code} onClick={() => setLocale(lang.code as any)} className="flex items-center gap-3 cursor-pointer hover:bg-primary/10 transition-colors">
+                   <img src={`https://flagcdn.com/w20/${lang.flag}.png`} width="20" alt={lang.code} className="rounded-xs" />
+                   <div className="flex flex-col">
+                     <span className="text-sm font-medium">{lang.name}</span>
+                     <span className="text-[10px] text-muted-foreground uppercase">{lang.sub}</span>
+                   </div>
+                 </DropdownMenuItem>
+               ))}
+             </DropdownMenuContent>
+            </DropdownMenu>
+           </div>
 
           {/* Desktop Auth Controls */}
           <div className="hidden md:flex items-center gap-2">
@@ -204,7 +206,7 @@ export function SiteHeader() {
                         </DropdownMenuItem>
                         
                         <DropdownMenuSeparator className="bg-border/50" />
-                        <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500/70">Ãrea Comercial</div>
+                        <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500/70">Área Comercial</div>
                         <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
                           <Link href="/gabinete-vendas" className="flex items-center w-full">
                             <Briefcase className="mr-2 h-4 w-4" />
@@ -214,7 +216,7 @@ export function SiteHeader() {
                         <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
                           <Link href="/gabinete/precificacao" className="flex items-center w-full">
                             <Coins className="mr-2 h-4 w-4" />
-                            <span>CatÃ¡logo de Produtos</span>
+                            <span>Catálogo de Produtos</span>
                           </Link>
                         </DropdownMenuItem>
                       </>
@@ -239,11 +241,22 @@ export function SiteHeader() {
                   <UserIcon className="mr-2 h-4 w-4 hidden md:block" />
                   {t('login')}
                 </Link>
+                <Link 
+                  href="/signup" 
+                  className={cn(
+                    buttonVariants({ variant: 'outline', size: 'sm' }),
+                    'border-primary/50 text-primary hover:bg-primary/10 transition-all'
+                  )}
+                >
+                  Cadastrar
+                </Link>
               </div>
             )}
           </div>
-          <div className="md:hidden flex items-center ml-1">
-            <Button variant="ghost" size="sm" className="h-9 px-2 hover:bg-primary/10" onClick={() => setMobileMenuOpen(true)}>
+
+          {/* Mobile Menu Trigger (Hamburger) */}
+          <div className="md:hidden flex items-center ml-2 relative z-[60]">
+            <Button variant="outline" size="sm" className="h-10 w-10 p-0 border-white/20 bg-black/50 text-white hover:bg-white/10 hover:text-white" onClick={() => setMobileMenuOpen(true)}>
               <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle menu</span>
             </Button>
@@ -347,18 +360,21 @@ export function SiteHeader() {
                     {mainNav.map((item) => {
                       if (item.href === '/intelligence') {
                         return (
-                          <details key={item.href} className="group border border-blue-600/30 rounded-lg bg-blue-600/5 overflow-hidden mb-1">
-                            <summary className="cursor-pointer flex items-center justify-between p-3 text-white font-bold uppercase tracking-widest list-none [&::-webkit-details-marker]:hidden bg-blue-600/10 hover:bg-blue-600/20 transition-colors">
-                              <span className="tracking-wide text-sm">{item.title}</span>
-                              <svg className="w-4 h-4 transition-transform group-open:rotate-180 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                          <details key={item.href} className="group border border-blue-600/40 rounded-xl bg-blue-600/10 mb-3 shadow-[0_0_15px_rgba(37,99,235,0.15)] relative">
+                            <summary className="cursor-pointer flex items-center justify-between p-4 text-white font-bold uppercase tracking-widest list-none [&::-webkit-details-marker]:hidden bg-gradient-to-r from-blue-600/20 to-blue-900/20 hover:from-blue-600/30 transition-all select-none rounded-xl group-open:rounded-b-none relative z-10">
+                              <div className="flex items-center gap-3">
+                                <Sparkles className="w-5 h-5 text-blue-400 animate-pulse" />
+                                <span className="tracking-wide text-[15px]">{item.title}</span>
+                              </div>
+                              <svg className="w-6 h-6 transition-transform duration-300 group-open:rotate-180 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                             </summary>
-                            <div className="flex flex-col p-2 bg-black/40 gap-1 border-t border-blue-500/20">
-                              <Link href="/intelligence" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-blue-400 hover:bg-blue-500/10 rounded-md">VisÃ£o Geral Intelligence</Link>
-                              <Link href="/nexus-empresas" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-cyan-400 hover:bg-cyan-500/10 rounded-md">Nexus Empresas (B2B)</Link>
-                              <Link href="/inova-revenda" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-pink-500 hover:bg-pink-500/10 rounded-md">Inova Revenda</Link>
-                              <Link href="/inova-moda" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-purple-400 hover:bg-purple-500/10 rounded-md">Inova Moda</Link>
-                              <Link href="/vitrine-inovadora" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-fuchsia-400 hover:bg-fuchsia-500/10 rounded-md">Vitrine Inovadora</Link>
-                              <Link href="/energia" onClick={() => setMobileMenuOpen(false)} className="p-3 text-sm font-bold text-amber-500 hover:bg-amber-500/10 rounded-md">Nexus Energia</Link>
+                            <div className="flex flex-col p-3 bg-black/60 gap-3 border-t border-blue-500/30 rounded-b-xl relative z-0">
+                              <Link href="/intelligence" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-blue-400 hover:bg-blue-500/20 rounded-lg flex items-center gap-3 transition-colors border border-blue-500/20 bg-blue-500/10">Visão Geral Intelligence</Link>
+                              <Link href="/nexus-empresas" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-cyan-400 hover:bg-cyan-500/20 rounded-lg flex items-center gap-3 transition-colors border border-cyan-500/20 bg-cyan-500/10">Nexus Empresas (B2B)</Link>
+                              <Link href="/inova-revenda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-pink-500 hover:bg-pink-500/20 rounded-lg flex items-center gap-3 transition-colors border border-pink-500/20 bg-pink-500/10">Inova Revenda</Link>
+                              <Link href="/inova-moda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-purple-400 hover:bg-purple-500/20 rounded-lg flex items-center gap-3 transition-colors border border-purple-500/20 bg-purple-500/10">Inova Moda</Link>
+                              <Link href="/vitrine-inovadora" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-fuchsia-400 hover:bg-fuchsia-500/20 rounded-lg flex items-center gap-3 transition-colors border border-fuchsia-500/20 bg-fuchsia-500/10">Vitrine Inovadora</Link>
+                              <Link href="/energia" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-amber-500 hover:bg-amber-500/20 rounded-lg flex items-center gap-3 transition-colors border border-amber-500/20 bg-amber-500/10">Nexus Energia</Link>
                             </div>
                           </details>
                         );
@@ -481,6 +497,9 @@ export function SiteHeader() {
                             <Link href="/login" onClick={() => setMobileMenuOpen(false)} className={cn(buttonVariants({ variant: 'default', className: 'w-full shadow-[0_0_15px_rgba(37,99,235,0.3)]' }))}>
                               <UserIcon className="mr-2 h-4 w-4" />
                               {t('login')}
+                            </Link>
+                            <Link href="/signup" onClick={() => setMobileMenuOpen(false)} className={cn(buttonVariants({ variant: 'outline', className: 'w-full border-primary/50 text-primary' }))}>
+                              Cadastrar / Criar Conta
                             </Link>
                           </div>
                         )}

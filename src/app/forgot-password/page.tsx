@@ -6,18 +6,23 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
-import { resetPassword } from 'aws-amplify/auth';
+import { resetPassword, confirmResetPassword } from 'aws-amplify/auth';
+import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import Image from 'next/image';
 
 export default function ForgotPasswordPage() {
+  const router = useRouter();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [step, setStep] = useState<1 | 2>(1);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleRequestCode = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError('');
 
@@ -31,9 +36,9 @@ export default function ForgotPasswordPage() {
       await resetPassword({ username: email });
       toast({
         title: 'Ordem de Avanço.',
-        description: 'Missão cumprida. Verifique sua caixa de entrada para o próximo nível.',
+        description: 'Código de 6 dígitos enviado para seu e-mail.',
       });
-      setEmail('');
+      setStep(2);
     } catch (error: any) {
       let description = 'Ocorreu um erro desconhecido. Tente novamente mais tarde.';
       if (error.name === 'UserNotFoundException') {
@@ -44,6 +49,30 @@ export default function ForgotPasswordPage() {
         description = `Não foi possível enviar o e-mail de recuperação. Erro: ${error.message}`;
       }
       toast({ variant: 'destructive', title: 'Alerta de Rota.', description });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleConfirmReset = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError('');
+
+    if (!code || !newPassword) {
+      setError('Por favor, preencha todos os campos.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await confirmResetPassword({ username: email, confirmationCode: code, newPassword });
+      toast({
+        title: 'Senha redefinida com sucesso!',
+        description: 'Você já pode fazer login com sua nova senha.',
+      });
+      router.push('/login');
+    } catch (error: any) {
+      toast({ variant: 'destructive', title: 'Erro ao redefinir', description: error.message });
     } finally {
       setIsSubmitting(false);
     }
@@ -72,30 +101,69 @@ export default function ForgotPasswordPage() {
             <div className="mb-4 flex justify-center">
               <Logo width={200} height={67} />
             </div>
-            <CardTitle className="text-2xl">Esqueceu sua senha?</CardTitle>
+            <CardTitle className="text-2xl">
+              {step === 1 ? 'Esqueceu sua senha?' : 'Redefinir Senha'}
+            </CardTitle>
             <CardDescription className="text-slate-400">
-              Sem problemas. Insira seu e-mail e enviaremos o código para você redefinir sua senha.
+              {step === 1 
+                ? 'Sem problemas. Insira seu e-mail e enviaremos o código para você redefinir sua senha.' 
+                : `Enviamos um código de 6 dígitos para ${email}.`}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-slate-200">E-mail.</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-black/40 border-white/10 text-white placeholder-slate-500 focus:border-primary"
-                />
-                {error && <p className="text-sm font-medium text-destructive">{error}</p>}
-              </div>
-              <Button type="submit" className="w-full font-headline tracking-wider uppercase" disabled={isSubmitting}>
-                {isSubmitting ? 'Enviando...' : 'Enviar Redefinição'}
-              </Button>
-            </form>
+            {step === 1 ? (
+              <form onSubmit={handleRequestCode} className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-slate-200">E-mail.</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="seu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="bg-black/40 border-white/10 text-white placeholder-slate-500 focus:border-primary"
+                  />
+                  {error && <p className="text-sm font-medium text-destructive">{error}</p>}
+                </div>
+                <Button type="submit" className="w-full font-headline tracking-wider uppercase" disabled={isSubmitting}>
+                  {isSubmitting ? 'Enviando...' : 'Enviar Código'}
+                </Button>
+              </form>
+            ) : (
+              <form onSubmit={handleConfirmReset} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="code" className="text-slate-200">Código de 6 dígitos</Label>
+                  <Input
+                    id="code"
+                    type="text"
+                    placeholder="000000"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    maxLength={6}
+                    required
+                    className="bg-black/40 border-white/10 text-white placeholder-slate-500 focus:border-primary tracking-widest text-center text-lg"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="newPassword" className="text-slate-200">Nova Senha</Label>
+                  <Input
+                    id="newPassword"
+                    type="password"
+                    placeholder="********"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                    className="bg-black/40 border-white/10 text-white placeholder-slate-500 focus:border-primary"
+                  />
+                  {error && <p className="text-sm font-medium text-destructive">{error}</p>}
+                </div>
+                <Button type="submit" className="w-full font-headline tracking-wider uppercase bg-emerald-600 hover:bg-emerald-500 text-white" disabled={isSubmitting}>
+                  {isSubmitting ? 'Confirmando...' : 'Salvar Nova Senha'}
+                </Button>
+              </form>
+            )}
+
             <div className="mt-6 text-center text-sm text-slate-400">
               Lembrou a senha?{' '}
               <Link href="/login" className="text-primary hover:underline font-semibold">

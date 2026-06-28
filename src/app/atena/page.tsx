@@ -425,7 +425,7 @@ function AtenaContent() {
           src={currentOutfit}
           alt="Nexus Live"
           fill
-          className="object-cover object-top"
+          className="object-contain md:object-cover object-[center_15%] md:object-[center_20%]"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-blue-950/80 via-black/10 to-transparent pointer-events-none" />

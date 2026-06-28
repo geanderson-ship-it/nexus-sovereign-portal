@@ -88,7 +88,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       suppressHydrationWarning
-      className="dark"
+      className="dark overflow-x-hidden"
       style={{ colorScheme: 'dark' }}
     >
       <Script
@@ -125,7 +125,7 @@ export default function RootLayout({
       </Script>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-background font-sans antialiased overflow-x-hidden',
           fontSans.variable,
           fontHeadline.variable
         )}

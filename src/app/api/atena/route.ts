@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
     };
 
     let command = new ConverseCommand({
-      modelId: "us.anthropic.claude-3-5-sonnet-20241022-v2:0", 
+      modelId: "us.anthropic.claude-sonnet-4-5-20250929-v1:0", 
       messages: formattedMessages,
       system: systemPrompt,
       inferenceConfig,
@@ -197,7 +197,7 @@ export async function POST(req: NextRequest) {
       
       // Enviar a segunda requisição devolvendo o conteúdo do email para o Claude
       const followUpCommand = new ConverseCommand({
-        modelId: "us.anthropic.claude-3-5-sonnet-20241022-v2:0", 
+        modelId: "us.anthropic.claude-sonnet-4-5-20250929-v1:0", 
         messages: [
           ...formattedMessages,
           { role: 'assistant', content: contentBlocks },

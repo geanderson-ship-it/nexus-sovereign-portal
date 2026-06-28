@@ -195,7 +195,11 @@ export default function AtenaTerminalPage() {
 
   const toggleMicrophone = () => {
     if (!recognitionRef.current) {
-      alert("O seu navegador não suporta reconhecimento de voz nativo.");
+      if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
+        alert("🔒 Bloqueio de Segurança do Celular: O microfone não funciona em redes locais (HTTP). Você precisa acessar pelo domínio oficial da Vercel (HTTPS) para falar com a Atena.");
+      } else {
+        alert("O seu navegador não suporta reconhecimento de voz nativo.");
+      }
       return;
     }
     
@@ -244,9 +248,9 @@ export default function AtenaTerminalPage() {
     e?.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    // if (viewMode === 'fullscreen') {
-    //   setViewMode('split');
-    // }
+    if (viewMode === 'fullscreen') {
+      setViewMode('split');
+    }
 
     const userMessage = input.trim();
     setInput('');
@@ -347,12 +351,12 @@ export default function AtenaTerminalPage() {
   }
 
   return (
-    <div className="h-screen bg-[#020202] text-slate-200 overflow-hidden font-mono relative flex flex-col">
+    <div className="h-[100dvh] bg-[#020202] text-slate-200 overflow-hidden font-mono relative flex flex-col">
       
       {/* HEADER DISCRETO */}
-      <div className="absolute top-0 left-0 w-full p-6 flex items-center justify-between z-50 pointer-events-none">
-        <div className="flex items-center gap-4 pointer-events-auto">
-          <Link href="/gabinete" className="group flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-indigo-900/50 hover:bg-indigo-900/40 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+      <div className="relative md:absolute top-0 left-0 w-full p-3 md:p-6 flex items-center justify-between z-50 bg-[#0a0a0a] md:bg-transparent border-b border-indigo-900/30 md:border-none pointer-events-auto">
+        <div className="flex items-center gap-2 md:gap-4">
+          <Link href="/gabinete" className="group flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 md:px-4 py-2 rounded-full border border-indigo-900/50 hover:bg-indigo-900/40 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)]">
             <ChevronLeft className="w-4 h-4 text-indigo-400 group-hover:text-white transition-colors" />
             <span className="text-xs font-bold text-indigo-300 group-hover:text-white uppercase tracking-widest hidden sm:inline-block">Voltar</span>
           </Link>
@@ -380,12 +384,12 @@ export default function AtenaTerminalPage() {
       </div>
 
       {/* ÁREA PRINCIPAL (DINÂMICA) */}
-      <div className="flex-1 flex w-full h-full relative transition-all duration-700 ease-in-out">
+      <div className="flex-1 flex flex-col md:flex-row w-full h-full relative transition-all duration-700 ease-in-out">
         
         {/* LADO ESQUERDO: AVATAR FULL-BLEED */}
         <div 
-          className={`relative h-full transition-all duration-700 ease-in-out overflow-hidden bg-black
-            ${viewMode === 'fullscreen' ? 'w-full' : 'w-1/2 border-r border-indigo-900/50 shadow-[10px_0_30px_rgba(0,0,0,0.8)]'}
+          className={`relative transition-all duration-700 ease-in-out overflow-hidden bg-black
+            ${viewMode === 'fullscreen' ? 'w-full h-full' : 'w-full h-[40%] md:w-1/2 md:h-full border-b md:border-b-0 md:border-r border-indigo-900/50 shadow-[10px_0_30px_rgba(0,0,0,0.8)]'}
           `}
         >
           {/* Avatar Imagem cobrindo tudo (Full Bleed Horizontal) */}
@@ -394,19 +398,19 @@ export default function AtenaTerminalPage() {
               src="/atena/Atena%20Autonoma%20Digital.png" 
               alt="Atena Avatar" 
               fill
-              className="object-cover object-top"
+              className="object-contain md:object-cover object-[center_15%] md:object-[center_20%]"
               priority
             />
             {/* Gradiente para escurecer as bordas e dar contraste para o texto/input */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none" />
-            <div className={`absolute inset-0 bg-gradient-to-r ${viewMode === 'fullscreen' ? 'from-black/20 via-transparent to-black/20' : 'from-transparent to-black/60'} pointer-events-none`} />
+            <div className={`absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r ${viewMode === 'fullscreen' ? 'from-black/20 via-transparent to-black/20' : 'from-transparent to-black/60'} pointer-events-none`} />
           </div>
         </div>
 
         {/* LADO DIREITO: TERMINAL E WORKSPACE */}
         <div 
-          className={`h-full bg-[#050505] flex flex-col relative transition-all duration-700 ease-in-out z-10
-            ${viewMode === 'fullscreen' ? 'w-0 opacity-0 translate-x-full' : 'w-1/2 opacity-100 translate-x-0'}
+          className={`bg-[#050505] flex flex-col relative transition-all duration-700 ease-in-out z-10
+            ${viewMode === 'fullscreen' ? 'h-0 md:h-full md:w-0 opacity-0 overflow-hidden' : 'h-[60%] w-full md:h-full md:w-1/2 opacity-100'}
           `}
         >
           {/* Header do Terminal */}
@@ -418,7 +422,7 @@ export default function AtenaTerminalPage() {
           {/* Área de Logs e Chat */}
           <div 
             ref={scrollRef}
-            className="flex-1 overflow-y-auto p-8 space-y-8 scrollbar-thin scrollbar-thumb-slate-800"
+            className="flex-1 overflow-y-auto p-4 md:p-8 pb-32 md:pb-32 space-y-6 md:space-y-8 scrollbar-thin scrollbar-thumb-slate-800"
           >
             {messages.map((msg, i) => (
               <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} w-full`}>
@@ -489,10 +493,12 @@ export default function AtenaTerminalPage() {
       </div>
 
       {/* BARRA DE INPUT FLUTUANTE (SEMPRE VISÍVEL) */}
-      <div className={`absolute bottom-8 transition-all duration-700 ease-in-out z-50
-        ${viewMode === 'fullscreen' ? 'w-full max-w-2xl left-1/2 -translate-x-1/2' : 'w-[calc(50%-4rem)] left-[2rem]'}
+      <div className={`absolute bottom-4 md:bottom-8 px-4 md:px-0 transition-all duration-700 ease-in-out z-50
+        ${viewMode === 'fullscreen' 
+          ? 'w-full md:max-w-2xl left-1/2 -translate-x-1/2' 
+          : 'w-full md:w-[calc(50%-4rem)] left-0 md:left-[2rem]'}
       `}>
-        <form onSubmit={handleSendMessage} className="relative group">
+        <form onSubmit={handleSendMessage} className="relative group w-full">
           {/* Image Preview */}
           {selectedImage && (
             <div className="absolute bottom-[calc(100%+10px)] left-8 w-24 h-24 rounded-lg overflow-hidden border-2 border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.3)] bg-black group-hover:opacity-100 transition-opacity">
