@@ -6,9 +6,21 @@ import {
   SearchFacesByImageCommand 
 } from "@aws-sdk/client-rekognition";
 
-const awsConfig = {
-  region: process.env.AWS_REGION || "us-east-1",
+const awsConfig: any = {
+  region: process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
 };
+
+if (process.env.BEDROCK_ACCESS_KEY_ID && process.env.BEDROCK_SECRET_ACCESS_KEY) {
+  awsConfig.credentials = {
+    accessKeyId: process.env.BEDROCK_ACCESS_KEY_ID,
+    secretAccessKey: process.env.BEDROCK_SECRET_ACCESS_KEY,
+  };
+} else if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
+  awsConfig.credentials = {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  };
+}
 
 const rekognition = new RekognitionClient(awsConfig);
 const COLLECTION_ID = "AtenaFaces";
