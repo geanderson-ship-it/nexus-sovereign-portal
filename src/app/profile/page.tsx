@@ -43,6 +43,14 @@ export default function ProfilePage() {
   const { toast } = useToast();
   const { nickname, saveNickname } = useNickname(user?.email);
   const [nicknameInput, setNicknameInput] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      toast({ title: "Sessão expirada", description: "Por favor, faça login novamente." });
+      router.push('/login');
+    }
+  }, [isUserLoading, user, router, toast]);
 
   useEffect(() => {
     if (nickname) setNicknameInput(nickname);
