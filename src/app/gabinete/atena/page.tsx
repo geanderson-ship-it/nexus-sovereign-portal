@@ -7,6 +7,8 @@ import { useEffect, useState, useRef } from 'react';
 import { Shield, Terminal, Mic, Send, Activity, MonitorPlay, ChevronLeft, Video, VideoOff, Paperclip, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { eventEmitter } from '@/auth/event-emitter';
+import { MiniYouTubePlayer } from '@/components/mini-youtube-player';
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -288,6 +290,11 @@ export default function AtenaTerminalPage() {
       if (data.audioBase64 && !isAudioMuted) {
         const audio = new Audio("data:audio/mp3;base64," + data.audioBase64);
         audio.play().catch(e => console.error("Auto-play bloqueado pelo navegador:", e));
+      }
+
+      // Tocar música solicitada
+      if (data.musicToPlay) {
+        eventEmitter.emit('play-music', data.musicToPlay);
       }
 
     } catch (error: any) {
@@ -587,6 +594,9 @@ export default function AtenaTerminalPage() {
         </form>
       </div>
 
+      {/* Mini YouTube Player (Invisível até ser ativado) */}
+      <MiniYouTubePlayer />
+      
     </div>
   );
 }

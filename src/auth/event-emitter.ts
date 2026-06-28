@@ -7,6 +7,7 @@ export interface AppEvents {
   'open-chat': { context: AIContext; data?: any };
   'viseme-update': { viseme: SpeechMark | null };
   'audio-level-update': { level: number };
+  'play-music': { videoId: string; title?: string };
 }
 
 type Callback<T> = (data: T) => void;

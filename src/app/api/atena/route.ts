@@ -4,6 +4,7 @@ import { PollyClient } from "@aws-sdk/client-polly";
 import { checkEmails } from '@/lib/email-reader';
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
 import { pesquisarInternet } from '@/lib/web-search';
+import ytSearch from 'yt-search';
 
 const awsConfig = {
   region: process.env.AWS_REGION || "us-east-1",
@@ -109,6 +110,24 @@ export async function POST(req: NextRequest) {
               }
             }
           }
+        },
+        {
+          toolSpec: {
+            name: "tocar_musica",
+            description: "Pesquisa e toca uma música no YouTube para o usuário. Use quando o usuário pedir para tocar uma música, som ou artista.",
+            inputSchema: {
+              json: {
+                type: "object",
+                properties: {
+                  query: {
+                    type: "string",
+                    description: "O nome da música e/ou artista a ser pesquisada no YouTube."
+                  }
+                },
+                required: ["query"]
+              }
+            }
+          }
         }
       ]
     };
@@ -126,6 +145,8 @@ export async function POST(req: NextRequest) {
     // VERIFICAR SE O MODELO PEDIU PARA USAR UMA FERRAMENTA (TOOL CALL)
     let contentBlocks = response.output?.message?.content || [];
     const toolUses = contentBlocks.filter((block: any) => block.toolUse);
+
+    let musicToPlay: { videoId: string; title: string } | null = null;
 
     if (toolUses.length > 0) {
       const toolResults = [];
@@ -188,6 +209,38 @@ export async function POST(req: NextRequest) {
                 toolResult: {
                   toolUseId: toolUse.toolUseId,
                   content: [{ text: `Erro ao pesquisar na web: ${e.message}` }],
+                  status: 'error'
+                }
+              });
+           }
+        }
+        
+        if (toolUse.name === 'tocar_musica') {
+           try {
+              const { query } = toolUse.input;
+              const r = await ytSearch(query);
+              const video = r.videos[0];
+              if (video) {
+                musicToPlay = { videoId: video.videoId, title: video.title };
+                toolResults.push({
+                  toolResult: {
+                    toolUseId: toolUse.toolUseId,
+                    content: [{ text: `A música '${video.title}' foi encontrada e está tocando agora no player do usuário.` }]
+                  }
+                });
+              } else {
+                toolResults.push({
+                  toolResult: {
+                    toolUseId: toolUse.toolUseId,
+                    content: [{ text: `Nenhum vídeo encontrado para '${query}'.` }]
+                  }
+                });
+              }
+           } catch (e: any) {
+              toolResults.push({
+                toolResult: {
+                  toolUseId: toolUse.toolUseId,
+                  content: [{ text: `Erro ao buscar música no YouTube: ${e.message}` }],
                   status: 'error'
                 }
               });
@@ -256,7 +309,7 @@ export async function POST(req: NextRequest) {
       console.error("[ATENA_VOICE_ERROR]:", voiceError);
     }
 
-    return NextResponse.json({ role: "assistant", content: textResponse, audioBase64 });
+    return NextResponse.json({ role: "assistant", content: textResponse, audioBase64, musicToPlay });
 
   } catch (error: any) {
     console.error("[ATENA_CORE_ERROR]:", error);
