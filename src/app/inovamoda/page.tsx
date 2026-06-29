@@ -156,16 +156,56 @@ export default function InovaModaPage() {
             {t('inovamoda.descSimulator') || 'A evolução definitiva do E-commerce de Moda. O Provador Virtual 3D alimentado por Inteligência Artificial Soberana. Reduza a logística reversa a quase zero.'}
           </p>
           
-          <div className="flex flex-wrap justify-center gap-4 text-sm font-medium">
-            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500" /> Conversão +40%
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-left">
+            
+            {/* Card Conversão */}
+            <div className="bg-slate-900/80 p-6 rounded-2xl border border-emerald-500/30 shadow-[0_0_25px_rgba(16,185,129,0.15)] hover:shadow-[0_0_35px_rgba(16,185,129,0.25)] transition-all flex flex-col h-full">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                  <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                </div>
+                <div>
+                  <span className="text-[10px] text-emerald-500/80 font-black uppercase tracking-widest leading-none block mb-1">Aumento de</span>
+                  <span className="font-black text-white text-2xl leading-none tracking-wide block">Conversão +40%</span>
+                </div>
+              </div>
+              <p className="text-emerald-100/70 text-sm leading-relaxed mt-auto">
+                A recomendação de caimento perfeito elimina o medo de errar o tamanho, disparando a confiança do comprador e gerando um <strong>crescimento agressivo nas vendas</strong>.
+              </p>
             </div>
-            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
-              <RefreshCw className="w-4 h-4 text-pink-500" /> Devoluções -70%
+            
+            {/* Card Devolução */}
+            <div className="bg-slate-900/80 p-6 rounded-2xl border border-pink-500/30 shadow-[0_0_25px_rgba(236,72,153,0.15)] hover:shadow-[0_0_35px_rgba(236,72,153,0.25)] transition-all flex flex-col h-full">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full bg-pink-500/10 flex items-center justify-center border border-pink-500/20">
+                  <RefreshCw className="w-6 h-6 text-pink-400" />
+                </div>
+                <div>
+                  <span className="text-[10px] text-pink-500/80 font-black uppercase tracking-widest leading-none block mb-1">Redução de</span>
+                  <span className="font-black text-white text-2xl leading-none tracking-wide block">Devoluções -70%</span>
+                </div>
+              </div>
+              <p className="text-pink-100/70 text-sm leading-relaxed mt-auto">
+                Com precisão biométrica cirúrgica, os produtos chegam no tamanho certo, <strong>extinguindo custos ocultos de logística reversa</strong> e protegendo sua margem de lucro.
+              </p>
             </div>
-            <div className="flex items-center gap-2 bg-slate-900/50 px-4 py-2 rounded-lg border border-slate-800">
-              <ShieldCheck className="w-4 h-4 text-blue-500" /> AWS Privacy
+            
+            {/* Card LGPD */}
+            <div className="bg-slate-900/80 p-6 rounded-2xl border border-blue-500/30 shadow-[0_0_25px_rgba(59,130,246,0.15)] hover:shadow-[0_0_35px_rgba(59,130,246,0.25)] transition-all flex flex-col h-full">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                  <ShieldCheck className="w-6 h-6 text-blue-400" />
+                </div>
+                <div>
+                  <span className="text-[10px] text-blue-500/80 font-black uppercase tracking-widest leading-none block mb-1">Segurança e</span>
+                  <span className="font-black text-white text-2xl leading-none tracking-wide block">Privacidade LGPD</span>
+                </div>
+              </div>
+              <p className="text-blue-100/70 text-sm leading-relaxed mt-auto">
+                Arquitetura Soberana com processamento fechado. Os dados biométricos são deletados no ato, <strong>blindando 100% sua empresa</strong> contra qualquer risco jurídico.
+              </p>
             </div>
+
           </div>
         </div>
 
@@ -175,7 +215,7 @@ export default function InovaModaPage() {
           {/* LADO ESQUERDO: O Espelho / Avatar */}
           <div className="lg:col-span-5 relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-            <Card className="relative bg-slate-900 border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[850px] w-full flex items-center justify-center">
+            <Card className="relative bg-slate-900 border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[900px] w-full flex items-center justify-center">
               
               {!hasScanned && !isScanning && (
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-900/90 backdrop-blur-md p-8 text-center">
@@ -184,7 +224,7 @@ export default function InovaModaPage() {
                   </div>
                   <h3 className="text-2xl font-headline font-bold text-white mb-2">Construir Avatar 3D</h3>
                   <p className="text-slate-400 text-sm mb-4 max-w-xs">
-                    Para provar as roupas, precisamos de um vídeo 360º do cliente para criar o "Gêmeo Digital".
+                    Para provar as roupas, grave um vídeo rápido dando uma <strong>volta completa de corpo inteiro</strong> (mostrando todos os lados) para criarmos o seu "Gêmeo Digital".
                   </p>
 
                   {/* Dicas de Gravação */}
@@ -285,6 +325,12 @@ export default function InovaModaPage() {
                         Nossa IA recomenda o tamanho exato e o caimento perfeito para o seu biotipo. Compras realizadas em tamanhos <strong>diferentes</strong> da recomendação do sistema perderão o direito à troca gratuita (frete grátis) por divergência de tamanho.
                       </p>
                     </div>
+
+                    {/* Aviso de Privacidade (Vídeo) */}
+                    <p className="mt-4 text-center text-[10px] text-slate-500 flex items-center justify-center gap-1.5 font-bold uppercase tracking-widest">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> 
+                      Este vídeo será excluído após o fechamento do aplicativo
+                    </p>
                   </div>
                 </div>
               )}
