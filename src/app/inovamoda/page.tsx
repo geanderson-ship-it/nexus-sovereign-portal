@@ -175,7 +175,7 @@ export default function InovaModaPage() {
           {/* LADO ESQUERDO: O Espelho / Avatar */}
           <div className="lg:col-span-5 relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-purple-600 rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-            <Card className="relative bg-slate-900 border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[600px] w-full flex items-center justify-center">
+            <Card className="relative bg-slate-900 border-slate-800 rounded-[2rem] overflow-hidden shadow-2xl h-[850px] w-full flex items-center justify-center">
               
               {!hasScanned && !isScanning && (
                 <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-900/90 backdrop-blur-md p-8 text-center">
@@ -274,6 +274,16 @@ export default function InovaModaPage() {
                         <Upload className="w-5 h-5 mr-2" />
                         Fazer Upload de Vídeo
                       </Button>
+                    </div>
+                    
+                    {/* Aviso de Política de Trocas (Recomendação IA) */}
+                    <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl text-left">
+                      <h4 className="text-amber-400 text-[10px] font-bold uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                        <Info className="w-3.5 h-3.5" /> Política de Trocas
+                      </h4>
+                      <p className="text-amber-200/80 text-xs leading-relaxed">
+                        Nossa IA recomenda o tamanho exato e o caimento perfeito para o seu biotipo. Compras realizadas em tamanhos <strong>diferentes</strong> da recomendação do sistema perderão o direito à troca gratuita (frete grátis) por divergência de tamanho.
+                      </p>
                     </div>
                   </div>
                 </div>

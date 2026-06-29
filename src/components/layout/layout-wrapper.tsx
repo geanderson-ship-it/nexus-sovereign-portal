@@ -20,7 +20,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const isStandalone = pathname?.startsWith('/app/') || 
                        pathname?.startsWith('/standalone/') || 
                        pathname?.startsWith('/vitrine-inovadora') ||
-                       pathname?.startsWith('/inova-moda') ||
+                       pathname?.startsWith('/inovamoda') ||
                        pathname?.startsWith('/dante-safra') ||
                        pathname?.startsWith('/djeny-design') ||
                        pathname?.startsWith('/atena') ||

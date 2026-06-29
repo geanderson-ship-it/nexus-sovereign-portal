@@ -91,6 +91,7 @@ export function SiteHeader() {
     { title: t('navPalestras') || 'Palestras', href: '/palestras' },
     { title: t('navIntelligence') || 'Intelligence', href: '/intelligence' },
     { title: t('navAgro') || 'Agro', href: '/agro' },
+    { title: 'Inova Moda', href: '/inovamoda' },
     { title: t('navPremium') || 'Premium', href: '/intelligence/premium' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
     { title: t('navSobre') || 'Sobre', href: '/about' },
@@ -303,7 +304,7 @@ export function SiteHeader() {
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-purple-500/10 mb-1 p-3 rounded-lg focus:bg-purple-500/20">
-                        <Link href="/inova-moda" className="flex flex-col">
+                        <Link href="/inovamoda" className="flex flex-col">
                           <span className="font-black text-purple-400 uppercase tracking-wider text-sm">Inova Moda</span>
                           <span className="text-[10px] text-muted-foreground mt-0.5">Provador Virtual c/ GPU</span>
                         </Link>
@@ -331,7 +332,9 @@ export function SiteHeader() {
                   href={item.href}
                   className={cn(
                     'transition-all duration-300',
-                    item.href === '/agro'
+                    item.href === '/inovamoda'
+                      ? 'bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:bg-purple-500/20 text-white font-bold uppercase tracking-widest'
+                      : item.href === '/agro'
                       ? 'bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/vitrine-inovadora'
                       ? 'bg-pink-500/10 border border-pink-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:bg-pink-500/20 text-white font-bold uppercase tracking-widest'
@@ -372,7 +375,7 @@ export function SiteHeader() {
                               <Link href="/intelligence" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-blue-400 hover:bg-blue-500/20 rounded-lg flex items-center gap-3 transition-colors border border-blue-500/20 bg-blue-500/10">Visão Geral Intelligence</Link>
                               <Link href="/nexus-empresas" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-cyan-400 hover:bg-cyan-500/20 rounded-lg flex items-center gap-3 transition-colors border border-cyan-500/20 bg-cyan-500/10">Nexus Empresas (B2B)</Link>
                               <Link href="/inova-revenda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-pink-500 hover:bg-pink-500/20 rounded-lg flex items-center gap-3 transition-colors border border-pink-500/20 bg-pink-500/10">Inova Revenda</Link>
-                              <Link href="/inova-moda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-purple-400 hover:bg-purple-500/20 rounded-lg flex items-center gap-3 transition-colors border border-purple-500/20 bg-purple-500/10">Inova Moda</Link>
+                              <Link href="/inovamoda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-purple-400 hover:bg-purple-500/20 rounded-lg flex items-center gap-3 transition-colors border border-purple-500/20 bg-purple-500/10">Inova Moda</Link>
                               <Link href="/vitrine-inovadora" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-fuchsia-400 hover:bg-fuchsia-500/20 rounded-lg flex items-center gap-3 transition-colors border border-fuchsia-500/20 bg-fuchsia-500/10">Vitrine Inovadora</Link>
                               <Link href="/energia" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-amber-500 hover:bg-amber-500/20 rounded-lg flex items-center gap-3 transition-colors border border-amber-500/20 bg-amber-500/10">Nexus Energia</Link>
                             </div>
@@ -387,7 +390,9 @@ export function SiteHeader() {
                           onClick={() => setMobileMenuOpen(false)}
                           className={cn(
                             'flex items-center justify-between p-3 rounded-lg transition-all duration-200 group mb-1',
-                            item.href === '/agro'
+                            item.href === '/inovamoda'
+                            ? 'bg-purple-500/10 text-white drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] font-bold border border-purple-500/50 uppercase tracking-widest'
+                            : item.href === '/agro'
                             ? 'bg-emerald-500/10 text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] font-bold border border-emerald-500/50 uppercase tracking-widest'
                             : item.href === '/intelligence/premium'
                             ? 'bg-violet-500/10 text-white drop-shadow-[0_0_8px_rgba(139,92,246,0.8)] font-bold border border-violet-500/50 uppercase tracking-widest'
