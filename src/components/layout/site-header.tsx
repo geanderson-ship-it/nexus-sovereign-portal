@@ -93,6 +93,7 @@ export function SiteHeader() {
     { title: t('navAgro') || 'Agro', href: '/agro' },
     { title: 'Inova Moda', href: '/inovamoda' },
     { title: t('navPremium') || 'Premium', href: '/intelligence/premium' },
+    { title: 'Rotas', href: '/nexus-rotas' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
     { title: t('navSobre') || 'Sobre', href: '/about' },
     { title: t('navContato') || 'Contato', href: '/contact' },
@@ -297,6 +298,12 @@ export function SiteHeader() {
                           <span className="text-[10px] text-muted-foreground mt-0.5">AutomaÃ§Ã£o para a indÃºstria (B2B)</span>
                         </Link>
                       </DropdownMenuItem>
+                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 mb-1 p-3 rounded-lg focus:bg-emerald-500/20">
+                        <Link href="/nexus-rotas" className="flex flex-col">
+                          <span className="font-black text-emerald-400 uppercase tracking-wider text-sm">Rotas</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">IA e Concierge para Hotéis e Turismo (B2B)</span>
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-pink-500/10 mb-1 p-3 rounded-lg focus:bg-pink-500/20">
                         <Link href="/inova-revenda" className="flex flex-col">
                           <span className="font-black text-pink-500 uppercase tracking-wider text-sm">Inova Revenda</span>
@@ -340,6 +347,8 @@ export function SiteHeader() {
                       ? 'bg-pink-500/10 border border-pink-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:bg-pink-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/intelligence/premium'
                       ? 'bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold uppercase tracking-widest'
+                      : item.href === '/nexus-rotas'
+                      ? 'bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold uppercase tracking-widest'
                       : pathname === item.href 
                         ? 'bg-primary/10 border border-primary/30 px-3 py-1.5 rounded-lg shadow-[0_0_10px_rgba(37,99,235,0.15)] text-foreground font-semibold' 
                         : 'bg-white/5 border border-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium'
@@ -374,6 +383,7 @@ export function SiteHeader() {
                             <div className="flex flex-col p-3 bg-black/60 gap-3 border-t border-blue-500/30 rounded-b-xl relative z-0">
                               <Link href="/intelligence" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-blue-400 hover:bg-blue-500/20 rounded-lg flex items-center gap-3 transition-colors border border-blue-500/20 bg-blue-500/10">Visão Geral Intelligence</Link>
                               <Link href="/nexus-empresas" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-cyan-400 hover:bg-cyan-500/20 rounded-lg flex items-center gap-3 transition-colors border border-cyan-500/20 bg-cyan-500/10">Nexus Empresas (B2B)</Link>
+                              <Link href="/nexus-rotas" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-emerald-400 hover:bg-emerald-500/20 rounded-lg flex items-center gap-3 transition-colors border border-emerald-500/20 bg-emerald-500/10">Rotas</Link>
                               <Link href="/inova-revenda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-pink-500 hover:bg-pink-500/20 rounded-lg flex items-center gap-3 transition-colors border border-pink-500/20 bg-pink-500/10">Inova Revenda</Link>
                               <Link href="/inovamoda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-purple-400 hover:bg-purple-500/20 rounded-lg flex items-center gap-3 transition-colors border border-purple-500/20 bg-purple-500/10">Inova Moda</Link>
                               <Link href="/vitrine-inovadora" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-fuchsia-400 hover:bg-fuchsia-500/20 rounded-lg flex items-center gap-3 transition-colors border border-fuchsia-500/20 bg-fuchsia-500/10">Vitrine Inovadora</Link>
@@ -396,7 +406,9 @@ export function SiteHeader() {
                             ? 'bg-emerald-500/10 text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] font-bold border border-emerald-500/50 uppercase tracking-widest'
                             : item.href === '/intelligence/premium'
                             ? 'bg-violet-500/10 text-white drop-shadow-[0_0_8px_rgba(139,92,246,0.8)] font-bold border border-violet-500/50 uppercase tracking-widest'
-                                : pathname === item.href
+                            : item.href === '/nexus-rotas'
+                            ? 'bg-teal-500/10 text-white drop-shadow-[0_0_8px_rgba(20,184,166,0.8)] font-bold border border-teal-500/50 uppercase tracking-widest'
+                            : pathname === item.href
                                   ? 'bg-accent/20 text-foreground font-semibold'
                                   : 'text-foreground/70 hover:bg-accent/10 hover:text-foreground'
                           )}

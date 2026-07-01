@@ -61,7 +61,7 @@ export default function VitrineInovadoraHub() {
     const ActiveIcon = activeIndustry.icon;
 
     return (
-      <div className="fixed inset-0 w-full h-full bg-black overflow-hidden flex font-sans z-50">
+      <div className="fixed inset-0 w-full h-full bg-black overflow-y-auto flex flex-col font-sans z-50">
         
         {/* BOTÃO VOLTAR PARA O HUB (Apenas para o operador) */}
         <button 
@@ -92,6 +92,77 @@ export default function VitrineInovadoraHub() {
 
         {/* REMOVIDO OVERLAY ESCURO E TEXTOS GIGANTES PARA DEIXAR A IMAGEM BRILHAR */}
 
+
+        {/* CARD EXPLICATIVO DO QR CODE */}
+        <div className="relative z-10 mt-[100vh] mx-auto w-full max-w-2xl px-6 py-12">
+          <div className="relative bg-black/80 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl flex flex-col items-center text-center gap-6 p-8">
+            
+            {/* Imagem de fundo do card */}
+            <div className="absolute inset-0 -z-10">
+              <Image
+                src={
+                  activeIndustry.id === 'moda' ? '/Vitrini inovadora/Faschion week.webp' :
+                  activeIndustry.id === 'eletro' ? '/Vitrini inovadora/eletrodomesticos 2.jpg' :
+                  activeIndustry.id === 'moveis' ? '/Vitrini inovadora/Moveis 2.jpg' :
+                  '/Vitrini inovadora/Imóveis.jpg'
+                }
+                alt={activeIndustry.name}
+                fill
+                className="object-cover opacity-40"
+              />
+              <div className="absolute inset-0 bg-black/40" />
+            </div>
+            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${activeIndustry.color} flex items-center justify-center shadow-lg`}>
+              <ActiveIcon className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-2xl font-black text-white uppercase tracking-wide">{activeIndustry.name}</h2>
+            <p className="text-neutral-300 text-base leading-relaxed">
+              Aponte a câmera do seu celular para o <strong className="text-white">QR Code</strong> exibido na tela e seja direcionado instantaneamente para um de nossos <strong className="text-white">vendedores especializados</strong> via <strong className="text-green-400">WhatsApp</strong>.
+            </p>
+            <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 text-left space-y-3">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">📱</span>
+                <div>
+                  <p className="text-white font-bold text-sm">Passo 1 — Abra a câmera</p>
+                  <p className="text-neutral-400 text-xs">Abra a câmera do seu celular normalmente, sem precisar de nenhum aplicativo extra.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">🎯</span>
+                <div>
+                  <p className="text-white font-bold text-sm">Passo 2 — Aponte para o QR Code</p>
+                  <p className="text-neutral-400 text-xs">Aponte a câmera para o QR Code exibido no painel. Um link aparecerá automaticamente na tela.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">💬</span>
+                <div>
+                  <p className="text-white font-bold text-sm">Passo 3 — Fale com um vendedor</p>
+                  <p className="text-neutral-400 text-xs">Você será direcionado diretamente para o <strong className="text-green-400">WhatsApp</strong> de um vendedor da loja, pronto para te atender em tempo real.</p>
+                </div>
+              </div>
+            </div>
+            <p className="text-neutral-500 text-xs italic">
+              Atendimento humano e personalizado. Sem robôs, sem filas. Um especialista real esperando por você.
+            </p>
+
+            {/* CARD WHATSAPP */}
+            <div className="w-full bg-green-500/10 border border-green-500/30 rounded-2xl p-6 flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center mb-3">
+                <svg className="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </div>
+              <h3 className="text-white font-black text-base mb-1">Quero essa vitrine na minha loja</h3>
+              <p className="text-neutral-400 text-xs leading-relaxed mb-4">Fale agora com um especialista Nexus e leve a sinalização digital de alto padrão para o seu negócio.</p>
+              <button
+                onClick={() => window.open(`https://wa.me/5551999799582?text=Ol%C3%A1!%20Vi%20a%20vitrine%20de%20${encodeURIComponent(activeIndustry.name)}%20e%20tenho%20interesse%20para%20minha%20loja.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F`, '_blank')}
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-bold px-6 py-3 rounded-xl transition-all text-xs uppercase tracking-widest shadow-lg"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Falar com Especialista
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* QR CODE FLUTUANTE (Canto Inferior Esquerdo) */}
         <div className="absolute bottom-6 left-6 z-30 flex flex-col items-start scale-50 origin-bottom-left md:scale-75 lg:scale-90">
@@ -146,18 +217,35 @@ export default function VitrineInovadoraHub() {
       </header>
 
       {/* HERO SECTION GIGANTE */}
-      <section className="relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-        {/* Background Premium Abstract - Surpresa para a Mamãe */}
-        <div className="absolute inset-0 z-0 bg-neutral-900">
-          <Image 
-            src="https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=2560&q=80" 
-            alt="Hero Background" 
-            fill 
-            priority
-            className="object-cover opacity-60 mix-blend-screen"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-neutral-600/60 to-neutral-600" />
+      <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
+        {/* MOSAICO DE FUNDO */}
+        <div className="fixed inset-0 z-0 grid grid-cols-4 grid-rows-2">
+          <div className="relative overflow-hidden">
+            <Image src="/Vitrini inovadora/Eletrodomésticos.jpg" alt="Eletrodomésticos" fill className="object-cover brightness-75" />
+          </div>
+          <div className="relative overflow-hidden">
+            <Image src="/Vitrini inovadora/desfile de modas.webp" alt="Moda" fill className="object-cover brightness-75" />
+          </div>
+          <div className="relative overflow-hidden">
+            <Image src="/Vitrini inovadora/Imóveis.jpg" alt="Imóveis" fill className="object-cover brightness-75" />
+          </div>
+          <div className="relative overflow-hidden">
+            <Image src="/Vitrini inovadora/Moveis.jpg" alt="Móveis" fill className="object-cover brightness-75" />
+          </div>
+          <div className="relative overflow-hidden">
+            <Image src="/Vitrini inovadora/eletrodomesticos 2.jpg" alt="Eletrodomésticos 2" fill className="object-cover brightness-75" />
+          </div>
+          <div className="relative overflow-hidden">
+            <Image src="/Vitrini inovadora/Faschion week.webp" alt="Fashion Week" fill className="object-cover brightness-75" />
+          </div>
+          <div className="relative overflow-hidden">
+            <Image src="/Vitrini inovadora/Moveis 2.jpg" alt="Móveis 2" fill className="object-cover brightness-75" />
+          </div>
+          <div className="relative overflow-hidden">
+            <Image src="/Vitrini inovadora/Eletrodomesticos.webp" alt="Eletrodomésticos 3" fill className="object-cover brightness-75" />
+          </div>
         </div>
+        <div className="fixed inset-0 bg-black/50 z-0" />
 
         <div className="relative z-10 flex flex-col items-center text-center px-4">
           
@@ -189,7 +277,7 @@ export default function VitrineInovadoraHub() {
       </section>
 
       {/* GRID DE CARDS DAS INDÚSTRIAS */}
-      <section className="relative z-20 max-w-5xl mx-auto px-6 pb-32 pt-12 md:pt-16">
+      <section className="relative z-20 max-w-5xl mx-auto px-6 pb-12 pt-12 md:pt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {industries.map((ind, index) => {
             const Icon = ind.icon;
@@ -241,6 +329,26 @@ export default function VitrineInovadoraHub() {
           })}
         </div>
       </section>
+
+      {/* CARD WHATSAPP HUB */}
+      <div className="relative z-20 max-w-2xl mx-auto px-6 pb-32">
+        <div className="bg-black/70 backdrop-blur-md border border-green-500/30 rounded-2xl p-8 flex flex-col items-center text-center shadow-[0_0_30px_rgba(34,197,94,0.15)]">
+          <div className="w-14 h-14 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center mb-4">
+            <svg className="w-7 h-7 text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <h3 className="text-xl font-black text-white mb-2">Quero a Vitrine Inovadora na minha loja</h3>
+          <p className="text-neutral-400 text-sm leading-relaxed mb-6">
+            Fale agora com um especialista Nexus e leve a sinalização digital de alto padrão para o seu negócio. Atendimento imediato via WhatsApp.
+          </p>
+          <button
+            onClick={() => window.open('https://wa.me/5551999799582?text=Ol%C3%A1!%20Tenho%20interesse%20na%20Vitrine%20Inovadora%20para%20minha%20loja.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F', '_blank')}
+            className="flex items-center gap-3 bg-green-600 hover:bg-green-500 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] text-sm uppercase tracking-widest"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Falar com Especialista
+          </button>
+        </div>
+      </div>
 
     </div>
   );

@@ -66,6 +66,7 @@
     "genkit": "^1.0.1",
     "genkitx-aws-bedrock": "^1.17.0",
     "google-it": "^1.6.4",
+    "imap-simple": "^5.1.0",
     "imapflow": "^1.4.3",
     "lucide-react": "0.400.0",
     "mailparser": "^3.9.12",

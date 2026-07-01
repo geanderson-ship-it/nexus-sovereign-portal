@@ -124,15 +124,22 @@ export default function InovaModaPage() {
       
       {/* BACKGROUND PREMIUM FASHION THEME */}
       <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image
+          src="/images/inovamoda-wide.png"
+          alt="Moda colorida InovaModa"
+          fill
+          className="object-cover object-center opacity-100"
+          priority
+        />
+        <div className="absolute inset-0 bg-[#080b10]/40" />
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-pink-600/10 rounded-full blur-[120px] opacity-50" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] opacity-50" />
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay"></div>
       </div>
 
       <div className="container relative z-10 mx-auto px-4 max-w-7xl">
         
         {/* BOTÃO DE VOLTAR PARA PREMIUM */}
-        <div className="absolute top-0 left-4 md:left-8 mt-4 md:mt-0">
+        <div className="fixed top-32 left-4 md:left-8 z-20">
           <Link href="/intelligence/premium" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors group">
             <div className="h-10 w-10 rounded-full bg-zinc-900/50 border border-zinc-800 flex items-center justify-center group-hover:bg-zinc-800 transition-colors shadow-lg backdrop-blur-md">
               <ChevronLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
@@ -143,18 +150,42 @@ export default function InovaModaPage() {
 
         {/* HEADER HERO */}
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold uppercase tracking-widest mb-6">
-            <SparkleIcon className="w-4 h-4" /> Nexus Innovation
+
+          {/* CARD PRINCIPAL */}
+          <div className="relative rounded-3xl overflow-hidden border border-pink-500/20 bg-black/50 backdrop-blur-md shadow-[0_0_60px_rgba(236,72,153,0.15)] mb-12">
+            
+            {/* TOPO: Badge + Título */}
+            <div className="px-8 pt-10 pb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold uppercase tracking-widest mb-6">
+                <SparkleIcon className="w-4 h-4" /> Nexus Innovation
+              </div>
+              <h1 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tight">
+                InovaModa <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">360</span>
+              </h1>
+            </div>
+
+            {/* MEIO: Imagem */}
+            <div className="relative w-full h-[500px] md:h-[650px]">
+              <Image
+                src="/images/inovamoda-mosaic.png"
+                alt="InovaModa 360 - Moda Colorida"
+                fill
+                className="object-cover object-center"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            </div>
+
+            {/* BAIXO: Texto */}
+            <div className="px-8 py-8 bg-black/40">
+              <p className="text-lg md:text-xl text-zinc-300 font-light italic tracking-wide mb-3">
+                "{t('inovamoda.slogan') || 'Em tempo real, revele todos os estilos que existem em você.'}"
+              </p>
+              <p className="text-base text-slate-400 font-light leading-relaxed">
+                {t('inovamoda.descSimulator') || 'A evolução definitiva das vendas de Moda pela internet. O Provador Virtual 3D alimentado por Inteligência Artificial Soberana. Reduza as trocas e devoluções a quase zero.'}
+              </p>
+            </div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-headline font-black text-white mb-6 tracking-tight">
-            InovaModa <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">360</span>
-          </h1>
-          <p className="text-lg md:text-xl text-zinc-300 font-light mt-4 max-w-2xl mx-auto italic tracking-wide">
-            "{t('inovamoda.slogan') || 'Em tempo real, revele todos os estilos que existem em você.'}"
-          </p>
-          <p className="text-xl text-slate-400 font-light leading-relaxed mb-8">
-            {t('inovamoda.descSimulator') || 'A evolução definitiva do E-commerce de Moda. O Provador Virtual 3D alimentado por Inteligência Artificial Soberana. Reduza a logística reversa a quase zero.'}
-          </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-left">
             
@@ -210,7 +241,7 @@ export default function InovaModaPage() {
         </div>
 
         {/* DEMO INTERATIVA (O PROVADOR) */}
-        <div className="grid lg:grid-cols-12 gap-8 items-start mb-20">
+        <div className="grid lg:grid-cols-12 gap-8 items-start mb-12">
           
           {/* LADO ESQUERDO: O Espelho / Avatar */}
           <div className="lg:col-span-5 relative group">
@@ -464,10 +495,12 @@ export default function InovaModaPage() {
 
           {/* LADO DIREITO: Catálogo e Controles */}
           <div className="lg:col-span-7 flex flex-col justify-center h-full">
-            <h2 className="text-3xl font-headline font-bold text-white mb-2">Simulador de Loja B2B</h2>
-            <p className="text-slate-400 mb-8">
-              Selecione as peças do catálogo abaixo. A IA InovaModa mapeia a postura corporal, ajusta a iluminação dinâmica e sobrepõe as peças respeitando a física do tecido.
-            </p>
+            <div className="bg-slate-900/90 border border-pink-500/20 rounded-2xl px-8 py-6 mb-8 text-center shadow-[0_0_30px_rgba(236,72,153,0.1)]">
+              <h2 className="text-3xl font-headline font-bold text-white mb-2">Simulador de Loja B2B</h2>
+              <p className="text-slate-400">
+                Selecione as peças do catálogo abaixo. A IA InovaModa mapeia a postura corporal, ajusta a iluminação dinâmica e sobrepõe as peças respeitando a física do tecido.
+              </p>
+            </div>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-8">
               
@@ -590,37 +623,63 @@ export default function InovaModaPage() {
 
             </div>
 
-            {/* Painel de Arquitetura AWS */}
-            <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
-              <h4 className="text-sm font-bold uppercase tracking-widest text-slate-300 mb-4 flex items-center gap-2">
-                <Box className="w-4 h-4 text-slate-500" /> Infraestrutura Tecnológica
-              </h4>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center">
-                  <div className="w-10 h-10 mx-auto bg-orange-500/10 rounded flex items-center justify-center mb-2 border border-orange-500/20">
-                    <Cpu className="w-5 h-5 text-orange-400" />
-                  </div>
-                  <div className="text-xs font-bold text-white">AWS SageMaker</div>
-                  <div className="text-[10px] text-slate-500">GPU Inferência</div>
+          </div>
+
+        </div>
+
+        {/* CARD WHATSAPP */}
+        <div className="max-w-2xl mx-auto mb-12">
+          <div className="bg-black/60 backdrop-blur-md border border-green-500/30 rounded-2xl p-8 flex flex-col items-center text-center shadow-[0_0_30px_rgba(34,197,94,0.15)]">
+            <div className="w-14 h-14 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center mb-4">
+              <svg className="w-7 h-7 text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <h3 className="text-xl font-black text-white mb-2">Quero o InovaModa 360 na minha loja</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">
+              Fale agora com um especialista Nexus e descubra como implantar o provador virtual 3D na sua loja. Atendimento imediato via WhatsApp.
+            </p>
+            <button
+              onClick={() => window.open('https://wa.me/5551999799582?text=Ol%C3%A1!%20Tenho%20interesse%20no%20InovaModa%20360%20para%20minha%20loja.%20Pode%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F', '_blank')}
+              className="flex items-center gap-3 bg-green-600 hover:bg-green-500 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] text-sm uppercase tracking-widest"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Falar com Especialista
+            </button>
+          </div>
+        </div>
+
+        {/* INFRAESTRUTURA */}
+        <div className="max-w-4xl mx-auto mb-20">
+          <div className="bg-slate-900/95 border border-slate-700 rounded-2xl p-8">
+            <h4 className="text-base font-bold uppercase tracking-widest text-slate-300 mb-8 flex items-center justify-center gap-2">
+              <Box className="w-5 h-5 text-slate-400" /> Infraestrutura Tecnológica
+            </h4>
+            <div className="grid grid-cols-3 gap-6">
+              <div className="flex flex-col items-center text-center bg-orange-500/10 border border-orange-500/20 rounded-2xl p-6 hover:bg-orange-500/20 transition-all">
+                <div className="w-16 h-16 mx-auto bg-orange-500/20 rounded-2xl flex items-center justify-center mb-4 border border-orange-500/30 shadow-[0_0_20px_rgba(249,115,22,0.2)]">
+                  <Cpu className="w-8 h-8 text-orange-400" />
                 </div>
-                <div className="text-center">
-                  <div className="w-10 h-10 mx-auto bg-blue-500/10 rounded flex items-center justify-center mb-2 border border-blue-500/20">
-                    <Activity className="w-5 h-5 text-blue-400" />
-                  </div>
-                  <div className="text-xs font-bold text-white">SMPL Mesh</div>
-                  <div className="text-[10px] text-slate-500">Mapeamento 3D</div>
+                <div className="text-base font-black text-white mb-1">AWS SageMaker</div>
+                <div className="text-sm text-orange-300/80 font-medium mb-1">GPU Inferência</div>
+                <div className="text-xs text-orange-200/50 leading-tight">A nuvem mais avançada do mundo</div>
+              </div>
+              <div className="flex flex-col items-center text-center bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6 hover:bg-blue-500/20 transition-all">
+                <div className="w-16 h-16 mx-auto bg-blue-500/20 rounded-2xl flex items-center justify-center mb-4 border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                  <Activity className="w-8 h-8 text-blue-400" />
                 </div>
-                <div className="text-center">
-                  <div className="w-10 h-10 mx-auto bg-emerald-500/10 rounded flex items-center justify-center mb-2 border border-emerald-500/20">
-                    <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <div className="text-xs font-bold text-white">LGPD Compliant</div>
-                  <div className="text-[10px] text-slate-500">Zero Retenção Facial</div>
+                <div className="text-base font-black text-white mb-1">SMPL Mesh</div>
+                <div className="text-sm text-blue-300/80 font-medium mb-1">Mapeamento 3D</div>
+                <div className="text-xs text-blue-200/50 leading-tight">Precisão biométrica cirúrgica</div>
+              </div>
+              <div className="flex flex-col items-center text-center bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-6 hover:bg-emerald-500/20 transition-all">
+                <div className="w-16 h-16 mx-auto bg-emerald-500/20 rounded-2xl flex items-center justify-center mb-4 border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                  <ShieldCheck className="w-8 h-8 text-emerald-400" />
                 </div>
+                <div className="text-base font-black text-white mb-1">LGPD Compliant</div>
+                <div className="text-sm text-emerald-300/80 font-medium mb-1">Zero Retenção Facial</div>
+                <div className="text-xs text-emerald-200/50 leading-tight">Privacidade garantida por lei</div>
               </div>
             </div>
           </div>
-
         </div>
 
       </div>
@@ -635,8 +694,8 @@ function OutfitCard({ title, description, icon, isActive, onClick, disabled }: a
       onClick={disabled ? undefined : onClick}
       className={`relative overflow-hidden rounded-xl border p-4 transition-all duration-300 ${
         isActive 
-          ? 'bg-pink-500/10 border-pink-500/50 shadow-[0_0_20px_rgba(236,72,153,0.15)] cursor-default' 
-          : 'bg-slate-900/60 border-slate-800 hover:border-slate-600 hover:bg-slate-800 cursor-pointer opacity-80 hover:opacity-100'
+          ? 'bg-pink-500/20 border-pink-500/50 shadow-[0_0_20px_rgba(236,72,153,0.15)] cursor-default' 
+          : 'bg-slate-900/90 border-slate-700 hover:border-slate-500 hover:bg-slate-800/95 cursor-pointer opacity-90 hover:opacity-100'
       } ${disabled && !isActive ? 'opacity-50 cursor-not-allowed' : ''}`}
     >
       {isActive && (
@@ -650,7 +709,7 @@ function OutfitCard({ title, description, icon, isActive, onClick, disabled }: a
         </div>
         <h4 className={`font-bold text-sm ${isActive ? 'text-white' : 'text-slate-300'}`}>{title}</h4>
       </div>
-      <p className="text-xs text-slate-500">{description}</p>
+      <p className="text-xs text-slate-300">{description}</p>
     </div>
   );
 }
