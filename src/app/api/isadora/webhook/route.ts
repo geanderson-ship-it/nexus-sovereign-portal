@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-runtime";
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
 
-const ZAPI_INSTANCE = "3F57A44F16F91243B9DD5A0A9E39134B";
-const ZAPI_TOKEN    = "29718FBB432A30390A580F96";
+const ZAPI_INSTANCE = process.env.ZAPI_INSTANCE || "";
+const ZAPI_TOKEN    = process.env.ZAPI_TOKEN || "";
 const ZAPI_URL      = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}/send-text`;
 
 // Memória de conversa por número (reseta ao reiniciar o servidor)
