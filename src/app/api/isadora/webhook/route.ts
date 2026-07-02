@@ -90,7 +90,7 @@ async function getIsadoraResponse(phone: string, userMessage: string): Promise<s
   }
 
   let command = new ConverseCommand({
-    modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0",
+    modelId: "anthropic.claude-3-5-sonnet-20241029-v2:0",
     messages: conversationHistory[phone] as any,
     system: systemPrompt,
     inferenceConfig: { maxTokens: 1024, temperature: 0.7 },
@@ -126,7 +126,7 @@ async function getIsadoraResponse(phone: string, userMessage: string): Promise<s
     conversationHistory[phone].push({ role: "user", content: toolResults });
 
     const followUp = new ConverseCommand({
-      modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0",
+      modelId: "anthropic.claude-3-5-sonnet-20241029-v2:0",
       messages: conversationHistory[phone] as any,
       system: systemPrompt,
       inferenceConfig: { maxTokens: 1024, temperature: 0.7 },
