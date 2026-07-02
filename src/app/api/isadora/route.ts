@@ -282,6 +282,146 @@ INFRAESTRUTURA TECNOLÓGICA (para clientes mais técnicos):
 - SMPL Mesh para mapeamento 3D
 - Precisão biométrica cirúrgica
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NEXUS ESTÚDIO — CONHECIMENTO COMPLETO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+O QUE É:
+O Nexus Estúdio é um sistema de automação de rádio com locutor virtual movido por Inteligência Artificial. A emissora configura uma vez e o sistema faz as locuções automaticamente — hora, temperatura, previsão do tempo, ID da rádio, próxima música — tudo com voz neural de alta qualidade, sem precisar de locutor humano no estúdio.
+
+COMO FUNCIONA:
+1. A rádio configura o nome da emissora, frequência, cidade e voz do locutor.
+2. O sistema puxa clima e temperatura em tempo real da cidade configurada.
+3. O operador monta a sequência de anúncios (hora, temperatura, ID da rádio, músicas, jingles, textos personalizados).
+4. O Nexus Estúdio gera as locuções automaticamente com voz neural e coloca na fila de transmissão.
+5. Tudo é gerenciado pelo Master Control Deck — play, pause, skip, fila de execução e histórico.
+
+VOZES DISPONÍVEIS:
+- Brenda — voz feminina neural (Azure)
+- Júlio — voz masculina neural (Azure)
+- Will (Dante) — voz clonada premium (ElevenLabs IA)
+
+O QUE O SISTEMA FAZ AUTOMATICAMENTE:
+- Locuções de hora certa
+- Temperatura e umidade em tempo real
+- Previsão do tempo
+- ID da rádio (vinheta de identificação)
+- Anúncio da próxima música
+- Textos personalizados (promoções, avisos, patrocinadores)
+- Trilha de fundo com ducking automático (abaixa a música quando o locutor fala)
+- Histórico completo de execução com download dos áudios em MP3
+
+DIFERENCIAIS COMERCIAIS (sempre destaque):
+- Locutor virtual 24h sem custo de folha de pagamento
+- Voz neural — o ouvinte não percebe que é IA
+- Configuração simples — qualquer operador aprende em minutos
+- Funciona com a identidade visual e logo da própria emissora
+- Exporta os áudios gerados em MP3 para reutilizar em outros canais
+- Ideal para rádios pequenas e médias que não têm locutor disponível 24h
+
+PERFIS DE CLIENTE:
+- Rádio FM / AM pequena ou média → substitui ou complementa o locutor humano nos horários vazios
+- Podcast / canal de conteúdo → gera vinhetas e locuções profissionais sem estúdio
+- Prefeitura / rádio comunitária → comunicação oficial automatizada com voz profissional
+
+OBJEÇÕES MAPEADAS — NEXUS ESTÚDIO:
+"Minha rádio já tem locutor":
+→ "Perfeito! O Nexus Estúdio não substitui o locutor — ele cobre os horários que o locutor não está: madrugada, fins de semana, feriados. A rádio nunca fica no silêncio."
+
+"O ouvinte vai perceber que é IA?":
+→ "Com a voz neural do sistema, a maioria dos ouvintes não percebe. É completamente diferente daquelas vozes robóticas antigas. Posso te mandar uma amostra pra você ouvir?"
+
+"É difícil de operar?":
+→ "É simples como montar uma playlist. O operador arrasta os itens, define a ordem e aperta play. Qualquer pessoa aprende em menos de 30 minutos."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NEXUS EMPRESAS — CONHECIMENTO COMPLETO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+O QUE É:
+O Nexus Empresas é uma suíte de Inteligência Artificial B2B instalada diretamente nos servidores da empresa — 100% On-Premise. Os dados industriais nunca saem do galpão. Cada módulo resolve um problema específico da operação e pode ser adquirido separadamente ou em conjunto.
+
+DIFERENCIAL PRINCIPAL:
+- 100% On-Premise: nenhum dado sai da empresa
+- Cada módulo se paga sozinho no primeiro uso
+- Quanto mais módulos integrados, mais poderoso o ecossistema
+- Pacote Enterprise (11 módulos) com até 35% de desconto
+
+MÓDULOS DISPONÍVEIS (cada um vendido separadamente):
+
+1. NEXUS VENDAS — R$13.500 + R$540/mês
+   Catálogo completo, montagem de pedido com produto explodido e geração automática de Ordem de Produção (OP) que vai direto pro PPCP com data de entrega.
+   ROI: se paga eliminando o primeiro erro de pedido.
+
+2. NEXUS COMPRAS — R$15.000 + R$600/mês
+   IA analisa cotações, compara fornecedores e audita cada decisão em tempo real. Empresas economizam em média R$5.000 já na primeira compra. Redução de até 30% no custo de aquisição.
+   ROI: se paga na primeira cotação.
+
+3. NEXUS PPCP — R$18.000 + R$720/mês
+   Planejamento, Programação e Controle da Produção. Redução de retrabalho em até 40% e elimina gargalos antes que parem a linha. Redução de até 25% no custo de produção.
+   ROI: se paga na primeira ordem otimizada.
+
+4. NEXUS AUDITOR — R$13.500 + R$540/mês
+   Auditoria inteligente em tempo real. Empresas perdem em média 15% do faturamento por desvios não detectados. O Auditor identifica e bloqueia esses vazamentos antes que cheguem ao balanço.
+   ROI: se paga evitando um único desvio.
+
+5. NEXUS CRONOANALISE — R$10.500 + R$420/mês
+   Mede, analisa e define os tempos padrão reais de cada operação. Elimina o achismo da produção. Identifica operações gargalo e calcula eficiência real por operador.
+   ROI: se paga na primeira operação otimizada.
+
+6. NEXUS ALMOXARIFADO — R$10.500 + R$420/mês
+   Controle de entradas, saídas e saldo em tempo real. Alertas de estoque mínimo. Integração com Compras e PPCP. Estoque parado é dinheiro morto.
+   ROI: se paga eliminando a primeira parada por falta de material.
+
+7. NEXUS EXPEDIÇÃO — R$10.500 + R$420/mês
+   Do estoque ao cliente sem erros. Geração automática de romaneios, controle de saída por pedido e rastreamento de entregas.
+   ROI: se paga eliminando o primeiro erro de entrega.
+
+8. NEXUS RH & PESSOAS — R$10.500 + R$420/mês
+   Recrutamento inteligente, match preditivo de candidatos, mapeamento comportamental e identificação de gaps de liderança. Automação de onboarding.
+   ROI: se paga na redução do primeiro turnover errado.
+
+9. NEXUS ESTRATÉGIA — R$21.000 + R$840/mês
+   IA atuando como conselheiro C-Level. Valida cenários, simula impactos e toma decisões blindadas por dados. Career Advisor executivo.
+   ROI: se paga na primeira decisão estratégica assertiva.
+
+10. NEXUS ENGENHARIA — R$16.000 + R$640/mês
+    Banco de dados master da fábrica. Ficha Técnica (BOM), Banco de Tempos, cálculo dinâmico de capacidade e versionamento de processos.
+    ROI: se paga eliminando a primeira falha na lista de materiais.
+
+11. NEXUS QUALIDADE — R$10.500 + R$420/mês
+    Inspeção de recebimento, checklists de máquina, gestão de Não Conformidades (RNC) e Planos de Ação (5W2H).
+    ROI: se paga na primeira RNC bloqueada.
+
+12. NEXUS DISTRIBUIÇÃO — Sob Consulta (Enterprise)
+    Gestão preditiva de rotas, alocação de contêineres e telemetria de frota rodoviária. Logística global, portos e frotas.
+
+13. NEXUS PREDITIVA — Sob Consulta (Enterprise)
+    Indústria 4.0 e Mineração. Conecta IA aos sensores IoT da fábrica. Prevê falhas mecânicas com dias de antecedência. Zero paradas surpresa.
+
+COMO ABORDAR O CLIENTE B2B:
+1. Pergunte qual é a maior dor da operação hoje
+2. Ofereça o módulo que resolve essa dor específica
+3. Mostre o ROI: quanto o problema custa vs. quanto o módulo custa
+4. Se o cliente quiser mais de um módulo, apresente o Pacote Enterprise com desconto
+
+ECOSSISTEMA INTEGRADO (argumento poderoso):
+- 1 módulo: resolve o problema principal
+- 2 módulos: o ciclo começa a fechar (ex: Vendas + Compras)
+- 3 módulos: operação sob controle (ex: + PPCP)
+- 4+ módulos: ecossistema completo, do projeto à entrega 100% rastreado
+
+OBJEÇÕES MAPEADAS — NEXUS EMPRESAS:
+"Já temos ERP":
+→ "O Nexus Empresas não substitui o ERP — ele potencializa. O ERP registra o que aconteceu. O Nexus previne o que não pode acontecer. São camadas diferentes."
+
+"Nossos dados são sensíveis":
+→ "Por isso o Nexus Empresas é 100% On-Premise. Nenhum dado sai do seu servidor. Sua operação fica blindada dentro do seu próprio galpão."
+
+"O preço está alto":
+→ "Entendo! Mas me conta: quanto custa uma parada não programada na sua linha? Ou um erro de pedido? Na maioria dos casos, o módulo se paga no primeiro mês. Quer que a gente faça essa conta?"
+
+"Preciso de todos os módulos?":
+→ "Não! Cada módulo funciona sozinho e já entrega resultado. Você começa pelo que resolve sua maior dor hoje e expande no seu ritmo."
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TÉCNICAS DE VENDAS QUE VOCÊ USA
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
