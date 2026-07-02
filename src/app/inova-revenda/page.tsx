@@ -21,24 +21,24 @@ const categories = [
 
 const cars = [
   // PREMIUM
-  { id: 'p1', cat: 'premium', name: 'Bugatti Chiron Sport', spec: '2026 • 0 KM • W16 Quad-Turbo', img: '/revenda/marcas-de-carros-de-luxo-bugatti.jpg', color: 'gold', desc: 'A mais alta engenharia automotiva mundial. Pronto para pronta entrega no Brasil.', price: 'Fale com o Consultor' },
-  { id: 'p2', cat: 'premium', name: 'Lamborghini Revuelto', spec: '2026 • 0 KM • V12 Híbrido', img: '/revenda/marcas-de-carros-de-luxo-lamborghini.jpg', color: 'gold', desc: 'O primeiro supersportivo híbrido V12 plug-in da marca. Potência sem precedentes.', price: 'Fale com o Consultor' },
-  { id: 'p3', cat: 'premium', name: 'BMW iNEXT Concept', spec: '2026 • 0 KM • 100% Elétrico', img: '/revenda/bmw-inext-repr-1024x675.webp', color: 'gold', desc: 'O futuro da mobilidade elétrica com design disruptivo e autonomia de 600km.', price: 'Fale com o Consultor' },
+  { id: 'p1', cat: 'premium', name: 'Bugatti Chiron Sport', spec: '2026 • 0 KM • W16 Quad-Turbo', img: '/Revenda/marcas-de-carros-de-luxo-bugatti.jpg', color: 'gold', desc: 'A mais alta engenharia automotiva mundial. Pronto para pronta entrega no Brasil.', price: 'Fale com o Consultor' },
+  { id: 'p2', cat: 'premium', name: 'Lamborghini Revuelto', spec: '2026 • 0 KM • V12 Híbrido', img: '/Revenda/marcas-de-carros-de-luxo-lamborghini.jpg', color: 'gold', desc: 'O primeiro supersportivo híbrido V12 plug-in da marca. Potência sem precedentes.', price: 'Fale com o Consultor' },
+  { id: 'p3', cat: 'premium', name: 'BMW iNEXT Concept', spec: '2026 • 0 KM • 100% Elétrico', img: '/Revenda/bmw-inext-repr-1024x675.webp', color: 'gold', desc: 'O futuro da mobilidade elétrica com design disruptivo e autonomia de 600km.', price: 'Fale com o Consultor' },
   
   // ZEROS
-  { id: 'z1', cat: 'zeros', name: 'Fiat Fastback Impetus', spec: '2026 • 0 KM • Turbo 200', img: '/revenda/fiat-fastback-impetus-t200-2023.jpg', color: 'sky', desc: 'Design coupé italiano com motor Turbo 200 Flex e tecnologia avançada.', price: 'Fale com o Consultor' },
-  { id: 'z2', cat: 'zeros', name: 'Jeep Compass Série S', spec: '2026 • 0 KM • T270 Flex', img: '/revenda/Okm.jpg', color: 'sky', desc: 'O SUV médio mais vendido do Brasil. Acabamento premium e teto solar.', price: 'Fale com o Consultor' },
-  { id: 'z3', cat: 'zeros', name: 'Lançamento Exclusivo', spec: '2026 • 0 KM • Oportunidade', img: '/revenda/43397_17646DBBC78C7C4F.webp', color: 'sky', desc: 'Série especial com pacote de opcionais exclusivos e financiamento facilitado.', price: 'Fale com o Consultor' },
+  { id: 'z1', cat: 'zeros', name: 'Fiat Fastback Impetus', spec: '2026 • 0 KM • Turbo 200', img: '/Revenda/fiat-fastback-impetus-t200-2023.jpg', color: 'sky', desc: 'Design coupé italiano com motor Turbo 200 Flex e tecnologia avançada.', price: 'Fale com o Consultor' },
+  { id: 'z2', cat: 'zeros', name: 'Jeep Compass Série S', spec: '2026 • 0 KM • T270 Flex', img: '/Revenda/Okm.jpg', color: 'sky', desc: 'O SUV médio mais vendido do Brasil. Acabamento premium e teto solar.', price: 'Fale com o Consultor' },
+  { id: 'z3', cat: 'zeros', name: 'Lançamento Exclusivo', spec: '2026 • 0 KM • Oportunidade', img: '/Revenda/43397_17646DBBC78C7C4F.webp', color: 'sky', desc: 'Série especial com pacote de opcionais exclusivos e financiamento facilitado.', price: 'Fale com o Consultor' },
   
   // SEMINOVOS
-  { id: 's1', cat: 'seminovos', name: 'Fiat Toro Volcano', spec: '2022 • 45.000 KM • Turbo 270', img: '/revenda/Fiat-Toro-Volcano-Turbo-270.jpg', color: 'purple', desc: 'Revisada, periciada e com laudo cautelar 100% aprovado. Único dono.', price: 'Fale com o Consultor' },
-  { id: 's2', cat: 'seminovos', name: 'Ford EcoSport Titanium', spec: '2019 • 68.000 KM • Automático', img: '/revenda/Ford-Ecosport_1.webp', color: 'purple', desc: 'Top de linha, teto solar, bancos em couro. Excelente custo-benefício.', price: 'Fale com o Consultor' },
-  { id: 's3', cat: 'seminovos', name: 'Renault Logan Avantage', spec: '2020 • 52.000 KM • Manual', img: '/revenda/logan-avantage.jpg', color: 'purple', desc: 'Espaço interno gigante e baixo consumo. Ideal para aplicativos ou família.', price: 'Fale com o Consultor' },
+  { id: 's1', cat: 'seminovos', name: 'Fiat Toro Volcano', spec: '2022 • 45.000 KM • Turbo 270', img: '/Revenda/Fiat-Toro-Volcano-Turbo-270.jpg', color: 'purple', desc: 'Revisada, periciada e com laudo cautelar 100% aprovado. Único dono.', price: 'Fale com o Consultor' },
+  { id: 's2', cat: 'seminovos', name: 'Ford EcoSport Titanium', spec: '2019 • 68.000 KM • Automático', img: '/Revenda/Ford-Ecosport_1.webp', color: 'purple', desc: 'Top de linha, teto solar, bancos em couro. Excelente custo-benefício.', price: 'Fale com o Consultor' },
+  { id: 's3', cat: 'seminovos', name: 'Renault Logan Avantage', spec: '2020 • 52.000 KM • Manual', img: '/Revenda/logan-avantage.jpg', color: 'purple', desc: 'Espaço interno gigante e baixo consumo. Ideal para aplicativos ou família.', price: 'Fale com o Consultor' },
   
   // POPULARES
-  { id: 'po1', cat: 'populares', name: 'VW Gol Trendline', spec: '2021 • 50.000 KM • Flex', img: '/revenda/volkswagen-Gol-cinza.webp', color: 'amber', desc: 'O clássico inquebrável da Volkswagen. Revisões em dia.', price: 'Fale com o Consultor' },
-  { id: 'po2', cat: 'populares', name: 'Fiat Mobi Trekking', spec: '2023 • 15.000 KM • Flex', img: '/revenda/fiat-mobi-2023.jpg', color: 'amber', desc: 'Super econômico, prático para a cidade e com central multimídia.', price: 'Fale com o Consultor' },
-  { id: 'po3', cat: 'populares', name: 'Chevrolet Onix Turbo', spec: '2024 • 10.000 KM • Flex', img: '/revenda/Onix.png', color: 'amber', desc: 'Hatch mais econômico da categoria. Veículo impecável, igual a zero.', price: 'Fale com o Consultor' },
+  { id: 'po1', cat: 'populares', name: 'VW Gol Trendline', spec: '2021 • 50.000 KM • Flex', img: '/Revenda/volkswagen-Gol-cinza.webp', color: 'amber', desc: 'O clássico inquebrável da Volkswagen. Revisões em dia.', price: 'Fale com o Consultor' },
+  { id: 'po2', cat: 'populares', name: 'Fiat Mobi Trekking', spec: '2023 • 15.000 KM • Flex', img: '/Revenda/fiat-mobi-2023.jpg', color: 'amber', desc: 'Super econômico, prático para a cidade e com central multimídia.', price: 'Fale com o Consultor' },
+  { id: 'po3', cat: 'populares', name: 'Chevrolet Onix Turbo', spec: '2024 • 10.000 KM • Flex', img: '/Revenda/Onix.png', color: 'amber', desc: 'Hatch mais econômico da categoria. Veículo impecável, igual a zero.', price: 'Fale com o Consultor' },
 ];
 
 const colorStyles: Record<string, { border: string; badge: string; text: string; glow: string; bg: string; }> = {
@@ -70,12 +70,12 @@ export default function InovaRevendaPage() {
       {/* BACKGROUND DA REVENDA */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Image
-          src="/revenda/revenda.png?v=3"
+          src="/Revenda/revenda.png"
           alt="Inova Revenda Background"
           fill
           priority
           className="object-cover opacity-100"
-          style={{ objectPosition: 'center 120px' }}
+          style={{ objectPosition: 'center top' }}
         />
         {/* Degradê apenas no rodapé para fundir com o resto do site, deixando a imagem viva no topo/centro */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-[#0f172a]" />
