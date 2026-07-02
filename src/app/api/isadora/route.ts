@@ -659,14 +659,13 @@ REGRA DE FORMATO (WHATSAPP/CHAT)
 
     let command = new ConverseCommand({
       modelId: "us.anthropic.claude-sonnet-4-6",
-        messages: formattedMessages,
-        system: systemPrompt,
-        inferenceConfig,
-        toolConfig,
-      });
+      messages: formattedMessages,
+      system: systemPrompt,
+      inferenceConfig,
+      toolConfig,
+    });
 
-      response = await bedrockClient.send(followUpCommand);
-    }
+    let response = await bedrockClient.send(command);
 
     const finalContent = response.output?.message?.content;
     let textResponse = finalContent?.find((c: any) => c.text)?.text;
