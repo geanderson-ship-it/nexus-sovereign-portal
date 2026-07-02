@@ -1,17 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-runtime";
+import { getIsadoraHistory, saveIsadoraHistory, recordHandoff, getIsadoraSession } from '@/lib/isadora-db';
 
 const ZAPI_INSTANCE = process.env.ZAPI_INSTANCE || "";
 const ZAPI_TOKEN    = process.env.ZAPI_TOKEN || "";
 const ZAPI_URL      = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}/send-text`;
-
-// Memória de conversa + nicho detectado por número
-const conversationHistory: Record<string, { 
-  role: string; 
-  content: any[] 
-}[]> = {};
-const clientNiche: Record<string, string> = {};
-const purchaseIntention: Record<string, number> = {};
 
 const awsConfig: any = {
   region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
@@ -191,29 +184,88 @@ async function sendWhatsApp(phone: string, message: string) {
   if (!res.ok) throw new Error(`Z-API erro ${res.status}: ${JSON.stringify(data)}`);
 }
 
+/**
+ * Notifica Geanderson quando uma venda quente é detectada
+ */
+async function notifyGeandersonHotLead(
+  phone: string,
+  nicho: string,
+  purchaseIntention: number,
+  lastMessages: any[]
+) {
+  try {
+    const geandersonPhone = process.env.GEANDERSON_WHATSAPP_PHONE || process.env.GEANDERSON_PHONE;
+    
+    if (!geandersonPhone) {
+      console.log(`[Isadora] ⚠️ GEANDERSON_WHATSAPP_PHONE não configurado. Venda quente não será notificada.`);
+      return;
+    }
+
+    // Preparar contexto da conversa (últimas 3 mensagens)
+    const context = lastMessages.slice(-3).map(m => {
+      const role = m.role === 'user' ? '👤 Cliente' : '🤖 Isadora';
+      const text = m.content?.[0]?.text || '';
+      return `${role}: ${text.substring(0, 100)}...`;
+    }).join('\n');
+
+    const notificationMessage = `
+🔥 VENDA QUENTE DETECTADA!
+
+📱 Telefone: ${phone}
+🎯 Nicho: ${nicho}
+📊 Score de interesse: ${purchaseIntention}/10
+
+Últimas mensagens:
+${context}
+
+Ação: Cliente está pronto para conversa comercial. Responda no WhatsApp! ✅
+    `.trim();
+
+    console.log(`[Isadora] 📧 Enviando notificação para Geanderson: ${geandersonPhone}`);
+    await sendWhatsApp(geandersonPhone, notificationMessage);
+    console.log(`[Isadora] ✅ Notificação enviada com sucesso!`);
+  } catch (error) {
+    console.error(`[Isadora] ❌ Erro ao notificar Geanderson:`, error);
+    // Não falhar o fluxo se a notificação falhar
+  }
+}
+
 async function getIsadoraResponse(phone: string, userMessage: string): Promise<{ response: string; shouldHandoff: boolean }> {
-  if (!conversationHistory[phone]) conversationHistory[phone] = [];
+  // Recuperar histórico do DynamoDB (não mais em memória!)
+  let history = await getIsadoraHistory(phone);
+  const session = await getIsadoraSession(phone);
 
   // Detectar nicho e intenção de compra
-  const detectedNiche = detectNiche(userMessage, conversationHistory[phone]);
-  if (detectedNiche !== 'unknown' && !clientNiche[phone]) {
-    clientNiche[phone] = detectedNiche;
-    console.log(`[Isadora] Nicho detectado para ${phone}: ${detectedNiche}`);
+  const detectedNiche = detectNiche(userMessage, history);
+  let nicho = session?.nicho || detectedNiche;
+  if (detectedNiche !== 'unknown' && nicho === 'unknown') {
+    nicho = detectedNiche;
+    console.log(`[Isadora] Nicho detectado para ${phone}: ${nicho}`);
   }
 
   const intentionScore = calculatePurchaseIntention(userMessage);
-  purchaseIntention[phone] = (purchaseIntention[phone] || 0) + intentionScore;
+  const currentIntention = (session?.purchaseIntention || 0) + intentionScore;
 
-  conversationHistory[phone].push({ role: "user", content: [{ text: userMessage }] });
+  // Adicionar mensagem do usuário ao histórico
+  history.push({ 
+    role: "user", 
+    content: [{ text: userMessage }],
+    timestamp: new Date().toISOString()
+  });
 
-  // Mantém apenas as últimas 20 mensagens
-  if (conversationHistory[phone].length > 20) {
-    conversationHistory[phone] = conversationHistory[phone].slice(-20);
+  // Manter apenas últimas 20 mensagens
+  if (history.length > 20) {
+    history = history.slice(-20);
   }
 
   // Se intenção de compra muito alta, prepara handoff
-  if (purchaseIntention[phone] >= 6) {
-    console.log(`[Isadora] VENDA QUENTE para ${phone}! Score: ${purchaseIntention[phone]}`);
+  if (currentIntention >= 6) {
+    console.log(`[Isadora] 🔥 VENDA QUENTE para ${phone}! Score: ${currentIntention}`);
+    await recordHandoff(phone, nicho, currentIntention);
+    
+    // 🔥 NOTIFICAR GEANDERSON IMEDIATAMENTE
+    await notifyGeandersonHotLead(phone, nicho, currentIntention, history);
+    
     return {
       response: `Ótimo! Você está no caminho certo 😊
 
@@ -226,21 +278,30 @@ Pode deixar que já encaminho seu contato! ✅`,
 
   let command = new ConverseCommand({
     modelId: "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
-    messages: conversationHistory[phone] as any,
+    messages: history.map(h => ({
+      role: h.role as 'user' | 'assistant',
+      content: h.content
+    })) as any,
     system: systemPrompt,
-    inferenceConfig: { maxTokens: 1024, temperature: 0.7 },
+    inferenceConfig: { maxTokens: 1024, temperature: 0.4 }, // Reduzido para 0.4 (menos criativa, mais precisa)
     toolConfig,
   });
 
   let response = await bedrockClient.send(command);
   let contentBlocks = response.output?.message?.content || [];
   
-  // Sem tools, então não precisa processar tool results
-
   const textResponse = contentBlocks.find((c: any) => c.text)?.text
     || "Desculpe, deu um branco aqui! Pode repetir? 😅";
 
-  conversationHistory[phone].push({ role: "assistant", content: [{ text: textResponse }] });
+  // Adicionar resposta ao histórico
+  history.push({ 
+    role: "assistant", 
+    content: [{ text: textResponse }],
+    timestamp: new Date().toISOString()
+  });
+
+  // Salvar tudo no DynamoDB
+  await saveIsadoraHistory(phone, history, nicho, currentIntention);
 
   return { response: textResponse, shouldHandoff: false };
 }
@@ -269,13 +330,7 @@ export async function POST(req: NextRequest) {
     await sendWhatsApp(phone, response);
 
     if (shouldHandoff) {
-      console.log(`[Isadora] 🔥 VENDA QUENTE! Registrando handoff para ${phone}`);
-      // TODO: Notificar Geanderson/Ivoni de venda quente (DynamoDB, email, etc)
-      const niche = clientNiche[phone] || 'unknown';
-      const historyContext = conversationHistory[phone]?.slice(-5).map(m => 
-        m.role === 'user' ? `Cliente: ${m.content[0]?.text}` : `Isadora: ${m.content[0]?.text}`
-      ).join('\n');
-      console.log(`[Isadora] Contexto da venda:\n- Nicho: ${niche}\n- Histórico:\n${historyContext}`);
+      console.log(`[Isadora] ✅ Cliente transferido para atendimento humano`);
     }
 
     console.log(`[Isadora] Respondeu para ${phone}: ${response}`);
