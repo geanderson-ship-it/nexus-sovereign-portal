@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "asadbinimtiaz.kiro-vscode-extension"
+        "asadbinimtiaz.kiro-vscode-extension",
+        "amazonwebservices.amazon-q-vscode"
     ]
 }

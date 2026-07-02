@@ -217,10 +217,23 @@ export async function POST(req: NextRequest) {
     const finalContent = response.output?.message?.content;
     let textResponse = finalContent?.find((c: any) => c.text)?.text;
 
+    // Retry logic for empty response
     if (!textResponse) {
-      throw new Error("A AWS retornou uma resposta vazia.");
+      // Attempt a single retry with the same model
+      const retryCommand = new ConverseCommand({
+        modelId: MODEL_ID,
+        messages: formattedMessages,
+        system: systemPrompt,
+        inferenceConfig,
+        toolConfig,
+      });
+      const retryResponse = await bedrockClient.send(retryCommand);
+      const retryContent = retryResponse.output?.message?.content;
+      textResponse = retryContent?.find((c: any) => c.text)?.text;
+      if (!textResponse) {
+        throw new Error("A AWS retornou uma resposta vazia após tentativa de reconsulta.");
+      }
     }
-
     let audioBase64 = null;
     try {
       let cleanText = textResponse
