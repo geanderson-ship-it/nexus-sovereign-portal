@@ -288,7 +288,9 @@ export default function AtenaTerminalPage() {
         body: JSON.stringify({ messages: [...conversationHistory, newMessage] })
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      if (!text) throw new Error('Resposta vazia do servidor');
+      const data = JSON.parse(text);
 
       if (!res.ok) {
         throw new Error(data.error || 'Erro de comunicação');

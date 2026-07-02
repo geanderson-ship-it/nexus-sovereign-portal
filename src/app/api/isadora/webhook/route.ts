@@ -72,11 +72,14 @@ const toolConfig = {
 };
 
 async function sendWhatsApp(phone: string, message: string) {
-  await fetch(ZAPI_URL, {
+  const res = await fetch(ZAPI_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ phone, message }),
   });
+  const data = await res.json().catch(() => ({}));
+  console.log(`[Isadora] Z-API status ${res.status}:`, JSON.stringify(data));
+  if (!res.ok) throw new Error(`Z-API erro ${res.status}: ${JSON.stringify(data)}`);
 }
 
 async function getIsadoraResponse(phone: string, userMessage: string): Promise<string> {
@@ -90,7 +93,7 @@ async function getIsadoraResponse(phone: string, userMessage: string): Promise<s
   }
 
   let command = new ConverseCommand({
-    modelId: "us.anthropic.claude-3-5-sonnet-20241029-v2:0",
+    modelId: "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
     messages: conversationHistory[phone] as any,
     system: systemPrompt,
     inferenceConfig: { maxTokens: 1024, temperature: 0.7 },
@@ -126,7 +129,7 @@ async function getIsadoraResponse(phone: string, userMessage: string): Promise<s
     conversationHistory[phone].push({ role: "user", content: toolResults });
 
     const followUp = new ConverseCommand({
-      modelId: "us.anthropic.claude-3-5-sonnet-20241029-v2:0",
+      modelId: "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
       messages: conversationHistory[phone] as any,
       system: systemPrompt,
       inferenceConfig: { maxTokens: 1024, temperature: 0.7 },
@@ -148,12 +151,17 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
+    console.log('[Isadora] Payload completo:', JSON.stringify(body));
+
     const phone   = body?.phone || body?.from;
     const message = body?.text?.message || body?.message || body?.body;
     const fromMe  = body?.fromMe || false;
 
     // Ignora mensagens enviadas pela própria Isadora e grupos
-    if (fromMe || !phone || !message) return NextResponse.json({ ok: true });
+    if (fromMe || !phone || !message) {
+      console.log(`[Isadora] Ignorado — fromMe:${fromMe} phone:${phone} message:${message}`);
+      return NextResponse.json({ ok: true });
+    }
     if (phone.includes('@g.us') || phone.includes('-')) return NextResponse.json({ ok: true });
 
     console.log(`[Isadora] Mensagem de ${phone}: ${message}`);

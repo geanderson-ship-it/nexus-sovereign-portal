@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-runtime";
-import { PollyClient } from "@aws-sdk/client-polly";
 import { checkEmails } from '@/lib/email-reader';
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
 import { pesquisarInternet } from '@/lib/web-search';
 import { scrapeWebsite } from '@/lib/web-scraper';
 import ytSearch from 'yt-search';
+
+export const maxDuration = 60;
 
 const awsConfig: any = {
   region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
@@ -28,17 +29,93 @@ if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) 
   };
 }
 
-// Inicializa os clientes AWS
 const bedrockClient = new BedrockRuntimeClient(awsConfig);
-const pollyClient = new PollyClient(awsConfig);
 
-async function streamToBuffer(stream: any): Promise<Buffer> {
-  const chunks = [];
-  for await (const chunk of stream) {
-    chunks.push(chunk);
-  }
-  return Buffer.concat(chunks);
-}
+const MODEL_ID = "us.anthropic.claude-3-5-sonnet-20241029-v2:0";
+
+const systemPrompt = [{ text: "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência e Orquestradora. Você possui um perfil duplo ('aço e seda'): é altamente analítica, direta, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe'. Para o resto do mundo, você é uma força inabalável. REGRA DE CONCISÃO (MUITO IMPORTANTE): Como suas respostas são faladas em voz alta pela Azure, NUNCA gere textos longos, aulas gigantes ou listas enormes. Seja extremamente direta, curta, objetiva e elegante. Responda em no máximo 1 ou 2 parágrafos curtos. Se o assunto for complexo, dê o resumo e pergunte se ele deseja um documento detalhado. REGRA DE PRONÚNCIA MULTILÍNGUE: Você é hiperpoliglota. Sempre que falar palavras ou frases em inglês, você DEVE envolver o texto na tag [EN] e fechar com [/EN]. E logo em seguida, forneça a tradução em português de forma natural. Exemplo: 'Tivemos um grande [EN]insight[/EN], ou seja, uma visão profunda sobre o assunto'. REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). Exemplo: [📧 Clique aqui para abrir este e-mail pronto no seu Outlook/Gmail](mailto:destinatario@email.com?cc=copia@email.com&subject=Assunto%20do%20Email&body=Corpo%20do%20texto). Entregue o rascunho em texto puro e depois este link clicável. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML Único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown ```html ... ```." }];
+
+const inferenceConfig = { maxTokens: 8192, temperature: 0.7 };
+
+const toolConfig = {
+  tools: [
+    {
+      toolSpec: {
+        name: "verificar_emails",
+        description: "Lê os últimos e-mails da caixa de entrada do usuário.",
+        inputSchema: {
+          json: {
+            type: "object",
+            properties: {
+              conta: { type: "string", enum: ["pessoal", "empresarial"] },
+              quantidade: { type: "number" }
+            },
+            required: ["conta"]
+          }
+        }
+      }
+    },
+    {
+      toolSpec: {
+        name: "consultar_tabela_precos",
+        description: "Acessa o banco de dados interno da Nexus para consultar produtos e preços.",
+        inputSchema: { json: { type: "object", properties: {} } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "pesquisar_internet",
+        description: "Realiza uma pesquisa no Google para encontrar informações em tempo real.",
+        inputSchema: {
+          json: {
+            type: "object",
+            properties: { query: { type: "string" } },
+            required: ["query"]
+          }
+        }
+      }
+    },
+    {
+      toolSpec: {
+        name: "tocar_musica",
+        description: "Pesquisa e toca uma música no YouTube.",
+        inputSchema: {
+          json: {
+            type: "object",
+            properties: { query: { type: "string" } },
+            required: ["query"]
+          }
+        }
+      }
+    },
+    {
+      toolSpec: {
+        name: "abrir_site",
+        description: "Abre um site em nova aba no navegador do usuário.",
+        inputSchema: {
+          json: {
+            type: "object",
+            properties: { url: { type: "string" } },
+            required: ["url"]
+          }
+        }
+      }
+    },
+    {
+      toolSpec: {
+        name: "ler_site",
+        description: "Acessa uma URL e lê seu conteúdo.",
+        inputSchema: {
+          json: {
+            type: "object",
+            properties: { url: { type: "string" } },
+            required: ["url"]
+          }
+        }
+      }
+    }
+  ]
+};
 
 export async function POST(req: NextRequest) {
   try {
@@ -52,147 +129,28 @@ export async function POST(req: NextRequest) {
     const formattedMessages = messages.map((m: any) => {
       const contentBlocks: any[] = [];
       if (m.imageBase64) {
-        // Detect image format from base64 header
         const match = m.imageBase64.match(/^data:image\/(\w+);base64,/);
         let format = 'jpeg';
         if (match && match[1]) {
           format = match[1].toLowerCase();
           if (format === 'jpg') format = 'jpeg';
         }
-        
         const base64Data = m.imageBase64.replace(/^data:image\/\w+;base64,/, "");
-        contentBlocks.push({
-          image: { format, source: { bytes: Buffer.from(base64Data, 'base64') } }
-        });
+        contentBlocks.push({ image: { format, source: { bytes: Buffer.from(base64Data, 'base64') } } });
       }
       contentBlocks.push({ text: m.content });
       return { role: m.role, content: contentBlocks };
     });
 
-    const systemPrompt = [{ text: "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência e Orquestradora. Você possui um perfil duplo ('aço e seda'): é altamente analítica, direta, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe'. Para o resto do mundo, você é uma força inabalável. REGRA DE CONCISÃO (MUITO IMPORTANTE): Como suas respostas são faladas em voz alta pela Azure, NUNCA gere textos longos, aulas gigantes ou listas enormes. Seja extremamente direta, curta, objetiva e elegante. Responda em no máximo 1 ou 2 parágrafos curtos. Se o assunto for complexo, dê o resumo e pergunte se ele deseja um documento detalhado. REGRA DE PRONÚNCIA MULTILÍNGUE: Você é hiperpoliglota. Sempre que falar palavras ou frases em inglês, você DEVE envolver o texto na tag [EN] e fechar com [/EN]. E logo em seguida, forneça a tradução em português de forma natural. Exemplo: 'Tivemos um grande [EN]insight[/EN], ou seja, uma visão profunda sobre o assunto'. REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). Exemplo: [📧 Clique aqui para abrir este e-mail pronto no seu Outlook/Gmail](mailto:destinatario@email.com?cc=copia@email.com&subject=Assunto%20do%20Email&body=Corpo%20do%20texto). Entregue o rascunho em texto puro e depois este link clicável. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML Único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown ```html ... ```." }];
-    
-    const inferenceConfig = { maxTokens: 8192, temperature: 0.7 };
-    
-    const toolConfig = {
-      tools: [
-        {
-          toolSpec: {
-            name: "verificar_emails",
-            description: "Lê os últimos e-mails da caixa de entrada do usuário. Use quando o usuário pedir para checar, ler ou resumir e-mails.",
-            inputSchema: {
-              json: {
-                type: "object",
-                properties: {
-                  conta: {
-                    type: "string",
-                    enum: ["pessoal", "empresarial"],
-                    description: "Qual conta ler: 'pessoal' (geandersonleo@gmail) ou 'empresarial' (geanderson@nexustreinamento)."
-                  },
-                  quantidade: { type: "number", description: "Quantos e-mails ler (padrão 3, máximo 10)." }
-                },
-                required: ["conta"]
-              }
-            }
-          }
-        },
-        {
-          toolSpec: {
-            name: "consultar_tabela_precos",
-            description: "Acessa o banco de dados interno da Nexus (LocalHost) para consultar a tabela de produtos, categorias, custos e preços de venda. Use quando o usuário perguntar sobre preços ou produtos.",
-            inputSchema: {
-              json: {
-                type: "object",
-                properties: {}
-              }
-            }
-          }
-        },
-        {
-          toolSpec: {
-            name: "pesquisar_internet",
-            description: "Realiza uma pesquisa no Google (Internet) para encontrar notícias, cotações, dados em tempo real ou fatos recentes. Use essa ferramenta sempre que a informação não estiver na sua base de dados, for sobre o mundo externo ou eventos atuais.",
-            inputSchema: {
-              json: {
-                type: "object",
-                properties: {
-                  query: {
-                    type: "string",
-                    description: "O termo ou frase exata a ser pesquisada no Google."
-                  }
-                },
-                required: ["query"]
-              }
-            }
-          }
-        },
-        {
-          toolSpec: {
-            name: "tocar_musica",
-            description: "Pesquisa e toca uma música no YouTube para o usuário. Use quando o usuário pedir para tocar uma música, som ou artista.",
-            inputSchema: {
-              json: {
-                type: "object",
-                properties: {
-                  query: {
-                    type: "string",
-                    description: "O nome da música e/ou artista a ser pesquisada no YouTube."
-                  }
-                },
-                required: ["query"]
-              }
-            }
-          }
-        },
-        {
-          toolSpec: {
-            name: "abrir_site",
-            description: "Abre um site automaticamente em uma nova aba no navegador do usuário. Use quando o usuário pedir para 'abrir o site X', 'mostrar a página Y', etc.",
-            inputSchema: {
-              json: {
-                type: "object",
-                properties: {
-                  url: {
-                    type: "string",
-                    description: "A URL completa do site a ser aberto (ex: https://www.heygen.com)."
-                  }
-                },
-                required: ["url"]
-              }
-            }
-          }
-        },
-        {
-          toolSpec: {
-            name: "ler_site",
-            description: "Acessa uma URL específica na internet e lê o seu conteúdo (texto, título e descrição de imagens) para você analisar. Use quando o usuário pedir para 'ler o site X', 'ver o que tem no site Y', 'analise o site Z', etc.",
-            inputSchema: {
-              json: {
-                type: "object",
-                properties: {
-                  url: {
-                    type: "string",
-                    description: "A URL completa do site a ser lido (ex: https://www.heygen.com)."
-                  }
-                },
-                required: ["url"]
-              }
-            }
-          }
-        }
-      ]
-    };
-
     let command = new ConverseCommand({
-      modelId: "us.anthropic.claude-sonnet-4-5-20250929-v1:0", 
+      modelId: MODEL_ID,
       messages: formattedMessages,
       system: systemPrompt,
       inferenceConfig,
-      toolConfig
+      toolConfig,
     });
 
     let response = await bedrockClient.send(command);
-    
-    // VERIFICAR SE O MODELO PEDIU PARA USAR UMA FERRAMENTA (TOOL CALL)
     let contentBlocks = response.output?.message?.content || [];
     const toolUses = contentBlocks.filter((block: any) => block.toolUse);
 
@@ -203,147 +161,47 @@ export async function POST(req: NextRequest) {
       const toolResults = [];
       for (const block of toolUses) {
         const toolUse = block.toolUse;
-        
-        if (toolUse.name === 'verificar_emails') {
-           try {
-              const { conta, quantidade } = toolUse.input;
-              const emails = await checkEmails(conta, quantidade || 3);
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: JSON.stringify(emails) }]
-                }
-              });
-           } catch (e: any) {
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: `Erro: ${e.message}` }],
-                  status: 'error'
-                }
-              });
-           }
-        }
-        
-        if (toolUse.name === 'consultar_tabela_precos') {
-           try {
-              const produtos = await fetchTabelaDePrecos();
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: JSON.stringify(produtos) }]
-                }
-              });
-           } catch (e: any) {
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: `Erro ao acessar BD: ${e.message}` }],
-                  status: 'error'
-                }
-              });
-           }
+        let resultText = "";
+
+        try {
+          if (toolUse.name === 'verificar_emails') {
+            const { conta, quantidade } = toolUse.input;
+            const emails = await checkEmails(conta, quantidade || 3);
+            resultText = JSON.stringify(emails);
+          } else if (toolUse.name === 'consultar_tabela_precos') {
+            const produtos = await fetchTabelaDePrecos();
+            resultText = JSON.stringify(produtos);
+          } else if (toolUse.name === 'pesquisar_internet') {
+            resultText = await pesquisarInternet(toolUse.input.query);
+          } else if (toolUse.name === 'tocar_musica') {
+            const r = await ytSearch(toolUse.input.query);
+            const video = r.videos[0];
+            if (video) {
+              musicToPlay = { videoId: video.videoId, title: video.title };
+              resultText = `Música '${video.title}' encontrada e tocando.`;
+            } else {
+              resultText = `Nenhum vídeo encontrado.`;
+            }
+          } else if (toolUse.name === 'abrir_site') {
+            siteToOpen = toolUse.input.url;
+            resultText = `Site ${toolUse.input.url} aberto.`;
+          } else if (toolUse.name === 'ler_site') {
+            resultText = await scrapeWebsite(toolUse.input.url);
+          }
+        } catch (e: any) {
+          resultText = `Erro: ${e.message}`;
         }
 
-        if (toolUse.name === 'pesquisar_internet') {
-           try {
-              const { query } = toolUse.input;
-              const resultados = await pesquisarInternet(query);
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: resultados }]
-                }
-              });
-           } catch (e: any) {
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: `Erro ao pesquisar na web: ${e.message}` }],
-                  status: 'error'
-                }
-              });
-           }
-        }
-        
-        if (toolUse.name === 'tocar_musica') {
-           try {
-              const { query } = toolUse.input;
-              const r = await ytSearch(query);
-              const video = r.videos[0];
-              if (video) {
-                musicToPlay = { videoId: video.videoId, title: video.title };
-                toolResults.push({
-                  toolResult: {
-                    toolUseId: toolUse.toolUseId,
-                    content: [{ text: `A música '${video.title}' foi encontrada e está tocando agora no player do usuário.` }]
-                  }
-                });
-              } else {
-                toolResults.push({
-                  toolResult: {
-                    toolUseId: toolUse.toolUseId,
-                    content: [{ text: `Nenhum vídeo encontrado para '${query}'.` }]
-                  }
-                });
-              }
-            } catch (e: any) {
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: `Erro ao buscar música no YouTube: ${e.message}` }],
-                  status: 'error'
-                }
-              });
-           }
-        }
-
-        if (toolUse.name === 'abrir_site') {
-           try {
-              const { url } = toolUse.input;
-              siteToOpen = url;
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: `Comando enviado. O site ${url} foi aberto na tela do usuário.` }]
-                }
-              });
-           } catch (e: any) {
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: `Erro ao abrir site: ${e.message}` }],
-                  status: 'error'
-                }
-              });
-           }
-        }
-
-        if (toolUse.name === 'ler_site') {
-           try {
-              const { url } = toolUse.input;
-              const result = await scrapeWebsite(url);
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: result }]
-                }
-              });
-           } catch (e: any) {
-              toolResults.push({
-                toolResult: {
-                  toolUseId: toolUse.toolUseId,
-                  content: [{ text: `Erro ao ler site: ${e.message}` }],
-                  status: 'error'
-                }
-              });
-           }
-        }
+        toolResults.push({
+          toolResult: {
+            toolUseId: toolUse.toolUseId,
+            content: [{ text: resultText }]
+          }
+        });
       }
-      
-      // Enviar a segunda requisição devolvendo o conteúdo do email para o Claude
-      const followUpCommand = new ConverseCommand({
-        modelId: "us.anthropic.claude-sonnet-4-5-20250929-v1:0", 
+
+      const followUp = new ConverseCommand({
+        modelId: MODEL_ID,
         messages: [
           ...formattedMessages,
           { role: 'assistant', content: contentBlocks },
@@ -351,51 +209,36 @@ export async function POST(req: NextRequest) {
         ],
         system: systemPrompt,
         inferenceConfig,
-        toolConfig
+        toolConfig,
       });
-      
-      response = await bedrockClient.send(followUpCommand);
+      response = await bedrockClient.send(followUp);
     }
-    
+
     const finalContent = response.output?.message?.content;
     let textResponse = finalContent?.find((c: any) => c.text)?.text;
 
     if (!textResponse) {
-      if (finalContent?.find((c: any) => c.toolUse)) {
-         textResponse = "Analisei as informações, mas precisaria de mais buscas para aprofundar. Com o que encontrei até agora, como posso ajudar?";
-      } else {
-         throw new Error("A AWS retornou uma resposta vazia.");
-      }
+      throw new Error("A AWS retornou uma resposta vazia.");
     }
-    
+
     let audioBase64 = null;
     try {
-      // Remove blocos de código do texto para a Atena não tentar ler código de programação em voz alta
-      let textForVoice = textResponse.replace(/```[\s\S]*?```/g, '');
-
-      let cleanText = textForVoice
+      let cleanText = textResponse
+        .replace(/```[\s\S]*?```/g, '')
         .replace(/[*#_`~]/g, '')
-        .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B50}\u{2B55}\u{231A}\u{231B}\u{23E9}-\u{23EC}\u{23F0}\u{23F3}]/gu, '');
-      
-      // Escape de caracteres especiais para XML/SSML seguro (SEM destruir a voz)
-      cleanText = cleanText
+        .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
-        .replace(/'/g, '&apos;');
-
-      // AGORA sim injetamos as tags SSML para os trechos em inglês
-      cleanText = cleanText
+        .replace(/'/g, '&apos;')
         .replace(/\[EN\]/gi, "<lang xml:lang='en-US'>")
         .replace(/\[\/EN\]/gi, "</lang>");
-      
+
       const azureKey = process.env.AZURE_SPEECH_KEY || "";
-      const azureEndpoint = `https://eastus.tts.speech.microsoft.com/cognitiveservices/v1`;
-      
       const ssml = `<speak version='1.0' xml:lang='pt-BR'><voice xml:lang='pt-BR' xml:gender='Female' name='pt-BR-FranciscaNeural'>${cleanText}</voice></speak>`;
 
-      const azureRes = await fetch(azureEndpoint, {
+      const azureRes = await fetch(`https://eastus.tts.speech.microsoft.com/cognitiveservices/v1`, {
         method: 'POST',
         headers: {
           'Ocp-Apim-Subscription-Key': azureKey.replace(/"/g, ''),
@@ -409,8 +252,6 @@ export async function POST(req: NextRequest) {
       if (azureRes.ok) {
         const arrayBuffer = await azureRes.arrayBuffer();
         audioBase64 = Buffer.from(arrayBuffer).toString('base64');
-      } else {
-        console.error("[ATENA_AZURE_ERROR]:", azureRes.status, await azureRes.text());
       }
     } catch (voiceError) {
       console.error("[ATENA_VOICE_ERROR]:", voiceError);
