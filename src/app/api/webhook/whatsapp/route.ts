@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
 
     // 3. Dispara para a AWS Bedrock (Claude 3 Haiku para velocidade, ou Sonnet para raciocínio)
     const command = new InvokeModelCommand({
-      modelId: 'anthropic.claude-3-haiku-20240307-v1:0', // Haiku é perfeito para WhatsApp por ser veloz
+      modelId: 'us.anthropic.claude-haiku-4-5-20251001-v1:0', // Haiku 4.5 é perfeito para WhatsApp por ser veloz
       contentType: 'application/json',
       accept: 'application/json',
       body: JSON.stringify(bedrockPayload),

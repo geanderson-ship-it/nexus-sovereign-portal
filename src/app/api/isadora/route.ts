@@ -658,7 +658,7 @@ REGRA DE FORMATO (WHATSAPP/CHAT)
     };
 
     let command = new ConverseCommand({
-      modelId: "anthropic.claude-3-5-sonnet-20241022-v2:0",
+      modelId: "us.anthropic.claude-sonnet-4-6",
         messages: formattedMessages,
         system: systemPrompt,
         inferenceConfig,
