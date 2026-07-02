@@ -261,6 +261,10 @@ export async function POST(req: NextRequest) {
 
   } catch (error: any) {
     console.error("[ATENA_CORE_ERROR]:", error);
-    return NextResponse.json({ error: "Falha na conexão neural. " + error.message }, { status: 500 });
+    const isThrottle = error.name === 'ThrottlingException' || error.message?.includes('throttl');
+    const message = isThrottle
+      ? "Atena está sobrecarregada no momento (limite de requisições AWS atingido). Aguarde alguns segundos e tente novamente."
+      : "Falha na conexão neural. " + error.message;
+    return NextResponse.json({ error: message }, { status: isThrottle ? 429 : 500 });
   }
 }
