@@ -12,6 +12,8 @@ const awsConfig: any = {
   region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
 };
 
+import { generateEmailLink } from '@/lib/email-tool';
+
 if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) {
   awsConfig.credentials = {
     accessKeyId: process.env.AMPLIFY_ACCESS_KEY_ID,
@@ -114,7 +116,25 @@ const toolConfig = {
         }
       }
     }
-  ]
+    {
+      toolSpec: {
+        name: "enviar_email",
+        description: "Gera um link mailto pronto para enviar email com destinatário, assunto e corpo.",
+        inputSchema: {
+          json: {
+            type: "object",
+            properties: {
+              to: { type: "string" },
+              cc: { type: "string" },
+              subject: { type: "string" },
+              body: { type: "string" }
+            },
+            required: ["to", "subject", "body"]
+          }
+        }
+      }
+    },
+    ]
 };
 
 export async function POST(req: NextRequest) {
@@ -187,6 +207,9 @@ export async function POST(req: NextRequest) {
             resultText = `Site ${toolUse.input.url} aberto.`;
           } else if (toolUse.name === 'ler_site') {
             resultText = await scrapeWebsite(toolUse.input.url);
+          } else if (toolUse.name === 'enviar_email') {
+            const { to, cc, subject, body } = toolUse.input;
+            resultText = generateEmailLink(to, cc, subject, body);
           }
         } catch (e: any) {
           resultText = `Erro: ${e.message}`;
@@ -231,7 +254,8 @@ export async function POST(req: NextRequest) {
       const retryContent = retryResponse.output?.message?.content;
       textResponse = retryContent?.find((c: any) => c.text)?.text;
       if (!textResponse) {
-        throw new Error("A AWS retornou uma resposta vazia após tentativa de reconsulta.");
+        // Fallback generic response
+        textResponse = "Desculpe, não consegui gerar uma resposta no momento. Por favor, tente novamente ou reformule sua pergunta.";
       }
     }
     let audioBase64 = null;
