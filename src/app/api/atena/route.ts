@@ -115,7 +115,7 @@ const toolConfig = {
           }
         }
       }
-    }
+    },
     {
       toolSpec: {
         name: "enviar_email",
