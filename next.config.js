@@ -48,6 +48,7 @@ const nextConfig = {
       'cheerio'
     ],
   },
+  output: 'standalone',
   async redirects() {
     return [
       {
