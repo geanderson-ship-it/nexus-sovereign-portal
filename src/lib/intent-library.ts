@@ -24,3 +24,22 @@ export const emotionKeywords: {
     success: ['sucesso', 'perfeito', 'concluído', 'ótimo', 'missão cumprida', 'validado', 'realizado', 'pronto'],
     alert: ['alerta', 'cuidado', 'risco', 'perigo', 'atenção', 'problema', 'falha', 'erro', 'instável'],
 };
+
+import { inferNiche, mapProductToNiche, generatePersuasiveMessage, isHotLead } from './utils';
+import { sendWhatsAppMessage } from './whatsapp';
+
+/**
+ * Process a user message with the sales persuasive flow.
+ * Returns the response text to be sent back to the user.
+ */
+export async function handleSalesPersuasive(message: string, userPhone: string): Promise<string> {
+  const niche = inferNiche(message);
+  const product = mapProductToNiche(niche);
+  const response = generatePersuasiveMessage(product);
+  if (isHotLead(message)) {
+    const directorPhone = '+55 51 99979-9582';
+    const leadInfo = `Lead quente detectado!\nNicho: ${niche}\nProduto: ${product.name}\nMensagem: ${message}`;
+    await sendWhatsAppMessage(directorPhone, leadInfo);
+  }
+  return response;
+}

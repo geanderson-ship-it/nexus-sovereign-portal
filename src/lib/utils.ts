@@ -211,3 +211,86 @@ export function extractVideoFramesGrid(file: File): Promise<{ dataUrl: string; d
 }
 
 
+
+// ---------- Sales Persuasive Utilities ----------
+
+/**
+ * Infer the niche from a user message based on keywords.
+ */
+export function inferNiche(message: string): string {
+  const lower = message.toLowerCase();
+  const nicheMap: Record<string, string[]> = {
+    moda: ['moda', 'roupa', 'vestir', 'look', 'desfile'],
+    eletro: ['geladeira', 'fogão', 'eletrodoméstico', 'casa', 'produto eletrônico'],
+    moveis: ['sofá', 'cama', 'mesa', 'mobília', 'móvel'],
+    agronegocio: ['plantio', 'colheita', 'soja', 'milho', 'agro'],
+    seguranca: ['segurança', 'câmera', 'monitoramento', 'vigilância', 'vigilancia']
+  };
+  for (const [niche, keywords] of Object.entries(nicheMap)) {
+    for (const kw of keywords) {
+      if (lower.includes(kw)) return niche;
+    }
+  }
+  return 'outros';
+}
+
+export interface Product {
+  name: string;
+  description: string;
+  qrInfo: string;
+}
+
+/**
+ * Map a niche to the corresponding Nexus product.
+ */
+export function mapProductToNiche(niche: string): Product {
+  switch (niche) {
+    case 'moda':
+      return {
+        name: 'Inova Moda 360 & Vitrini Inovadora',
+        description: 'Desfile virtual de avatares com roupas, visualização 3D em tempo real e integração com site/WhatsApp.',
+        qrInfo: 'QR‑Code leva ao e‑commerce ou WhatsApp da loja.'
+      };
+    case 'eletro':
+    case 'moveis':
+      return {
+        name: 'Vitrini Inovadora',
+        description: 'Tela interativa que exibe produtos, demonstrações de uso e comparação de consumo energético.',
+        qrInfo: 'QR‑Code direciona ao e‑commerce ou WhatsApp.'
+      };
+    case 'agronegocio':
+      return {
+        name: 'Dante Agro',
+        description: 'Agrônomo digital que recomenda insumos, otimiza plantio e calcula ROI agrícola.',
+        qrInfo: 'QR‑Code opcional para portal de apoio ao produtor.'
+      };
+    case 'seguranca':
+      return {
+        name: 'Egide',
+        description: 'Controle máximo de segurança com câmeras, integração municipal e despacho de viaturas.',
+        qrInfo: 'QR‑Code abre app de monitoramento ou contato via WhatsApp.'
+      };
+    default:
+      return {
+        name: 'Consultor Estratégico Nexus',
+        description: 'Análise de necessidades e proposta de solução sob medida.',
+        qrInfo: 'QR‑Code para contato comercial.'
+      };
+  }
+}
+
+/**
+ * Generate a persuasive message for the given product.
+ */
+export function generatePersuasiveMessage(product: Product): string {
+  return `✨ ${product.name}\n${product.description}\n📱 Escaneie o ${product.qrInfo} para conhecer detalhes e fechar a compra instantaneamente!`;
+}
+
+/**
+ * Detect if the user message indicates a hot lead.
+ */
+export function isHotLead(message: string): boolean {
+  const hotKeywords = ['agora', 'imediato', 'quero fechar', 'comprar agora', 'urgente', 'pronto para comprar'];
+  const lower = message.toLowerCase();
+  return hotKeywords.some(k => lower.includes(k));
+}
