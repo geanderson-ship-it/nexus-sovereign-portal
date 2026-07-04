@@ -21,4 +21,5 @@ tsc_final_utf8.txt
 test-*.ts
 *.log
 .DS_Store
-Thumbs.db
+# Large media files
+public/Agro/Dante_safra.mp4

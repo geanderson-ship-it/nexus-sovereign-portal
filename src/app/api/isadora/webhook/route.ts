@@ -201,27 +201,49 @@ async function notifyGeandersonHotLead(
       return;
     }
 
-    // Preparar contexto da conversa (últimas 3 mensagens)
-    const context = lastMessages.slice(-3).map(m => {
+    const nicheProducts: Record<string, string> = {
+      'moda': 'Inova Moda 360 (Provador Virtual 3D)',
+      'moveis': 'Vitrine Inovadora (Sinalização Digital)',
+      'agricultura': 'Dante Safra (Inteligência Agrícola)',
+      'veiculo': 'Inova Revenda (Vitrine + Simulador)',
+      'radio': 'Nexus Estúdio (Locutor Virtual 24h)',
+      'empresa': 'Nexus Empresas (Suite On-Premise)',
+      'saude': 'Nexus Health (IA Diagnóstica)',
+      'energia': 'Nexus Energia / Helios'
+    };
+
+    const produtoSugerido = nicheProducts[nicho.toLowerCase()] || "Consultoria Nexus Geral";
+
+    // Formatar histórico completo das últimas mensagens
+    const conversationSummary = lastMessages.map(m => {
       const role = m.role === 'user' ? '👤 Cliente' : '🤖 Isadora';
       const text = m.content?.[0]?.text || '';
-      return `${role}: ${text.substring(0, 100)}...`;
-    }).join('\n');
+      return `${role}: ${text}`;
+    }).join('\n\n');
+
+    const cleanPhone = phone.replace(/\D/g, "");
+    const waLink = `https://wa.me/${cleanPhone}`;
 
     const notificationMessage = `
-🔥 VENDA QUENTE DETECTADA!
+🔥 *NEXUS HOLDING — ALERTA DE LEAD QUENTE* 🔥
 
-📱 Telefone: ${phone}
-🎯 Nicho: ${nicho}
-📊 Score de interesse: ${purchaseIntention}/10
+Isadora acaba de qualificar um cliente e direcionou para você, Gean!
 
-Últimas mensagens:
-${context}
+📱 *Cliente:* +${cleanPhone}
+🎯 *Nicho do Cliente:* ${nicho.toUpperCase()}
+📦 *Produto Recomendado:* ${produtoSugerido}
+📊 *Intenção de Compra:* ${purchaseIntention}/10
 
-Ação: Cliente está pronto para conversa comercial. Responda no WhatsApp! ✅
+💬 *Histórico da Conversa:*
+${conversationSummary}
+
+🔗 *Iniciar Conversa no WhatsApp:*
+${waLink}
+
+_Ação: Abra o link acima para dar continuidade ao fechamento, apresentar preços, descontos e formalizar a proposta!_ ✅
     `.trim();
 
-    console.log(`[Isadora] 📧 Enviando notificação para Geanderson: ${geandersonPhone}`);
+    console.log(`[Isadora] 📧 Enviando notificação detalhada para Geanderson: ${geandersonPhone}`);
     await sendWhatsApp(geandersonPhone, notificationMessage);
     console.log(`[Isadora] ✅ Notificação enviada com sucesso!`);
   } catch (error) {

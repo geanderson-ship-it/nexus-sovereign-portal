@@ -28,7 +28,7 @@ export default function AgroPage() {
           }}
         />
         {/* FILME ESCURECEDOR SUAVE PARA GARANTIR LEITURA */}
-        <div className="fixed inset-0 z-0 bg-slate-950/85 backdrop-blur-sm pointer-events-none" />
+        <div className="fixed inset-0 z-0 bg-slate-950/40 backdrop-blur-sm pointer-events-none" />
 
         {/* NAVEGAÇÃO SUPERIOR (Secundária) */}
         <nav className="absolute top-20 left-0 w-full z-40 p-6 px-6 md:px-12 flex justify-between items-center pointer-events-none">
@@ -73,6 +73,61 @@ export default function AgroPage() {
               Inteligência Artificial de Precisão e Telemetria Neural. Da semente à exportação, mantenha a sua terra e as suas safras sob controle absoluto.
             </motion.p>
           </section>
+
+          {/* VIDEO SHOWCASE */}
+          <motion.section 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="flex flex-col items-center max-w-4xl mx-auto w-full"
+          >
+            <div className="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.15)] bg-slate-950">
+              <video 
+                src="/Agro/Dante_safra1.mp4" 
+                controls 
+                autoPlay 
+                muted 
+                loop 
+                playsInline 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-emerald-500/30 rounded-full">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">Demonstração Tática</span>
+              </div>
+            </div>
+
+            {/* LINK PARA VÍDEO VERTICAL */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="group flex items-center gap-3 px-6 py-3 rounded-full border border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/20 text-emerald-400 hover:text-white transition-all shadow-[0_0_15px_rgba(16,185,129,0.05)] hover:scale-105 cursor-pointer">
+                  <Sparkles className="h-4 w-4 text-emerald-400 animate-pulse" />
+                  <span className="text-xs font-black uppercase tracking-widest">Conheça melhor o Dante Safra</span>
+                </button>
+              </DialogTrigger>
+              <DialogContent className="bg-slate-950 border border-emerald-900/50 text-white max-w-sm p-4 flex flex-col items-center justify-center rounded-3xl">
+                <DialogHeader className="w-full text-center mb-2">
+                  <DialogTitle className="text-lg font-black uppercase tracking-tight text-emerald-400">
+                    Apresentação Dante Safra
+                  </DialogTitle>
+                </DialogHeader>
+                {/* CONTAINER COM ASPECT-RATIO VERTICAL 9:16 */}
+                <div className="relative w-full max-w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-emerald-500/30 bg-black shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                  <video 
+                    src="/Agro/Dante_safra.mp4" 
+                    controls 
+                    autoPlay 
+                    playsInline 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <p className="text-[10px] text-slate-500 mt-3 text-center uppercase tracking-widest font-bold">Vídeo vertical completo</p>
+              </DialogContent>
+            </Dialog>
+          </motion.section>
 
           {/* MATRIZ DE FORÇA (O Músculo do Dante) */}
           <section className="flex flex-col gap-12">
@@ -148,9 +203,9 @@ export default function AgroPage() {
 
                 <div className="flex flex-col relative z-10 w-full md:w-5/12 gap-6 bg-slate-950/50 p-8 rounded-3xl border border-emerald-900/50">
                   <div>
-                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Licença Anual</p>
-                    <h4 className="text-5xl font-black text-white tracking-tighter">R$ 999,00</h4>
-                    <p className="text-xs text-slate-500 mt-2 font-medium">Pagamento instantâneo via PIX. Setup Imediato.</p>
+                    <p className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Licença Agro</p>
+                    <h4 className="text-5xl font-black text-white tracking-tighter">Sob Consulta</h4>
+                    <p className="text-xs text-slate-500 mt-2 font-medium">Implementação customizada para sua lavoura.</p>
                   </div>
                   <div className="flex flex-col gap-3">
                     <Dialog>
@@ -221,12 +276,12 @@ export default function AgroPage() {
                       </DialogContent>
                     </Dialog>
 
-                    <Button 
-                      onClick={() => setIsPaymentModalOpen(true)}
-                      className="w-full h-14 bg-emerald-500 hover:bg-emerald-400 text-black font-black uppercase tracking-widest text-xs transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] rounded-xl"
-                    >
-                      Ativar Terminal Agro via PIX
-                    </Button>
+                    <Link href="https://wa.me/5551999799582?text=%5BDANTE%20SAFRA%20-%20AGRICULTOR%5D%20Ol%C3%A1.%20Tenho%20interesse%20em%20ativar%20o%20Dante%20Safra%20para%20minha%20propriedade." target="_blank" className="w-full block">
+                      <div className="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-center transition-all flex items-center justify-center gap-3">
+                        <span className="font-black uppercase tracking-[0.2em] text-xs">Falar com Especialista</span>
+                        <ChevronRight className="h-4 w-4 text-black" />
+                      </div>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
@@ -331,18 +386,6 @@ export default function AgroPage() {
 
         </main>
       </div>
-
-      {/* MODAL PIX PARA AGRICULTOR */}
-      <IAPaymentModal
-        isOpen={isPaymentModalOpen}
-        onClose={() => setIsPaymentModalOpen(false)}
-        iaName="Dante Safra Agro - Agricultor"
-        pixKey="+5551999799582"
-        annualPrice="R$ 999,00"
-        isSinglePrice={true}
-        singlePriceLabel="Licença Anual"
-        onSuccess={() => setIsPaymentModalOpen(false)}
-      />
     </SovereignShowcase>
   );
 }
