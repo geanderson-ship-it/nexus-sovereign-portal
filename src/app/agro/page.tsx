@@ -117,7 +117,7 @@ export default function AgroPage() {
                 {/* CONTAINER COM ASPECT-RATIO VERTICAL 9:16 */}
                 <div className="relative w-full max-w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-emerald-500/30 bg-black shadow-[0_0_30px_rgba(16,185,129,0.2)]">
                   <video 
-                    src="/Agro/Dante_safra.mp4" 
+                    src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Agro/Dante_safra.mp4" 
                     controls 
                     autoPlay 
                     playsInline 
