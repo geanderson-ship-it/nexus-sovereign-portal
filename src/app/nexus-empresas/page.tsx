@@ -239,8 +239,8 @@ export default function NexusEmpresasPage() {
           <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20 px-6 py-1.5 tracking-[0.3em] font-mono text-[10px] mb-8">B2B_INTELLIGENCE_SUITE</Badge>
           <div className="w-full flex flex-col items-center text-center gap-6 mt-12 mb-6 max-w-4xl px-4 mx-auto">
             {/* LOGO VIDEO DJENY */}
-            <div className="relative w-full max-w-[800px] aspect-video flex items-center justify-center">
-              <div className="w-full h-full rounded-[40px] overflow-hidden flex items-center justify-center border border-blue-500/20 bg-blue-500/5 shadow-[0_0_80px_rgba(0,212,255,0.15)]">
+            <div className="relative w-full max-w-[800px] flex flex-col items-center gap-6">
+              <div className="w-full aspect-video rounded-[40px] overflow-hidden border border-blue-500/20 bg-blue-500/5 shadow-[0_0_80px_rgba(0,212,255,0.15)]">
                 <video
                   src="/Nexus Empresas/Nexus_empresas.mp4"
                   controls
@@ -251,6 +251,33 @@ export default function NexusEmpresasPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
+
+              {/* BOTAO PARA ENTRAR NO POPUP VIDEO B2B */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button className="group flex items-center gap-3 px-6 py-3 rounded-full border border-[#00D4FF]/30 bg-[#00D4FF]/5 hover:bg-[#00D4FF]/20 text-[#00D4FF] hover:text-white transition-all shadow-[0_0_15px_rgba(0,212,255,0.05)] hover:scale-105 cursor-pointer">
+                    <Sparkles className="h-4 w-4 text-[#00D4FF] animate-pulse" />
+                    <span className="text-xs font-black uppercase tracking-widest">Quer conhecer toda a Nexus B2B? Assista a Apresentação</span>
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="bg-slate-950 border border-blue-900/50 text-white max-w-4xl p-4 flex flex-col items-center justify-center rounded-3xl">
+                  <DialogHeader className="w-full text-center mb-2">
+                    <DialogTitle className="text-lg font-black uppercase tracking-tight text-[#00D4FF]">
+                      Apresentação Completa Nexus B2B
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-blue-500/30 bg-black shadow-[0_0_30px_rgba(0,212,255,0.2)]">
+                    <video 
+                      src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Nexus_Empresas/Nexus_B2B.mp4" 
+                      controls 
+                      autoPlay 
+                      playsInline 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <p className="text-[10px] text-slate-500 mt-3 text-center uppercase tracking-widest font-bold">Apresentação Institucional Completa</p>
+                </DialogContent>
+              </Dialog>
             </div>
 
             {/* NOME DA EMPRESA */}
@@ -275,30 +302,6 @@ export default function NexusEmpresasPage() {
           </div>
         </motion.div>
       </div>
-
-      {/* SEÇÃO CONHEÇA A NEXUS B2B */}
-      <section className="relative z-10 container mx-auto px-4 py-16 flex flex-col items-center gap-8">
-        <div className="text-center space-y-4 max-w-2xl">
-          <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-4 py-1 tracking-[0.2em] font-mono text-[10px]">
-            APRESENTAÇÃO EXCLUSIVA
-          </Badge>
-          <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white">
-            Conheça a <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-[#00D4FF]">Nexus B2B</span>
-          </h2>
-          <p className="text-slate-400">
-            Assista à nossa apresentação completa e entenda como as soluções táticas da Nexus revolucionam o mercado corporativo.
-          </p>
-        </div>
-
-        <div className="relative w-full max-w-4xl aspect-video rounded-[32px] overflow-hidden border-2 border-emerald-500/20 shadow-[0_0_50px_rgba(0,212,255,0.1)] bg-slate-950">
-          <video 
-            src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Nexus_Empresas/Nexus_B2B.mp4" 
-            controls 
-            playsInline 
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </section>
 
       {/* MÓDULOS — GRID COMPACTO */}
       <section id="modulos" className="relative z-10 container mx-auto px-4 py-24">
