@@ -200,12 +200,7 @@ export function SiteHeader() {
                             <span>{t('navGabinete')}</span>
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-blue-500/10 text-blue-400 font-bold">
-                          <Link href="/atena" className="flex items-center w-full">
-                            <Sparkles className="mr-2 h-4 w-4" />
-                            <span>Atena (IA Exclusiva)</span>
-                          </Link>
-                        </DropdownMenuItem>
+
                         
                         <DropdownMenuSeparator className="bg-border/50" />
                         <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500/70">Área Comercial</div>
@@ -483,9 +478,7 @@ export function SiteHeader() {
                                     <Button variant="ghost" className="w-full justify-start text-primary font-medium hover:bg-primary/10" asChild onClick={() => setMobileMenuOpen(false)}>
                                       <Link href="/gabinete"><Shield className="mr-2 h-4 w-4" /> {t('navGabinete')}</Link>
                                     </Button>
-                                    <Button variant="ghost" className="w-full justify-start text-blue-400 font-bold hover:bg-blue-500/10" asChild onClick={() => setMobileMenuOpen(false)}>
-                                      <Link href="/atena"><Sparkles className="mr-2 h-4 w-4" /> Atena (IA Exclusiva)</Link>
-                                    </Button>
+
                                   </div>
                                 </details>
 
