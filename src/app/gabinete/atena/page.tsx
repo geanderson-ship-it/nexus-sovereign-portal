@@ -141,6 +141,7 @@ export default function AtenaTerminalPage() {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const stopAudio = () => {
     if (currentAudioRef.current) {
@@ -262,10 +263,23 @@ export default function AtenaTerminalPage() {
     e?.preventDefault();
     if (!input.trim() || isLoading) return;
 
-
+    // Desliga o microfone se estiver ouvindo
+    if (isListening && recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (err) {
+        console.error("Erro ao parar gravação:", err);
+      }
+      setIsListening(false);
+    }
 
     const userMessage = input.trim();
     setInput('');
+
+    // Foca o campo de digitação novamente de imediato
+    setTimeout(() => {
+      textareaRef.current?.focus();
+    }, 50);
     
     // Envia imagem anexada ou captura a cǽmera
     let imageBase64 = selectedImage || undefined;
@@ -710,6 +724,7 @@ export default function AtenaTerminalPage() {
               )}
               
               <textarea
+                ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
