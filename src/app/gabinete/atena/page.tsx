@@ -341,7 +341,7 @@ export default function AtenaTerminalPage() {
     // Regex para encontrar blocos ```html ... ``` suportando corte no final (EOF)
     const htmlMatch = content.match(/```(?:html|xml)\n([\s\S]*?)(?:```|$)/);
 
-    // Função para transformar links Markdown [texto](url) em âncoras HTML
+    // Função para transformar links Markdown [texto](url) em âncoras HTML, além de formatar **negrito** e *itálico*
     const renderMarkdownLinks = (text: string) => {
       const parts = text.split(/(\[.*?\]\(.*?\))/g);
       return parts.map((part, i) => {
@@ -353,7 +353,22 @@ export default function AtenaTerminalPage() {
             </a>
           );
         }
-        return <span key={i}>{part}</span>;
+        
+        // Formatar negritos (**) e itálicos (*)
+        const subParts = part.split(/(\*\*.*?\*\*|\*.*?\*)/g);
+        return (
+          <span key={i}>
+            {subParts.map((subPart, j) => {
+              if (subPart.startsWith('**') && subPart.endsWith('**')) {
+                return <strong key={j} className="font-extrabold text-white">{subPart.slice(2, -2)}</strong>;
+              }
+              if (subPart.startsWith('*') && subPart.endsWith('*')) {
+                return <em key={j} className="italic text-slate-300">{subPart.slice(1, -1)}</em>;
+              }
+              return subPart;
+            })}
+          </span>
+        );
       });
     };
     
@@ -405,7 +420,7 @@ export default function AtenaTerminalPage() {
   }
 
   return (
-    <div className="h-[100dvh] bg-[#020202] text-slate-200 overflow-hidden font-mono relative flex flex-col">
+    <div className="h-[100dvh] bg-[#020202] text-slate-200 overflow-hidden font-sans relative flex flex-col" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
       
       {/* HEADER DISCRETO */}
       <div className="relative md:absolute top-0 left-0 w-full p-3 md:p-6 flex items-center justify-between z-50 bg-[#0a0a0a] md:bg-transparent border-b border-indigo-900/30 md:border-none pointer-events-auto">
