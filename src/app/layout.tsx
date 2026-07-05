@@ -113,13 +113,163 @@ export default function RootLayout({
         {`
           {
             "@context": "https://schema.org",
-            "@type": "EducationalOrganization",
-            "name": "Nexus Inteligência",
-            "url": "https://nexustreinamento.com",
-            "logo": "https://nexustreinamento.com/nexus-hero-hologram.png",
-            "description": "Plataforma avançada de cursos online, mentoria de IA e inteligência estratégica para acelerar sua carreira e negócios.",
-            "brand": "Nexus",
-            "keywords": "IA, Inteligência Artificial, Mentoria, Gestão, Liderança"
+            "@graph": [
+              {
+                "@type": "EducationalOrganization",
+                "@id": "https://nexustreinamento.com/#organization",
+                "name": "Nexus Inteligência",
+                "url": "https://nexustreinamento.com",
+                "logo": "https://nexustreinamento.com/nexus-hero-hologram.png",
+                "description": "Plataforma avançada de cursos online, mentoria de IA e inteligência estratégica para acelerar sua carreira e negócios.",
+                "brand": "Nexus",
+                "sameAs": [
+                  "https://nexus.aws"
+                ]
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/dante-safra",
+                "name": "Dante Safra",
+                "alternateName": ["Dante Agro", "Inteligência Artificial Agrícola Nexus", "Agrônomo Virtual"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "Terminal tático de inteligência artificial para o agronegócio. Diagnóstico de pragas por visão computacional, sincronia climática e funcionamento offline completo.",
+                "keywords": "agronegócio, agricultura, criação, campo, cultura, cultivo, agronomo, IA, Inteligência artificial, fazenda, lavoura, pragas, safra, terra, gado, veterinário, telemetria, soja, milho, colheita, manejo",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/inova-moda",
+                "name": "Inova Moda 360",
+                "alternateName": ["Provador Virtual 3D", "Inova Moda", "Fitting Room IA"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "Provador virtual 3D avançado movido por IA Soberana. Mapeia biometria corporal via mesh 3D de vídeo para recomendações exatas de tamanho e caimento.",
+                "keywords": "provador, provar roupas, provação de roupas, provador virtual, provador 3D, IA, Inteligência artificial, moda, e-commerce, inova, inovar, inovação, inovadora, caimento 3D, biometria, tamanho de roupa",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/vitrine-inovadora",
+                "name": "Vitrine Inovadora",
+                "alternateName": ["Vitrine Inteligente", "Vitrine Phygital"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "Sinalização digital interativa inteligente de alto padrão que conecta vitrines físicas a canais automáticos de atendimento via WhatsApp.",
+                "keywords": "vitrine, vitrine inovadora, inova, inovar, inovação, inovadora, WhatsApp, comércio, varejo, loja física, sinalização digital, IA, Inteligência artificial",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/inova-revenda",
+                "name": "Inova Revenda",
+                "alternateName": ["Vitrine Veicular Inteligente", "Concessionária Digital"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "Concessionária e vitrine digital de veículos inteligente com simulador de parcelas e análise de score de crédito em tempo real.",
+                "keywords": "inova, inovar, inovação, inovadora, carros, concessionária, simulador de crédito, financiamento, veículos, score de crédito, IA, Inteligência artificial",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/nexus-estudio",
+                "name": "Nexus Estúdio",
+                "alternateName": ["Locutor Virtual", "Rádio IA"],
+                "operatingSystem": "All",
+                "applicationCategory": "MultimediaApplication",
+                "description": "Sistema inteligente de automação de rádio e áudio com locutor virtual baseado em vozes neurais profissionais de alta definição.",
+                "keywords": "áudio, rádio, locutor virtual, vozes neurais, inteligência artificial, automação de áudio, estúdio, podcast, sintetizador de voz",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/nexus-empresas",
+                "name": "Nexus Empresas",
+                "alternateName": ["Suíte Empresarial Nexus", "ERP IA On-Premise"],
+                "operatingSystem": "Linux/Docker/Windows",
+                "applicationCategory": "BusinessApplication",
+                "description": "Suíte empresarial com 11 módulos de IA On-Premise para otimização de vendas, compras, PPCP, auditoria, cronoanálise, almoxarifado, expedição e RH.",
+                "keywords": "empresas, ERP, vendas, compras, PPCP, auditoria, cronoanálise, almoxarifado, expedição, RH, inteligência artificial, gestão empresarial",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/maga-dot",
+                "name": "Maga Dot",
+                "alternateName": ["Atena IA", "Maga.Dot", "IA de Diretoria", "Consciência Operacional"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "IA com consciência operacional de elite, treinada com DNA corporativo sob demanda, atuando como conselheira executiva em Cloud privada ou On-Premise.",
+                "keywords": "Atena, Maga Dot, diretoria, decisão executiva, IA de conselho, inteligência artificial corporativa, negócios, tomada de decisão, cloud privada",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/orion",
+                "name": "Orion",
+                "alternateName": ["Nexus Orion", "Orion OS", "Simulador Big Data"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "Arquiteto matemático e simulador de cenários Big Data para tomadas de decisões baseadas em dados e probabilidades limpas de viés emocional.",
+                "keywords": "Orion, Big Data, simulador matemático, probabilidades, tomada de decisão, análise de dados, estatística, IA, Inteligência artificial",
+                "publisher": {
+                  "@id": "https://nexus.aws/orion"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/pactum",
+                "name": "Nexus Pactum",
+                "alternateName": ["Pactum Negociações", "Auditor de Contratos IA"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "Ferramenta tática de negociação empresarial. Realiza auditoria rápida de contratos e analisa microexpressões em reuniões em tempo real.",
+                "keywords": "Pactum, negociação, contratos, auditoria contratual, microexpressões, reuniões, inteligência artificial, mediação",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/egide",
+                "name": "Nexus Égide",
+                "alternateName": ["Égide Segurança", "Blindagem Predial Inteligente"],
+                "operatingSystem": "All",
+                "applicationCategory": "SecurityApplication",
+                "description": "Cerco tático e blindagem patrimonial com IA preditiva de segurança, leitura de placas e monitoramento tático de complexos industriais.",
+                "keywords": "Égide, segurança patrimonial, monitoramento, câmeras, leitura de placas, LPR, inteligência artificial, blindagem",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/nexus-health",
+                "name": "Nexus Health",
+                "alternateName": ["Diagnóstico Médico IA", "Nexus Saúde"],
+                "operatingSystem": "All",
+                "applicationCategory": "MedicalApplication",
+                "description": "IA diagnóstica por imagem médica com 94.7% de acurácia em exames de tomografia, mamografia, raio-x e ressonância magnética.",
+                "keywords": "saúde, exame, precoce, antecipar resultados, diagnóstico, diagnóstico médico, imagem médica, tomografia, ressonância, mamografia, raio-x, IA, Inteligência artificial",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              }
+            ]
           }
         `}
       </Script>
