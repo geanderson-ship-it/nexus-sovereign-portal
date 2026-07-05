@@ -23,3 +23,5 @@ test-*.ts
 .DS_Store
 # Large media files
 public/Agro/Dante_safra.mp4
+public/Nexus Empresas/Nexus_B2B.mp4
+
