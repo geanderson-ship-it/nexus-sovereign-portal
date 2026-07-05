@@ -709,13 +709,20 @@ export default function AtenaTerminalPage() {
               </button>
             )}
             
-            <input
-              type="text"
+            <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  // Dispara o envio simulando o formulário
+                  handleSendMessage();
+                }
+              }}
               disabled={isLoading}
+              rows={1}
               placeholder="Digite sua ordem para a Atena..."
-              className="flex-1 bg-transparent border-none px-2 py-2 text-indigo-100 placeholder-indigo-300/50 focus:outline-none focus:ring-0 text-sm tracking-wide font-medium"
+              className="flex-1 bg-transparent border-none px-2 py-2 text-indigo-100 placeholder-indigo-300/50 focus:outline-none focus:ring-0 text-sm tracking-wide font-medium resize-none max-h-24 min-h-[38px] overflow-y-auto scrollbar-none"
               autoFocus
             />
             
