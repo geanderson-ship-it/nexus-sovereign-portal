@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Terminal, Shield, ShieldAlert, Cpu, Network, MonitorPlay, ChevronLeft, Mic, Video, VideoOff, Paperclip, X, Send, Play, Pause, Square, Volume2, Globe, VolumeX, Activity } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { eventEmitter } from '@/auth/event-emitter';
 import { MiniYouTubePlayer } from '@/components/mini-youtube-player';
 
