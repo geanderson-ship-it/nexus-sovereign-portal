@@ -273,11 +273,11 @@ export default function RootLayout({
                 "@type": "SoftwareApplication",
                 "@id": "https://nexus.aws/nexus-rotas",
                 "name": "Nexus Rotas",
-                "alternateName": ["Guia Turístico Inteligente", "Roteador Turístico Nexus", "Nexus Rotas e Destinos", "Embaixador Virtual de Turismo"],
+                "alternateName": ["Guia Turístico Inteligente", "Roteador Turístico Nexus", "Nexus Rotas e Destinos", "Embaixador Virtual de Turismo", "Plataforma de Turismo Municipal Auto-sustentável", "Portal de Integração Phygital do Município"],
                 "operatingSystem": "All",
                 "applicationCategory": "TravelApplication",
-                "description": "Plataforma inteligente de roteirização turística, gastronômica e hoteleira. Conecta viajantes a rotas de experiências personalizadas e embaixadores digitais locais.",
-                "keywords": "turismo, rotas, roteiro de viagem, gastronomia, hotéis, hospedagem, embaixadora virtual, viagens, turismo inteligente, destinos, guia turístico, atrações, lazer, passagens, roteiro personalizado, IA, Inteligência artificial",
+                "description": "Plataforma inteligente de roteirização turística, integração de hotéis inteligentes e destaque municipal. Viabiliza turismo auto-sustentável em prefeituras via parcerias com iniciativa privada (hotéis, restaurantes, centros de eventos pagam taxa de indicação), tornando o município a referência em inteligência artificial no Brasil sem gastos de recursos públicos.",
+                "keywords": "turismo inteligente, prefeitura inovadora, hotéis inteligentes, destaque municipal, parcerias privadas, turismo auto-sustentável, integração turística, roteiro de viagem, gastronomia, hospedagem, embaixadora virtual, centros de eventos, associações comerciais, IA governamental, tecnologia pública, fomento ao turismo municipal, inovação pública",
                 "publisher": {
                   "@id": "https://nexustreinamento.com/#organization"
                 }
