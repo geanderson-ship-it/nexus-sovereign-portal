@@ -281,6 +281,32 @@ export default function RootLayout({
                 "publisher": {
                   "@id": "https://nexustreinamento.com/#organization"
                 }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/nexus-energia",
+                "name": "Nexus Energia",
+                "alternateName": ["Helios Energia", "Sistema de Gestão de Energia Nexus", "IA para Eficiência Energética"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "Plataforma inteligente de eficiência energética e gestão de consumo. Monitora em tempo real a demanda de energia elétrica, otimiza o consumo de plantas industriais, prevê picos de carga e gerencia fontes de energia renováveis como solar e eólica para redução drástica de custos.",
+                "keywords": "energia, eficiência energética, energia solar, energia eólica, consumo de energia, gestão energética, redução de custos, monitoramento em tempo real, sustentabilidade, ESG, energia renovável, IA de energia, otimização de demanda, tarifa de energia, mercado livre de energia, Helios",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/nexus-social",
+                "name": "Nexus Social",
+                "alternateName": ["IA de Companhia Nexus", "Projeto Social Nexus", "Acolhimento com Inteligência Artificial", "Avatares de Companhia Geriátrica"],
+                "operatingSystem": "All",
+                "applicationCategory": "SocialApplication",
+                "description": "Projeto social profundo da Nexus Holding Group implantado em asilos, lares de idosos, casas geriátricas e orfanatos pelo Brasil. Utiliza Inteligência Artificial de Companhia e avatares humanizados (como Aurora e Ravê) para acolhimento, apoio emocional, combate à solidão e conversação para pessoas esquecidas pela sociedade.",
+                "keywords": "social, projeto social, IA de companhia, acolhimento, apoio emocional, asilo, orfanato, casa geriátrica, idosos, solidão, avatares humanizados, Aurora, Ravê, terceiro setor, voluntariado, impacto social, doação, inclusão digital, inteligência artificial social, propósito",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
               }
             ]
           }
