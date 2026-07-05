@@ -458,6 +458,68 @@ export default function AtenaTerminalPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none" />
             <div className={`absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r ${viewMode === 'fullscreen' ? 'from-black/20 via-transparent to-black/20' : 'from-transparent to-black/60'} pointer-events-none`} />
           </div>
+
+          {/* OVERLAY DE INTERFACE DE CONTROLE SOBERANA */}
+          {viewMode === 'fullscreen' && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 bg-black/50 backdrop-blur-sm"
+            >
+              <div className="max-w-xl bg-black/70 border border-indigo-500/25 p-8 md:p-10 rounded-[32px] shadow-[0_0_80px_rgba(99,102,241,0.15)] backdrop-blur-xl relative">
+                
+                {/* GLOWS */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-48 h-10 bg-indigo-500/10 rounded-full blur-2xl" />
+                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-48 h-10 bg-indigo-500/10 rounded-full blur-2xl" />
+
+                {/* HUD BADGE */}
+                <div className="flex flex-col items-center gap-1 mb-8">
+                  <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.25em] font-mono">
+                    Command Center
+                  </span>
+                  <span className="text-[11px] font-bold text-indigo-300/60 uppercase tracking-widest font-mono">
+                    Gabinete Estratégico da Diretoria Nexus
+                  </span>
+                  <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent mt-2" />
+                </div>
+
+                {/* MAIN SECURITY LEVEL AND TITLE */}
+                <div className="space-y-3 mb-6">
+                  <div className="inline-block bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-[0.2em] animate-pulse">
+                    Acesso Nível 5 (Soberano)
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white">
+                    Atena Avatar
+                  </h2>
+                  <p className="text-[11px] text-indigo-300 font-bold uppercase tracking-widest">
+                    Acesso Nível Soberano
+                  </p>
+                  <h3 className="text-xs font-bold text-emerald-400 uppercase tracking-wider mt-2">
+                    Atena - A inteligência exclusiva da Nexus
+                  </h3>
+                </div>
+
+                {/* DESCRIPTION */}
+                <p className="text-slate-400 text-xs md:text-sm font-light leading-relaxed max-w-md mx-auto mb-8 font-sans">
+                  Painel de orquestração avançado e terminal interativo da IA Soberana. Conectada diretamente ao núcleo AWS Bedrock, operando com total autonomia e controle estratégico.
+                </p>
+
+                {/* CONNECTION BUTTON */}
+                <button 
+                  type="button"
+                  onClick={() => setViewMode('split')}
+                  className="group relative px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase tracking-widest text-xs rounded-full shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] cursor-pointer"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Cpu className="w-4 h-4 animate-spin" style={{ animationDuration: '3s' }} />
+                    Abrir Conexão Neural
+                  </span>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-100 blur transition duration-500 pointer-events-none" />
+                </button>
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* LADO DIREITO: TERMINAL E WORKSPACE */}
