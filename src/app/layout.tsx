@@ -51,6 +51,9 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
     title: 'Atena',
   },
+  verification: {
+    google: 'y_PGsP4GwsiDp4dNSw10FuThEOeZ_PZCheEl-CNqDaU',
+  },
   alternates: {
     canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     languages: {
