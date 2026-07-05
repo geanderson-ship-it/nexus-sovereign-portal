@@ -2,7 +2,7 @@
   "name": "Atena Nexus",
   "short_name": "Atena",
   "description": "Auxiliar Executiva Exclusiva da Nexus",
-  "start_url": "/atena",
+  "start_url": "/gabinete/atena",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#020617",
