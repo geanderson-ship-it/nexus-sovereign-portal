@@ -61,8 +61,8 @@ export function SiteHeader() {
     try {
       await signOut();
       toast({
-        title: t('common.advanceOrder') || 'Ordem de AvanÃ§o.',
-        description: t('common.logoutSuccess') || 'MissÃ£o cumprida. Desconectado com sucesso.',
+        title: t('common.advanceOrder') || 'Ordem de Avanço.',
+        description: t('common.logoutSuccess') || 'Missão cumprida. Desconectado com sucesso.',
       });
       if (mobileMenuOpen) setMobileMenuOpen(false);
       router.push('/');
@@ -288,14 +288,14 @@ export function SiteHeader() {
                       <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-2 py-1 mb-2 border-b border-border/50">Ecossistema Corporativo</div>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-blue-500/10 mb-1 p-3 rounded-lg focus:bg-blue-500/20">
                         <Link href="/intelligence" className="flex flex-col">
-                          <span className="font-black text-blue-400 uppercase tracking-wider text-sm">VisÃ£o Geral Intelligence</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">O coraÃ§Ã£o da inteligÃªncia Nexus</span>
+                          <span className="font-black text-blue-400 uppercase tracking-wider text-sm">Visão Geral Intelligence</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">O coração da inteligência Nexus</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-cyan-500/10 mb-1 p-3 rounded-lg focus:bg-cyan-500/20">
                         <Link href="/nexus-empresas" className="flex flex-col">
                           <span className="font-black text-cyan-400 uppercase tracking-wider text-sm">Nexus Empresas</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">AutomaÃ§Ã£o para a indÃºstria (B2B)</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">Automação para a indústria (B2B)</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 mb-1 p-3 rounded-lg focus:bg-emerald-500/20">
@@ -307,7 +307,7 @@ export function SiteHeader() {
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-pink-500/10 mb-1 p-3 rounded-lg focus:bg-pink-500/20">
                         <Link href="/inova-revenda" className="flex flex-col">
                           <span className="font-black text-pink-500 uppercase tracking-wider text-sm">Inova Revenda</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">ConcessionÃ¡rias guiadas por IA</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">Concessionárias guiadas por IA</span>
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-purple-500/10 mb-1 p-3 rounded-lg focus:bg-purple-500/20">
@@ -325,7 +325,7 @@ export function SiteHeader() {
                       <DropdownMenuItem asChild className="cursor-pointer hover:bg-amber-500/10 p-3 rounded-lg focus:bg-amber-500/20">
                         <Link href="/energia" className="flex flex-col">
                           <span className="font-black text-amber-500 uppercase tracking-wider text-sm">Nexus Energia</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">IA e OtimizaÃ§Ã£o para o setor elÃ©trico</span>
+                          <span className="text-[10px] text-muted-foreground mt-0.5">IA e Otimização para o setor elétrico</span>
                         </Link>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
