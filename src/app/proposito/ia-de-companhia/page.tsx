@@ -72,10 +72,10 @@ export default function IADeCompanhiaPage() {
             
             {/* AVATAR: AURORA */}
             <div className="bg-[#0b101a] border border-slate-800 rounded-3xl p-6 md:p-8 hover:border-rose-500/30 transition-all group">
-              <div className="relative aspect-square w-full rounded-2xl overflow-hidden mb-8 border border-slate-700 group-hover:border-rose-500/50 transition-colors shadow-2xl">
+               <div className="relative aspect-square w-full rounded-2xl overflow-hidden mb-8 border border-slate-700 group-hover:border-rose-500/50 transition-colors shadow-2xl">
                 <video
                   ref={auroraVideoRef}
-                  src="/Social/Aurora_-_Estudante_de_psicologia..mp4"
+                  src="/Social/aurora_social.mp4"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
                   poster="/avatares/maria-jovem.png"
                   onClick={toggleAurora}
@@ -119,7 +119,7 @@ export default function IADeCompanhiaPage() {
               <div className="relative aspect-square w-full rounded-2xl overflow-hidden mb-8 border border-slate-700 group-hover:border-blue-500/50 transition-colors shadow-2xl">
                 <video
                   ref={raviVideoRef}
-                  src="/Social/Raví_-_Estudante_de_psicologia..mp4"
+                  src="/Social/ravi_social.mp4"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
                   poster="/avatares/ravi.png"
                   onClick={toggleRavi}
