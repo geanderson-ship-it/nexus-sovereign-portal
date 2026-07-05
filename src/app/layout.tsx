@@ -169,11 +169,11 @@ export default function RootLayout({
                 "@type": "SoftwareApplication",
                 "@id": "https://nexus.aws/inova-revenda",
                 "name": "Inova Revenda",
-                "alternateName": ["Vitrine Veicular Inteligente", "Concessionária Digital"],
+                "alternateName": ["Plataforma Automotiva Inteligente", "Inova Veículos", "Concessionária de Carros IA", "Simulador Automotivo Nexus"],
                 "operatingSystem": "All",
                 "applicationCategory": "BusinessApplication",
                 "description": "Concessionária e vitrine digital de veículos inteligente com simulador de parcelas e análise de score de crédito em tempo real.",
-                "keywords": "inova, inovar, inovação, inovadora, carros, concessionária, simulador de crédito, financiamento, veículos, score de crédito, IA, Inteligência artificial",
+                "keywords": "inova, inovar, inovação, inovadora, carros, concessionária, simulador de crédito, financiamento, veículos, score de crédito, IA, Inteligência artificial, carros seminovos, aprovação de crédito, venda de veículos, taxas de juros, parcelamento de veículos",
                 "publisher": {
                   "@id": "https://nexustreinamento.com/#organization"
                 }
@@ -182,11 +182,11 @@ export default function RootLayout({
                 "@type": "SoftwareApplication",
                 "@id": "https://nexus.aws/nexus-estudio",
                 "name": "Nexus Estúdio",
-                "alternateName": ["Locutor Virtual", "Rádio IA"],
+                "alternateName": ["Locutor Virtual Neuronal", "Rádio Inteligente", "Nexus Voice Studio", "Sintetizador de Voz Profissional"],
                 "operatingSystem": "All",
                 "applicationCategory": "MultimediaApplication",
                 "description": "Sistema inteligente de automação de rádio e áudio com locutor virtual baseado em vozes neurais profissionais de alta definição.",
-                "keywords": "áudio, rádio, locutor virtual, vozes neurais, inteligência artificial, automação de áudio, estúdio, podcast, sintetizador de voz",
+                "keywords": "áudio, rádio, locutor virtual, vozes neurais, inteligência artificial, automação de áudio, estúdio, podcast, sintetizador de voz, rádio corporativa, vinhetas automáticas, locução natural, voz de IA, TTS, text to speech, gerador de voz humana",
                 "publisher": {
                   "@id": "https://nexustreinamento.com/#organization"
                 }
@@ -195,11 +195,11 @@ export default function RootLayout({
                 "@type": "SoftwareApplication",
                 "@id": "https://nexus.aws/nexus-empresas",
                 "name": "Nexus Empresas",
-                "alternateName": ["Suíte Empresarial Nexus", "ERP IA On-Premise"],
+                "alternateName": ["ERP IA Nexus", "Suíte Corporativa de Inteligência Artificial", "Nexus ERP Inteligente", "Gestão Empresarial On-Premise"],
                 "operatingSystem": "Linux/Docker/Windows",
                 "applicationCategory": "BusinessApplication",
                 "description": "Suíte empresarial com 11 módulos de IA On-Premise para otimização de vendas, compras, PPCP, auditoria, cronoanálise, almoxarifado, expedição e RH.",
-                "keywords": "empresas, ERP, vendas, compras, PPCP, auditoria, cronoanálise, almoxarifado, expedição, RH, inteligência artificial, gestão empresarial",
+                "keywords": "empresas, ERP, vendas, compras, PPCP, auditoria, cronoanálise, almoxarifado, expedição, RH, inteligência artificial, gestão empresarial, fábrica, indústria, manufatura, otimização de estoque, controle de produção, produtividade, eficiência operacional, automação industrial",
                 "publisher": {
                   "@id": "https://nexustreinamento.com/#organization"
                 }
@@ -265,6 +265,19 @@ export default function RootLayout({
                 "applicationCategory": "MedicalApplication",
                 "description": "IA diagnóstica por imagem médica com 94.7% de acurácia em exames de tomografia, mamografia, raio-x e ressonância magnética.",
                 "keywords": "saúde, exame, precoce, antecipar resultados, diagnóstico, diagnóstico médico, imagem médica, tomografia, ressonância, mamografia, raio-x, IA, Inteligência artificial",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/nexus-rotas",
+                "name": "Nexus Rotas",
+                "alternateName": ["Guia Turístico Inteligente", "Roteador Turístico Nexus", "Nexus Rotas e Destinos", "Embaixador Virtual de Turismo"],
+                "operatingSystem": "All",
+                "applicationCategory": "TravelApplication",
+                "description": "Plataforma inteligente de roteirização turística, gastronômica e hoteleira. Conecta viajantes a rotas de experiências personalizadas e embaixadores digitais locais.",
+                "keywords": "turismo, rotas, roteiro de viagem, gastronomia, hotéis, hospedagem, embaixadora virtual, viagens, turismo inteligente, destinos, guia turístico, atrações, lazer, passagens, roteiro personalizado, IA, Inteligência artificial",
                 "publisher": {
                   "@id": "https://nexustreinamento.com/#organization"
                 }
