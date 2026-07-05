@@ -1,6 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useUser } from '@/auth';
+import { isAdminUser } from '@/lib/constants';
+import { useRouter } from 'next/navigation';
 import { 
   Card, 
   CardContent, 
@@ -50,9 +53,32 @@ const simulatorProfiles = [
 ];
 
 export default function NexusPactumCockpit() {
+  const { user, isUserLoading } = useUser();
+  const router = useRouter();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    if (!isUserLoading) {
+      if (!user || !isAdminUser(user)) {
+        router.push('/login');
+      } else {
+        setIsAuthorized(true);
+      }
+    }
+  }, [user, isUserLoading, router]);
+
   const [activeTab, setActiveTab] = useState<'dashboard' | 'auditor' | 'warroom' | 'simulator'>('dashboard');
   const [deals, setDeals] = useState(initialDeals);
   const [directCallTarget, setDirectCallTarget] = useState('');
+
+  if (isUserLoading || !isAuthorized) {
+    return (
+      <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center text-amber-500">
+        <div className="w-12 h-12 mb-4 animate-pulse border-4 border-amber-500 border-t-transparent rounded-full" />
+        <h2 className="text-xl font-mono tracking-widest uppercase">Validando DNA Digital</h2>
+      </div>
+    );
+  }
 
   const handleStartDirectCall = () => {
     if (!directCallTarget) return;
