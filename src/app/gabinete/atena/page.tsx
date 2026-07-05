@@ -24,6 +24,7 @@ export default function AtenaTerminalPage() {
   
   // Controle de Layout (Fullscreen vs Split)
   const [viewMode, setViewMode] = useState<'fullscreen' | 'split'>('fullscreen');
+  const [isConnectionActive, setIsConnectionActive] = useState(false);
   
   // Controle de Áudio da Atena (Sempre Ativo)
   const isAudioMuted = false;
@@ -261,9 +262,7 @@ export default function AtenaTerminalPage() {
     e?.preventDefault();
     if (!input.trim() || isLoading) return;
 
-    if (viewMode === 'fullscreen') {
-      setViewMode('split');
-    }
+
 
     const userMessage = input.trim();
     setInput('');
@@ -476,7 +475,7 @@ export default function AtenaTerminalPage() {
           </div>
 
           {/* OVERLAY DE INTERFACE DE CONTROLE SOBERANA */}
-          {viewMode === 'fullscreen' && (
+          {viewMode === 'fullscreen' && !isConnectionActive && (
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -524,7 +523,7 @@ export default function AtenaTerminalPage() {
                 {/* CONNECTION BUTTON */}
                 <button 
                   type="button"
-                  onClick={() => setViewMode('split')}
+                  onClick={() => setIsConnectionActive(true)}
                   className="group relative px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase tracking-widest text-xs rounded-full shadow-[0_0_30px_rgba(99,102,241,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(99,102,241,0.5)] cursor-pointer"
                 >
                   <span className="relative z-10 flex items-center gap-2">
@@ -623,119 +622,121 @@ export default function AtenaTerminalPage() {
         )}
       </div>
 
-      {/* BARRA DE INPUT FLUTUANTE (SEMPRE VISÍVEL) */}
-      <div className={`absolute bottom-4 md:bottom-8 px-4 md:px-0 transition-all duration-700 ease-in-out z-50
-        ${viewMode === 'fullscreen' 
-          ? 'w-full md:max-w-2xl left-1/2 -translate-x-1/2' 
-          : 'w-full md:w-[calc(50%-4rem)] left-0 md:left-[2rem]'}
-      `}>
-        <form onSubmit={handleSendMessage} className="relative group w-full">
-          {/* Image Preview */}
-          {selectedImage && (
-            <div className="absolute bottom-[calc(100%+10px)] left-8 w-24 h-24 rounded-lg overflow-hidden border-2 border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.3)] bg-black group-hover:opacity-100 transition-opacity">
-              <img src={selectedImage} alt="Anexo" className="w-full h-full object-cover" />
+      {/* BARRA DE INPUT FLUTUANTE */}
+      {(isConnectionActive || viewMode === 'split') && (
+        <div className={`absolute bottom-4 md:bottom-8 px-4 md:px-0 transition-all duration-700 ease-in-out z-50
+          ${viewMode === 'fullscreen' 
+            ? 'w-full md:max-w-2xl left-1/2 -translate-x-1/2' 
+            : 'w-full md:w-[calc(50%-4rem)] left-0 md:left-[2rem]'}
+        `}>
+          <form onSubmit={handleSendMessage} className="relative group w-full">
+            {/* Image Preview */}
+            {selectedImage && (
+              <div className="absolute bottom-[calc(100%+10px)] left-8 w-24 h-24 rounded-lg overflow-hidden border-2 border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.3)] bg-black group-hover:opacity-100 transition-opacity">
+                <img src={selectedImage} alt="Anexo" className="w-full h-full object-cover" />
+                <button 
+                  type="button" 
+                  onClick={() => setSelectedImage(null)}
+                  className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-red-500 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
+
+            {/* Hidden File Input */}
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              onChange={handleImageSelect}
+              accept="image/*"
+              className="hidden" 
+            />
+
+            <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
+            <div className="relative flex items-center gap-2 bg-[#050505]/80 backdrop-blur-xl border border-indigo-900/50 rounded-full p-2 shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
+              
+              {/* BOTǟO DE ANEXO (IMAGEM) */}
               <button 
                 type="button" 
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-red-500 transition-colors"
+                onClick={() => fileInputRef.current?.click()}
+                title="Anexar Imagem"
+                className={`p-3 rounded-full transition-colors ${
+                  selectedImage 
+                  ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.5)]' 
+                  : 'bg-indigo-950/50 text-indigo-400 hover:text-white hover:bg-indigo-900'
+                }`}
               >
-                <X className="w-3 h-3" />
+                <Paperclip className="w-5 h-5" />
+              </button>
+              {/* BOTÃO DA CAMERA */}
+              <button 
+                type="button" 
+                onClick={toggleCamera}
+                title={isCameraActive ? "Desativar Visão Biométrica" : "Ativar Visão Biométrica"}
+                className={`p-3 rounded-full transition-colors ${
+                  isCameraActive 
+                  ? 'bg-red-600/80 text-white shadow-[0_0_15px_rgba(220,38,38,0.4)]' 
+                  : 'bg-indigo-950/50 text-indigo-400 hover:text-white hover:bg-indigo-900'
+                }`}
+              >
+                {isCameraActive ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
+              </button>
+              
+              {/* BOTÃO DO MICROFONE DO USUÁRIO */}
+              <button 
+                type="button" 
+                onClick={toggleMicrophone}
+                title={isListening ? "Parar Gravação" : "Falar com a Atena"}
+                className={`p-3 rounded-full transition-colors ${
+                  isListening 
+                  ? 'bg-red-600/80 text-white shadow-[0_0_15px_rgba(220,38,38,0.5)]' 
+                  : 'bg-indigo-950/50 text-indigo-400 hover:text-white hover:bg-indigo-900'
+                }`}
+              >
+                <Mic className={`w-5 h-5 ${isListening ? 'animate-pulse' : ''}`} />
+              </button>
+              
+              {/* BOTÃO PARA PARAR A FALA DA ATENA */}
+              {isPlayingAudio && (
+                <button 
+                  type="button" 
+                  onClick={stopAudio}
+                  title="Parar fala da Atena"
+                  className="p-3 rounded-full bg-red-600/80 text-white shadow-[0_0_15px_rgba(220,38,38,0.5)] transition-colors hover:bg-red-500 animate-pulse"
+                >
+                  <VolumeX className="w-5 h-5" />
+                </button>
+              )}
+              
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    // Dispara o envio simulando o formulário
+                    handleSendMessage();
+                  }
+                }}
+                disabled={isLoading}
+                rows={1}
+                placeholder="Digite sua ordem para a Atena..."
+                className="flex-1 bg-transparent border-none px-2 py-2 text-indigo-100 placeholder-indigo-300/50 focus:outline-none focus:ring-0 text-sm tracking-wide font-medium resize-none max-h-24 min-h-[38px] overflow-y-auto scrollbar-none"
+                autoFocus
+              />
+              
+              <button 
+                type="submit"
+                disabled={isLoading || !input.trim()}
+                className="p-3 rounded-full bg-indigo-600 text-white hover:bg-indigo-500 transition-colors disabled:opacity-50 flex items-center justify-center shadow-[0_0_10px_rgba(99,102,241,0.3)]"
+              >
+                <Send className="w-4 h-4 translate-x-px" />
               </button>
             </div>
-          )}
-
-          {/* Hidden File Input */}
-          <input 
-            type="file" 
-            ref={fileInputRef}
-            onChange={handleImageSelect}
-            accept="image/*"
-            className="hidden" 
-          />
-
-          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
-          <div className="relative flex items-center gap-2 bg-[#050505]/80 backdrop-blur-xl border border-indigo-900/50 rounded-full p-2 shadow-[0_10px_40px_rgba(0,0,0,0.8)]">
-            
-            {/* BOTǟO DE ANEXO (IMAGEM) */}
-            <button 
-              type="button" 
-              onClick={() => fileInputRef.current?.click()}
-              title="Anexar Imagem"
-              className={`p-3 rounded-full transition-colors ${
-                selectedImage 
-                ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.5)]' 
-                : 'bg-indigo-950/50 text-indigo-400 hover:text-white hover:bg-indigo-900'
-              }`}
-            >
-              <Paperclip className="w-5 h-5" />
-            </button>
-            {/* BOTÃO DA CAMERA */}
-            <button 
-              type="button" 
-              onClick={toggleCamera}
-              title={isCameraActive ? "Desativar Visão Biométrica" : "Ativar Visão Biométrica"}
-              className={`p-3 rounded-full transition-colors ${
-                isCameraActive 
-                ? 'bg-red-600/80 text-white shadow-[0_0_15px_rgba(220,38,38,0.4)]' 
-                : 'bg-indigo-950/50 text-indigo-400 hover:text-white hover:bg-indigo-900'
-              }`}
-            >
-              {isCameraActive ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
-            </button>
-            
-            {/* BOTÃO DO MICROFONE DO USUÁRIO */}
-            <button 
-              type="button" 
-              onClick={toggleMicrophone}
-              title={isListening ? "Parar Gravação" : "Falar com a Atena"}
-              className={`p-3 rounded-full transition-colors ${
-                isListening 
-                ? 'bg-red-600/80 text-white shadow-[0_0_15px_rgba(220,38,38,0.5)]' 
-                : 'bg-indigo-950/50 text-indigo-400 hover:text-white hover:bg-indigo-900'
-              }`}
-            >
-              <Mic className={`w-5 h-5 ${isListening ? 'animate-pulse' : ''}`} />
-            </button>
-            
-            {/* BOTÃO PARA PARAR A FALA DA ATENA */}
-            {isPlayingAudio && (
-              <button 
-                type="button" 
-                onClick={stopAudio}
-                title="Parar fala da Atena"
-                className="p-3 rounded-full bg-red-600/80 text-white shadow-[0_0_15px_rgba(220,38,38,0.5)] transition-colors hover:bg-red-500 animate-pulse"
-              >
-                <VolumeX className="w-5 h-5" />
-              </button>
-            )}
-            
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  // Dispara o envio simulando o formulário
-                  handleSendMessage();
-                }
-              }}
-              disabled={isLoading}
-              rows={1}
-              placeholder="Digite sua ordem para a Atena..."
-              className="flex-1 bg-transparent border-none px-2 py-2 text-indigo-100 placeholder-indigo-300/50 focus:outline-none focus:ring-0 text-sm tracking-wide font-medium resize-none max-h-24 min-h-[38px] overflow-y-auto scrollbar-none"
-              autoFocus
-            />
-            
-            <button 
-              type="submit"
-              disabled={isLoading || !input.trim()}
-              className="p-3 rounded-full bg-indigo-600 text-white hover:bg-indigo-500 transition-colors disabled:opacity-50 flex items-center justify-center shadow-[0_0_10px_rgba(99,102,241,0.3)]"
-            >
-              <Send className="w-4 h-4 translate-x-px" />
-            </button>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      )}
 
       {/* Mini YouTube Player (Invisível até ser ativado) */}
       <MiniYouTubePlayer />
