@@ -20,12 +20,12 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Nexus Inteligência | Hub para Evolução Humana & IA',
-  description: 'A convergência definitiva entre tecnologia avançada e essência humana. Mentoria, cursos e IA estratégica para acelerar sua jornada global.',
-  keywords: 'inteligência artificial, mentoria de elite, dante safra, magadot, orion, nexus, aws activate startup',
+  title: 'Nexus Treinamento | Hub de Inovação, Evolução e Inteligência Artificial',
+  description: 'A convergência definitiva entre tecnologia avançada e inovação corporativa. Soluções em Inteligência Artificial estratégica para acelerar negócios em escala global.',
+  keywords: 'inteligência artificial, inovação, evolução, dante safra, magadot, orion, nexus, tecnologia para empresas, aws activate startup',
   openGraph: {
-    title: 'Nexus Inteligência | Hub para Evolução Humana & IA',
-    description: 'Transforme sua carreira com a inteligência da Nexus. Tecnologia de ponta, essência humana.',
+    title: 'Nexus Treinamento | Hub de Inovação e Inteligência Artificial',
+    description: 'Impulsione sua empresa com as soluções de Inteligência Artificial e Inovação da Nexus.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     siteName: 'Nexus',
     images: [
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexus Inteligência | IA & Evolução',
-    description: 'Acelere sua jornada com o cérebro da Nexus.',
+    title: 'Nexus Treinamento | Inovação e IA',
+    description: 'Acelere seus negócios com a inteligência corporativa da Nexus.',
     images: ['/nexus-hero-hologram.png'],
   },
   manifest: '/manifest.json',
@@ -118,12 +118,12 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@graph": [
               {
-                "@type": "EducationalOrganization",
+                "@type": "Corporation",
                 "@id": "https://nexustreinamento.com/#organization",
-                "name": "Nexus Inteligência",
+                "name": "Nexus Treinamento",
                 "url": "https://nexustreinamento.com",
                 "logo": "https://nexustreinamento.com/nexus-hero-hologram.png",
-                "description": "Plataforma avançada de cursos online, mentoria de IA e inteligência estratégica para acelerar sua carreira e negócios.",
+                "description": "Hub de Inovação e Inteligência Artificial. Soluções de ponta para empresas, governos e negócios focadas em evolução tecnológica e operacional.",
                 "brand": "Nexus",
                 "sameAs": [
                   "https://nexus.aws"
