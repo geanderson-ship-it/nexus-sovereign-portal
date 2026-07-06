@@ -11,8 +11,9 @@ export default function IntelligenceLayout({
 }) {
   const pathname = usePathname();
   const isRoot = pathname === '/intelligence';
+  const isPremium = pathname === '/intelligence/premium';
 
-  if (isRoot) {
+  if (isRoot || isPremium) {
     return (
       <div className="flex-1 overflow-y-auto bg-black border-l border-white/5 pt-14 scrollbar-hide min-h-screen">
          {children}
