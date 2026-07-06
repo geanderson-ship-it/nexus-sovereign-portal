@@ -125,42 +125,13 @@ export default function HomePage() {
                             </div>
                             <h3 className="text-2xl font-bold font-headline text-primary text-center">{t('inicio.treinamento.title')}</h3>
                             
-                            <ul className="space-y-4 text-left">
-                                <li className="flex items-start gap-3">
-                                    <Rocket className="h-6 w-6 text-primary mt-1 flex-shrink-0"/>
-                                    <div>
-                                        <h4 className="font-semibold text-foreground">{t('inicio.treinamento.palestras.title')}</h4>
-                                        <p className="text-sm text-muted-foreground">{t('inicio.treinamento.palestras.description')}</p>
-                                    </div>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <Gem className="h-6 w-6 text-primary mt-1 flex-shrink-0"/>
-                                    <div>
-                                        <h4 className="font-semibold text-foreground">{t('inicio.treinamento.cursos.title')}</h4>
-                                        <p className="text-sm text-muted-foreground">{t('inicio.treinamento.cursos.description')}</p>
-                                    </div>
-                                </li>
-                                 <li className="flex items-start gap-3">
-                                    <BarChart className="h-6 w-6 text-primary mt-1 flex-shrink-0"/>
-                                    <div>
-                                        <h4 className="font-semibold text-foreground">{t('inicio.treinamento.consultoria.title')}</h4>
-                                        <p className="text-sm text-muted-foreground">{t('inicio.treinamento.consultoria.description')}</p>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div className="flex flex-col items-center gap-4 text-center">
+                                <p className="text-muted-foreground">
+                                    Nossa nova diretriz foca no desenvolvimento de soluções através de inteligência artificial de ponta. Operamos como o núcleo propulsor da sua evolução corporativa.
+                                </p>
+                            </div>
                             
                             <blockquote className="border-l-4 border-primary pl-4 italic text-foreground text-left">{t('inicio.treinamento.quote')}</blockquote>
-                        </div>
-                        
-                        <div className="pt-6">
-                            <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2">
-                                <Button asChild size="lg" className="w-full h-14 text-lg font-bold">
-                                    <Link href="/courses">{t('inicio.treinamento.cta.cursos')}</Link>
-                                </Button>
-                                <Button asChild size="lg" variant="outline" className="w-full h-14 text-lg font-bold">
-                                    <Link href="/consulting">{t('inicio.treinamento.cta.consultoria')}</Link>
-                                </Button>
-                            </div>
                         </div>
 
                         {/* Bottom glow */}
