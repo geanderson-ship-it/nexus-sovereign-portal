@@ -97,7 +97,7 @@ export default function LoginPage() {
     setIsSubmittingVendas(true);
     
     setTimeout(() => {
-      const allowedEmails = ['demo@nexus.com', 'emerson.santoglass@gmail.com', 'carlaschuhrepresentante@gmail.com'];
+      const allowedEmails = ['carlaschuhrepresentante@gmail.com'];
       if (allowedEmails.includes(vendasEmail.toLowerCase().trim()) && vendasPassword === 'vendas2026') {
         localStorage.setItem('vendas_auth', 'true');
         toast({ title: 'Acesso Liberado', description: 'Redirecionando para o Portal de Vendas...' });
