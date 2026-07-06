@@ -8,14 +8,13 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
-import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
+
 import { IAPaymentModal } from '@/components/maga/ia-payment-modal';
 
 export default function AgroPage() {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   return (
-    <SovereignShowcase moduleName="Dante Safra" imagePath="/Nexus Empresas/Dante safra axis.png">
       <div className="min-h-screen text-white font-sans selection:bg-emerald-500/30 relative">
         {/* BACKGROUND PREMIUM CUSTOMIZADO */}
         <div 
@@ -386,6 +385,5 @@ export default function AgroPage() {
 
         </main>
       </div>
-    </SovereignShowcase>
   );
 }
