@@ -60,7 +60,7 @@ export default function HomePage() {
                         >
                             <div className="relative w-full aspect-[16/9] md:aspect-[16/7] lg:aspect-[2.3/1] overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/5">
                                 <Image
-                                    src="/nexus-hero-hologram.png"
+                                    src="/Nexus Holding Group/nexus_logo_definitiva.jpg"
                                     alt="Nexus Holding Group: Convergência Humana"
                                     fill
                                     className="object-contain object-center scale-[1.01] md:scale-[1.02] lg:scale-[1.04] transition-all duration-[4000ms]"
