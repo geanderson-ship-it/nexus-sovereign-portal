@@ -86,14 +86,14 @@ export function SiteHeader() {
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
   const mainNav = useMemo(() => [
-    { title: t('navCourses') || 'Cursos', href: '/courses' },
-    { title: t('navGaleria') || 'Galeria', href: '/gallery' },
-    { title: t('navPalestras') || 'Palestras', href: '/palestras' },
-    { title: t('navIntelligence') || 'Intelligence', href: '/intelligence' },
-    { title: t('navAgro') || 'Agro', href: '/agro' },
     { title: 'Inova Moda', href: '/inovamoda' },
+    { title: 'Inova Revenda', href: '/inova-revenda' },
+    { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
+    { title: 'Embaixadora', href: '/nexus-rotas' },
+    { title: 'Energia', href: '/energia' },
+    { title: 'Empresas', href: '/nexus-empresas' },
+    { title: t('navAgro') || 'Agro', href: '/agro' },
     { title: t('navPremium') || 'Premium', href: '/intelligence/premium' },
-    { title: 'Rotas', href: '/nexus-rotas' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
     { title: t('navSobre') || 'Sobre', href: '/about' },
     { title: t('navContato') || 'Contato', href: '/contact' },
@@ -104,7 +104,7 @@ export function SiteHeader() {
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex flex-col py-3">
+      <div className="w-full px-4 lg:px-8 max-w-[1920px] mx-auto flex flex-col py-3">
         
         {/* TOP ROW: Logo & Controls */}
         <div className="flex items-center justify-between w-full">
@@ -263,71 +263,8 @@ export function SiteHeader() {
         </div>
 
         {/* BOTTOM ROW: Navigation Menus (Desktop Only) */}
-        <nav className="hidden md:flex justify-center items-center gap-x-4 lg:gap-x-6 gap-y-3 mt-4 text-[13px] lg:text-sm flex-wrap w-full pb-2">
+        <nav className="hidden xl:flex justify-center items-center gap-x-2 gap-y-2 mt-4 text-[10px] xl:text-[11px] 2xl:text-[12px] flex-nowrap w-full pb-2 px-4 whitespace-nowrap overflow-x-auto no-scrollbar">
             {mainNav.map((item) => {
-              if (item.href === '/intelligence') {
-                return (
-                  <DropdownMenu key={item.href}>
-                    <DropdownMenuTrigger asChild>
-                      <button className={cn(
-                        "flex items-center gap-2 transition-all duration-300",
-                        pathname.includes('/intelligence') || pathname.includes('/nexus-empresas') || pathname.includes('/energia')
-                          ? "bg-blue-600/20 border border-blue-500/50 px-3 py-1.5 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] text-white font-bold uppercase tracking-widest"
-                          : "bg-blue-600/10 border border-blue-600/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.15)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] hover:bg-blue-600/20 text-white font-bold uppercase tracking-widest"
-                      )}>
-                        {item.title}
-                        <svg className="w-4 h-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-64 bg-background/95 backdrop-blur-xl border-blue-500/30 p-2 shadow-2xl shadow-blue-900/20" align="center">
-                      <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-2 py-1 mb-2 border-b border-border/50">Ecossistema Corporativo</div>
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-blue-500/10 mb-1 p-3 rounded-lg focus:bg-blue-500/20">
-                        <Link href="/intelligence" className="flex flex-col">
-                          <span className="font-black text-blue-400 uppercase tracking-wider text-sm">Visão Geral Intelligence</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">O coração da inteligência Nexus</span>
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-cyan-500/10 mb-1 p-3 rounded-lg focus:bg-cyan-500/20">
-                        <Link href="/nexus-empresas" className="flex flex-col">
-                          <span className="font-black text-cyan-400 uppercase tracking-wider text-sm">Nexus Empresas</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">Automação para a indústria (B2B)</span>
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 mb-1 p-3 rounded-lg focus:bg-emerald-500/20">
-                        <Link href="/nexus-rotas" className="flex flex-col">
-                          <span className="font-black text-emerald-400 uppercase tracking-wider text-sm">Rotas</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">IA e Concierge para Hotéis e Turismo (B2B)</span>
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-pink-500/10 mb-1 p-3 rounded-lg focus:bg-pink-500/20">
-                        <Link href="/inova-revenda" className="flex flex-col">
-                          <span className="font-black text-pink-500 uppercase tracking-wider text-sm">Inova Revenda</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">Concessionárias guiadas por IA</span>
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-purple-500/10 mb-1 p-3 rounded-lg focus:bg-purple-500/20">
-                        <Link href="/inovamoda" className="flex flex-col">
-                          <span className="font-black text-purple-400 uppercase tracking-wider text-sm">Inova Moda</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">Provador Virtual c/ GPU</span>
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-fuchsia-500/10 mb-1 p-3 rounded-lg focus:bg-fuchsia-500/20">
-                        <Link href="/vitrine-inovadora" className="flex flex-col">
-                          <span className="font-black text-fuchsia-400 uppercase tracking-wider text-sm">Vitrine Inovadora</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">Painel Digital Inteligente</span>
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-amber-500/10 p-3 rounded-lg focus:bg-amber-500/20">
-                        <Link href="/energia" className="flex flex-col">
-                          <span className="font-black text-amber-500 uppercase tracking-wider text-sm">Nexus Energia</span>
-                          <span className="text-[10px] text-muted-foreground mt-0.5">IA e Otimização para o setor elétrico</span>
-                        </Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                );
-              }
-
               return (
                 <Link
                   key={item.href}
@@ -335,18 +272,24 @@ export function SiteHeader() {
                   className={cn(
                     'transition-all duration-300',
                     item.href === '/inovamoda'
-                      ? 'bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:bg-purple-500/20 text-white font-bold uppercase tracking-widest'
-                      : item.href === '/agro'
-                      ? 'bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-purple-500/10 border border-purple-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:bg-purple-500/20 text-white font-bold uppercase tracking-widest'
+                      : item.href === '/inova-revenda'
+                      ? 'bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/vitrine-inovadora'
-                      ? 'bg-pink-500/10 border border-pink-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:bg-pink-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-pink-500/10 border border-pink-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:bg-pink-500/20 text-white font-bold uppercase tracking-widest'
+                      : item.href === '/energia'
+                      ? 'bg-amber-600/10 border border-amber-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-600/20 text-white font-bold uppercase tracking-widest'
+                      : item.href === '/nexus-empresas'
+                      ? 'bg-cyan-600/10 border border-cyan-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-cyan-600/20 text-white font-bold uppercase tracking-widest'
+                      : item.href === '/agro'
+                      ? 'bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/intelligence/premium'
-                      ? 'bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-violet-500/10 border border-violet-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/nexus-rotas'
-                      ? 'bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-teal-500/10 border border-teal-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold uppercase tracking-widest'
                       : pathname === item.href 
-                        ? 'bg-primary/10 border border-primary/30 px-3 py-1.5 rounded-lg shadow-[0_0_10px_rgba(37,99,235,0.15)] text-foreground font-semibold' 
-                        : 'bg-white/5 border border-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium'
+                        ? 'bg-primary/10 border border-primary/30 px-2 py-1 rounded-md shadow-[0_0_10px_rgba(37,99,235,0.15)] text-foreground font-semibold' 
+                        : 'bg-white/5 border border-white/5 px-2 py-1 rounded-md hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium'
                   )}
                 >
                   {item.title}
@@ -365,29 +308,6 @@ export function SiteHeader() {
                   </div>
                   <nav className="flex-1 overflow-y-auto p-4 flex flex-col gap-1">
                     {mainNav.map((item) => {
-                      if (item.href === '/intelligence') {
-                        return (
-                          <details key={item.href} className="group border border-blue-600/40 rounded-xl bg-blue-600/10 mb-3 shadow-[0_0_15px_rgba(37,99,235,0.15)] relative">
-                            <summary className="cursor-pointer flex items-center justify-between p-4 text-white font-bold uppercase tracking-widest list-none [&::-webkit-details-marker]:hidden bg-gradient-to-r from-blue-600/20 to-blue-900/20 hover:from-blue-600/30 transition-all select-none rounded-xl group-open:rounded-b-none relative z-10">
-                              <div className="flex items-center gap-3">
-                                <Sparkles className="w-5 h-5 text-blue-400 animate-pulse" />
-                                <span className="tracking-wide text-[15px]">{item.title}</span>
-                              </div>
-                              <svg className="w-6 h-6 transition-transform duration-300 group-open:rotate-180 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                            </summary>
-                            <div className="flex flex-col p-3 bg-black/60 gap-3 border-t border-blue-500/30 rounded-b-xl relative z-0">
-                              <Link href="/intelligence" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-blue-400 hover:bg-blue-500/20 rounded-lg flex items-center gap-3 transition-colors border border-blue-500/20 bg-blue-500/10">Visão Geral Intelligence</Link>
-                              <Link href="/nexus-empresas" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-cyan-400 hover:bg-cyan-500/20 rounded-lg flex items-center gap-3 transition-colors border border-cyan-500/20 bg-cyan-500/10">Nexus Empresas (B2B)</Link>
-                              <Link href="/nexus-rotas" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-emerald-400 hover:bg-emerald-500/20 rounded-lg flex items-center gap-3 transition-colors border border-emerald-500/20 bg-emerald-500/10">Rotas</Link>
-                              <Link href="/inova-revenda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-pink-500 hover:bg-pink-500/20 rounded-lg flex items-center gap-3 transition-colors border border-pink-500/20 bg-pink-500/10">Inova Revenda</Link>
-                              <Link href="/inovamoda" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-purple-400 hover:bg-purple-500/20 rounded-lg flex items-center gap-3 transition-colors border border-purple-500/20 bg-purple-500/10">Inova Moda</Link>
-                              <Link href="/vitrine-inovadora" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-fuchsia-400 hover:bg-fuchsia-500/20 rounded-lg flex items-center gap-3 transition-colors border border-fuchsia-500/20 bg-fuchsia-500/10">Vitrine Inovadora</Link>
-                              <Link href="/energia" onClick={() => setMobileMenuOpen(false)} className="p-4 text-sm font-bold text-amber-500 hover:bg-amber-500/20 rounded-lg flex items-center gap-3 transition-colors border border-amber-500/20 bg-amber-500/10">Nexus Energia</Link>
-                            </div>
-                          </details>
-                        );
-                      }
-
                       return (
                         <Link
                           key={item.href}
@@ -397,6 +317,14 @@ export function SiteHeader() {
                             'flex items-center justify-between p-3 rounded-lg transition-all duration-200 group mb-1',
                             item.href === '/inovamoda'
                             ? 'bg-purple-500/10 text-white drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] font-bold border border-purple-500/50 uppercase tracking-widest'
+                            : item.href === '/inova-revenda'
+                            ? 'bg-amber-500/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 uppercase tracking-widest'
+                            : item.href === '/vitrine-inovadora'
+                            ? 'bg-pink-500/10 text-white drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] font-bold border border-pink-500/50 uppercase tracking-widest'
+                            : item.href === '/energia'
+                            ? 'bg-amber-600/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 uppercase tracking-widest'
+                            : item.href === '/nexus-empresas'
+                            ? 'bg-cyan-600/10 text-white drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] font-bold border border-cyan-500/50 uppercase tracking-widest'
                             : item.href === '/agro'
                             ? 'bg-emerald-500/10 text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] font-bold border border-emerald-500/50 uppercase tracking-widest'
                             : item.href === '/intelligence/premium'

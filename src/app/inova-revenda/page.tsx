@@ -83,11 +83,25 @@ export default function InovaRevendaPage() {
       </div>
 
       {/* HERO SECTION */}
-      {/* O marginTop empurra o bloco inteiro para baixo. 100vh (tela toda) menos o cabeçalho e um respiro, para a pontinha do card ficar visível */}
-      <div className="relative z-10 w-full flex justify-center" style={{ marginTop: 'calc(100vh - 250px)' }}>
+      <div className="relative z-10 w-full flex justify-center pt-32">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10 text-center px-4 max-w-5xl mx-auto w-full mb-24">
-          <Badge className="bg-[#cfa968]/20 text-[#cfa968] border-[#cfa968]/40 px-6 py-1.5 tracking-[0.3em] font-mono text-[10px] mb-8">AUTO_INTELLIGENCE</Badge>
+          
           <div className="w-full flex flex-col items-center text-center gap-6 mt-4 mb-6 max-w-4xl px-4 mx-auto p-8 rounded-3xl bg-black/60 backdrop-blur-md border border-white/10 shadow-2xl">
+            
+            <div className="mb-4 w-full max-w-2xl mx-auto rounded-[2rem] overflow-hidden border-2 border-[#cfa968]/40 shadow-[0_0_50px_rgba(207,169,104,0.25)] bg-black/50 relative">
+              <video 
+                src="/Nexus Revenda/Clara - Revenda.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                controls 
+                className="w-full h-auto object-cover"
+              />
+            </div>
+
+            <Badge className="bg-[#cfa968]/20 text-[#cfa968] border-[#cfa968]/40 px-6 py-1.5 tracking-[0.3em] font-mono text-[10px] mb-2">AUTO_INTELLIGENCE</Badge>
+            
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-white drop-shadow-[0_0_15px_rgba(0,0,0,0.8)]">
               Inova <span className="text-[#cfa968]">Revenda</span>
             </h1>

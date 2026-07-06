@@ -42,6 +42,19 @@ export default function NexusRotasHubPage() {
         
         {/* HERO SECTION */}
         <section className="flex flex-col items-center text-center max-w-4xl mx-auto py-12">
+          
+          <div className="mb-8 w-full max-w-3xl mx-auto rounded-3xl overflow-hidden border border-teal-500/40 shadow-[0_0_50px_rgba(20,184,166,0.3)] bg-black/50 backdrop-blur-md relative">
+            <video 
+              src="/Embaixadora Nexus/Vitória_-_Embaixadora_virtual..mp4" 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              controls 
+              className="w-full h-auto object-cover rounded-3xl"
+            />
+          </div>
+
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-500/30 bg-teal-950/40 text-teal-300 text-xs font-bold uppercase tracking-wider mb-6 animate-pulse shadow-[0_0_20px_rgba(20,184,166,0.3)] backdrop-blur-sm">
             <Compass className="w-4 h-4 text-teal-400" />
             Ecossistema Turístico Unificado

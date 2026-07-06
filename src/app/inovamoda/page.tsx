@@ -138,15 +138,7 @@ export default function InovaModaPage() {
 
       <div className="container relative z-10 mx-auto px-4 max-w-7xl">
         
-        {/* BOTÃO DE VOLTAR PARA PREMIUM */}
-        <div className="fixed top-32 left-4 md:left-8 z-20">
-          <Link href="/intelligence/premium" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors group">
-            <div className="h-10 w-10 rounded-full bg-zinc-900/50 border border-zinc-800 flex items-center justify-center group-hover:bg-zinc-800 transition-colors shadow-lg backdrop-blur-md">
-              <ChevronLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-widest hidden md:block">{t('inovamoda.backToPremium') || 'Voltar para Premium'}</span>
-          </Link>
-        </div>
+
 
         {/* HEADER HERO */}
         <div className="text-center max-w-4xl mx-auto mb-16">
@@ -154,14 +146,28 @@ export default function InovaModaPage() {
           {/* CARD PRINCIPAL */}
           <div className="relative rounded-3xl overflow-hidden border border-pink-500/20 bg-black/50 backdrop-blur-md shadow-[0_0_60px_rgba(236,72,153,0.15)] mb-12">
             
-            {/* TOPO: Badge + Título */}
+            {/* TOPO: Vídeo, depois Badge + Título */}
             <div className="px-8 pt-10 pb-6">
+              
+              <div className="w-full rounded-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_40px_rgba(236,72,153,0.3)] bg-black/50 relative mb-8">
+                <video 
+                  src="/Inova moda 360/Sofia - Inova moda.mp4" 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  controls 
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold uppercase tracking-widest mb-6">
                 <SparkleIcon className="w-4 h-4" /> Nexus Innovation
               </div>
-              <h1 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tight">
+              <h1 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tight mb-4">
                 InovaModa <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">360</span>
               </h1>
+              
             </div>
 
             {/* MEIO: Imagem */}

@@ -208,13 +208,7 @@ export default function VitrineInovadoraHub() {
   return (
     <div className="min-h-screen bg-neutral-600 font-sans">
       
-      {/* HEADER SIMPLES PARA VOLTAR AO SITE */}
-      <header className="absolute top-0 w-full z-40 px-6 py-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent">
-        <Link href="/" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors">
-          <ChevronLeft className="w-5 h-5" />
-          <span className="font-bold text-sm tracking-widest uppercase">Voltar ao Nexus</span>
-        </Link>
-      </header>
+
 
       {/* HERO SECTION GIGANTE */}
       <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
@@ -249,29 +243,41 @@ export default function VitrineInovadoraHub() {
 
         <div className="relative z-10 flex flex-col items-center text-center px-4">
           
-          {/* CARD DO TÍTULO (FROSTED GLASS) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="bg-black/40 backdrop-blur-2xl border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl flex flex-col items-center"
-          >
-            <div className="flex items-center gap-4 bg-white/10 backdrop-blur-xl border border-white/10 px-6 py-2 rounded-full mb-6 shadow-xl">
-              <Sparkles className="w-5 h-5 text-fuchsia-400" />
-              <span className="text-white font-bold tracking-[0.2em] uppercase text-xs md:text-sm">Sinalização Digital de Alto Padrão</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none mb-6 drop-shadow-2xl">
-              Vitrine <br className="md:hidden" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 via-pink-400 to-purple-400 drop-shadow-[0_0_30px_rgba(217,70,239,0.5)]">
-                Inovadora
-              </span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-neutral-300 font-light max-w-2xl drop-shadow-md">
-              Selecione a franquia abaixo para iniciar a transmissão do painel interativo na sua vitrine.
-            </p>
-          </motion.div>
+            {/* CARD DO TÍTULO (FROSTED GLASS) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="bg-black/40 backdrop-blur-2xl border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl flex flex-col items-center"
+            >
+              <div className="w-full max-w-3xl rounded-2xl overflow-hidden border border-fuchsia-500/30 shadow-[0_0_40px_rgba(217,70,239,0.3)] bg-black/50 relative mb-8">
+                <video 
+                  src="/Vitrine Inovadora/Camila_-_Vitrini_inovadora..mp4" 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  controls 
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+
+              <div className="flex items-center gap-4 bg-white/10 backdrop-blur-xl border border-white/10 px-6 py-2 rounded-full mb-6 shadow-xl">
+                <Sparkles className="w-5 h-5 text-fuchsia-400" />
+                <span className="text-white font-bold tracking-[0.2em] uppercase text-xs md:text-sm">Sinalização Digital de Alto Padrão</span>
+              </div>
+              
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none mb-6 drop-shadow-2xl">
+                Vitrine <br className="md:hidden" />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 via-pink-400 to-purple-400 drop-shadow-[0_0_30px_rgba(217,70,239,0.5)]">
+                  Inovadora
+                </span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-neutral-300 font-light max-w-2xl drop-shadow-md">
+                Selecione a franquia abaixo para iniciar a transmissão do painel interativo na sua vitrine.
+              </p>
+            </motion.div>
 
         </div>
       </section>

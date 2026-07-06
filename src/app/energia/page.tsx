@@ -185,16 +185,40 @@ export default function EnergiaPage() {
 
       <main className="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col gap-24">
         
-        {/* HERO SECTION HELIOS */}
-        <section className="flex flex-col items-center text-center gap-8 mt-12 w-full">
-          <WhiteLabelHeader
-            defaultTitle="Nexus Helios"
-            defaultSlogan="O Cérebro da Matriz Energética. Previsões Exatas no Mercado Livre e Visão Computacional para Manutenção Preditiva em Infraestruturas Críticas."
-            defaultLogo="/Nexus Intelligence Energy/Nexus Intelligence Energy.png"
-            storageKeyPrefix="energia"
-            themeColor="amber"
-          />
+        {/* NOVA HERO SECTION - HELENA (HELIOS) */}
+        <section className="flex flex-col items-center text-center gap-4 mt-4 lg:mt-8 w-full max-w-5xl mx-auto mb-12">
+          
+          <div className="w-full rounded-[2rem] overflow-hidden border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.2)] bg-black/50 relative mb-8">
+            <video 
+              src="/Nexus Energia/Helena - energia.mp4" 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              controls 
+              className="w-full h-auto object-cover"
+            />
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-widest mb-2">
+            <Sparkles className="w-4 h-4" /> Nexus Helios
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tight">
+            Nexus <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Energia</span>
+          </h1>
+          
+          <p className="text-lg md:text-xl text-zinc-300 font-light italic tracking-wide max-w-3xl mt-4">
+            "Olá, eu sou a Helena, a inteligência central do Nexus Energia."
+          </p>
+          
+          <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed max-w-3xl mt-2">
+            Fui desenhada para gerenciar redes elétricas complexas, antecipar o mercado livre de energia e monitorar ativos críticos através de visão computacional. Minha missão é zerar desperdícios, proteger usinas contra falhas mecânicas antes que elas ocorram e otimizar cada watt de energia em sua planta. 
+            <br /><br />
+            <strong className="text-amber-400">O que vamos revolucionar hoje?</strong>
+          </p>
         </section>
+
 
         {/* EIXO DE VALOR (PERFIS) */}
         <section className="flex flex-col gap-12 mt-16">

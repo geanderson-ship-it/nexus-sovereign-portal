@@ -20,20 +20,20 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Nexus Treinamento | Hub de Inovação, Evolução e Inteligência Artificial',
-  description: 'A convergência definitiva entre tecnologia avançada e inovação corporativa. Soluções em Inteligência Artificial estratégica para acelerar negócios em escala global.',
-  keywords: 'inteligência artificial, inovação, evolução, dante safra, magadot, orion, nexus, tecnologia para empresas, aws activate startup',
+  title: 'Nexus Treinamento | Empresa de Tecnologia, Inovação e Evolução',
+  description: 'A Nexus Treinamento é uma empresa de tecnologia, inovação e evolução. Impulsione sua empresa com as soluções mais avançadas de Inteligência Artificial do mercado.',
+  keywords: 'nexus treinamento, empresa de tecnologia, inovação, evolução, inteligência artificial, dante safra, magadot, orion, tecnologia para empresas',
   openGraph: {
-    title: 'Nexus Treinamento | Hub de Inovação e Inteligência Artificial',
-    description: 'Impulsione sua empresa com as soluções de Inteligência Artificial e Inovação da Nexus.',
+    title: 'Nexus Treinamento | Tecnologia, Inovação e Evolução',
+    description: 'A Nexus Treinamento é uma empresa de tecnologia, inovação e evolução focada em soluções avançadas de Inteligência Artificial.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
-    siteName: 'Nexus',
+    siteName: 'Nexus Treinamento',
     images: [
       {
         url: '/nexus-hero-hologram.png',
         width: 1200,
         height: 630,
-        alt: 'Nexus Inteligência Artificial',
+        alt: 'Nexus Treinamento - Tecnologia e Inovação',
       },
     ],
     locale: 'pt-BR',
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexus Treinamento | Inovação e IA',
-    description: 'Acelere seus negócios com a inteligência corporativa da Nexus.',
+    title: 'Nexus Treinamento | Tecnologia, Inovação e Evolução',
+    description: 'A Nexus Treinamento é uma empresa de tecnologia, inovação e evolução focada em Inteligência Artificial.',
     images: ['/nexus-hero-hologram.png'],
   },
   manifest: '/manifest.json',

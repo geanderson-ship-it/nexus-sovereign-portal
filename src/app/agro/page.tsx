@@ -44,89 +44,92 @@ export default function AgroPage() {
 
         <main className="relative z-10 pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col gap-32">
           
-          {/* HERO SECTION */}
-          <section className="flex flex-col items-center text-center gap-8 mt-12">
+          {/* HERO SECTION WITH VIDEO AT TOP */}
+          <section className="flex flex-col items-center text-center gap-8 mt-12 w-full max-w-4xl mx-auto">
+            
+            {/* VIDEO SHOWCASE (NOW ON TOP) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="w-full"
+            >
+              <div className="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.15)] bg-slate-950 mb-4">
+                <video 
+                  src="/Agro/Dante_safra1.mp4" 
+                  controls 
+                  autoPlay 
+                  muted 
+                  loop 
+                  playsInline 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-emerald-500/30 rounded-full">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">Demonstração Tática</span>
+                </div>
+              </div>
+
+              {/* LINK PARA VÍDEO VERTICAL */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button className="mx-auto group flex items-center gap-3 px-6 py-3 rounded-full border border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/20 text-emerald-400 hover:text-white transition-all shadow-[0_0_15px_rgba(16,185,129,0.05)] hover:scale-105 cursor-pointer">
+                    <Sparkles className="h-4 w-4 text-emerald-400 animate-pulse" />
+                    <span className="text-xs font-black uppercase tracking-widest">Conheça melhor o Dante Safra</span>
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="bg-slate-950 border border-emerald-900/50 text-white max-w-sm p-4 flex flex-col items-center justify-center rounded-3xl">
+                  <DialogHeader className="w-full text-center mb-2">
+                    <DialogTitle className="text-lg font-black uppercase tracking-tight text-emerald-400">
+                      Apresentação Dante Safra
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="relative w-full max-w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-emerald-500/30 bg-black shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                    <video 
+                      src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Agro/Dante_safra.mp4" 
+                      controls 
+                      autoPlay 
+                      playsInline 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <p className="text-[10px] text-slate-500 mt-3 text-center uppercase tracking-widest font-bold">Vídeo vertical completo</p>
+                </DialogContent>
+              </Dialog>
+            </motion.div>
+
+            {/* BADGE & TITLE */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="p-3 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-4"
+              transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+              className="p-3 rounded-full bg-emerald-500/10 border border-emerald-500/20 mt-4"
             >
               <Target className="h-8 w-8 text-emerald-400" />
             </motion.div>
+            
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+              transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
               className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9]"
             >
               O Terminal Tático<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-emerald-600">Do Agronegócio</span>
             </motion.h1>
+            
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+              transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
               className="text-slate-400 text-lg md:text-2xl font-light tracking-wide max-w-3xl leading-relaxed"
             >
               Inteligência Artificial de Precisão e Telemetria Neural. Da semente à exportação, mantenha a sua terra e as suas safras sob controle absoluto.
             </motion.p>
           </section>
-
-          {/* VIDEO SHOWCASE */}
-          <motion.section 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="flex flex-col items-center max-w-4xl mx-auto w-full"
-          >
-            <div className="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.15)] bg-slate-950">
-              <video 
-                src="/Agro/Dante_safra1.mp4" 
-                controls 
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-emerald-500/30 rounded-full">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400">Demonstração Tática</span>
-              </div>
-            </div>
-
-            {/* LINK PARA VÍDEO VERTICAL */}
-            <Dialog>
-              <DialogTrigger asChild>
-                <button className="group flex items-center gap-3 px-6 py-3 rounded-full border border-emerald-500/30 bg-emerald-500/5 hover:bg-emerald-500/20 text-emerald-400 hover:text-white transition-all shadow-[0_0_15px_rgba(16,185,129,0.05)] hover:scale-105 cursor-pointer">
-                  <Sparkles className="h-4 w-4 text-emerald-400 animate-pulse" />
-                  <span className="text-xs font-black uppercase tracking-widest">Conheça melhor o Dante Safra</span>
-                </button>
-              </DialogTrigger>
-              <DialogContent className="bg-slate-950 border border-emerald-900/50 text-white max-w-sm p-4 flex flex-col items-center justify-center rounded-3xl">
-                <DialogHeader className="w-full text-center mb-2">
-                  <DialogTitle className="text-lg font-black uppercase tracking-tight text-emerald-400">
-                    Apresentação Dante Safra
-                  </DialogTitle>
-                </DialogHeader>
-                {/* CONTAINER COM ASPECT-RATIO VERTICAL 9:16 */}
-                <div className="relative w-full max-w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-emerald-500/30 bg-black shadow-[0_0_30px_rgba(16,185,129,0.2)]">
-                  <video 
-                    src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Agro/Dante_safra.mp4" 
-                    controls 
-                    autoPlay 
-                    playsInline 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <p className="text-[10px] text-slate-500 mt-3 text-center uppercase tracking-widest font-bold">Vídeo vertical completo</p>
-              </DialogContent>
-            </Dialog>
-          </motion.section>
 
           {/* MATRIZ DE FORÇA (O Músculo do Dante) */}
           <section className="flex flex-col gap-12">
