@@ -41,9 +41,9 @@ export default function OrionOSPage() {
         <div className="relative z-20 mb-[-1rem]">
           <Link 
             href="/exclusive" 
-            className="inline-flex items-center justify-center w-10 h-10 text-slate-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors uppercase font-mono text-[10px] tracking-widest bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-lg backdrop-blur-sm w-fit"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-4 h-4" /> Voltar ao Portfólio Exclusive
           </Link>
         </div>
 

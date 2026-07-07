@@ -611,11 +611,12 @@ export default function EgidePage() {
         
         {/* BOTÃO VOLTAR */}
         <div className="relative z-20 mb-[-1rem]">
-          <Button asChild variant="ghost" size="icon" className="text-slate-400 hover:text-white">
-            <Link href="/exclusive">
-              <ArrowLeft className="w-6 h-6" />
-            </Link>
-          </Button>
+          <Link 
+            href="/exclusive" 
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors uppercase font-mono text-[10px] tracking-widest bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-lg backdrop-blur-sm w-fit"
+          >
+            <ArrowLeft className="w-4 h-4" /> Voltar ao Portfólio Exclusive
+          </Link>
         </div>
 
         {/* HEADER: TÍTULO NEXUS ÉGIDE */}
