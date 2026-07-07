@@ -300,8 +300,8 @@ export default function SuportePage() {
           <h1 className="font-headline text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6 uppercase drop-shadow-md">
             Triagem <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Inteligente</span>
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            {t('suporte.subtitle') || 'Escolha a sua via de resolução rápida guiada pelo Clã. Direcionamos seu problema para a inteligência responsável.'}
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+            Escolha a sua via de resolução rápida guiada pela nossa Inteligência Artificial. Direcionamos sua requisição diretamente para a matriz responsável.
           </p>
         </motion.div>
 
@@ -335,11 +335,11 @@ export default function SuportePage() {
             </div>
             
             <h3 className="text-2xl font-bold font-headline mb-3 text-foreground group-hover:text-amber-500 transition-colors uppercase">
-              {t('suporte.dante.title') || 'Dante (Acesso)'}
+              Dante (Acesso)
             </h3>
             
             <p className="text-muted-foreground text-sm flex-1 mb-8 leading-relaxed">
-              {t('suporte.dante.description') || 'Recuperação de senhas, verificação de identidade e problemas de login.'}
+              Recuperação de credenciais de alto nível, verificação de identidade e resolução de acesso aos portais da Holding.
             </p>
 
             <div className="flex items-center gap-2 mb-8 text-xs text-amber-500/80 font-semibold bg-amber-500/10 p-2 rounded border border-amber-500/20">
@@ -351,7 +351,7 @@ export default function SuportePage() {
               onClick={handleDante}
               className="w-full bg-amber-500 hover:bg-amber-600 text-white shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all flex items-center justify-between"
             >
-              <span>{t('suporte.dante.cta') || 'Resolver Acesso'}</span>
+              <span>Restaurar Credenciais</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
           </motion.div>
@@ -383,11 +383,11 @@ export default function SuportePage() {
             </div>
             
             <h3 className="text-2xl font-bold font-headline mb-3 text-foreground group-hover:text-blue-400 transition-colors uppercase">
-              {t('suporte.djeny.title') || 'Djeny (Cursos)'}
+              Djeny (Treinamento)
             </h3>
             
             <p className="text-muted-foreground text-sm flex-1 mb-4 leading-relaxed">
-              {t('suporte.djeny.description') || 'Dúvidas sobre conteúdo, liberação de aulas, apostilas e certificados.'}
+              Dúvidas sobre imersões corporativas, materiais estratégicos, ecossistemas da Nexus Treinamento e emissão de certificações.
             </p>
 
             <div className="flex items-center gap-2 mb-8 text-xs text-blue-400/80 font-semibold bg-blue-400/10 p-2 rounded border border-blue-400/20">
@@ -399,7 +399,7 @@ export default function SuportePage() {
               onClick={handleDjeny}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-all flex items-center justify-between"
             >
-              <span>{t('suporte.djeny.cta') || 'Dúvidas de Cursos'}</span>
+              <span>Nexus Treinamento</span>
               <ArrowRight className="h-4 w-4" />
             </Button>
           </motion.div>

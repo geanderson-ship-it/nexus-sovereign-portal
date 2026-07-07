@@ -8,8 +8,8 @@ export function SiteFooter() {
   const { t } = useLocale();
 
   return (
-    <footer className="border-t border-border/40 py-6 md:py-8">
-      <div className="container flex flex-col items-center justify-between gap-6">
+    <footer className="border-t border-border/40 py-6 md:py-8 relative z-50 mt-12">
+      <div className="container flex flex-col items-center justify-between gap-6 bg-black/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
         <div className="flex flex-col items-center gap-5">
             <div className="flex flex-col items-center">
                 <span className="font-headline text-2xl font-black uppercase tracking-[0.2em] text-blue-500 drop-shadow-md">

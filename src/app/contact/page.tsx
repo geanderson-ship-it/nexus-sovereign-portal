@@ -21,7 +21,6 @@ import { cn } from '@/lib/utils';
 import { Mail, Phone, MapPin, CheckCircle2 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { palestras } from '@/lib/courses-data';
 import { useLocale } from '@/hooks/use-locale';
 import * as gtag from '@/lib/gtag';
 
@@ -66,14 +65,14 @@ function ContactContent() {
     }
 
     // 2. Construir link do WhatsApp
-    const whatsappBody = `*Nova Requisição de Contato - Nexus*
+    const whatsappBody = `*Nova Requisição Executiva - Nexus Holding Group*
 
 *Nome:* ${data.firstName} ${data.lastName}
 *E-mail:* ${data.email}
 *Telefone:* ${data.phone}
-*Empresa:* ${data.company || t('contact.mailto.notInformed')}
+*Empresa:* ${data.company || "Não informada"}
 --------------------------------
-*Assunto:* ${selectedSubject || data.subject}
+*Área de Interesse:* ${selectedSubject || data.subject}
 
 *Mensagem:*
 ${data.message}`.trim();
@@ -111,10 +110,10 @@ ${data.message}`.trim();
       <div className="relative z-10 container mx-auto py-12 md:py-20">
         <div className="mb-12 text-center">
           <h1 className={cn("text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl lg:text-7xl", "font-headline")}>
-            {t('contact.title')}
+            CENTRAL DE OPERAÇÕES
           </h1>
           <p className="mx-auto mt-6 max-w-[700px] text-lg text-muted-foreground md:text-xl font-sans">
-            {t('contact.subtitle')}
+            Inicie o diálogo que vai redefinir a arquitetura tecnológica e a blindagem da sua corporação. A nossa equipe de engenharia está pronta para orquestrar a sua evolução.
           </p>
         </div>
 
@@ -124,14 +123,27 @@ ${data.message}`.trim();
                 <div className="mt-1 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <Mail className="h-6 w-6" />
                 </div>
-                <div>
-                <h3 className="text-xl font-semibold font-headline">{t('contact.email.title')}</h3>
-                <p className="text-muted-foreground font-sans">
-                    {t('contact.email.text')}
-                </p>
-                <a href="mailto:geanderson@nexustreinamento.com" className="text-primary hover:underline">
-                    geanderson@nexustreinamento.com
-                </a>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-xl font-semibold font-headline">Contatos Executivos</h3>
+                    <p className="text-muted-foreground font-sans text-sm mb-2">
+                        Canais diretos com a nossa alta gestão.
+                    </p>
+                  </div>
+                  
+                  <div className="border-l-2 border-primary/30 pl-3">
+                    <p className="font-bold text-foreground">Diretor Geral: Geanderson Leandro Schuh</p>
+                    <a href="mailto:geanderson@nexustreinamento.com" className="text-primary hover:underline text-sm">
+                        geanderson@nexustreinamento.com
+                    </a>
+                  </div>
+
+                  <div className="border-l-2 border-blue-400/30 pl-3">
+                    <p className="font-bold text-foreground">Diretora Executiva: Ivoni Severo Schuh</p>
+                    <a href="mailto:vendas@nexustreinamento.com" className="text-blue-400 hover:underline text-sm">
+                        vendas@nexustreinamento.com
+                    </a>
+                  </div>
                 </div>
             </div>
             <div className="flex items-start gap-4">
@@ -177,7 +189,7 @@ ${data.message}`.trim();
                   </p>
                 </div>
                 <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
-                <p className="text-xs text-slate-500 font-medium uppercase tracking-widest">Nexus Treinamento · Desvendando Talentos</p>
+                <p className="text-xs text-slate-500 font-medium uppercase tracking-widest">Nexus Holding Group · Engenharia de Resultados</p>
                 <Button variant="outline" className="border-primary/30 text-primary hover:bg-primary/10 mt-2" onClick={() => setSent(false)}>
                   Enviar outra mensagem
                 </Button>
@@ -211,23 +223,23 @@ ${data.message}`.trim();
                       <Input id="company" name="company" placeholder={t('contact.form.company.placeholder')} />
                     </div>
                   <div className="space-y-2">
-                    <Label htmlFor="subject">{t('contact.form.subject')}</Label>
+                    <Label htmlFor="subject">Área de Interesse</Label>
                      <Select required name="subject" value={selectedSubject} onValueChange={setSelectedSubject}>
                       <SelectTrigger id="subject">
-                        <SelectValue placeholder={t('contact.form.subject.placeholder')} />
+                        <SelectValue placeholder="Selecione o setor desejado..." />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>{t('contact.form.subject.group.lectures')}</SelectLabel>
-                          {palestras.map(palestra => (
-                            <SelectItem key={palestra.slug} value={palestra.slug}>{palestra.title}</SelectItem>
-                          ))}
+                          <SelectLabel>Arquitetura Tecnológica</SelectLabel>
+                          <SelectItem value="ia-soberana">Implementação de IA Soberana On-Premise</SelectItem>
+                          <SelectItem value="nexus-intelligence">Nexus Intelligence (Automação e Dados)</SelectItem>
+                          <SelectItem value="nexus-treinamento">Nexus Treinamento (Evolução Corporativa)</SelectItem>
                         </SelectGroup>
                         <SelectGroup>
-                          <SelectLabel>{t('contact.form.subject.group.other')}</SelectLabel>
-                          <SelectItem value="consultoria">{t('contact.form.subject.option.consulting')}</SelectItem>
-                          <SelectItem value="cursos">{t('contact.form.subject.option.courses')}</SelectItem>
-                          <SelectItem value="parcerias">{t('contact.form.subject.option.partnerships')}</SelectItem>
+                          <SelectLabel>Negócios</SelectLabel>
+                          <SelectItem value="inova-revenda">Inova Revenda (Setor Automotivo)</SelectItem>
+                          <SelectItem value="vitrine-inovadora">Vitrine Inovadora (E-commerce / Varejo)</SelectItem>
+                          <SelectItem value="parcerias">Parcerias Estratégicas B2B</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>

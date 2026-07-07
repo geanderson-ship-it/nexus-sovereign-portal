@@ -49,8 +49,8 @@ export default function HomePage() {
             </div>
 
             <div className="relative z-10 text-foreground overflow-x-hidden">
-                <section className="relative min-h-[90dvh] flex flex-col items-center justify-center pt-32 md:pt-48 overflow-hidden">
-                <div className="w-full max-w-[1650px] mx-auto px-4 md:px-8 relative z-10 mt-8 md:mt-12">
+                <section className="relative min-h-[90dvh] flex flex-col items-center justify-start pt-20 md:pt-24 overflow-hidden">
+                <div className="w-full max-w-[1650px] mx-auto px-4 md:px-8 relative z-10">
                     <div className="flex flex-col items-center justify-center mb-0 w-full">
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.98 }}
@@ -58,13 +58,11 @@ export default function HomePage() {
                             transition={{ duration: 1.5, ease: "easeOut" }}
                             className="relative w-full max-w-[1500px] group px-0"
                         >
-                            <div className="relative w-full aspect-[16/9] md:aspect-[16/7] lg:aspect-[2.3/1] overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/5">
-                                <Image
-                                    src="/Nexus Holding Group/Nexus Holding group nova.jpg"
-                                    alt="Nexus Holding Group: Convergência Humana"
-                                    fill
-                                    className="object-contain object-center scale-[1.01] md:scale-[1.02] lg:scale-[1.04] transition-all duration-[4000ms]"
-                                    priority
+                            <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.5)] bg-black/50">
+                                <video 
+                                    src="/Nexus Holding Group/Avatar_IV_Video.mp4" 
+                                    controls
+                                    className="w-full h-auto aspect-video object-cover"
                                 />
                             </div>
                         </motion.div>
@@ -74,10 +72,20 @@ export default function HomePage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.6 }}
-                        className="text-center max-w-5xl mx-auto mt-8 md:mt-12 relative z-20"
+                        className="text-center max-w-5xl mx-auto mt-8 md:mt-12 relative z-20 flex flex-col items-center"
                     >
+                        {/* Nexus Logo Image (Restored) */}
+                        <div className="relative w-full max-w-5xl mx-auto aspect-video mb-12 overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 bg-black/40 shadow-[0_0_50px_rgba(37,99,235,0.4)]">
+                            <Image
+                                src="/Nexus Holding Group/Nexus Holding group nova.jpg"
+                                alt="Nexus Holding Group Logo"
+                                fill
+                                className="object-contain p-4"
+                            />
+                        </div>
+
                         {/* Glassmorphism Card */}
-                        <div className="relative rounded-2xl md:rounded-3xl border border-white/10 bg-black/30 backdrop-blur-md px-8 py-10 md:px-14 md:py-12 shadow-[0_0_60px_rgba(0,0,0,0.4)] overflow-hidden">
+                        <div className="relative w-full rounded-2xl md:rounded-3xl border border-white/10 bg-black/30 backdrop-blur-md px-8 py-10 md:px-14 md:py-12 shadow-[0_0_60px_rgba(0,0,0,0.4)] overflow-hidden">
                             {/* Subtle amber glow top */}
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
                             {/* Corner accents */}
@@ -86,13 +94,13 @@ export default function HomePage() {
                             <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/30 rounded-bl-sm" />
                             <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/30 rounded-br-sm" />
 
-                            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline tracking-tighter mb-4 leading-tight drop-shadow-lg">
-                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-primary/30">
-                                    {t('inicio.title')}
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold font-headline tracking-tighter mb-6 leading-tight drop-shadow-lg">
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-primary/50">
+                                    A Convergência da Excelência Humana com a Arquitetura Cibernética
                                 </span>
                             </h1>
-                            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light italic opacity-70 tracking-tight">
-                                {t('inicio.subtitle')}
+                            <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-light opacity-90">
+                                A <strong>Nexus Holding Group</strong> é o ecossistema definitivo para operações que exigem vanguarda tecnológica. Sob a engenharia estratégica do <strong>Diretor Geanderson</strong>, o grupo atua como a espinha dorsal da inovação corporativa, orquestrando soluções 100% <em>On-Premise</em> através de nossos dois braços de elite:
                             </p>
 
                             {/* Subtle bottom glow */}
@@ -107,7 +115,8 @@ export default function HomePage() {
 
             {/* Section 2: Divisions */}
             <section className="py-16 md:py-24 border-y border-white/5">
-                <div className="container grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+                <div className="container flex flex-col gap-16 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch w-full">
                     
                     {/* Nexus Treinamento */}
                     <div className="relative rounded-2xl md:rounded-3xl border border-primary/15 bg-black/30 backdrop-blur-md p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
@@ -180,6 +189,7 @@ export default function HomePage() {
                         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
                     </div>
                 </div>
+                </div>
             </section>
             
             {/* NEW CTA Section */}
@@ -187,16 +197,19 @@ export default function HomePage() {
                 <div className="container">
                     <Card className="backdrop-blur-md border-2 border-primary/40 p-6 md:p-10 text-center">
                         <CardHeader>
-                            <CardTitle className="font-headline text-4xl lg:text-5xl">
-                                <span className="text-primary">{t('inicio.newCta.title1')}</span>
-                                <span className="text-primary/90 ml-2">{t('inicio.newCta.title2')}</span>
+                            <CardTitle className="font-headline text-4xl lg:text-5xl uppercase tracking-tighter">
+                                <span className="text-foreground">Seu problema,</span>
+                                <span className="text-primary ml-3">nossa engenharia.</span>
                             </CardTitle>
                         </CardHeader>
-                        <CardContent className="max-w-3xl mx-auto space-y-4">
-                             <p className="text-lg md:text-xl text-muted-foreground">
-                                {t('inicio.newCta.description')}
+                        <CardContent className="max-w-3xl mx-auto space-y-6">
+                             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                                Na <strong className="text-primary font-semibold">Nexus Treinamento</strong>, projetamos a tecnologia e a inovação que impulsionam a sua evolução.<br/>
+                                Na <strong className="text-blue-400 font-semibold">Nexus Intelligence</strong>, orquestramos a sua conexão definitiva com o futuro.
                             </p>
-                            <blockquote className="text-xl md:text-2xl font-semibold text-foreground italic">{t('inicio.newCta.quote')}</blockquote>
+                            <blockquote className="text-xl md:text-2xl font-semibold text-foreground italic border-l-4 border-primary pl-6 py-2 text-left">
+                                "Somos a Nexus Holding Group: o ecossistema de elite onde a visão estratégica humana encontra a arquitetura cibernética mais avançada do planeta."
+                            </blockquote>
                         </CardContent>
                         <CardFooter className="justify-center mt-6">
                             <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-500 text-white text-lg font-bold px-8">
@@ -216,7 +229,7 @@ export default function HomePage() {
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
                             <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/40" />
                             <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-primary/40" />
-                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">{t('inicio.pillars.title')}</h2>
+                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">Pilares Soberanos</h2>
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
                         </div>
                     </div>
@@ -225,34 +238,34 @@ export default function HomePage() {
                         <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
                                 <Heart className="mx-auto h-10 w-10 text-primary mb-4" />
-                                <CardTitle className="font-headline">{t('inicio.pillars.humanidade.title')}</CardTitle>
-                                <CardDescription className="font-semibold">{t('inicio.pillars.humanidade.subtitle')}</CardDescription>
+                                <CardTitle className="font-headline">Visão Humana</CardTitle>
+                                <CardDescription className="font-semibold">A bússola da inteligência</CardDescription>
                             </CardHeader>
-                             <CardContent><p className="text-muted-foreground">{t('inicio.pillars.humanidade.description')}</p></CardContent>
+                             <CardContent><p className="text-muted-foreground">A tecnologia deve servir ao potencial humano, ampliando nossa capacidade criativa e estratégica, jamais substituindo a essência do negócio.</p></CardContent>
                         </Card>
                         <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
                                 <Handshake className="mx-auto h-10 w-10 text-primary mb-4" />
-                                <CardTitle className="font-headline">{t('inicio.pillars.respeito.title')}</CardTitle>
-                                <CardDescription className="font-semibold">{t('inicio.pillars.respeito.subtitle')}</CardDescription>
+                                <CardTitle className="font-headline">Soberania de Dados</CardTitle>
+                                <CardDescription className="font-semibold">Controle absoluto</CardDescription>
                             </CardHeader>
-                             <CardContent><p className="text-muted-foreground">{t('inicio.pillars.respeito.description')}</p></CardContent>
+                             <CardContent><p className="text-muted-foreground">Garantimos que o capital intelectual da sua empresa permaneça 100% On-Premise e sob as regras estritas do seu firewall corporativo.</p></CardContent>
                         </Card>
                         <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
                                 <ShieldCheck className="mx-auto h-10 w-10 text-primary mb-4" />
-                                <CardTitle className="font-headline">{t('inicio.pillars.confianca.title')}</CardTitle>
-                                <CardDescription className="font-semibold">{t('inicio.pillars.confianca.subtitle')}</CardDescription>
+                                <CardTitle className="font-headline">Segurança Extrema</CardTitle>
+                                <CardDescription className="font-semibold">Blindagem cibernética</CardDescription>
                             </CardHeader>
-                             <CardContent><p className="text-muted-foreground">{t('inicio.pillars.confianca.description')}</p></CardContent>
+                             <CardContent><p className="text-muted-foreground">Construímos ecossistemas inquebráveis onde a infraestrutura protege as decisões mais críticas e sigilosas da sua operação.</p></CardContent>
                         </Card>
                         <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
                                 <Scale className="mx-auto h-10 w-10 text-primary mb-4" />
-                                <CardTitle className="font-headline">{t('inicio.pillars.etica.title')}</CardTitle>
-                                <CardDescription className="font-semibold">{t('inicio.pillars.etica.subtitle')}</CardDescription>
+                                <CardTitle className="font-headline">Algoritmos Éticos</CardTitle>
+                                <CardDescription className="font-semibold">Decisões imparciais</CardDescription>
                             </CardHeader>
-                             <CardContent><p className="text-muted-foreground">{t('inicio.pillars.etica.description')}</p></CardContent>
+                             <CardContent><p className="text-muted-foreground">Nossas inteligências artificiais operam livres de vieses, focadas exclusivamente na matemática da eficiência, na verdade e no resultado puro.</p></CardContent>
                         </Card>
                     </div>
                 </div>
@@ -266,24 +279,24 @@ export default function HomePage() {
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
                             <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/40" />
                             <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-primary/40" />
-                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">{t('inicio.impulses.title')}</h2>
+                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">Impulsos de Crescimento</h2>
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
                         </div>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
                         <Card className="bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
-                                <CardTitle className="text-primary flex items-center gap-3"><Repeat className="h-7 w-7"/>{t('inicio.impulses.reciprocidade.title')}</CardTitle>
-                                <CardDescription className="font-semibold">{t('inicio.impulses.reciprocidade.subtitle')}</CardDescription>
+                                <CardTitle className="text-primary flex items-center gap-3"><Repeat className="h-7 w-7"/>Reciprocidade Evolutiva</CardTitle>
+                                <CardDescription className="font-semibold">Parceria de Alto Nível</CardDescription>
                             </CardHeader>
-                            <CardContent><p className="text-muted-foreground">{t('inicio.impulses.reciprocidade.description')}</p></CardContent>
+                            <CardContent><p className="text-muted-foreground">Crescemos e evoluímos na exata proporção em que escalamos os lucros, os resultados e a autonomia dos nossos parceiros de negócios.</p></CardContent>
                         </Card>
                          <Card className="bg-transparent backdrop-blur-md border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
-                                <CardTitle className="text-primary flex items-center gap-3"><Sparkles className="h-7 w-7"/>{t('inicio.impulses.vanguarda.title')}</CardTitle>
-                                <CardDescription className="font-semibold">{t('inicio.impulses.vanguarda.subtitle')}</CardDescription>
+                                <CardTitle className="text-primary flex items-center gap-3"><Sparkles className="h-7 w-7"/>Vanguarda Tecnológica</CardTitle>
+                                <CardDescription className="font-semibold">Liderança Pioneira</CardDescription>
                             </CardHeader>
-                            <CardContent><p className="text-muted-foreground">{t('inicio.impulses.vanguarda.description')}</p></CardContent>
+                            <CardContent><p className="text-muted-foreground">Não acompanhamos as tendências. Nós moldamos e desenvolvemos as tecnologias que vão ditar as regras do mercado nas próximas décadas.</p></CardContent>
                         </Card>
                     </div>
                     <div className="mt-20 text-center max-w-4xl mx-auto">
@@ -293,10 +306,16 @@ export default function HomePage() {
                             <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-blue-400/30" />
                             <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/30" />
                             <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/30" />
-                            <div className="space-y-3">
-                                <p className="text-3xl font-semibold text-blue-400 [text-shadow:0_0_20px_rgba(96,165,250,0.4)]">{t('inicio.final.line1')}</p>
-                                <p className="text-3xl font-semibold text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">{t('inicio.final.line2')}</p>
-                                <p className="text-3xl font-bold font-headline text-white">{t('inicio.final.line3')}</p>
+                            <div className="space-y-6">
+                                <p className="text-2xl md:text-3xl font-semibold text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">
+                                    Na Nexus Treinamento, projetamos a tecnologia e a inovação que impulsionam a sua evolução.
+                                </p>
+                                <p className="text-2xl md:text-3xl font-semibold text-blue-400 [text-shadow:0_0_20px_rgba(96,165,250,0.4)]">
+                                    Na Nexus Intelligence, orquestramos a sua conexão definitiva com o futuro.
+                                </p>
+                                <p className="text-2xl md:text-3xl font-bold font-headline text-white mt-8 pt-6 border-t border-white/10">
+                                    Somos a Nexus Holding Group: o ecossistema de elite onde a visão estratégica humana encontra a arquitetura cibernética mais avançada do planeta.
+                                </p>
                             </div>
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
                         </div>

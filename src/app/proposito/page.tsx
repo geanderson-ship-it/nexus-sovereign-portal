@@ -21,17 +21,27 @@ export default function PropositoPage() {
 
       <div className="relative z-10">
 
-      <main className="pt-32 md:pt-48 pb-20 mt-8 md:mt-12">
+      <main className="pt-20 md:pt-24 pb-20">
         
         {/* HERO SECTION */}
-        <section className="relative px-4 py-20 overflow-hidden">
+        <section className="relative px-4 pb-16 pt-0 overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
             <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-rose-600/20 rounded-full blur-[120px] opacity-50" />
             <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] opacity-40" />
           </div>
 
           <div className="max-w-5xl mx-auto relative z-10 text-center">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black font-headline tracking-tight text-white mb-6 pt-8">
+            
+            {/* Aurora Video Presentation */}
+            <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(225,29,72,0.2)] bg-black/50 mb-12">
+              <video 
+                src="/social/Aurora_-_Social..mp4" 
+                controls
+                className="w-full h-auto aspect-video object-cover"
+              />
+            </div>
+
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black font-headline tracking-tight text-white mb-6">
               Pessoas Vêm <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-600 drop-shadow-[0_0_20px_rgba(225,29,72,0.4)]">Primeiro</span>.<br />
               O Resultado é Consequência.
             </h1>

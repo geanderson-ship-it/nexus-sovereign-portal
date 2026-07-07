@@ -31,12 +31,15 @@ function TextLogo() {
                         pathname?.includes('/nexus-empresas');
 
   return (
-    <div className="flex flex-col items-start md:items-center">
-      <span className="font-headline uppercase flex flex-col md:flex-row items-start md:items-center gap-0 md:gap-3 leading-tight md:leading-normal">
-        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600 drop-shadow-[0_0_20px_rgba(37,99,235,0.6)] text-2xl sm:text-4xl tracking-[0.15em] md:tracking-[0.2em]">
+    <div className="flex flex-col items-start md:items-center relative group cursor-pointer">
+      {/* Efeito UAU de Brilho Fundo */}
+      <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/0 via-blue-500/30 to-blue-600/0 blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000 pointer-events-none"></div>
+      
+      <span className="font-headline uppercase flex flex-col md:flex-row items-start md:items-center gap-0 md:gap-3 leading-tight md:leading-normal relative z-10 transition-all duration-500 group-hover:scale-105">
+        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.9)] text-3xl sm:text-5xl tracking-[0.15em] md:tracking-[0.2em]">
           Nexus
         </span>
-        <span className="font-light text-white/90 tracking-[0.15em] sm:tracking-[0.2em] text-[10px] sm:text-2xl mt-0 md:mt-0.5 whitespace-nowrap drop-shadow-sm">
+        <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-3xl mt-0 md:mt-1 whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
           {isPremiumPath ? 'Holding Group' : 'Treinamento'}
         </span>
       </span>
@@ -252,7 +255,7 @@ export function SiteHeader() {
           </div>
 
           {/* Mobile Menu Trigger (Hamburger) */}
-          <div className="md:hidden flex items-center ml-2 relative z-[60]">
+          <div className="xl:hidden flex items-center ml-2 relative z-[60]">
             <Button variant="outline" size="sm" className="h-10 w-10 p-0 border-white/20 bg-black/50 text-white hover:bg-white/10 hover:text-white" onClick={() => setMobileMenuOpen(true)}>
               <Menu className="h-6 w-6" />
               <span className="sr-only">Toggle menu</span>
@@ -263,7 +266,7 @@ export function SiteHeader() {
         </div>
 
         {/* BOTTOM ROW: Navigation Menus (Desktop Only) */}
-        <nav className="hidden xl:flex justify-center items-center gap-x-2 gap-y-2 mt-4 text-[10px] xl:text-[11px] 2xl:text-[12px] flex-nowrap w-full pb-2 px-4 whitespace-nowrap overflow-x-auto no-scrollbar">
+        <nav className="hidden xl:flex justify-center items-center gap-x-3 2xl:gap-x-5 gap-y-2 mt-5 text-[11px] xl:text-[12px] 2xl:text-[14px] flex-nowrap w-full pb-2 px-4 whitespace-nowrap overflow-x-auto no-scrollbar">
             {mainNav.map((item) => {
               return (
                 <Link
@@ -272,24 +275,24 @@ export function SiteHeader() {
                   className={cn(
                     'transition-all duration-300',
                     item.href === '/inovamoda'
-                      ? 'bg-purple-500/10 border border-purple-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:bg-purple-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:bg-purple-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/inova-revenda'
-                      ? 'bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/vitrine-inovadora'
-                      ? 'bg-pink-500/10 border border-pink-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:bg-pink-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-pink-500/10 border border-pink-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:bg-pink-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/energia'
-                      ? 'bg-amber-600/10 border border-amber-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-600/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-amber-600/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-600/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/nexus-empresas'
-                      ? 'bg-cyan-600/10 border border-cyan-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-cyan-600/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-cyan-600/10 border border-cyan-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-cyan-600/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/agro'
-                      ? 'bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/intelligence/premium'
-                      ? 'bg-violet-500/10 border border-violet-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/nexus-rotas'
-                      ? 'bg-teal-500/10 border border-teal-500/30 px-2 py-1 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold uppercase tracking-widest'
+                      ? 'bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold uppercase tracking-widest'
                       : pathname === item.href 
-                        ? 'bg-primary/10 border border-primary/30 px-2 py-1 rounded-md shadow-[0_0_10px_rgba(37,99,235,0.15)] text-foreground font-semibold' 
-                        : 'bg-white/5 border border-white/5 px-2 py-1 rounded-md hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium'
+                        ? 'bg-primary/10 border border-primary/30 px-3 py-1.5 rounded-md shadow-[0_0_10px_rgba(37,99,235,0.15)] text-foreground font-semibold' 
+                        : 'bg-white/5 border border-white/5 px-3 py-1.5 rounded-md hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium'
                   )}
                 >
                   {item.title}
