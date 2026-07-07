@@ -21,7 +21,9 @@ import {
   X,
   ThumbsUp,
   ThumbsDown,
-  Crown
+  Crown,
+  User,
+  Bot
 } from 'lucide-react';
 import { IAPaymentModal } from './ia-payment-modal';
 import Link from 'next/link';
@@ -150,13 +152,55 @@ export function MagaOSModule() {
 
   return (
     <div className="max-w-5xl mx-auto h-[85vh] flex flex-col relative animate-in fade-in duration-1000">
-      {/* 
-        A INJEÇÃO DO MANIFESTO ACONTECE AQUI.
-        Neste cenário, estamos assumindo que quem chega nesta tela e não está na Trial Gate já pagou pelo acesso VIP.
-        Se fosse uma tela pública, envolveríamos com if(hasPurchasedAtena).
-      */}
       {user && <PWAManifestInjector manifestUrl="/atena-manifest.json" />}
-      
+
+      {/* HEADER MOVIDO PARA CIMA (FORA DA IMAGEM DO AVATAR) */}
+      <motion.div 
+        animate={{ opacity: zenMode ? 0 : 1, y: zenMode ? -20 : 0 }}
+        className={cn(
+          "flex justify-between items-center px-6 py-6 bg-slate-950/60 backdrop-blur-xl border border-white/10 rounded-t-3xl relative z-20 shadow-2xl transition-all",
+          zenMode && "pointer-events-none"
+        )}
+      >
+        {/* Left Side */}
+        <div className="flex flex-col flex-1 md:w-1/3 md:flex-none">
+          <h1 className="text-2xl md:text-4xl font-headline font-medium text-white tracking-[0.4em] md:tracking-[0.8em] drop-shadow-2xl uppercase opacity-60">Nexus</h1>
+          <p className="text-[10px] font-mono text-white/20 tracking-[1.2em] uppercase font-light hidden md:block mt-1">Maga // Conexão Humana</p>
+        </div>
+        
+        {/* Center: Mode Toggle */}
+        <div className="hidden md:flex items-center justify-center w-1/3">
+          <div className="flex items-center gap-1 bg-slate-900/80 p-1.5 rounded-xl border border-yellow-500/20 shadow-[0_0_15px_rgba(234,179,8,0.1)] backdrop-blur-md">
+            <Button variant="ghost" size="sm" className="text-slate-500 hover:text-slate-300 font-mono text-[10px] tracking-widest px-4 py-1.5 rounded-lg transition-all h-8">
+              <User className="w-3.5 h-3.5 mr-2" /> LIVE AVATAR
+            </Button>
+            <Button variant="ghost" size="sm" className="bg-yellow-500/10 text-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.2)] font-mono text-[10px] tracking-widest px-4 py-1.5 rounded-lg transition-all border border-yellow-500/30 h-8">
+              <Bot className="w-3.5 h-3.5 mr-2" /> CHAT
+            </Button>
+          </div>
+        </div>
+
+        {/* Right Side */}
+        <div className="flex gap-2 justify-end flex-1 md:w-1/3 md:flex-none">
+          <Badge variant="outline" className="border-white/10 text-white/40 bg-white/5 backdrop-blur-2xl uppercase tracking-widest px-4 py-1 hidden lg:inline-flex">
+            CONEXÃO ESTÁVEL
+          </Badge>
+          {isSpeaking && (
+            <Badge className="bg-blue-600/20 text-blue-400 border-blue-500 animate-pulse font-black uppercase tracking-widest px-4 py-1">
+              <Volume2 className="h-3 w-3 mr-2" /> <span>RHETORIC_ON</span>
+            </Badge>
+          )}
+          <Button 
+            size="sm" 
+            onClick={() => setIsPaymentModalOpen(true)}
+            className="bg-gradient-to-r from-amber-500 to-yellow-600 text-black font-bold border-none hover:scale-105 transition-all gap-2"
+          >
+            <Crown className="h-4 w-4" /> UPGRADE VIP
+          </Button>
+        </div>
+      </motion.div>
+
+      <div className="flex-1 relative flex flex-col overflow-hidden rounded-b-3xl border-x border-b border-white/10 shadow-2xl bg-slate-950/40">
       {/* MAGA HERO AVATAR (BACKGROUND/CENTER) */}
       <div 
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0 cursor-pointer pointer-events-auto"
@@ -234,58 +278,22 @@ export function MagaOSModule() {
           )}
 
           {/* Reactive Aura */}
-          <AnimatePresence>
-            {isSpeaking && (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 0.4, scale: 1.3 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 rounded-full bg-blue-500/20 blur-[120px]"
-              />
-            )}
-          </AnimatePresence>
+          <motion.div 
+            animate={{ opacity: isSpeaking ? 0.4 : 0, scale: isSpeaking ? 1.3 : 0.8 }}
+            className="absolute inset-0 rounded-full bg-blue-500/20 blur-[120px] pointer-events-none transition-all duration-500"
+          />
         </motion.div>
       </div>
 
       {/* OVERLAY: CHAT HISTORY (HUD STYLE) */}
-      <AnimatePresence>
-        {!zenMode && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex-1 overflow-hidden relative z-10 flex flex-col pt-12 pointer-events-none"
-          >
-            <div className="flex justify-between items-center px-6 mb-4 pointer-events-auto">
-              <div className="flex flex-col">
-                <h1 className="text-4xl font-headline font-medium text-white tracking-[0.8em] drop-shadow-2xl uppercase opacity-60">Nexus</h1>
-                <p className="text-[10px] font-mono text-white/20 tracking-[1.2em] uppercase font-light">Maga // Conexão Humana</p>
-              </div>
-              <div className="flex gap-2">
-                <Badge variant="outline" className="border-white/10 text-white/40 bg-white/5 backdrop-blur-2xl uppercase tracking-widest px-4 py-1">
-                  CONEXÃO ESTÁVEL
-                </Badge>
-                {isSpeaking && (
-                  <Badge className="bg-blue-600/20 text-blue-400 border-blue-500 animate-pulse font-black uppercase tracking-widest px-4 py-1">
-                    <Volume2 className="h-3 w-3 mr-2" /> RHETORIC_ON
-                  </Badge>
-                )}
-                <Link href="/intelligence/maga-live">
-                  <Button size="sm" variant="outline" className="border-blue-500/50 text-blue-400 bg-blue-500/10 hover:bg-blue-500 hover:text-white transition-all gap-2">
-                    <Activity className="h-4 w-4" /> MAGA LIVE
-                  </Button>
-                </Link>
-                <Button 
-                  size="sm" 
-                  onClick={() => setIsPaymentModalOpen(true)}
-                  className="bg-gradient-to-r from-amber-500 to-yellow-600 text-black font-bold border-none hover:scale-105 transition-all gap-2"
-                >
-                  <Crown className="h-4 w-4" /> UPGRADE VIP
-                </Button>
-              </div>
-            </div>
-
-            <ScrollArea className="flex-1 px-6 pb-4 pointer-events-auto" ref={scrollRef}>
+      <motion.div 
+        animate={{ opacity: zenMode ? 0 : 1 }}
+        className={cn(
+          "flex-1 overflow-hidden relative z-10 flex flex-col pointer-events-none transition-all duration-500",
+          zenMode && "invisible"
+        )}
+      >
+            <ScrollArea className="flex-1 px-6 pb-4 pt-6 pointer-events-auto" ref={scrollRef}>
               <div className="space-y-8 max-w-3xl mx-auto">
                 {messages.map((msg, idx) => (
                   <motion.div 
@@ -321,7 +329,7 @@ export function MagaOSModule() {
                               <Image src={msg.image} alt="Attachment" width={300} height={200} className="object-cover" />
                             </div>
                           )}
-                          <p className="font-mono text-sm leading-relaxed">{msg.text}</p>
+                          <p className="font-mono text-sm leading-relaxed"><span>{msg.text}</span></p>
                           
                           {/* Feedback Icons for Model responses */}
                           {msg.role === 'model' && (
@@ -336,7 +344,7 @@ export function MagaOSModule() {
                           )}
                         </div>
                         <span className="text-[9px] font-mono text-gray-600 uppercase tracking-widest px-2">
-                          {msg.role === 'user' ? (user?.displayName || 'Comandante') : 'Maguinha'}
+                          <span>{msg.role === 'user' ? (user?.displayName || 'Comandante') : 'Maguinha'}</span>
                         </span>
                       </div>
                     </div>
@@ -345,44 +353,42 @@ export function MagaOSModule() {
                 
                 {isLoading && (
                   <div className="flex items-center gap-3 text-blue-400/60 font-mono text-[10px] animate-pulse">
-                    <Loader2 className="h-3 w-3 animate-spin" /> PROCESSANDO MATRIZ DE PENSAMENTO...
+                    <Loader2 className="h-3 w-3 animate-spin" /> <span>PROCESSANDO MATRIZ DE PENSAMENTO...</span>
                   </div>
                 )}
               </div>
             </ScrollArea>
           </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* INPUT COMMAND BAR (BOTTOM) */}
-      <AnimatePresence>
-        {!zenMode && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="p-6 relative z-20"
-          >
+      <motion.div 
+        animate={{ opacity: zenMode ? 0 : 1, y: zenMode ? 20 : 0 }}
+        className={cn(
+          "p-6 relative z-20 transition-all duration-500",
+          zenMode && "pointer-events-none invisible"
+        )}
+      >
             <div className="max-w-4xl mx-auto relative group">
               
               {/* Preview Image */}
-              <AnimatePresence>
+              <motion.div 
+                animate={{ opacity: attachedImage ? 1 : 0, y: attachedImage ? 0 : 10 }}
+                className={cn(
+                  "absolute bottom-full left-0 mb-4 p-2 bg-zinc-900 border border-blue-500/30 rounded-lg flex items-center gap-3 shadow-2xl backdrop-blur-xl transition-all duration-300",
+                  !attachedImage && "pointer-events-none"
+                )}
+              >
                 {attachedImage && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute bottom-full left-0 mb-4 p-2 bg-zinc-900 border border-blue-500/30 rounded-lg flex items-center gap-3 shadow-2xl backdrop-blur-xl"
-                  >
+                  <div className="flex items-center gap-3 w-full">
                     <div className="relative h-16 w-16 rounded overflow-hidden">
                       <Image src={attachedImage} alt="Preview" fill className="object-cover" />
                     </div>
                     <button onClick={() => setAttachedImage(null)} className="p-1 hover:bg-white/10 rounded-full transition-colors text-gray-400">
                       <X className="h-4 w-4" />
                     </button>
-                  </motion.div>
+                  </div>
                 )}
-              </AnimatePresence>
+              </motion.div>
 
               <form 
                 onSubmit={handleSendMessage}
@@ -438,23 +444,15 @@ export function MagaOSModule() {
               </form>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Background Grid/Matrix effect */}
-      <AnimatePresence>
-        {!zenMode && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.2 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 z-[-1] pointer-events-none"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
-            <div className="h-full w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <motion.div 
+        animate={{ opacity: zenMode ? 0 : 0.2 }}
+        className="absolute inset-0 z-[-1] pointer-events-none transition-opacity duration-500"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
+        <div className="h-full w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]" />
+      </motion.div>
 
       <IAPaymentModal 
         isOpen={isPaymentModalOpen}
@@ -462,6 +460,7 @@ export function MagaOSModule() {
         iaName="Magadot Premium"
         pixKey={MAGA_PIX_KEY}
       />
+      </div>
     </div>
   );
 }

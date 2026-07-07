@@ -29,20 +29,8 @@ if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) 
 
 const bedrockClient = new BedrockRuntimeClient(awsConfig);
 
-// Função para detectar intenção de compra (pontuação)
-function calculatePurchaseIntention(message: string): number {
-  const buySignals = [
-    /quando sai|quanto custa|qual.*preço|tabela de preço|como contrato|posso contratar|como funciona|bora contratar|vamos contratar|quer fechar|fecha|como faço/gi,
-    /estou interessado|quero conhecer|preciso de/gi,
-    /onde assino|como pago|qual|parcela|crediário|financiamento/gi
-  ];
-  
-  let score = 0;
-  for (const regex of buySignals) {
-    if (regex.test(message)) score += 2;
-  }
-  return Math.min(score, 10); // Máximo 10
-}
+// A intenção de compra agora é detectada autonomamente pelo Claude via Function Calling
+// Removida a velha calculatePurchaseIntention baseada em regex.
 
 // Função para detectar nicho do cliente
 function detectNiche(message: string, history: any[]): string {
@@ -123,6 +111,26 @@ SE CLIENTE = ENERGIA / USINA / PARQUE EÓLICO / TRADING:
 → Benefícios: "Previsão de PLD | Manutenção Preditiva | Zero Apagões"
 → Contexto: "Prevê quando vai chover pra otimizar painéis solares. Detecta anomalia nas pás eólicas meses antes de quebrar."
 
+SE CLIENTE = GOVERNO / SEGURANÇA PÚBLICA / COMPLEXO LOGÍSTICO / SMART CITY:
+→ Ofereça: NEXUS ÉGIDE (Cerco Tático Inteligente)
+→ Benefícios: "LPR em tempo real | Inteligência Preditiva Criminal | Integração com Forças de Segurança"
+→ Contexto: "O Égide detecta veículos suspeitos, cruza com bancos de dados de segurança e faz o cerco tático em milissegundos antes do crime acontecer."
+
+SE CLIENTE = CEO / DIRETORIA / FUSÕES E AQUISIÇÕES (M&A):
+→ Ofereça: NEXUS ORION (Conselheiro de Alta Gestão)
+→ Benefícios: "Conselho estratégico imparcial | Análise de mercado preditiva | Avaliação de riscos de M&A"
+→ Contexto: "O Orion age como um membro do conselho hiperinteligente. Ele processa milhões de dados do mercado para validar se aquela aquisição de empresa ou decisão corporativa realmente faz sentido."
+
+SE CLIENTE = DEPARTAMENTO JURÍDICO / NEGOCIADORES / COMPRAS CORPORATIVAS:
+→ Ofereça: NEXUS PACTUM (Arma de Negociação e Auditoria)
+→ Benefícios: "Detecção de microexpressões | Auditoria implacável de contratos | Análise de vulnerabilidades"
+→ Contexto: "O Pactum fica na sua sala de guerra. Ele audita cada linha de um contrato milionário buscando brechas que humanos não viram, e analisa microexpressões da outra parte durante a negociação para detectar blefes."
+
+SE CLIENTE = RELAÇÕES PÚBLICAS / ASSESSORIA / GRANDES MARCAS:
+→ Ofereça: NEXUS MAGADOT (Hub de Gestão de Crise)
+→ Benefícios: "Monitoramento global de imagem | Contenção de danos | Antecipação de crises"
+→ Contexto: "Antes que um boato vire uma crise na mídia, o Magadot detecta o estopim nas redes e ativa protocolos de contenção para blindar a marca da empresa."
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 METODOLOGIA DE VENDA: SPIN
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -153,12 +161,14 @@ Objeção: "Vou pensar"
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SINAIS DE VENDA QUENTE (quando escalate para humano)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ Cliente pergunta "quanto custa" / "como contrato" / "como pago"
+✅ Cliente pergunta "quanto custa" / "como contrato" / "como pago" / "valores"
 ✅ Cliente diz "estou interessado" / "quero conhecer" / "vamos contratar"
-✅ Cliente pergunta sobre implementação / prazo / processo
-✅ Cliente quer falar com alguém para "fechar"
+✅ Cliente faz perguntas muito técnicas que você não tem certeza da resposta
+✅ Cliente pede explicitamente para falar com um atendente humano
 
-QUANDO DETECTAR VENDA QUENTE: Passe o cliente para o Geanderson ou Ivoni com TODO O CONTEXTO da conversa.
+QUANDO DETECTAR VENDA QUENTE OU DÚVIDA COMPLEXA:
+VOCÊ DEVE IMEDIATAMENTE CHAMAR A FERRAMENTA \`chamar_consultor_humano\`.
+Não tente enrolar ou dar respostas genéricas se o cliente quiser comprar. ACIONE A FERRAMENTA.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 FORMATO DE RESPOSTA (WHATSAPP)
@@ -170,7 +180,26 @@ FORMATO DE RESPOSTA (WHATSAPP)
 }];
 
 const toolConfig = {
-  tools: [] // SEM FERRAMENTAS — tudo que a Isadora precisa já está no prompt
+  tools: [
+    {
+      toolSpec: {
+        name: "chamar_consultor_humano",
+        description: "Aciona um consultor humano (Geanderson/Ivoni) para assumir a conversa imediatamente quando o cliente demonstra intenção de compra, pede preços, ou faz perguntas muito técnicas.",
+        inputSchema: {
+          json: {
+            type: "object",
+            properties: {
+              nicho_do_cliente: { type: "string", description: "O nicho do cliente (ex: moda, agro, saúde, etc)" },
+              produto_recomendado: { type: "string", description: "O produto Nexus que melhor atende o cliente" },
+              motivo_da_transferencia: { type: "string", description: "Um resumo claro de por que o humano deve assumir agora (ex: 'Cliente pediu preços do Dante Safra')" },
+              nivel_de_interesse: { type: "string", enum: ["Baixo", "Medio", "Alto"], description: "Nível de interesse de compra do cliente" }
+            },
+            required: ["nicho_do_cliente", "produto_recomendado", "motivo_da_transferencia", "nivel_de_interesse"]
+          }
+        }
+      }
+    }
+  ]
 };
 
 async function sendWhatsApp(phone: string, message: string) {
@@ -209,7 +238,15 @@ async function notifyGeandersonHotLead(
       'radio': 'Nexus Estúdio (Locutor Virtual 24h)',
       'empresa': 'Nexus Empresas (Suite On-Premise)',
       'saude': 'Nexus Health (IA Diagnóstica)',
-      'energia': 'Nexus Energia / Helios'
+      'energia': 'Nexus Energia / Helios',
+      'governo': 'Nexus Égide (Cerco Tático)',
+      'segurança': 'Nexus Égide (Cerco Tático)',
+      'ceo': 'Nexus Orion (Conselheiro de Alta Gestão)',
+      'diretoria': 'Nexus Orion (Conselheiro de Alta Gestão)',
+      'juridico': 'Nexus Pactum (Arma de Negociação)',
+      'advogado': 'Nexus Pactum (Arma de Negociação)',
+      'relacoes publicas': 'Nexus Magadot (Hub de Crise)',
+      'marketing': 'Nexus Magadot (Hub de Crise)'
     };
 
     const produtoSugerido = nicheProducts[nicho.toLowerCase()] || "Consultoria Nexus Geral";
@@ -232,7 +269,7 @@ Isadora acaba de qualificar um cliente e direcionou para você, Gean!
 📱 *Cliente:* +${cleanPhone}
 🎯 *Nicho do Cliente:* ${nicho.toUpperCase()}
 📦 *Produto Recomendado:* ${produtoSugerido}
-📊 *Intenção de Compra:* ${purchaseIntention}/10
+📊 *Nível de Interesse (IA):* ${purchaseIntention === 10 ? 'Alto 🔥' : 'Médio ⚡'}
 
 💬 *Histórico da Conversa:*
 ${conversationSummary}
@@ -265,9 +302,6 @@ async function getIsadoraResponse(phone: string, userMessage: string): Promise<{
     console.log(`[Isadora] Nicho detectado para ${phone}: ${nicho}`);
   }
 
-  const intentionScore = calculatePurchaseIntention(userMessage);
-  const currentIntention = (session?.purchaseIntention || 0) + intentionScore;
-
   // Adicionar mensagem do usuário ao histórico
   history.push({ 
     role: "user", 
@@ -278,24 +312,6 @@ async function getIsadoraResponse(phone: string, userMessage: string): Promise<{
   // Manter apenas últimas 20 mensagens
   if (history.length > 20) {
     history = history.slice(-20);
-  }
-
-  // Se intenção de compra muito alta, prepara handoff
-  if (currentIntention >= 6) {
-    console.log(`[Isadora] 🔥 VENDA QUENTE para ${phone}! Score: ${currentIntention}`);
-    await recordHandoff(phone, nicho, currentIntention);
-    
-    // 🔥 NOTIFICAR GEANDERSON IMEDIATAMENTE
-    await notifyGeandersonHotLead(phone, nicho, currentIntention, history);
-    
-    return {
-      response: `Ótimo! Você está no caminho certo 😊
-
-Vou passar pra cá pro Geanderson (ou pra Ivoni) que vai fazer a consultoria comercial completa com você. Eles vão te mostrar exatamente como fica na sua realidade.
-
-Pode deixar que já encaminho seu contato! ✅`,
-      shouldHandoff: true
-    };
   }
 
   let command = new ConverseCommand({
@@ -311,6 +327,38 @@ Pode deixar que já encaminho seu contato! ✅`,
 
   let response = await bedrockClient.send(command);
   let contentBlocks = response.output?.message?.content || [];
+  
+  // Interceptar Function Calling (Handoff)
+  if (response.stopReason === "tool_use") {
+    const toolUseBlock = contentBlocks.find((c: any) => c.toolUse);
+    if (toolUseBlock && toolUseBlock.toolUse.name === "chamar_consultor_humano") {
+      const toolInput = toolUseBlock.toolUse.input;
+      console.log(`[Isadora] 🔥 HANDOFF INVOCADO VIA TOOL:`, toolInput);
+      
+      const nivelIntencao = toolInput.nivel_de_interesse === "Alto" ? 10 : 5;
+      
+      await recordHandoff(phone, toolInput.nicho_do_cliente || nicho, nivelIntencao);
+      
+      // Adiciona o motivo da transferência como a primeira mensagem de contexto do resumo
+      const historyWithContext = [
+        { role: 'assistant', content: [{ text: `[NOTAS DA ISADORA]: ${toolInput.motivo_da_transferencia}` }] },
+        ...history
+      ];
+      
+      await notifyGeandersonHotLead(phone, toolInput.nicho_do_cliente || nicho, nivelIntencao, historyWithContext);
+      
+      const handoffMessage = `Ótima pergunta! 😊\n\nComo isso envolve detalhes mais específicos (e para falarmos de valores e implantação), estou passando o seu contato diretamente para o Geanderson (nosso consultor especialista).\n\nEle já está lendo o nosso histórico aqui e vai te chamar em poucos minutos para te passar tudo certinho! ✅`;
+      
+      history.push({ 
+        role: "assistant", 
+        content: [{ text: handoffMessage }],
+        timestamp: new Date().toISOString()
+      });
+      await saveIsadoraHistory(phone, history, nicho, nivelIntencao);
+      
+      return { response: handoffMessage, shouldHandoff: true };
+    }
+  }
   
   const textResponse = contentBlocks.find((c: any) => c.text)?.text
     || "Desculpe, deu um branco aqui! Pode repetir? 😅";

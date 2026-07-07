@@ -34,7 +34,11 @@ export function CustomVideoPlayer({ src, className, containerClassName, ...props
     }
   }, []);
 
-  const togglePlay = () => {
+  const togglePlay = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
     if (videoRef.current) {
       if (videoRef.current.paused) {
         // Unmute automatically on first user interaction if they hit play
@@ -50,6 +54,7 @@ export function CustomVideoPlayer({ src, className, containerClassName, ...props
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);

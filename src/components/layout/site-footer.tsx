@@ -3,12 +3,19 @@
 import Link from 'next/link';
 import { Youtube, Facebook, Mail } from 'lucide-react';
 import { useLocale } from '@/hooks/use-locale';
+import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
 export function SiteFooter() {
   const { t } = useLocale();
 
   return (
-    <footer className="border-t border-border/40 py-6 md:py-8 relative z-50 mt-12">
+    <footer className="border-t border-border/40 py-6 md:py-8 relative z-50 mt-12 space-y-12">
+      
+      {/* Salvaguarda Jurídica Global Nexus */}
+      <div className="container">
+        <LegalSafeguard />
+      </div>
+
       <div className="container flex flex-col items-center justify-between gap-6 bg-black/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
         <div className="flex flex-col items-center gap-5">
             <div className="flex flex-col items-center">

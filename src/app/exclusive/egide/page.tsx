@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
@@ -13,6 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { 
   Shield, 
   ShieldAlert, 
+  ShieldCheck,
   Eye, 
   Radio, 
   Bell, 
@@ -30,7 +33,7 @@ import {
   Zap, 
   ArrowLeft, 
   Compass, 
-  CheckCircle2 
+  CheckCircle2
 } from 'lucide-react';
 import { WhiteLabelHeader } from '@/components/nexus/white-label-header';
 
@@ -68,13 +71,10 @@ export default function EgidePage() {
 
   useEffect(() => {
     if (!isUserLoading) {
-      if (!user || !isAdminUser(user)) {
-        router.push('/login');
-      } else {
-        setIsAuthorized(true);
-      }
+      // Liberando acesso para funcionar como Showcase (Demonstração)
+      setIsAuthorized(true);
     }
-  }, [user, isUserLoading, router]);
+  }, [isUserLoading]);
 
   const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
   const [selectedViatura, setSelectedViatura] = useState<Viatura | null>(null);
@@ -522,73 +522,179 @@ export default function EgidePage() {
         <div className="absolute inset-0 bg-red-950/15 pointer-events-none z-0 transition-colors duration-500 animate-pulse border-4 border-red-500/30" />
       )}
 
-      {/* AMBIENTE */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-950/5 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-950/5 rounded-full blur-[150px]" />
+      {/* BACKGROUND EFFECTS PREMIUM (ÉGIDE) */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#02040A]">
         
-        {/* Marca d'água premium do logotipo Nexus Édge em tamanho total da tela */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.055] mix-blend-overlay">
-          <Image 
-            src="/Nexus Intelligence Édge/Nexus Intelligence Édgi.png" 
-            alt="Nexus Édge Logo Watermark" 
-            fill
-            className="object-contain p-4 sm:p-12 filter grayscale invert"
-            priority
-          />
+        {/* Radar HUD Tático de Alta Resolução (Estilo Exclusive) */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-70 mix-blend-screen pointer-events-none">
+           
+           {/* SVG Gerado Dinamicamente: HUD Completo */}
+           <div className="absolute inset-0" 
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='1000' height='1000' viewBox='0 0 1000 1000' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3CradialGradient id='glow' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%233b82f6' stop-opacity='0.1'/%3E%3Cstop offset='100%25' stop-color='%233b82f6' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='1000' height='1000' fill='url(%23glow)'/%3E%3Cline x1='500' y1='0' x2='500' y2='1000' stroke='%233b82f6' stroke-width='1' opacity='0.3'/%3E%3Cline x1='0' y1='500' x2='1000' y2='500' stroke='%233b82f6' stroke-width='1' opacity='0.3'/%3E%3Cline x1='146' y1='146' x2='853' y2='853' stroke='%233b82f6' stroke-width='1' opacity='0.1'/%3E%3Cline x1='146' y1='853' x2='853' y2='146' stroke='%233b82f6' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='500' cy='500' r='100' fill='none' stroke='%233b82f6' stroke-width='1' opacity='0.4'/%3E%3Ccircle cx='500' cy='500' r='200' fill='none' stroke='%233b82f6' stroke-width='1' opacity='0.2' stroke-dasharray='5 5'/%3E%3Ccircle cx='500' cy='500' r='300' fill='none' stroke='%233b82f6' stroke-width='1' opacity='0.4'/%3E%3Ccircle cx='500' cy='500' r='400' fill='none' stroke='%233b82f6' stroke-width='1' opacity='0.2' stroke-dasharray='10 15'/%3E%3Ccircle cx='500' cy='500' r='450' fill='none' stroke='%233b82f6' stroke-width='2' opacity='0.5'/%3E%3Ccircle cx='500' cy='500' r='460' fill='none' stroke='%233b82f6' stroke-width='10' opacity='0.3' stroke-dasharray='2 22'/%3E%3Ccircle cx='500' cy='500' r='470' fill='none' stroke='%233b82f6' stroke-width='4' opacity='0.5' stroke-dasharray='1 5.8'/%3E%3Cpath d='M 500 50 A 450 450 0 0 1 818 181' fill='none' stroke='%2360a5fa' stroke-width='6' opacity='0.8'/%3E%3Cpath d='M 181 818 A 450 450 0 0 1 50 500' fill='none' stroke='%2360a5fa' stroke-width='6' opacity='0.8'/%3E%3Ctext x='510' y='60' fill='%2360a5fa' font-family='monospace' font-size='14' opacity='0.8'%3EAZIMUTH 000°%3C/text%3E%3Ctext x='830' y='170' fill='%2360a5fa' font-family='monospace' font-size='14' opacity='0.8'%3ESEC-NX-01%3C/text%3E%3Ctext x='510' y='210' fill='%2360a5fa' font-family='monospace' font-size='12' opacity='0.6'%3ERANGE 200KM%3C/text%3E%3Ctext x='510' y='310' fill='%2360a5fa' font-family='monospace' font-size='12' opacity='0.6'%3ERANGE 300KM%3C/text%3E%3Ctext x='510' y='410' fill='%2360a5fa' font-family='monospace' font-size='12' opacity='0.6'%3ERANGE 400KM%3C/text%3E%3Ctext x='100' y='490' fill='%2360a5fa' font-family='monospace' font-size='14' opacity='0.8'%3EWEST SECTOR DETECT%3C/text%3E%3Cpath d='M 480 500 L 520 500 M 500 480 L 500 520' stroke='%23ffffff' stroke-width='2' opacity='0.8'/%3E%3C/svg%3E")`,
+               backgroundSize: '100vmin 100vmin',
+               backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat'
+             }} 
+           />
+
+           {/* Efeito Sonar: Ondas de Radar Expandindo */}
+           <style>{`
+             @keyframes radar-expand {
+               0% { transform: translate(-50%, -50%) scale(0); opacity: 0.8; }
+               100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+             }
+             .animate-radar-expand-1 { animation: radar-expand 6s cubic-bezier(0.1, 0.5, 0.2, 1) infinite; }
+             .animate-radar-expand-2 { animation: radar-expand 6s cubic-bezier(0.1, 0.5, 0.2, 1) infinite 2s; }
+             .animate-radar-expand-3 { animation: radar-expand 6s cubic-bezier(0.1, 0.5, 0.2, 1) infinite 4s; }
+           `}</style>
+           
+           <div className="absolute top-1/2 left-1/2 w-[100vmin] h-[100vmin] border-2 border-blue-500 rounded-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0)_50%,rgba(59,130,246,0.3)_100%)] animate-radar-expand-1 pointer-events-none" />
+           <div className="absolute top-1/2 left-1/2 w-[100vmin] h-[100vmin] border-2 border-blue-500 rounded-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0)_50%,rgba(59,130,246,0.3)_100%)] animate-radar-expand-2 pointer-events-none" />
+           <div className="absolute top-1/2 left-1/2 w-[100vmin] h-[100vmin] border-2 border-blue-500 rounded-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0)_50%,rgba(59,130,246,0.3)_100%)] animate-radar-expand-3 pointer-events-none" />
+           
+           {/* Radar Ping Pulse no centro */}
+           <div className="absolute top-1/2 left-1/2 w-4 h-4 -translate-x-1/2 -translate-y-1/2">
+             <span className="absolute inset-0 animate-ping rounded-full bg-blue-400 opacity-75 duration-1000"></span>
+             <span className="relative flex h-full w-full rounded-full bg-blue-500 shadow-[0_0_20px_#3b82f6]"></span>
+           </div>
+           
+           {/* Pontos de Inteligência (Alvos Terrestres/Veículos) */}
+           <div className="absolute top-1/2 left-1/2 w-[100vmin] h-[100vmin] -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+             {/* Alvo 1 */}
+             <div className="absolute top-[30%] left-[75%] flex flex-col items-center justify-center">
+               <div className="relative flex items-center justify-center mb-1">
+                 <span className="absolute h-6 w-6 animate-ping rounded-full bg-red-500 opacity-75"></span>
+                 <span className="relative h-2 w-2 rounded-full bg-red-600 shadow-[0_0_15px_#ef4444]"></span>
+               </div>
+               <span className="text-red-500 font-mono text-[8px] opacity-80">LPR-NX1</span>
+             </div>
+             
+             {/* Alvo 2 */}
+             <div className="absolute top-[80%] left-[45%] flex flex-col items-center justify-center">
+               <div className="relative flex items-center justify-center mb-1">
+                 <span className="absolute h-4 w-4 animate-ping rounded-full bg-red-500 opacity-75" style={{ animationDelay: '0.3s' }}></span>
+                 <span className="relative h-1.5 w-1.5 rounded-full bg-red-600 shadow-[0_0_15px_#ef4444]"></span>
+               </div>
+               <span className="text-red-500 font-mono text-[8px] opacity-80">CAM-Sul</span>
+             </div>
+             
+             {/* Alvo 3 */}
+             <div className="absolute top-[60%] left-[20%] flex flex-col items-center justify-center">
+               <div className="relative flex items-center justify-center mb-1">
+                 <span className="absolute h-5 w-5 animate-ping rounded-full bg-red-500 opacity-75" style={{ animationDelay: '0.8s' }}></span>
+                 <span className="relative h-2 w-2 rounded-full bg-red-600 shadow-[0_0_15px_#ef4444]"></span>
+               </div>
+               <span className="text-red-500 font-mono text-[9px] font-bold opacity-100 tracking-widest bg-red-950/60 px-1 rounded border border-red-500/30">SUSPECT</span>
+             </div>
+             
+             {/* Alvo 4 */}
+             <div className="absolute top-[15%] left-[60%] flex flex-col items-center justify-center">
+               <div className="relative flex items-center justify-center mb-1">
+                 <span className="absolute h-3 w-3 animate-ping rounded-full bg-red-500 opacity-75" style={{ animationDelay: '1.2s' }}></span>
+                 <span className="relative h-1.5 w-1.5 rounded-full bg-red-600 shadow-[0_0_15px_#ef4444]"></span>
+               </div>
+               <span className="text-red-500 font-mono text-[8px] opacity-60">LPR-NX2</span>
+             </div>
+           </div>
         </div>
+        
+        {/* Orbes Táticos de Energia (Animados) */}
+        <div className="absolute top-[-20%] right-[-10%] w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] bg-blue-600/20 blur-[120px] rounded-full animate-[pulse_6s_ease-in-out_infinite]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[90vw] h-[90vw] md:w-[60vw] md:h-[60vw] bg-indigo-700/25 blur-[130px] rounded-full animate-[pulse_10s_ease-in-out_infinite_reverse]" />
+        
+        {/* Textura Granulada (Noise/Stardust) */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 pt-8 space-y-6">
         
-        {/* HEADER */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/80 pb-6">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <Button asChild variant="ghost" size="icon" className="text-slate-400 hover:text-white -ml-2">
-                <Link href="/intelligence">
-                  <ArrowLeft className="w-5 h-5" />
-                </Link>
-              </Button>
-              <Badge variant="outline" className="border-blue-500/30 text-blue-400 font-bold bg-blue-500/5">
-                MÓDULO SEGURANÇA
-              </Badge>
-            </div>
-            <div className="pt-4 w-full">
-              <WhiteLabelHeader
-                defaultTitle="Nexus Intelligence Égide"
-                defaultSlogan="Painel de Controle de Segurança e Cerco Eletrônico Inteligente"
-                defaultLogo="/logo-nexus-shield.png"
-                storageKeyPrefix="egide"
-                themeColor="blue"
-              />
-            </div>
+        {/* BOTÃO VOLTAR */}
+        <div className="relative z-20 mb-[-1rem]">
+          <Button asChild variant="ghost" size="icon" className="text-slate-400 hover:text-white">
+            <Link href="/exclusive">
+              <ArrowLeft className="w-6 h-6" />
+            </Link>
+          </Button>
+        </div>
+
+        {/* HEADER: TÍTULO NEXUS ÉGIDE */}
+        <div className="relative z-10 text-center mt-8 mb-4">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <Badge variant="outline" className="border-blue-500/30 text-blue-400 bg-blue-500/10 px-3 py-1 text-xs font-black tracking-widest uppercase">
+              <ShieldAlert className="w-4 h-4 mr-2 inline-block" />
+              Módulo de Segurança e Cerco Tático
+            </Badge>
           </div>
-          
-          <div className="flex gap-2">
-            <Button 
-              variant="outline" 
-              onClick={handleResetSimulator}
-              className="border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white"
-            >
-              Resetar Simulador
-            </Button>
-            <Button 
-              onClick={handleTriggerAlert} 
-              disabled={isAlertActive}
-              className="bg-red-600 hover:bg-red-500 text-white font-bold shadow-lg shadow-red-900/20"
-            >
-              <AlertTriangle className="w-4 h-4 mr-2" />
-              Simular Veículo Roubado
-            </Button>
-            <Button 
-              onClick={handleTriggerAegisIntrusion} 
-              className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-lg shadow-indigo-900/20"
-            >
-              <Fingerprint className="w-4 h-4 mr-2" />
-              Simular Bloqueio Aegis
-            </Button>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white font-headline drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+            NEXUS <span className="text-blue-500">ÉGIDE</span>
+          </h1>
+        </div>
+
+        {/* CENA CINEMATOGRÁFICA (COMANDANTE ÁVILA) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="w-full max-w-5xl mx-auto my-8"
+        >
+          <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-blue-500/30 shadow-[0_0_60px_rgba(59,130,246,0.15)] bg-black/60">
+            {/* O src provisório foi atualizado para o arquivo local correto */}
+            <CustomVideoPlayer 
+              src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Avila_Egide.mp4" 
+              className="aspect-video"
+            />
+            <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-md border border-blue-500/40 rounded-full z-10">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              </span>
+              <span className="text-[10px] font-black uppercase tracking-wider text-blue-400">Briefing Tático - Cel. Ávila</span>
+            </div>
+            
+            {/* Overlay sutil na base do player para dar aquele tom de "Filme" */}
+            <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10"></div>
           </div>
+        </motion.div>
+
+        {/* EXCLUSIVE BESPOKE ADAPTATION BADGE */}
+        <div className="flex flex-col items-center gap-6 p-10 md:p-14 bg-gradient-to-b from-blue-600/10 via-blue-600/5 to-transparent border border-blue-500/30 rounded-3xl w-full max-w-5xl mx-auto backdrop-blur-md text-center shadow-[0_0_50px_rgba(59,130,246,0.05)] mt-8 mb-12">
+          <div className="flex items-center justify-center gap-4 mb-2">
+            <div className="relative flex h-5 w-5 shrink-0 items-center justify-center">
+              <span className="absolute h-5 w-5 animate-ping rounded-full bg-blue-500 opacity-75"></span>
+              <span className="relative h-2.5 w-2.5 rounded-full bg-blue-400"></span>
+            </div>
+            <span className="text-blue-500 font-black uppercase tracking-[0.25em] text-xs md:text-sm">Engenharia Sob Medida (Bespoke)</span>
+          </div>
+          <p className="text-base md:text-xl text-slate-300 font-medium leading-relaxed max-w-4xl">
+            A arquitetura de visão computacional e os protocolos de bloqueio do Égide são <strong className="text-white font-black drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">100% adaptáveis</strong>. Nossos Arquitetos de Soluções podem treinar o reconhecimento de placas e padrões táticos para refletir exatamente os desafios de segurança pública ou privada da sua corporação.
+          </p>
+        </div>
+
+        {/* CONTROLES DO SIMULADOR (MOVIDOS DO TOPO PARA BAIXO) */}
+        <div className="flex flex-wrap items-center justify-center gap-4 pb-8">
+          <Button 
+            variant="outline" 
+            onClick={handleResetSimulator}
+            className="border-white/10 text-white hover:bg-white/5 font-black uppercase tracking-widest h-14 px-8 rounded-2xl"
+          >
+            Resetar Simulador
+          </Button>
+          <Button 
+            onClick={handleTriggerAlert} 
+            disabled={isAlertActive}
+            className="bg-red-600 hover:bg-red-500 text-white font-black uppercase tracking-widest h-14 px-8 rounded-2xl shadow-xl shadow-red-600/20"
+          >
+            <AlertTriangle className="w-5 h-5 mr-2 animate-pulse" />
+            Simular Veículo Roubado
+          </Button>
+          <Button 
+            onClick={handleTriggerAegisIntrusion} 
+            className="bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase tracking-widest h-14 px-8 rounded-2xl shadow-xl shadow-indigo-600/20"
+          >
+            <Fingerprint className="w-5 h-5 mr-2" />
+            Simular Bloqueio Aegis
+          </Button>
         </div>
 
         {/* METRICS */}
@@ -1627,6 +1733,30 @@ export default function EgidePage() {
         }
       `}</style>
 
+      {/* BANNER DE UPSELL NO FINAL DA TELA */}
+      <div className="relative w-full border-t border-amber-500/20 bg-gradient-to-b from-[#111] to-[#050505] py-16 px-6 z-20 mt-12">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.15)_0%,transparent_70%)] pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <Badge variant="outline" className="border-amber-500/30 text-amber-500 bg-amber-500/10 mb-4 px-3 py-1 font-mono uppercase tracking-widest text-xs">
+            Showcase Mode Ativo
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+            A Inteligência Moldada ao Seu Domínio
+          </h2>
+          <p className="text-lg text-zinc-400 font-light max-w-2xl mx-auto leading-relaxed">
+            A infraestrutura de Segurança e Cerco Digital exibida aqui é apenas uma vitrine das nossas capacidades base. Todo o ecossistema Nexus Égide pode ser estruturado, treinado e <span className="text-amber-400 font-medium">adaptado milimetricamente às necessidades operacionais e à geografia da sua corporação ou município.</span>
+          </p>
+          <div className="pt-6">
+            <button 
+              onClick={() => window.open('https://wa.me/5548988582761?text=Acesso+Exclusivo:+Gostaria+de+falar+com+o+Tenente-Coronel+Ávila+sobre+a+adaptação+do+Módulo+Égide+para+minha+gestão.', '_blank')}
+              className="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-500 text-black font-black uppercase tracking-widest text-sm rounded-lg hover:shadow-[0_0_30px_rgba(245,158,11,0.4)] hover:scale-105 transition-all flex items-center gap-3 mx-auto"
+            >
+              <ShieldCheck className="h-5 w-5" />
+              Acionar Arquiteto de Soluções
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

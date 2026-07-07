@@ -96,7 +96,7 @@ export function SiteHeader() {
     { title: 'Energia', href: '/energia' },
     { title: 'Empresas', href: '/nexus-empresas' },
     { title: t('navAgro') || 'Agro', href: '/agro' },
-    { title: t('navPremium') || 'Premium', href: '/intelligence/premium' },
+    { title: t('navPremium') || 'Exclusive', href: '/exclusive' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
     { title: t('navSobre') || 'Sobre', href: '/about' },
     { title: t('navContato') || 'Contato', href: '/contact' },
@@ -272,6 +272,8 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  target={item.href === '/exclusive' ? '_blank' : undefined}
+                  rel={item.href === '/exclusive' ? 'noopener noreferrer' : undefined}
                   className={cn(
                     'transition-all duration-300',
                     item.href === '/inovamoda'
@@ -286,7 +288,7 @@ export function SiteHeader() {
                       ? 'bg-cyan-600/10 border border-cyan-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-cyan-600/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/agro'
                       ? 'bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
-                      : item.href === '/intelligence/premium'
+                      : item.href === '/exclusive'
                       ? 'bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/nexus-rotas'
                       ? 'bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold uppercase tracking-widest'
@@ -315,7 +317,13 @@ export function SiteHeader() {
                         <Link
                           key={item.href}
                           href={item.href}
-                          onClick={() => setMobileMenuOpen(false)}
+                          target={item.href === '/exclusive' ? '_blank' : undefined}
+                          rel={item.href === '/exclusive' ? 'noopener noreferrer' : undefined}
+                          onClick={() => {
+                            if (item.href !== '/exclusive') {
+                              setMobileMenuOpen(false);
+                            }
+                          }}
                           className={cn(
                             'flex items-center justify-between p-3 rounded-lg transition-all duration-200 group mb-1',
                             item.href === '/inovamoda'
@@ -330,7 +338,7 @@ export function SiteHeader() {
                             ? 'bg-cyan-600/10 text-white drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] font-bold border border-cyan-500/50 uppercase tracking-widest'
                             : item.href === '/agro'
                             ? 'bg-emerald-500/10 text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] font-bold border border-emerald-500/50 uppercase tracking-widest'
-                            : item.href === '/intelligence/premium'
+                            : item.href === '/exclusive'
                             ? 'bg-violet-500/10 text-white drop-shadow-[0_0_8px_rgba(139,92,246,0.8)] font-bold border border-violet-500/50 uppercase tracking-widest'
                             : item.href === '/nexus-rotas'
                             ? 'bg-teal-500/10 text-white drop-shadow-[0_0_8px_rgba(20,184,166,0.8)] font-bold border border-teal-500/50 uppercase tracking-widest'

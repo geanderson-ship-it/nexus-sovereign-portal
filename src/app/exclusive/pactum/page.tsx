@@ -38,6 +38,7 @@ import { PactumWarRoom } from '@/components/gabinete/pactum-war-room';
 import { PactumSimulator } from '@/components/gabinete/pactum-simulator';
 import { SovereignShowcase } from '@/components/nexus/SovereignShowcase';
 import { WhiteLabelHeader } from '@/components/nexus/white-label-header';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 
 // Active simulated high-stakes contracts
 const initialDeals = [
@@ -59,17 +60,24 @@ export default function NexusPactumCockpit() {
 
   useEffect(() => {
     if (!isUserLoading) {
-      if (!user || !isAdminUser(user)) {
-        router.push('/login');
-      } else {
-        setIsAuthorized(true);
-      }
+      // Liberando acesso para funcionar como Showcase (Demonstração)
+      setIsAuthorized(true);
     }
-  }, [user, isUserLoading, router]);
+  }, [isUserLoading]);
 
   const [activeTab, setActiveTab] = useState<'dashboard' | 'auditor' | 'warroom' | 'simulator'>('dashboard');
   const [deals, setDeals] = useState(initialDeals);
   const [directCallTarget, setDirectCallTarget] = useState('');
+  const [selectedDeal, setSelectedDeal] = useState<typeof initialDeals[0] | null>(null);
+  const [selectedSimulator, setSelectedSimulator] = useState<typeof simulatorProfiles[0] | null>(null);
+  const [isNegotiating, setIsNegotiating] = useState(false);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [isNewDealOpen, setIsNewDealOpen] = useState(false);
+  
+  // States for adding a new contract
+  const [newDealName, setNewDealName] = useState('');
+  const [newOpponent, setNewOpponent] = useState('');
+  const [newVal, setNewVal] = useState('');
 
   if (isUserLoading || !isAuthorized) {
     return (
@@ -113,16 +121,6 @@ export default function NexusPactumCockpit() {
     setSelectedDeal(directDeal);
     setIsNegotiating(true);
   };
-  const [selectedDeal, setSelectedDeal] = useState<typeof initialDeals[0] | null>(null);
-  const [selectedSimulator, setSelectedSimulator] = useState<typeof simulatorProfiles[0] | null>(null);
-  const [isNegotiating, setIsNegotiating] = useState(false);
-  const [isSimulating, setIsSimulating] = useState(false);
-  const [isNewDealOpen, setIsNewDealOpen] = useState(false);
-  
-  // States for adding a new contract
-  const [newDealName, setNewDealName] = useState('');
-  const [newOpponent, setNewOpponent] = useState('');
-  const [newVal, setNewVal] = useState('');
 
   const handleStartNegotiation = (deal: typeof initialDeals[0]) => {
     setSelectedDeal(deal);
@@ -174,24 +172,79 @@ export default function NexusPactumCockpit() {
   }
 
   return (
-    <SovereignShowcase moduleName="Nexus Pactum" imagePath="/Nexus Pactum/Nexus intelligence Pactum.png">
+    <>
       <div className="min-h-screen bg-[#020617] text-slate-200 p-8 space-y-12 relative overflow-hidden">
         
-        {/* White-Label Custom Header */}
-        <WhiteLabelHeader
-          defaultTitle="Nexus Pactum"
-          defaultSlogan="Auditoria avançada de vulnerabilidades em contratos e análise biométrica de blefes baseada em Teoria dos Jogos."
-          defaultLogo="/logo-nexus-shield.png"
-          storageKeyPrefix="pactum"
-          themeColor="violet"
+        {/* BOTÃO VOLTAR */}
+        <div className="relative z-20 mb-[-1rem]">
+          <Link 
+            href="/exclusive" 
+            className="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors uppercase font-mono text-[10px] tracking-widest bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-lg backdrop-blur-sm w-fit"
+          >
+            <ChevronLeft className="h-4 w-4" /> Voltar ao Portfólio Exclusive
+          </Link>
+        </div>
+
+        {/* BACKGROUND EFFECTS PREMIUM */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#050B14]">
+        
+        {/* Gráfico Gigante Analítico de Fundo (Projeção de Crescimento) */}
+        <div className="absolute inset-0 opacity-20 mix-blend-screen" 
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg width='1200' height='800' viewBox='0 0 1200 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f59e0b;stop-opacity:0.4' /%3E%3Cstop offset='100%25' style='stop-color:%23f59e0b;stop-opacity:0' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M100 100 L100 700 L1100 700' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.2'/%3E%3Cpath d='M100 250 L1100 250 M100 400 L1100 400 M100 550 L1100 550' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.05' stroke-dasharray='10,10'/%3E%3Cpath d='M100 700 L150 650 L300 680 L500 450 L700 350 L900 400 L1100 150 L1100 700 Z' fill='url(%23grad1)' /%3E%3Cpath d='M100 700 L150 650 L300 680 L500 450 L700 350 L900 400 L1100 150' fill='none' stroke='%23f59e0b' stroke-width='5' opacity='0.8'/%3E%3Ccircle cx='500' cy='450' r='8' fill='%23f59e0b' opacity='1'/%3E%3Ccircle cx='700' cy='350' r='8' fill='%23f59e0b' opacity='1'/%3E%3Ccircle cx='900' cy='400' r='8' fill='%23f59e0b' opacity='1'/%3E%3Ccircle cx='1100' cy='150' r='10' fill='%23ffffff' opacity='1'/%3E%3Ctext x='960' y='120' fill='%23ffffff' font-family='sans-serif' font-size='28' font-weight='900' opacity='0.9' letter-spacing='2'%3EPROJEÇÃO DE ATIVOS%3C/text%3E%3Ctext x='960' y='160' fill='%23f59e0b' font-family='monospace' font-size='32' font-weight='bold' opacity='1'%3E%2B340%25 YOY%3C/text%3E%3C/svg%3E")`,
+               backgroundSize: 'cover',
+               backgroundPosition: 'center',
+               backgroundRepeat: 'no-repeat'
+             }} 
         />
-      
-      {/* BACKGROUND EFFECTS */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 right-0 w-[50%] h-[60%] bg-blue-600/5 blur-[120px] rounded-full" />
-        <div className="absolute bottom-0 left-0 w-[30%] h-[50%] bg-violet-900/10 blur-[100px] rounded-full" />
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.02] pointer-events-none" />
+        
+        {/* Orbes Táticos de Energia (Animados) */}
+        <div className="absolute top-[-20%] right-[-10%] w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] bg-amber-500/25 blur-[120px] rounded-full animate-[pulse_6s_ease-in-out_infinite]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[90vw] h-[90vw] md:w-[60vw] md:h-[60vw] bg-violet-600/30 blur-[130px] rounded-full animate-[pulse_10s_ease-in-out_infinite_reverse]" />
+        
+        {/* Textura Granulada (Noise/Stardust) */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay" />
+
+        {/* Efeito Vignette Cinematográfico mais suave (Apenas nas bordas extremas) */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,#020617_110%)] opacity-80" />
       </div>
+
+      {/* HEADER: TÍTULO NEXUS PACTUM */}
+      <div className="relative z-10 text-center mt-12 mb-6">
+        <div className="flex items-center justify-center gap-3 mb-3">
+          <Badge variant="outline" className="border-amber-500/30 text-amber-500 bg-amber-500/10 px-3 py-1 text-xs font-black tracking-widest uppercase">
+            <ShieldCheck className="w-4 h-4 mr-2 inline-block" />
+            Módulo de Negociação Estratégica
+          </Badge>
+        </div>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white font-headline drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+          NEXUS <span className="text-amber-500">PACTUM</span>
+        </h1>
+      </div>
+
+      {/* CENA CINEMATOGRÁFICA (NEGOCIADOR ARTHUR VALENTE) */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="relative z-10 w-full mb-12"
+      >
+        <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.15)] bg-black/60">
+          <CustomVideoPlayer 
+            src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Artur_Pactum.mp4" 
+            className="aspect-video"
+          />
+          <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-md border border-amber-500/40 rounded-full z-10">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+            </span>
+            <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">War Room - Negociador Chefe</span>
+          </div>
+          
+          <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10"></div>
+        </div>
+      </motion.div>
 
       {/* HERO SECTION */}
       <motion.div 
@@ -199,10 +252,10 @@ export default function NexusPactumCockpit() {
         animate={{ opacity: 1, y: 0 }}
         className="relative z-10 overflow-hidden rounded-[48px] bg-gradient-to-br from-slate-900 via-slate-900/50 to-[#020617] border border-white/5 shadow-2xl"
       >
-        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-12 p-8 lg:p-16">
-          <div className="flex-1 space-y-8 text-center lg:text-left">
+        <div className="relative z-10 flex flex-col items-center gap-12 p-8 lg:p-16">
+          <div className="w-full space-y-8 text-center">
             <div className="space-y-4">
-              <div className="flex items-center justify-center lg:justify-start gap-3">
+              <div className="flex items-center justify-center gap-3">
                 <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 px-4 py-1 text-[10px] font-black uppercase tracking-widest italic">
                   Alta Governança de Acordos
                 </Badge>
@@ -211,12 +264,26 @@ export default function NexusPactumCockpit() {
               <h2 className="text-3xl lg:text-4xl font-black tracking-tight text-white font-headline uppercase leading-none">
                 Contratos & Negociações Táticas
               </h2>
-              <p className="text-sm text-slate-400 max-w-2xl leading-relaxed">
+              <p className="text-base text-slate-400 max-w-4xl mx-auto leading-relaxed">
                 Painel analítico para detecção de anomalias em cláusulas legais e simulação em tempo real com negociadores virtuais.
               </p>
+
+              {/* EXCLUSIVE BESPOKE ADAPTATION BADGE */}
+              <div className="flex flex-col items-center gap-6 p-10 md:p-14 bg-gradient-to-b from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 rounded-3xl w-full max-w-5xl mx-auto backdrop-blur-md text-center shadow-[0_0_50px_rgba(245,158,11,0.05)]">
+                <div className="flex items-center justify-center gap-4 mb-2">
+                  <div className="relative flex h-5 w-5 shrink-0 items-center justify-center">
+                    <span className="absolute h-5 w-5 animate-ping rounded-full bg-amber-500 opacity-75"></span>
+                    <span className="relative h-2.5 w-2.5 rounded-full bg-amber-400"></span>
+                  </div>
+                  <span className="text-amber-500 font-black uppercase tracking-[0.25em] text-xs md:text-sm">Engenharia Sob Medida (Bespoke)</span>
+                </div>
+                <p className="text-base md:text-xl text-slate-300 font-medium leading-relaxed max-w-4xl">
+                  A arquitetura de heurística e os protocolos de decisão do Pactum são <strong className="text-white font-black text-amber-50">100% adaptáveis</strong>. Nossos Arquitetos de Soluções podem treinar, refinar ou criar novas funcionalidades para refletir exatamente os desafios jurídicos e comerciais da sua corporação.
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-4">
               <Button 
                 onClick={() => {
                   setSelectedDeal(deals[1]);
@@ -235,30 +302,6 @@ export default function NexusPactumCockpit() {
               </Button>
             </div>
           </div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9, rotate: -1 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative w-full lg:w-[450px] aspect-[1.5] group"
-          >
-            <div className="absolute inset-0 bg-blue-500/20 blur-[80px] rounded-full group-hover:bg-blue-500/30 transition-all duration-700" />
-            <div className="relative h-full w-full rounded-[40px] overflow-hidden border border-white/10 bg-slate-900 shadow-2xl flex items-center justify-center">
-              <Image 
-                src="/Nexus Pactum/Nexus intelligence Pactum.png" 
-                alt="Nexus Pactum Logo"
-                fill
-                className="object-cover transition-transform duration-[3s] group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="flex items-center justify-between p-4 bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Inteligência Pactum</span>
-                  <Badge className="bg-blue-500 text-white border-none font-black text-[9px] uppercase">Protocolo Ativo</Badge>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </motion.div>
 
@@ -299,7 +342,7 @@ export default function NexusPactumCockpit() {
         </div>
 
         <Button variant="ghost" asChild className="text-slate-500 hover:text-white group bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl px-6 h-12">
-          <Link href="/intelligence">
+          <Link href="/exclusive">
             <ChevronLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" /> Voltar
           </Link>
         </Button>
@@ -650,11 +693,11 @@ export default function NexusPactumCockpit() {
       )}
 
       {/* LEGAL SAFEGUARD PROTOCOL */}
-      <div className="max-w-7xl mx-auto px-6 pb-24 mt-12">
+      <div className="max-w-7xl mx-auto px-6 pb-4 mt-8">
         <LegalSafeguard module="NEXUS PACTUM WAR ROOM" protocol="NX-PACT-01" />
       </div>
 
       </div>
-    </SovereignShowcase>
+    </>
   );
 }

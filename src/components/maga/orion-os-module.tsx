@@ -48,7 +48,7 @@ export function OrionOSModule() {
     {
       id: '1',
       role: 'assistant',
-      content: 'Olá. Sou o Orion. Que bom estar com você. Vamos traçar um caminho claro e belo para os seus objetivos estratégicos hoje?',
+      content: 'Olá, CEO Lancaster. Quais as diretrizes para análise preditiva e estruturação de inteligência de mercado hoje?',
       timestamp: new Date()
     }
   ]);
@@ -252,7 +252,7 @@ export function OrionOSModule() {
               exit={{ opacity: 0, y: -20 }}
               className="p-6 border-b border-slate-800 flex items-center justify-between bg-slate-950/30"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 w-full md:w-1/3">
                 <Button 
                   variant="ghost" 
                   size="icon" 
@@ -267,16 +267,29 @@ export function OrionOSModule() {
                       CONEXÃO ATIVA
                     </Badge>
                     <div className="h-4 w-[1px] bg-slate-800 mx-1" />
-                    <span className="text-xs font-mono text-slate-700 tracking-widest">ORION // ESTRATEGISTA</span>
+                    <span className="text-xs font-mono text-slate-700 tracking-widest hidden lg:inline-block">ORION // ESTRATEGISTA</span>
                   </div>
                   <h2 className="text-lg font-headline font-medium text-white/60 tracking-[0.6em] mt-1 uppercase">Nexus</h2>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+
+              {/* CENTER: MODE TOGGLE */}
+              <div className="hidden md:flex items-center justify-center w-1/3">
+                <div className="flex items-center gap-1 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800 shadow-inner">
+                  <Button variant="ghost" size="sm" className="text-slate-500 hover:text-slate-300 font-mono text-[10px] tracking-widest px-4 py-1.5 rounded-lg transition-all h-8">
+                    <User className="w-3.5 h-3.5 mr-2" /> LIVE AVATAR
+                  </Button>
+                  <Button variant="ghost" size="sm" className="bg-slate-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] font-mono text-[10px] tracking-widest px-4 py-1.5 rounded-lg transition-all border border-slate-700 h-8">
+                    <Bot className="w-3.5 h-3.5 mr-2 text-yellow-500" /> CHAT
+                  </Button>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 w-full md:w-1/3 justify-end">
                 <Button 
                   variant="ghost" 
                   size="icon"
-                  className="text-slate-400 hover:text-white"
+                  className="text-slate-400 hover:text-white hidden sm:inline-flex"
                   onClick={() => setIsFullscreen(!isFullscreen)}
                 >
                   {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
@@ -288,7 +301,7 @@ export function OrionOSModule() {
                 >
                   <Crown className="h-4 w-4" /> UPGRADE STRATEGY
                 </Button>
-                <Link href="/intelligence">
+                <Link href="/exclusive">
                   <Button variant="ghost" size="icon" className="text-slate-400 hover:text-white">
                     <ArrowLeft className="w-5 h-5" />
                   </Button>

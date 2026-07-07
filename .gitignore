@@ -25,3 +25,5 @@ test-*.ts
 public/Agro/Dante_safra.mp4
 public/Nexus Empresas/Nexus_B2B.mp4
 
+
+*.mp4

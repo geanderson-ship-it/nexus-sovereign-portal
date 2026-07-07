@@ -320,33 +320,27 @@ export function PactumWarRoom({ dealName, opponentName, dealValue, onClose }: Pa
                 </div>
               </div>
 
-              {/* Opponent camera screen graphics */}
-              <div className="relative z-10 flex-1 flex flex-col items-center justify-center">
-                
-                {/* Simulated Target Reticle */}
-                <div className="relative h-60 w-60 rounded-full border border-blue-500/20 flex items-center justify-center">
-                  <div className="absolute h-52 w-52 rounded-full border border-dashed border-blue-500/10 animate-spin" />
-                  
-                  {/* Scanner Waves */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className={cn(
-                      "h-36 w-36 rounded-full border flex items-center justify-center transition-all duration-700",
-                      nervousness > 70 ? "border-red-500 bg-red-500/5 animate-pulse" : "border-blue-500 bg-blue-500/5"
-                    )}>
-                      <Activity className={cn("h-16 w-16", nervousness > 70 ? "text-red-400" : "text-blue-400")} />
-                    </div>
-                  </div>
-                  
-                  {/* Scanning Crosshairs */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0.5 h-60 bg-blue-500/10" />
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-60 h-0.5 bg-blue-500/10" />
+              {/* Opponent camera screen graphics (MOVED OFF CENTER) */}
+              
+              {/* Simulated Target Reticle (Subtle overlay) */}
+              <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-center opacity-30">
+                <div className="relative h-[80%] aspect-square rounded-full border border-blue-500/10 flex items-center justify-center">
+                  <div className="absolute h-[90%] aspect-square rounded-full border border-dashed border-blue-500/10 animate-[spin_10s_linear_infinite]" />
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-blue-500/10" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[1px] bg-blue-500/10" />
                 </div>
+              </div>
 
-                {/* Opponent metadata */}
-                <div className="mt-8 text-center space-y-1 bg-black/60 px-6 py-3 rounded-2xl border border-white/10 backdrop-blur-xl">
-                  <h3 className="text-lg font-black text-white font-headline uppercase">{opponentName}</h3>
-                  <p className="text-[10px] text-blue-400 font-mono tracking-widest uppercase">Canal de Voz // Vladivostok Feed</p>
-                </div>
+              {/* Opponent metadata (Moved to Top Right) */}
+              <div className="absolute top-4 right-4 z-20 text-right space-y-1 bg-black/60 px-4 py-2 rounded-xl border border-white/10 backdrop-blur-md">
+                <h3 className="text-sm font-black text-white font-headline uppercase">{opponentName}</h3>
+                <p className="text-[8px] text-blue-400 font-mono tracking-widest uppercase flex items-center justify-end gap-2">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500"></span>
+                  </span>
+                  Sinal Interceptado
+                </p>
               </div>
 
               {/* Dynamic Telemetry HUD Overlays */}
