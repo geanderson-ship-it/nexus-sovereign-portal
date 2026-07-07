@@ -35,7 +35,7 @@ export default function PropositoPage() {
             {/* Aurora Video Presentation */}
             <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(225,29,72,0.2)] bg-black/50 mb-12">
               <video 
-                src="/social/Aurora_-_Social..mp4" 
+                src="/Social/Aurora_-_Social..mp4" 
                 controls
                 className="w-full h-auto aspect-video object-cover"
               />
