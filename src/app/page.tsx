@@ -60,7 +60,7 @@ export default function HomePage() {
                         >
                             <div className="relative w-full aspect-[16/9] md:aspect-[16/7] lg:aspect-[2.3/1] overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/5">
                                 <Image
-                                    src="/Nexus Holding Group/nexus_logo_definitiva.jpg"
+                                    src="/Nexus Holding Group/Nexus Holding group nova.jpg"
                                     alt="Nexus Holding Group: Convergência Humana"
                                     fill
                                     className="object-contain object-center scale-[1.01] md:scale-[1.02] lg:scale-[1.04] transition-all duration-[4000ms]"
@@ -123,15 +123,19 @@ export default function HomePage() {
                             <div className="flex justify-center">
                                <Logo width={400} height={134} />
                             </div>
-                            <h3 className="text-2xl font-bold font-headline text-primary text-center">{t('inicio.treinamento.title')}</h3>
+                            <h3 className="text-2xl font-bold font-headline text-primary text-center uppercase tracking-wider">
+                                Tecnologia, Inovação e Evolução
+                            </h3>
                             
-                            <div className="flex flex-col items-center gap-4 text-center">
-                                <p className="text-muted-foreground">
-                                    Nossa nova diretriz foca no desenvolvimento de soluções através de inteligência artificial de ponta. Operamos como o núcleo propulsor da sua evolução corporativa.
+                            <div className="flex flex-col items-center gap-6 mt-4">
+                                <p className="text-foreground/90 text-lg leading-relaxed font-light">
+                                    A revolução corporativa começa aqui. Moldamos o futuro de empresas visionárias através de estratégias tecnológicas de vanguarda e arquiteturas disruptivas que redefinem o mercado.
                                 </p>
                             </div>
                             
-                            <blockquote className="border-l-4 border-primary pl-4 italic text-foreground text-left">{t('inicio.treinamento.quote')}</blockquote>
+                            <blockquote className="mt-6 border-l-4 border-primary pl-4 py-2 italic text-muted-foreground text-left text-sm">
+                                "Evoluir não é mais uma opção, é a única garantia de soberania no mercado de amanhã."
+                            </blockquote>
                         </div>
 
                         {/* Bottom glow */}
@@ -148,33 +152,23 @@ export default function HomePage() {
                         <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-blue-500/30 rounded-bl-sm" />
                         <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-blue-500/30 rounded-br-sm" />
 
-                        <div className="flex-grow space-y-6">
+                        <div className="flex-grow space-y-6 text-center">
                             <div className="flex justify-center">
                                 <NexusIntelligenceLogo width={400} height={134} />
                             </div>
-                            <h3 className="text-2xl font-bold font-headline text-blue-400 text-center">{t('inicio.intelligence.title')}</h3>
+                            <h3 className="text-2xl font-bold font-headline text-blue-400 text-center uppercase tracking-wider">
+                                Inteligência Artificial e Soluções Avançadas
+                            </h3>
                             
-                            <div className="space-y-6 text-left">
-                                <div>
-                                    <h4 className="font-semibold text-blue-400 text-lg">{t('inicio.intelligence.dante.title')}</h4>
-                                    <p className="text-muted-foreground text-sm mt-1 space-y-1">{t('inicio.intelligence.dante.description')}</p>
-                                    <ul className="list-disc list-inside pl-4 text-muted-foreground text-sm mt-1 space-y-1">
-                                        <li><span className="font-semibold text-foreground">{t('inicio.intelligence.dante.chat.title')}</span> {t('inicio.intelligence.dante.chat.description')}</li>
-                                        <li><span className="font-semibold text-foreground">{t('inicio.intelligence.dante.safra.title')}</span> {t('inicio.intelligence.dante.safra.description')}</li>
-                                        <li><span className="font-semibold text-foreground">{t('inicio.intelligence.dante.compras.title')}</span> {t('inicio.intelligence.dante.compras.description')}</li>
-                                    </ul>
-                                    <p className="text-xs italic mt-2 text-muted-foreground/80">{t('inicio.intelligence.dante.devNote')}</p>
-                                </div>
-                                 <div>
-                                    <h4 className="font-semibold text-primary text-lg">{t('inicio.intelligence.djeny.title')}</h4>
-                                     <p className="text-muted-foreground text-sm mt-1">{t('inicio.intelligence.djeny.description')}</p>
-                                    <ul className="list-disc list-inside pl-4 text-muted-foreground text-sm mt-1 space-y-1">
-                                        <li><span className="font-semibold text-foreground">{t('inicio.intelligence.djeny.chat.title')}</span> {t('inicio.intelligence.djeny.chat.description')}</li>
-                                        <li><span className="font-semibold text-foreground">{t('inicio.intelligence.djeny.design.title')}</span> {t('inicio.intelligence.djeny.design.description')}</li>
-                                    </ul>
-                                    <p className="text-xs italic mt-2 text-muted-foreground/80">{t('inicio.intelligence.djeny.devNote')}</p>
-                                </div>
+                            <div className="flex flex-col items-center gap-6 mt-4">
+                                <p className="text-foreground/90 text-lg leading-relaxed font-light">
+                                    O ecossistema definitivo de I.A. para o alto escalão corporativo. Soluções <strong className="text-blue-400 font-medium">100% On-Premise</strong> que conferem poder de decisão absoluto e orquestração preditiva em tempo real.
+                                </p>
                             </div>
+
+                            <blockquote className="mt-6 border-l-4 border-blue-500 pl-4 py-2 italic text-muted-foreground text-left text-sm">
+                                "Para corporações que exigem o topo, a intuição não basta. A margem de erro é zero."
+                            </blockquote>
                         </div>
                         <div className="pt-6 flex flex-col gap-2">
                            <Button asChild size="lg" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold h-14 text-lg shadow-[0_0_20px_rgba(37,99,235,0.3)]">
