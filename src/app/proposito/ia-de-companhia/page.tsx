@@ -5,10 +5,11 @@ import React, { useRef, useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, Sparkles, Heart, Mic, Video, ShieldCheck, Play } from 'lucide-react';
+import { ShieldCheck, Lock, Fingerprint, BrainCircuit, Activity, HeartPulse, ChevronRight, MessageCircle, Video, ArrowRight, Play, Heart, Bot, Zap, Globe, Pause, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 
-export default function IADeCompanhiaPage() {
+export default function IaDeCompanhiaPage() {
   const auroraVideoRef = useRef<HTMLVideoElement>(null);
   const raviVideoRef = useRef<HTMLVideoElement>(null);
   const [isPlayingAurora, setIsPlayingAurora] = useState(false);
@@ -73,13 +74,10 @@ export default function IADeCompanhiaPage() {
             {/* AVATAR: AURORA */}
             <div className="bg-[#0b101a] border border-slate-800 rounded-3xl p-6 md:p-8 hover:border-rose-500/30 transition-all group">
                <div className="relative aspect-square w-full rounded-2xl overflow-hidden mb-8 border border-slate-700 group-hover:border-rose-500/50 transition-colors shadow-2xl">
-                <video
-                  ref={auroraVideoRef}
+                <CustomVideoPlayer
                   src="/Social/aurora_social.mp4"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
                   poster="/avatares/maria-jovem.png"
-                  onClick={toggleAurora}
-                  onEnded={() => setIsPlayingAurora(false)}
                 />
                 
                 {/* Play Button Overlay */}
@@ -117,13 +115,10 @@ export default function IADeCompanhiaPage() {
             {/* AVATAR: RAVI */}
             <div className="bg-[#0b101a] border border-slate-800 rounded-3xl p-6 md:p-8 hover:border-blue-500/30 transition-all group">
               <div className="relative aspect-square w-full rounded-2xl overflow-hidden mb-8 border border-slate-700 group-hover:border-blue-500/50 transition-colors shadow-2xl">
-                <video
-                  ref={raviVideoRef}
+                <CustomVideoPlayer
                   src="/Social/ravi_social.mp4"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 cursor-pointer"
                   poster="/avatares/ravi.png"
-                  onClick={toggleRavi}
-                  onEnded={() => setIsPlayingRavi(false)}
                 />
                 
                 {/* Play Button Overlay */}

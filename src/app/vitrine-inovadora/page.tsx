@@ -52,7 +52,7 @@ const industries = [
   }
 ];
 
-export default function VitrineInovadoraHub() {
+export default function VitrineInovadoraPage() {
   const [activeKiosk, setActiveKiosk] = useState<string | null>(null);
 
   // MODO KIOSK (TELA CHEIA)
@@ -251,13 +251,8 @@ export default function VitrineInovadoraHub() {
               className="bg-black/40 backdrop-blur-2xl border border-white/20 p-8 md:p-12 rounded-3xl shadow-2xl flex flex-col items-center"
             >
               <div className="w-full max-w-3xl rounded-2xl overflow-hidden border border-fuchsia-500/30 shadow-[0_0_40px_rgba(217,70,239,0.3)] bg-black/50 relative mb-8">
-                <video 
+                <CustomVideoPlayer 
                   src="/Vitrine Inovadora/Camila_-_Vitrini_inovadora..mp4" 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline 
-                  controls 
                   className="w-full h-auto object-cover"
                 />
               </div>

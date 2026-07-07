@@ -18,6 +18,7 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 
 export default function NexusRotasHubPage() {
   return (
@@ -44,13 +45,8 @@ export default function NexusRotasHubPage() {
         <section className="flex flex-col items-center text-center max-w-4xl mx-auto py-12">
           
           <div className="mb-8 w-full max-w-3xl mx-auto rounded-3xl overflow-hidden border border-teal-500/40 shadow-[0_0_50px_rgba(20,184,166,0.3)] bg-black/50 backdrop-blur-md relative">
-            <video 
+            <CustomVideoPlayer 
               src="/Embaixadora Nexus/Vitória_-_Embaixadora_virtual..mp4" 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              controls 
               className="w-full h-auto object-cover rounded-3xl"
             />
           </div>

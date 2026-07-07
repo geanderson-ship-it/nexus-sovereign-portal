@@ -189,13 +189,8 @@ export default function EnergiaPage() {
         <section className="flex flex-col items-center text-center gap-4 mt-4 lg:mt-8 w-full max-w-5xl mx-auto mb-12">
           
           <div className="w-full rounded-[2rem] overflow-hidden border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.2)] bg-black/50 relative mb-8">
-            <video 
+            <CustomVideoPlayer 
               src="/Nexus Energia/Helena - energia.mp4" 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              controls 
               className="w-full h-auto object-cover"
             />
           </div>

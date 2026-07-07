@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag, Camera, Upload, Video, ScanLine, ChevronLeft, Info, Sun } from 'lucide-react';
+import { Shirt, Cpu, RefreshCw, CheckCircle2, ShieldCheck, Activity, Smartphone, Box, Zap, ShoppingBag, Camera, Upload, Video, ScanLine, ChevronLeft, Info, Sun, Sparkle as SparkleIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/use-locale';
+import { useToast } from '@/hooks/use-toast';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 
 export default function InovaModaPage() {
   const { t } = useLocale();
@@ -150,13 +152,8 @@ export default function InovaModaPage() {
             <div className="px-8 pt-10 pb-6">
               
               <div className="w-full rounded-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_40px_rgba(236,72,153,0.3)] bg-black/50 relative mb-8">
-                <video 
+                <CustomVideoPlayer 
                   src="/Inova moda 360/Sofia - Inova moda.mp4" 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline 
-                  controls 
                   className="w-full h-auto object-cover"
                 />
               </div>
@@ -432,12 +429,8 @@ export default function InovaModaPage() {
                     }}
                   >
                     {uploadMediaType === 'video' && activeOutfit === 'default' ? (
-                      <video 
+                      <CustomVideoPlayer 
                         src={uploadedImage!}
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline
                         className="object-contain w-full h-full pointer-events-none bg-black/40"
                       />
                     ) : (

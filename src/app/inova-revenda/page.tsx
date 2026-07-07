@@ -7,7 +7,8 @@ import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Phone, CheckCircle, ArrowRight, ShieldCheck, Star, CarFront, Gauge, Banknote } from 'lucide-react';
+import { Phone, CheckCircle, ArrowRight, ShoppingBag, TrendingUp, Users, Smartphone, BarChart3, MessageSquare, Zap, Target, Award, PlayCircle, Store, CarFront, Gauge, Banknote } from 'lucide-react';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 import * as gtag from '@/lib/gtag';
 
 const WHATSAPP_URL = 'https://wa.me/5551999799582';
@@ -89,13 +90,8 @@ export default function InovaRevendaPage() {
           <div className="w-full flex flex-col items-center text-center gap-6 mt-4 mb-6 max-w-4xl px-4 mx-auto p-8 rounded-3xl bg-black/60 backdrop-blur-md border border-white/10 shadow-2xl">
             
             <div className="mb-4 w-full max-w-2xl mx-auto rounded-[2rem] overflow-hidden border-2 border-[#cfa968]/40 shadow-[0_0_50px_rgba(207,169,104,0.25)] bg-black/50 relative">
-              <video 
+              <CustomVideoPlayer 
                 src="/Nexus Revenda/Clara - Revenda.mp4" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                controls 
                 className="w-full h-auto object-cover"
               />
             </div>
