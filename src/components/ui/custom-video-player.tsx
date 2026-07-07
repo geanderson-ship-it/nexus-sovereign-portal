@@ -66,17 +66,18 @@ export function CustomVideoPlayer({ src, className, containerClassName, ...props
         src={src}
         className={cn("w-full h-full object-cover", className)}
         playsInline
+        preload="metadata"
         {...props}
       />
 
       {/* Center Play/Pause Overlay */}
       <div className={cn(
-        "absolute inset-0 flex items-center justify-center transition-all duration-300",
-        isPlaying ? "bg-transparent opacity-0 group-hover:opacity-100" : "bg-black/40 opacity-100 backdrop-blur-[2px]"
+        "absolute inset-0 flex items-center justify-center transition-all duration-300 pointer-events-none",
+        isPlaying ? "bg-transparent opacity-0 md:group-hover:opacity-100" : "bg-black/40 opacity-100 backdrop-blur-[2px]"
       )}>
         <button 
           onClick={(e) => { e.stopPropagation(); togglePlay(); }}
-          className="flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-primary/80 text-white backdrop-blur-md transition-transform hover:scale-110 hover:bg-primary shadow-[0_0_30px_rgba(37,99,235,0.5)]"
+          className="pointer-events-auto flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-primary/80 text-white backdrop-blur-md transition-transform hover:scale-110 hover:bg-primary shadow-[0_0_30px_rgba(37,99,235,0.5)]"
         >
           {isPlaying ? (
             <Pause className="h-6 w-6 md:h-8 md:w-8 fill-current" />
@@ -88,12 +89,12 @@ export function CustomVideoPlayer({ src, className, containerClassName, ...props
 
       {/* Volume Control (Bottom Right) */}
       <div className={cn(
-        "absolute bottom-4 right-4 z-10 transition-opacity duration-300",
-        isPlaying ? "opacity-0 group-hover:opacity-100" : "opacity-100"
+        "absolute bottom-4 right-4 z-10 transition-opacity duration-300 pointer-events-none",
+        isPlaying ? "opacity-0 md:group-hover:opacity-100" : "opacity-100"
       )}>
         <button
           onClick={toggleMute}
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 border border-white/10"
+          className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 border border-white/10"
         >
           {isMuted ? (
             <VolumeX className="h-5 w-5" />
