@@ -1,4 +1,5 @@
 'use client';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 
 import React, { useState } from 'react';
 import Image from 'next/image';
