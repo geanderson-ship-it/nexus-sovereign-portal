@@ -28,6 +28,8 @@ import {
     PortalGithubSidebar
 } from '@/components/github-style-portal';
 
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+
 export default function HomePage() {
     const { t } = useLocale();
 
@@ -59,10 +61,9 @@ export default function HomePage() {
                             className="relative w-full max-w-[1500px] group px-0"
                         >
                             <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.5)] bg-black/50">
-                                <video 
-                                    src="/Nexus Holding Group/Avatar_IV_Video.mp4" 
-                                    controls
-                                    className="w-full h-auto aspect-video object-cover"
+                                <CustomVideoPlayer 
+                                    src="/Nexus Holding Group/Avatar_IV_Video.mp4"
+                                    className="aspect-video" 
                                 />
                             </div>
                         </motion.div>

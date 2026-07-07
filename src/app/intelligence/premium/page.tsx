@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useLocale } from '@/hooks/use-locale';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 
 export default function PremiumPage() {
   const { t } = useLocale();
@@ -47,14 +48,9 @@ export default function PremiumPage() {
             className="w-full"
           >
             <div className="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-violet-500/30 shadow-[0_0_50px_rgba(139,92,246,0.15)] bg-slate-950 mb-4">
-              <video 
+              <CustomVideoPlayer 
                 src="/Nexus Intelligence Premium/Stela_-_Premium.mp4" 
-                controls 
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
-                className="w-full h-full object-cover"
+                className="aspect-video"
               />
               <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-violet-500/30 rounded-full">
                 <span className="relative flex h-2 w-2">
