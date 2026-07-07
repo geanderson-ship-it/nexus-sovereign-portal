@@ -191,7 +191,7 @@ export default function EnergiaPage() {
           
           <div className="w-full rounded-[2rem] overflow-hidden border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.2)] bg-black/50 relative mb-8">
             <CustomVideoPlayer 
-              src="/Nexus Energia/Helena - energia.mp4" 
+              src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Energia/Helena_energia.mp4" 
               className="w-full h-auto object-cover"
             />
           </div>

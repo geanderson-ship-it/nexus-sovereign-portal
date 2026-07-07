@@ -91,7 +91,7 @@ export default function InovaRevendaPage() {
             
             <div className="mb-4 w-full max-w-2xl mx-auto rounded-[2rem] overflow-hidden border-2 border-[#cfa968]/40 shadow-[0_0_50px_rgba(207,169,104,0.25)] bg-black/50 relative">
               <CustomVideoPlayer 
-                src="/Nexus Revenda/Clara - Revenda.mp4" 
+                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Revenda/Clara_Revenda.mp4" 
                 className="w-full h-auto object-cover"
               />
             </div>

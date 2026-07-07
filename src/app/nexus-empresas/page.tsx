@@ -243,7 +243,7 @@ export default function NexusEmpresasPage() {
             <div className="relative w-full max-w-[800px] flex flex-col items-center gap-6">
               <div className="w-full aspect-video rounded-[40px] overflow-hidden border border-blue-500/20 bg-blue-500/5 shadow-[0_0_80px_rgba(0,212,255,0.15)]">
                 <CustomVideoPlayer
-                  src="/Nexus Empresas/Nexus_empresas.mp4"
+                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Empresas/Nexus_empresas.mp4"
                   className="w-full h-full object-cover"
                 />
               </div>

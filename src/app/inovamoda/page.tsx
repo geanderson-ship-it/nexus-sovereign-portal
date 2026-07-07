@@ -153,7 +153,7 @@ export default function InovaModaPage() {
               
               <div className="w-full rounded-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_40px_rgba(236,72,153,0.3)] bg-black/50 relative mb-8">
                 <CustomVideoPlayer 
-                  src="/Inova moda 360/Sofia - Inova moda.mp4" 
+                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/InovaModa/Sofia_Inova_moda.mp4" 
                   className="w-full h-auto object-cover"
                 />
               </div>
