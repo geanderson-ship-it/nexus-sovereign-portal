@@ -674,7 +674,7 @@ export default function InovaModaPage() {
                   Moda Inclusiva para Pessoas com Deficiência (PcD)
                 </h3>
                 <p className="text-slate-300 text-sm leading-relaxed mb-6">
-                  O InovaModa 360 não exige que o cliente fique em pé. A nossa IA mapeia o corpo humano a partir de uma simples foto frontal, permitindo que <strong>cadeirantes ou pessoas acamadas</strong> experimentem qualquer peça de roupa com total dignidade e conforto. Leve a verdadeira inclusão para o seu e-commerce.
+                  O InovaModa 360 transcende as barreiras do provador físico. A nossa Inteligência Artificial mapeia as medidas com precisão através de uma única foto frontal, que pode ser feita no conforto de casa em um ambiente bem iluminado, sem a necessidade de se deslocar até a loja física. Uma tecnologia desenvolvida para abraçar pessoas com dificuldade de mobilidade ou limitações físicas, sem exigir poses específicas, garantindo <strong>total autonomia, conforto e dignidade</strong> na hora de escolher a peça perfeita. Leve a verdadeira inclusão para o seu negócio.
                 </p>
               </div>
             </div>

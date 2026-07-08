@@ -91,7 +91,7 @@ export default function InovaRevendaPage() {
             
             <div className="w-full rounded-2xl overflow-hidden border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.3)] bg-black/50 relative mb-6">
               <CustomVideoPlayer 
-                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/NexusRevenda/Clara-Revenda.mp4" 
+                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/InovaRevenda/Clara_Revenda_Apresentacao.mp4" 
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -130,7 +130,7 @@ export default function InovaRevendaPage() {
               Inova <span className="text-[#cfa968]">Revenda</span>
             </h1>
             <p className="text-slate-200 text-sm sm:text-base md:text-xl font-light tracking-wide max-w-2xl leading-relaxed mx-auto drop-shadow-md">
-              A primeira concessionária digital guiada por Inteligência Artificial. Veículos premium, financiamento em tempo real e atendimento que te entende.
+              O ecossistema digital de vendas guiado por Inteligência Artificial que se adapta exatamente ao seu negócio. Projetado para escalar vendas de alto valor, seja na comercialização de <strong>carros de luxo, motos, lanchas, iates, jatos particulares ou helicópteros</strong>. Atendimento premium e inteligência comercial 24 horas por dia.
             </p>
           </div>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
