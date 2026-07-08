@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Phone, CheckCircle, ArrowRight, ShoppingBag, TrendingUp, Users, Smartphone, BarChart3, MessageSquare, Zap, Target, Award, PlayCircle, Store, CarFront, Gauge, Banknote } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
