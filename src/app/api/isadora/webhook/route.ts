@@ -290,17 +290,17 @@ const toolConfig = {
 async function sendWhatsApp(phone: string, message: string) {
   const zapiToken = process.env.ZAPI_TOKEN;
   const zapiInstance = process.env.ZAPI_INSTANCE || "3F57A44F16F91243B9DD5A0A9E39134B";
+  const zapiClientToken = process.env.ZAPI_CLIENT_TOKEN || "F14e4baef93124d62b55f389507b5f6b3S";
 
   if (zapiToken) {
     console.log(`[Isadora] Enviando via Z-API para ${phone}...`);
     const zapiUrl = `https://api.z-api.io/instances/${zapiInstance}/token/${zapiToken}/send-text`;
     
-    // Z-API espera o número no formato com ou sem DDI dependendo da config, mas geralmente com DDI
-    // Exemplo de body Z-API: { "phone": "5551999799582", "message": "Oi" }
     const res = await fetch(zapiUrl, {
       method: 'POST',
       headers: { 
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'client-token': zapiClientToken
       },
       body: JSON.stringify({ phone: phone, message: message }),
     });
