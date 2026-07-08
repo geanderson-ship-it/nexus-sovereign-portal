@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Phone, CheckCircle, ArrowRight, ShoppingBag, TrendingUp, Users, Smartphone, BarChart3, MessageSquare, Zap, Target, Award, PlayCircle, Store, CarFront, Gauge, Banknote } from 'lucide-react';
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
 import * as gtag from '@/lib/gtag';
 
@@ -89,11 +90,39 @@ export default function InovaRevendaPage() {
           
           <div className="w-full flex flex-col items-center text-center gap-6 mt-4 mb-6 max-w-4xl px-4 mx-auto p-8 rounded-3xl bg-black/60 backdrop-blur-md border border-white/10 shadow-2xl">
             
-            <div className="mb-4 w-full max-w-2xl mx-auto rounded-[2rem] overflow-hidden border-2 border-[#cfa968]/40 shadow-[0_0_50px_rgba(207,169,104,0.25)] bg-black/50 relative">
+            <div className="w-full rounded-2xl overflow-hidden border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.3)] bg-black/50 relative mb-6">
               <CustomVideoPlayer 
-                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Revenda/Clara_Revenda.mp4" 
+                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/NexusRevenda/Clara-Revenda.mp4" 
                 className="w-full h-auto object-cover"
               />
+            </div>
+
+            {/* Botão de Saiba Mais (Detalhado) */}
+            <div className="flex justify-center mb-10 z-20 relative">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-black/40 border border-amber-500/30 text-amber-400 text-sm font-bold uppercase tracking-widest hover:bg-amber-500/20 hover:text-white transition-all shadow-[0_0_20px_rgba(245,158,11,0.15)] group">
+                    <PlayCircle className="w-4 h-4 group-hover:scale-110 transition-transform" /> 
+                    Saiba mais detalhes
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[800px] bg-[#0a0a0a] border-amber-500/30 text-white p-1">
+                  <DialogHeader className="p-6 pb-2">
+                    <DialogTitle className="text-2xl font-headline font-black text-amber-500 flex items-center gap-2">
+                      <CarFront className="w-6 h-6" /> Inova Revenda (Detalhado)
+                    </DialogTitle>
+                    <DialogDescription className="text-slate-400">
+                      O motor definitivo para escalar vendas de veículos, embarcações e aeronaves.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-amber-500/30 bg-black shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+                    <CustomVideoPlayer 
+                      src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/InovaRevenda/Clara_Inova_Revenda_Detalhado.mp4" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
 
             <Badge className="bg-[#cfa968]/20 text-[#cfa968] border-[#cfa968]/40 px-6 py-1.5 tracking-[0.3em] font-mono text-[10px] mb-2">AUTO_INTELLIGENCE</Badge>

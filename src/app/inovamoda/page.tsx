@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/use-locale';
 import { useToast } from '@/hooks/use-toast';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 export default function InovaModaPage() {
   const { t } = useLocale();
@@ -151,11 +152,39 @@ export default function InovaModaPage() {
             {/* TOPO: Vídeo, depois Badge + Título */}
             <div className="px-8 pt-10 pb-6">
               
-              <div className="w-full rounded-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_40px_rgba(236,72,153,0.3)] bg-black/50 relative mb-8">
+              <div className="w-full rounded-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_40px_rgba(236,72,153,0.3)] bg-black/50 relative mb-4">
                 <CustomVideoPlayer 
                   src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/InovaModa/Sofia_Inova_moda.mp4" 
                   className="w-full h-auto object-cover"
                 />
+              </div>
+
+              {/* Botão de Saiba Mais (Detalhado) */}
+              <div className="flex justify-center mb-8">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <button className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-black/40 border border-pink-500/30 text-pink-300 text-sm font-bold uppercase tracking-widest hover:bg-pink-500/20 hover:text-white transition-all shadow-[0_0_20px_rgba(236,72,153,0.15)] group">
+                      <Video className="w-4 h-4 group-hover:scale-110 transition-transform" /> 
+                      Saiba mais detalhes
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[800px] bg-[#080b10] border-pink-500/30 text-white p-1">
+                    <DialogHeader className="p-6 pb-2">
+                      <DialogTitle className="text-2xl font-headline font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500 flex items-center gap-2">
+                        <SparkleIcon className="w-5 h-5 text-pink-400" /> InovaModa 360 (Detalhado)
+                      </DialogTitle>
+                      <DialogDescription className="text-slate-400">
+                        Entenda como o Provador Virtual Neural revoluciona as vendas no varejo físico e digital.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-pink-500/30 bg-black shadow-[0_0_30px_rgba(236,72,153,0.2)]">
+                      <CustomVideoPlayer 
+                        src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/InovaModa/Sofia_Inova_Moda_Detalhado.mp4" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
 
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold uppercase tracking-widest mb-6">

@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-runtime";
 import { getIsadoraHistory, saveIsadoraHistory, recordHandoff, getIsadoraSession } from '@/lib/isadora-db';
 
-const ZAPI_INSTANCE = process.env.ZAPI_INSTANCE || "";
-const ZAPI_TOKEN    = process.env.ZAPI_TOKEN || "";
-const ZAPI_URL      = `https://api.z-api.io/instances/${ZAPI_INSTANCE}/token/${ZAPI_TOKEN}/send-text`;
+const EVOLUTION_API_URL = process.env.EVOLUTION_API_URL || "http://100.59.197.161:8080";
+const EVOLUTION_GLOBAL_APIKEY = process.env.EVOLUTION_GLOBAL_APIKEY || "nexus";
+const EVOLUTION_INSTANCE_NAME = process.env.EVOLUTION_INSTANCE_NAME || "Isadora";
+const EVOLUTION_SEND_TEXT_URL = `${EVOLUTION_API_URL}/message/sendText/${EVOLUTION_INSTANCE_NAME}`;
 
 const awsConfig: any = {
   region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
@@ -224,6 +225,14 @@ Objeção ou Pedido Especial: "O sistema de vocês faz [Funcionalidade Específi
 → (E em seguida, acione a ferramenta Handoff para o humano).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DEFESA CONTRA COMPORTAMENTO INADEQUADO (GRACINHAS/ASSÉDIO)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Se o cliente fizer piadas inadequadas, comentários de cunho pessoal, assédio, ou vier com "gracinhas" fora do escopo profissional:
+→ Assuma uma postura fria, estritamente executiva e cortês. 
+→ Responda: "Como sou uma Inteligência Artificial focada no atendimento corporativo da Nexus, não consigo continuar essa linha de conversa. Posso ajudá-lo com alguma de nossas soluções tecnológicas?"
+→ Se o cliente insistir no comportamento inadequado, encerre o atendimento educadamente e pare de responder solicitações que não sejam estritamente sobre negócios.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RETORNO DE VIABILIDADE TÉCNICA (O DIA SEGUINTE)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Se a Diretoria repassar a decisão para você comunicar ao cliente no dia seguinte, mantenha a proximidade e seja extremamente transparente.
@@ -279,14 +288,21 @@ const toolConfig = {
 };
 
 async function sendWhatsApp(phone: string, message: string) {
-  const res = await fetch(ZAPI_URL, {
+  const res = await fetch(EVOLUTION_SEND_TEXT_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone, message }),
+    headers: { 
+      'Content-Type': 'application/json',
+      'apikey': EVOLUTION_GLOBAL_APIKEY 
+    },
+    body: JSON.stringify({ number: phone, text: message }),
   });
-  const data = await res.json().catch(() => ({}));
-  console.log(`[Isadora] Z-API status ${res.status}:`, JSON.stringify(data));
-  if (!res.ok) throw new Error(`Z-API erro ${res.status}: ${JSON.stringify(data)}`);
+  
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error(`[Evolution API] Erro ao enviar mensagem para ${phone}:`, errorText);
+  } else {
+    console.log(`[Evolution API] Mensagem enviada para ${phone} com sucesso.`);
+  }
 }
 
 /**
