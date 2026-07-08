@@ -626,6 +626,32 @@ export default function InovaModaPage() {
 
         </div>
 
+        {/* MODA INCLUSIVA E ACESSIBILIDADE */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900/40 via-purple-900/20 to-black border border-purple-500/30 p-1">
+            <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-20 mix-blend-overlay"></div>
+            <div className="relative bg-slate-950/80 backdrop-blur-xl rounded-[22px] p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 shadow-[0_0_50px_rgba(168,85,247,0.15)]">
+              <div className="flex-shrink-0 relative">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-[0_0_30px_rgba(168,85,247,0.4)] relative z-10">
+                  <Activity className="w-12 h-12 text-white" />
+                </div>
+                <div className="absolute inset-0 bg-purple-500/50 rounded-full animate-ping"></div>
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-[10px] font-bold uppercase tracking-widest mb-4">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Acessibilidade e Inclusão
+                </div>
+                <h3 className="text-2xl md:text-3xl font-headline font-black text-white mb-4">
+                  Moda Inclusiva para Pessoas com Deficiência (PcD)
+                </h3>
+                <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                  O InovaModa 360 não exige que o cliente fique em pé. A nossa IA mapeia o corpo humano a partir de uma simples foto frontal, permitindo que <strong>cadeirantes ou pessoas acamadas</strong> experimentem qualquer peça de roupa com total dignidade e conforto. Leve a verdadeira inclusão para o seu e-commerce.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* CARD WHATSAPP */}
         <div className="max-w-2xl mx-auto mb-12">
           <div className="bg-black/60 backdrop-blur-md border border-green-500/30 rounded-2xl p-8 flex flex-col items-center text-center shadow-[0_0_30px_rgba(34,197,94,0.15)]">
