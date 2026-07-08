@@ -447,7 +447,7 @@ async function getIsadoraResponse(phone: string, userMessage: string): Promise<{
   });
 
   // Salvar tudo no DynamoDB
-  await saveIsadoraHistory(phone, history, nicho, currentIntention);
+  await saveIsadoraHistory(phone, history, nicho, 0);
 
   return { response: textResponse, shouldHandoff: false };
 }
