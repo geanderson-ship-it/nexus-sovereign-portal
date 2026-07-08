@@ -243,7 +243,7 @@ export default function NexusEmpresasPage() {
             <div className="relative w-full max-w-[1200px] flex flex-col items-center gap-6">
               <div className="w-full aspect-video rounded-[40px] overflow-hidden border border-blue-500/20 bg-blue-500/5 shadow-[0_0_80px_rgba(0,212,255,0.15)]">
                 <CustomVideoPlayer
-                  src="/Nexus Empresas/Mirela_Enterprise_Apresentacao.mp4"
+                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Mirela_Enterprise_Apresentacao.mp4"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -264,7 +264,7 @@ export default function NexusEmpresasPage() {
                   </DialogHeader>
                   <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-blue-500/30 bg-black shadow-[0_0_30px_rgba(0,212,255,0.2)]">
                     <CustomVideoPlayer 
-                      src="/Nexus Empresas/Mirela_Enterprise_Detalhes.mp4" 
+                      src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Mirela_Enterprise_Detalhes.mp4" 
                       className="w-full h-full object-cover"
                     />
                   </div>

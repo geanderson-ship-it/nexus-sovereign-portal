@@ -271,7 +271,7 @@ export default function ExclusiveHub() {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Magadot_Nexus.mp4"
+                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Magadot_Nexus.mp4"
                   autoPlay muted loop playsInline
                   containerClassName="w-full h-full"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"

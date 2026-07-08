@@ -124,7 +124,7 @@ export default async function IsadoraWarRoomPage() {
               <CardContent className="p-0">
                 <div className="relative aspect-video bg-black">
                   <CustomVideoPlayer 
-                    src="/avatars/Vdeos/Isadora_-_Executiva_em_vendas_Nexus_holding_Group.mp4" 
+                    src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Isadora_Executiva_em_vendas_Nexus_holding_Group.mp4" 
                     title="Isadora - Transmissão Operacional" 
                     accentColor="#f59e0b"
                   />

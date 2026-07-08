@@ -62,7 +62,7 @@ export default function HomePage() {
                         >
                             <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.5)] bg-black/50">
                                 <CustomVideoPlayer 
-                                    src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Home/Avatar_IV_Video.mp4"
+                                    src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Avatar_IV_Video.mp4"
                                     className="aspect-video" 
                                 />
                             </div>

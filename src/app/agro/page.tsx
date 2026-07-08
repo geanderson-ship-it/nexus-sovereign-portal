@@ -57,7 +57,7 @@ export default function AgroPage() {
             >
               <div className="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.15)] bg-slate-950 mb-4">
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Agro/Dante_safra1.mp4" 
+                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Dante_safra1.mp4" 
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-emerald-500/30 rounded-full">
@@ -85,7 +85,7 @@ export default function AgroPage() {
                   </DialogHeader>
                   <div className="relative w-full max-w-[280px] aspect-[9/16] rounded-2xl overflow-hidden border border-emerald-500/30 bg-black shadow-[0_0_30px_rgba(16,185,129,0.2)]">
                     <CustomVideoPlayer 
-                      src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Agro/Dante_safra.mp4" 
+                      src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Dante_safra.mp4" 
                       className="w-full h-full object-contain"
                     />
                   </div>
