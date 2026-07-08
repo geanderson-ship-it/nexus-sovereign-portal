@@ -236,14 +236,14 @@ export default function NexusEmpresasPage() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[#020A14]/60 via-transparent to-[#020A14]" />
         </div>
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="relative z-10 text-center px-4 max-w-7xl mx-auto w-full">
           <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20 px-6 py-1.5 tracking-[0.3em] font-mono text-[10px] mb-8">B2B_INTELLIGENCE_SUITE</Badge>
-          <div className="w-full flex flex-col items-center text-center gap-6 mt-12 mb-6 max-w-4xl px-4 mx-auto">
-            {/* LOGO VIDEO DJENY */}
-            <div className="relative w-full max-w-[800px] flex flex-col items-center gap-6">
+          <div className="w-full flex flex-col items-center text-center gap-6 mt-12 mb-6 max-w-6xl px-4 mx-auto">
+            {/* LOGO VIDEO MIRELA */}
+            <div className="relative w-full max-w-[1200px] flex flex-col items-center gap-6">
               <div className="w-full aspect-video rounded-[40px] overflow-hidden border border-blue-500/20 bg-blue-500/5 shadow-[0_0_80px_rgba(0,212,255,0.15)]">
                 <CustomVideoPlayer
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Empresas/Nexus_empresas.mp4"
+                  src="/Nexus Empresas/Mirela_-_Interprise_apresentação..mp4"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -264,7 +264,7 @@ export default function NexusEmpresasPage() {
                   </DialogHeader>
                   <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-blue-500/30 bg-black shadow-[0_0_30px_rgba(0,212,255,0.2)]">
                     <CustomVideoPlayer 
-                      src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Nexus_Empresas/Nexus_B2B.mp4" 
+                      src="/Nexus Empresas/Mirela_-_Interprise_Detalhes..mp4" 
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -275,7 +275,7 @@ export default function NexusEmpresasPage() {
 
             {/* NOME DA EMPRESA */}
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-white">
-              Nexus <span className="text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-indigo-600">Empresas</span>
+              Nexus <span className="text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-indigo-600">Enterprise</span>
             </h1>
 
             {/* SLOGAN */}

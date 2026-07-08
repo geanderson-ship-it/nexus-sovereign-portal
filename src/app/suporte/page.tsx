@@ -700,7 +700,7 @@ export default function SuportePage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="global">Nexus Global (Dashboard/Menu)</SelectItem>
-                  <SelectItem value="empresas">Nexus Empresas (Indústria/B2B)</SelectItem>
+                  <SelectItem value="empresas">Nexus Enterprise (Indústria/B2B)</SelectItem>
                   <SelectItem value="intelligence">Nexus Intelligence (IA/Bedrock)</SelectItem>
                   <SelectItem value="studio">Nexus Studio (Broadcast/Mídia)</SelectItem>
                   <SelectItem value="crono">Cronoanálise (Banco de Tempos)</SelectItem>

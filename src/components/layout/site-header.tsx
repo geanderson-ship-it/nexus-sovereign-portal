@@ -94,7 +94,7 @@ export function SiteHeader() {
     { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
     { title: 'Embaixadora', href: '/nexus-rotas' },
     { title: 'Energia', href: '/energia' },
-    { title: 'Empresas', href: '/nexus-empresas' },
+    { title: 'Enterprise', href: '/nexus-empresas' },
     { title: t('navAgro') || 'Agro', href: '/agro' },
     { title: t('navPremium') || 'Exclusive', href: '/exclusive' },
     { title: t('navSocial') || 'Social', href: '/proposito' },

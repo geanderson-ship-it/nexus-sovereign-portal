@@ -54,14 +54,12 @@ export default function NexusEmpresasDemoPage() {
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12 border-b border-blue-900/50 pb-8">
           <div className="flex items-center gap-4">
-            <Link href="/gabinete-vendas">
-              <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-blue-500 hover:scale-105 transition-all cursor-pointer">
-                <Briefcase className="w-8 h-8 text-blue-500" />
-              </div>
-            </Link>
+            <div className="w-16 h-16 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+              <Building2 className="w-8 h-8 text-blue-400" />
+            </div>
             <div>
-              <h1 className="text-4xl font-bold font-headline text-white">Nexus Empresas</h1>
-              <p className="text-slate-400">Ambiente de Demonstração (Showroom)</p>
+              <h1 className="text-4xl font-bold font-headline text-white">Nexus Enterprise</h1>
+              <p className="text-slate-400 font-mono text-sm uppercase tracking-widest mt-1">Suite de Inteligência Artificial On-Premise</p>
             </div>
           </div>
         </div>

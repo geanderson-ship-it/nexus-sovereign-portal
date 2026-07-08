@@ -5,7 +5,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase, FileText, DollarSign } from 'lucide-react';
+import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase, FileText, DollarSign, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -37,211 +37,145 @@ export default function GabineteHubPage() {
   return (
     <div className="min-h-screen text-slate-200 pt-32 pb-20 px-4 relative">
       
-      {/* BACKGROUND IMAGE */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <Image
-          src="/nexus-prospector-bg.png"
-          alt="Nexus Cabinet Background"
-          fill
-          priority
-          className="object-cover opacity-35"
-          style={{ objectPosition: 'center center' }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/40 via-[#020617]/70 to-[#020617]/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.04)_0%,transparent_60%)]" />
+      {/* GABINETE ACTIVE CORE BACKGROUND (MAGADOT/ORION STYLE) - INTENSIFICADO */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#0f0700]">
+          {/* Pontilhados mais visíveis */}
+          <div className="absolute inset-0 bg-[radial-gradient(#eab308_1.5px,transparent_1.5px)] [background-size:40px_40px] opacity-20" />
+          
+          {/* Brilhos centrais mais fortes e intensos */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vw] bg-amber-600/25 blur-[100px] rounded-full animate-pulse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50vw] h-[50vw] bg-yellow-500/25 blur-[80px] rounded-full animate-ping" style={{ animationDuration: '4s' }} />
+          
+          {/* Anéis orbitais mais brilhantes */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] border-[2px] border-amber-500/20 rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] border-[2px] border-yellow-500/30 rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] border-[2px] border-amber-400/40 rounded-full border-dashed animate-[spin_60s_linear_infinite]" />
+
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-40 mix-blend-overlay" />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12 border-b border-slate-800 pb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.15)]">
-              <Shield className="w-8 h-8 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-4xl font-bold font-headline text-white">Command Center</h1>
-              <p className="text-slate-400">Gabinete Estratégico da Diretoria Nexus</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3 bg-slate-900/50 border border-slate-800 px-4 py-2 rounded-full">
-            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-300">Acesso Nível 5 (Soberano)</span>
-          </div>
+        <div className="w-full relative h-[180px] md:h-[280px] mb-12 overflow-hidden rounded-3xl border border-blue-500/20 shadow-[0_0_60px_rgba(59,130,246,0.3)]">
+          <Image 
+            src="/Nexus Holding Group/Cartão Nexus Holding group.png" 
+            alt="Nexus Holding Group" 
+            fill 
+            className="object-cover object-[center_40%]"
+            priority
+          />
+          {/* Degradê para misturar suavemente a base da imagem com o fundo da tela */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/20 to-transparent pointer-events-none" />
         </div>
 
-        {/* HERO CARD: ATENA */}
-        <Link href="/gabinete/atena" className="block mb-8">
-          <Card className="bg-slate-900/60 border-indigo-500/30 hover:border-indigo-400/60 hover:bg-slate-900/80 transition-all cursor-pointer group relative overflow-hidden ring-1 ring-indigo-500/30 w-full shadow-[0_0_40px_rgba(99,102,241,0.1)]">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors pointer-events-none" />
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
-            
-            <div className="flex flex-col md:flex-row items-center gap-8 p-8 relative z-10">
-              <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.3)] group-hover:scale-105 transition-transform flex-shrink-0 bg-indigo-950">
-                <Image src="/atena-avatar.png" alt="Atena Avatar" fill className="object-cover" />
+        {/* HERO CARDS: ATENA & ISADORA */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          {/* ATENA */}
+          <Link href="/gabinete/atena" className="block">
+            <Card className="h-full bg-slate-900/60 border-indigo-500/30 hover:border-indigo-400/60 hover:bg-slate-900/80 transition-all cursor-pointer group relative overflow-hidden ring-1 ring-indigo-500/30 w-full shadow-[0_0_40px_rgba(99,102,241,0.1)]">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors pointer-events-none" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
+              
+              <div className="flex flex-col items-center gap-6 p-8 relative z-10 text-center">
+                <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.3)] group-hover:scale-105 transition-transform flex-shrink-0 bg-indigo-950">
+                  <Image src="/atena-avatar.png" alt="Atena Avatar" fill className="object-cover" />
+                </div>
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-4 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                    <Activity className="w-4 h-4 text-indigo-400 animate-pulse" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-300">Acesso Nível Soberano</span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl text-white font-headline font-bold mb-3 group-hover:text-indigo-300 transition-colors">
+                    Atena - IA Exclusiva
+                  </h2>
+                  <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+                    Painel de orquestração e terminal interativo da IA Soberana conectada ao núcleo AWS.
+                  </p>
+                </div>
               </div>
-              <div className="flex-1 text-center md:text-left">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-4 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
-                  <Activity className="w-4 h-4 text-indigo-400 animate-pulse" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-indigo-300">Acesso Nível Soberano</span>
+            </Card>
+          </Link>
+
+          {/* ISADORA */}
+          <Link href="/gabinete/isadora" className="block">
+            <Card className="h-full bg-slate-900/60 border-amber-500/30 hover:border-amber-400/60 hover:bg-slate-900/80 transition-all cursor-pointer group relative overflow-hidden ring-1 ring-amber-500/30 w-full shadow-[0_0_40px_rgba(245,158,11,0.1)]">
+              <div className="absolute top-0 left-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl group-hover:bg-amber-500/20 transition-colors pointer-events-none" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500" />
+              
+              <div className="flex flex-col items-center gap-6 p-8 relative z-10 text-center">
+                <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.3)] group-hover:scale-105 transition-transform flex-shrink-0 bg-amber-950">
+                  <Image src="/Vendedora Nexus/Isadora Nexus.png" alt="Isadora Avatar" fill className="object-cover object-[center_30%]" />
                 </div>
-                <h2 className="text-3xl md:text-4xl text-white font-headline font-bold mb-3 group-hover:text-indigo-300 transition-colors drop-shadow-md">
-                  Atena - A inteligência exclusiva da Nexus
-                </h2>
-                <p className="text-slate-300 max-w-3xl text-base md:text-lg leading-relaxed">
-                  Painel de orquestração avançado e terminal interativo da IA Soberana. Conectada diretamente ao núcleo AWS Bedrock, operando com total autonomia e controle estratégico.
-                </p>
-                <div className="mt-8 flex items-center justify-center md:justify-start gap-2 text-sm font-bold uppercase tracking-widest text-indigo-400 group-hover:text-indigo-300">
-                  Abrir Conexão Neural <Activity className="w-5 h-5 animate-pulse ml-2" />
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 mb-4 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                    <TrendingUp className="w-4 h-4 text-amber-400 animate-pulse" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-amber-300">Vendas & Handoff</span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl text-white font-headline font-bold mb-3 group-hover:text-amber-300 transition-colors">
+                    Isadora OS (Vendas)
+                  </h2>
+                  <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+                    Painel de monitoramento de Hot Leads e conversões da executiva de alta performance.
+                  </p>
                 </div>
               </div>
-            </div>
-          </Card>
-        </Link>
-
-        {/* Módulos do Gabinete */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          
-          {/* Contratos Lançados */}
-          <Link href="/gabinete/contratos">
-            <Card className="bg-slate-900/40 border-slate-800 hover:border-amber-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-colors" />
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-amber-500/20">
-                  <FileText className="w-6 h-6 text-amber-400" />
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-amber-400 transition-colors font-headline">Contratos Lançados</CardTitle>
-                <CardDescription>Aprovações e Módulos Vendidos</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-400">
-                  Valide e aprove as vendas submetidas pela equipe comercial. Acompanhe os módulos adquiridos por cada novo cliente.
-                </p>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-amber-500">
-                  Auditar Contratos <FileText className="w-3 h-3" />
-                </div>
-              </CardContent>
             </Card>
           </Link>
+        </div>
 
-          {/* Faturamento */}
-          <Link href="/gabinete/faturamento">
-            <Card className="bg-slate-900/40 border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-colors" />
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-emerald-500/20">
-                  <DollarSign className="w-6 h-6 text-emerald-400" />
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-emerald-400 transition-colors font-headline">Faturamento Inteligente</CardTitle>
-                <CardDescription>Receita, Inadimplência e Fluxo</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-400">
-                  Painel financeiro C-Level. Visualize pagamentos confirmados, inadimplência em tempo real e previsão de recebíveis.
-                </p>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
-                  Acessar Tesouraria <DollarSign className="w-3 h-3" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          {/* Card Prospector Hub */}
-          <Link href="/gabinete/prospector">
-            <Card className="bg-slate-900/40 border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/10 transition-colors" />
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-blue-500/20">
-                  <Search className="w-6 h-6 text-blue-400" />
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-blue-400 transition-colors font-headline">Prospector & Hub</CardTitle>
-                <CardDescription>Mapeamento e Ecossistema</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-400">
-                  Integração com IBGE, controle de leads e agenda tática. Todas as ferramentas em um só lugar.
-                </p>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-blue-500">
-                  Acessar Hub <Search className="w-3 h-3" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          {/* NOVO CARD: Showroom de Avatares */}
-          <Link href="/gabinete/showroom">
-            <Card className="bg-slate-900/40 border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-colors" />
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-purple-500/20">
-                  <Users className="w-6 h-6 text-purple-400" />
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-purple-400 transition-colors font-headline">Showroom de Avatares</CardTitle>
-                <CardDescription>Galeria de Apresentação (Demos)</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-400">
-                  Acesse o painel visual com a Embaixadora Digital e o cardápio interativo das nossas IAs (Aurora, Magadot, etc).
-                </p>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-purple-500">
-                  Abrir Showroom <Users className="w-3 h-3" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          {/* Propostas Comerciais */}
-          <Link href="/gabinete/propostas">
-            <Card className="bg-slate-900/40 border-slate-800 hover:border-rose-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl group-hover:bg-rose-500/10 transition-colors" />
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-rose-500/20">
-                  <Briefcase className="w-6 h-6 text-rose-400" />
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-rose-400 transition-colors font-headline">Propostas Comerciais</CardTitle>
-                <CardDescription>Cenários de Preços e Fechamentos</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-400">
-                  Módulo de ancoragem. Apresente os pacotes modulares (Atendente, ÉGIDE e Combo) e consolide negócios de alto impacto.
-                </p>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-rose-500">
-                  Acessar Acervo <Briefcase className="w-3 h-3" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-          {/* Cases de Sucesso */}
-          <Link href="/gabinete/cases">
-            <Card className="bg-slate-900/40 border-slate-800 hover:border-yellow-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/5 rounded-full blur-3xl group-hover:bg-yellow-500/10 transition-colors" />
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-yellow-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-yellow-500/20">
-                  <MapPin className="w-6 h-6 text-yellow-400" />
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-yellow-400 transition-colors font-headline">Cases de Sucesso</CardTitle>
-                <CardDescription>Cidades e Embaixadoras</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-400">
-                  Mural oficial de acompanhamento das cidades que já possuem o programa de Embaixadoras Digitais implementado e ativo.
-                </p>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-yellow-500">
-                  Ver Mapa <MapPin className="w-3 h-3" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
+        {/* Sala de Controle (Links em Lista) */}
+        <div className="mb-12 border-t border-slate-800 pt-8">
+          <h3 className="text-xl font-headline font-bold text-white mb-6 flex items-center gap-2">
+            <Activity className="w-5 h-5 text-primary" /> Sala de Controle
+          </h3>
+          <ul className="flex flex-col gap-4 max-w-md">
+            <li>
+              <Link href="/gabinete/contratos" className="flex items-center gap-3 text-slate-300 hover:text-amber-400 transition-colors group">
+                <FileText className="w-4 h-4 text-slate-600 group-hover:text-amber-400" /> 
+                <span className="font-mono text-sm tracking-wide uppercase">Contratos Lançados</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/gabinete/faturamento" className="flex items-center gap-3 text-slate-300 hover:text-emerald-400 transition-colors group">
+                <DollarSign className="w-4 h-4 text-slate-600 group-hover:text-emerald-400" /> 
+                <span className="font-mono text-sm tracking-wide uppercase">Faturamento Inteligente</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/gabinete/prospector" className="flex items-center gap-3 text-slate-300 hover:text-blue-400 transition-colors group">
+                <Search className="w-4 h-4 text-slate-600 group-hover:text-blue-400" /> 
+                <span className="font-mono text-sm tracking-wide uppercase">Prospector & Hub</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/gabinete/showroom" className="flex items-center gap-3 text-slate-300 hover:text-purple-400 transition-colors group">
+                <Users className="w-4 h-4 text-slate-600 group-hover:text-purple-400" /> 
+                <span className="font-mono text-sm tracking-wide uppercase">Showroom de Avatares</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/gabinete/propostas" className="flex items-center gap-3 text-slate-300 hover:text-rose-400 transition-colors group">
+                <Briefcase className="w-4 h-4 text-slate-600 group-hover:text-rose-400" /> 
+                <span className="font-mono text-sm tracking-wide uppercase">Propostas Comerciais</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/gabinete/cases" className="flex items-center gap-3 text-slate-300 hover:text-yellow-400 transition-colors group">
+                <MapPin className="w-4 h-4 text-slate-600 group-hover:text-yellow-400" /> 
+                <span className="font-mono text-sm tracking-wide uppercase">Cases de Sucesso</span>
+              </Link>
+            </li>
+          </ul>
         </div>
 
         {/* Cofre Administrativo: Regras de Contrato */}
-        <div className="mt-12 border border-slate-800 bg-slate-900/30 rounded-xl overflow-hidden backdrop-blur-md">
-          <div className="bg-slate-800/50 px-6 py-4 border-b border-slate-800 flex items-center gap-3">
-            <Lock className="w-5 h-5 text-amber-500" />
-            <h2 className="text-lg font-headline text-white">Cofre Administrativo: Diretrizes de Contratos Terceirizados (15%)</h2>
-          </div>
-          <div className="p-6 text-sm text-slate-300">
+        <div className="mt-12 border-t border-slate-800 pt-8">
+          <details className="group border border-slate-800 bg-slate-900/30 rounded-xl overflow-hidden backdrop-blur-md cursor-pointer">
+            <summary className="bg-slate-800/50 px-6 py-4 flex items-center gap-3 list-none">
+              <Lock className="w-5 h-5 text-amber-500" />
+              <h2 className="text-lg font-headline text-white">Contrato para Vendedores</h2>
+            </summary>
+            
+            <div className="p-6 text-sm text-slate-300 border-t border-slate-800">
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">
               {/* Parte 1: Escopo e Faturamento */}
               <div>
@@ -378,7 +312,8 @@ export default function GabineteHubPage() {
                 </Button>
               </Link>
             </div>
-          </div>
+            </div>
+          </details>
         </div>
       </div>
     </div>
