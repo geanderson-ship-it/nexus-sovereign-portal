@@ -288,20 +288,46 @@ const toolConfig = {
 };
 
 async function sendWhatsApp(phone: string, message: string) {
-  const res = await fetch(EVOLUTION_SEND_TEXT_URL, {
-    method: 'POST',
-    headers: { 
-      'Content-Type': 'application/json',
-      'apikey': EVOLUTION_GLOBAL_APIKEY 
-    },
-    body: JSON.stringify({ number: phone, text: message }),
-  });
-  
-  if (!res.ok) {
-    const errorText = await res.text();
-    console.error(`[Evolution API] Erro ao enviar mensagem para ${phone}:`, errorText);
+  const zapiToken = process.env.ZAPI_TOKEN;
+  const zapiInstance = process.env.ZAPI_INSTANCE || "3F57A44F16F91243B9DD5A0A9E39134B";
+
+  if (zapiToken) {
+    console.log(`[Isadora] Enviando via Z-API para ${phone}...`);
+    const zapiUrl = `https://api.z-api.io/instances/${zapiInstance}/token/${zapiToken}/send-text`;
+    
+    // Z-API espera o número no formato com ou sem DDI dependendo da config, mas geralmente com DDI
+    // Exemplo de body Z-API: { "phone": "5551999799582", "message": "Oi" }
+    const res = await fetch(zapiUrl, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ phone: phone, message: message }),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error(`[Z-API] Erro ao enviar mensagem para ${phone}:`, errorText);
+    } else {
+      console.log(`[Z-API] Mensagem enviada para ${phone} com sucesso.`);
+    }
   } else {
-    console.log(`[Evolution API] Mensagem enviada para ${phone} com sucesso.`);
+    console.log(`[Isadora] Enviando via Evolution API para ${phone}...`);
+    const res = await fetch(EVOLUTION_SEND_TEXT_URL, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'apikey': EVOLUTION_GLOBAL_APIKEY 
+      },
+      body: JSON.stringify({ number: phone, text: message }),
+    });
+    
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error(`[Evolution API] Erro ao enviar mensagem para ${phone}:`, errorText);
+    } else {
+      console.log(`[Evolution API] Mensagem enviada para ${phone} com sucesso.`);
+    }
   }
 }
 
