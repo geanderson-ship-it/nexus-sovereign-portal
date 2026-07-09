@@ -97,7 +97,9 @@ export default async function IsadoraWarRoomPage() {
             </div>
           </div>
           
-          <div className="flex gap-4">
+          </div>
+          
+          <div className="flex gap-4 flex-wrap">
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 min-w-[140px] text-center backdrop-blur-sm">
               <p className="text-xs text-slate-500 uppercase tracking-widest font-mono mb-1">Leads Quentes</p>
               <p className="text-3xl font-bold text-white">{hotLeads.length}</p>
@@ -108,8 +110,18 @@ export default async function IsadoraWarRoomPage() {
                 <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" /> Conectado
               </p>
             </div>
+            <Link
+              href="/gabinete/isadora/contatos"
+              className="bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 hover:border-amber-500/60 rounded-xl p-4 min-w-[140px] text-center backdrop-blur-sm transition-all group"
+            >
+              <p className="text-xs text-amber-500/70 uppercase tracking-widest font-mono mb-1">Lista de Contatos</p>
+              <p className="text-sm font-bold text-amber-400 mt-2 flex items-center justify-center gap-2 group-hover:gap-3 transition-all">
+                Prospectar →
+              </p>
+            </Link>
           </div>
         </div>
+
 
         <div className="grid lg:grid-cols-3 gap-8">
           
