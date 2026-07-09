@@ -137,6 +137,52 @@ export default function ContatosIsadoraPage() {
     }
   }
 
+  function handleImportCSV(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      const lines = text.split('\n');
+      const novosContatos: Contato[] = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        const [nome, cnpj, telefone, email, cidade, estado, situacao, segmento] = line.split(',');
+        
+        if (nome && telefone) {
+          novosContatos.push({
+            id: Date.now().toString() + i,
+            nome: nome.replace(/["']/g, ''),
+            telefone: formatarTelefone(telefone.replace(/["']/g, '')),
+            segmento: segmento ? segmento.replace(/["']/g, '') : 'Outro',
+            status: 'Pendente',
+            dataAdicionado: new Date().toISOString()
+          });
+        }
+      }
+
+      setContatos(prev => [...novosContatos, ...prev]);
+      mostrarFeedback(`✅ ${novosContatos.length} contatos importados com sucesso!`);
+    };
+    reader.readAsText(file);
+    e.target.value = ''; // reseta o input
+  }
+
+  function carregarLeadsTeste() {
+    const leadsTeste: Contato[] = [
+      { id: 't1', nome: 'Agropecuária Vale do Sol', telefone: '5561999991111', segmento: 'Agronegócio', status: 'Pendente', dataAdicionado: new Date().toISOString() },
+      { id: 't2', nome: 'InovaTech Solutions', telefone: '5511988882222', segmento: 'Tecnologia', status: 'Pendente', dataAdicionado: new Date().toISOString() },
+      { id: 't3', nome: 'Clínica Bem Estar', telefone: '5541977773333', segmento: 'Saúde / Clínica', status: 'Pendente', dataAdicionado: new Date().toISOString() },
+      { id: 't4', nome: 'Grupo Zogbi Holding', telefone: '5521966664444', segmento: 'Holding / Diretoria', status: 'Pendente', dataAdicionado: new Date().toISOString() },
+      { id: 't5', nome: 'Concessionária Apex', telefone: '5531955555555', segmento: 'Automóveis / Revenda', status: 'Pendente', dataAdicionado: new Date().toISOString() },
+    ];
+    setContatos(prev => [...leadsTeste, ...prev]);
+    mostrarFeedback('✅ 5 leads de teste carregados!');
+  }
+
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // FILTROS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -180,12 +226,24 @@ export default function ContatosIsadoraPage() {
               <p className="text-slate-400 text-sm">Leads para prospecção ativa da Isadora</p>
             </div>
           </div>
-          <button
-            onClick={() => setShowForm(true)}
-            className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg transition-all text-sm"
-          >
-            <Plus size={16} /> Novo Contato
-          </button>
+          <div className="flex gap-3 items-center">
+            <button
+              onClick={carregarLeadsTeste}
+              className="text-amber-500/70 hover:text-amber-400 text-xs transition-colors"
+            >
+              + Dados de Teste
+            </button>
+            <label className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2 rounded-lg transition-all text-sm cursor-pointer">
+              <span>Importar CSV</span>
+              <input type="file" accept=".csv" className="hidden" onChange={handleImportCSV} />
+            </label>
+            <button
+              onClick={() => setShowForm(true)}
+              className="flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg transition-all text-sm"
+            >
+              <Plus size={16} /> Novo Contato
+            </button>
+          </div>
         </div>
 
         {/* Feedback Toast */}
