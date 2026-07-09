@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, Plus, Trash2, Send, Phone, User, Tag, CheckCircle, Clock, XCircle, Search } from 'lucide-react';
+import { ChevronLeft, Plus, Trash2, Send, Phone, User, Tag, CheckCircle, Clock, XCircle, Search, Radar } from 'lucide-react';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // TIPOS
@@ -17,6 +17,7 @@ interface Contato {
   status: Status;
   dataAdicionado: string;
   dataEnvio?: string;
+  origem?: 'Manual' | 'Radar' | 'CSV';
 }
 
 const SEGMENTOS = [
@@ -45,16 +46,51 @@ const STATUS_CONFIG: Record<Status, { label: string; color: string; icon: any }>
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export default function ContatosIsadoraPage() {
   const [contatos, setContatos] = useState<Contato[]>([]);
+  const [carregando, setCarregando] = useState(true);
   const [busca, setBusca] = useState('');
   const [filtroStatus, setFiltroStatus] = useState<Status | 'Todos'>('Todos');
   const [showForm, setShowForm] = useState(false);
+  const [showRadar, setShowRadar] = useState(false);
   const [disparando, setDisparando] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
 
-  // Form state
+  // Form state (Manual)
   const [nome, setNome] = useState('');
   const [telefone, setTelefone] = useState('');
   const [segmento, setSegmento] = useState(SEGMENTOS[0]);
+
+  // Form state (Radar)
+  const [radarCnae, setRadarCnae] = useState('6201501'); // TI default
+  const [radarCidade, setRadarCidade] = useState('');
+  const [radarUf, setRadarUf] = useState('SP');
+  const [radarLimit, setRadarLimit] = useState(10);
+  const [buscandoRadar, setBuscandoRadar] = useState(false);
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // EFEITOS
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  useEffect(() => {
+    carregarContatos();
+  }, []);
+
+  async function carregarContatos() {
+    try {
+      setCarregando(true);
+      const res = await fetch('/api/isadora/leads');
+      if (res.ok) {
+        const data = await res.json();
+        // Ordenar os mais recentes primeiro
+        const ordenados = (data || []).sort((a: Contato, b: Contato) => 
+          new Date(b.dataAdicionado).getTime() - new Date(a.dataAdicionado).getTime()
+        );
+        setContatos(ordenados);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setCarregando(false);
+    }
+  }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // FUNÇÕES
@@ -66,35 +102,66 @@ export default function ContatosIsadoraPage() {
     return `55${limpo}`;
   }
 
-  function adicionarContato() {
+  async function adicionarContato() {
     if (!nome.trim() || !telefone.trim()) return;
     const novo: Contato = {
-      id: Date.now().toString(),
+      id: formatarTelefone(telefone) + '_' + Date.now(), // id unico baseado no tel
       nome: nome.trim(),
       telefone: formatarTelefone(telefone),
       segmento,
       status: 'Pendente',
       dataAdicionado: new Date().toISOString(),
+      origem: 'Manual'
     };
-    setContatos(prev => [novo, ...prev]);
-    setNome('');
-    setTelefone('');
-    setSegmento(SEGMENTOS[0]);
-    setShowForm(false);
-    mostrarFeedback(`✅ ${novo.nome} adicionado à lista!`);
+
+    try {
+      const res = await fetch('/api/isadora/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novo),
+      });
+      if (res.ok) {
+        setContatos(prev => [novo, ...prev]);
+        setNome('');
+        setTelefone('');
+        setSegmento(SEGMENTOS[0]);
+        setShowForm(false);
+        mostrarFeedback(`✅ ${novo.nome} adicionado à lista!`);
+      }
+    } catch (e) {
+      mostrarFeedback('❌ Erro ao salvar lead no banco.');
+    }
   }
 
-  function removerContato(id: string) {
-    setContatos(prev => prev.filter(c => c.id !== id));
+  async function removerContato(id: string) {
+    try {
+      const res = await fetch(`/api/isadora/leads?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setContatos(prev => prev.filter(c => c.id !== id));
+      }
+    } catch (e) {
+      mostrarFeedback('❌ Erro ao excluir lead.');
+    }
   }
 
-  function alterarStatus(id: string, status: Status) {
-    setContatos(prev => prev.map(c => c.id === id ? { ...c, status } : c));
+  async function alterarStatus(id: string, status: Status, dataEnvio?: string) {
+    try {
+      const res = await fetch('/api/isadora/leads', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status, dataEnvio }),
+      });
+      if (res.ok) {
+        setContatos(prev => prev.map(c => c.id === id ? { ...c, status, dataEnvio: dataEnvio || c.dataEnvio } : c));
+      }
+    } catch (e) {
+      console.error('Erro ao atualizar status');
+    }
   }
 
   function mostrarFeedback(msg: string) {
     setFeedback(msg);
-    setTimeout(() => setFeedback(null), 3000);
+    setTimeout(() => setFeedback(null), 4000);
   }
 
   async function dispararIsadora(contato: Contato) {
@@ -111,10 +178,8 @@ export default function ContatosIsadoraPage() {
       });
 
       if (res.ok) {
-        alterarStatus(contato.id, 'Enviado');
-        setContatos(prev => prev.map(c =>
-          c.id === contato.id ? { ...c, status: 'Enviado', dataEnvio: new Date().toISOString() } : c
-        ));
+        const agora = new Date().toISOString();
+        await alterarStatus(contato.id, 'Enviado', agora);
         mostrarFeedback(`🚀 Isadora abordou ${contato.nome} no WhatsApp!`);
       } else {
         const err = await res.json();
@@ -137,12 +202,12 @@ export default function ContatosIsadoraPage() {
     }
   }
 
-  function handleImportCSV(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImportCSV(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       const text = event.target?.result as string;
       const lines = text.split('\n');
       const novosContatos: Contato[] = [];
@@ -153,34 +218,73 @@ export default function ContatosIsadoraPage() {
         const [nome, cnpj, telefone, email, cidade, estado, situacao, segmento] = line.split(',');
         
         if (nome && telefone) {
+          const telLimpo = formatarTelefone(telefone.replace(/["']/g, ''));
           novosContatos.push({
-            id: Date.now().toString() + i,
+            id: telLimpo + '_' + Date.now() + i,
             nome: nome.replace(/["']/g, ''),
-            telefone: formatarTelefone(telefone.replace(/["']/g, '')),
+            telefone: telLimpo,
             segmento: segmento ? segmento.replace(/["']/g, '') : 'Outro',
             status: 'Pendente',
-            dataAdicionado: new Date().toISOString()
+            dataAdicionado: new Date().toISOString(),
+            origem: 'CSV'
           });
         }
       }
 
-      setContatos(prev => [...novosContatos, ...prev]);
-      mostrarFeedback(`✅ ${novosContatos.length} contatos importados com sucesso!`);
+      try {
+        const res = await fetch('/api/isadora/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(novosContatos),
+        });
+        if (res.ok) {
+          setContatos(prev => [...novosContatos, ...prev]);
+          mostrarFeedback(`✅ ${novosContatos.length} contatos importados com sucesso para o banco!`);
+        }
+      } catch (e) {
+        mostrarFeedback('❌ Erro ao salvar lista no banco.');
+      }
     };
     reader.readAsText(file);
     e.target.value = ''; // reseta o input
   }
 
-  function carregarLeadsTeste() {
-    const leadsTeste: Contato[] = [
-      { id: 't1', nome: 'Agropecuária Vale do Sol', telefone: '5561999991111', segmento: 'Agronegócio', status: 'Pendente', dataAdicionado: new Date().toISOString() },
-      { id: 't2', nome: 'InovaTech Solutions', telefone: '5511988882222', segmento: 'Tecnologia', status: 'Pendente', dataAdicionado: new Date().toISOString() },
-      { id: 't3', nome: 'Clínica Bem Estar', telefone: '5541977773333', segmento: 'Saúde / Clínica', status: 'Pendente', dataAdicionado: new Date().toISOString() },
-      { id: 't4', nome: 'Grupo Zogbi Holding', telefone: '5521966664444', segmento: 'Holding / Diretoria', status: 'Pendente', dataAdicionado: new Date().toISOString() },
-      { id: 't5', nome: 'Concessionária Apex', telefone: '5531955555555', segmento: 'Automóveis / Revenda', status: 'Pendente', dataAdicionado: new Date().toISOString() },
-    ];
-    setContatos(prev => [...leadsTeste, ...prev]);
-    mostrarFeedback('✅ 5 leads de teste carregados!');
+  async function executarRadar() {
+    if (!radarCnae || !radarCidade || !radarUf) return;
+    
+    setBuscandoRadar(true);
+    try {
+      const res = await fetch('/api/isadora/radar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cnae: radarCnae, municipio: radarCidade, uf: radarUf, limite: radarLimit }),
+      });
+      
+      const data = await res.json();
+      
+      if (res.ok && data.leads && data.leads.length > 0) {
+        // Agora salva no banco
+        const saveRes = await fetch('/api/isadora/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data.leads),
+        });
+        
+        if (saveRes.ok) {
+          setContatos(prev => [...data.leads, ...prev]);
+          mostrarFeedback(`📡 Radar: ${data.leads.length} novos leads capturados!`);
+          setShowRadar(false);
+        }
+      } else if (res.ok && data.leads.length === 0) {
+        mostrarFeedback(`📡 Radar: Nenhuma empresa ativa encontrada com este CNAE/Cidade.`);
+      } else {
+        mostrarFeedback(`❌ Erro no Radar: ${data.error}`);
+      }
+    } catch (e) {
+      mostrarFeedback('❌ Erro de conexão com o Radar.');
+    } finally {
+      setBuscandoRadar(false);
+    }
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -228,10 +332,10 @@ export default function ContatosIsadoraPage() {
           </div>
           <div className="flex gap-3 items-center">
             <button
-              onClick={carregarLeadsTeste}
-              className="text-amber-500/70 hover:text-amber-400 text-xs transition-colors"
+              onClick={() => setShowRadar(true)}
+              className="flex items-center gap-2 bg-blue-600/20 hover:bg-blue-600/40 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-lg transition-all text-sm font-semibold"
             >
-              + Dados de Teste
+              <Radar size={16} /> Radar de Leads
             </button>
             <label className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-4 py-2 rounded-lg transition-all text-sm cursor-pointer">
               <span>Importar CSV</span>
@@ -256,13 +360,15 @@ export default function ContatosIsadoraPage() {
         {/* Stats */}
         <div className="grid grid-cols-4 gap-3">
           {[
-            { label: 'Total', value: stats.total, color: 'text-slate-300' },
-            { label: 'Pendentes', value: stats.pendentes, color: 'text-amber-400' },
-            { label: 'Enviados', value: stats.enviados, color: 'text-blue-400' },
-            { label: 'Responderam', value: stats.responderam, color: 'text-green-400' },
+            { label: 'Total Base de Dados', value: stats.total, color: 'text-slate-300' },
+            { label: 'Pendentes (Fila)', value: stats.pendentes, color: 'text-amber-400' },
+            { label: 'Enviados (Aguardando)', value: stats.enviados, color: 'text-blue-400' },
+            { label: 'Responderam (Handoff)', value: stats.responderam, color: 'text-green-400' },
           ].map(s => (
             <div key={s.label} className="bg-slate-900/60 border border-amber-500/20 rounded-xl p-4 text-center">
-              <div className={`text-3xl font-bold ${s.color}`}>{s.value}</div>
+              <div className={`text-3xl font-bold ${s.color}`}>
+                {carregando ? '...' : s.value}
+              </div>
               <div className="text-slate-500 text-xs mt-1">{s.label}</div>
             </div>
           ))}
@@ -272,7 +378,7 @@ export default function ContatosIsadoraPage() {
         {showForm && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
             <div className="bg-slate-900 border border-amber-500/30 rounded-2xl p-6 w-full max-w-md space-y-4 shadow-2xl">
-              <h2 className="text-lg font-bold text-amber-400">Adicionar Contato</h2>
+              <h2 className="text-lg font-bold text-amber-400">Adicionar Contato Manual</h2>
 
               <div className="space-y-3">
                 <div>
@@ -331,7 +437,95 @@ export default function ContatosIsadoraPage() {
                   disabled={!nome.trim() || !telefone.trim()}
                   className="flex-1 bg-amber-500 hover:bg-amber-400 disabled:opacity-40 text-black font-semibold py-2 rounded-lg text-sm transition-all"
                 >
-                  Adicionar
+                  Salvar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal do Radar */}
+        {showRadar && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+            <div className="bg-slate-900 border border-blue-500/40 rounded-2xl p-6 w-full max-w-md space-y-4 shadow-[0_0_40px_rgba(59,130,246,0.15)]">
+              <div className="flex items-center gap-2 text-blue-400 mb-2">
+                <Radar size={20} className={buscandoRadar ? 'animate-spin' : ''} />
+                <h2 className="text-lg font-bold">Radar de Leads</h2>
+              </div>
+              <p className="text-slate-400 text-xs">A Isadora buscará empresas ativas na Receita Federal de forma automática.</p>
+
+              <div className="space-y-3">
+                <div>
+                  <label className="text-slate-400 text-xs mb-1 block">CNAE (Código do Nicho)</label>
+                  <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2">
+                    <input
+                      type="text"
+                      placeholder="Ex: 6201501"
+                      value={radarCnae}
+                      onChange={e => setRadarCnae(e.target.value)}
+                      className="bg-transparent text-sm text-slate-200 placeholder-slate-600 outline-none flex-1"
+                    />
+                  </div>
+                  <p className="text-slate-600 text-[10px] mt-1">Ex: 6201501 (TI), 4781400 (Vestuário)</p>
+                </div>
+
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="col-span-2">
+                    <label className="text-slate-400 text-xs mb-1 block">Cidade</label>
+                    <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2">
+                      <input
+                        type="text"
+                        placeholder="Ex: Sao Paulo"
+                        value={radarCidade}
+                        onChange={e => setRadarCidade(e.target.value)}
+                        className="bg-transparent text-sm text-slate-200 placeholder-slate-600 outline-none flex-1"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-slate-400 text-xs mb-1 block">UF</label>
+                    <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2">
+                      <input
+                        type="text"
+                        placeholder="SP"
+                        value={radarUf}
+                        onChange={e => setRadarUf(e.target.value.toUpperCase())}
+                        maxLength={2}
+                        className="bg-transparent text-sm text-slate-200 placeholder-slate-600 outline-none w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-slate-400 text-xs mb-1 block">Quantidade de Leads</label>
+                  <div className="flex items-center gap-2 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2">
+                    <input
+                      type="number"
+                      min={1}
+                      max={50}
+                      value={radarLimit}
+                      onChange={e => setRadarLimit(Number(e.target.value))}
+                      className="bg-transparent text-sm text-slate-200 outline-none flex-1"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => setShowRadar(false)}
+                  disabled={buscandoRadar}
+                  className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 py-2 rounded-lg text-sm transition-all"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={executarRadar}
+                  disabled={buscandoRadar || !radarCnae || !radarCidade || !radarUf}
+                  className="flex-1 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-semibold py-2 rounded-lg text-sm transition-all flex items-center justify-center gap-2"
+                >
+                  {buscandoRadar ? 'Procurando...' : 'Iniciar Radar'}
                 </button>
               </div>
             </div>
@@ -380,27 +574,37 @@ export default function ContatosIsadoraPage() {
         )}
 
         {/* Lista de contatos */}
-        {contatosFiltrados.length === 0 ? (
+        {carregando ? (
+          <div className="text-center py-20 text-slate-500 animate-pulse">Carregando banco de leads...</div>
+        ) : contatosFiltrados.length === 0 ? (
           <div className="text-center py-20 space-y-3">
             <div className="text-5xl">📋</div>
             <p className="text-slate-400">
               {contatos.length === 0
-                ? 'Nenhum contato ainda. Adicione o primeiro para a Isadora prospectar!'
+                ? 'Nenhum contato ainda na base de dados.'
                 : 'Nenhum contato encontrado com esse filtro.'}
             </p>
             {contatos.length === 0 && (
-              <button
-                onClick={() => setShowForm(true)}
-                className="mt-2 inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg text-sm"
-              >
-                <Plus size={16} /> Adicionar primeiro contato
-              </button>
+              <div className="flex gap-3 justify-center mt-4">
+                <button
+                  onClick={() => setShowRadar(true)}
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+                >
+                  <Radar size={16} /> Usar Radar
+                </button>
+                <button
+                  onClick={() => setShowForm(true)}
+                  className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-semibold px-4 py-2 rounded-lg text-sm transition-all"
+                >
+                  <Plus size={16} /> Adicionar Manual
+                </button>
+              </div>
             )}
           </div>
         ) : (
           <div className="space-y-3">
             {contatosFiltrados.map(c => {
-              const statusCfg = STATUS_CONFIG[c.status];
+              const statusCfg = STATUS_CONFIG[c.status] || STATUS_CONFIG.Pendente;
               const StatusIcon = statusCfg.icon;
               return (
                 <div
@@ -414,13 +618,18 @@ export default function ContatosIsadoraPage() {
                       <span className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border ${statusCfg.color}`}>
                         <StatusIcon size={10} /> {statusCfg.label}
                       </span>
+                      {c.origem === 'Radar' && (
+                        <span className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase font-mono tracking-wider">
+                          <Radar size={8} /> Auto
+                        </span>
+                      )}
                     </div>
                     <div className="flex items-center gap-4 mt-1 text-slate-500 text-sm flex-wrap">
                       <span className="flex items-center gap-1">
                         <Phone size={11} /> {c.telefone}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Tag size={11} /> {c.segmento}
+                        <Tag size={11} /> {c.segmento} {c.cnae && `(${c.cnae})`}
                       </span>
                       {c.dataEnvio && (
                         <span className="text-xs text-slate-600">

@@ -175,3 +175,100 @@ export async function checkAndRegisterMessage(phone: string, messageId: string):
     return true;
   }
 }
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// GERENCIAMENTO DE LEADS (OUTBOUND / RADAR)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const LEADS_TABLE_NAME = 'Nexus_Isadora_Leads';
+
+export interface IsadoraLead {
+  id: string;          // telefone limpo (ex: 5511999999999)
+  nome: string;
+  telefone: string;    // com máscara ou original
+  segmento: string;
+  status: 'Pendente' | 'Enviado' | 'Respondeu' | 'Descartado';
+  dataAdicionado: string;
+  dataEnvio?: string;
+  origem?: 'Manual' | 'Radar' | 'CSV';
+}
+
+/**
+ * Salva ou atualiza um lead na base de dados
+ */
+export async function salvarLead(lead: IsadoraLead) {
+  try {
+    const command = new PutCommand({
+      TableName: LEADS_TABLE_NAME,
+      Item: lead,
+    });
+    await docClient.send(command);
+    return true;
+  } catch (error) {
+    console.error(`[Isadora DB] Erro ao salvar lead ${lead.id}:`, error);
+    return false;
+  }
+}
+
+/**
+ * Lista todos os leads salvos
+ */
+export async function listarLeads(): Promise<IsadoraLead[]> {
+  try {
+    // Usamos o método scan() para buscar todos (apenas para DBs pequenos, em prod seria query ou GSI)
+    const { ScanCommand } = require('@aws-sdk/lib-dynamodb');
+    const command = new ScanCommand({
+      TableName: LEADS_TABLE_NAME,
+    });
+    const response = await docClient.send(command);
+    return (response.Items as IsadoraLead[]) || [];
+  } catch (error) {
+    console.error(`[Isadora DB] Erro ao listar leads:`, error);
+    return [];
+  }
+}
+
+/**
+ * Atualiza apenas o status de um lead
+ */
+export async function atualizarStatusLead(id: string, status: IsadoraLead['status'], dataEnvio?: string) {
+  try {
+    let updateExpr = 'SET #s = :status';
+    const exprValues: any = { ':status': status };
+    
+    if (dataEnvio) {
+      updateExpr += ', dataEnvio = :dataEnvio';
+      exprValues[':dataEnvio'] = dataEnvio;
+    }
+
+    const command = new UpdateCommand({
+      TableName: LEADS_TABLE_NAME,
+      Key: { id },
+      UpdateExpression: updateExpr,
+      ExpressionAttributeNames: { '#s': 'status' },
+      ExpressionAttributeValues: exprValues,
+    });
+    await docClient.send(command);
+    return true;
+  } catch (error) {
+    console.error(`[Isadora DB] Erro ao atualizar status do lead ${id}:`, error);
+    return false;
+  }
+}
+
+/**
+ * Exclui um lead
+ */
+export async function excluirLead(id: string) {
+  try {
+    const { DeleteCommand } = require('@aws-sdk/lib-dynamodb');
+    const command = new DeleteCommand({
+      TableName: LEADS_TABLE_NAME,
+      Key: { id },
+    });
+    await docClient.send(command);
+    return true;
+  } catch (error) {
+    console.error(`[Isadora DB] Erro ao excluir lead ${id}:`, error);
+    return false;
+  }
+}
