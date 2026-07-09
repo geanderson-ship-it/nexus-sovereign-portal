@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-runtime";
-import { getIsadoraHistory, saveIsadoraHistory, recordHandoff, getIsadoraSession } from '@/lib/isadora-db';
+import { getIsadoraHistory, saveIsadoraHistory, recordHandoff, getIsadoraSession, checkAndRegisterMessage } from '@/lib/isadora-db';
 
 const EVOLUTION_API_URL = process.env.EVOLUTION_API_URL || "http://100.59.197.161:8080";
 const EVOLUTION_GLOBAL_APIKEY = process.env.EVOLUTION_GLOBAL_APIKEY || "nexus";
@@ -505,6 +505,7 @@ export async function POST(req: NextRequest) {
     const phone   = body?.phone || body?.from;
     const message = body?.text?.message || body?.message || body?.body;
     const fromMe  = body?.fromMe || false;
+    const messageId = body?.messageId;
 
     // Ignora mensagens enviadas pela própria Isadora e grupos
     if (fromMe || !phone || !message) {
@@ -512,6 +513,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
     if (phone.includes('@g.us') || phone.includes('-')) return NextResponse.json({ ok: true });
+
+    // Deduplicação de mensagens (Z-API retries)
+    if (messageId) {
+      const isNew = await checkAndRegisterMessage(phone, messageId);
+      if (!isNew) {
+        console.log(`[Isadora] 🚫 Mensagem duplicada ignorada (ID: ${messageId})`);
+        return NextResponse.json({ ok: true });
+      }
+    }
 
     console.log(`[Isadora] Mensagem de ${phone}: ${message}`);
 

@@ -145,3 +145,33 @@ export async function getIsadoraSession(phone: string): Promise<IsadoraSession |
     return null;
   }
 }
+
+/**
+ * Verifica se o messageId do WhatsApp/Z-API já foi processado para evitar duplicidade de envio.
+ * Usa gravação condicional no DynamoDB para evitar concorrência.
+ * Retorna true se for nova, false se for duplicada.
+ */
+export async function checkAndRegisterMessage(phone: string, messageId: string): Promise<boolean> {
+  try {
+    const command = new UpdateCommand({
+      TableName: TABLE_NAME,
+      Key: { phone },
+      UpdateExpression: 'SET lastMessageId = :messageId',
+      ConditionExpression: 'attribute_not_exists(lastMessageId) OR lastMessageId <> :messageId',
+      ExpressionAttributeValues: {
+        ':messageId': messageId,
+      },
+    });
+
+    await docClient.send(command);
+    return true; // Mensagem nova registrada com sucesso
+  } catch (error: any) {
+    if (error.name === 'ConditionalCheckFailedException') {
+      console.log(`[Isadora DB] 🚫 Mensagem duplicada detectada para ${phone}: ${messageId}`);
+      return false; // Duplicada
+    }
+    // Caso ocorra outro erro de banco (ex: tabela não criada), permite continuar para não travar o bot
+    console.error(`[Isadora DB] Erro no checkAndRegisterMessage para ${phone}:`, error);
+    return true;
+  }
+}
