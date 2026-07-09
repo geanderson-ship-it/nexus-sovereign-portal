@@ -97,8 +97,6 @@ export default async function IsadoraWarRoomPage() {
             </div>
           </div>
           
-          </div>
-          
           <div className="flex gap-4 flex-wrap">
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 min-w-[140px] text-center backdrop-blur-sm">
               <p className="text-xs text-slate-500 uppercase tracking-widest font-mono mb-1">Leads Quentes</p>
