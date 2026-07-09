@@ -8,7 +8,7 @@ const EVOLUTION_INSTANCE_NAME = process.env.EVOLUTION_INSTANCE_NAME || "Isadora"
 const EVOLUTION_SEND_TEXT_URL = `${EVOLUTION_API_URL}/message/sendText/${EVOLUTION_INSTANCE_NAME}`;
 
 const awsConfig: any = {
-  region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
+  region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || process.env.REGIÃO_AWS || "us-east-1",
 };
 
 if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) {
@@ -21,9 +21,9 @@ if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) 
     accessKeyId: process.env.BEDROCK_ACCESS_KEY_ID,
     secretAccessKey: process.env.BEDROCK_SECRET_ACCESS_KEY,
   };
-} else if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
+} else if ((process.env.AWS_ACCESS_KEY_ID || process.env.ID_DA_CHAVE_DE_ACESSO_AWS || process.env['ID_DA_CHAVE_DE_ACESSO_AWS']) && process.env.AWS_SECRET_ACCESS_KEY) {
   awsConfig.credentials = {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || process.env.ID_DA_CHAVE_DE_ACESSO_AWS || process.env['ID_DA_CHAVE_DE_ACESSO_AWS'] || '',
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   };
 }
@@ -289,7 +289,7 @@ const toolConfig = {
 
 async function sendWhatsApp(phone: string, message: string) {
   const zapiToken = process.env.ZAPI_TOKEN;
-  const zapiInstance = process.env.ZAPI_INSTANCE || "3F57A44F16F91243B9DD5A0A9E39134B";
+  const zapiInstance = process.env.ZAPI_INSTANCE || process.env.INSTANCIA_ZAPI || process.env['INSTÂNCIA ZAPI'] || process.env['INSTÂNCIA_ZAPI'] || "3F57A44F16F91243B9DD5A0A9E39134B";
   const zapiClientToken = process.env.ZAPI_CLIENT_TOKEN || "F14e4baef93124d62b55f389507b5f6b3S";
 
   if (zapiToken) {
