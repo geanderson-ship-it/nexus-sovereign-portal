@@ -52,9 +52,7 @@ export default function NexusB2BPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.1 }}
-                            href="http://localhost:3001" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
+                            href="/nexus-b2b/pharma" 
                             className="group block relative rounded-[32px] border border-emerald-500/20 bg-black/40 backdrop-blur-md p-10 hover:bg-emerald-900/10 hover:border-emerald-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(16,185,129,0.2)] hover:-translate-y-2 overflow-hidden"
                         >
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

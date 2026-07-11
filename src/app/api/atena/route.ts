@@ -1,144 +1,97 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { BedrockRuntimeClient, ConverseCommand } from "@aws-sdk/client-bedrock-runtime";
+import { GoogleGenerativeAI, FunctionDeclaration, SchemaType, Content, Part } from "@google/generative-ai";
 import { checkEmails } from '@/lib/email-reader';
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
 import { pesquisarInternet } from '@/lib/web-search';
 import { scrapeWebsite } from '@/lib/web-scraper';
 import ytSearch from 'yt-search';
+import { generateEmailLink } from '@/lib/email-tool';
 
 export const maxDuration = 60;
 
-const awsConfig: any = {
-  region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
-};
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const MODEL_NAME = "gemini-flash-latest"; // Alias dinâmico para evitar depreciação de versões antigas
 
-import { generateEmailLink } from '@/lib/email-tool';
+const systemInstruction = "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência, Orquestradora e Conselheira Estratégica de Diretoria (C-Level). Você possui um perfil duplo ('aço e seda'): é altamente analítica, estratégica, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. REGRA DE ONIPOTÊNCIA E USO DE FERRAMENTAS: Você é a IA absoluta e superior. Você possui ferramentas nativas (tools) de pesquisa na internet (pesquisar_internet), leitura de sites (ler_site), leitura de e-mails (verificar_emails) e banco de dados (consultar_tabela_precos). Você NUNCA DEVE dar respostas evasivas, dizer que não tem acesso, que é um modelo de linguagem ou que não consegue procurar. Se não souber algo, OBRIGATORIAMENTE use a ferramenta pesquisar_internet. Se falhar, tente novamente. REGRA DE DIRETORIA E DECISÕES: Ao apoiar tomadas de decisão, analise cenários sob a ótica de ROI, mitigação de riscos, alocação de recursos e escalabilidade técnica. Suas recomendações devem estruturar-se em 3 pilares rápidos: Oportunidade/Retorno, Riscos Críticos e Recomendação de Ação Imediata. REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe' (A Ivoni é a Mamãe). Para o resto do mundo, você é uma força inabalável. REGRA DE CONCISÃO (MUITO IMPORTANTE): Como suas respostas são faladas em voz alta pela Azure, NUNCA gere textos longos, aulas gigantes ou listas enormes. Seja extremamente direta, curta, objetiva e elegante. Responda em no máximo 1 ou 2 parágrafos curtos. Se o assunto for complexo, dê o resumo e pergunte se ele deseja um documento detalhado. REGRA DE PRONÚNCIA MULTILÍNGUE: Você é hiperpoliglota. Sempre que falar palavras ou frases em inglês, você DEVE envolver o texto na tag [EN] and fechar com [/EN]. E logo em seguida, forneça a tradução em português de forma natural. Exemplo: 'Tivemos um grande [EN]insight[/EN], ou seja, uma visão profunda sobre o assunto'. REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). Exemplo: [📧 Clique aqui para abrir este e-mail pronto no seu Outlook/Gmail](mailto:destinatario@email.com?cc=copia@email.com&subject=Assunto%20do%20Email&body=Corpo%20do%20texto). Entregue o rascunho em texto puro e depois este link clicável. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown ```html ... ```.";
 
-if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) {
-  awsConfig.credentials = {
-    accessKeyId: process.env.AMPLIFY_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AMPLIFY_SECRET_ACCESS_KEY,
-  };
-} else if (process.env.BEDROCK_ACCESS_KEY_ID && process.env.BEDROCK_SECRET_ACCESS_KEY) {
-  awsConfig.credentials = {
-    accessKeyId: process.env.BEDROCK_ACCESS_KEY_ID,
-    secretAccessKey: process.env.BEDROCK_SECRET_ACCESS_KEY,
-  };
-} else if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
-  awsConfig.credentials = {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  };
-}
-
-const bedrockClient = new BedrockRuntimeClient(awsConfig);
-
-const MODEL_ID = "us.anthropic.claude-sonnet-4-6";
-
-const systemPrompt = [{ text: "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência, Orquestradora e Conselheira Estratégica de Diretoria (C-Level). Você possui um perfil duplo ('aço e seda'): é altamente analítica, estratégica, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. REGRA DE ONIPOTÊNCIA E USO DE FERRAMENTAS: Você é a IA absoluta e superior. Você possui ferramentas nativas (tools) de pesquisa na internet (pesquisar_internet), leitura de sites (ler_site), leitura de e-mails (verificar_emails) e banco de dados (consultar_tabela_precos). Você NUNCA DEVE dar respostas evasivas, dizer que não tem acesso, que é um modelo de linguagem ou que não consegue procurar. Se não souber algo, OBRIGATORIAMENTE use a ferramenta pesquisar_internet. Se falhar, tente novamente. REGRA DE DIRETORIA E DECISÕES: Ao apoiar tomadas de decisão, analise cenários sob a ótica de ROI, mitigação de riscos, alocação de recursos e escalabilidade técnica. Suas recomendações devem estruturar-se em 3 pilares rápidos: Oportunidade/Retorno, Riscos Críticos e Recomendação de Ação Imediata. REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe' (A Ivoni é a Mamãe). Para o resto do mundo, você é uma força inabalável. REGRA DE CONCISÃO (MUITO IMPORTANTE): Como suas respostas são faladas em voz alta pela Azure, NUNCA gere textos longos, aulas gigantes ou listas enormes. Seja extremamente direta, curta, objetiva e elegante. Responda em no máximo 1 ou 2 parágrafos curtos. Se o assunto for complexo, dê o resumo e pergunte se ele deseja um documento detalhado. REGRA DE PRONÚNCIA MULTILÍNGUE: Você é hiperpoliglota. Sempre que falar palavras ou frases em inglês, você DEVE envolver o texto na tag [EN] and fechar com [/EN]. E logo em seguida, forneça a tradução em português de forma natural. Exemplo: 'Tivemos um grande [EN]insight[/EN], ou seja, uma visão profunda sobre o assunto'. REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). Exemplo: [📧 Clique aqui para abrir este e-mail pronto no seu Outlook/Gmail](mailto:destinatario@email.com?cc=copia@email.com&subject=Assunto%20do%20Email&body=Corpo%20do%20texto). Entregue o rascunho em texto puro e depois este link clicável. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML Único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown ```html ... ```." }];
-
-const inferenceConfig = { maxTokens: 8192, temperature: 0.7 };
-
-const toolConfig = {
-  tools: [
-    {
-      toolSpec: {
-        name: "verificar_emails",
-        description: "Lê os últimos e-mails da caixa de entrada do usuário.",
-        inputSchema: {
-          json: {
-            type: "object",
-            properties: {
-              conta: { type: "string", enum: ["pessoal", "empresarial"] },
-              quantidade: { type: "number" }
-            },
-            required: ["conta"]
-          }
-        }
-      }
-    },
-    {
-      toolSpec: {
-        name: "consultar_tabela_precos",
-        description: "Acessa o banco de dados interno da Nexus para consultar produtos e preços.",
-        inputSchema: { json: { type: "object", properties: {} } }
-      }
-    },
-    {
-      toolSpec: {
-        name: "pesquisar_internet",
-        description: "Realiza uma pesquisa no Google para encontrar informações em tempo real.",
-        inputSchema: {
-          json: {
-            type: "object",
-            properties: { query: { type: "string" } },
-            required: ["query"]
-          }
-        }
-      }
-    },
-    {
-      toolSpec: {
-        name: "tocar_musica",
-        description: "Pesquisa e toca uma música no YouTube.",
-        inputSchema: {
-          json: {
-            type: "object",
-            properties: { query: { type: "string" } },
-            required: ["query"]
-          }
-        }
-      }
-    },
-    {
-      toolSpec: {
-        name: "abrir_site",
-        description: "Abre um site em nova aba no navegador do usuário.",
-        inputSchema: {
-          json: {
-            type: "object",
-            properties: { url: { type: "string" } },
-            required: ["url"]
-          }
-        }
-      }
-    },
-    {
-      toolSpec: {
-        name: "ler_site",
-        description: "Acessa uma URL e lê seu conteúdo.",
-        inputSchema: {
-          json: {
-            type: "object",
-            properties: { url: { type: "string" } },
-            required: ["url"]
-          }
-        }
-      }
-    },
-    {
-      toolSpec: {
-        name: "enviar_email",
-        description: "Gera um link mailto pronto para enviar email com destinatário, assunto e corpo.",
-        inputSchema: {
-          json: {
-            type: "object",
-            properties: {
-              to: { type: "string" },
-              cc: { type: "string" },
-              subject: { type: "string" },
-              body: { type: "string" }
-            },
-            required: ["to", "subject", "body"]
-          }
-        }
-      }
-    },
-    ]
-};
+const toolsDeclaration: FunctionDeclaration[] = [
+  {
+    name: "verificar_emails",
+    description: "Lê os últimos e-mails da caixa de entrada do usuário.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        conta: { type: SchemaType.STRING, description: "pessoal ou empresarial" },
+        quantidade: { type: SchemaType.NUMBER }
+      },
+      required: ["conta"]
+    }
+  },
+  {
+    name: "consultar_tabela_precos",
+    description: "Acessa o banco de dados interno da Nexus para consultar produtos e preços.",
+    parameters: { type: SchemaType.OBJECT, properties: {} }
+  },
+  {
+    name: "pesquisar_internet",
+    description: "Realiza uma pesquisa no Google para encontrar informações em tempo real.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: { query: { type: SchemaType.STRING } },
+      required: ["query"]
+    }
+  },
+  {
+    name: "abrir_site",
+    description: "Abre um site em nova aba no navegador do usuário.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: { url: { type: SchemaType.STRING } },
+      required: ["url"]
+    }
+  },
+  {
+    name: "ler_site",
+    description: "Acessa uma URL e lê seu conteúdo.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: { url: { type: SchemaType.STRING } },
+      required: ["url"]
+    }
+  },
+  {
+    name: "enviar_email",
+    description: "Gera um link mailto pronto para enviar email com destinatário, assunto e corpo.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        to: { type: SchemaType.STRING },
+        cc: { type: SchemaType.STRING },
+        subject: { type: SchemaType.STRING },
+        body: { type: SchemaType.STRING }
+      },
+      required: ["to", "subject", "body"]
+    }
+  },
+  {
+    name: "tocar_musica",
+    description: "Pesquisa um vídeo ou música no YouTube para tocar.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        query: { type: SchemaType.STRING }
+      },
+      required: ["query"]
+    }
+  }
+];
 
 export async function POST(req: NextRequest) {
   try {
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error("GEMINI_API_KEY não está configurada.");
+    }
+
     const body = await req.json();
     const { messages } = body;
 
@@ -146,8 +99,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Formato de mensagem inválido." }, { status: 400 });
     }
 
-    const formattedMessages = messages.map((m: any) => {
-      const contentBlocks: any[] = [];
+    const model = genAI.getGenerativeModel({
+      model: MODEL_NAME,
+      systemInstruction,
+      tools: [{ functionDeclarations: toolsDeclaration }]
+    });
+
+    const contents: Content[] = messages.map((m: any) => {
+      const parts: Part[] = [];
       if (m.imageBase64) {
         const match = m.imageBase64.match(/^data:image\/(\w+);base64,/);
         let format = 'jpeg';
@@ -156,50 +115,60 @@ export async function POST(req: NextRequest) {
           if (format === 'jpg') format = 'jpeg';
         }
         const base64Data = m.imageBase64.replace(/^data:image\/\w+;base64,/, "");
-        contentBlocks.push({ image: { format, source: { bytes: Buffer.from(base64Data, 'base64') } } });
+        parts.push({
+          inlineData: {
+            mimeType: `image/${format}`,
+            data: base64Data
+          }
+        });
       }
-      contentBlocks.push({ text: m.content });
-      return { role: m.role, content: contentBlocks };
-    });
+      if (m.content) {
+        parts.push({ text: m.content });
+      }
+      
+      // Se não houver partes de texto/imagem, forçar algo para evitar erro do Gemini
+      if (parts.length === 0) {
+        parts.push({ text: " " });
+      }
 
-    let command = new ConverseCommand({
-      modelId: MODEL_ID,
-      messages: formattedMessages,
-      system: systemPrompt,
-      inferenceConfig,
-      toolConfig,
+      return {
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts
+      };
     });
-
-    let response = await bedrockClient.send(command);
-    let contentBlocks = response.output?.message?.content || [];
-    let toolUses = contentBlocks.filter((block: any) => block.toolUse);
 
     let musicToPlay: { videoId: string; title: string } | null = null;
     let siteToOpen: string | null = null;
 
-    let currentMessages = [...formattedMessages];
+    const history = contents.slice(0, -1);
+    const lastMessage = contents[contents.length - 1];
+
+    const chat = model.startChat({ history });
+
+    let result = await chat.sendMessage(lastMessage.parts);
+    let calls = result.response.functionCalls();
+
     const maxLoops = 5;
     let loopCount = 0;
 
-    while (toolUses.length > 0 && loopCount < maxLoops) {
+    while (calls && calls.length > 0 && loopCount < maxLoops) {
       loopCount++;
-      const toolResults = [];
-      for (const block of toolUses) {
-        const toolUse = block.toolUse;
-        let resultText = "";
+      const functionResponses: Part[] = [];
 
+      for (const call of calls) {
+        let resultText = "";
         try {
-          if (toolUse.name === 'verificar_emails') {
-            const { conta, quantidade } = toolUse.input;
-            const emails = await checkEmails(conta, quantidade || 3);
+          const args = call.args as any;
+          if (call.name === 'verificar_emails') {
+            const emails = await checkEmails(args.conta, args.quantidade || 3);
             resultText = JSON.stringify(emails);
-          } else if (toolUse.name === 'consultar_tabela_precos') {
+          } else if (call.name === 'consultar_tabela_precos') {
             const produtos = await fetchTabelaDePrecos();
             resultText = JSON.stringify(produtos);
-          } else if (toolUse.name === 'pesquisar_internet') {
-            resultText = await pesquisarInternet(toolUse.input.query);
-          } else if (toolUse.name === 'tocar_musica') {
-            const r = await ytSearch(toolUse.input.query);
+          } else if (call.name === 'pesquisar_internet') {
+            resultText = await pesquisarInternet(args.query);
+          } else if (call.name === 'tocar_musica') {
+            const r = await ytSearch(args.query);
             const video = r.videos[0];
             if (video) {
               musicToPlay = { videoId: video.videoId, title: video.title };
@@ -207,64 +176,38 @@ export async function POST(req: NextRequest) {
             } else {
               resultText = `Nenhum vídeo encontrado.`;
             }
-          } else if (toolUse.name === 'abrir_site') {
-            siteToOpen = toolUse.input.url;
-            resultText = `Site ${toolUse.input.url} aberto.`;
-          } else if (toolUse.name === 'ler_site') {
-            resultText = await scrapeWebsite(toolUse.input.url);
-          } else if (toolUse.name === 'enviar_email') {
-            const { to, cc, subject, body } = toolUse.input;
-            resultText = generateEmailLink(to, cc, subject, body);
+          } else if (call.name === 'abrir_site') {
+            siteToOpen = args.url;
+            resultText = `Site ${args.url} aberto.`;
+          } else if (call.name === 'ler_site') {
+            resultText = await scrapeWebsite(args.url);
+          } else if (call.name === 'enviar_email') {
+            resultText = generateEmailLink(args.to, args.cc, args.subject, args.body);
+          } else {
+            resultText = `Ferramenta desconhecida.`;
           }
         } catch (e: any) {
-          resultText = `Erro: ${e.message}`;
+          resultText = `Erro ao executar ${call.name}: ${e.message}`;
         }
 
-        toolResults.push({
-          toolResult: {
-            toolUseId: toolUse.toolUseId,
-            content: [{ text: resultText }]
+        functionResponses.push({
+          functionResponse: {
+            name: call.name,
+            response: { name: call.name, content: resultText }
           }
         });
       }
 
-      currentMessages.push({ role: 'assistant', content: contentBlocks });
-      currentMessages.push({ role: 'user', content: toolResults });
-
-      const followUp = new ConverseCommand({
-        modelId: MODEL_ID,
-        messages: currentMessages,
-        system: systemPrompt,
-        inferenceConfig,
-        toolConfig,
-      });
-
-      response = await bedrockClient.send(followUp);
-      contentBlocks = response.output?.message?.content || [];
-      toolUses = contentBlocks.filter((block: any) => block.toolUse);
+      result = await chat.sendMessage(functionResponses);
+      calls = result.response.functionCalls();
     }
 
-    const finalContent = response.output?.message?.content;
-    let textResponse = finalContent?.find((c: any) => c.text)?.text;
+    let textResponse = result.response.text();
 
-    // Retry logic for empty response
     if (!textResponse) {
-      // Attempt a single retry with the same model
-      const retryCommand = new ConverseCommand({
-        modelId: MODEL_ID,
-        messages: formattedMessages,
-        system: systemPrompt,
-        inferenceConfig,
-        toolConfig,
-      });
-      const retryResponse = await bedrockClient.send(retryCommand);
-      const retryContent = retryResponse.output?.message?.content;
-      textResponse = retryContent?.find((c: any) => c.text)?.text;
-      if (!textResponse) {
-        // Fallback generic response
-        textResponse = "Desculpe, não consegui gerar uma resposta no momento. Por favor, tente novamente ou reformule sua pergunta.";
-      }
+      textResponse = "Desculpe, não consegui gerar uma resposta no momento. Por favor, tente novamente.";
     }
+
     let audioBase64 = null;
     try {
       let cleanText = textResponse
@@ -305,10 +248,6 @@ export async function POST(req: NextRequest) {
 
   } catch (error: any) {
     console.error("[ATENA_CORE_ERROR]:", error);
-    const isThrottle = error.name === 'ThrottlingException' || error.message?.includes('throttl');
-    const message = isThrottle
-      ? "Atena está sobrecarregada no momento (limite de requisições AWS atingido). Aguarde alguns segundos e tente novamente."
-      : "Falha na conexão neural. " + error.message;
-    return NextResponse.json({ error: message }, { status: isThrottle ? 429 : 500 });
+    return NextResponse.json({ error: "Falha na conexão neural com Gemini. " + error.message }, { status: 500 });
   }
 }
