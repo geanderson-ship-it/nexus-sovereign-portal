@@ -6,6 +6,7 @@ import { pesquisarInternet } from '@/lib/web-search';
 import { scrapeWebsite } from '@/lib/web-scraper';
 import ytSearch from 'yt-search';
 import { generateEmailLink } from '@/lib/email-tool';
+import { saveAtenaMemory, searchAtenaMemories } from '@/lib/atena-db';
 
 export const maxDuration = 60;
 
@@ -83,6 +84,29 @@ const toolsDeclaration: FunctionDeclaration[] = [
       },
       required: ["query"]
     }
+  },
+  {
+    name: "salvar_memoria",
+    description: "Salva uma informação importante no banco de memórias de longo prazo (DynamoDB) para nunca esquecer.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        categoria: { type: SchemaType.STRING, description: "A categoria do assunto, ex: Pessoal, Negócios, Estratégia" },
+        conteudo: { type: SchemaType.STRING, description: "O conteúdo completo que deve ser lembrado no futuro." }
+      },
+      required: ["categoria", "conteudo"]
+    }
+  },
+  {
+    name: "buscar_memoria",
+    description: "Pesquisa no banco de memórias de longo prazo (DynamoDB) coisas que você aprendeu com o usuário meses ou semanas atrás. Use sempre que o usuário referenciar algo passado.",
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        termoBusca: { type: SchemaType.STRING, description: "Palavra-chave para encontrar a memória." }
+      },
+      required: ["termoBusca"]
+    }
   }
 ];
 
@@ -99,13 +123,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Formato de mensagem inválido." }, { status: 400 });
     }
 
+    let recentMessages = messages.slice(-10); // Mantém as últimas 10 interações (evita lentidão)
+    if (recentMessages.length > 0 && recentMessages[0].role === 'assistant') {
+      recentMessages = recentMessages.slice(1); // Garante que o histórico do Gemini sempre inicie com 'user'
+    }
+
     const model = genAI.getGenerativeModel({
       model: MODEL_NAME,
       systemInstruction,
       tools: [{ functionDeclarations: toolsDeclaration }]
     });
 
-    const contents: Content[] = messages.map((m: any) => {
+    const contents: Content[] = recentMessages.map((m: any) => {
       const parts: Part[] = [];
       if (m.imageBase64) {
         const match = m.imageBase64.match(/^data:image\/(\w+);base64,/);
@@ -183,6 +212,12 @@ export async function POST(req: NextRequest) {
             resultText = await scrapeWebsite(args.url);
           } else if (call.name === 'enviar_email') {
             resultText = generateEmailLink(args.to, args.cc, args.subject, args.body);
+          } else if (call.name === 'salvar_memoria') {
+            await saveAtenaMemory({ userId: 'geanderson', categoria: args.categoria, conteudo: args.conteudo });
+            resultText = `Memória guardada com sucesso! Categoria: ${args.categoria}. Eu nunca me esquecerei disso.`;
+          } else if (call.name === 'buscar_memoria') {
+            const mems = await searchAtenaMemories('geanderson', args.termoBusca);
+            resultText = mems.length > 0 ? JSON.stringify(mems) : "Nenhuma memória passada encontrada sobre isso.";
           } else {
             resultText = `Ferramenta desconhecida.`;
           }
