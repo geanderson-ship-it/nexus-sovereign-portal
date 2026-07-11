@@ -22,7 +22,7 @@ export default function PharmaPage() {
       {/* IFRAME WRAPPER */}
       <div className="flex-1 w-full relative bg-black">
         <iframe 
-          src="https://nexus-pharma-gig53175d-geandersonleo-5383s-projects.vercel.app" 
+          src="https://nexus-pharma-delta.vercel.app" 
           className="w-full h-full border-none absolute inset-0"
           title="Nexus Pharma Application"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
