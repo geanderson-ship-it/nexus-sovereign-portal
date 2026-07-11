@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { LogOut, Menu, User as UserIcon, Shield, Globe, ArrowRight, Sparkles, Briefcase, Coins } from 'lucide-react';
+import { LogOut, Menu, User as UserIcon, Shield, Globe, ArrowRight, Sparkles, Briefcase, Coins, ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -95,12 +95,10 @@ export function SiteHeader() {
     { title: 'Embaixadora', href: '/nexus-rotas' },
     { title: 'Energia', href: '/energia' },
     { title: 'Enterprise', href: '/nexus-empresas' },
+    { title: 'Nexus B2B', href: '/nexus-b2b' },
     { title: t('navAgro') || 'Agro', href: '/agro' },
     { title: t('navPremium') || 'Exclusive', href: '/exclusive' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
-    { title: t('navSobre') || 'Sobre', href: '/about' },
-    { title: t('navContato') || 'Contato', href: '/contact' },
-    { title: t('navSuporte') || 'Suporte', href: '/suporte' },
   ], [t]);
 
   if (!isClient) return null;
@@ -286,6 +284,8 @@ export function SiteHeader() {
                       ? 'bg-amber-600/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-600/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/nexus-empresas'
                       ? 'bg-cyan-600/10 border border-cyan-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-cyan-600/20 text-white font-bold uppercase tracking-widest'
+                      : item.href === '/nexus-b2b'
+                      ? 'bg-emerald-600/10 border border-emerald-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-600/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/agro'
                       ? 'bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold uppercase tracking-widest'
                       : item.href === '/exclusive'
@@ -301,6 +301,25 @@ export function SiteHeader() {
                 </Link>
               );
             })}
+
+            {/* Menu Institucional / Agrupado */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="bg-white/5 border border-white/5 px-3 py-1.5 rounded-md hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium flex items-center gap-1 transition-all duration-300 outline-none">
+                Institucional <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur border-primary/20">
+                <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10">
+                  <Link href="/about" className="w-full">{t('navSobre') || 'Sobre a Nexus'}</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10">
+                  <Link href="/contact" className="w-full">{t('navContato') || 'Contato Comercial'}</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-border/50" />
+                <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10">
+                  <Link href="/suporte" className="w-full">{t('navSuporte') || 'Central de Suporte'}</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
         </nav>
 
         {/* Mobile Menu Sheet */}

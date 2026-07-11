@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, Plus, Trash2, Send, Phone, User, Tag, CheckCircle, Clock, XCircle, Search, Radar } from 'lucide-react';
+import { ChevronLeft, Plus, Trash2, Send, Phone, User, Tag, CheckCircle, Clock, XCircle, Search, Radar, MessageSquare, X } from 'lucide-react';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // TIPOS
@@ -53,6 +53,12 @@ export default function ContatosIsadoraPage() {
   const [showRadar, setShowRadar] = useState(false);
   const [disparando, setDisparando] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
+
+  // Estado da conversa
+  const [contatoConversa, setContatoConversa] = useState<Contato | null>(null);
+  const [historico, setHistorico] = useState<any[]>([]);
+  const [carregandoConversa, setCarregandoConversa] = useState(false);
+  const [infoConversa, setInfoConversa] = useState<any>(null);
 
   // Form state (Manual)
   const [nome, setNome] = useState('');
@@ -145,17 +151,17 @@ export default function ContatosIsadoraPage() {
   }
 
   async function alterarStatus(id: string, status: Status, dataEnvio?: string) {
+    // Atualiza a tela imediatamente (sem esperar o banco)
+    setContatos(prev => prev.map(c => c.id === id ? { ...c, status, dataEnvio: dataEnvio || c.dataEnvio } : c));
+    // Persiste no banco em background
     try {
-      const res = await fetch('/api/isadora/leads', {
+      await fetch('/api/isadora/leads', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status, dataEnvio }),
       });
-      if (res.ok) {
-        setContatos(prev => prev.map(c => c.id === id ? { ...c, status, dataEnvio: dataEnvio || c.dataEnvio } : c));
-      }
     } catch (e) {
-      console.error('Erro ao atualizar status');
+      console.error('Erro ao salvar status no banco:', e);
     }
   }
 
@@ -164,8 +170,32 @@ export default function ContatosIsadoraPage() {
     setTimeout(() => setFeedback(null), 4000);
   }
 
+  async function abrirConversa(contato: Contato) {
+    setContatoConversa(contato);
+    setHistorico([]);
+    setInfoConversa(null);
+    setCarregandoConversa(true);
+    try {
+      const res = await fetch(`/api/isadora/conversa?phone=${contato.telefone}`);
+      if (res.ok) {
+        const data = await res.json();
+        setHistorico(data.history || []);
+        setInfoConversa(data);
+      }
+    } catch (e) {
+      console.error('Erro ao buscar conversa:', e);
+    } finally {
+      setCarregandoConversa(false);
+    }
+  }
+
   async function dispararIsadora(contato: Contato) {
     setDisparando(contato.id);
+    const agora = new Date().toISOString();
+
+    // Marca como Enviado imediatamente na tela
+    await alterarStatus(contato.id, 'Enviado', agora);
+
     try {
       const res = await fetch('/api/isadora/outbound', {
         method: 'POST',
@@ -178,15 +208,14 @@ export default function ContatosIsadoraPage() {
       });
 
       if (res.ok) {
-        const agora = new Date().toISOString();
-        await alterarStatus(contato.id, 'Enviado', agora);
         mostrarFeedback(`🚀 Isadora abordou ${contato.nome} no WhatsApp!`);
       } else {
         const err = await res.json();
-        mostrarFeedback(`❌ Erro: ${err.error || 'Falha ao disparar'}`);
+        // Mostra o erro mas mantém como Enviado (já foi tentado)
+        mostrarFeedback(`⚠️ ${contato.nome}: ${err.error || 'Verifique o número'}`);
       }
     } catch {
-      mostrarFeedback('❌ Erro de conexão. Tente novamente.');
+      mostrarFeedback('⚠️ Erro de conexão — lead marcado como Enviado mesmo assim.');
     } finally {
       setDisparando(null);
     }
@@ -641,6 +670,16 @@ export default function ContatosIsadoraPage() {
 
                   {/* Ações */}
                   <div className="flex items-center gap-2 shrink-0">
+                    {(c.status === 'Enviado' || c.status === 'Respondeu') && (
+                      <button
+                        onClick={() => abrirConversa(c)}
+                        title="Ver conversa"
+                        className="flex items-center gap-1 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs px-3 py-1.5 rounded-lg transition-all"
+                      >
+                        <MessageSquare size={12} /> Ver conversa
+                      </button>
+                    )}
+
                     <select
                       value={c.status}
                       onChange={e => alterarStatus(c.id, e.target.value as Status)}
@@ -671,6 +710,93 @@ export default function ContatosIsadoraPage() {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        {/* MODAL DE CONVERSA */}
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        {contatoConversa && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+            <div className="bg-[#111827] border border-slate-700 rounded-2xl w-full max-w-lg flex flex-col shadow-2xl" style={{maxHeight: '85vh'}}>
+              
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 border-b border-slate-700/60">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
+                    <span className="text-amber-400 font-bold text-sm">{contatoConversa.nome.charAt(0)}</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white text-sm">{contatoConversa.nome}</p>
+                    <p className="text-slate-500 text-xs">{contatoConversa.telefone}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  {infoConversa?.purchaseIntention > 0 && (
+                    <div className="flex items-center gap-1 text-xs text-amber-400 bg-amber-500/10 px-2 py-1 rounded-lg border border-amber-500/20">
+                      Interesse: {infoConversa.purchaseIntention}/10
+                    </div>
+                  )}
+                  {infoConversa?.handoffTriggered && (
+                    <div className="text-xs text-green-400 bg-green-500/10 px-2 py-1 rounded-lg border border-green-500/20">
+                      🔥 Hot Lead
+                    </div>
+                  )}
+                  <button
+                    onClick={() => setContatoConversa(null)}
+                    className="text-slate-500 hover:text-slate-200 transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Mensagens */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
+                {carregandoConversa ? (
+                  <div className="text-center py-10 text-slate-500 animate-pulse">Buscando conversa...</div>
+                ) : historico.length === 0 ? (
+                  <div className="text-center py-10 space-y-2">
+                    <MessageSquare size={32} className="text-slate-700 mx-auto" />
+                    <p className="text-slate-500 text-sm">Nenhuma mensagem registrada ainda.</p>
+                    <p className="text-slate-600 text-xs">A conversa aparecerá aqui assim que o contato responder no WhatsApp.</p>
+                  </div>
+                ) : (
+                  historico.map((msg: any, i: number) => {
+                    const isIsadora = msg.role === 'assistant';
+                    const texto = msg.content?.[0]?.text || JSON.stringify(msg.content);
+                    const hora = msg.timestamp
+                      ? new Date(msg.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+                      : '';
+                    return (
+                      <div key={i} className={`flex ${isIsadora ? 'justify-end' : 'justify-start'}`}>
+                        <div
+                          className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
+                            isIsadora
+                              ? 'bg-amber-500 text-black rounded-br-sm'
+                              : 'bg-slate-800 text-slate-100 rounded-bl-sm'
+                          }`}
+                        >
+                          <p style={{whiteSpace: 'pre-wrap'}}>{texto}</p>
+                          {hora && (
+                            <p className={`text-[10px] mt-1 text-right ${isIsadora ? 'text-black/50' : 'text-slate-500'}`}>
+                              {isIsadora ? 'Isadora' : contatoConversa.nome.split(' ')[0]} · {hora}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className="p-3 border-t border-slate-700/60">
+                <p className="text-center text-slate-600 text-xs">
+                  Conversas via WhatsApp — gerenciadas pela Isadora
+                </p>
+              </div>
+            </div>
           </div>
         )}
       </div>
