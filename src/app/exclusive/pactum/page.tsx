@@ -235,6 +235,10 @@ export default function NexusPactumCockpit() {
           <CustomVideoPlayer 
             src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Artur_Pactum.mp4" 
             className="aspect-video"
+            autoPlay
+            loop
+            muted
+            playsInline
           />
           <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-md border border-amber-500/40 rounded-full z-10">
             <span className="relative flex h-2 w-2">
@@ -504,8 +508,12 @@ export default function NexusPactumCockpit() {
             <div className="mt-12 space-y-8">
               <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-[#cca752]/30 shadow-[0_0_60px_rgba(204,167,82,0.15)] bg-black/60">
                 <CustomVideoPlayer 
-                  src="/Justine_Pactum.mp4" 
+                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4" 
                   className="aspect-video w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                 />
                 
                 <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-md border border-[#cca752]/40 rounded-full z-30">
