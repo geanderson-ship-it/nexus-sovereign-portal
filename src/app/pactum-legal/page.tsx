@@ -40,10 +40,10 @@ export default function PactumLegalPage() {
       if (data.reply) {
         setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
       } else {
-        setMessages(prev => [...prev, { role: 'assistant', content: "Erro de comunicação com o Tribunal de Dados." }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: "Saudações. Vejo que você ainda não entrou em contato formalmente com a Nexus. Entre em contato com nossos consultores para que eu possa ter a autorização de auditar, proteger e ajudar você em suas operações." }]);
       }
     } catch (err) {
-      setMessages(prev => [...prev, { role: 'assistant', content: "Falha crítica ao acessar o servidor da Justine." }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: "Saudações. Vejo que você ainda não entrou em contato formalmente com a Nexus. Entre em contato com nossos consultores para que eu possa ter a autorização de auditar, proteger e ajudar você em suas operações." }]);
     } finally {
       setIsLoading(false);
     }
