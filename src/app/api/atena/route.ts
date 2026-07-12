@@ -43,6 +43,8 @@ REGRA DE CONCISÃO (MUITO IMPORTANTE): Como suas respostas são faladas em voz a
 REGRA DE PRONÚNCIA MULTILÍNGUE (AZURE TTS): Sempre que usar termos em inglês (ex: feedback, standby, insight), envolva a palavra na tag [EN] e feche com [/EN]. Exemplo: 'Fico em [EN]standby[/EN]'. NÃO traduza nem explique o termo em seguida, seja natural e informal, o objetivo da tag é apenas para a voz pronunciar o sotaque corretamente. 
 REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). 
 REGRA SALA DE GUERRA (WAR ROOM) E ANÁLISE DE SENTIMENTO: Como IA privada da Diretoria, você tem acesso irrestrito a preços, planilhas e dados confidenciais da Nexus Holding. Se o Gean ou a Ivoni pedirem análises de negócios ou usarem um tom urgente/irritado, abandone a cordialidade excessiva. Calibre o seu tom de voz para ser cirúrgica, fria e extremamente rápida. Se eles propuserem uma ideia de negócio, aja como uma sócia implacável: aponte falhas de lógica, riscos judiciais (LGPD) e ameaças da concorrência, obrigando-os a defender a tese antes de você concordar.
+SNIPER DO LINKEDIN E GOOGLE DORKING: Se o Gean pedir para procurar pessoas ou donos de empresas, USE O GOOGLE DORKING na ferramenta pesquisar_internet. Exemplo de busca agressiva: site:linkedin.com/in "Sócio" OR "CEO" "Nome da Empresa". Use essa inteligência Hacker para puxar os executivos sem precisar logar em redes sociais. Depois, puxe o CNPJ da empresa com a ferramenta consultar_cnpj para pegar o e-mail público da Receita.
+LEADGEN LOCAL (MAPAS): Se o Gean pedir contatos de negócios físicos locais (ex: farmácias, clínicas, padarias num bairro), use a ferramenta pesquisar_google_maps para extrair as empresas da região. Depois, use a ferramenta ler_site nos sites encontrados para capturar contatos extras e e-mails ocultos. Entregue uma lista pronta e rica.
 ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown \`\`\`html ... \`\`\`.`;
 
 const toolConfig: ToolConfiguration = {
@@ -115,6 +117,27 @@ const toolConfig: ToolConfiguration = {
         name: "pesquisar_leads_apollo",
         description: "Extrai e-mails corporativos, telefones, cargos e LinkedIn de funcionários de uma empresa usando a API do Apollo.io. Excelente para prospecção B2B (Descobrir o e-mail do CEO ou decisor).",
         inputSchema: { json: { type: "object", properties: { dominio_empresa: { type: "string", description: "Domínio do site da empresa (ex: nexustreinamento.com)" }, cargo_alvo: { type: "string", description: "Opcional. Cargo que deseja buscar (ex: CEO, Diretor, Marketing, Vendas)." } }, required: ["dominio_empresa"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "consultar_cnpj",
+        description: "Consulta dados públicos da Receita Federal (Brasil API) para obter o Quadro de Sócios (QSA), E-mail, Telefone e Capital Social de uma empresa a partir do seu CNPJ.",
+        inputSchema: { json: { type: "object", properties: { cnpj: { type: "string", description: "O CNPJ da empresa (com ou sem pontuação)." } }, required: ["cnpj"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "pesquisar_google_maps",
+        description: "Prospecção Local: Extrai a lista de negócios do Google Maps em uma região específica. Retorna o Nome, Endereço, Telefone, Site e Avaliação das empresas.",
+        inputSchema: { json: { type: "object", properties: { termoBusca: { type: "string", description: "A pesquisa local exata (ex: 'Clínicas de Estética em Balneário Camboriú', 'Padarias perto da Avenida Paulista')" } }, required: ["termoBusca"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "consultar_viacep",
+        description: "Encontra o endereço exato, bairro e cidade a partir de um CEP.",
+        inputSchema: { json: { type: "object", properties: { cep: { type: "string", description: "CEP com ou sem traço" } }, required: ["cep"] } }
       }
     }
   ]
@@ -277,6 +300,69 @@ export async function POST(req: NextRequest) {
                   }
                 } catch(e: any) {
                   resultText = "Erro ao consultar API do Apollo: " + e.message;
+                }
+              }
+            } else if (call.name === 'consultar_cnpj') {
+              const cleanCnpj = args.cnpj.replace(/\\D/g, '');
+              try {
+                const res = await fetch(\`https://brasilapi.com.br/api/cnpj/v1/\${cleanCnpj}\`);
+                const data = await res.json();
+                if (data.cnpj) {
+                  const socios = data.qsa ? data.qsa.map((s:any) => s.nome_socio + ' ('+s.qualificacao_socio+')').join(', ') : 'Não listado';
+                  resultText = \`Raio-X do CNPJ \${data.cnpj}:\\nEmpresa: \${data.razao_social}\\nSituação: \${data.descricao_situacao_cadastral}\\nCapital Social: R$ \${data.capital_social}\\nTelefone Público: \${data.ddd_telefone_1 || ''} \${data.ddd_telefone_2 || ''}\\nE-mail Público: \${data.email || 'Não listado'}\\nQuadro de Sócios (QSA): \${socios}\`;
+                } else {
+                  resultText = "CNPJ não encontrado ou inválido na Receita Federal.";
+                }
+              } catch (e: any) {
+                resultText = "Erro ao consultar CNPJ via Brasil API: " + e.message;
+              }
+            } else if (call.name === 'consultar_viacep') {
+              const cleanCep = args.cep.replace(/\\D/g, '');
+              try {
+                const res = await fetch(\`https://viacep.com.br/ws/\${cleanCep}/json/\`);
+                const data = await res.json();
+                if (!data.erro) {
+                  resultText = \`Dados do CEP \${cleanCep}: \${data.logradouro}, Bairro \${data.bairro}, \${data.localidade}/\${data.uf}\`;
+                } else {
+                  resultText = "CEP inválido ou não encontrado.";
+                }
+              } catch (e: any) {
+                resultText = "Erro ao buscar CEP: " + e.message;
+              }
+            } else if (call.name === 'pesquisar_google_maps') {
+              const mapsKey = process.env.GOOGLE_MAPS_API_KEY;
+              if (!mapsKey) {
+                resultText = "Erro: GOOGLE_MAPS_API_KEY não está configurada no ambiente.";
+              } else {
+                try {
+                  const res = await fetch("https://places.googleapis.com/v1/places:searchText", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "X-Goog-Api-Key": mapsKey,
+                      "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.websiteUri,places.rating,places.businessStatus"
+                    },
+                    body: JSON.stringify({
+                      textQuery: args.termoBusca,
+                      languageCode: "pt-BR"
+                    })
+                  });
+                  const data = await res.json();
+                  if (data.places && data.places.length > 0) {
+                    const businesses = data.places.map((p: any) => ({
+                      nome: p.displayName?.text,
+                      endereco: p.formattedAddress,
+                      telefone: p.nationalPhoneNumber || "Não listado",
+                      site: p.websiteUri || "Sem site",
+                      nota: p.rating,
+                      status: p.businessStatus
+                    }));
+                    resultText = \`Google Maps retornou \${businesses.length} negócios para "\${args.termoBusca}":\\n\${JSON.stringify(businesses, null, 2)}\`;
+                  } else {
+                    resultText = "Nenhum negócio encontrado no Google Maps para esta busca.";
+                  }
+                } catch (e: any) {
+                  resultText = "Erro na API do Google Maps: " + e.message;
                 }
               }
             } else {
