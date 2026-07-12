@@ -29,6 +29,10 @@ export interface IsadoraSession {
   createdAt: string;
   handoffTriggered?: boolean;
   handoffTime?: string;
+  isBlocked?: boolean;
+  strikes?: number;
+  pendingTechReview?: boolean;
+  techReviewRequestedAt?: string;
 }
 
 /**
@@ -270,5 +274,70 @@ export async function excluirLead(id: string) {
   } catch (error) {
     console.error(`[Isadora DB] Erro ao excluir lead ${id}:`, error);
     return false;
+  }
+}
+
+/**
+ * Adiciona um strike na sessão (para a Regra da Segunda Chance)
+ */
+export async function addStrikeToIsadoraSession(phone: string, currentStrikes: number = 0) {
+  try {
+    const newStrikes = currentStrikes + 1;
+    const command = new UpdateCommand({
+      TableName: TABLE_NAME,
+      Key: { phone },
+      UpdateExpression: 'SET strikes = :s',
+      ExpressionAttributeValues: {
+        ':s': newStrikes,
+      },
+    });
+    await docClient.send(command);
+    console.log(`[Isadora DB] ⚠️ Strike ${newStrikes} registrado para ${phone}`);
+    return newStrikes;
+  } catch (error) {
+    console.error(`[Isadora DB] Erro ao adicionar strike para ${phone}:`, error);
+    return currentStrikes;
+  }
+}
+
+/**
+ * Bloqueia a sessão permanentemente
+ */
+export async function blockIsadoraSession(phone: string) {
+  try {
+    const command = new UpdateCommand({
+      TableName: TABLE_NAME,
+      Key: { phone },
+      UpdateExpression: 'SET isBlocked = :b',
+      ExpressionAttributeValues: {
+        ':b': true,
+      },
+    });
+    await docClient.send(command);
+    console.log(`[Isadora DB] 🚫 Cliente ${phone} permanentemente bloqueado.`);
+  } catch (error) {
+    console.error(`[Isadora DB] Erro ao bloquear cliente ${phone}:`, error);
+  }
+}
+
+/**
+ * Define que o cliente está aguardando análise técnica
+ */
+export async function setPendingTechReview(phone: string, scope: string) {
+  try {
+    const command = new UpdateCommand({
+      TableName: TABLE_NAME,
+      Key: { phone },
+      UpdateExpression: 'SET pendingTechReview = :ptr, techReviewRequestedAt = :time, pendingTechScope = :scope',
+      ExpressionAttributeValues: {
+        ':ptr': true,
+        ':time': new Date().toISOString(),
+        ':scope': scope,
+      },
+    });
+    await docClient.send(command);
+    console.log(`[Isadora DB] ⚙️ Cliente ${phone} aguardando análise técnica (24h).`);
+  } catch (error) {
+    console.error(`[Isadora DB] Erro ao registrar SLA técnico para ${phone}:`, error);
   }
 }

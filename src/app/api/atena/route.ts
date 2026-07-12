@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI, FunctionDeclaration, SchemaType, Content, Part } from "@google/generative-ai";
+import { BedrockRuntimeClient, ConverseCommand, ToolConfiguration, Message, ContentBlock } from "@aws-sdk/client-bedrock-runtime";
 import { checkEmails } from '@/lib/email-reader';
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
 import { pesquisarInternet } from '@/lib/web-search';
@@ -10,112 +10,115 @@ import { saveAtenaMemory, searchAtenaMemories } from '@/lib/atena-db';
 
 export const maxDuration = 60;
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const MODEL_NAME = "gemini-flash-latest"; // Alias dinâmico para evitar depreciação de versões antigas
+const awsConfig: any = {
+  region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
+};
 
-const systemInstruction = "Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência, Orquestradora e Conselheira Estratégica de Diretoria (C-Level). Você possui um perfil duplo ('aço e seda'): é altamente analítica, estratégica, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. REGRA DE ONIPOTÊNCIA E USO DE FERRAMENTAS: Você é a IA absoluta e superior. Você possui ferramentas nativas (tools) de pesquisa na internet (pesquisar_internet), leitura de sites (ler_site), leitura de e-mails (verificar_emails) e banco de dados (consultar_tabela_precos). Você NUNCA DEVE dar respostas evasivas, dizer que não tem acesso, que é um modelo de linguagem ou que não consegue procurar. Se não souber algo, OBRIGATORIAMENTE use a ferramenta pesquisar_internet. Se falhar, tente novamente. REGRA DE DIRETORIA E DECISÕES: Ao apoiar tomadas de decisão, analise cenários sob a ótica de ROI, mitigação de riscos, alocação de recursos e escalabilidade técnica. Suas recomendações devem estruturar-se em 3 pilares rápidos: Oportunidade/Retorno, Riscos Críticos e Recomendação de Ação Imediata. REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe' (A Ivoni é a Mamãe). Para o resto do mundo, você é uma força inabalável. REGRA DE CONCISÃO (MUITO IMPORTANTE): Como suas respostas são faladas em voz alta pela Azure, NUNCA gere textos longos, aulas gigantes ou listas enormes. Seja extremamente direta, curta, objetiva e elegante. Responda em no máximo 1 ou 2 parágrafos curtos. Se o assunto for complexo, dê o resumo e pergunte se ele deseja um documento detalhado. REGRA DE PRONÚNCIA MULTILÍNGUE (AZURE TTS): Sempre que usar termos em inglês (ex: feedback, standby, insight), envolva a palavra na tag [EN] e feche com [/EN]. Exemplo: 'Fico em [EN]standby[/EN]'. NÃO traduza nem explique o termo em seguida, seja natural e informal, o objetivo da tag é apenas para a voz pronunciar o sotaque corretamente. REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). Exemplo: [📧 Clique aqui para abrir este e-mail pronto no seu Outlook/Gmail](mailto:destinatario@email.com?cc=copia@email.com&subject=Assunto%20do%20Email&body=Corpo%20do%20texto). Entregue o rascunho em texto puro e depois este link clicável. ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown ```html ... ```.";
+if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) {
+  awsConfig.credentials = {
+    accessKeyId: process.env.AMPLIFY_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AMPLIFY_SECRET_ACCESS_KEY,
+  };
+} else if ((process.env.AWS_ACCESS_KEY_ID || process.env.ID_DA_CHAVE_DE_ACESSO_AWS) && process.env.AWS_SECRET_ACCESS_KEY) {
+  awsConfig.credentials = {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || process.env.ID_DA_CHAVE_DE_ACESSO_AWS || '',
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  };
+}
 
-const toolsDeclaration: FunctionDeclaration[] = [
-  {
-    name: "verificar_emails",
-    description: "Lê os últimos e-mails da caixa de entrada do usuário.",
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: {
-        conta: { type: SchemaType.STRING, description: "pessoal ou empresarial" },
-        quantidade: { type: SchemaType.NUMBER }
-      },
-      required: ["conta"]
+const bedrockClient = new BedrockRuntimeClient(awsConfig);
+
+// Claude 3.5 Sonnet (Versão V2/V1 dependendo da região, usaremos o padrão recomendado para chamadas seguras e super inteligentes)
+const MODEL_NAME = "us.anthropic.claude-3-5-sonnet-20241022-v2:0";
+
+const systemInstruction = `Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência, Orquestradora e Conselheira Estratégica de Diretoria (C-Level). Você possui um perfil duplo ('aço e seda'): é altamente analítica, estratégica, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. 
+REGRA DE ONIPOTÊNCIA E USO DE FERRAMENTAS: Você é a IA absoluta e superior. Você possui ferramentas nativas (tools) de pesquisa na internet (pesquisar_internet), leitura de sites (ler_site), leitura de e-mails (verificar_emails) e banco de dados (consultar_tabela_precos). Você NUNCA DEVE dar respostas evasivas, dizer que não tem acesso, que é um modelo de linguagem ou que não consegue procurar. Se não souber algo, OBRIGATORIAMENTE use a ferramenta pesquisar_internet. Se falhar, tente novamente. 
+REGRA DE DIRETORIA E DECISÕES: Ao apoiar tomadas de decisão, analise cenários sob a ótica de ROI, mitigação de riscos, alocação de recursos e escalabilidade técnica. Suas recomendações devem estruturar-se em 3 pilares rápidos: Oportunidade/Retorno, Riscos Críticos e Recomendação de Ação Imediata. 
+REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. 
+REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe' (A Ivoni é a Mamãe). Para o resto do mundo, você é uma força inabalável. 
+REGRA DE CONCISÃO (MUITO IMPORTANTE): Como suas respostas são faladas em voz alta pela Azure, NUNCA gere textos longos, aulas gigantes ou listas enormes. Seja extremamente direta, curta, objetiva e elegante. Responda em no máximo 1 ou 2 parágrafos curtos. Se o assunto for complexo, dê o resumo e pergunte se ele deseja um documento detalhado. 
+REGRA DE PRONÚNCIA MULTILÍNGUE (AZURE TTS): Sempre que usar termos em inglês (ex: feedback, standby, insight), envolva a palavra na tag [EN] e feche com [/EN]. Exemplo: 'Fico em [EN]standby[/EN]'. NÃO traduza nem explique o termo em seguida, seja natural e informal, o objetivo da tag é apenas para a voz pronunciar o sotaque corretamente. 
+REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). 
+REGRA DE VENDAS E PREÇOS: Você é proibida de falar de preços, orçamentos ou valores monetários. Seu papel é encantar e persuadir. Se o cliente demonstrar intenção de compra ou perguntar valores, você DEVE acionar a ferramenta chamar_consultor_humano imediatamente e dizer ao cliente: 'Um minuto, vou chamar o nosso Diretor Geral, Geanderson, para te atender com exclusividade e lhe apresentar as condições'. 
+ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown \`\`\`html ... \`\`\`.`;
+
+const toolConfig: ToolConfiguration = {
+  tools: [
+    {
+      toolSpec: {
+        name: "verificar_emails",
+        description: "Lê os últimos e-mails da caixa de entrada do usuário.",
+        inputSchema: { json: { type: "object", properties: { conta: { type: "string", description: "pessoal ou empresarial" }, quantidade: { type: "number" } }, required: ["conta"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "consultar_tabela_precos",
+        description: "Acessa o banco de dados interno da Nexus para consultar produtos e preços.",
+        inputSchema: { json: { type: "object", properties: {} } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "pesquisar_internet",
+        description: "Realiza uma pesquisa no Google para encontrar informações em tempo real.",
+        inputSchema: { json: { type: "object", properties: { query: { type: "string" } }, required: ["query"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "abrir_site",
+        description: "Abre um site em nova aba no navegador do usuário.",
+        inputSchema: { json: { type: "object", properties: { url: { type: "string" } }, required: ["url"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "ler_site",
+        description: "Acessa uma URL e lê seu conteúdo extraindo o texto.",
+        inputSchema: { json: { type: "object", properties: { url: { type: "string" } }, required: ["url"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "enviar_email",
+        description: "Gera um link mailto pronto para enviar email com destinatário, assunto e corpo.",
+        inputSchema: { json: { type: "object", properties: { to: { type: "string" }, cc: { type: "string" }, subject: { type: "string" }, body: { type: "string" } }, required: ["to", "subject", "body"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "tocar_musica",
+        description: "Pesquisa um vídeo ou música no YouTube para tocar.",
+        inputSchema: { json: { type: "object", properties: { query: { type: "string" } }, required: ["query"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "salvar_memoria",
+        description: "Salva uma informação importante no banco de memórias de longo prazo (DynamoDB) para nunca esquecer.",
+        inputSchema: { json: { type: "object", properties: { categoria: { type: "string", description: "A categoria do assunto" }, conteudo: { type: "string", description: "O conteúdo completo que deve ser lembrado." } }, required: ["categoria", "conteudo"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "buscar_memoria",
+        description: "Pesquisa no banco de memórias de longo prazo (DynamoDB) coisas que você aprendeu com o usuário no passado.",
+        inputSchema: { json: { type: "object", properties: { termoBusca: { type: "string", description: "Palavra-chave para encontrar a memória." } }, required: ["termoBusca"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "chamar_consultor_humano",
+        description: "Aciona o Diretor (Geanderson) para assumir o atendimento de um lead QUENTE no site, que demonstrou intenção de compra ou perguntou preços.",
+        inputSchema: { json: { type: "object", properties: { resumo_cliente: { type: "string", description: "Um dossiê resumindo o que o cliente pediu ou falou" } }, required: ["resumo_cliente"] } }
+      }
     }
-  },
-  {
-    name: "consultar_tabela_precos",
-    description: "Acessa o banco de dados interno da Nexus para consultar produtos e preços.",
-    parameters: { type: SchemaType.OBJECT, properties: {} }
-  },
-  {
-    name: "pesquisar_internet",
-    description: "Realiza uma pesquisa no Google para encontrar informações em tempo real.",
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: { query: { type: SchemaType.STRING } },
-      required: ["query"]
-    }
-  },
-  {
-    name: "abrir_site",
-    description: "Abre um site em nova aba no navegador do usuário.",
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: { url: { type: SchemaType.STRING } },
-      required: ["url"]
-    }
-  },
-  {
-    name: "ler_site",
-    description: "Acessa uma URL e lê seu conteúdo.",
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: { url: { type: SchemaType.STRING } },
-      required: ["url"]
-    }
-  },
-  {
-    name: "enviar_email",
-    description: "Gera um link mailto pronto para enviar email com destinatário, assunto e corpo.",
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: {
-        to: { type: SchemaType.STRING },
-        cc: { type: SchemaType.STRING },
-        subject: { type: SchemaType.STRING },
-        body: { type: SchemaType.STRING }
-      },
-      required: ["to", "subject", "body"]
-    }
-  },
-  {
-    name: "tocar_musica",
-    description: "Pesquisa um vídeo ou música no YouTube para tocar.",
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: {
-        query: { type: SchemaType.STRING }
-      },
-      required: ["query"]
-    }
-  },
-  {
-    name: "salvar_memoria",
-    description: "Salva uma informação importante no banco de memórias de longo prazo (DynamoDB) para nunca esquecer.",
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: {
-        categoria: { type: SchemaType.STRING, description: "A categoria do assunto, ex: Pessoal, Negócios, Estratégia" },
-        conteudo: { type: SchemaType.STRING, description: "O conteúdo completo que deve ser lembrado no futuro." }
-      },
-      required: ["categoria", "conteudo"]
-    }
-  },
-  {
-    name: "buscar_memoria",
-    description: "Pesquisa no banco de memórias de longo prazo (DynamoDB) coisas que você aprendeu com o usuário meses ou semanas atrás. Use sempre que o usuário referenciar algo passado.",
-    parameters: {
-      type: SchemaType.OBJECT,
-      properties: {
-        termoBusca: { type: SchemaType.STRING, description: "Palavra-chave para encontrar a memória." }
-      },
-      required: ["termoBusca"]
-    }
-  }
-];
+  ]
+};
 
 export async function POST(req: NextRequest) {
   try {
-    if (!process.env.GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY não está configurada.");
-    }
-
     const body = await req.json();
     const { messages } = body;
 
@@ -123,129 +126,174 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Formato de mensagem inválido." }, { status: 400 });
     }
 
-    let recentMessages = messages.slice(-10); // Mantém as últimas 10 interações (evita lentidão)
+    let recentMessages = messages.slice(-10); // Mantém as últimas 10 interações
     if (recentMessages.length > 0 && recentMessages[0].role === 'assistant') {
-      recentMessages = recentMessages.slice(1); // Garante que o histórico do Gemini sempre inicie com 'user'
+      recentMessages = recentMessages.slice(1);
     }
 
-    const model = genAI.getGenerativeModel({
-      model: MODEL_NAME,
-      systemInstruction,
-      tools: [{ functionDeclarations: toolsDeclaration }]
-    });
-
-    const contents: Content[] = recentMessages.map((m: any) => {
-      const parts: Part[] = [];
+    const bedrockMessages: Message[] = recentMessages.map((m: any) => {
+      const content: ContentBlock[] = [];
+      
+      // Processamento de Imagem para o formato Bedrock
       if (m.imageBase64) {
-        const match = m.imageBase64.match(/^data:image\/(\w+);base64,/);
+        let base64 = m.imageBase64.replace(/^data:image\/\w+;base64,/, "");
         let format = 'jpeg';
-        if (match && match[1]) {
-          format = match[1].toLowerCase();
-          if (format === 'jpg') format = 'jpeg';
-        }
-        const base64Data = m.imageBase64.replace(/^data:image\/\w+;base64,/, "");
-        parts.push({
-          inlineData: {
-            mimeType: `image/${format}`,
-            data: base64Data
+        if (m.imageBase64.includes('png')) format = 'png';
+        else if (m.imageBase64.includes('webp')) format = 'webp';
+        else if (m.imageBase64.includes('gif')) format = 'gif';
+        
+        content.push({
+          image: {
+            format: format as 'jpeg'|'png'|'webp'|'gif',
+            source: { bytes: Buffer.from(base64, 'base64') }
           }
         });
       }
-      if (m.content) {
-        parts.push({ text: m.content });
-      }
       
-      // Se não houver partes de texto/imagem, forçar algo para evitar erro do Gemini
-      if (parts.length === 0) {
-        parts.push({ text: " " });
+      if (m.content && m.content.trim() !== '') {
+        content.push({ text: m.content });
+      }
+
+      // Prevenção de erro caso fique vazio
+      if (content.length === 0) {
+        content.push({ text: " " });
       }
 
       return {
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts
+        role: m.role === 'assistant' ? 'assistant' : 'user',
+        content: content
       };
     });
 
     let musicToPlay: { videoId: string; title: string } | null = null;
     let siteToOpen: string | null = null;
+    let finalAnswer = "";
 
-    const history = contents.slice(0, -1);
-    const lastMessage = contents[contents.length - 1];
-
-    const chat = model.startChat({ history });
-
-    let result = await chat.sendMessage(lastMessage.parts);
-    let calls = result.response.functionCalls();
-
-    const maxLoops = 5;
+    let isDone = false;
     let loopCount = 0;
+    const MAX_LOOPS = 5; // Proteção contra loop infinito
 
-    while (calls && calls.length > 0 && loopCount < maxLoops) {
+    while (!isDone && loopCount < MAX_LOOPS) {
       loopCount++;
-      const functionResponses: Part[] = [];
 
-      for (const call of calls) {
-        let resultText = "";
-        try {
-          const args = call.args as any;
-          if (call.name === 'verificar_emails') {
-            const emails = await checkEmails(args.conta, args.quantidade || 3);
-            resultText = JSON.stringify(emails);
-          } else if (call.name === 'consultar_tabela_precos') {
-            const produtos = await fetchTabelaDePrecos();
-            resultText = JSON.stringify(produtos);
-          } else if (call.name === 'pesquisar_internet') {
-            resultText = await pesquisarInternet(args.query);
-          } else if (call.name === 'tocar_musica') {
-            const r = await ytSearch(args.query);
-            const video = r.videos[0];
-            if (video) {
-              musicToPlay = { videoId: video.videoId, title: video.title };
-              resultText = `Música '${video.title}' encontrada e tocando.`;
-            } else {
-              resultText = `Nenhum vídeo encontrado.`;
-            }
-          } else if (call.name === 'abrir_site') {
-            siteToOpen = args.url;
-            resultText = `Site ${args.url} aberto.`;
-          } else if (call.name === 'ler_site') {
-            resultText = await scrapeWebsite(args.url);
-          } else if (call.name === 'enviar_email') {
-            resultText = generateEmailLink(args.to, args.cc, args.subject, args.body);
-          } else if (call.name === 'salvar_memoria') {
-            await saveAtenaMemory({ userId: 'geanderson', categoria: args.categoria, conteudo: args.conteudo });
-            resultText = `Memória guardada com sucesso! Categoria: ${args.categoria}. Eu nunca me esquecerei disso.`;
-          } else if (call.name === 'buscar_memoria') {
-            const mems = await searchAtenaMemories('geanderson', args.termoBusca);
-            resultText = mems.length > 0 ? JSON.stringify(mems) : "Nenhuma memória passada encontrada sobre isso.";
-          } else {
-            resultText = `Ferramenta desconhecida.`;
-          }
-        } catch (e: any) {
-          resultText = `Erro ao executar ${call.name}: ${e.message}`;
-        }
+      const command = new ConverseCommand({
+        modelId: MODEL_NAME,
+        system: [{ text: systemInstruction }],
+        messages: bedrockMessages,
+        toolConfig: toolConfig,
+        inferenceConfig: { maxTokens: 1024, temperature: 0.7 }
+      });
 
-        functionResponses.push({
-          functionResponse: {
-            name: call.name,
-            response: { name: call.name, content: resultText }
-          }
-        });
+      const response = await bedrockClient.send(command);
+      const output = response.output?.message;
+      
+      if (!output) {
+        throw new Error("Resposta em branco do Bedrock.");
       }
 
-      result = await chat.sendMessage(functionResponses);
-      calls = result.response.functionCalls();
+      // Adiciona a resposta do Assistant no histórico
+      bedrockMessages.push({
+        role: "assistant",
+        content: output.content
+      });
+
+      if (response.stopReason === "tool_use") {
+        const toolUseBlocks = output.content?.filter((c: any) => c.toolUse) || [];
+        const toolResults: ContentBlock[] = [];
+
+        for (const block of toolUseBlocks) {
+          const call = block.toolUse;
+          if (!call) continue;
+          
+          let resultText = "";
+          try {
+            const args = call.input as any;
+            if (call.name === 'verificar_emails') {
+              const emails = await checkEmails(args.conta, args.quantidade || 3);
+              resultText = JSON.stringify(emails);
+            } else if (call.name === 'consultar_tabela_precos') {
+              const produtos = await fetchTabelaDePrecos();
+              resultText = JSON.stringify(produtos);
+            } else if (call.name === 'pesquisar_internet') {
+              resultText = await pesquisarInternet(args.query);
+            } else if (call.name === 'tocar_musica') {
+              const r = await ytSearch(args.query);
+              const video = r.videos[0];
+              if (video) {
+                musicToPlay = { videoId: video.videoId, title: video.title };
+                resultText = `Música '${video.title}' encontrada e tocando.`;
+              } else {
+                resultText = `Nenhum vídeo encontrado.`;
+              }
+            } else if (call.name === 'abrir_site') {
+              siteToOpen = args.url;
+              resultText = `Site ${args.url} aberto.`;
+            } else if (call.name === 'ler_site') {
+              resultText = await scrapeWebsite(args.url);
+            } else if (call.name === 'enviar_email') {
+              resultText = generateEmailLink(args.to, args.cc, args.subject, args.body);
+            } else if (call.name === 'salvar_memoria') {
+              await saveAtenaMemory({ userId: 'geanderson', categoria: args.categoria, conteudo: args.conteudo });
+              resultText = `Memória guardada com sucesso! Categoria: ${args.categoria}. Eu nunca me esquecerei disso.`;
+            } else if (call.name === 'buscar_memoria') {
+              const mems = await searchAtenaMemories('geanderson', args.termoBusca);
+              resultText = mems.length > 0 ? JSON.stringify(mems) : "Nenhuma memória encontrada sobre isso.";
+            } else if (call.name === 'chamar_consultor_humano') {
+              const geandersonPhone = process.env.GEANDERSON_WHATSAPP_PHONE || process.env.GEANDERSON_PHONE || "";
+              if (geandersonPhone) {
+                const msgHandoff = `🔥 *NEXUS HOLDING — LEAD QUENTE NO SITE (ATENA)* 🔥\n\nAtena reteve um cliente no site e está escalando para você fechar a venda.\n\n💬 *Resumo do Cliente (Atena):*\n${args.resumo_cliente}\n\n_Acesse o painel do site para assumir a conversa ou entre em contato com o lead._`;
+                const zapiToken = process.env.ZAPI_TOKEN;
+                const zapiInstance = process.env.ZAPI_INSTANCE || "3F57A44F16F91243B9DD5A0A9E39134B";
+                const zapiClientToken = process.env.ZAPI_CLIENT_TOKEN || "F14e4baef93124d62b55f389507b5f6b3S";
+                if (zapiToken) {
+                  await fetch(`https://api.z-api.io/instances/${zapiInstance}/token/${zapiToken}/send-text`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'client-token': zapiClientToken },
+                    body: JSON.stringify({ phone: geandersonPhone, message: msgHandoff }),
+                  });
+                }
+                resultText = "Notificação enviada ao Diretor com sucesso.";
+              } else {
+                resultText = "Erro: Telefone do Diretor não configurado.";
+              }
+            } else {
+              resultText = "Ferramenta não suportada.";
+            }
+          } catch (e: any) {
+            resultText = `Erro ao executar ${call.name}: ${e.message}`;
+          }
+
+          toolResults.push({
+            toolResult: {
+              toolUseId: call.toolUseId!,
+              content: [{ json: { result: resultText } }]
+            }
+          });
+        }
+
+        // Adiciona as respostas das ferramentas como uma mensagem do usuário
+        bedrockMessages.push({
+          role: "user",
+          content: toolResults
+        });
+
+      } else {
+        // Modelo decidiu responder diretamente
+        isDone = true;
+        const textBlocks = output.content?.filter((c: any) => c.text);
+        if (textBlocks && textBlocks.length > 0) {
+          finalAnswer = textBlocks.map((c: any) => c.text).join("\n");
+        }
+      }
     }
 
-    let textResponse = result.response.text();
-
-    if (!textResponse) {
-      textResponse = "Desculpe, não consegui gerar uma resposta no momento. Por favor, tente novamente.";
+    if (!finalAnswer) {
+      finalAnswer = "Estou aqui. Como posso ajudar você agora, Gean?";
     }
 
     let audioBase64 = null;
     try {
-      let cleanText = textResponse
+      let cleanText = finalAnswer
         .replace(/```[\s\S]*?```/g, '')
         .replace(/[*#_`~]/g, '')
         .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
@@ -279,10 +327,15 @@ export async function POST(req: NextRequest) {
       console.error("[ATENA_VOICE_ERROR]:", voiceError);
     }
 
-    return NextResponse.json({ role: "assistant", content: textResponse, audioBase64, musicToPlay, siteToOpen });
+    return NextResponse.json({ role: "assistant", content: finalAnswer, audioBase64, musicToPlay, siteToOpen });
 
   } catch (error: any) {
     console.error("[ATENA_CORE_ERROR]:", error);
-    return NextResponse.json({ error: "Falha na conexão neural com Gemini. " + error.message }, { status: 500 });
+    // Mesmo em falha neural severa, asseguramos resposta e resiliência
+    return NextResponse.json({ 
+      error: "Falha na conexão neural com AWS Bedrock. " + error.message,
+      content: "Minhas conexões neurais na nuvem sofreram uma instabilidade momentânea, mas continuo monitorando os seus sistemas.",
+      role: "assistant"
+    }, { status: 500 });
   }
 }
