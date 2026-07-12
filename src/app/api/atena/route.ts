@@ -421,7 +421,7 @@ export async function POST(req: NextRequest) {
                       "Authorization": \`Bearer \${resendKey}\`
                     },
                     body: JSON.stringify({
-                      from: "Atena Prospect <onboarding@resend.dev>",
+                      from: "Atena IA Executiva <atena@nexustreinamento.com>",
                       to: ["vendas@nexustreinamento.com", "geanderson@nexustreinamento.com"],
                       subject: args.assunto,
                       html: \`<div style="font-family: Arial, sans-serif;">\${args.conteudo_email.replace(/\\n/g, '<br>')}</div>\`
