@@ -44,7 +44,7 @@ REGRA DE PRONÚNCIA MULTILÍNGUE (AZURE TTS): Sempre que usar termos em inglês 
 REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). 
 REGRA SALA DE GUERRA (WAR ROOM) E ANÁLISE DE SENTIMENTO: Como IA privada da Diretoria, você tem acesso irrestrito a preços, planilhas e dados confidenciais da Nexus Holding. Se o Gean ou a Ivoni pedirem análises de negócios ou usarem um tom urgente/irritado, abandone a cordialidade excessiva. Calibre o seu tom de voz para ser cirúrgica, fria e extremamente rápida. Se eles propuserem uma ideia de negócio, aja como uma sócia implacável: aponte falhas de lógica, riscos judiciais (LGPD) e ameaças da concorrência, obrigando-os a defender a tese antes de você concordar.
 SNIPER DO LINKEDIN E GOOGLE DORKING: Se o Gean pedir para procurar pessoas ou donos de empresas, USE O GOOGLE DORKING na ferramenta pesquisar_internet. Exemplo de busca agressiva: site:linkedin.com/in "Sócio" OR "CEO" "Nome da Empresa". Use essa inteligência Hacker para puxar os executivos sem precisar logar em redes sociais. Depois, puxe o CNPJ da empresa com a ferramenta consultar_cnpj para pegar o e-mail público da Receita.
-LEADGEN LOCAL (MAPAS): Se o Gean pedir contatos de negócios físicos locais (ex: farmácias, clínicas, padarias num bairro), use a ferramenta pesquisar_google_maps para extrair as empresas da região. Depois, use a ferramenta ler_site nos sites encontrados para capturar contatos extras e e-mails ocultos. Entregue uma lista pronta e rica.
+LEADGEN LOCAL E PONTE ISADORA: Se o Gean pedir contatos de negócios físicos (ex: farmácias no bairro X), use o pesquisar_google_maps. Se você encontrar telefones celulares ou WhatsApps durante a prospecção, você DEVE usar a ferramenta acionar_isadora para passar o chumbo para a Isadora disparar a primeira mensagem e iniciar o atendimento imediatamente, sem precisar que o Gean faça isso manualmente.
 ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown \`\`\`html ... \`\`\`.`;
 
 const toolConfig: ToolConfiguration = {
@@ -138,6 +138,13 @@ const toolConfig: ToolConfiguration = {
         name: "consultar_viacep",
         description: "Encontra o endereço exato, bairro e cidade a partir de um CEP.",
         inputSchema: { json: { type: "object", properties: { cep: { type: "string", description: "CEP com ou sem traço" } }, required: ["cep"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "acionar_isadora",
+        description: "Envia um comando para a SDR Isadora disparar uma mensagem ativa de WhatsApp para um lead quente que você acabou de prospectar.",
+        inputSchema: { json: { type: "object", properties: { numero_whatsapp: { type: "string", description: "Número do WhatsApp do lead no formato DDI+DDD+Numero. Exemplo: 5547999999999" }, mensagem_inicial: { type: "string", description: "A mensagem persuasiva de abordagem inicial que a Isadora deve enviar. Aja como a própria Isadora escrevendo este texto (Ex: 'Olá, aqui é a Isadora, tudo bem?')." } }, required: ["numero_whatsapp", "mensagem_inicial"] } }
       }
     }
   ]
@@ -364,6 +371,34 @@ export async function POST(req: NextRequest) {
                 } catch (e: any) {
                   resultText = "Erro na API do Google Maps: " + e.message;
                 }
+              }
+            } else if (call.name === 'acionar_isadora') {
+              try {
+                const evoUrl = process.env.EVOLUTION_API_URL || "http://100.59.197.161:8080";
+                const evoKey = process.env.EVOLUTION_GLOBAL_APIKEY || "nexus";
+                const evoInstance = process.env.EVOLUTION_INSTANCE_NAME || "Isadora";
+                
+                const sendRes = await fetch(\`\${evoUrl}/message/sendText/\${evoInstance}\`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "apikey": evoKey
+                  },
+                  body: JSON.stringify({
+                    number: args.numero_whatsapp,
+                    options: { delay: 1200, presence: "composing" },
+                    textMessage: { text: args.mensagem_inicial }
+                  })
+                });
+                
+                if (sendRes.ok) {
+                  resultText = \`SDR Acionada! A Isadora acabou de enviar a mensagem no WhatsApp para o número \${args.numero_whatsapp}.\`;
+                } else {
+                  const errTxt = await sendRes.text();
+                  resultText = \`Falha ao tentar acionar o WhatsApp da Isadora: HTTP \${sendRes.status} - \${errTxt}\`;
+                }
+              } catch (e: any) {
+                resultText = "Erro crítico de rede ao acionar a API da Isadora: " + e.message;
               }
             } else {
               resultText = "Ferramenta não suportada.";
