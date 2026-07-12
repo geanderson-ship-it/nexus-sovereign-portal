@@ -447,12 +447,12 @@ export default function NexusPactumCockpit() {
                   </CardContent>
                 </Card>
 
-                {/* CENA CINEMATOGRÁFICA (JUSTINE - C.L.O) MOVIDA PARA BAIXO DA LISTA */}
-                <div className="relative w-full min-h-[400px] rounded-3xl overflow-hidden border border-[#cca752]/30 shadow-[0_0_60px_rgba(204,167,82,0.15)] bg-black/60 flex flex-col md:flex-row mt-8">
-                  <div className="w-full md:w-2/3 relative min-h-[300px] bg-[#050508]">
+                {/* CENA CINEMATOGRÁFICA (JUSTINE - C.L.O) FULL WIDTH */}
+                <div className="mt-8 space-y-6">
+                  <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-[#cca752]/30 shadow-[0_0_60px_rgba(204,167,82,0.15)] bg-black/60">
                     <CustomVideoPlayer 
                       src="/Justine_Pactum.mp4" 
-                      className="w-full h-full object-cover"
+                      className="aspect-video w-full h-full object-cover"
                     />
                     
                     <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-md border border-[#cca752]/40 rounded-full z-30">
@@ -462,29 +462,52 @@ export default function NexusPactumCockpit() {
                       </span>
                       <span className="text-[10px] font-black uppercase tracking-wider text-[#cca752]">Tribunal do Pactum - Online</span>
                     </div>
-                    <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10"></div>
-                  </div>
-                  
-                  <div className="w-full md:w-1/3 p-8 flex flex-col justify-center bg-gradient-to-br from-[#0a0a0c] to-[#121217] border-t md:border-t-0 md:border-l border-[#cca752]/20">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="p-2 bg-[#cca752]/10 rounded-lg border border-[#cca752]/30">
-                        <Scale className="w-5 h-5 text-[#cca752]" />
-                      </div>
-                      <Badge className="bg-[#cca752]/10 text-[#cca752] border-[#cca752]/20 font-black uppercase tracking-widest text-[10px] py-1">
-                        Chief Legal Officer
-                      </Badge>
+
+                    <div className="absolute bottom-6 right-6 z-40">
+                      <Button asChild className="bg-[#cca752] hover:bg-[#e6c16c] text-[#0a0a0c] font-black uppercase tracking-widest text-xs h-12 px-6 rounded-2xl shadow-[0_0_25px_rgba(204,167,82,0.5)] transition-all hover:scale-[1.05]">
+                        <Link href="/pactum-legal">
+                          <Scale className="mr-2 h-4 w-4" /> Acessar Tribunal da IA
+                        </Link>
+                      </Button>
                     </div>
-                    <h3 className="text-2xl font-black text-white uppercase font-headline tracking-tighter mb-4">
-                      Justine
-                    </h3>
-                    <p className="text-sm text-slate-400 leading-relaxed mb-10">
-                      A guardiã do ecossistema. Auditoria cirúrgica de contratos, prevenção de passivos estruturais e blindagem corporativa para todas as operações da Nexus Holding.
-                    </p>
-                    <Button asChild className="w-full bg-[#cca752] hover:bg-[#e6c16c] text-[#0a0a0c] font-black uppercase tracking-widest text-xs h-14 rounded-2xl shadow-[0_0_25px_rgba(204,167,82,0.25)] transition-all hover:scale-[1.02]">
-                      <Link href="/pactum-legal">
-                        Acessar Tribunal da IA
-                      </Link>
-                    </Button>
+                    <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black/90 to-transparent pointer-events-none z-10"></div>
+                  </div>
+
+                  {/* CARDS EXPLICATIVOS DA JUSTINE */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
+                      <CardContent className="p-6 space-y-4">
+                        <div className="h-10 w-10 bg-[#cca752]/10 border border-[#cca752]/30 rounded-xl flex items-center justify-center">
+                          <ShieldCheck className="w-5 h-5 text-[#cca752]" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-white uppercase tracking-widest text-[10px] mb-1">Blindagem de Ativos</h4>
+                          <p className="text-xs text-slate-400 leading-relaxed">Proteção implacável do patrimônio da Nexus, garantindo solidez e defesa preventiva contra passivos judiciais e trabalhistas.</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
+                      <CardContent className="p-6 space-y-4">
+                        <div className="h-10 w-10 bg-[#cca752]/10 border border-[#cca752]/30 rounded-xl flex items-center justify-center">
+                          <FileSearch className="w-5 h-5 text-[#cca752]" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-white uppercase tracking-widest text-[10px] mb-1">Auditoria Contratual</h4>
+                          <p className="text-xs text-slate-400 leading-relaxed">Inspeção microscópica e cirúrgica de cláusulas, revelando assimetrias e armadilhas legais invisíveis antes da assinatura.</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
+                      <CardContent className="p-6 space-y-4">
+                        <div className="h-10 w-10 bg-[#cca752]/10 border border-[#cca752]/30 rounded-xl flex items-center justify-center">
+                          <Target className="w-5 h-5 text-[#cca752]" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-white uppercase tracking-widest text-[10px] mb-1">Compliance Estrito</h4>
+                          <p className="text-xs text-slate-400 leading-relaxed">Vigilância constante sobre as operações do ecossistema, assegurando que todas as ações obedeçam rigorosamente às normativas.</p>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
                 </div>
 
