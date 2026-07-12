@@ -613,7 +613,7 @@ export default function DanteSafraChat() {
                             }}
                         >
                             {isLoadingAudio && playingId === msg.id ? <Loader2 className="h-4 w-4 animate-spin" /> : (isPlaying && playingId === msg.id ? <Pause className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />)}
-                            <span className="sr-only">{t('lectures.preview.play')}</span>
+                            <span className="sr-only">Ouvir áudio</span>
                         </Button>
                     )}
                     {msg.sender === 'user' && (

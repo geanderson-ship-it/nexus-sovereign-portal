@@ -830,7 +830,7 @@ export async function danteSafra(input: DanteSafraInput): Promise<DanteSafraOutp
     if (input.setupStage === 'PROPRIEDADE') {
 
       return {
-        response: t('intelligence.dante-safra.setup.step1'),
+        response: translations['intelligence.dante-safra.setup.step1'] || 'Olá! Eu sou o Dante, o seu agrônomo digital. Para começarmos, preciso conhecer sua propriedade. Me conte: qual o tamanho da sua terra, que tipo de plantações você tem e que animais você cria?',
         nextStage: 'MUNICIPIO' as const
       };
     }
