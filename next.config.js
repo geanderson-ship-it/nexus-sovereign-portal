@@ -22,6 +22,18 @@ const nextConfig = {
     EVOLUTION_INSTANCE_NAME: process.env.EVOLUTION_INSTANCE_NAME,
     ORION_ELEVENLABS_VOICE_ID: process.env.ORION_ELEVENLABS_VOICE_ID,
     NEXUS_TRANSCRIBE_BUCKET: process.env.NEXUS_TRANSCRIBE_BUCKET,
+    GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+    ZAPI_INSTANCE: process.env.ZAPI_INSTANCE,
+    ZAPI_TOKEN: process.env.ZAPI_TOKEN,
+    ZAPI_CLIENT_TOKEN: process.env.ZAPI_CLIENT_TOKEN,
+    GMAIL_PESSOAL_EMAIL: process.env.GMAIL_PESSOAL_EMAIL,
+    GMAIL_PESSOAL_PASS: process.env.GMAIL_PESSOAL_PASS,
+    GMAIL_EMPRESA_EMAIL: process.env.GMAIL_EMPRESA_EMAIL,
+    GMAIL_EMPRESA_PASS: process.env.GMAIL_EMPRESA_PASS,
+    EMAIL_USER: process.env.EMAIL_USER,
+    EMAIL_APP_PASSWORD: process.env.EMAIL_APP_PASSWORD,
+    GEANDERSON_WHATSAPP_PHONE: process.env.GEANDERSON_WHATSAPP_PHONE,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
   },
   images: {
     // Platinum Optimization: AWS Amplify handles image optimization natively via CloudFront.
