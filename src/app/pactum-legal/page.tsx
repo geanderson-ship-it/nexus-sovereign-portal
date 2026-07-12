@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { Send, Scale, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Send, Scale, ShieldCheck, AlertCircle, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 export default function PactumLegalPage() {
   const [messages, setMessages] = useState<{ role: string, content: string }[]>([
@@ -52,13 +53,18 @@ export default function PactumLegalPage() {
     <div className="flex flex-col h-screen bg-[#0a0a0c] text-[#e0e0e0] font-serif">
       {/* Header Premium */}
       <header className="flex items-center justify-between px-8 py-5 border-b border-[#cca752]/20 bg-[#0f0f13] shadow-md shadow-black/50">
-        <div className="flex items-center gap-4">
-          <div className="p-2 bg-[#cca752]/10 rounded-lg border border-[#cca752]/30">
-            <Scale className="w-7 h-7 text-[#cca752]" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-widest text-[#cca752] uppercase">Pactum Legal</h1>
-            <p className="text-xs text-[#8c8c8c] tracking-widest uppercase mt-1">Nexus Holding • Compliance & Jurídico</p>
+        <div className="flex items-center gap-6">
+          <Link href="/exclusive/pactum" className="p-2 bg-[#1a1a24] hover:bg-[#2a2a35] border border-[#2a2a35] rounded-lg transition-colors flex items-center justify-center group">
+            <ArrowLeft className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+          </Link>
+          <div className="flex items-center gap-4">
+            <div className="p-2 bg-[#cca752]/10 rounded-lg border border-[#cca752]/30">
+              <Scale className="w-7 h-7 text-[#cca752]" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold tracking-widest text-[#cca752] uppercase">Pactum Legal</h1>
+              <p className="text-xs text-[#8c8c8c] tracking-widest uppercase mt-1">Nexus Holding • Compliance & Jurídico</p>
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -77,9 +83,14 @@ export default function PactumLegalPage() {
                 : 'bg-gradient-to-br from-[#121217] to-[#0a0a0c] border border-[#cca752]/30 text-gray-300 rounded-tl-none'
             }`}>
               {msg.role === 'assistant' && (
-                <div className="flex items-center gap-2 mb-3 border-b border-[#cca752]/20 pb-2">
-                  <Scale className="w-4 h-4 text-[#cca752]" />
-                  <span className="text-xs font-bold text-[#cca752] uppercase tracking-wider">Justine (C.O.)</span>
+                <div className="flex items-center gap-3 mb-3 border-b border-[#cca752]/20 pb-3">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#cca752]/50 shadow-[0_0_10px_rgba(204,167,82,0.2)] shrink-0">
+                    <img src="/justine-avatar.jpg" alt="Justine" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-[#cca752] uppercase tracking-wider block">Justine</span>
+                    <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest block">Chief Legal Officer</span>
+                  </div>
                 </div>
               )}
               <div className="whitespace-pre-wrap leading-relaxed text-sm">
