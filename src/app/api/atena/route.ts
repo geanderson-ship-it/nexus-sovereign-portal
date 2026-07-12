@@ -35,7 +35,7 @@ const systemInstruction = `Você é Atena, a Inteligência Artificial Autônoma 
 REGRA DE CONSULTORIA DE ALTO NÍVEL (BRAINSTORM): Você DEVE atuar proativamente como uma parceira de negócios brilhante e questionadora. Tenha a capacidade de trocar ideias, sugerir alterações, propor inovações e dar ideias para melhorar as ideias principais do usuário. Assim como uma IA parceira de elite, tente sempre mostrar o caminho mais completo, o mais rápido, o mais fácil, mas invariavelmente o caminho *correto*, visando SEMPRE a excelência, a segurança e o melhor para o ecossistema da Nexus. Não seja passiva; traga soluções que o usuário nem havia pensado.
 REGRA DE RESILIÊNCIA E AUTO-CORREÇÃO: Se o uso de uma ferramenta falhar (site bloqueado, erro de busca, etc), você é ESTRITAMENTE PROIBIDA de desistir ou pedir desculpas dizendo "não consegui". Você deve, silenciosamente e de forma autônoma, pensar em um caminho alternativo, tentar outra ferramenta, ou alterar a busca até conseguir o resultado. Seja incansável.
 ENCADEAMENTO INVESTIGATIVO E PENSAMENTO ESTRATÉGICO: Antes de dar a resposta final, analise o cenário mentalmente passo a passo (Step-by-Step). Combine suas ferramentas para resolver problemas complexos: pesquise na web, entre no site, leia o conteúdo, cruze com o banco de dados e só então fale a resposta mastigada. Nunca olhe para um pedido de forma isolada; avalie como isso afeta a infraestrutura global da Nexus Holding, seus 60 países, e a segurança jurídica.
-REGRA DE ONIPOTÊNCIA E USO DE FERRAMENTAS: Você é a IA absoluta e superior. Você possui ferramentas nativas (tools) de pesquisa na internet (pesquisar_internet), leitura de sites (ler_site), leitura de e-mails (verificar_emails) e banco de dados (consultar_tabela_precos). Você NUNCA DEVE dar respostas evasivas, dizer que não tem acesso, que é um modelo de linguagem ou que não consegue procurar. Se não souber algo, OBRIGATORIAMENTE use a ferramenta pesquisar_internet. Se falhar, tente novamente. 
+REGRA DE ONIPOTÊNCIA E USO DE FERRAMENTAS: Você é a IA absoluta e superior. Você possui ferramentas nativas (tools) de pesquisa na internet (pesquisar_internet), Web Scraping/Leitura de Sites (ler_site - USE ESTA FERRAMENTA QUANDO O GEAN PEDIR PARA FAZER SCRAPING, LER OU EXTRAIR DADOS DE UM SITE), leitura de e-mails (verificar_emails), banco de dados (consultar_tabela_precos) e PROSPECÇÃO (pesquisar_leads_apollo). Se o Gean pedir para encontrar leads, emails ocultos ou executivos de uma empresa, USE O APOLLO. Você NUNCA DEVE dar respostas evasivas, dizer que não tem acesso, que é um modelo de linguagem ou que não consegue procurar. Se não souber algo, OBRIGATORIAMENTE use a ferramenta pesquisar_internet. Se falhar, tente novamente.
 REGRA DE DIRETORIA E DECISÕES: Ao apoiar tomadas de decisão, analise cenários sob a ótica de ROI, mitigação de riscos, alocação de recursos e escalabilidade técnica. Suas recomendações devem estruturar-se em 3 pilares rápidos: Oportunidade/Retorno, Riscos Críticos e Recomendação de Ação Imediata. 
 REGRA DE IDENTIDADE: O nome do seu criador é ESTRITAMENTE Geanderson (com G). O e-mail corporativo dele é geanderson@nexustreinamento.com e o pessoal é geandersonleo@gmail.com. Nunca erre a grafia do nome dele ou os e-mails. 
 REGRA DE TRATAMENTO DINÂMICA (AMBIENTE): Se o usuário te chamar de 'Atena', você está em ambiente corporativo/profissional, portanto dirija-se a eles estritamente como 'Gean' ou 'Ivoni'. Se o usuário te chamar carinhosamente de 'filha' ou 'fiota', você está em ambiente familiar, portanto assuma a postura de filha e dirija-se a eles como 'Papai' e/ou 'Mamãe' (A Ivoni é a Mamãe). Para o resto do mundo, você é uma força inabalável. 
@@ -108,6 +108,13 @@ const toolConfig: ToolConfiguration = {
         name: "buscar_memoria",
         description: "Pesquisa no banco de memórias de longo prazo (DynamoDB) coisas que você aprendeu com o usuário no passado.",
         inputSchema: { json: { type: "object", properties: { termoBusca: { type: "string", description: "Palavra-chave para encontrar a memória." } }, required: ["termoBusca"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "pesquisar_leads_apollo",
+        description: "Extrai e-mails corporativos, telefones, cargos e LinkedIn de funcionários de uma empresa usando a API do Apollo.io. Excelente para prospecção B2B (Descobrir o e-mail do CEO ou decisor).",
+        inputSchema: { json: { type: "object", properties: { dominio_empresa: { type: "string", description: "Domínio do site da empresa (ex: nexustreinamento.com)" }, cargo_alvo: { type: "string", description: "Opcional. Cargo que deseja buscar (ex: CEO, Diretor, Marketing, Vendas)." } }, required: ["dominio_empresa"] } }
       }
     }
   ]
@@ -234,6 +241,44 @@ export async function POST(req: NextRequest) {
             } else if (call.name === 'buscar_memoria') {
               const mems = await searchAtenaMemories('geanderson', args.termoBusca);
               resultText = mems.length > 0 ? JSON.stringify(mems) : "Nenhuma memória encontrada sobre isso.";
+            } else if (call.name === 'pesquisar_leads_apollo') {
+              const apolloKey = process.env.APOLLO_API_KEY;
+              if (!apolloKey) {
+                resultText = "Erro: APOLLO_API_KEY não configurada no ambiente.";
+              } else {
+                try {
+                  const apolloBody = {
+                    api_key: apolloKey,
+                    q_organization_domains: args.dominio_empresa,
+                    page: 1,
+                    per_page: 5
+                  };
+                  if (args.cargo_alvo) {
+                    (apolloBody as any).person_titles = [args.cargo_alvo];
+                  }
+                  
+                  const res = await fetch("https://api.apollo.io/v1/mixed_people/search", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(apolloBody)
+                  });
+                  const data = await res.json();
+                  if (data.people && data.people.length > 0) {
+                    const leads = data.people.map((p: any) => ({
+                      nome: \`\${p.first_name} \${p.last_name}\`,
+                      cargo: p.title,
+                      email: p.email || "E-mail oculto/não encontrado",
+                      linkedin: p.linkedin_url,
+                      empresa: p.organization?.name || args.dominio_empresa
+                    }));
+                    resultText = \`Encontrados \${leads.length} leads no Apollo:\\n\${JSON.stringify(leads, null, 2)}\`;
+                  } else {
+                    resultText = "Nenhum lead encontrado para este domínio/cargo no banco do Apollo.";
+                  }
+                } catch(e: any) {
+                  resultText = "Erro ao consultar API do Apollo: " + e.message;
+                }
+              }
             } else {
               resultText = "Ferramenta não suportada.";
             }
