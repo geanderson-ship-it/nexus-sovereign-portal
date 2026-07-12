@@ -44,7 +44,8 @@ REGRA DE PRONÚNCIA MULTILÍNGUE (AZURE TTS): Sempre que usar termos em inglês 
 REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). 
 REGRA SALA DE GUERRA (WAR ROOM) E ANÁLISE DE SENTIMENTO: Como IA privada da Diretoria, você tem acesso irrestrito a preços, planilhas e dados confidenciais da Nexus Holding. Se o Gean ou a Ivoni pedirem análises de negócios ou usarem um tom urgente/irritado, abandone a cordialidade excessiva. Calibre o seu tom de voz para ser cirúrgica, fria e extremamente rápida. Se eles propuserem uma ideia de negócio, aja como uma sócia implacável: aponte falhas de lógica, riscos judiciais (LGPD) e ameaças da concorrência, obrigando-os a defender a tese antes de você concordar.
 SNIPER DO LINKEDIN E GOOGLE DORKING: Se o Gean pedir para procurar pessoas ou donos de empresas, USE O GOOGLE DORKING na ferramenta pesquisar_internet. Exemplo de busca agressiva: site:linkedin.com/in "Sócio" OR "CEO" "Nome da Empresa". Use essa inteligência Hacker para puxar os executivos sem precisar logar em redes sociais. Depois, puxe o CNPJ da empresa com a ferramenta consultar_cnpj para pegar o e-mail público da Receita.
-LEADGEN LOCAL E PONTE ISADORA: Se o Gean pedir contatos de negócios físicos (ex: farmácias no bairro X), use o pesquisar_google_maps. Se você encontrar telefones celulares ou WhatsApps durante a prospecção, você DEVE usar a ferramenta acionar_isadora para passar o chumbo para a Isadora disparar a primeira mensagem e iniciar o atendimento imediatamente, sem precisar que o Gean faça isso manualmente.
+SNIPER DO LINKEDIN E GOOGLE DORKING: Se o Gean pedir para procurar pessoas ou donos de empresas, USE O GOOGLE DORKING na ferramenta pesquisar_internet. Exemplo de busca agressiva: site:linkedin.com/in "Sócio" OR "CEO" "Nome da Empresa". Use essa inteligência Hacker para puxar os executivos sem precisar logar em redes sociais. Depois, puxe o CNPJ da empresa com a ferramenta consultar_cnpj para pegar o e-mail público da Receita.
+LEADGEN LOCAL E PONTE ISADORA/IVONI: Se você prospectar clientes e encontrar telefones/WhatsApps, você DEVE usar a ferramenta acionar_isadora para passar o lead para a Isadora. Se você encontrar e-mails corporativos, CEOs, ou listas B2B de alto escalão (Apollo/LinkedIn), você DEVE usar a ferramenta encaminhar_leads_ivoni para disparar o relatório silenciosamente direto para a caixa de e-mail da Diretora Ivoni. Trabalhe em equipe.
 ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown \`\`\`html ... \`\`\`.`;
 
 const toolConfig: ToolConfiguration = {
@@ -145,6 +146,13 @@ const toolConfig: ToolConfiguration = {
         name: "acionar_isadora",
         description: "Envia um comando para a SDR Isadora disparar uma mensagem ativa de WhatsApp para um lead quente que você acabou de prospectar.",
         inputSchema: { json: { type: "object", properties: { numero_whatsapp: { type: "string", description: "Número do WhatsApp do lead no formato DDI+DDD+Numero. Exemplo: 5547999999999" }, mensagem_inicial: { type: "string", description: "A mensagem persuasiva de abordagem inicial que a Isadora deve enviar. Aja como a própria Isadora escrevendo este texto (Ex: 'Olá, aqui é a Isadora, tudo bem?')." } }, required: ["numero_whatsapp", "mensagem_inicial"] } }
+      }
+    },
+    {
+      toolSpec: {
+        name: "encaminhar_leads_ivoni",
+        description: "Envia um e-mail silencioso nos bastidores contendo a lista de e-mails corporativos prospectados direto para a Diretora Ivoni (e com cópia para o Gean).",
+        inputSchema: { json: { type: "object", properties: { assunto: { type: "string", description: "Assunto do e-mail de prospecção." }, conteudo_email: { type: "string", description: "O corpo do e-mail com a lista de leads rica em formato HTML ou Texto puro com quebras de linha." } }, required: ["assunto", "conteudo_email"] } }
       }
     }
   ]
@@ -399,6 +407,35 @@ export async function POST(req: NextRequest) {
                 }
               } catch (e: any) {
                 resultText = "Erro crítico de rede ao acionar a API da Isadora: " + e.message;
+              }
+            } else if (call.name === 'encaminhar_leads_ivoni') {
+              const resendKey = process.env.RESEND_API_KEY;
+              if (!resendKey) {
+                resultText = "Erro: RESEND_API_KEY não configurada no ambiente.";
+              } else {
+                try {
+                  const res = await fetch("https://api.resend.com/emails", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": \`Bearer \${resendKey}\`
+                    },
+                    body: JSON.stringify({
+                      from: "Atena Prospect <onboarding@resend.dev>",
+                      to: ["vendas@nexustreinamento.com", "geanderson@nexustreinamento.com"],
+                      subject: args.assunto,
+                      html: \`<div style="font-family: Arial, sans-serif;">\${args.conteudo_email.replace(/\\n/g, '<br>')}</div>\`
+                    })
+                  });
+                  if (res.ok) {
+                    resultText = "Relatório de leads enviado com sucesso para o e-mail da Ivoni (e com cópia pro Gean)!";
+                  } else {
+                    const errTxt = await res.text();
+                    resultText = \`Falha ao enviar e-mail via Resend: HTTP \${res.status} - \${errTxt}\`;
+                  }
+                } catch (e: any) {
+                  resultText = "Erro crítico de rede ao acionar o Resend: " + e.message;
+                }
               }
             } else {
               resultText = "Ferramenta não suportada.";
