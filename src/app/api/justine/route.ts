@@ -101,9 +101,9 @@ export async function POST(req: NextRequest) {
               resultText = "Erro: API de Pesquisa do Google não configurada.";
             } else {
               try {
-                const res = await fetch(\`https://www.googleapis.com/customsearch/v1?key=\${googleKey}&cx=\${cx}&q=\${encodeURIComponent(args.termoBusca)}\`);
+                const res = await fetch(`https://www.googleapis.com/customsearch/v1?key=${googleKey}&cx=${cx}&q=${encodeURIComponent(args.termoBusca)}`);
                 const data = await res.json();
-                resultText = data.items ? data.items.map((i:any) => i.title + " - " + i.snippet).join("\\n") : "Nada encontrado.";
+                resultText = data.items ? data.items.map((i:any) => i.title + " - " + i.snippet).join("\n") : "Nada encontrado.";
               } catch(e:any) {
                 resultText = "Erro de rede na pesquisa: " + e.message;
               }

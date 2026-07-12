@@ -366,8 +366,9 @@ export default function NexusPactumCockpit() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
-              className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+              className="w-full space-y-12"
             >
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Active Deals */}
               <div className="lg:col-span-2 space-y-6">
                 <Card className="bg-zinc-950/60 border-2 border-blue-500/20 backdrop-blur-md shadow-2xl">
