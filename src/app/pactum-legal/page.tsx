@@ -10,10 +10,15 @@ export default function PactumLegalPage() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
@@ -76,7 +81,7 @@ export default function PactumLegalPage() {
       </header>
 
       {/* Chat Area */}
-      <main className="flex-1 overflow-y-auto p-6 space-y-6 max-w-4xl w-full mx-auto font-sans">
+      <main ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-6 max-w-4xl w-full mx-auto font-sans">
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[80%] rounded-xl p-5 shadow-lg ${
@@ -111,7 +116,6 @@ export default function PactumLegalPage() {
             </div>
           </div>
         )}
-        <div ref={messagesEndRef} />
       </main>
 
       {/* Input Area */}
