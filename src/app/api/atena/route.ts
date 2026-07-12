@@ -303,13 +303,13 @@ export async function POST(req: NextRequest) {
                   const data = await res.json();
                   if (data.people && data.people.length > 0) {
                     const leads = data.people.map((p: any) => ({
-                      nome: \`\${p.first_name} \${p.last_name}\`,
+                      nome: `${p.first_name} ${p.last_name}`,
                       cargo: p.title,
                       email: p.email || "E-mail oculto/não encontrado",
                       linkedin: p.linkedin_url,
                       empresa: p.organization?.name || args.dominio_empresa
                     }));
-                    resultText = \`Encontrados \${leads.length} leads no Apollo:\\n\${JSON.stringify(leads, null, 2)}\`;
+                    resultText = `Encontrados ${leads.length} leads no Apollo:\\n${JSON.stringify(leads, null, 2)}`;
                   } else {
                     resultText = "Nenhum lead encontrado para este domínio/cargo no banco do Apollo.";
                   }
@@ -320,11 +320,11 @@ export async function POST(req: NextRequest) {
             } else if (call.name === 'consultar_cnpj') {
               const cleanCnpj = args.cnpj.replace(/\\D/g, '');
               try {
-                const res = await fetch(\`https://brasilapi.com.br/api/cnpj/v1/\${cleanCnpj}\`);
+                const res = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCnpj}`);
                 const data = await res.json();
                 if (data.cnpj) {
                   const socios = data.qsa ? data.qsa.map((s:any) => s.nome_socio + ' ('+s.qualificacao_socio+')').join(', ') : 'Não listado';
-                  resultText = \`Raio-X do CNPJ \${data.cnpj}:\\nEmpresa: \${data.razao_social}\\nSituação: \${data.descricao_situacao_cadastral}\\nCapital Social: R$ \${data.capital_social}\\nTelefone Público: \${data.ddd_telefone_1 || ''} \${data.ddd_telefone_2 || ''}\\nE-mail Público: \${data.email || 'Não listado'}\\nQuadro de Sócios (QSA): \${socios}\`;
+                  resultText = `Raio-X do CNPJ ${data.cnpj}:\\nEmpresa: ${data.razao_social}\\nSituação: ${data.descricao_situacao_cadastral}\\nCapital Social: R$ ${data.capital_social}\\nTelefone Público: ${data.ddd_telefone_1 || ''} ${data.ddd_telefone_2 || ''}\\nE-mail Público: ${data.email || 'Não listado'}\\nQuadro de Sócios (QSA): ${socios}`;
                 } else {
                   resultText = "CNPJ não encontrado ou inválido na Receita Federal.";
                 }
@@ -334,10 +334,10 @@ export async function POST(req: NextRequest) {
             } else if (call.name === 'consultar_viacep') {
               const cleanCep = args.cep.replace(/\\D/g, '');
               try {
-                const res = await fetch(\`https://viacep.com.br/ws/\${cleanCep}/json/\`);
+                const res = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
                 const data = await res.json();
                 if (!data.erro) {
-                  resultText = \`Dados do CEP \${cleanCep}: \${data.logradouro}, Bairro \${data.bairro}, \${data.localidade}/\${data.uf}\`;
+                  resultText = `Dados do CEP ${cleanCep}: ${data.logradouro}, Bairro ${data.bairro}, ${data.localidade}/${data.uf}`;
                 } else {
                   resultText = "CEP inválido ou não encontrado.";
                 }
@@ -372,7 +372,7 @@ export async function POST(req: NextRequest) {
                       nota: p.rating,
                       status: p.businessStatus
                     }));
-                    resultText = \`Google Maps retornou \${businesses.length} negócios para "\${args.termoBusca}":\\n\${JSON.stringify(businesses, null, 2)}\`;
+                    resultText = `Google Maps retornou ${businesses.length} negócios para "${args.termoBusca}":\\n${JSON.stringify(businesses, null, 2)}`;
                   } else {
                     resultText = "Nenhum negócio encontrado no Google Maps para esta busca.";
                   }
@@ -386,7 +386,7 @@ export async function POST(req: NextRequest) {
                 const evoKey = process.env.EVOLUTION_GLOBAL_APIKEY || "nexus";
                 const evoInstance = process.env.EVOLUTION_INSTANCE_NAME || "Isadora";
                 
-                const sendRes = await fetch(\`\${evoUrl}/message/sendText/\${evoInstance}\`, {
+                const sendRes = await fetch(`${evoUrl}/message/sendText/${evoInstance}`, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
@@ -400,10 +400,10 @@ export async function POST(req: NextRequest) {
                 });
                 
                 if (sendRes.ok) {
-                  resultText = \`SDR Acionada! A Isadora acabou de enviar a mensagem no WhatsApp para o número \${args.numero_whatsapp}.\`;
+                  resultText = `SDR Acionada! A Isadora acabou de enviar a mensagem no WhatsApp para o número ${args.numero_whatsapp}.`;
                 } else {
                   const errTxt = await sendRes.text();
-                  resultText = \`Falha ao tentar acionar o WhatsApp da Isadora: HTTP \${sendRes.status} - \${errTxt}\`;
+                  resultText = `Falha ao tentar acionar o WhatsApp da Isadora: HTTP ${sendRes.status} - ${errTxt}`;
                 }
               } catch (e: any) {
                 resultText = "Erro crítico de rede ao acionar a API da Isadora: " + e.message;
@@ -418,20 +418,20 @@ export async function POST(req: NextRequest) {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
-                      "Authorization": \`Bearer \${resendKey}\`
+                      "Authorization": `Bearer ${resendKey}`
                     },
                     body: JSON.stringify({
                       from: "Atena IA Executiva <atena@nexustreinamento.com>",
                       to: ["vendas@nexustreinamento.com", "geanderson@nexustreinamento.com"],
                       subject: args.assunto,
-                      html: \`<div style="font-family: Arial, sans-serif;">\${args.conteudo_email.replace(/\\n/g, '<br>')}</div>\`
+                      html: `<div style="font-family: Arial, sans-serif;">${args.conteudo_email.replace(/\\n/g, '<br>')}</div>`
                     })
                   });
                   if (res.ok) {
                     resultText = "Relatório de leads enviado com sucesso para o e-mail da Ivoni (e com cópia pro Gean)!";
                   } else {
                     const errTxt = await res.text();
-                    resultText = \`Falha ao enviar e-mail via Resend: HTTP \${res.status} - \${errTxt}\`;
+                    resultText = `Falha ao enviar e-mail via Resend: HTTP ${res.status} - ${errTxt}`;
                   }
                 } catch (e: any) {
                   resultText = "Erro crítico de rede ao acionar o Resend: " + e.message;
