@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { BedrockRuntimeClient, ConverseCommand, ToolConfiguration } from "@aws-sdk/client-bedrock-runtime";
-import { getAtenaHistory, saveAtenaHistory } from '@/lib/db'; 
+const sessionHistories = new Map<string, any[]>();
+async function getJustineHistory(sessionId: string, maxHistory: number) {
+  let hist = sessionHistories.get(sessionId) || [];
+  if (hist.length > maxHistory) hist = hist.slice(hist.length - maxHistory);
+  return hist;
+}
+async function saveJustineHistory(sessionId: string, history: any[]) {
+  sessionHistories.set(sessionId, history);
+}
+
 
 const MODEL_ID = "us.anthropic.claude-sonnet-4-5-20250929-v1:0";
 
@@ -57,7 +66,7 @@ export async function POST(req: NextRequest) {
     }
 
     const maxHistory = 15;
-    let history = await getAtenaHistory(sessionId, maxHistory);
+    let history = await getJustineHistory(sessionId, maxHistory);
 
     history.push({ role: 'user', content: [{ text: message }] });
 
@@ -129,7 +138,7 @@ export async function POST(req: NextRequest) {
       } else {
         const textBlocks = responseMessage.content?.filter(c => c.text);
         if (textBlocks && textBlocks.length > 0) {
-          finalResponseText = textBlocks.map(b => b.text).join("\\n");
+          finalResponseText = textBlocks.map(b => b.text).join("\n");
         }
         isDone = true;
       }
@@ -139,7 +148,7 @@ export async function POST(req: NextRequest) {
       finalResponseText = "Análise concluída sem emissão de parecer.";
     }
 
-    await saveAtenaHistory(sessionId, history);
+    await saveJustineHistory(sessionId, history);
 
     return NextResponse.json({ reply: finalResponseText });
 
