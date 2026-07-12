@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function PactumLegalPage() {
   const [messages, setMessages] = useState<{ role: string, content: string }[]>([
-    { role: 'assistant', content: 'Saudações. Eu sou Justine, Consultora Jurídica Chefe e Compliance Officer da Nexus Holding. Por favor, apresente o contrato ou a tese de negócio para que eu possa iniciar a auditoria de riscos legais e compliance.' }
+    { role: 'assistant', content: 'Saudações. Eu sou Justine, Consultora Jurídica Chefe da Nexus Holding.\n\nVerifico em meus registros de compliance que sua corporação ainda não está sob a chancela estratégica da Nexus. O Tribunal do Pactum opera em uma jurisdição de acesso estrito e exclusivo.\n\nSolicite o contato imediato com nossos consultores para habilitar a sua credencial. Somente quando estiver devidamente blindado pela Nexus, eu poderei intervir e auditar as suas operações.' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
