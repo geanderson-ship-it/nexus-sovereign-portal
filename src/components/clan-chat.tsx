@@ -210,15 +210,14 @@ export function ClanChat() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">
-            Para desbloquear esta e outras ferramentas de elite, adquira
-            qualquer um dos nossos cursos com Acesso Total.
+            Para desbloquear esta e outras ferramentas de elite, solicite uma demonstração do Gabinete.
           </p>
         </CardContent>
         <CardFooter>
           <Button asChild className="w-full">
-            <Link href="/courses">
+            <Link href="/">
               <BookOpen className="mr-2 h-4 w-4" />
-              Ver Cursos e Desbloquear Acesso
+              Acessar Página Inicial
             </Link>
           </Button>
         </CardFooter>

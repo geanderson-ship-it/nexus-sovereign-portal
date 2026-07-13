@@ -223,14 +223,14 @@ export function CareerAdvisorChat() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">
-            Para desbloquear este e outros terminais de IA, adquira um de nossos cursos de elite.
+            Para desbloquear este e outros terminais de IA, solicite uma demonstração B2B do Gabinete.
           </p>
         </CardContent>
-        <CardFooter>
-          <Button asChild className="w-full">
-            <Link href="/courses">
+        <CardFooter className="flex justify-between">
+          <Button asChild className="w-full bg-nexus-blue hover:bg-nexus-blue/90">
+            <Link href="/">
               <BookOpen className="mr-2 h-4 w-4" />
-              Ver Cursos e Desbloquear Acesso
+              Acessar Página Inicial
             </Link>
           </Button>
         </CardFooter>

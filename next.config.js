@@ -68,6 +68,26 @@ const nextConfig = {
         destination: '/intelligence/dante-builder',
         permanent: true,
       },
+      {
+        source: '/courses',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/consulting',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/palestras',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/gallery',
+        destination: '/',
+        permanent: true,
+      },
     ]
   },
 }
@@ -78,7 +98,7 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
   swcMinify: true,
-  disable: false, // Alterado para false para testar a instalação no npm run dev
+  disable: true, // Desativado globalmente para não bloquear APIs e vídeos (Range Requests) em produção
   workboxOptions: {
     disableDevLogs: true,
   },

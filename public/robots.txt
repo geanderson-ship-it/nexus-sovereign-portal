@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api
 
-Sitemap: https://nexus-site-novo.vercel.app/sitemap.xml
+Sitemap: https://www.nexustreinamento.com/sitemap.xml

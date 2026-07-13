@@ -51,11 +51,7 @@ const PRODUCTS_CATALOG: Product[] = [
   { id: 'studio', name: 'Nexus Studio', category: 'segmentos', startup: 1499, monthly: 199, description: 'Cockpit de broadcast e automação' },
   { id: 'health', name: 'Nexus Health', category: 'segmentos', startup: 0, monthly: 199, description: 'Monitoramento clínico e IA preventiva' },
 
-  // Cursos
-  { id: 'lideranca-gestor', name: 'Liderança Essencial: O Despertar do Gestor', category: 'cursos', startup: 999, monthly: 0, description: 'Transição do operador ao líder' },
-  { id: 'lideranca-pro', name: 'Liderança Estratégica Nexus', category: 'cursos', startup: 1499, monthly: 0, description: 'Leadership PRO' },
-  { id: 'leader-coach', name: 'Líder Treinador de Elite', category: 'cursos', startup: 2249, monthly: 0, description: 'Leader Coach' },
-  { id: 'executive-mastery', name: 'Alta Liderança Executiva', category: 'cursos', startup: 2999, monthly: 0, description: 'Executive Mastery' }
+
 ];
 
 interface SelectedProduct {
@@ -83,7 +79,7 @@ export default function LancamentoVendaPage() {
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<'todos' | 'premium' | 'empresas' | 'segmentos' | 'cursos'>('todos');
+  const [activeTab, setActiveTab] = useState<'todos' | 'premium' | 'empresas' | 'segmentos'>('todos');
 
   useEffect(() => {
     if (!isUserLoading) {
@@ -353,7 +349,7 @@ export default function LancamentoVendaPage() {
 
                         {/* CATEGORY TABS */}
                         <div className="flex gap-1 overflow-x-auto pb-1">
-                          {(['todos', 'premium', 'empresas', 'segmentos', 'cursos'] as const).map((tab) => (
+                          {(['todos', 'premium', 'empresas', 'segmentos'] as const).map((tab) => (
                             <button
                               key={tab}
                               type="button"

@@ -11,7 +11,7 @@ import Image from 'next/image';
 
 interface PriceItem {
   name: string;
-  category: 'empresas' | 'premium' | 'segmentos' | 'cursos' | 'consulta';
+  category: 'empresas' | 'premium' | 'segmentos';
   description: string;
   icon: any;
   iconColor: string;
@@ -341,114 +341,14 @@ const priceItems: PriceItem[] = [
   },
 
   
-  // Cursos (Preços Fixos)
-  {
-    name: 'Liderança Essencial: O Despertar do Gestor',
-    category: 'cursos',
-    description: 'O manual definitivo de transição do "operador" ao "líder"',
-    icon: BookOpen,
-    iconColor: 'text-blue-400',
-    iconBg: 'bg-blue-500/10 border-blue-500/20',
-    tag: 'Liderança',
-    tagBg: 'bg-blue-500/10',
-    tagText: 'text-blue-400',
-    tagBorder: 'border-blue-500/15',
-    startupPrice: 'R$ 999',
-    monthlyPrice: 'Sem Recorrência'
-  },
-  {
-    name: 'Liderança Estratégica Nexus (Leadership PRO)',
-    category: 'cursos',
-    description: 'Inteligência emocional, negociação e gestão executiva',
-    icon: BookOpen,
-    iconColor: 'text-primary',
-    iconBg: 'bg-primary/10 border-primary/20',
-    tag: 'Mais Vendido ⚡',
-    tagBg: 'bg-primary/20',
-    tagText: 'text-primary',
-    tagBorder: 'border-primary/30',
-    startupPrice: 'R$ 1.499',
-    monthlyPrice: 'Sem Recorrência'
-  },
-  {
-    name: 'Líder Treinador de Elite (Leader Coach)',
-    category: 'cursos',
-    description: 'Como construir equipes de alto desempenho autogerenciáveis',
-    icon: BookOpen,
-    iconColor: 'text-emerald-400',
-    iconBg: 'bg-emerald-500/10 border-emerald-500/20',
-    tag: 'Leader Coach',
-    tagBg: 'bg-emerald-500/10',
-    tagText: 'text-emerald-400',
-    tagBorder: 'border-emerald-500/15',
-    startupPrice: 'R$ 2.249',
-    monthlyPrice: 'Sem Recorrência'
-  },
-  {
-    name: 'Alta Liderança Executiva (Executive Mastery)',
-    category: 'cursos',
-    description: 'Maturidade de governança, legado e cultura corporativa',
-    icon: BookOpen,
-    iconColor: 'text-violet-400',
-    iconBg: 'bg-violet-500/10 border-violet-500/20',
-    tag: 'Elite Selection 🏆',
-    tagBg: 'bg-violet-500/10',
-    tagText: 'text-violet-400',
-    tagBorder: 'border-violet-500/15',
-    startupPrice: 'R$ 2.999',
-    monthlyPrice: 'Sem Recorrência'
-  },
 
-  // Sob Consulta (Consultoria e Palestras)
-  {
-    name: 'Consultoria Estratégica Nexus',
-    category: 'consulta',
-    description: 'Estruturação de operações por IA, automação e otimização PPCP',
-    icon: TrendingUp,
-    iconColor: 'text-indigo-400',
-    iconBg: 'bg-indigo-500/10 border-indigo-500/20',
-    tag: 'Mentoria & IA',
-    tagBg: 'bg-indigo-500/10',
-    tagText: 'text-indigo-400',
-    tagBorder: 'border-indigo-500/15',
-    startupPrice: 'Sob Consulta 💬',
-    monthlyPrice: 'Sob Consulta 💬'
-  },
-  {
-    name: 'Formação Completa de Líderes (7 Palestras)',
-    category: 'consulta',
-    description: 'Pacote Corporativo B2B Anual. Acesso ao roadmap completo das 7 palestras com Q&A ao vivo por IA.',
-    icon: Mic,
-    iconColor: 'text-pink-400',
-    iconBg: 'bg-pink-500/10 border-pink-500/20',
-    tag: 'Roadmap Premium',
-    tagBg: 'bg-pink-500/10',
-    tagText: 'text-pink-400',
-    tagBorder: 'border-pink-500/15',
-    startupPrice: 'R$ 80.000',
-    monthlyPrice: 'Sem Recorrência'
-  },
-  {
-    name: 'Palestra Corporativa Avulsa (Tema Único)',
-    category: 'consulta',
-    description: 'Licença para 1 Palestra imersiva (ex: Comunicação que Conecta) para times ou eventos.',
-    icon: Mic,
-    iconColor: 'text-rose-400',
-    iconBg: 'bg-rose-500/10 border-rose-500/20',
-    tag: 'Imersão Nexus',
-    tagBg: 'bg-rose-500/10',
-    tagText: 'text-rose-400',
-    tagBorder: 'border-rose-500/15',
-    startupPrice: 'R$ 15.000',
-    monthlyPrice: 'Sem Recorrência'
-  }
 ];
 
 export default function PrecificacaoPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<'todos' | 'empresas' | 'premium' | 'segmentos' | 'cursos' | 'consulta'>('todos');
+  const [activeCategory, setActiveCategory] = useState<'todos' | 'empresas' | 'premium' | 'segmentos'>('todos');
 
   useEffect(() => {
     if (!isUserLoading) {
@@ -519,7 +419,7 @@ export default function PrecificacaoPage() {
 
           {/* CATEGORY TABS */}
           <div className="flex flex-wrap gap-2 pb-2">
-            {(['todos', 'premium', 'empresas', 'segmentos', 'cursos', 'consulta'] as const).map((cat) => (
+            {(['todos', 'premium', 'empresas', 'segmentos'] as const).map((cat) => (
               <button
                 key={cat}
                 type="button"
@@ -533,8 +433,7 @@ export default function PrecificacaoPage() {
                 {cat === 'todos' ? 'Todos' : 
                  cat === 'premium' ? 'Sovereign Premium' : 
                  cat === 'empresas' ? 'Nexus B2B' : 
-                 cat === 'segmentos' ? 'Segmentos' : 
-                 cat === 'cursos' ? 'Cursos' : 'Consultoria'}
+                 cat === 'segmentos' ? 'Segmentos' : ''}
               </button>
             ))}
           </div>
@@ -573,8 +472,7 @@ export default function PrecificacaoPage() {
                         <span className="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-bold bg-slate-900 text-slate-450 border border-slate-800 uppercase font-mono tracking-wider">
                           {item.category === 'premium' ? 'Premium 150k' : 
                            item.category === 'empresas' ? 'App B2B' : 
-                           item.category === 'segmentos' ? 'Nicho' : 
-                           item.category === 'cursos' ? 'Capacitação' : 'Serviço Premium'}
+                           item.category === 'segmentos' ? 'Nicho' : ''}
                         </span>
                       </td>
                       <td className={`py-4 px-6 text-right font-bold ${
@@ -758,7 +656,7 @@ export default function PrecificacaoPage() {
               </div>
             )}
             
-            {(activeCategory === 'cursos' || activeCategory === 'consulta' || activeCategory === 'todos') && (
+            {(activeCategory === 'todos') && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 mt-8 border-t border-slate-800/50 pt-8 text-center max-w-2xl mx-auto">
                 <Shield className="w-8 h-8 text-slate-600 mx-auto mb-4" />
                 <h3 className="text-lg font-bold text-white mb-2 font-headline">A Garantia Nexus</h3>

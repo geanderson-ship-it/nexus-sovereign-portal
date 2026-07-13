@@ -1,15 +1,15 @@
 import { MetadataRoute } from 'next';
-import { allCourses, palestras } from '@/lib/courses-data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://nexus-site-novo.vercel.app';
+  const baseUrl = 'https://www.nexustreinamento.com';
 
-  // Static platform sections
+  // Static platform sections (excluding deleted courses, gallery, consulting, palestras)
   const staticRoutes = [
     '',
-    '/courses',
+    '/exclusive',
     '/dante-safra',
     '/gabinete',
+    '/gabinete-vendas',
     '/intelligence',
     '/excellence',
     '/about',
@@ -18,19 +18,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/intelligence/dante-safra',
     '/intelligence/djeny-design',
     '/mentorship',
-    '/gallery',
     '/psg-vision',
+    '/proposito',
+    '/vitrine-inovadora',
+    '/energia',
+    '/nexus-b2b',
+    '/nexus-empresas',
+    '/agro',
+    '/nexus-rotas'
   ];
 
-  const courseRoutes = allCourses.map(course => `/courses/${course.slug}`);
-  const lectureRoutes = palestras.map(palestra => `/palestras/${palestra.slug}/preview`);
-
-  const allRoutes = [...staticRoutes, ...courseRoutes, ...lectureRoutes];
+  const allRoutes = [...staticRoutes];
 
   return allRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
+    priority: route === '' || route === '/exclusive' ? 1 : 0.8,
   }));
 }

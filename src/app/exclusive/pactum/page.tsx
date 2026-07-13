@@ -524,14 +524,16 @@ export default function NexusPactumCockpit() {
                   <span className="text-[10px] font-black uppercase tracking-wider text-[#cca752]">Tribunal do Pactum - Online</span>
                 </div>
 
-                <div className="absolute bottom-8 right-8 z-40">
-                  <Button asChild className="bg-[#cca752] hover:bg-[#e6c16c] text-[#0a0a0c] font-black uppercase tracking-widest text-sm h-14 px-8 rounded-2xl shadow-[0_0_25px_rgba(204,167,82,0.5)] transition-all hover:scale-[1.05]">
-                    <Link href="/pactum-legal">
-                      <Scale className="mr-2 h-5 w-5" /> Acessar Tribunal da IA
-                    </Link>
-                  </Button>
-                </div>
                 <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black/90 to-transparent pointer-events-none z-10"></div>
+              </div>
+
+              {/* BOTÃO TRIBUNAL DA IA - MOVIDO PARA BAIXO DO VÍDEO NO MOBILE */}
+              <div className="flex justify-center md:justify-end w-full">
+                <Button asChild className="w-full md:w-auto bg-[#cca752] hover:bg-[#e6c16c] text-[#0a0a0c] font-black uppercase tracking-widest text-sm h-14 px-8 rounded-2xl shadow-[0_0_25px_rgba(204,167,82,0.5)] transition-all hover:scale-[1.05]">
+                  <Link href="/pactum-legal">
+                    <Scale className="mr-2 h-5 w-5" /> Acessar Tribunal da IA
+                  </Link>
+                </Button>
               </div>
 
               {/* CARDS EXPLICATIVOS DA JUSTINE - AMPLIADOS */}
