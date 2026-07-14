@@ -193,7 +193,7 @@ export default function EgidePage() {
               <CardHeader className="border-b border-slate-800/50 pb-4">
                 <CardTitle className="text-lg text-white font-headline flex items-center gap-2">
                   <Camera className="w-5 h-5 text-blue-400" />
-                  Feed de LPR (Leitura Automática)
+                  Feed LPR Viso-Analítico (Fotos retidas por 90 dias)
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
@@ -218,13 +218,17 @@ export default function EgidePage() {
                           <p className="text-[10px] text-slate-500">{item.cam}</p>
                         </div>
                       </div>
-                      <div className="text-right">
+                      <div className="text-right flex flex-col items-end">
                         <p className="font-mono text-xs text-slate-400">{item.id}</p>
                         <p className={`text-[9px] font-bold uppercase mt-0.5 px-1.5 py-0.5 rounded inline-block ${
                           item.status !== 'OK' ? 'bg-rose-500/20 text-rose-400' : 'bg-slate-800 text-slate-400'
                         }`}>
                           {item.status}
                         </p>
+                        <div className="mt-1 flex items-center gap-1 text-[8px] text-blue-400 bg-blue-900/30 px-1 py-0.5 rounded border border-blue-500/30">
+                          <Camera className="w-2 h-2" />
+                          <span>FOTO ARQUIVADA (90D)</span>
+                        </div>
                       </div>
                     </div>
                   ))}
