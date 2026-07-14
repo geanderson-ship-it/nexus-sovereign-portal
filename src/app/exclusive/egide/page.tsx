@@ -74,19 +74,24 @@ const FOTOS_LPR = [
 ];
 
 const PLACAS_FIXAS = [
-  'VAL5J29',
-  'MTO2K31',
-  'SCS8B90',
-  'PSB1C42'
+  'EGD1M44',
+  'SUL7G88',
+  'BRA2E19'
 ];
+
+// Dicionário para ajuste milimétrico do LPR Patch no canto da tela, caso as fotos tenham proporções diferentes.
+const FOTO_CONFIGS: Record<string, { bottom: string, left: string, scale: string }> = {
+  '/lpr_egd1m44.jpg': { bottom: '15%', left: '50%', scale: '800%' },
+  '/lpr_sul7g88.jpg': { bottom: '15%', left: '50%', scale: '800%' },
+  '/lpr_bra2e19.jpg': { bottom: '15%', left: '50%', scale: '800%' }
+};
 
 // Retorna sempre a mesma foto base para a placa correta
 const getFotoByPlaca = (placa: string): string => {
-  if (placa === 'VAL5J29') return '/lpr_carro1.jpg';
-  if (placa === 'MTO2K31') return '/lpr_carro2.jpg';
-  if (placa === 'SCS8B90') return '/lpr_carro3.jpg';
-  if (placa === 'PSB1C42') return '/lpr_carro4.jpg';
-  return '/lpr_carro1.jpg';
+  if (placa === 'EGD1M44') return '/lpr_egd1m44.jpg';
+  if (placa === 'SUL7G88') return '/lpr_sul7g88.jpg';
+  if (placa === 'BRA2E19') return '/lpr_bra2e19.jpg';
+  return '/lpr_egd1m44.jpg';
 };
 
 // Gera dados aleatórios mas usa as placas da demonstração para garantir coerência 100%
@@ -209,10 +214,10 @@ export default function EgidePage() {
   const [alertStage, setAlertStage] = useState<'detector' | 'despachado'>('detector');
   const [processedCount, setProcessedCount] = useState(43910);
   const [logs, setLogs] = useState<LprLog[]>([
-    { id: 1, placa: 'VAL5J29', camera: '01 - Entrada Norte', municipio: 'Vale Verde, RS', horario: '10:30:15', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_carro1.jpg' },
-    { id: 2, placa: 'MTO2K31', camera: '03 - Centro', municipio: 'Mato Leitão, RS', horario: '10:30:08', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_carro2.jpg' },
-    { id: 3, placa: 'SCS8B90', camera: '02 - Rodovia RS-422', municipio: 'Santa Cruz, RS', horario: '10:29:48', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_carro3.jpg' },
-    { id: 4, placa: 'PSB1C42', camera: '04 - Acesso Sul', municipio: 'Passo do Sobrado, RS', horario: '10:29:12', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_carro4.jpg' }
+    { id: 1, placa: 'EGD1M44', camera: '01 - Entrada Norte', municipio: 'Vale Verde, RS', horario: '10:30:15', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_egd1m44.jpg' },
+    { id: 2, placa: 'SUL7G88', camera: '03 - Centro', municipio: 'Mato Leitão, RS', horario: '10:30:08', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_sul7g88.jpg' },
+    { id: 3, placa: 'BRA2E19', camera: '02 - Rodovia RS-422', municipio: 'Santa Cruz, RS', horario: '10:29:48', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_bra2e19.jpg' },
+    { id: 4, placa: 'EGD1M44', camera: '04 - Acesso Sul', municipio: 'Passo do Sobrado, RS', horario: '10:29:12', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_egd1m44.jpg' }
   ]);
   
   const [viaturas, setViaturas] = useState<Viatura[]>([
@@ -282,7 +287,7 @@ export default function EgidePage() {
     setAlertStage('detector');
     
     const horario = new Date().toTimeString().split(' ')[0];
-    const targetPlaca = 'MTO2K31';
+    const targetPlaca = 'SUL7G88';
     const alertLog: LprLog = {
       id: Date.now(),
       placa: targetPlaca,
@@ -307,7 +312,7 @@ export default function EgidePage() {
     setAudits(prev => [auditIncident, ...prev]);
 
     setAtenaRecommendation(
-      "Alerta de alta prioridade gerado no Portal de Entrada. Placa MTO2K31 possui registro ativo de furto. Recomendo o despacho imediato da Viatura 02 (Grupo Tático) que se encontra em QAP nas proximidades da RS-422."
+      "Alerta de alta prioridade gerado no Portal de Entrada. Placa SUL7G88 possui registro ativo de furto. Recomendo o despacho imediato da Viatura 02 (Grupo Tático) que se encontra em QAP nas proximidades da RS-422."
     );
   };
 
@@ -744,7 +749,7 @@ export default function EgidePage() {
                     EventBridge: Alerta de Furto Identificado no Cerco!
                   </h3>
                   <p className="text-slate-300 text-sm">
-                    Placa **MTO2K31** detectada na Câmera **05 - Portal de Entrada**. Cruzamento instantâneo com BD de furto em milissegundos.
+                    Placa **SUL7G88** detectada na Câmera **05 - Portal de Entrada**. Cruzamento instantâneo com BD de furto em milissegundos.
                   </p>
                 </div>
               </div>
@@ -1080,7 +1085,11 @@ export default function EgidePage() {
                 <div className="flex justify-between items-start">
                   <Badge variant="outline" className={`font-mono text-[9px] uppercase border-none px-2 py-0.5 ${nightVision.cam3 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-blue-500/20 text-blue-400'}`}>CAM_03 // CENTRO HISTÓRICO</Badge>
                 </div>
-                <div className="flex-1 flex items-center justify-center relative">
+                <div className="flex-1 flex">
+                  <div className={`absolute bottom-4 left-16 w-24 h-16 border rounded flex items-center justify-center ${nightVision.cam3 ? 'border-emerald-400/50 bg-emerald-400/5' : 'border-blue-400/50 bg-blue-400/5'}`}>
+                    <span className="text-[8px] font-mono absolute -top-4 left-0 uppercase">VEHICLE_BOUNDS // CONF: 97%</span>
+                    <span className="text-[9px] font-mono font-black">{logs[1]?.placa || 'SUL7G88'}</span>
+                  </div>
                   <div className={`absolute border border-dashed rounded-lg p-6 flex flex-col items-center justify-center ${nightVision.cam3 ? 'border-emerald-500/30 text-emerald-400/60' : 'border-blue-500/30 text-blue-500/60'}`}>
                     <Shield className="w-10 h-10 mb-2 opacity-50 animate-pulse" />
                     <span className="text-[9px] font-mono uppercase tracking-widest">LPR SCANNING</span>
@@ -1099,7 +1108,11 @@ export default function EgidePage() {
                 <div className="flex justify-between items-start">
                   <Badge variant="outline" className={`font-mono text-[9px] uppercase border-none px-2 py-0.5 ${nightVision.cam4 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-blue-500/20 text-blue-400'}`}>CAM_04 // ACESSO SUL</Badge>
                 </div>
-                <div className="flex-1 flex items-center justify-center relative">
+                <div className="flex-1 flex">
+                  <div className={`absolute bottom-6 right-16 w-24 h-16 border rounded flex items-center justify-center ${nightVision.cam4 ? 'border-emerald-400/50 bg-emerald-400/5' : 'border-blue-400/50 bg-blue-400/5'}`}>
+                    <span className="text-[8px] font-mono absolute -top-4 left-0 uppercase">VEHICLE_BOUNDS // CONF: 96%</span>
+                    <span className="text-[9px] font-mono font-black">{logs[3]?.placa || 'EGD1M44'}</span>
+                  </div>
                   <div className={`absolute border border-dashed rounded-lg p-6 flex flex-col items-center justify-center ${nightVision.cam4 ? 'border-emerald-500/30 text-emerald-400/60' : 'border-blue-500/30 text-blue-500/60'}`}>
                     <Shield className="w-10 h-10 mb-2 opacity-50 animate-pulse" />
                     <span className="text-[9px] font-mono uppercase tracking-widest">LPR SCANNING</span>
@@ -1257,10 +1270,10 @@ export default function EgidePage() {
                         alt="Crop da placa"
                         style={{
                           position: 'absolute',
-                          width: '800%',
+                          width: FOTO_CONFIGS[selectedFotoLog.fotoUrl]?.scale || '800%',
                           height: 'auto',
-                          left: '50%',
-                          bottom: '12%',
+                          left: FOTO_CONFIGS[selectedFotoLog.fotoUrl]?.left || '50%',
+                          bottom: FOTO_CONFIGS[selectedFotoLog.fotoUrl]?.bottom || '15%',
                           transform: 'translate(-50%, 0)',
                           pointerEvents: 'none'
                         }}
