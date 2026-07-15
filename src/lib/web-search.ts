@@ -12,7 +12,7 @@ export async function pesquisarInternet(query: string): Promise<string> {
     
     // Promise.race para evitar que a busca congele a API caso o Google peça CAPTCHA
     const timeoutPromise = new Promise<any[]>((_, reject) => {
-      setTimeout(() => reject(new Error('Timeout de 10s atingido na busca do Google')), 10000);
+      setTimeout(() => reject(new Error('Timeout de 45s atingido na busca do Google')), 45000);
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

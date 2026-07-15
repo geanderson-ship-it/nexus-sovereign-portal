@@ -53,8 +53,8 @@ const toolConfig: ToolConfiguration = {
     {
       toolSpec: {
         name: "verificar_emails",
-        description: "Lê os últimos e-mails da caixa de entrada do usuário.",
-        inputSchema: { json: { type: "object", properties: { conta: { type: "string", description: "pessoal ou empresarial" }, quantidade: { type: "number" } }, required: ["conta"] } }
+        description: "Lê os últimos e-mails de uma conta e pasta específica.",
+        inputSchema: { json: { type: "object", properties: { conta: { type: "string", description: "pessoal, empresarial ou vendas" }, pasta: { type: "string", description: "entrada, enviados, spam ou lixeira" }, quantidade: { type: "number" } }, required: ["conta"] } }
       }
     },
     {
@@ -250,7 +250,7 @@ export async function POST(req: NextRequest) {
           try {
             const args = call.input as any;
             if (call.name === 'verificar_emails') {
-              const emails = await checkEmails(args.conta, args.quantidade || 3);
+              const emails = await checkEmails(args.conta, args.pasta || 'entrada', args.quantidade || 3);
               resultText = JSON.stringify(emails);
             } else if (call.name === 'consultar_tabela_precos') {
               const produtos = await fetchTabelaDePrecos();
