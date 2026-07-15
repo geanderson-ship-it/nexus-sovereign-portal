@@ -224,13 +224,83 @@ export default function NexusPactumCockpit() {
         </h1>
       </div>
 
-      {/* CENA CINEMATOGRÁFICA (NEGOCIADOR ARTHUR VALENTE) */}
+      {/* CENA CINEMATOGRÁFICA (JUSTINE - C.L.O) LARGURA TOTAL */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="relative z-10 w-full mb-12"
+        className="relative z-10 w-full mb-12 space-y-8"
       >
+        <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-[#cca752]/30 shadow-[0_0_60px_rgba(204,167,82,0.15)] bg-black/60">
+          <CustomVideoPlayer 
+            src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4" 
+            className="aspect-video w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+          
+          <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-md border border-[#cca752]/40 rounded-full z-30">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#cca752] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#cca752]"></span>
+            </span>
+            <span className="text-[10px] font-black uppercase tracking-wider text-[#cca752]">Tribunal do Pactum - Online</span>
+          </div>
+
+          <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black/90 to-transparent pointer-events-none z-10"></div>
+        </div>
+
+        {/* BOTÃO TRIBUNAL DA IA - MOVIDO PARA BAIXO DO VÍDEO NO MOBILE */}
+        <div className="flex justify-center md:justify-end w-full">
+          <Button asChild className="w-full md:w-auto bg-[#cca752] hover:bg-[#e6c16c] text-[#0a0a0c] font-black uppercase tracking-widest text-sm h-14 px-8 rounded-2xl shadow-[0_0_25px_rgba(204,167,82,0.5)] transition-all hover:scale-[1.05]">
+            <Link href="/pactum-legal">
+              <Scale className="mr-2 h-5 w-5" /> Acessar Tribunal da IA
+            </Link>
+          </Button>
+        </div>
+
+        {/* CARDS EXPLICATIVOS DA JUSTINE - AMPLIADOS */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
+            <CardContent className="p-8 space-y-6">
+              <div className="h-14 w-14 bg-[#cca752]/10 border border-[#cca752]/30 rounded-2xl flex items-center justify-center shadow-lg shadow-[#cca752]/5">
+                <ShieldCheck className="w-8 h-8 text-[#cca752]" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white uppercase tracking-widest text-sm mb-2">Blindagem de Ativos</h4>
+                <p className="text-sm text-slate-400 leading-relaxed">Proteção implacável do patrimônio da Nexus, garantindo solidez e defesa preventiva contra passivos judiciais e trabalhistas em larga escala.</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
+            <CardContent className="p-8 space-y-6">
+              <div className="h-14 w-14 bg-[#cca752]/10 border border-[#cca752]/30 rounded-2xl flex items-center justify-center shadow-lg shadow-[#cca752]/5">
+                <FileSearch className="w-8 h-8 text-[#cca752]" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white uppercase tracking-widest text-sm mb-2">Auditoria Contratual</h4>
+                <p className="text-sm text-slate-400 leading-relaxed">Inspeção microscópica e cirúrgica de cláusulas, revelando assimetrias e armadilhas legais invisíveis antes de qualquer assinatura.</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
+            <CardContent className="p-8 space-y-6">
+              <div className="h-14 w-14 bg-[#cca752]/10 border border-[#cca752]/30 rounded-2xl flex items-center justify-center shadow-lg shadow-[#cca752]/5">
+                <Target className="w-8 h-8 text-[#cca752]" />
+              </div>
+              <div>
+                <h4 className="font-bold text-white uppercase tracking-widest text-sm mb-2">Compliance Estrito</h4>
+                <p className="text-sm text-slate-400 leading-relaxed">Vigilância constante sobre as operações do ecossistema, assegurando que todas as ações obedeçam rigorosamente às normativas globais.</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </motion.div>
+
+      {/* CENA CINEMATOGRÁFICA (NEGOCIADOR ARTHUR VALENTE) E SISTEMA DE APRESENTAÇÃO */}
+      <div className="relative z-10 w-full mb-12 space-y-8">
         <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.15)] bg-black/60">
           <CustomVideoPlayer 
             src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Artur_Pactum.mp4" 
@@ -250,66 +320,62 @@ export default function NexusPactumCockpit() {
           
           <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10"></div>
         </div>
-      </motion.div>
 
-      {/* HERO SECTION */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 overflow-hidden rounded-[48px] bg-gradient-to-br from-slate-900 via-slate-900/50 to-[#020617] border border-white/5 shadow-2xl"
-      >
-        <div className="relative z-10 flex flex-col items-center gap-12 p-8 lg:p-16">
-          <div className="w-full space-y-8 text-center">
-            <div className="space-y-4">
-              <div className="flex items-center justify-center gap-3">
-                <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 px-4 py-1 text-[10px] font-black uppercase tracking-widest italic">
-                  Alta Governança de Acordos
-                </Badge>
-                <div className="h-[1px] w-12 bg-blue-500/30" />
-              </div>
-              <h2 className="text-3xl lg:text-4xl font-black tracking-tight text-white font-headline uppercase leading-none">
-                Contratos & Negociações Táticas
-              </h2>
-              <p className="text-base text-slate-400 max-w-4xl mx-auto leading-relaxed">
-                Painel analítico para detecção de anomalias em cláusulas legais e simulação em tempo real com negociadores virtuais.
-              </p>
-
-              {/* EXCLUSIVE BESPOKE ADAPTATION BADGE */}
-              <div className="flex flex-col items-center gap-6 p-10 md:p-14 bg-gradient-to-b from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 rounded-3xl w-full max-w-5xl mx-auto backdrop-blur-md text-center shadow-[0_0_50px_rgba(245,158,11,0.05)]">
-                <div className="flex items-center justify-center gap-4 mb-2">
-                  <div className="relative flex h-5 w-5 shrink-0 items-center justify-center">
-                    <span className="absolute h-5 w-5 animate-ping rounded-full bg-amber-500 opacity-75"></span>
-                    <span className="relative h-2.5 w-2.5 rounded-full bg-amber-400"></span>
-                  </div>
-                  <span className="text-amber-500 font-black uppercase tracking-[0.25em] text-xs md:text-sm">Engenharia Sob Medida (Bespoke)</span>
+        {/* HERO SECTION - REPOSICIONADA */}
+        <div className="relative z-10 overflow-hidden rounded-[48px] bg-gradient-to-br from-slate-900 via-slate-900/50 to-[#020617] border border-white/5 shadow-2xl">
+          <div className="relative z-10 flex flex-col items-center gap-12 p-8 lg:p-16">
+            <div className="w-full space-y-8 text-center">
+              <div className="space-y-4">
+                <div className="flex items-center justify-center gap-3">
+                  <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 px-4 py-1 text-[10px] font-black uppercase tracking-widest italic">
+                    Alta Governança de Acordos
+                  </Badge>
+                  <div className="h-[1px] w-12 bg-blue-500/30" />
                 </div>
-                <p className="text-base md:text-xl text-slate-300 font-medium leading-relaxed max-w-4xl">
-                  A arquitetura de heurística e os protocolos de decisão do Pactum são <strong className="text-white font-black text-amber-50">100% adaptáveis</strong>. Nossos Arquitetos de Soluções podem treinar, refinar ou criar novas funcionalidades para refletir exatamente os desafios jurídicos e comerciais da sua corporação.
+                <h2 className="text-3xl lg:text-4xl font-black tracking-tight text-white font-headline uppercase leading-none">
+                  Contratos & Negociações Táticas
+                </h2>
+                <p className="text-base text-slate-400 max-w-4xl mx-auto leading-relaxed">
+                  Painel analítico para detecção de anomalias em cláusulas legais e simulação em tempo real com negociadores virtuais.
                 </p>
-              </div>
-            </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <Button 
-                onClick={() => {
-                  setSelectedDeal(deals[1]);
-                  setIsNegotiating(true);
-                }} 
-                className="bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest h-14 px-8 rounded-2xl shadow-xl shadow-blue-600/20"
-              >
-                <Video className="mr-2 h-5 w-5 animate-pulse" /> Abrir Gabinete de Negociação
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => setActiveTab('auditor')}
-                className="border-white/10 text-white hover:bg-white/5 font-black uppercase tracking-widest h-14 px-8 rounded-2xl"
-              >
-                <FileText className="mr-2 h-5 w-5" /> Iniciar Auditoria
-              </Button>
+                {/* EXCLUSIVE BESPOKE ADAPTATION BADGE */}
+                <div className="flex flex-col items-center gap-6 p-10 md:p-14 bg-gradient-to-b from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 rounded-3xl w-full max-w-5xl mx-auto backdrop-blur-md text-center shadow-[0_0_50px_rgba(245,158,11,0.05)]">
+                  <div className="flex items-center justify-center gap-4 mb-2">
+                    <div className="relative flex h-5 w-5 shrink-0 items-center justify-center">
+                      <span className="absolute h-5 w-5 animate-ping rounded-full bg-amber-500 opacity-75"></span>
+                      <span className="relative h-2.5 w-2.5 rounded-full bg-amber-400"></span>
+                    </div>
+                    <span className="text-amber-500 font-black uppercase tracking-[0.25em] text-xs md:text-sm">Engenharia Sob Medida (Bespoke)</span>
+                  </div>
+                  <p className="text-base md:text-xl text-slate-300 font-medium leading-relaxed max-w-4xl">
+                    A arquitetura de heurística e os protocolos de decisão do Pactum são <strong className="text-white font-black text-amber-50">100% adaptáveis</strong>. Nossos Arquitetos de Soluções podem treinar, refinar ou criar novas funcionalidades para refletir exatamente os desafios jurídicos e comerciais da sua corporação.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <Button 
+                  onClick={() => {
+                    setSelectedDeal(deals[1]);
+                    setIsNegotiating(true);
+                  }} 
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest h-14 px-8 rounded-2xl shadow-xl shadow-blue-600/20"
+                >
+                  <Video className="mr-2 h-5 w-5 animate-pulse" /> Abrir Gabinete de Negociação
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setActiveTab('auditor')}
+                  className="border-white/10 text-white hover:bg-white/5 font-black uppercase tracking-widest h-14 px-8 rounded-2xl"
+                >
+                  <FileText className="mr-2 h-5 w-5" /> Iniciar Auditoria
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* PORTAL NAV HUB HEADER */}
       <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 pt-8 border-t border-white/5">
@@ -499,76 +565,6 @@ export default function NexusPactumCockpit() {
                     >
                       Auditar Contrato Ativo <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-            {/* CENA CINEMATOGRÁFICA (JUSTINE - C.L.O) LARGURA TOTAL */}
-            <div className="mt-12 space-y-8">
-              <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-[#cca752]/30 shadow-[0_0_60px_rgba(204,167,82,0.15)] bg-black/60">
-                <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4" 
-                  className="aspect-video w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
-                
-                <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-md border border-[#cca752]/40 rounded-full z-30">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#cca752] opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#cca752]"></span>
-                  </span>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-[#cca752]">Tribunal do Pactum - Online</span>
-                </div>
-
-                <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-black/90 to-transparent pointer-events-none z-10"></div>
-              </div>
-
-              {/* BOTÃO TRIBUNAL DA IA - MOVIDO PARA BAIXO DO VÍDEO NO MOBILE */}
-              <div className="flex justify-center md:justify-end w-full">
-                <Button asChild className="w-full md:w-auto bg-[#cca752] hover:bg-[#e6c16c] text-[#0a0a0c] font-black uppercase tracking-widest text-sm h-14 px-8 rounded-2xl shadow-[0_0_25px_rgba(204,167,82,0.5)] transition-all hover:scale-[1.05]">
-                  <Link href="/pactum-legal">
-                    <Scale className="mr-2 h-5 w-5" /> Acessar Tribunal da IA
-                  </Link>
-                </Button>
-              </div>
-
-              {/* CARDS EXPLICATIVOS DA JUSTINE - AMPLIADOS */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
-                  <CardContent className="p-8 space-y-6">
-                    <div className="h-14 w-14 bg-[#cca752]/10 border border-[#cca752]/30 rounded-2xl flex items-center justify-center shadow-lg shadow-[#cca752]/5">
-                      <ShieldCheck className="w-8 h-8 text-[#cca752]" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white uppercase tracking-widest text-sm mb-2">Blindagem de Ativos</h4>
-                      <p className="text-sm text-slate-400 leading-relaxed">Proteção implacável do patrimônio da Nexus, garantindo solidez e defesa preventiva contra passivos judiciais e trabalhistas em larga escala.</p>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
-                  <CardContent className="p-8 space-y-6">
-                    <div className="h-14 w-14 bg-[#cca752]/10 border border-[#cca752]/30 rounded-2xl flex items-center justify-center shadow-lg shadow-[#cca752]/5">
-                      <FileSearch className="w-8 h-8 text-[#cca752]" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white uppercase tracking-widest text-sm mb-2">Auditoria Contratual</h4>
-                      <p className="text-sm text-slate-400 leading-relaxed">Inspeção microscópica e cirúrgica de cláusulas, revelando assimetrias e armadilhas legais invisíveis antes de qualquer assinatura.</p>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="bg-black/60 border border-[#cca752]/20 backdrop-blur-md hover:border-[#cca752]/50 hover:bg-[#cca752]/5 transition-all duration-300">
-                  <CardContent className="p-8 space-y-6">
-                    <div className="h-14 w-14 bg-[#cca752]/10 border border-[#cca752]/30 rounded-2xl flex items-center justify-center shadow-lg shadow-[#cca752]/5">
-                      <Target className="w-8 h-8 text-[#cca752]" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white uppercase tracking-widest text-sm mb-2">Compliance Estrito</h4>
-                      <p className="text-sm text-slate-400 leading-relaxed">Vigilância constante sobre as operações do ecossistema, assegurando que todas as ações obedeçam rigorosamente às normativas globais.</p>
-                    </div>
                   </CardContent>
                 </Card>
               </div>
