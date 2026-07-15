@@ -1453,7 +1453,7 @@ export default function EgidePage() {
               Dante Watchdog
             </h2>
 
-            <div className={`flex-1 rounded-lg border p-4 font-mono text-xs leading-relaxed ${isDetranOnline ? 'bg-indigo-950/20 border-indigo-900/30 text-indigo-200' : 'bg-red-950/20 border-red-900/30 text-red-200'}`}>
+            <div className={`flex-1 rounded-lg border p-4 font-mono text-sm leading-relaxed ${isDetranOnline ? 'bg-indigo-950/20 border-indigo-900/30 text-indigo-200' : 'bg-red-950/20 border-red-900/30 text-red-200'}`}>
               <div className="flex items-center gap-2 mb-3">
                 <div className={`w-2 h-2 rounded-full ${isDetranOnline ? 'bg-indigo-500' : 'bg-red-500'} animate-pulse`} />
                 <span className="font-bold">SYSTEM_LOG // LIVE_FEED</span>
@@ -1464,14 +1464,14 @@ export default function EgidePage() {
                   <p className="mb-2">&gt; Inicializando verificação de perímetro computacional...</p>
                   <p className="mb-2 text-indigo-400">&gt; Todos os nós de inteligência operantes.</p>
                   <p className="mb-2">&gt; Carga das GPUs na AWS estabilizada em 42%. Largura de banda do município otimizada.</p>
-                  <p className="mt-4 text-[10px] opacity-70">"O fluxo de dados governamentais está íntegro. Nenhum gargalo detectado na infraestrutura local."</p>
+                  <p className="mt-4 text-xs opacity-70">"O fluxo de dados governamentais está íntegro. Nenhum gargalo detectado na infraestrutura local."</p>
                 </>
               ) : (
                 <>
                   <p className="mb-2 text-red-400 font-bold">&gt; ALERTA: TIME-OUT NA RESPOSTA DO GOVERNO</p>
                   <p className="mb-2">&gt; A API da Secretaria de Segurança (SINESP/Detran) parou de responder aos pacotes de verificação.</p>
                   <p className="mb-2 text-red-300">&gt; INICIANDO PROTOCOLO DE CONTINGÊNCIA: Ativando Cache Local Criptografado.</p>
-                  <p className="mt-4 text-[10px] opacity-70 font-bold">"O sistema governamental caiu, mas nós não. O Égide continuará operando e lendo placas off-line com base no último backup recebido. Nenhuma cegueira operacional."</p>
+                  <p className="mt-4 text-xs opacity-70 font-bold">"O sistema governamental caiu, mas nós não. O Égide continuará operando e lendo placas off-line com base no último backup recebido. Nenhuma cegueira operacional."</p>
                 </>
               )}
             </div>
