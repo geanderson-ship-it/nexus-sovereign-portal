@@ -114,7 +114,7 @@ export default function AboutPage() {
           <h3 className="text-xl font-bold text-blue-400 mb-8 tracking-widest uppercase text-center">Inteligência Artificial Exclusiva</h3>
           <div className="w-full max-w-4xl px-4">
             {/* Atena */}
-            <div onClick={() => setActiveVideo('/Sobre/Atena.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start gap-6 p-8 bg-blue-950/20 border border-blue-500/30 rounded-3xl hover:border-blue-400/60 hover:bg-blue-950/30 transition-all shadow-[0_0_40px_rgba(37,99,235,0.15)] relative overflow-hidden group cursor-pointer">
+            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Atena.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start gap-6 p-8 bg-blue-950/20 border border-blue-500/30 rounded-3xl hover:border-blue-400/60 hover:bg-blue-950/30 transition-all shadow-[0_0_40px_rgba(37,99,235,0.15)] relative overflow-hidden group cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
               <div className="relative w-32 h-32 rounded-2xl overflow-hidden border border-blue-500/50 flex-shrink-0 mt-1 shadow-[0_0_20px_rgba(37,99,235,0.3)]">
                 <Image src="/Sobre/atena.png" alt="Atena" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -141,7 +141,7 @@ export default function AboutPage() {
           <h3 className="text-xl font-bold text-blue-400 mb-8 tracking-widest uppercase text-center">Conselho Autônomo de I.A.</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl px-4">
             {/* Stela */}
-            <Link href="/inicio" className="flex items-start gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <Link href="/inicio" className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
                 <Image src="/Sobre/stela.jpg" alt="Stela" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -156,7 +156,7 @@ export default function AboutPage() {
             </Link>
 
             {/* Dante */}
-            <div onClick={() => setActiveVideo('/Sobre/Dante.mp4')} className="flex items-start gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Dante.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
                 <Image src="/Sobre/dante.png" alt="Dante" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -171,7 +171,7 @@ export default function AboutPage() {
             </div>
 
             {/* Djeny */}
-            <div onClick={() => setActiveVideo('/Sobre/Djeny.mp4')} className="flex items-start gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Djeny.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
                 <Image src="/Sobre/djeny.png" alt="Djeny" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -186,7 +186,7 @@ export default function AboutPage() {
             </div>
 
             {/* Justine */}
-            <Link href="/exclusive/pactum" className="flex items-start gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <Link href="/exclusive/pactum" className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
                 <Image src="/Sobre/justine.jpg" alt="Justine" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -201,7 +201,7 @@ export default function AboutPage() {
             </Link>
 
             {/* Isadora */}
-            <div onClick={() => setActiveVideo('/Sobre/Isadora.mp4')} className="flex items-start gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Isadora.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
                 <Image src="/Sobre/isadora.png" alt="Isadora" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -216,7 +216,7 @@ export default function AboutPage() {
             </div>
 
             {/* Aurora */}
-            <Link href="/proposito" className="flex items-start gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <Link href="/proposito" className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
                 <Image src="/Sobre/aurora.png" alt="Aurora" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
