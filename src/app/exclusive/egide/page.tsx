@@ -1396,40 +1396,40 @@ export default function EgidePage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-slate-300">Motores de IA (AWS Cloud)</span>
-                    <span className="text-[9px] text-slate-500">LPR & Biometria Operacionais</span>
+                    <span className="text-sm font-bold text-slate-300">Motores de IA (AWS Cloud)</span>
+                    <span className="text-xs text-slate-500">LPR & Biometria Operacionais</span>
                   </div>
                   <div className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                 </div>
                 
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-slate-300">Conexão Prefeitura (Fibra)</span>
-                    <span className="text-[9px] text-slate-500">Estável • Ping: 12ms • Zero Perda de Pacotes</span>
+                    <span className="text-sm font-bold text-slate-300">Conexão Prefeitura (Fibra)</span>
+                    <span className="text-xs text-slate-500">Estável • Ping: 12ms • Zero Perda de Pacotes</span>
                   </div>
                   <div className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-slate-300">Banco de Dados (Detran/SSP)</span>
-                    <span className="text-[9px] text-slate-500">APIs Governamentais</span>
+                    <span className="text-sm font-bold text-slate-300">Banco de Dados (Detran/SSP)</span>
+                    <span className="text-xs text-slate-500">APIs Governamentais</span>
                   </div>
                   <div className={`h-3 w-3 rounded-full transition-colors ${isDetranOnline ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse'}`} />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-slate-300">Gateway Local (On-Premise)</span>
-                    <span className="text-[9px] text-slate-500">Heartbeat Sincronizado • Energia Estável</span>
+                    <span className="text-sm font-bold text-slate-300">Gateway Local (On-Premise)</span>
+                    <span className="text-xs text-slate-500">Heartbeat Sincronizado • Energia Estável</span>
                   </div>
                   <div className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-slate-300">Cofre de Retenção (LGPD)</span>
-                    <span className="text-[9px] text-slate-500">Logs Imutáveis (WORM) • Expurgo em 60 dias</span>
+                    <span className="text-sm font-bold text-slate-300">Cofre de Retenção (LGPD)</span>
+                    <span className="text-xs text-slate-500">Logs Imutáveis (WORM) • Expurgo em 60 dias</span>
                   </div>
                   <div className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                 </div>
