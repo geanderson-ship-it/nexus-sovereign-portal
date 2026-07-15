@@ -12,6 +12,7 @@ import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { BiometricScanner } from '@/components/BiometricScanner';
 import { 
   Shield, 
   ShieldAlert, 
@@ -34,7 +35,8 @@ import {
   Zap, 
   ArrowLeft, 
   Compass, 
-  CheckCircle2
+  CheckCircle2,
+  ScanFace
 } from 'lucide-react';
 import { WhiteLabelHeader } from '@/components/nexus/white-label-header';
 
@@ -112,6 +114,7 @@ export default function EgidePage() {
   }, [isUserLoading]);
 
   const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
+  const [isBiometricOpen, setIsBiometricOpen] = useState(false);
   const [selectedViatura, setSelectedViatura] = useState<Viatura | null>(null);
   const [selectedIntruder, setSelectedIntruder] = useState<AuditEntry | null>(null);
   const [selectedFotoLog, setSelectedFotoLog] = useState<LprLog | null>(null);
@@ -673,6 +676,13 @@ export default function EgidePage() {
           >
             <Fingerprint className="w-5 h-5 mr-2" />
             Simular Bloqueio Aegis
+          </Button>
+          <Button 
+            onClick={() => setIsBiometricOpen(true)} 
+            className="bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase tracking-widest h-14 px-8 rounded-2xl shadow-xl shadow-emerald-600/20"
+          >
+            <ScanFace className="w-5 h-5 mr-2 animate-pulse" />
+            Cerco Biométrico (Live)
           </Button>
         </div>
 
@@ -1358,6 +1368,10 @@ export default function EgidePage() {
         </DialogContent>
       </Dialog>
     )}
+
+    {/* PAINEL DE BIOMETRIA */}
+    <BiometricScanner isOpen={isBiometricOpen} onClose={() => setIsBiometricOpen(false)} />
+
     </>
   );
 }
