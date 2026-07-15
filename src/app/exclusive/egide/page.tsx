@@ -215,6 +215,8 @@ export default function EgidePage() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [alertStage, setAlertStage] = useState<'detector' | 'despachado'>('detector');
+  const [isHealthOpen, setIsHealthOpen] = useState(false);
+  const [isDetranOnline, setIsDetranOnline] = useState(true);
   const [processedCount, setProcessedCount] = useState(43910);
   const [logs, setLogs] = useState<LprLog[]>([
     { id: 1, placa: 'EGD1M44', camera: '01 - Entrada Norte', municipio: 'Vale Verde, RS', horario: '10:30:15', status: 'OK', detalhe: 'Cadastro Regular', fotoUrl: '/lpr_egd1m44.jpg' },
@@ -683,6 +685,13 @@ export default function EgidePage() {
           >
             <ScanFace className="w-5 h-5 mr-2 animate-pulse" />
             Cerco Biométrico (Live)
+          </Button>
+          <Button 
+            onClick={() => setIsHealthOpen(true)} 
+            className="bg-slate-800 hover:bg-slate-700 text-blue-400 border border-blue-900 font-bold uppercase tracking-widest h-14 px-8 rounded-2xl shadow-xl transition-all"
+          >
+            <Server className="w-5 h-5 mr-2" />
+            Diagnóstico de Rede
           </Button>
         </div>
 
@@ -1371,6 +1380,108 @@ export default function EgidePage() {
 
     {/* PAINEL DE BIOMETRIA */}
     <BiometricScanner isOpen={isBiometricOpen} onClose={() => setIsBiometricOpen(false)} />
+
+    {/* NEXUS HEALTH / DANTE WATCHDOG MODAL */}
+    <Dialog open={isHealthOpen} onOpenChange={setIsHealthOpen}>
+      <DialogContent className="sm:max-w-4xl bg-slate-950 border border-blue-900/50 text-white p-0 overflow-hidden shadow-[0_0_50px_rgba(59,130,246,0.15)] rounded-xl">
+        <div className="flex h-[450px]">
+          {/* Coluna Esquerda: Status Lights */}
+          <div className="w-1/2 p-6 bg-slate-900/50 border-r border-blue-900/30 flex flex-col justify-between">
+            <div>
+              <h2 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2 border-b border-slate-800 pb-2">
+                <Server className="w-4 h-4 text-blue-500" />
+                Status da Infraestrutura
+              </h2>
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-slate-300">Motores de IA (AWS Cloud)</span>
+                    <span className="text-[9px] text-slate-500">LPR & Biometria Operacionais</span>
+                  </div>
+                  <div className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-slate-300">Conexão Prefeitura (Fibra)</span>
+                    <span className="text-[9px] text-slate-500">Estável • Ping: 12ms • Zero Perda de Pacotes</span>
+                  </div>
+                  <div className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-slate-300">Banco de Dados (Detran/SSP)</span>
+                    <span className="text-[9px] text-slate-500">APIs Governamentais</span>
+                  </div>
+                  <div className={`h-3 w-3 rounded-full transition-colors ${isDetranOnline ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse'}`} />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-slate-300">Gateway Local (On-Premise)</span>
+                    <span className="text-[9px] text-slate-500">Heartbeat Sincronizado • Energia Estável</span>
+                  </div>
+                  <div className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-slate-300">Cofre de Retenção (LGPD)</span>
+                    <span className="text-[9px] text-slate-500">Logs Imutáveis (WORM) • Expurgo em 60 dias</span>
+                  </div>
+                  <div className="h-3 w-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                </div>
+              </div>
+            </div>
+
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setIsDetranOnline(!isDetranOnline)}
+              className="w-full text-xs opacity-20 hover:opacity-100 hover:bg-red-950/50 hover:text-red-400 hover:border-red-900 border-slate-800 transition-all"
+            >
+              [DevMode] {isDetranOnline ? 'Simular Queda do Detran' : 'Restaurar API do Detran'}
+            </Button>
+          </div>
+
+          {/* Coluna Direita: Dante Watchdog */}
+          <div className="w-1/2 p-6 flex flex-col">
+            <h2 className="text-sm font-black text-indigo-400 uppercase tracking-widest mb-6 flex items-center gap-2 border-b border-slate-800 pb-2">
+              <Activity className="w-4 h-4" />
+              Dante Watchdog
+            </h2>
+
+            <div className={`flex-1 rounded-lg border p-4 font-mono text-xs leading-relaxed ${isDetranOnline ? 'bg-indigo-950/20 border-indigo-900/30 text-indigo-200' : 'bg-red-950/20 border-red-900/30 text-red-200'}`}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className={`w-2 h-2 rounded-full ${isDetranOnline ? 'bg-indigo-500' : 'bg-red-500'} animate-pulse`} />
+                <span className="font-bold">SYSTEM_LOG // LIVE_FEED</span>
+              </div>
+              
+              {isDetranOnline ? (
+                <>
+                  <p className="mb-2">&gt; Inicializando verificação de perímetro computacional...</p>
+                  <p className="mb-2 text-indigo-400">&gt; Todos os nós de inteligência operantes.</p>
+                  <p className="mb-2">&gt; Carga das GPUs na AWS estabilizada em 42%. Largura de banda do município otimizada.</p>
+                  <p className="mt-4 text-[10px] opacity-70">"O fluxo de dados governamentais está íntegro. Nenhum gargalo detectado na infraestrutura local."</p>
+                </>
+              ) : (
+                <>
+                  <p className="mb-2 text-red-400 font-bold">&gt; ALERTA: TIME-OUT NA RESPOSTA DO GOVERNO</p>
+                  <p className="mb-2">&gt; A API da Secretaria de Segurança (SINESP/Detran) parou de responder aos pacotes de verificação.</p>
+                  <p className="mb-2 text-red-300">&gt; INICIANDO PROTOCOLO DE CONTINGÊNCIA: Ativando Cache Local Criptografado.</p>
+                  <p className="mt-4 text-[10px] opacity-70 font-bold">"O sistema governamental caiu, mas nós não. O Égide continuará operando e lendo placas off-line com base no último backup recebido. Nenhuma cegueira operacional."</p>
+                </>
+              )}
+            </div>
+            <div className="mt-4 text-[8px] text-slate-500 text-center uppercase tracking-widest">
+              Nexus Sovereign AI Architecture
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
 
     </>
   );
