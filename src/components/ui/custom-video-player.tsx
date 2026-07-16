@@ -69,9 +69,10 @@ export function CustomVideoPlayer({ src, className, containerClassName, ...props
       <video
         ref={videoRef}
         src={src}
-        className={cn("w-full h-full object-cover", className)}
+        className={cn("w-full h-full object-cover transform-gpu", className)}
         playsInline
-        preload="metadata"
+        webkit-playsinline="true"
+        preload="auto"
         {...props}
       />
 

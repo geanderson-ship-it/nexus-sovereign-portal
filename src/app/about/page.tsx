@@ -81,7 +81,7 @@ export default function AboutPage() {
             <div className="group relative flex flex-col items-center p-8 bg-black/40 border border-primary/30 rounded-3xl backdrop-blur-xl shadow-[0_0_40px_rgba(37,99,235,0.1)] transition-all hover:border-primary hover:shadow-[0_0_60px_rgba(37,99,235,0.3)]">
               <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-primary/50">
                 <div className="absolute inset-0 bg-blue-900/20 z-10 mix-blend-overlay"></div>
-                <Image src="/Sobre/Gean.jpg" alt="Geanderson" fill className="object-cover" />
+                <Image src="/Sobre/gean_diretor.png" alt="Geanderson" fill className="object-cover" />
               </div>
               <h4 className="text-3xl font-bold text-foreground font-headline uppercase text-center">Geanderson</h4>
               <p className="text-primary font-semibold text-lg uppercase tracking-wide mt-2 text-center">Diretor Geral (CEO) & Fundador</p>
