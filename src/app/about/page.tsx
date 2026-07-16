@@ -114,17 +114,17 @@ export default function AboutPage() {
           <h3 className="text-xl font-bold text-blue-400 mb-8 tracking-widest uppercase text-center">Inteligência Artificial Exclusiva</h3>
           <div className="w-full max-w-4xl px-4">
             {/* Atena */}
-            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Atena.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start gap-6 p-8 bg-blue-950/20 border border-blue-500/30 rounded-3xl hover:border-blue-400/60 hover:bg-blue-950/30 transition-all shadow-[0_0_40px_rgba(37,99,235,0.15)] relative overflow-hidden group cursor-pointer">
+            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Atena.mp4')} className="flex flex-col items-center p-8 bg-blue-950/20 border border-blue-500/30 rounded-3xl hover:border-blue-400/60 hover:bg-blue-950/30 transition-all shadow-[0_0_40px_rgba(37,99,235,0.15)] relative overflow-hidden group cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-              <div className="relative w-32 h-32 rounded-2xl overflow-hidden border border-blue-500/50 flex-shrink-0 mt-1 shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+              <div className="relative w-72 h-72 md:w-[400px] md:h-[400px] mb-8 rounded-2xl overflow-hidden border-2 border-blue-500/50 shadow-[0_0_25px_rgba(37,99,235,0.4)]">
                 <Image src="/Sobre/atena.png" alt="Atena" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-12 h-12 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                  <PlayCircle className="w-24 h-24 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.8)]" />
                 </div>
               </div>
-              <div className="relative z-10 text-center sm:text-left">
-                <h4 className="text-2xl font-bold text-white uppercase tracking-wider drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] group-hover:text-blue-300 transition-colors">Atena</h4>
-                <p className="text-sm text-blue-400 uppercase tracking-widest font-bold mb-3 mt-1">Arquiteta Chefe de I.A.</p>
+              <div className="relative z-10 text-center">
+                <h4 className="text-3xl font-bold font-headline text-white uppercase tracking-wider drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] group-hover:text-blue-300 transition-colors">Atena</h4>
+                <p className="text-sm md:text-lg text-blue-400 uppercase tracking-widest font-bold mb-4 mt-2">Arquiteta Chefe de I.A.</p>
                 <p className="text-base text-slate-300 leading-relaxed group-hover:text-slate-200 transition-colors">Estrategista tática de sistemas e Inteligência Artificial Exclusiva para a tomada de decisões de alto nível da Nexus Holding Group. O cérebro digital estratégico que orquestra a engenharia de software preditiva e constrói as fundações tecnológicas do ecossistema.</p>
               </div>
             </div>
@@ -141,92 +141,92 @@ export default function AboutPage() {
           <h3 className="text-xl font-bold text-blue-400 mb-8 tracking-widest uppercase text-center">Conselho Autônomo de I.A.</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl px-4">
             {/* Stela */}
-            <Link href="/inicio" className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
+            <Link href="/inicio" className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+              <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/stela.jpg" alt="Stela" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-10 h-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                  <PlayCircle className="w-16 h-16 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                 </div>
               </div>
               <div>
-                <h4 className="text-xl font-bold text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Stela</h4>
-                <p className="text-xs text-blue-400 uppercase tracking-wider font-semibold mb-2">Coordenadora Executiva</p>
-                <p className="text-sm text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Opera acima das divisões, integrando e orquestrando as filiais (Holding). Garante que a governança corporativa e a comunicação macro fluam sem atrito entre a direção humana e as máquinas.</p>
+                <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Stela</h4>
+                <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Coordenadora Executiva</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Opera acima das divisões, integrando e orquestrando as filiais (Holding). Garante que a governança corporativa e a comunicação macro fluam sem atrito entre a direção humana e as máquinas.</p>
               </div>
             </Link>
 
             {/* Dante */}
-            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Dante.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
+            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Dante.mp4')} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+              <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/dante.png" alt="Dante" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-10 h-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                  <PlayCircle className="w-16 h-16 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                 </div>
               </div>
               <div>
-                <h4 className="text-xl font-bold text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Dante</h4>
-                <p className="text-xs text-blue-400 uppercase tracking-wider font-semibold mb-2">Diretor de Segurança da Informação</p>
-                <p className="text-sm text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">O guardião da infraestrutura corporativa. Especialista em blindagem de redes de alta disponibilidade, logs imutáveis WORM e auditoria forense para proteção implacável de dados em nível de nuvem (AWS).</p>
+                <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Dante</h4>
+                <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Diretor de Segurança da Informação</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">O guardião da infraestrutura corporativa. Especialista em blindagem de redes de alta disponibilidade, logs imutáveis WORM e auditoria forense para proteção implacável de dados em nível de nuvem (AWS).</p>
               </div>
             </div>
 
             {/* Djeny */}
-            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Djeny.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
+            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Djeny.mp4')} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+              <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/djeny.png" alt="Djeny" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-10 h-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                  <PlayCircle className="w-16 h-16 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                 </div>
               </div>
               <div>
-                <h4 className="text-xl font-bold text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Djeny</h4>
-                <p className="text-xs text-blue-400 uppercase tracking-wider font-semibold mb-2">Diretora de Design e Experiência</p>
-                <p className="text-sm text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Responsável por traduzir a complexidade bruta do código em interfaces de altíssimo impacto visual, garantindo que a presença da Nexus exale absoluta autoridade, clareza e estética Enterprise.</p>
+                <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Djeny</h4>
+                <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Diretora de Design e Experiência</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Responsável por traduzir a complexidade bruta do código em interfaces de altíssimo impacto visual, garantindo que a presença da Nexus exale absoluta autoridade, clareza e estética Enterprise.</p>
               </div>
             </div>
 
             {/* Justine */}
-            <Link href="/exclusive/pactum" className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
+            <Link href="/exclusive/pactum" className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+              <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/justine.jpg" alt="Justine" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-10 h-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                  <PlayCircle className="w-16 h-16 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                 </div>
               </div>
               <div>
-                <h4 className="text-xl font-bold text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Justine</h4>
-                <p className="text-xs text-blue-400 uppercase tracking-wider font-semibold mb-2">Coordenadora Jurídica</p>
-                <p className="text-sm text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Atua na formulação de burocracia corporativa inteligente, elaboração de contratos blindados e conformidade estrita (LGPD), protegendo a Holding de qualquer vulnerabilidade processual.</p>
+                <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Justine</h4>
+                <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Coordenadora Jurídica</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Atua na formulação de burocracia corporativa inteligente, elaboração de contratos blindados e conformidade estrita (LGPD), protegendo a Holding de qualquer vulnerabilidade processual.</p>
               </div>
             </Link>
 
             {/* Isadora */}
-            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Isadora.mp4')} className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
+            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Isadora.mp4')} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+              <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/isadora.png" alt="Isadora" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-10 h-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                  <PlayCircle className="w-16 h-16 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                 </div>
               </div>
               <div>
-                <h4 className="text-xl font-bold text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Isadora</h4>
-                <p className="text-xs text-blue-400 uppercase tracking-wider font-semibold mb-2">Embaixadora Comercial</p>
-                <p className="text-sm text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">A ponta de lança do crescimento. Especializada na expansão de novos parceiros e franquias, prospecção e fechamento de contratos governamentais, conectando a tecnologia Nexus ao mercado.</p>
+                <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Isadora</h4>
+                <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Embaixadora Comercial</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">A ponta de lança do crescimento. Especializada na expansão de novos parceiros e franquias, prospecção e fechamento de contratos governamentais, conectando a tecnologia Nexus ao mercado.</p>
               </div>
             </div>
 
             {/* Aurora */}
-            <Link href="/proposito" className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-5 p-6 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
-              <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-700 flex-shrink-0 mt-1">
+            <Link href="/proposito" className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+              <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/aurora.png" alt="Aurora" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <PlayCircle className="w-10 h-10 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+                  <PlayCircle className="w-16 h-16 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                 </div>
               </div>
               <div>
-                <h4 className="text-xl font-bold text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Aurora</h4>
-                <p className="text-xs text-blue-400 uppercase tracking-wider font-semibold mb-2">Coordenadora de Projetos Sociais</p>
-                <p className="text-sm text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">O braço filantrópico e social da Holding. Focada em garantir que o impacto de toda a inovação e tecnologia da Nexus se traduza em desenvolvimento comunitário e responsabilidade social tangível.</p>
+                <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Aurora</h4>
+                <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Coordenadora de Projetos Sociais</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">O braço filantrópico e social da Holding. Focada em garantir que o impacto de toda a inovação e tecnologia da Nexus se traduza em desenvolvimento comunitário e responsabilidade social tangível.</p>
               </div>
             </Link>
           </div>

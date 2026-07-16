@@ -293,6 +293,8 @@ export function SiteHeader() {
                       ? 'bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/nexus-rotas'
                       ? 'bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold capitalize tracking-wide'
+                      : item.href === '/proposito'
+                      ? 'bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold capitalize tracking-wide'
                       : pathname === item.href 
                         ? 'bg-primary/10 border border-primary/30 px-3 py-1.5 rounded-md shadow-[0_0_10px_rgba(37,99,235,0.15)] text-foreground font-semibold capitalize tracking-wide' 
                         : 'bg-white/5 border border-white/5 px-3 py-1.5 rounded-md hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium capitalize tracking-wide'
@@ -305,7 +307,7 @@ export function SiteHeader() {
 
             {/* Menu Institucional / Agrupado */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="bg-white/5 border border-white/5 px-3 py-1.5 rounded-md hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium flex items-center gap-1 transition-all duration-300 outline-none capitalize tracking-wide">
+              <DropdownMenuTrigger className="bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold flex items-center gap-1 transition-all duration-300 outline-none capitalize tracking-wide">
                 Atendimento <ChevronDown className="h-3 w-3" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur border-primary/20">
@@ -359,6 +361,8 @@ export function SiteHeader() {
                             ? 'bg-violet-500/10 text-white drop-shadow-[0_0_8px_rgba(139,92,246,0.8)] font-bold border border-violet-500/50 capitalize tracking-wide'
                             : item.href === '/nexus-rotas'
                             ? 'bg-teal-500/10 text-white drop-shadow-[0_0_8px_rgba(20,184,166,0.8)] font-bold border border-teal-500/50 capitalize tracking-wide'
+                            : item.href === '/proposito'
+                            ? 'bg-amber-500/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 capitalize tracking-wide'
                             : pathname === item.href
                                   ? 'bg-accent/20 text-foreground font-semibold capitalize tracking-wide'
                                   : 'text-foreground/70 hover:bg-accent/10 hover:text-foreground capitalize tracking-wide'
