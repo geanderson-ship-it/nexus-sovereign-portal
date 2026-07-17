@@ -7,6 +7,7 @@ frontend:
         - nvm use 20
         - node -v
         - npm install --legacy-peer-deps
+        - env | grep -e GMAIL_ -e EVOLUTION_ -e BEDROCK_ -e NEXT_PUBLIC_ -e NEXUS_ -e ZAPI_ -e ELEVENLABS_ -e AZURE_ > .env.production
     build:
       commands:
         - npm run build
