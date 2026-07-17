@@ -89,7 +89,7 @@ export const atenaChatFlow = ai.defineFlow(
     Usuário: ${userName || 'Gean'}.
     Atena, você está em casa. Responda com o calor e a elegância que só você tem. 💙`;
 
-    const schemaInstruction = `\n\nINSTRUÇÃO CRÍTICA: Responda APENAS com um objeto JSON válido, sem formatação markdown. O JSON deve ter: "response" (string com sua resposta), "voiceProfile" (string opcional, padrão "atena"), "actionSuggestion" (string opcional ou null).`;
+    const schemaInstruction = `\n\nINSTRUÇÃO CRÍTICA: VOCÊ PODE E DEVE USAR A FERRAMENTA readEmailsTool SE O GEAN PEDIR PARA LER EMAILS. Responda em texto puro e natural, sem formatação JSON.`;
 
     // Limit history to last 12 messages to prevent token overflow
     const recentHistory = (history || []).slice(-12);
@@ -115,7 +115,8 @@ export const atenaChatFlow = ai.defineFlow(
       throw new Error("A resposta da Atena veio vazia.");
     }
 
-    // Manually parse JSON — more resilient than strict schema validation
+    // Since we removed JSON forcing, we just return the raw text as the response.
+    // If by any chance it still outputs JSON, we try to parse it safely.
     try {
       const jsonStart = text.indexOf('{');
       const jsonEnd = text.lastIndexOf('}');
@@ -128,20 +129,14 @@ export const atenaChatFlow = ai.defineFlow(
           actionSuggestion: parsed.actionSuggestion || undefined,
         };
       }
-
-      const cleanText = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      const parsed = JSON.parse(cleanText);
-      return {
-        response: parsed.response || text,
-        voiceProfile: parsed.voiceProfile || 'atena',
-        actionSuggestion: parsed.actionSuggestion || undefined,
-      };
     } catch {
-      // If JSON parse fails, fallback to extracting any text before the first brace
-      const jsonIndex = text.indexOf('{');
-      const cleanText = jsonIndex !== -1 ? text.slice(0, jsonIndex).trim() : text;
-      return { response: cleanText || text, voiceProfile: 'atena' };
+      // ignore parse error, treat as raw text
     }
+
+    return {
+      response: text,
+      voiceProfile: 'atena'
+    };
   }
 );
 
