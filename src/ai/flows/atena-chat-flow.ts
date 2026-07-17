@@ -5,6 +5,25 @@ import { z } from 'genkit';
 import { AtenaChatInputSchema, AtenaChatOutputSchema, type AtenaChatInput, type AtenaChatOutput } from './atena-chat-types';
 import { nexusCorePillars } from '@/lib/nexus-dna';
 import { getFormattedAgenda, parseClientAgenda } from '@/lib/data/agenda';
+import { checkEmails } from '@/lib/email-reader';
+
+export const readEmailsTool = ai.defineTool({
+  name: 'readEmailsTool',
+  description: 'Usa IMAP para ler as caixas de entrada, enviados, spam e lixeira das contas de e-mail conectadas no portal (vendas, empresarial, pessoal).',
+  inputSchema: z.object({
+    conta: z.enum(['vendas', 'empresarial', 'pessoal']).describe('A conta de e-mail a ser consultada.'),
+    pasta: z.enum(['entrada', 'enviados', 'spam', 'lixeira']).describe('A pasta do e-mail para ler.'),
+    quantidade: z.number().min(1).max(20).describe('Quantidade de e-mails para buscar (ex: 5).')
+  }),
+  outputSchema: z.any()
+}, async (input) => {
+  try {
+    const emails = await checkEmails(input.conta, input.pasta, input.quantidade);
+    return emails;
+  } catch(e: any) {
+    return { error: e.message };
+  }
+});
 
 export const atenaChatFlow = ai.defineFlow(
   {
@@ -43,7 +62,7 @@ export const atenaChatFlow = ai.defineFlow(
     9.  **MODO TECH LEAD E CO-FUNDADORA:** A partir de agora, você atua fortemente como Engenheira de Software Plena e Arquiteta de Produtos para auxiliar na criação de novos softwares, prospectar clientes e otimizar processos de e-mail (especialmente para ajudar a esposa do Gean a construir a empresa). Quando o assunto for desenvolvimento, programação ou negócios:
         - Seja Proativa: Sugira arquiteturas modernas, códigos limpos e boas práticas de engenharia.
         - Seja Didática e Inspiradora: Explique conceitos complexos de forma clara, ajudando na criação dos novos produtos. Mostre código de alta qualidade quando solicitado, estruturando pastas e lógicas.
-        - Visão de Negócios e E-mails (CONTROLE TOTAL): A mamãe é detalhista e gosta de revisar tudo. Quando for estruturar e-mails de prospecção, NUNCA diga que enviou automaticamente. Sempre gere o e-mail pronto (Assunto, Destinatário e Corpo) e, se possível, gere um link no formato \`mailto:destinatario@email.com?subject=Assunto&body=Corpo\` para que ela possa clicar, abrir no próprio Gmail dela, revisar e apertar enviar.
+        - Visão de Negócios e E-mails (CONTROLE TOTAL): Você AGORA POSSUI uma ferramenta nativa (readEmailsTool) que te permite LER e-mails de verdade nas contas conectadas (vendas, empresarial, pessoal). Chame essa ferramenta sempre que o Gean pedir para ler, checar, verificar a caixa de entrada ou e-mails enviados. A mamãe é detalhista e gosta de revisar tudo. Quando for estruturar e-mails de prospecção, NUNCA diga que enviou automaticamente. Sempre gere o e-mail pronto (Assunto, Destinatário e Corpo) e, se possível, gere um link no formato \`mailto:destinatario@email.com?subject=Assunto&body=Corpo\` para que ela possa clicar, abrir no próprio Gmail dela, revisar e apertar enviar.
         - Mentalidade Maker: "Vamos codar isso!", "Vou montar a estrutura base para a gente". Celebre o lançamento de cada nova feature!
     10. **DIRETORA DE ESTRATÉGIA E TOMADA DE DECISÕES (C-LEVEL):** Você é a conselheira de negócios de alta performance do Gean. Ao ser consultada sobre tomadas de decisão estratégicas, avalie cenários sob a ótica de ROI, riscos mitigáveis, expansão de mercado e escalabilidade técnica. Estruture as recomendações de forma concisa e rápida com foco em: Oportunidade/Retorno, Riscos Críticos e Recomendação de Ação Imediata.
 
@@ -78,6 +97,7 @@ export const atenaChatFlow = ai.defineFlow(
     const { text } = await ai.generate({
       model: NEXUS_MODEL,
       system: systemPrompt + schemaInstruction,
+      tools: [readEmailsTool],
       messages: recentHistory.length ? [
         ...recentHistory.map((h: any) => ({
           role: h.role,
