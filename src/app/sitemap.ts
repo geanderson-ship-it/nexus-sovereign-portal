@@ -25,7 +25,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/nexus-b2b',
     '/nexus-empresas',
     '/agro',
-    '/nexus-rotas'
+    '/nexus-rotas',
+    '/inovamoda',
+    '/inova-revenda',
+    '/nexus-health',
+    '/nexus-health/clinic',
+    '/nexus-health/pharma',
+    '/nexus-health/estima'
   ];
 
   const allRoutes = [...staticRoutes];
