@@ -46,32 +46,38 @@ export default function NexusB2BPage() {
                     </motion.div>
 
                     {/* CARDS GRID */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-8">
                         {/* Nexus Pharma */}
                         <motion.a 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.1 }}
                             href="/nexus-health/pharma" 
-                            className="group block relative rounded-[32px] border border-emerald-500/20 bg-black/40 backdrop-blur-md p-10 hover:bg-emerald-900/10 hover:border-emerald-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(16,185,129,0.2)] hover:-translate-y-2 overflow-hidden"
+                            className="group block relative rounded-[32px] border border-emerald-500/20 bg-black/40 backdrop-blur-md hover:border-emerald-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(16,185,129,0.2)] hover:-translate-y-2 overflow-hidden flex flex-col h-full p-0"
                         >
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                            
-                            <div className="absolute top-6 right-6 text-emerald-500/50 group-hover:text-emerald-400 transition-colors">
-                                <ArrowRight className="-rotate-45" size={24} />
+                            {/* Avatar Lídia - Cover Quadrada */}
+                            <div className="relative w-full aspect-square shrink-0 overflow-hidden border-b border-emerald-500/20">
+                                <Image src="/lidia-pharma.jpg" alt="Lídia - Nexus Pharma AI" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#080b10] via-transparent to-transparent" />
+                                
+                                <div className="absolute top-6 right-6 text-white/50 group-hover:text-emerald-400 transition-colors z-10 bg-black/40 p-2 rounded-full backdrop-blur-sm border border-white/10">
+                                    <ArrowRight className="-rotate-45" size={20} />
+                                </div>
                             </div>
                             
-                            <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 mb-8 group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all">
-                                <ShieldCheck className="text-emerald-500" size={32} />
-                            </div>
-                            
-                            <h3 className="text-2xl font-black font-headline text-white mb-4 uppercase tracking-tight group-hover:text-emerald-300 transition-colors">Nexus Pharma</h3>
-                            <p className="text-base text-slate-400 leading-relaxed mb-6 font-light">
-                                Gestão Farmacêutica com Segurança Militar. Retenção SNGPC, inventário preditivo e prevenção de fraudes por inteligência artificial.
-                            </p>
-                            
-                            <div className="flex items-center gap-2 text-emerald-500 text-sm font-bold tracking-widest uppercase mt-auto pt-6 border-t border-emerald-500/10">
-                                Acessar Sistema
+                            <div className="p-8 pt-0 flex flex-col flex-1 relative bg-black/40">
+                                <div className="w-16 h-16 rounded-2xl bg-[#080b10] flex items-center justify-center border border-emerald-500/40 mb-6 mx-auto group-hover:bg-emerald-500/10 transition-all -mt-8 relative z-10 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                                    <ShieldCheck className="text-emerald-500" size={32} />
+                                </div>
+                                
+                                <h3 className="text-2xl text-center font-black font-headline text-white mb-4 uppercase tracking-tight group-hover:text-emerald-300 transition-colors">Nexus Pharma</h3>
+                                <p className="text-base text-center text-slate-400 leading-relaxed mb-6 font-light">
+                                    Gestão Farmacêutica com Segurança Militar. Retenção SNGPC, inventário preditivo e prevenção de fraudes por inteligência artificial.
+                                </p>
+                                
+                                <div className="flex items-center justify-center gap-2 text-emerald-500 text-sm font-bold tracking-widest uppercase mt-auto pt-6 border-t border-emerald-500/10">
+                                    Acessar Sistema
+                                </div>
                             </div>
                         </motion.a>
 
@@ -81,25 +87,65 @@ export default function NexusB2BPage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
                             href="/nexus-health/clinic" 
-                            className="group block relative rounded-[32px] border border-cyan-500/20 bg-black/40 backdrop-blur-md p-10 hover:bg-cyan-900/10 hover:border-cyan-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(6,182,212,0.2)] hover:-translate-y-2 overflow-hidden"
+                            className="group block relative rounded-[32px] border border-cyan-500/20 bg-black/40 backdrop-blur-md hover:border-cyan-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(6,182,212,0.2)] hover:-translate-y-2 overflow-hidden flex flex-col h-full p-0"
                         >
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                            
-                            <div className="absolute top-6 right-6 text-cyan-500/50 group-hover:text-cyan-400 transition-colors">
-                                <ArrowRight className="-rotate-45" size={24} />
+                            {/* Avatar Mia - Cover Quadrada */}
+                            <div className="relative w-full aspect-square shrink-0 overflow-hidden border-b border-cyan-500/20">
+                                <Image src="/clinic-avatar.jpg" alt="Mia - Nexus Clinic AI" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#080b10] via-transparent to-transparent" />
+                                
+                                <div className="absolute top-6 right-6 text-white/50 group-hover:text-cyan-400 transition-colors z-10 bg-black/40 p-2 rounded-full backdrop-blur-sm border border-white/10">
+                                    <ArrowRight className="-rotate-45" size={20} />
+                                </div>
                             </div>
                             
-                            <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 mb-8 group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all">
-                                <Activity className="text-cyan-500" size={32} />
+                            <div className="p-8 pt-0 flex flex-col flex-1 relative bg-black/40">
+                                <div className="w-16 h-16 rounded-2xl bg-[#080b10] flex items-center justify-center border border-cyan-500/40 mb-6 mx-auto group-hover:bg-cyan-500/10 transition-all -mt-8 relative z-10 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+                                    <Activity className="text-cyan-500" size={32} />
+                                </div>
+                                
+                                <h3 className="text-2xl text-center font-black font-headline text-white mb-4 uppercase tracking-tight group-hover:text-cyan-300 transition-colors">Nexus Clinic</h3>
+                                <p className="text-base text-center text-slate-400 leading-relaxed mb-6 font-light">
+                                    SaaS de Gestão de Clínicas Privadas. Agenda inteligente integrada ao WhatsApp, CRM avançado e redução drástica de faltas.
+                                </p>
+                                
+                                <div className="flex items-center justify-center gap-2 text-cyan-500 text-sm font-bold tracking-widest uppercase mt-auto pt-6 border-t border-cyan-500/10">
+                                    Acessar Sistema
+                                </div>
+                            </div>
+                        </motion.a>
+
+                        {/* Nexus Estima */}
+                        <motion.a 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.3 }}
+                            href="/nexus-health/estima" 
+                            className="group block relative rounded-[32px] border border-amber-500/20 bg-black/40 backdrop-blur-md hover:border-amber-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(245,158,11,0.2)] hover:-translate-y-2 overflow-hidden flex flex-col h-full p-0"
+                        >
+                            {/* Avatar Luna - Cover Quadrada */}
+                            <div className="relative w-full aspect-square shrink-0 overflow-hidden border-b border-amber-500/20 bg-[#0a0512]">
+                                <Image src="/luna-animale.jpg" alt="Luna - Nexus Estima AI" fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#080b10] via-transparent to-transparent" />
+                                
+                                <div className="absolute top-6 right-6 text-white/50 group-hover:text-amber-400 transition-colors z-10 bg-black/40 p-2 rounded-full backdrop-blur-sm border border-white/10">
+                                    <ArrowRight className="-rotate-45" size={20} />
+                                </div>
                             </div>
                             
-                            <h3 className="text-2xl font-black font-headline text-white mb-4 uppercase tracking-tight group-hover:text-cyan-300 transition-colors">Nexus Clinic</h3>
-                            <p className="text-base text-slate-400 leading-relaxed mb-6 font-light">
-                                SaaS de Gestão de Clínicas Privadas. Agenda inteligente integrada ao WhatsApp, CRM avançado e redução drástica de faltas.
-                            </p>
-                            
-                            <div className="flex items-center gap-2 text-cyan-500 text-sm font-bold tracking-widest uppercase mt-auto pt-6 border-t border-cyan-500/10">
-                                Acessar Sistema
+                            <div className="p-8 pt-0 flex flex-col flex-1 relative bg-black/40">
+                                <div className="w-16 h-16 rounded-2xl bg-[#080b10] flex items-center justify-center border border-amber-500/40 mb-6 mx-auto group-hover:bg-amber-500/10 transition-all -mt-8 relative z-10 shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+                                    <Heart className="text-amber-500" size={32} />
+                                </div>
+                                
+                                <h3 className="text-2xl text-center font-black font-headline text-white mb-4 uppercase tracking-tight group-hover:text-amber-300 transition-colors">Nexus Estima</h3>
+                                <p className="text-base text-center text-slate-400 leading-relaxed mb-6 font-light">
+                                    Gestão Veterinária de Alta Performance. Controle de vacinas, retornos e prontuários guiados por inteligência artificial (Luna).
+                                </p>
+                                
+                                <div className="flex items-center justify-center gap-2 text-amber-500 text-sm font-bold tracking-widest uppercase mt-auto pt-6 border-t border-amber-500/10">
+                                    Acessar Sistema
+                                </div>
                             </div>
                         </motion.a>
                     </div>
