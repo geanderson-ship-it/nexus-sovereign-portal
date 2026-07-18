@@ -35,24 +35,24 @@ export default function NexusB2BPage() {
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-black tracking-[0.2em] uppercase mb-6 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
                             <Activity className="w-4 h-4" />
-                            Operações Corporativas
+                            Operações de Saúde
                         </div>
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-headline tracking-tighter mb-6 leading-tight drop-shadow-lg text-white">
-                            Ecossistema <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-teal-600">Nexus B2B</span>
+                            Ecossistema <span className="text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-cyan-400">Nexus Health</span>
                         </h1>
                         <p className="text-lg md:text-xl text-slate-400 font-light leading-relaxed">
-                            Onde a tecnologia militar encontra as demandas mais críticas do mercado. Nossas divisões especializadas em Saúde, Farmácia e Audiovisual.
+                            Onde a tecnologia militar encontra as demandas mais críticas do mercado. Nossas divisões especializadas em Gestão Farmacêutica e Clínicas Inteligentes.
                         </p>
                     </motion.div>
 
                     {/* CARDS GRID */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                         {/* Nexus Pharma */}
                         <motion.a 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.1 }}
-                            href="/nexus-b2b/pharma" 
+                            href="/nexus-health/pharma" 
                             className="group block relative rounded-[32px] border border-emerald-500/20 bg-black/40 backdrop-blur-md p-10 hover:bg-emerald-900/10 hover:border-emerald-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(16,185,129,0.2)] hover:-translate-y-2 overflow-hidden"
                         >
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -75,58 +75,30 @@ export default function NexusB2BPage() {
                             </div>
                         </motion.a>
 
-                        {/* Nexus Studio */}
+                        {/* Nexus Clinic */}
                         <motion.a 
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
-                            href="/intelligence/studio" 
-                            className="group block relative rounded-[32px] border border-amber-500/20 bg-black/40 backdrop-blur-md p-10 hover:bg-amber-900/10 hover:border-amber-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(245,158,11,0.2)] hover:-translate-y-2 overflow-hidden"
+                            href="/nexus-health/clinic" 
+                            className="group block relative rounded-[32px] border border-cyan-500/20 bg-black/40 backdrop-blur-md p-10 hover:bg-cyan-900/10 hover:border-cyan-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(6,182,212,0.2)] hover:-translate-y-2 overflow-hidden"
                         >
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                             
-                            <div className="absolute top-6 right-6 text-amber-500/50 group-hover:text-amber-400 transition-colors">
+                            <div className="absolute top-6 right-6 text-cyan-500/50 group-hover:text-cyan-400 transition-colors">
                                 <ArrowRight className="-rotate-45" size={24} />
                             </div>
                             
-                            <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 mb-8 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all">
-                                <Sparkles className="text-amber-500" size={32} />
+                            <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 mb-8 group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all">
+                                <Activity className="text-cyan-500" size={32} />
                             </div>
                             
-                            <h3 className="text-2xl font-black font-headline text-white mb-4 uppercase tracking-tight group-hover:text-amber-300 transition-colors">Nexus Studio</h3>
+                            <h3 className="text-2xl font-black font-headline text-white mb-4 uppercase tracking-tight group-hover:text-cyan-300 transition-colors">Nexus Clinic</h3>
                             <p className="text-base text-slate-400 leading-relaxed mb-6 font-light">
-                                Produtora audiovisual de elite. Captação cinematográfica, narrativas de alto impacto e publicidade hiper-realista guiada por dados.
+                                SaaS de Gestão de Clínicas Privadas. Agenda inteligente integrada ao WhatsApp, CRM avançado e redução drástica de faltas.
                             </p>
                             
-                            <div className="flex items-center gap-2 text-amber-500 text-sm font-bold tracking-widest uppercase mt-auto pt-6 border-t border-amber-500/10">
-                                Acessar Sistema
-                            </div>
-                        </motion.a>
-
-                        {/* Nexus Health */}
-                        <motion.a 
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.3 }}
-                            href="/intelligence/health" 
-                            className="group block relative rounded-[32px] border border-red-500/20 bg-black/40 backdrop-blur-md p-10 hover:bg-red-900/10 hover:border-red-500/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(239,68,68,0.2)] hover:-translate-y-2 overflow-hidden"
-                        >
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                            
-                            <div className="absolute top-6 right-6 text-red-500/50 group-hover:text-red-400 transition-colors">
-                                <ArrowRight className="-rotate-45" size={24} />
-                            </div>
-                            
-                            <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center border border-red-500/20 mb-8 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
-                                <Heart className="text-red-500" size={32} />
-                            </div>
-                            
-                            <h3 className="text-2xl font-black font-headline text-white mb-4 uppercase tracking-tight group-hover:text-red-300 transition-colors">Nexus Health</h3>
-                            <p className="text-base text-slate-400 leading-relaxed mb-6 font-light">
-                                Integração clínica e prontuários avançados. Saúde elevada ao patamar da alta tecnologia com diagnósticos assistidos por IA.
-                            </p>
-                            
-                            <div className="flex items-center gap-2 text-red-500 text-sm font-bold tracking-widest uppercase mt-auto pt-6 border-t border-red-500/10">
+                            <div className="flex items-center gap-2 text-cyan-500 text-sm font-bold tracking-widest uppercase mt-auto pt-6 border-t border-cyan-500/10">
                                 Acessar Sistema
                             </div>
                         </motion.a>

@@ -95,7 +95,7 @@ export function SiteHeader() {
     { title: 'Embaixadora', href: '/nexus-rotas' },
     { title: 'Energia', href: '/energia' },
     { title: 'Enterprise', href: '/nexus-empresas' },
-    { title: 'Nexus B2B', href: '/nexus-b2b' },
+    { title: 'Nexus Health', href: '/nexus-health' },
     { title: t('navAgro') || 'Agro', href: '/agro' },
     { title: t('navPremium') || 'Exclusive', href: '/exclusive' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
@@ -285,7 +285,7 @@ export function SiteHeader() {
                       ? 'bg-amber-600/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-600/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/nexus-empresas'
                       ? 'bg-cyan-600/10 border border-cyan-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-cyan-600/20 text-white font-bold capitalize tracking-wide'
-                      : item.href === '/nexus-b2b'
+                      : item.href === '/nexus-health'
                       ? 'bg-emerald-600/10 border border-emerald-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-600/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/agro'
                       ? 'bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] hover:bg-emerald-500/20 text-white font-bold capitalize tracking-wide'
@@ -355,7 +355,7 @@ export function SiteHeader() {
                             ? 'bg-amber-600/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 capitalize tracking-wide'
                             : item.href === '/nexus-empresas'
                             ? 'bg-cyan-600/10 text-white drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] font-bold border border-cyan-500/50 capitalize tracking-wide'
-                            : item.href === '/nexus-b2b'
+                            : item.href === '/nexus-health'
                             ? 'bg-emerald-600/10 text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] font-bold border border-emerald-500/50 capitalize tracking-wide'
                             : item.href === '/agro'
                             ? 'bg-emerald-500/10 text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] font-bold border border-emerald-500/50 capitalize tracking-wide'
