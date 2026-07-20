@@ -133,7 +133,6 @@ export function SiteHeader() {
                  {locale === 'ja-JP' && <><img src="https://flagcdn.com/w20/jp.png" width="20" alt="JA" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">JA</span></>}
                  {locale === 'zh-CN' && <><img src="https://flagcdn.com/w20/cn.png" width="20" alt="CN" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">CN</span></>}
                  {locale === 'ar-AE' && <><img src="https://flagcdn.com/w20/ae.png" width="20" alt="AE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">AR</span></>}
-                 {locale === 'ru-RU' && <><img src="https://flagcdn.com/w20/ru.png" width="20" alt="RU" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">RU</span></>}
                  <span className="sr-only">{t('navChangeLanguage')}</span>
                </Button>
              </DropdownMenuTrigger>
@@ -146,8 +145,7 @@ export function SiteHeader() {
                  { code: 'fr-FR', name: 'Français', sub: 'France', flag: 'fr' },
                  { code: 'ja-JP', name: '日本語', sub: '日本', flag: 'jp' },
                  { code: 'zh-CN', name: '简体中文', sub: '中国', flag: 'cn' },
-                 { code: 'ar-AE', name: 'العربية', sub: 'دبي', flag: 'ae' },
-                 { code: 'ru-RU', name: 'Русский', sub: 'Россия', flag: 'ru' }
+                 { code: 'ar-AE', name: 'العربية', sub: 'دبي', flag: 'ae' }
                ].map((lang) => (
                  <DropdownMenuItem key={lang.code} onClick={() => setLocale(lang.code as any)} className="flex items-center gap-3 cursor-pointer hover:bg-primary/10 transition-colors">
                    <img src={`https://flagcdn.com/w20/${lang.flag}.png`} width="20" alt={lang.code} className="rounded-xs" />
@@ -426,8 +424,7 @@ export function SiteHeader() {
                           {[
                             { code: 'pt-BR', flag: 'br', label: 'PT-BR' },
                             { code: 'en-US', flag: 'us', label: 'EN-US' },
-                            { code: 'es-ES', flag: 'es', label: 'ES-ES' },
-                            { code: 'ru-RU', flag: 'ru', label: 'RU-RU' }
+                            { code: 'es-ES', flag: 'es', label: 'ES-ES' }
                           ].map((lang) => (
                             <Button 
                               key={lang.code}

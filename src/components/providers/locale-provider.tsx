@@ -10,9 +10,8 @@ import frFR from "@/lib/locales/fr-FR.json";
 import jaJP from "@/lib/locales/ja-JP.json";
 import zhCN from "@/lib/locales/zh-CN.json";
 import arAE from "@/lib/locales/ar-AE.json";
-import ruRU from "@/lib/locales/ru-RU.json";
 
-export type Locale = "pt-BR" | "en-US" | "es-ES" | "de-DE" | "fr-FR" | "ja-JP" | "zh-CN" | "ar-AE" | "ru-RU";
+export type Locale = "pt-BR" | "en-US" | "es-ES" | "de-DE" | "fr-FR" | "ja-JP" | "zh-CN" | "ar-AE";
 
 type Translations = Record<string, any>;
 
@@ -25,7 +24,6 @@ const translations: Record<Locale, Translations> = {
   "ja-JP": jaJP,
   "zh-CN": zhCN,
   "ar-AE": arAE,
-  "ru-RU": ruRU,
 };
 
 
