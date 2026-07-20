@@ -31,7 +31,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/nexus-health',
     '/nexus-health/clinic',
     '/nexus-health/pharma',
-    '/nexus-health/estima'
+    '/nexus-health/estima',
+    '/nexus-empresas/construtech/orcamento',
+    '/nexus-empresas/construtech/diario',
+    '/nexus-empresas/construtech/equipamentos',
+    '/nexus-empresas/construtech/seguranca',
+    '/nexus-empresas/construtech/vistoria',
+    '/nexus-empresas/martech/brand',
+    '/nexus-empresas/martech/content',
+    '/nexus-empresas/martech/ads',
+    '/nexus-empresas/martech/crm',
+    '/nexus-empresas/martech/roi'
   ];
 
   const allRoutes = [...staticRoutes];

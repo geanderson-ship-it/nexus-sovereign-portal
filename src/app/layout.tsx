@@ -20,20 +20,20 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Nexus Treinamento | Empresa de Tecnologia, Inovação e Evolução',
-  description: 'A Nexus Treinamento é uma empresa de tecnologia, inovação e evolução. Impulsione sua empresa com as soluções mais avançadas de Inteligência Artificial do mercado.',
-  keywords: 'nexus treinamento, empresa de tecnologia, inovação, evolução, inteligência artificial, dante safra, magadot, orion, tecnologia para empresas',
+  title: 'Nexus Holding Group | Tecnologia, Treinamento e Inteligência Artificial',
+  description: 'A Nexus Holding Group (Nexus Treinamento) é um ecossistema de tecnologia, inovação corporativa e soluções de ponta. Impulsione sua empresa com as nossas ferramentas de Inteligência Artificial.',
+  keywords: 'nexus, nexus holding, nexus holding group, nexus group, nexus treinamento, nexus tecnologia, tecnologia, holding de tecnologia, empresa de tecnologia, inovação corporativa, inteligência artificial, IA, B2B, dante safra, inova moda, inova revenda, vitrine inovadora, nexus rotas, martech, construtech, legaltech',
   openGraph: {
-    title: 'Nexus Treinamento | Tecnologia, Inovação e Evolução',
-    description: 'A Nexus Treinamento é uma empresa de tecnologia, inovação e evolução focada em soluções avançadas de Inteligência Artificial.',
+    title: 'Nexus Holding Group | Tecnologia e Inovação',
+    description: 'A Nexus (Holding Group & Treinamento) é uma empresa de tecnologia e evolução focada em soluções avançadas de Inteligência Artificial.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
-    siteName: 'Nexus Treinamento',
+    siteName: 'Nexus Holding Group',
     images: [
       {
         url: '/nexus-hero-hologram.png',
         width: 1200,
         height: 630,
-        alt: 'Nexus Treinamento - Tecnologia e Inovação',
+        alt: 'Nexus Holding Group - Tecnologia e Inovação',
       },
     ],
     locale: 'pt-BR',
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexus Treinamento | Tecnologia, Inovação e Evolução',
-    description: 'A Nexus Treinamento é uma empresa de tecnologia, inovação e evolução focada em Inteligência Artificial.',
+    title: 'Nexus Holding Group | Tecnologia e Inteligência Artificial',
+    description: 'O grupo Nexus é especialista em tecnologia, inovação e evolução focada em Inteligência Artificial.',
     images: ['/nexus-hero-hologram.png'],
   },
   manifest: '/manifest.json',

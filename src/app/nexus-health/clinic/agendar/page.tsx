@@ -54,7 +54,11 @@ export default function AgendarPage() {
   const [pixCopiado, setPixCopiado] = useState(false);
   const [confirmado, setConfirmado] = useState(false);
 
-  const dias = useMemo(() => gerarDias(), []);
+  const [dias, setDias] = useState<Date[]>([]);
+  useEffect(() => {
+    setDias(gerarDias());
+  }, []);
+
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Fallback para Autoplay bloqueado (Chrome/Safari em nova aba)

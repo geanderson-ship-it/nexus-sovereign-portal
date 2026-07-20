@@ -24,12 +24,6 @@ import { isAdminUser } from '@/lib/constants';
 import { useLocale } from '@/hooks/use-locale';
 
 function TextLogo() {
-  const pathname = usePathname();
-  const isPremiumPath = pathname?.includes('/energia') || 
-                        pathname?.includes('/agro') || 
-                        pathname?.includes('/intelligence') || 
-                        pathname?.includes('/nexus-empresas');
-
   return (
     <div className="flex flex-col items-start md:items-center relative group cursor-pointer">
       {/* Efeito UAU de Brilho Fundo */}
@@ -40,7 +34,7 @@ function TextLogo() {
           Nexus
         </span>
         <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-3xl mt-0 md:mt-1 whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-          {isPremiumPath ? 'Holding Group' : 'Treinamento'}
+          Holding Group
         </span>
       </span>
     </div>
@@ -293,6 +287,8 @@ export function SiteHeader() {
                       ? 'bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/proposito'
                       ? 'bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold capitalize tracking-wide'
+                      : item.href === '/about'
+                      ? 'bg-blue-500/10 border border-blue-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(59,130,246,0.15)] hover:shadow-[0_0_25px_rgba(59,130,246,0.4)] hover:bg-blue-500/20 text-white font-bold capitalize tracking-wide'
                       : pathname === item.href 
                         ? 'bg-primary/10 border border-primary/30 px-3 py-1.5 rounded-md shadow-[0_0_10px_rgba(37,99,235,0.15)] text-foreground font-semibold capitalize tracking-wide' 
                         : 'bg-white/5 border border-white/5 px-3 py-1.5 rounded-md hover:bg-white/10 hover:border-white/10 text-foreground/70 hover:text-foreground font-medium capitalize tracking-wide'
@@ -329,23 +325,7 @@ export function SiteHeader() {
                     <TextLogo />
                   </div>
                   <nav className="flex-1 overflow-y-auto p-4 flex flex-col gap-1">
-                    {/* Atendimento no Mobile */}
-                    <details className="group/atendimento border border-amber-500/30 rounded-lg bg-amber-500/5 mb-3 overflow-hidden shadow-[0_0_8px_rgba(245,158,11,0.1)]">
-                      <summary className="cursor-pointer p-3 text-sm font-bold text-white tracking-wide hover:bg-amber-500/10 transition-colors list-none flex justify-between items-center [&::-webkit-details-marker]:hidden">
-                        <span>Atendimento</span>
-                        <ChevronDown className="h-4 w-4 transition-transform group-open/atendimento:rotate-180 text-amber-500" />
-                      </summary>
-                      <div className="flex flex-col gap-1 px-2 pb-2 bg-black/20">
-                        <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-between p-2 rounded-md text-white/80 hover:text-white hover:bg-amber-500/20 text-sm transition-colors group/sub">
-                          <span>{t('navContato') || 'Contato Comercial'}</span>
-                          <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 transition-all text-amber-500" />
-                        </Link>
-                        <Link href="/suporte" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-between p-2 rounded-md text-white/80 hover:text-white hover:bg-amber-500/20 text-sm transition-colors group/sub">
-                          <span>{t('navSuporte') || 'Central de Suporte'}</span>
-                          <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 transition-all text-amber-500" />
-                        </Link>
-                      </div>
-                    </details>
+
 
                     {mainNav.map((item) => {
                       return (
@@ -396,6 +376,19 @@ export function SiteHeader() {
                         </Link>
                       );
                     })}
+                    
+                    {/* Atendimento no Mobile (Fixo no final da lista) */}
+                    <div className="flex flex-col gap-1 mt-4 mb-2">
+                      <div className="px-3 py-1 text-[10px] font-black uppercase tracking-widest text-amber-500/70">Atendimento</div>
+                      <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-between p-3 rounded-lg transition-all duration-200 bg-amber-500/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 capitalize tracking-wide">
+                        <span className="text-sm tracking-wide">{t('navContato') || 'Contato Comercial'}</span>
+                        <ArrowRight className="h-4 w-4 text-amber-500" />
+                      </Link>
+                      <Link href="/suporte" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-between p-3 rounded-lg transition-all duration-200 bg-amber-600/10 text-white drop-shadow-[0_0_8px_rgba(217,119,6,0.8)] font-bold border border-amber-600/50 capitalize tracking-wide">
+                        <span className="text-sm tracking-wide">{t('navSuporte') || 'Central de Suporte'}</span>
+                        <ArrowRight className="h-4 w-4 text-amber-600" />
+                      </Link>
+                    </div>
                   </nav>
                   <div className="p-4 mt-auto border-t border-border/50">
                     <details className="group border border-primary/20 rounded-lg bg-background/50 overflow-hidden">

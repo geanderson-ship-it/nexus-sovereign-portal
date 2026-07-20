@@ -35,6 +35,9 @@ export function SovereignShowcase({
 
   // Set default view: clients only see demo, admins can toggle but start with interactive view
   useEffect(() => {
+    // Force scroll to top on page load
+    window.scrollTo(0, 0);
+    
     if (hasSalesAccess) {
       setShowDemoOnly(false);
     } else {

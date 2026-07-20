@@ -61,7 +61,10 @@ export default function AgendarEstimaPage() {
   const [pagamento, setPagamento] = useState<"pix" | "cartao">("pix");
   const [pixCopiado, setPixCopiado] = useState(false);
 
-  const dias = useMemo(() => gerarDias(), []);
+  const [dias, setDias] = useState<Date[]>([]);
+  useEffect(() => {
+    setDias(gerarDias());
+  }, []);
 
   function fecharModal() {
     setActiveModal(null);

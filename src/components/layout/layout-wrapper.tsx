@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
-import { FloatingSupport } from '@/components/ui/floating-support';
 import { ExitIntentPopup } from '@/components/ui/exit-intent-popup';
 import { useNexusTracker } from '@/hooks/use-nexus-tracker';
 import { useUser } from '@/auth';
@@ -31,7 +30,6 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
     return (
       <main className="flex-1 overflow-hidden relative">
         {children}
-        {!pathname?.startsWith('/atena') && !pathname?.startsWith('/intelligence/global') && <FloatingSupport />}
       </main>
     );
   }
@@ -41,7 +39,6 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
       <SiteHeader />
       <main className="flex-1 pt-32">{children}</main>
       <SiteFooter />
-      {!pathname?.startsWith('/atena') && !pathname?.startsWith('/intelligence/global') && <FloatingSupport />}
       {user && !hasAsked && (
         <NicknameModal
           open={true}

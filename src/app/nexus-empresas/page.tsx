@@ -1,6 +1,6 @@
 'use client';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -205,7 +205,7 @@ const legalModules = [
     icon: BrainCircuit, color: 'sky',
     features: ['Análise de perfil decisório por juiz', 'Previsibilidade estatística de ganho', 'Sugestão de jurisprudência matadora', 'Mapeamento de varas hostis'],
     image: '/images/jurimetria_b2b.jpg',
-    gtag: 'nexus_empresas_jurimetria', href: '',
+    gtag: 'nexus_empresas_jurimetria', href: '/nexus-empresas/legaltech/jurimetria',
     licenca: 'R$ 18.000,00', suporte: 'R$ 800,00/mês',
     roi: 'Aumento imediato na taxa de ganho de processos.',
     frozen: false,
@@ -219,7 +219,7 @@ const legalModules = [
     icon: FileText, color: 'emerald',
     features: ['Geração instantânea de contratos', 'Revisão ortográfica e legal automática', 'Workflow de aprovações (CLM)', 'Assinatura digital integrada'],
     image: '/images/contratos_b2b.jpg',
-    gtag: 'nexus_empresas_contratos', href: '',
+    gtag: 'nexus_empresas_contratos', href: '/nexus-empresas/legaltech/contratos',
     licenca: 'R$ 12.000,00', suporte: 'R$ 500,00/mês',
     roi: 'Reduz o tempo de emissão de contratos de dias para minutos.',
     frozen: false,
@@ -247,7 +247,7 @@ const legalModules = [
     icon: Users, color: 'pink',
     features: ['Alerta de risco de assédio/burnout', 'Auditoria de inconsistências de ponto', 'Previsão de ações trabalhistas', 'Adequação automática a convenções sindicais'],
     image: '/images/labor_b2b.jpg',
-    gtag: 'nexus_empresas_trabalhista', href: '',
+    gtag: 'nexus_empresas_trabalhista', href: '/nexus-empresas/legaltech/trabalhista',
     licenca: 'R$ 15.000,00', suporte: 'R$ 700,00/mês',
     roi: 'Se paga ao evitar o primeiro litígio trabalhista.',
     frozen: false,
@@ -261,7 +261,7 @@ const legalModules = [
     icon: ShieldCheck, color: 'violet',
     features: ['Mapeamento de dados sensíveis em tempo real', 'Bloqueio de vazamentos (DLP)', 'Geração de relatórios de impacto', 'Treinamento automatizado de equipe'],
     image: '/images/compliance_b2b.jpg',
-    gtag: 'nexus_empresas_compliance', href: '',
+    gtag: 'nexus_empresas_compliance', href: '/nexus-empresas/legaltech/compliance',
     licenca: 'R$ 20.000,00', suporte: 'R$ 900,00/mês',
     roi: 'Evita multas milionárias da ANPD.',
     frozen: false,
@@ -278,7 +278,7 @@ const constructModules = [
     icon: Database, color: 'emerald',
     features: ['Extração automatizada de quantitativos (BIM)', 'Cotação multicanal inteligente', 'Previsão de flutuação de preços de insumos', 'Geração de curva S automatizada'],
     image: '/images/orcamento_const.jpg',
-    gtag: 'nexus_empresas_orcamento', href: '',
+    gtag: 'nexus_empresas_orcamento', href: '/nexus-empresas/construtech/orcamento',
     licenca: 'R$ 15.000,00', suporte: 'R$ 600,00/mês',
     roi: 'A economia média na primeira grande compra de aço cobre a licença.',
     frozen: false,
@@ -292,7 +292,7 @@ const constructModules = [
     icon: Eye, color: 'emerald',
     features: ['Transcrição de áudios técnicos', 'Reconhecimento de avanço físico por foto', 'Alerta de atraso de cronograma', 'Exportação automática em PDF'],
     image: '/images/diario_const.jpg',
-    gtag: 'nexus_empresas_diario', href: '',
+    gtag: 'nexus_empresas_diario', href: '/nexus-empresas/construtech/diario',
     licenca: 'R$ 12.000,00', suporte: 'R$ 500,00/mês',
     roi: 'Economiza 2 horas por dia do engenheiro residente.',
     frozen: false,
@@ -306,7 +306,7 @@ const constructModules = [
     icon: Truck, color: 'sky',
     features: ['Rastreamento GPS no canteiro', 'Cálculo de ociosidade e custo de locação', 'Alerta de manutenção preventiva', 'Controle de ferramentas menores com RFID'],
     image: '/images/equipamento_const.jpg',
-    gtag: 'nexus_empresas_equipamentos', href: '',
+    gtag: 'nexus_empresas_equipamentos', href: '/nexus-empresas/construtech/equipamentos',
     licenca: 'R$ 18.000,00', suporte: 'R$ 750,00/mês',
     roi: 'Reduz os custos de locação estendida desnecessária em 30%.',
     frozen: false,
@@ -320,7 +320,7 @@ const constructModules = [
     icon: ShieldCheck, color: 'amber',
     features: ['Detecção visual de ausência de capacete/cinto', 'Alerta de aproximação de maquinário', 'Registro inalterável de conformidade', 'Treinamentos curtos via WhatsApp'],
     image: '/images/seguranca_const.jpg',
-    gtag: 'nexus_empresas_seguranca', href: '',
+    gtag: 'nexus_empresas_seguranca', href: '/nexus-empresas/construtech/seguranca',
     licenca: 'R$ 25.000,00', suporte: 'R$ 1.100,00/mês',
     roi: 'Um acidente grave evitado vale milhões em vidas e multas.',
     frozen: false,
@@ -334,7 +334,7 @@ const constructModules = [
     icon: CheckCircle, color: 'pink',
     features: ['Painel transparente para o comprador', 'Abertura de chamados com fotos', 'Roteirização inteligente da assistência', 'Checklist digital de handover'],
     image: '/images/vistoria_const.jpg',
-    gtag: 'nexus_empresas_vistoria', href: '',
+    gtag: 'nexus_empresas_vistoria', href: '/nexus-empresas/construtech/vistoria',
     licenca: 'R$ 10.000,00', suporte: 'R$ 400,00/mês',
     roi: 'Reduz a taxa de rejeição na entrega de chaves em 50%.',
     frozen: false,
@@ -351,7 +351,7 @@ const creativeModules = [
     icon: Palette, color: 'pink',
     features: ['Análise semântica de concorrência', 'Geração de paletas e moodboards', 'Definição de tom de voz corporativo', 'Manual de marca dinâmico'],
     image: '/images/martech_brand.jpg',
-    gtag: 'nexus_empresas_brand', href: '',
+    gtag: 'nexus_empresas_brand', href: '/nexus-empresas/martech/brand',
     licenca: 'R$ 10.000,00', suporte: 'R$ 450,00/mês',
     roi: 'Aumento imediato na percepção de valor pelo cliente final.',
     frozen: false,
@@ -365,7 +365,7 @@ const creativeModules = [
     icon: Sparkles, color: 'violet',
     features: ['Geração de copy para alta conversão', 'Design automatizado de banners', 'Roteiros para vídeos comerciais', 'Revisão ortográfica e de tom'],
     image: '/images/martech_content.jpg',
-    gtag: 'nexus_empresas_content', href: '',
+    gtag: 'nexus_empresas_content', href: '/nexus-empresas/martech/content',
     licenca: 'R$ 8.500,00', suporte: 'R$ 380,00/mês',
     roi: 'Substitui o custo fixo de agências terceirizadas básicas.',
     frozen: false,
@@ -379,7 +379,7 @@ const creativeModules = [
     icon: ArrowRight, color: 'sky',
     features: ['Otimização de lances em tempo real', 'Testes A/B multivariados automáticos', 'Alocação de orçamento preditiva', 'Criação de públicos semelhantes (Lookalike)'],
     image: '/images/martech_ads.jpg',
-    gtag: 'nexus_empresas_ads', href: '',
+    gtag: 'nexus_empresas_ads', href: '/nexus-empresas/martech/ads',
     licenca: 'R$ 15.000,00', suporte: 'R$ 600,00/mês',
     roi: 'Reduz o Custo de Aquisição de Clientes (CAC) em até 40%.',
     frozen: false,
@@ -393,7 +393,7 @@ const creativeModules = [
     icon: Users, color: 'emerald',
     features: ['Scoring de leads por IA', 'Aquecimento automático (Nurturing)', 'Integração direta com WhatsApp', 'Agendamento de reuniões sem fricção'],
     image: '/images/martech_crm.jpg',
-    gtag: 'nexus_empresas_crm', href: '',
+    gtag: 'nexus_empresas_crm', href: '/nexus-empresas/martech/crm',
     licenca: 'R$ 12.000,00', suporte: 'R$ 500,00/mês',
     roi: 'Dobra a taxa de conversão do time de vendas interno.',
     frozen: false,
@@ -407,7 +407,7 @@ const creativeModules = [
     icon: BarChart3, color: 'amber',
     features: ['Cálculo de ROI em tempo real', 'Atribuição multicanal de vendas', 'Previsão de faturamento futuro', 'Relatórios automatizados para a diretoria'],
     image: '/images/martech_roi.jpg',
-    gtag: 'nexus_empresas_roi', href: '',
+    gtag: 'nexus_empresas_roi', href: '/nexus-empresas/martech/roi',
     licenca: 'R$ 18.000,00', suporte: 'R$ 700,00/mês',
     roi: 'Se paga evitando investimentos às cegas em marketing ineficiente.',
     frozen: false,
@@ -431,8 +431,15 @@ type Mod = typeof industrialModules[0];
 export default function NexusEmpresasPage() {
   const [aberto, setAberto] = useState<Mod | null>(null);
   const [modalTab, setModalTab] = useState<'detalhes' | 'investimento'>('detalhes');
-  // Se activeMacro for null, exibe apenas a vitrine principal (4 macro-cards)
   const [activeMacro, setActiveMacro] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const macro = params.get('macro');
+    if (macro) {
+      setActiveMacro(macro);
+    }
+  }, []);
 
   // Determina quais módulos renderizar baseado na macro selecionada
   const activeModules = (() => {
@@ -524,6 +531,7 @@ export default function NexusEmpresasPage() {
                       onClick={() => {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                         setActiveMacro(macro.id);
+                        window.history.pushState(null, '', `?macro=${macro.id}`);
                       }}
                       className="relative h-64 md:h-96 w-full rounded-[40px] overflow-hidden border border-slate-800 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl"
                     >
@@ -575,7 +583,10 @@ export default function NexusEmpresasPage() {
             <div className="max-w-7xl mx-auto px-4">
               {/* Botão de Voltar */}
               <button 
-                onClick={() => setActiveMacro(null)}
+                onClick={() => {
+                  setActiveMacro(null);
+                  window.history.pushState(null, '', window.location.pathname);
+                }}
                 className="group flex items-center gap-2 text-slate-400 hover:text-white mb-8 transition-colors"
               >
                 <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
