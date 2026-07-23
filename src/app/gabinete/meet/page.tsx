@@ -85,6 +85,8 @@ export default function MeetSoberanoPage() {
   const [roomId, setRoomId] = useState('nhg-meet-soberano-default');
   const [isRemoteConnected, setIsRemoteConnected] = useState(false);
   const [remotePeerName, setRemotePeerName] = useState('Aguardando...');
+  const [isJoiner, setIsJoiner] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState('Inicializando...');
   const processedSignalsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
@@ -92,7 +94,10 @@ export default function MeetSoberanoPage() {
     if (typeof window !== 'undefined') {
       const searchParams = new URLSearchParams(window.location.search);
       const room = searchParams.get('room') || 'nhg-meet-soberano-default';
+      const join = searchParams.get('join') === 'true';
       setRoomId(room);
+      setIsJoiner(join);
+      setConnectionStatus(join ? 'Aguardando convite do Host...' : 'Criando sala e aguardando Ivoni...');
     }
   }, []);
 
