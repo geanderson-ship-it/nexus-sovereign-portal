@@ -6,7 +6,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { 
   Lock, Mic, MicOff, Video, VideoOff, PhoneOff, Languages, 
-  Sparkles, Globe, Shield, Play, VolumeX, Terminal, User
+  Sparkles, Globe, Shield, Play, VolumeX, Terminal, User, Share2, Clipboard
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -153,6 +153,15 @@ export default function MeetSoberanoPage() {
           console.error("Mic permission request failed:", err);
           updateMicError("Acesso ao microfone recusado. Por favor, clique no cadeado na barra de endereços para autorizar o microfone.");
         });
+    }
+  };
+
+  // Copiar link de convite para a chamada WebRTC
+  const copyJoinLink = () => {
+    if (typeof window !== 'undefined') {
+      const inviteUrl = `${window.location.origin}/gabinete/meet?room=${roomId}&join=true`;
+      navigator.clipboard.writeText(inviteUrl);
+      alert('Link de convite copiado com sucesso! Envie para a Ivoni para ela se conectar com você.');
     }
   };
   
@@ -922,11 +931,18 @@ export default function MeetSoberanoPage() {
             </div>
           )}
 
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-900/60 font-mono text-xs text-slate-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            Tradutor Integrado: ON
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-indigo-500/20 bg-indigo-950/20 font-mono text-xs text-indigo-400">
+            <span className={`w-2 h-2 rounded-full animate-pulse ${isRemoteConnected ? "bg-emerald-500" : "bg-amber-500"}`} />
+            <span>{connectionStatus}</span>
           </div>
-          
+
+          {!isJoiner && (
+            <Button onClick={copyJoinLink} size="sm" variant="outline" className="border-indigo-500/30 hover:bg-indigo-950 hover:text-white text-indigo-400 gap-2 text-xs font-bold shadow-lg shadow-indigo-500/10">
+              <Share2 className="w-4 h-4" />
+              Convidar Conexão
+            </Button>
+          )}
+
           <Link href="/gabinete">
             <Button size="sm" variant="outline" className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs">
               Voltar ao Gabinete
