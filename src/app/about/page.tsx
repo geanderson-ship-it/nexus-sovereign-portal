@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLocale } from '@/hooks/use-locale';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { getVideoUrl } from '@/lib/video-helper';
 
 export default function AboutPage() {
   const { t } = useLocale();
@@ -114,7 +115,7 @@ export default function AboutPage() {
           <h3 className="text-xl font-bold text-blue-400 mb-8 tracking-widest uppercase text-center">Inteligência Artificial Exclusiva</h3>
           <div className="w-full max-w-4xl px-4">
             {/* Atena */}
-            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Atena.mp4')} className="flex flex-col items-center p-8 bg-blue-950/20 border border-blue-500/30 rounded-3xl hover:border-blue-400/60 hover:bg-blue-950/30 transition-all shadow-[0_0_40px_rgba(37,99,235,0.15)] relative overflow-hidden group cursor-pointer">
+            <div onClick={() => setActiveVideo(getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Atena.mp4', 'Atena - Video.mp4'))} className="flex flex-col items-center p-8 bg-blue-950/20 border border-blue-500/30 rounded-3xl hover:border-blue-400/60 hover:bg-blue-950/30 transition-all shadow-[0_0_40px_rgba(37,99,235,0.15)] relative overflow-hidden group cursor-pointer">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-blue-500/10 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
               <div className="relative w-72 h-72 md:w-[400px] md:h-[400px] mb-8 rounded-2xl overflow-hidden border-2 border-blue-500/50 shadow-[0_0_25px_rgba(37,99,235,0.4)]">
                 <Image src="/Sobre/atena.png" alt="Atena" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -156,7 +157,7 @@ export default function AboutPage() {
             </Link>
 
             {/* Dante */}
-            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Dante.mp4')} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <div onClick={() => setActiveVideo(getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Dante.mp4', 'Dante - Segurança.mp4'))} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/dante.png" alt="Dante" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -171,7 +172,7 @@ export default function AboutPage() {
             </div>
 
             {/* Djeny */}
-            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Djeny.mp4')} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <div onClick={() => setActiveVideo(getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Djeny.mp4', 'Djeny - Design.mp4'))} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/djeny.png" alt="Djeny" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -201,7 +202,7 @@ export default function AboutPage() {
             </Link>
 
             {/* Isadora */}
-            <div onClick={() => setActiveVideo('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Isadora.mp4')} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
+            <div onClick={() => setActiveVideo(getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Isadora.mp4', 'Isadora - Embaixadora comercial.mp4'))} className="flex flex-col items-center text-center p-8 bg-slate-900/50 border border-slate-800 rounded-3xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.4)] group cursor-pointer">
               <div className="relative w-48 h-48 md:w-64 md:h-64 mb-6 rounded-2xl overflow-hidden border-2 border-slate-700">
                 <Image src="/Sobre/isadora.png" alt="Isadora" fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-blue-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

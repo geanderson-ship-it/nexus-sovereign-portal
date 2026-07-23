@@ -20,7 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/proposito',
     '/vitrine-inovadora',
     '/energia',
-    '/nexus-b2b',
     '/nexus-empresas',
     '/agro',
     '/nexus-rotas',

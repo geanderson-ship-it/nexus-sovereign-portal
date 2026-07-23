@@ -8,9 +8,10 @@ interface CustomVideoPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElem
   src: string;
   className?: string;
   containerClassName?: string;
+  playButtonClassName?: string;
 }
 
-export function CustomVideoPlayer({ src, className, containerClassName, ...props }: CustomVideoPlayerProps) {
+export function CustomVideoPlayer({ src, className, containerClassName, playButtonClassName, ...props }: CustomVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -83,7 +84,10 @@ export function CustomVideoPlayer({ src, className, containerClassName, ...props
       )}>
         <button 
           onClick={(e) => { e.stopPropagation(); togglePlay(); }}
-          className="pointer-events-auto flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-primary/80 text-white backdrop-blur-md transition-transform hover:scale-110 hover:bg-primary shadow-[0_0_30px_rgba(37,99,235,0.5)]"
+          className={cn(
+            "pointer-events-auto flex h-16 w-16 md:h-20 md:w-20 items-center justify-center rounded-full bg-primary/80 text-white backdrop-blur-md transition-transform hover:scale-110 hover:bg-primary shadow-[0_0_30px_rgba(37,99,235,0.5)]",
+            playButtonClassName
+          )}
         >
           {isPlaying ? (
             <Pause className="h-6 w-6 md:h-8 md:w-8 fill-current" />

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Phone, CheckCircle, ArrowRight, ShoppingBag, TrendingUp, Users, Smartphone, BarChart3, MessageSquare, Zap, Target, Award, PlayCircle, Store, CarFront, Gauge, Banknote } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 import * as gtag from '@/lib/gtag';
 
 const WHATSAPP_URL = 'https://wa.me/5551999799582';
@@ -91,7 +92,7 @@ export default function InovaRevendaPage() {
             
             <div className="w-full rounded-2xl overflow-hidden border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.3)] bg-black/50 relative mb-6">
               <CustomVideoPlayer 
-                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Clara_Revenda_Apresentacao.mp4" 
+                src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Clara_Revenda_Apresentacao.mp4", "Clara_Revenda_Apresentacao.mp4")} 
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -116,7 +117,7 @@ export default function InovaRevendaPage() {
                   </DialogHeader>
                   <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-amber-500/30 bg-black shadow-[0_0_30px_rgba(245,158,11,0.2)]">
                     <CustomVideoPlayer 
-                      src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Clara_Inova_Revenda_Detalhado.mp4" 
+                      src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Clara_Inova_Revenda_Detalhado.mp4", "Clara_Inova_Revenda_Detalhado.mp4")} 
                       className="w-full h-full object-cover"
                     />
                   </div>

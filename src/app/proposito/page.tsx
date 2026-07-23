@@ -8,6 +8,7 @@ import { Heart, ShieldCheck, Sparkles, HandHeart, Globe, ArrowRight, FileText, B
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 export default function PropositoPage() {
   return (
@@ -36,7 +37,7 @@ export default function PropositoPage() {
             {/* Aurora Video Presentation */}
             <div className="relative w-full max-w-4xl mx-auto overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(225,29,72,0.2)] bg-black/50 mb-12">
               <CustomVideoPlayer 
-                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Social/Aurora_Social_Full.mp4" 
+                src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Social/Aurora_Social_Full.mp4", "Aurora_Social_Full.mp4")} 
                 className="aspect-video"
               />
             </div>

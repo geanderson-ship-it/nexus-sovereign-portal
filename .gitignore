@@ -4,6 +4,8 @@
 node_modules/
 .next/
 out/
+.vercel
+
 # Archives and Large Files
 *.zip
 *.rar
@@ -12,7 +14,7 @@ out/
 *.pem
 backup.jpg
 parte_*
-.vercel
+*.mp4
 
 # Debug and Temporary Files
 tsc_output.txt
@@ -21,6 +23,10 @@ tsc_final_utf8.txt
 test-*.ts
 *.log
 .DS_Store
+/scratch/
+/data/
+/public/uploads/
+
 # Large media files
 public/Agro/Dante_safra.mp4
 public/Nexus Empresas/Nexus_B2B.mp4

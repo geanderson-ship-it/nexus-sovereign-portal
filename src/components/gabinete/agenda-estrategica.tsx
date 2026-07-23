@@ -102,22 +102,34 @@ export function AgendaEstrategica() {
     desfecho: 'Em Aberto'
   });
 
-  // Carregar dados salvos no navegador (localStorage)
+  // Carregar dados salvos no banco de dados compartilhado (API)
   useEffect(() => {
     setIsMounted(true);
-    const saved = localStorage.getItem('nexus_agenda_v3'); // Atualizado para v3 para migrar os dados com os novos compromissos reais do usuário
-    if (saved) {
-      try {
-        setAgendamentos(JSON.parse(saved));
-      } catch (e) {
-        setAgendamentos(INITIAL_AGENDA);
-      }
-    } else {
-      setAgendamentos(INITIAL_AGENDA);
-    }
+    fetch('/api/agenda')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.appointments) {
+          setAgendamentos(data.appointments);
+        } else {
+          setAgendamentos(INITIAL_AGENDA);
+        }
+      })
+      .catch(err => {
+        console.error("Erro ao obter agenda compartilhada. Usando fallback de localStorage...", err);
+        const saved = localStorage.getItem('nexus_agenda_v3');
+        if (saved) {
+          try {
+            setAgendamentos(JSON.parse(saved));
+          } catch (e) {
+            setAgendamentos(INITIAL_AGENDA);
+          }
+        } else {
+          setAgendamentos(INITIAL_AGENDA);
+        }
+      });
   }, []);
 
-  // Salvar automaticamente sempre que houver mudança
+  // Salvar no localStorage local como backup secundário
   useEffect(() => {
     if (isMounted) {
       localStorage.setItem('nexus_agenda_v3', JSON.stringify(agendamentos));
@@ -136,36 +148,84 @@ export function AgendaEstrategica() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (confirm('Tem certeza que deseja apagar esta reunião do radar?')) {
+      const original = agendamentos;
       setAgendamentos(agendamentos.filter(a => a.id !== id));
+      
+      try {
+        const res = await fetch(`/api/agenda?id=${id}`, {
+          method: 'DELETE'
+        });
+        if (!res.ok) throw new Error("Erro de servidor.");
+      } catch (err) {
+        console.error("Falha ao apagar reunião no servidor, revertendo...", err);
+        setAgendamentos(original);
+        alert("Erro ao excluir reunião no banco de dados.");
+      }
     }
   };
 
-  const handleToggleStatus = (id: number, currentStatus: string) => {
+  const handleToggleStatus = async (id: number, currentStatus: string) => {
     const newStatus = currentStatus === 'Confirmado' ? 'Pendente' : 'Confirmado';
-    setAgendamentos(agendamentos.map(a => a.id === id ? { ...a, status: newStatus } : a));
+    const target = agendamentos.find(a => a.id === id);
+    if (!target) return;
+    
+    const updated = { ...target, status: newStatus };
+    const original = agendamentos;
+    
+    setAgendamentos(agendamentos.map(a => a.id === id ? updated : a));
+    
+    try {
+      const res = await fetch('/api/agenda', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      });
+      if (!res.ok) throw new Error("Erro de servidor.");
+    } catch (err) {
+      console.error("Falha ao alternar status no servidor, revertendo...", err);
+      setAgendamentos(original);
+      alert("Erro ao salvar status no banco de dados.");
+    }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!formData.evento || !formData.data || !formData.local) {
       alert('Por favor, preencha pelo menos o Evento, Data e Local.');
       return;
     }
 
+    const original = agendamentos;
+    let updatedList = [...agendamentos];
+    let targetItem: AgendaItem;
+
     if (editingId) {
-      // Edit
-      setAgendamentos(agendamentos.map(a => a.id === editingId ? { ...a, ...formData } as AgendaItem : a));
+      targetItem = { ...formData, id: editingId } as AgendaItem;
+      updatedList = agendamentos.map(a => a.id === editingId ? targetItem : a);
     } else {
-      // Create
-      const newItem: AgendaItem = {
+      targetItem = {
         ...formData,
         id: Date.now(),
       } as AgendaItem;
-      setAgendamentos([...agendamentos, newItem]);
+      updatedList = [...agendamentos, targetItem];
     }
     
+    setAgendamentos(updatedList);
     setIsModalOpen(false);
+
+    try {
+      const res = await fetch('/api/agenda', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(targetItem)
+      });
+      if (!res.ok) throw new Error("Erro de servidor.");
+    } catch (err) {
+      console.error("Falha ao salvar reunião no servidor, revertendo...", err);
+      setAgendamentos(original);
+      alert("Erro ao salvar dados no banco de dados.");
+    }
   };
 
   if (!isMounted) return null; // Previne hidratação incorreta

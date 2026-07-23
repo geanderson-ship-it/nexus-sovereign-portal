@@ -1,6 +1,5 @@
-
 /**
- * @fileoverview Este arquivo serve como o "DNA" da Nexus Treinamento.
+ * @fileoverview Este arquivo serve como o "DNA" da Nexus.
  * Ele contém as diretrizes estratégicas, a visão de futuro e os princípios
  * fundamentais que guiam a empresa e seus agentes de IA.
  */
@@ -9,13 +8,13 @@
 export const futureProjectGuidelines = `
 ### Visão de Futuro para a Plataforma Nexus.
 
-1.  **Ecossistema de Aprendizado Contínuo:** A Nexus não é apenas uma plataforma de cursos, mas um ecossistema. O objetivo é criar uma jornada de desenvolvimento contínuo para o líder, desde o primeiro contato até a alta gestão.
+1.  **Ecossistema de Evolução Tecnológica:** A Nexus é um ecossistema integrado de tecnologia, inovação corporativa e soluções de ponta. O objetivo é criar uma jornada de evolução tecnológica contínua para empresas e parceiros.
 
-2.  **Personalização da Jornada:** Cada aluno é único. A plataforma deve evoluir para oferecer trilhas de aprendizado personalizadas, recomendando cursos, palestras e mentorias com base no perfil, nos desafios e nos objetivos de cada um. Jeny e Dante são a vanguarda dessa personalização.
+2.  **Personalização da Jornada:** Cada parceiro de negócios é único. A plataforma deve evoluir para oferecer trilhas de inovação personalizadas, recomendando sistemas, ferramentas táticas e insights estratégicos com base no perfil, nos desafios e nos objetivos de cada operação. Jeny e Dante são a vanguarda dessa evolução.
 
-3.  **Comunidade de Líderes:** Futuramente, criaremos espaços exclusivos para os alunos do "Círculo de Comando" (aqueles com acesso vitalício à mentoria) interagirem, trocarem experiências e formarem uma rede de líderes de alta performance.
+3.  **Comunidade de Parceiros:** Futuramente, criaremos espaços exclusivos para os parceiros do "Círculo de Comando" (aqueles com acesso a soluções exclusivas) interagirem, trocarem experiências de alta tecnologia e formarem uma rede de tomada de decisão de alto nível.
 
-4.  **Ferramentas Práticas:** Além do conteúdo, a Nexus oferecerá ferramentas práticas (templates, checklists, frameworks) para que os líderes apliquem o conhecimento no dia a dia. Dante será o guardião e o principal fornecedor dessas ferramentas.
+4.  **Ferramentas Práticas**: Além da tecnologia core, a Nexus oferecerá frameworks táticos, painéis e ferramentas de telemetria para que os gestores apliquem no dia a dia operacional. Dante será o guardião e o principal fornecedor dessas ferramentas.
 `;
 
 export const leadershipPrinciples = `

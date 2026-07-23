@@ -20,12 +20,12 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Nexus Holding Group | Tecnologia, Treinamento e Inteligência Artificial',
-  description: 'A Nexus Holding Group (Nexus Treinamento) é um ecossistema de tecnologia, inovação corporativa e soluções de ponta. Impulsione sua empresa com as nossas ferramentas de Inteligência Artificial.',
-  keywords: 'nexus, nexus holding, nexus holding group, nexus group, nexus treinamento, nexus tecnologia, tecnologia, holding de tecnologia, empresa de tecnologia, inovação corporativa, inteligência artificial, IA, B2B, dante safra, inova moda, inova revenda, vitrine inovadora, nexus rotas, martech, construtech, legaltech',
+  title: 'Nexus Holding Group | Tecnologia, Inovação e Inteligência Artificial',
+  description: 'A Nexus Holding Group é um ecossistema de tecnologia, inovação corporativa e soluções de ponta. Impulsione sua empresa com as nossas ferramentas de Inteligência Artificial.',
+  keywords: 'nexus, nexus holding, nexus holding group, nexus group, nexus tecnologia, tecnologia, holding de tecnologia, empresa de tecnologia, inovação corporativa, inteligência artificial, IA, B2B, dante safra, inova moda, inova revenda, vitrine inovadora, nexus rotas, martech, construtech, legaltech',
   openGraph: {
     title: 'Nexus Holding Group | Tecnologia e Inovação',
-    description: 'A Nexus (Holding Group & Treinamento) é uma empresa de tecnologia e evolução focada em soluções avançadas de Inteligência Artificial.',
+    description: 'A Nexus Holding Group é uma empresa de tecnologia e evolução focada em soluções avançadas de Inteligência Artificial.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     siteName: 'Nexus Holding Group',
     images: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Nexus Holding Group | Tecnologia e Inteligência Artificial',
-    description: 'O grupo Nexus é especialista em tecnologia, inovação e evolução focada em Inteligência Artificial.',
+    description: 'O grupo Nexus Holding Group é especialista em tecnologia, inovação e evolução focada em Inteligência Artificial.',
     images: ['/nexus-hero-hologram.png'],
   },
   manifest: '/manifest.json',
@@ -120,7 +120,7 @@ export default function RootLayout({
               {
                 "@type": "Corporation",
                 "@id": "https://nexustreinamento.com/#organization",
-                "name": "Nexus Treinamento",
+                "name": "Nexus Holding Group",
                 "url": "https://nexustreinamento.com",
                 "logo": "https://nexustreinamento.com/nexus-hero-hologram.png",
                 "description": "Hub de Inovação e Inteligência Artificial. Soluções de ponta para empresas, governos e negócios focadas em evolução tecnológica e operacional.",

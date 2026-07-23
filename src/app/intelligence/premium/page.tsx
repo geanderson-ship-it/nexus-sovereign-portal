@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { useLocale } from '@/hooks/use-locale';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 export default function PremiumPage() {
   const { t } = useLocale();
@@ -49,7 +50,7 @@ export default function PremiumPage() {
           >
             <div className="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-violet-500/30 shadow-[0_0_50px_rgba(139,92,246,0.15)] bg-slate-950 mb-4">
               <CustomVideoPlayer 
-                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Stela.mp4" 
+                src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Stela.mp4", "Stela_Premium.mp4")} 
                 className="aspect-video"
               />
               <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-violet-500/30 rounded-full">
@@ -259,7 +260,7 @@ export default function PremiumPage() {
               {/* VIDEO PLAYER PARA MAGA DOT */}
               <div className="aspect-video w-full rounded-2xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm overflow-hidden relative shadow-[0_0_50px_rgba(139,92,246,0.1)]">
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Magadot.mp4" 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Magadot.mp4", "Magadot_Nexus.mp4")} 
                   className="w-full h-full object-cover pointer-events-auto relative z-50"
                 />
               </div>
@@ -443,7 +444,7 @@ export default function PremiumPage() {
               {/* VIDEO PLAYER PARA ORION */}
               <div className="aspect-video w-full rounded-2xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm overflow-hidden relative shadow-[0_0_50px_rgba(16,185,129,0.1)]">
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Orion.mp4" 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Orion.mp4", "orion_Premium.mp4")} 
                   className="w-full h-full object-cover pointer-events-auto relative z-50"
                 />
               </div>

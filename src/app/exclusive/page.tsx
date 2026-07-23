@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Shield, BrainCircuit, ShieldAlert, FileSearch, Building2, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 export default function ExclusiveHub() {
   return (
@@ -42,7 +43,7 @@ export default function ExclusiveHub() {
           >
             <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.2)] bg-black/50">
               <CustomVideoPlayer 
-                src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Stela.mp4" 
+                src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Stela.mp4", "Stela_Premium.mp4")} 
                 className="aspect-video"
               />
               <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/80 backdrop-blur-md border border-amber-500/40 rounded-full z-10 pointer-events-none">
@@ -109,7 +110,7 @@ export default function ExclusiveHub() {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Avila_Egide.mp4"
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Avila_Egide.mp4", "Tenente_Coronel_Avila.mp4")}
                   autoPlay muted loop playsInline
                   containerClassName="w-full h-full"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"
@@ -163,7 +164,7 @@ export default function ExclusiveHub() {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Artur_Pactum.mp4"
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Artur_Pactum.mp4", "Artur_Pactum.mp4")}
                   autoPlay muted loop playsInline
                   containerClassName="w-full h-full"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"
@@ -217,7 +218,7 @@ export default function ExclusiveHub() {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Orion.mp4"
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Orion.mp4", "orion_Premium.mp4")}
                   autoPlay muted loop playsInline
                   containerClassName="w-full h-full"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"
@@ -271,7 +272,7 @@ export default function ExclusiveHub() {
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Magadot_Nexus.mp4"
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Magadot_Nexus.mp4", "Magadot_Nexus.mp4")}
                   autoPlay muted loop playsInline
                   containerClassName="w-full h-full"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"

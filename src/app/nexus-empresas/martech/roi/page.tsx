@@ -87,7 +87,7 @@ export default function ROIPage() {
                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-2 relative z-10">LTV / CAC Ratio</p>
                <h2 className="text-5xl font-black text-white mb-2 relative z-10">8.4x</h2>
                <Badge className="bg-sky-500/10 text-sky-400 border-sky-500/20 relative z-10">
-                 Altamente Saudável (> 3.0x ideal)
+                Altamente Saudável (&gt; 3.0x ideal)
                </Badge>
              </div>
           </div>

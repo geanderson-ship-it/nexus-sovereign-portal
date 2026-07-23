@@ -4,9 +4,12 @@ import Link from 'next/link';
 import { Youtube, Facebook, Mail } from 'lucide-react';
 import { useLocale } from '@/hooks/use-locale';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
+import { usePathname } from 'next/navigation';
 
 export function SiteFooter() {
   const { t } = useLocale();
+  const pathname = usePathname() || '';
+  const isExcluded = pathname.includes('/about') || pathname.includes('/proposito') || pathname.includes('/exclusive/egide');
 
   return (
     <footer className="border-t border-border/40 py-6 md:py-8 relative z-50 mt-12 space-y-12">
@@ -33,6 +36,31 @@ export function SiteFooter() {
           </button>
         </div>
       </div>
+
+      {/* CARD AGENDA GLOBAL (NEXUS CYBER GOLD STYLE) */}
+      {!isExcluded && (
+        <div className="container max-w-2xl mx-auto mb-12">
+          <div className="bg-gradient-to-br from-[#080b10] via-[#3f2b05]/30 to-[#080b10] backdrop-blur-md border border-amber-500/30 rounded-3xl p-8 md:p-10 flex flex-col items-center text-center shadow-[0_0_40px_rgba(234,179,8,0.15)]">
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-900/60 to-amber-600/40 border border-amber-400/30 flex items-center justify-center mb-5 shadow-[0_0_30px_rgba(234,179,8,0.3)] relative overflow-hidden group">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.5)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <svg className="w-10 h-10 text-amber-400 drop-shadow-[0_0_12px_rgba(234,179,8,0.5)] relative z-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-black text-white mb-3 drop-shadow-lg">Agendamento de Demonstração Soberana</h3>
+            <p className="text-amber-200/80 text-sm leading-relaxed mb-8 max-w-lg font-medium">
+              Escolha de forma rápida o melhor dia e horário na nossa agenda oficial integrada para receber atendimento exclusivo de 1 hora.
+            </p>
+            <Link
+              href="/agenda"
+              className="relative flex items-center justify-center gap-3 bg-gradient-to-r from-amber-700/80 to-[#1f1704] border border-amber-400/40 hover:from-amber-600 hover:to-amber-900 text-yellow-400 hover:text-yellow-300 font-bold px-10 py-5 rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(234,179,8,0.2)] hover:shadow-[0_0_40px_rgba(234,179,8,0.4)] text-sm uppercase tracking-[0.15em] overflow-hidden group w-full sm:w-auto"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <span className="relative z-10">Reservar Data & Hora</span>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Salvaguarda Jurídica Global Nexus */}
       <div className="container">

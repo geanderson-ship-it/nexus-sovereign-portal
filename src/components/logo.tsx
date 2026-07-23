@@ -13,7 +13,7 @@ export function Logo({
   return (
     <Image
       src="/nexus-treinamento-logo.png"
-      alt="Nexus Treinamento Logo"
+      alt="Nexus Logo"
       width={width}
       height={height}
       className={cn('object-contain h-auto', className)}

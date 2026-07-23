@@ -1,5 +1,6 @@
 'use client';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 import React, { useState } from 'react';
 import Image from 'next/image';
@@ -253,7 +254,7 @@ export default function VitrineInovadoraPage() {
             >
               <div className="w-full max-w-3xl rounded-2xl overflow-hidden border border-fuchsia-500/30 shadow-[0_0_40px_rgba(217,70,239,0.3)] bg-black/50 relative mb-8">
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Vitrine/Camila_Vitrine_v2.mp4" 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Vitrine/Camila_Vitrine_v2.mp4", "Camila_Vitrine_v2.mp4")} 
                   className="w-full h-auto object-cover"
                 />
               </div>

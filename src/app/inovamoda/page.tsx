@@ -154,7 +154,7 @@ export default function InovaModaPage() {
               
               <div className="w-full rounded-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_40px_rgba(236,72,153,0.3)] bg-black/50 relative mb-4">
                 <CustomVideoPlayer 
-                  src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/InovaModa/Sofia_Inova_moda.mp4" 
+                  src="/Sofia_Inova_moda.mp4" 
                   className="w-full h-auto object-cover"
                 />
               </div>
@@ -179,7 +179,7 @@ export default function InovaModaPage() {
                     </DialogHeader>
                     <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-pink-500/30 bg-black shadow-[0_0_30px_rgba(236,72,153,0.2)]">
                       <CustomVideoPlayer 
-                        src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Sofia_Inova_Moda_Detalhado.mp4" 
+                        src="/Sofia_Inova_Moda_Detalhado.mp4" 
                         className="w-full h-full object-cover"
                       />
                     </div>

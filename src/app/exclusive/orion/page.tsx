@@ -8,6 +8,7 @@ import { Target, Shield, Cpu, ArrowLeft } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 export default function OrionOSPage() {
   return (
@@ -73,7 +74,7 @@ export default function OrionOSPage() {
         >
           <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-yellow-500/30 shadow-[0_0_60px_rgba(234,179,8,0.15)] bg-black/60">
             <CustomVideoPlayer 
-              src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Orion.mp4" 
+              src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Orion.mp4", "orion_Premium.mp4")} 
               className="aspect-video"
             />
             <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/70 backdrop-blur-md border border-yellow-500/40 rounded-full z-10">

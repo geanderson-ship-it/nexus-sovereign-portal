@@ -1,5 +1,6 @@
 'use client';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,7 +16,7 @@ const WHATSAPP_URL = 'https://wa.me/5551999799582';
 
 const macroCards = [
   { id: 'industria', title: 'INDÚSTRIA 4.0', subtitle: 'Manufatura, Logística e Automação', icon: Factory, color: 'sky', video: '/images/heitor_heygen_v2.mp4', avatarVideo: '/images/heitor_heygen_v2.mp4', overlayClass: 'bg-sky-900/20', glowClass: 'shadow-[0_0_80px_rgba(14,165,233,0.3)]', badgeClass: 'bg-sky-500/20 text-sky-400 border-sky-500/30' },
-  { id: 'legaltech', title: 'LEGALTECH', subtitle: 'Jurimetria e Contratos', icon: Scale, color: 'amber', video: 'https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4', avatarVideo: 'https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4', overlayClass: 'bg-amber-900/20', glowClass: 'shadow-[0_0_80px_rgba(245,158,11,0.3)]', badgeClass: 'bg-amber-500/20 text-amber-400 border-amber-500/30' },
+  { id: 'legaltech', title: 'LEGALTECH', subtitle: 'Jurimetria e Contratos', icon: Scale, color: 'amber', video: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4', 'Justine - Pactum.mp4'), avatarVideo: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4', 'Justine - Pactum.mp4'), overlayClass: 'bg-amber-900/20', glowClass: 'shadow-[0_0_80px_rgba(245,158,11,0.3)]', badgeClass: 'bg-amber-500/20 text-amber-400 border-amber-500/30' },
   { id: 'construtech', title: 'CONSTRUTECH', subtitle: 'Engenharia Civil e Arquitetura', icon: Building2, color: 'emerald', video: '/images/augusto_construtech.mp4', avatarVideo: '/images/augusto_construtech.mp4', overlayClass: 'bg-emerald-900/20', glowClass: 'shadow-[0_0_80px_rgba(16,185,129,0.3)]', badgeClass: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' },
   { id: 'martech', title: 'MARTECH', subtitle: 'Marketing, Design e Branding', icon: Palette, color: 'pink', video: '/images/djeny_martech.mp4', avatarVideo: '/images/djeny_martech.mp4', overlayClass: 'bg-pink-900/20', glowClass: 'shadow-[0_0_80px_rgba(236,72,153,0.3)]', badgeClass: 'bg-pink-500/20 text-pink-400 border-pink-500/30' },
 ];
@@ -489,7 +490,7 @@ export default function NexusEmpresasPage() {
                   {/* LOGO VIDEO MIRELA */}
                   <div className="relative w-full max-w-[1200px] flex flex-col items-center gap-6">
                     <div className="w-full aspect-video rounded-[40px] overflow-hidden border border-blue-500/20 bg-blue-500/5 shadow-[0_0_80px_rgba(0,212,255,0.15)]">
-                      <CustomVideoPlayer src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Mirela_Enterprise_Apresentacao.mp4" className="w-full h-full object-cover" />
+                      <CustomVideoPlayer src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Mirela_Enterprise_Apresentacao.mp4", "Mirela_Enterprise_Apresentacao.mp4")} className="w-full h-full object-cover" />
                     </div>
                     <Dialog>
                       <DialogTrigger asChild>
@@ -503,7 +504,7 @@ export default function NexusEmpresasPage() {
                           <DialogTitle className="text-lg font-black uppercase tracking-tight text-[#00D4FF]">Apresentação Completa Nexus B2B</DialogTitle>
                         </DialogHeader>
                         <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-blue-500/30 bg-black shadow-[0_0_30px_rgba(0,212,255,0.2)]">
-                          <CustomVideoPlayer src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Mirela_Enterprise_Detalhes.mp4" className="w-full h-full object-cover" />
+                          <CustomVideoPlayer src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Mirela_Enterprise_Detalhes.mp4", "Mirela_Enterprise_Detalhes.mp4")} className="w-full h-full object-cover" />
                         </div>
                         <p className="text-[10px] text-slate-500 mt-3 text-center uppercase tracking-widest font-bold">Apresentação Institucional Completa</p>
                       </DialogContent>

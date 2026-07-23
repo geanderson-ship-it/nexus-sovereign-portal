@@ -6,11 +6,16 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { 
   Lock, Mic, MicOff, Video, VideoOff, PhoneOff, Languages, 
-  Sparkles, Globe, Shield, Play, VolumeX, Terminal, User, Share2, Clipboard
+  Sparkles, Globe, Shield, Play, VolumeX, Terminal, User, Share2, Clipboard,
+  Mail, Send, Check, ExternalLink, Search, Plus
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // IDIOMAS DO CLIENTE DISPONÍVEIS
 const LANGUAGES = [
@@ -31,7 +36,7 @@ const MOCK_CLIENT_SPEECHES: Record<string, { original: string; translation: stri
     { original: "Excelente qualidade de áudio da ElevenLabs. O som está nítido e sem nenhuma microfonia na nossa videoconferência.", translation: "Excelente qualidade de áudio da ElevenLabs. O som está nítido e sem nenhuma microfonia na nossa videoconferência." }
   ],
   es: [
-    { original: "Hola Gean, es un placer saludarte. El proyecto de Nexus me parece sumamente innovador y queremos avanzar hoy mismo.", translation: "Olá Gean, é um prazer te saudar. O projeto da Nexus me parece extremamente inovador e queremos avançar hoje mesmo." },
+    { original: "Hola Gean, es un placer saludarte. El projeto de Nexus me parece sumamente innovador y queremos avanzar hoy mismo.", translation: "Olá Gean, é um prazer te saudar. O projeto da Nexus me parece extremamente inovador e queremos avançar hoje mesmo." },
     { original: "¿Qué garantías nos ofrece el sistema de segurança on-premise que han desarrollado para proteger nuestros datos estratégicos?", translation: "Que garantias nos oferece o sistema de segurança local que vocês desenvolveram para proteger nossos dados estratégicos?" },
     { original: "Estamos de acuerdo con los valores de la proposta. ¿Cuáles son los próximos pasos para la firma del contrato comercial?", translation: "Estamos de acordo com os valores da proposta. Quais são os próximos passos para a assinatura do contrato comercial?" },
     { original: "La demostración de la traducción soberana es impresionante. Resuelve un gran problema de comunicação internacional.", translation: "A demonstração da tradução soberana é impressionante. Resolve um grande problema de comunicação internacional." }
@@ -48,8 +53,8 @@ const MOCK_CLIENT_SPEECHES: Record<string, { original: string; translation: stri
     { original: "Pouvez-vous confirmer si le cryptage de bout en bout est bien actif lors de ces visioconférences ?", translation: "Você pode confirmer se a criptografia de ponta a ponta está realmente ativa durante estas videoconferências?" }
   ],
   it: [
-    { original: "Buongiorno Gean. La tecnologia Nexus è straordinaria, siamo pronti a firmare l'accordo di licenza oggi.", translation: "Bom dia Gean. A tecnologia Nexus é straordinaria, estamos prontos para assinar o acordo de licença hoje." },
-    { original: "Quali sono i requisiti tecnici per implementare la linea di comunicazione protetta sui nostri server aziendali?", translation: "Quais são os requisitos técnicos para implementar a linha de comunicação protegida nos nossos servidores corporativos?" }
+    { original: "Buongiorno Gean. La tecnologia Nexus è straordinaria, siamo pronti a firmare l'accordo di licenza oggi.", translation: "Bom dia Gean. A tecnologia Nexus é straordinaria, estamos prontos para assinar o acordo de licenza hoje." },
+    { original: "Quali sono i requisiti tecnici per implementare la linea di comunicazione protetta sui nossos server aziendali?", translation: "Quais são os requisitos técnicos para implementar a linha de comunicação protegida nos nossos servidores corporativos?" }
   ],
   de: [
     { original: "Guten Tag Gean. Wir sind sehr interessiert an einer langfristigen Kooperation mit der Nexus Holding Group.", translation: "Bom dia Gean. Estamos muito interessados em uma cooperação de longo prazo com o Nexus Holding Group." },
@@ -69,6 +74,32 @@ export default function MeetSoberanoPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
+
+  // ESTADOS DO CONVIDADO (GUEST)
+  const [hasEnteredName, setHasEnteredName] = useState(false);
+  const [guestName, setGuestName] = useState('');
+
+  const guestNameRef = useRef(guestName);
+  useEffect(() => {
+    guestNameRef.current = guestName;
+  }, [guestName]);
+
+  const userRef = useRef(user);
+  useEffect(() => {
+    userRef.current = user;
+  }, [user]);
+
+  // ESTADOS DO DIALOG DE CONVITE POR E-MAIL
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
+  const [leadsList, setLeadsList] = useState<any[]>([]);
+  const [selectedRecipient, setSelectedRecipient] = useState('');
+  const [customEmail, setCustomEmail] = useState('');
+  const [selectedSender, setSelectedSender] = useState('vendas@nexustreinamento.com');
+  const [customSender, setCustomSender] = useState('');
+  const [emailSubject, setEmailSubject] = useState('Convite para Reunião Virtual Segura — Nexus Holding Group');
+  const [isEmailCopied, setIsEmailCopied] = useState(false);
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
 
   // ESTADOS DA CHAMADA
   const [isMuted, setIsMuted] = useState(false);
@@ -161,19 +192,120 @@ export default function MeetSoberanoPage() {
     }
   };
 
-  // Copiar link de convite para a chamada WebRTC
-  const copyJoinLink = () => {
-    if (typeof window !== 'undefined') {
-      const inviteUrl = `${window.location.origin}/gabinete/meet?room=${roomId}&join=true`;
-      navigator.clipboard.writeText(inviteUrl);
-      alert('Link de convite copiado com sucesso! Envie para a Ivoni para ela se conectar com você.');
+  // URL de convite baseada no domínio oficial solicitado
+  const inviteUrl = `https://nexustreinamento.com/gabinete/meet?room=${roomId}&join=true`;
+
+  const agendaUrlWithParams = useMemo(() => {
+    const to = selectedRecipient === 'custom' ? customEmail : selectedRecipient;
+    const lead = leadsList.find(l => l.email === to);
+    
+    const params = new URLSearchParams();
+    if (to) params.set('email', to);
+    if (lead) {
+      params.set('name', `${lead.firstName || ''} ${lead.lastName || ''}`.trim());
+      params.set('company', lead.company || '');
+      // Prefere whatsapp se disponível, senão fone
+      params.set('phone', lead.phone || lead.whatsapp || '');
+    }
+    
+    const paramStr = params.toString();
+    return `https://nexustreinamento.com/agenda${paramStr ? '?' + paramStr : ''}`;
+  }, [selectedRecipient, customEmail, leadsList]);
+
+  const senderSignature = useMemo(() => {
+    if (selectedSender === 'custom') {
+      return customSender ? `${customSender} — Nexus Holding Group` : 'Diretoria — Nexus Holding Group';
+    }
+    if (selectedSender === 'vendas@nexustreinamento.com') return 'Vendas — Nexus Holding Group';
+    if (selectedSender === 'diretoria@nexustreinamento.com') return 'Diretoria — Nexus Holding Group';
+    return 'Pessoal — Nexus Holding Group';
+  }, [selectedSender, customSender]);
+
+  const emailBody = useMemo(() => {
+    return `Prezado(a),
+
+Gostaria de convidá-lo(a) para uma reunião virtual de apresentação e alinhamento estratégico das soluções da Nexus Holding Group.
+
+Para escolher o melhor dia e horário para o nosso atendimento exclusivo, por favor acesse a nossa agenda online no link abaixo:
+${agendaUrlWithParams}
+
+Ao confirmar o agendamento, o sistema gerará automaticamente o link seguro para a nossa videoconferência.
+
+Atenciosamente,
+${senderSignature}
+https://nexustreinamento.com`;
+  }, [agendaUrlWithParams, senderSignature]);
+
+  const handleOpenEmailClient = () => {
+    const to = selectedRecipient === 'custom' ? customEmail : selectedRecipient;
+    if (!to) {
+      alert("Por favor, selecione ou insira um e-mail de destinatário.");
+      return;
+    }
+    const params = new URLSearchParams();
+    params.set('subject', emailSubject);
+    params.set('body', emailBody);
+    const mailtoUrl = `mailto:${to}?${params.toString().replace(/\+/g, '%20')}`;
+    window.open(mailtoUrl, '_blank');
+  };
+
+  const handleCopyEmailBody = () => {
+    navigator.clipboard.writeText(emailBody);
+    setIsEmailCopied(true);
+    setTimeout(() => setIsEmailCopied(false), 2000);
+  };
+
+  const handleCopyOnlyLink = () => {
+    navigator.clipboard.writeText(inviteUrl);
+    setIsLinkCopied(true);
+    setTimeout(() => setIsLinkCopied(false), 2000);
+  };
+
+  const handleSendDirectEmail = async () => {
+    const to = selectedRecipient === 'custom' ? customEmail : selectedRecipient;
+    if (!to) {
+      alert("Por favor, selecione ou insira um e-mail de destinatário.");
+      return;
+    }
+    
+    setIsSendingEmail(true);
+    try {
+      const res = await fetch('/api/agenda/send-invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to,
+          sender: selectedSender,
+          subject: emailSubject,
+          body: emailBody
+        })
+      });
+      
+      if (!res.ok) throw new Error("Erro de servidor.");
+      const data = await res.json();
+      if (data.success) {
+        alert("E-mail de convite enviado com sucesso diretamente pelo SMTP!");
+        setIsInviteOpen(false);
+      } else {
+        throw new Error(data.error || "Erro desconhecido.");
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(`Falha ao enviar e-mail pelo SMTP corporativo: ${err.message || 'Erro de rede'}.`);
+    } finally {
+      setIsSendingEmail(false);
     }
   };
-  
-  // VERIFICAÇÃO DE AUTORIZAÇÃO
+
+  // VERIFICAÇÃO DE AUTORIZAÇÃO E CARREGAMENTO DE CONTATOS
   useEffect(() => {
     if (!isUserLoading) {
-      if (!user || !isAdminUser(user)) {
+      const searchParams = new URLSearchParams(window.location.search);
+      const isJoin = searchParams.get('join') === 'true';
+      
+      if (isJoin) {
+        setIsAuthorized(true);
+      } else if (!user || !isAdminUser(user)) {
         router.push('/login');
       } else {
         setIsAuthorized(true);
@@ -181,9 +313,35 @@ export default function MeetSoberanoPage() {
     }
   }, [user, isUserLoading, router]);
 
+  useEffect(() => {
+    if (isAuthorized) {
+      fetch('/api/contact')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.leads && data.leads.length > 0) {
+            setLeadsList(data.leads);
+            setSelectedRecipient(data.leads[0].email);
+          } else {
+            throw new Error("Sem leads cadastrados");
+          }
+        })
+        .catch(err => {
+          console.log("Usando leads de backup para convite:", err);
+          const backupLeads = [
+            { email: 'gilberto.schumann@passodosobrado.rs.gov.br', firstName: 'Gilberto', lastName: 'Schumann', company: 'Prefeitura de Passo do Sobrado' },
+            { email: 'luciana.v@grupocalcados.com.br', firstName: 'Luciana', lastName: 'Vanderlei', company: 'Polo Calçadista de Mato Leitão' },
+            { email: 'carlos.medeiros@ipe.rs.gov.br', firstName: 'Carlos', lastName: 'Medeiros', company: 'Prefeitura de Ipê' }
+          ];
+          setLeadsList(backupLeads);
+          setSelectedRecipient(backupLeads[0].email);
+        });
+    }
+  }, [isAuthorized]);
+
   // INICIALIZAR E POLICIA WebRTC (Conexão P2P + Sinalização DynamoDB)
   useEffect(() => {
     if (!isAuthorized || typeof window === 'undefined') return;
+    if (isJoiner && !hasEnteredName) return; // Aguarda o convidado digitar o nome
 
     let active = true;
     let pollInterval: NodeJS.Timeout;
@@ -340,6 +498,16 @@ export default function MeetSoberanoPage() {
       channel.onopen = () => {
         logToAtena(`[DataChannel] Canal de dados conectado.`);
         setConnectionStatus('Conexão de Dados Ativa!');
+        
+        // Envia identidade local
+        try {
+          channel.send(JSON.stringify({
+            type: 'identity',
+            name: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
+          }));
+        } catch (e) {
+          console.error("Erro ao enviar identidade inicial:", e);
+        }
       };
       channel.onclose = () => {
         logToAtena(`[DataChannel] Canal de dados fechado.`);
@@ -349,7 +517,9 @@ export default function MeetSoberanoPage() {
       channel.onmessage = async (event) => {
         try {
           const msg = JSON.parse(event.data);
-          if (msg.type === 'transcript') {
+          if (msg.type === 'identity') {
+            setRemotePeerName(msg.name);
+          } else if (msg.type === 'transcript') {
             await handleIncomingTranscript(msg.text, msg.senderName);
           }
         } catch (err) {
@@ -568,7 +738,21 @@ export default function MeetSoberanoPage() {
         localStreamRef.current.getTracks().forEach(t => t.stop());
       }
     };
-  }, [isAuthorized, roomId, isMuted, isCameraOn, selectedLanguage, isJoiner]);
+  }, [isAuthorized, roomId, isJoiner, hasEnteredName]);
+
+  // Controle em tempo real de mídias (Mute/Camera/Idioma) sem reconectar
+  useEffect(() => {
+    if (localStreamRef.current) {
+      const audioTrack = localStreamRef.current.getAudioTracks()[0];
+      if (audioTrack) {
+        audioTrack.enabled = (selectedLanguage.code === 'pt') && !isMuted;
+      }
+      const videoTrack = localStreamRef.current.getVideoTracks()[0];
+      if (videoTrack) {
+        videoTrack.enabled = isCameraOn;
+      }
+    }
+  }, [selectedLanguage, isMuted, isCameraOn]);
 
   // CONFIGURAÇÃO DO RECONHECIMENTO DE VOZ NATIVO (WEB SPEECH API)
   useEffect(() => {
@@ -666,12 +850,13 @@ export default function MeetSoberanoPage() {
     });
 
     // Transmitir o texto reconhecido via WebRTC DataChannel
+    // Transmitir o texto reconhecido via WebRTC DataChannel
     if (dataChannelRef.current && dataChannelRef.current.readyState === 'open') {
       try {
         dataChannelRef.current.send(JSON.stringify({
           type: 'transcript',
           text: text,
-          senderName: user?.name || 'Gean'
+          senderName: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
         }));
         console.log("WebRTC: Transcrição enviada via DataChannel:", text);
       } catch (err) {
@@ -963,6 +1148,55 @@ export default function MeetSoberanoPage() {
     setAtenaInsights(prev => [newInsight, ...prev.slice(0, 4)]);
   };
 
+  if (isJoiner && !hasEnteredName) {
+    return (
+      <div className="min-h-screen bg-[#02050a] text-slate-100 font-sans flex flex-col items-center justify-center relative overflow-hidden">
+        {/* Background Cyber Tech Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.015)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="relative z-10 w-full max-w-md p-8 rounded-3xl bg-black/60 backdrop-blur-xl border border-slate-800/85 shadow-[0_0_50px_rgba(99,102,241,0.15)] text-center">
+          <div className="w-16 h-16 rounded-2xl border border-indigo-500/40 bg-indigo-950/50 flex items-center justify-center text-indigo-400 font-bold text-2xl shadow-[0_0_20px_rgba(99,102,241,0.2)] mx-auto mb-6">
+            N
+          </div>
+          <h1 className="text-2xl font-black tracking-tight text-white mb-2 uppercase">
+            Nexus Meet <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1">Soberano</span>
+          </h1>
+          <p className="text-xs text-slate-400 mb-8 max-w-xs mx-auto leading-relaxed">
+            Identifique-se para entrar na videoconferência criptografada e traduzida da Nexus Holding Group.
+          </p>
+
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            if (guestName.trim()) {
+              setHasEnteredName(true);
+            }
+          }} className="space-y-4 text-left">
+            <div>
+              <label htmlFor="name-input" className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block mb-2">Seu Nome / Empresa</label>
+              <input
+                id="name-input"
+                type="text"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                placeholder="Ex: Ivoni (Diretora)"
+                required
+                className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500 transition-colors shadow-inner"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={!guestName.trim()}
+              className="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-bold h-12 rounded-xl transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Entrar na Reunião
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#02050a] text-slate-100 font-sans flex flex-col relative overflow-hidden">
       
@@ -1026,7 +1260,7 @@ export default function MeetSoberanoPage() {
           </div>
 
           {!isJoiner && (
-            <Button onClick={copyJoinLink} size="sm" variant="outline" className="border-indigo-500/30 hover:bg-indigo-950 hover:text-white text-indigo-400 gap-2 text-xs font-bold shadow-lg shadow-indigo-500/10">
+            <Button onClick={() => setIsInviteOpen(true)} size="sm" variant="outline" className="border-indigo-500/30 hover:bg-indigo-950 hover:text-white text-indigo-400 gap-2 text-xs font-bold shadow-lg shadow-indigo-500/10">
               <Share2 className="w-4 h-4" />
               Convidar Conexão
             </Button>
@@ -1062,10 +1296,10 @@ export default function MeetSoberanoPage() {
               ) : (
                 <div className="flex flex-col items-center gap-4">
                   <div className="w-24 h-24 rounded-full border-4 border-blue-500/20 bg-blue-950/50 flex items-center justify-center text-blue-400 text-3xl font-headline font-bold shadow-[0_0_30px_rgba(59,130,246,0.15)]">
-                    G
+                    {isJoiner ? (guestName.charAt(0).toUpperCase() || 'C') : 'G'}
                   </div>
                   <div className="text-center">
-                    <p className="text-sm font-semibold text-white">Diretor Geanderson</p>
+                    <p className="text-sm font-semibold text-white">{isJoiner ? guestName : 'Diretor Geanderson'}</p>
                     <p className="text-xs text-slate-500">Câmera Desativada</p>
                   </div>
                 </div>
@@ -1074,7 +1308,7 @@ export default function MeetSoberanoPage() {
               {/* Dynamic Overlay labels */}
               <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-xs font-semibold text-white flex items-center gap-2">
                 <User className="w-3.5 h-3.5 text-blue-400" />
-                <span>Geanderson (Você)</span>
+                <span>{isJoiner ? `${guestName} (Você)` : 'Diretor Geanderson (Você)'}</span>
               </div>
 
               {isGeanSpeaking && (
@@ -1100,6 +1334,16 @@ export default function MeetSoberanoPage() {
                   playsInline 
                   className="w-full h-full object-cover"
                 />
+              ) : isJoiner ? (
+                <div className="flex flex-col items-center gap-5">
+                  <div className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
+                    <Globe className="w-10 h-10 text-indigo-500 animate-spin" style={{ animationDuration: '6s' }} />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-semibold text-white">Diretor Geanderson</p>
+                    <p className="text-xs text-slate-500">Aguardando Host iniciar a transmissão...</p>
+                  </div>
+                </div>
               ) : (
                 <div className="flex flex-col items-center gap-5">
                   {/* Client Avatar with dynamic ring */}
@@ -1142,7 +1386,7 @@ export default function MeetSoberanoPage() {
               {/* Dynamic Overlay labels */}
               <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-xs font-semibold text-white flex items-center gap-2">
                 <Globe className="w-3.5 h-3.5 text-amber-400" />
-                <span>{isRemoteConnected ? remotePeerName : `Cliente (${selectedLanguage.name})`}</span>
+                <span>{isRemoteConnected ? remotePeerName : (isJoiner ? 'Diretor Geanderson' : `Cliente (${selectedLanguage.name})`)}</span>
               </div>
 
               {isClientSpeaking && !isRemoteConnected && (
@@ -1379,6 +1623,160 @@ export default function MeetSoberanoPage() {
         </div>
 
       </footer>
+
+      {/* MODAL CONVIDAR CONEXÃO POR E-MAIL */}
+      <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
+        <DialogContent className="bg-[#0b0f19] border border-slate-800 text-slate-100 max-w-lg shadow-[0_0_50px_rgba(99,102,241,0.15)] rounded-2xl max-h-[90vh] flex flex-col">
+          <DialogHeader className="shrink-0">
+            <DialogTitle className="text-white text-lg font-headline flex items-center gap-2">
+              <Mail className="w-5 h-5 text-indigo-400" />
+              Convidar Conexão por E-mail
+            </DialogTitle>
+            <DialogDescription className="text-xs text-slate-400">
+              Selecione o destinatário dos seus leads da Nexus ou insira um e-mail personalizado para enviar o link seguro.
+            </DialogDescription>
+          </DialogHeader>
+
+          {/* Container rolável para evitar que o modal fique preso/cortado */}
+          <div className="flex-1 overflow-y-auto space-y-4 py-3 pr-1.5 scrollbar-thin scrollbar-thumb-slate-850 scrollbar-track-transparent">
+            {/* Campo Remetente */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider block">Remetente (Conta do Computador)</label>
+              <Select value={selectedSender} onValueChange={(val) => {
+                setSelectedSender(val);
+                if (val !== 'custom') setCustomSender('');
+              }}>
+                <SelectTrigger className="bg-slate-950/80 border-slate-800 text-slate-200">
+                  <SelectValue placeholder="Selecione a conta" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#0b0f19] border-slate-800 text-slate-200">
+                  <SelectItem value="vendas@nexustreinamento.com" className="text-emerald-400 font-medium">💼 Vendas (vendas@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="diretoria@nexustreinamento.com" className="text-blue-400 font-medium">👑 Diretoria (diretoria@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="pessoal@nexustreinamento.com" className="text-purple-400 font-medium">👤 Pessoal (pessoal@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="custom" className="text-amber-400 font-semibold">➕ Digitar Outra Conta...</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Campo Customizado de Remetente (se selecionado "custom") */}
+            {selectedSender === 'custom' && (
+              <div className="space-y-1 animate-in fade-in-50 duration-200">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">E-mail do Remetente</label>
+                <Input
+                  type="email"
+                  placeholder="exemplo@nexustreinamento.com"
+                  value={customSender}
+                  onChange={(e) => setCustomSender(e.target.value)}
+                  className="bg-slate-950/85 border-slate-800 text-white"
+                />
+              </div>
+            )}
+
+            {/* Campo Destinatário */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider block">Destinatário (Leads da Isadora / Contatos)</label>
+              <Select value={selectedRecipient} onValueChange={(val) => {
+                setSelectedRecipient(val);
+                if (val !== 'custom') setCustomEmail('');
+              }}>
+                <SelectTrigger className="bg-slate-950/80 border-slate-800 text-slate-200">
+                  <SelectValue placeholder="Selecione o lead" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#0b0f19] border-slate-800 text-slate-200">
+                  {leadsList.map((lead, idx) => (
+                    <SelectItem key={idx} value={lead.email}>
+                      👤 {lead.firstName} {lead.lastName} ({lead.company || 'Lead'})
+                    </SelectItem>
+                  ))}
+                  <SelectItem value="custom" className="text-amber-400 font-semibold">➕ Inserir Outro E-mail...</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Campo Customizado (se selecionado "custom") */}
+            {selectedRecipient === 'custom' && (
+              <div className="space-y-1 animate-in fade-in-50 duration-200">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">E-mail Personalizado</label>
+                <Input
+                  type="email"
+                  placeholder="exemplo@email.com"
+                  value={customEmail}
+                  onChange={(e) => setCustomEmail(e.target.value)}
+                  className="bg-slate-950/80 border-slate-800 text-white"
+                />
+              </div>
+            )}
+
+            {/* Visualização de Assunto */}
+            <div className="space-y-1">
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Assunto</label>
+              <Input
+                value={emailSubject}
+                onChange={(e) => setEmailSubject(e.target.value)}
+                className="bg-slate-950/80 border-slate-800 text-white"
+              />
+            </div>
+
+            {/* Visualização de Conteúdo do E-mail */}
+            <div className="space-y-1">
+              <div className="flex justify-between items-center mb-1">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Conteúdo do E-mail</label>
+                <Button 
+                  onClick={handleCopyEmailBody} 
+                  variant="ghost" 
+                  size="sm" 
+                  className="h-6 text-[10px] text-indigo-400 hover:text-white px-2"
+                >
+                  {isEmailCopied ? <Check className="w-3.5 h-3.5 mr-1" /> : <Clipboard className="w-3.5 h-3.5 mr-1" />}
+                  {isEmailCopied ? 'Copiado!' : 'Copiar Texto'}
+                </Button>
+              </div>
+              <Textarea
+                readOnly
+                value={emailBody}
+                className="bg-slate-950/80 border-slate-800 text-slate-300 text-xs min-h-[160px] font-mono leading-relaxed resize-none focus-visible:ring-0"
+              />
+            </div>
+          </div>
+
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4 shrink-0 border-t border-slate-800/40 pt-3 justify-between">
+            <Button
+              onClick={handleCopyOnlyLink}
+              variant="outline"
+              className="border-slate-800 hover:bg-slate-900 text-slate-300 text-xs"
+            >
+              {isLinkCopied ? <Check className="w-4 h-4 mr-2 text-emerald-400" /> : <Clipboard className="w-4 h-4 mr-2" />}
+              {isLinkCopied ? 'Link Copiado!' : 'Copiar Apenas Link'}
+            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleOpenEmailClient}
+                className="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-300 font-medium text-xs gap-1.5"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Abrir no Client
+              </Button>
+              <Button
+                onClick={handleSendDirectEmail}
+                disabled={isSendingEmail}
+                className="bg-indigo-600 hover:bg-indigo-550 text-white font-bold text-xs gap-1.5 shadow-lg shadow-indigo-500/25 disabled:opacity-50"
+              >
+                {isSendingEmail ? (
+                  <>
+                    <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin mr-1" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Disparar SMTP Direto
+                  </>
+                )}
+              </Button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
     </div>
   );

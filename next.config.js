@@ -64,6 +64,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/nexus-b2b',
+        destination: '/nexus-health',
+        permanent: true,
+      },
+      {
         source: '/intelligence/dante%20builder',
         destination: '/intelligence/dante-builder',
         permanent: true,

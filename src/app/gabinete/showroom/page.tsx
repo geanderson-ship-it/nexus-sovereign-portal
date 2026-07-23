@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Sparkles, Building2, UserCircle, MessageSquare, Mic, Globe2, Briefcase, Tv, Leaf, LayoutDashboard, X, Play, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, FileText, CheckCircle2, DollarSign, Calendar } from "lucide-react";
 import Link from "next/link";
+import { getVideoUrl } from '@/lib/video-helper';
 
 const mainAvatars = [
   { name: "Sofia", file: "Sofia.png", desc: "Embaixadora Digital de Cidades Inteligentes" },
@@ -186,8 +187,8 @@ export default function ShowroomPage() {
                 icon={<Tv className="w-5 h-5 text-amber-400" />} 
                 color="amber"
                 imagePath="/avatars/Imagens/aurora.png"
-                videoPath="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Aurora_Estudante_de_psicologia..mp4"
-                onPlay={() => setActiveVideo("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Aurora_Estudante_de_psicologia..mp4")}
+                videoPath={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Aurora_Estudante_de_psicologia..mp4", "Aurora_Estudante_de_psicologia..mp4")}
+                onPlay={() => setActiveVideo(getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Aurora_Estudante_de_psicologia..mp4", "Aurora_Estudante_de_psicologia..mp4"))}
               />
               
               {/* Magadot */}
@@ -197,8 +198,8 @@ export default function ShowroomPage() {
                 icon={<Leaf className="w-5 h-5 text-emerald-400" />} 
                 color="emerald"
                 imagePath="/avatars/Imagens/magadot.png" // Fallback caso não tenha
-                videoPath="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Magadot_Nexus.mp4"
-                onPlay={() => setActiveVideo("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Magadot_Nexus.mp4")}
+                videoPath={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Magadot_Nexus.mp4", "Magadot_Nexus.mp4")}
+                onPlay={() => setActiveVideo(getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Magadot_Nexus.mp4", "Magadot_Nexus.mp4"))}
               />
               
               {/* Djeny */}
@@ -208,8 +209,8 @@ export default function ShowroomPage() {
                 icon={<LayoutDashboard className="w-5 h-5 text-purple-400" />} 
                 color="purple"
                 imagePath="/avatars/Imagens/djeny.png" // Fallback
-                videoPath="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Nexus_B2B.mp4" // Placeholder usando o Nexus_B2B
-                onPlay={() => setActiveVideo("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Nexus_B2B.mp4")}
+                videoPath={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Nexus_B2B.mp4", "Nexus_B2B.mp4")} // Placeholder usando o Nexus_B2B
+                onPlay={() => setActiveVideo(getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Nexus_B2B.mp4", "Nexus_B2B.mp4"))}
               />
               
               {/* Isadora */}
@@ -219,8 +220,8 @@ export default function ShowroomPage() {
                 icon={<Briefcase className="w-5 h-5 text-rose-400" />} 
                 color="rose"
                 imagePath="/avatars/Imagens/isadora.png" // Fallback
-                videoPath="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Isadora_Executiva_em_vendas_Nexus_holding_Group.mp4"
-                onPlay={() => setActiveVideo("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Isadora_Executiva_em_vendas_Nexus_holding_Group.mp4")}
+                videoPath={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Isadora_Executiva_em_vendas_Nexus_holding_Group.mp4", "Isadora_Executiva_em_vendas_Nexus_holding_Group.mp4")}
+                onPlay={() => setActiveVideo(getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Isadora_Executiva_em_vendas_Nexus_holding_Group.mp4", "Isadora_Executiva_em_vendas_Nexus_holding_Group.mp4"))}
               />
 
             </div>

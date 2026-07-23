@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 export default function NexusRotasHubPage() {
   return (
@@ -46,7 +47,7 @@ export default function NexusRotasHubPage() {
           
           <div className="mb-8 w-full max-w-3xl mx-auto rounded-3xl overflow-hidden border border-teal-500/40 shadow-[0_0_50px_rgba(20,184,166,0.3)] bg-black/50 backdrop-blur-md relative">
             <CustomVideoPlayer 
-              src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Vitoria_Embaixadora.mp4" 
+              src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Vitoria_Embaixadora.mp4", "Vitoria_Embaixadora_virtual.mp4")} 
               className="w-full h-auto object-cover rounded-3xl"
             />
           </div>

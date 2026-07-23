@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
+import { getVideoUrl } from '@/lib/video-helper';
 import { 
   Card, 
   CardContent, 
@@ -233,7 +234,7 @@ export default function NexusPactumCockpit() {
       >
         <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-[#cca752]/30 shadow-[0_0_60px_rgba(204,167,82,0.15)] bg-black/60">
           <CustomVideoPlayer 
-            src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4" 
+            src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4", "Justine - Pactum.mp4")} 
             className="aspect-video w-full h-full object-cover"
             autoPlay
             loop
@@ -303,7 +304,7 @@ export default function NexusPactumCockpit() {
       <div className="relative z-10 w-full mb-12 space-y-8">
         <div className="relative w-full aspect-video rounded-3xl overflow-hidden border border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.15)] bg-black/60">
           <CustomVideoPlayer 
-            src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Artur_Pactum.mp4" 
+            src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Artur_Pactum.mp4", "Artur_Pactum.mp4")} 
             className="aspect-video"
             autoPlay
             loop
