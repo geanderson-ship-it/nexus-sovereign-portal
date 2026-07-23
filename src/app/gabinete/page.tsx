@@ -5,7 +5,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase, FileText, DollarSign, TrendingUp } from 'lucide-react';
+import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase, FileText, DollarSign, TrendingUp, Globe, Video } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -35,7 +35,7 @@ export default function GabineteHubPage() {
   }
 
   return (
-    <div className="min-h-screen text-slate-200 pt-32 pb-20 px-4 relative">
+    <div className="min-h-screen text-slate-200 pt-32 pb-20 px-0 relative">
       
       {/* GABINETE ACTIVE CORE BACKGROUND (MAGADOT/ORION STYLE) - INTENSIFICADO */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#0f0700]">
@@ -54,17 +54,109 @@ export default function GabineteHubPage() {
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-40 mix-blend-overlay" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="w-full relative h-[180px] md:h-[280px] mb-12 overflow-hidden rounded-3xl border border-blue-500/20 shadow-[0_0_60px_rgba(59,130,246,0.3)]">
-          <Image 
-            src="/Nexus Holding Group/Cartão Nexus Holding group.png" 
-            alt="Nexus Holding Group" 
-            fill 
-            className="object-cover object-[center_40%]"
-            priority
-          />
-          {/* Degradê para misturar suavemente a base da imagem com o fundo da tela */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/20 to-transparent pointer-events-none" />
+      {/* BANNER FULL SCREEN WIDTH */}
+      <div className="w-full relative h-[240px] md:h-[420px] mb-12 overflow-hidden border-b border-blue-500/20 shadow-[0_0_50px_rgba(59,130,246,0.25)]">
+        <Image 
+          src="/Nexus Holding Group/Cartão Nexus Holding group.png" 
+          alt="Nexus Holding Group" 
+          fill 
+          className="object-cover object-[center_38%]"
+          priority
+        />
+        {/* Degradê para misturar suavemente a base da imagem com o fundo da tela */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f0700] via-transparent to-transparent pointer-events-none" />
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-4">
+
+        {/* CARD GRANDE ESTILO NEXUS (SOVEREIGN CENTER) */}
+        <div className="block mb-12">
+            <div className="relative w-full rounded-3xl border border-amber-500/20 bg-black/40 backdrop-blur-xl p-8 md:p-10 shadow-[0_0_50px_rgba(234,179,8,0.1)] overflow-hidden group transition-all duration-500 hover:border-amber-500/40 hover:shadow-[0_0_60px_rgba(234,179,8,0.2)]">
+                {/* Cyber grid pattern overlay */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(234,179,8,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(234,179,8,0.015)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+                
+                {/* Ambient amber glows */}
+                <div className="absolute -top-40 -left-40 w-80 h-80 bg-amber-600/10 rounded-full blur-[100px] pointer-events-none transition-all duration-700 group-hover:bg-amber-600/15" />
+                <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-yellow-500/10 rounded-full blur-[100px] pointer-events-none transition-all duration-700 group-hover:bg-yellow-500/15" />
+                
+                {/* Accent lines top and bottom */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-amber-500/20 to-transparent" />
+ 
+                {/* Corner accents - customized for a more cybernetic look */}
+                <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-amber-500/40 rounded-tl-sm transition-all duration-300 group-hover:border-amber-400 group-hover:scale-105" />
+                <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-amber-500/40 rounded-tr-sm transition-all duration-300 group-hover:border-amber-400 group-hover:scale-105" />
+                <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-amber-500/40 rounded-bl-sm transition-all duration-300 group-hover:border-amber-400 group-hover:scale-105" />
+                <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-amber-500/40 rounded-br-sm transition-all duration-300 group-hover:border-amber-400 group-hover:scale-105" />
+ 
+                <div className="flex flex-col md:flex-row gap-8 items-center justify-between relative z-10">
+                    <div className="flex-1 space-y-4 text-left">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 shadow-[0_0_15px_rgba(234,179,8,0.15)]">
+                            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                            <span className="text-[9px] font-bold uppercase tracking-widest text-amber-400">NHG Core System v4.5</span>
+                        </div>
+ 
+                        <h2 className="text-3xl md:text-4xl font-bold font-headline text-white tracking-wide group-hover:text-amber-450 transition-colors duration-300">
+                            Centro de Comando & Soberania Operacional
+                        </h2>
+ 
+                        <p className="text-slate-300 text-sm md:text-base leading-relaxed font-light max-w-2xl">
+                            Bem-vindo de volta, <strong className="text-amber-400 font-semibold">Diretor Geanderson</strong>. O ecossistema está sob monitoramento ativo da inteligência integrada. Seus canais de vendas, faturamento e tradução simultânea estão 100% blindados e operantes.
+                        </p>
+ 
+                        <div className="flex flex-wrap items-center gap-4 pt-2">
+                            <Link href="/gabinete/tradutor">
+                                <Button className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-transform duration-300 hover:scale-105">
+                                    <Globe className="w-4 h-4" />
+                                    Abrir Tradutor Soberano
+                                </Button>
+                            </Link>
+                            <Link href="/gabinete/meet">
+                                <Button className="bg-indigo-600 hover:bg-indigo-550 border border-indigo-500/30 text-white font-bold shadow-lg shadow-indigo-500/10 flex items-center gap-2 transition-transform duration-300 hover:scale-105">
+                                    <Video className="w-4 h-4 text-indigo-400" />
+                                    Iniciar Nexus Meet
+                                </Button>
+                            </Link>
+                            <span className="text-xs text-slate-500 group-hover:text-slate-300 transition-colors duration-300">Selecione uma ferramenta no comando</span>
+                        </div>
+ 
+                        {/* Quick Telemetry Grid */}
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-800/60">
+                            <div className="flex flex-col">
+                                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">IA Núcleo</span>
+                                <span className="text-xs font-semibold text-amber-300">Claude 4.5 Sonnet</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Segurança</span>
+                                <span className="text-xs font-semibold text-emerald-400">On-Premise Ativo</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Base de Dados</span>
+                                <span className="text-xs font-semibold text-slate-200">Sincronizada (Amplify)</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Status Geral</span>
+                                <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                                    Otimizado
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <div className="shrink-0 relative w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-hidden border-2 border-amber-500/20 shadow-[0_0_30px_rgba(234,179,8,0.2)] bg-slate-950 p-2 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-amber-500/5 animate-[pulse_3s_infinite]" />
+                        <svg viewBox="0 0 100 100" className="w-20 h-20 text-amber-500 transition-transform duration-700 group-hover:scale-110">
+                            {/* High-tech shield/crest vector */}
+                            <path d="M50 5 L85 20 V50 C85 70 70 88 50 95 C30 88 15 70 15 50 V20 Z" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                            <path d="M50 15 L75 26 V48 C75 64 64 78 50 84 C36 78 25 64 25 48 V26 Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.5" />
+                            <circle cx="50" cy="45" r="8" fill="none" stroke="currentColor" strokeWidth="3" />
+                            <line x1="50" y1="25" x2="50" y2="37" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                            <line x1="50" y1="53" x2="50" y2="75" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </div>
 
         {/* HERO CARDS: ATENA & ISADORA */}
@@ -150,6 +242,18 @@ export default function GabineteHubPage() {
               <Link href="/gabinete/showroom" className="flex items-center gap-3 text-slate-300 hover:text-purple-400 transition-colors group">
                 <Users className="w-4 h-4 text-slate-600 group-hover:text-purple-400" /> 
                 <span className="font-mono text-sm tracking-wide uppercase">Showroom de Avatares</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/gabinete/tradutor" className="flex items-center gap-3 text-slate-300 hover:text-amber-400 transition-colors group">
+                <Globe className="w-4 h-4 text-slate-600 group-hover:text-amber-400" /> 
+                <span className="font-mono text-sm tracking-wide uppercase">Tradutor Soberano</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/gabinete/meet" className="flex items-center gap-3 text-slate-300 hover:text-indigo-400 transition-colors group">
+                <Video className="w-4 h-4 text-slate-600 group-hover:text-indigo-400" /> 
+                <span className="font-mono text-sm tracking-wide uppercase font-bold text-indigo-400/90">Nexus Meet Soberano</span>
               </Link>
             </li>
             <li>
