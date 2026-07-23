@@ -8,8 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '',
     '/exclusive',
     '/dante-safra',
-    '/gabinete',
-    '/gabinete-vendas',
     '/intelligence',
     '/excellence',
     '/about',
@@ -41,7 +39,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/nexus-empresas/martech/content',
     '/nexus-empresas/martech/ads',
     '/nexus-empresas/martech/crm',
-    '/nexus-empresas/martech/roi'
+    '/djeny',
+    '/djeny-design',
+    '/nexus-intelligence',
+    '/nexus-intelligence/dante',
+    '/nexus-intelligence/dante-safra',
+    '/pactum-legal',
+    '/pactum-link',
+    '/nexus-empresas/rh',
+    '/nexus-empresas/engenharia',
+    '/nexus-empresas/estrategia',
+    '/nexus-empresas/radio-studio',
+    '/nexus-empresas/legaltech/compliance',
+    '/nexus-empresas/legaltech/contratos',
+    '/nexus-empresas/legaltech/jurimetria',
+    '/nexus-empresas/legaltech/trabalhista',
+    '/privacy',
+    '/terms',
+    '/suporte'
   ];
 
   const allRoutes = [...staticRoutes];

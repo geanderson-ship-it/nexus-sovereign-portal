@@ -2,5 +2,16 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /profile
+Disallow: /proposals
+Disallow: /propostas
+Disallow: /brand-assets
+Disallow: /gabinete
+Disallow: /gabinete/*
+Disallow: /gabinete-vendas
+Disallow: /gabinete-vendas/*
 
 Sitemap: https://www.nexustreinamento.com/sitemap.xml

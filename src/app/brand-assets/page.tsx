@@ -44,6 +44,9 @@ export default function BrandAssetsPage() {
 
   return (
     <div className="container mx-auto py-12 md:py-20">
+      <head>
+        <meta name="robots" content="noindex, nofollow" />
+      </head>
       <div className="mb-12 text-center">
         <h1 className={cn("text-4xl font-bold tracking-tighter text-primary sm:text-5xl", "font-headline")}>
           {t('brand.title')}
