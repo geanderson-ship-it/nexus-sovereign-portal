@@ -187,8 +187,21 @@ export default function MeetSoberanoPage() {
 
     let active = true;
     let pollInterval: NodeJS.Timeout;
+    const queuedCandidates: RTCIceCandidateInit[] = [];
+
+    const logToAtena = (msg: string) => {
+      setAtenaInsights(prev => {
+        // Evita duplicar logs idênticos em sequência
+        if (prev[prev.length - 1] === msg) return prev;
+        return [...prev, msg];
+      });
+    };
 
     const initWebRTC = async () => {
+      logToAtena(`[WebRTC] Inicializando sala: ${roomId}`);
+      logToAtena(`[WebRTC] Papel: ${isJoiner ? 'Joiner (Convidado)' : 'Host (Criador)'}`);
+      
+      setConnectionStatus('Acessando câmera e microfone...');
       // 1. Obter mídia local (câmera e áudio)
       let localStream: MediaStream;
       try {
@@ -198,6 +211,7 @@ export default function MeetSoberanoPage() {
         if (myVideoRef.current) {
           myVideoRef.current.srcObject = localStream;
         }
+        logToAtena(`[WebRTC] Áudio e vídeo capturados.`);
       } catch (err) {
         console.warn("Falha ao obter mídia local completa. Tentando apenas vídeo...", err);
         try {
@@ -207,15 +221,26 @@ export default function MeetSoberanoPage() {
           if (myVideoRef.current) {
             myVideoRef.current.srcObject = localStream;
           }
+          logToAtena(`[WebRTC] Apenas vídeo capturado (sem áudio).`);
         } catch (e2) {
           console.error("Falha total de mídia:", e2);
+          setConnectionStatus('Erro: Câmera não detectada');
+          logToAtena(`[WebRTC] Erro de hardware: Nenhuma câmera detectada.`);
           return;
         }
       }
 
-      // 2. Criar RTCPeerConnection
+      setConnectionStatus(isJoiner ? 'Buscando sinal do Host...' : 'Aguardando participante entrar...');
+
+      // 2. Criar RTCPeerConnection com múltiplos STUN
       const pc = new RTCPeerConnection({
-        iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun1.l.google.com:19302' },
+          { urls: 'stun:stun2.l.google.com:19302' },
+          { urls: 'stun:stun3.l.google.com:19302' },
+          { urls: 'stun:stun4.l.google.com:19302' }
+        ]
       });
       peerConnectionRef.current = pc;
 
@@ -223,12 +248,11 @@ export default function MeetSoberanoPage() {
       localStream.getTracks().forEach(track => {
         pc.addTrack(track, localStream);
       });
+      logToAtena(`[WebRTC] Tracks de mídia adicionadas à conexão.`);
 
-      // Mudar habilitado conforme o idioma e mute
       const updateTracksState = () => {
         const audioTrack = localStream.getAudioTracks()[0];
         if (audioTrack) {
-          // Só transmite áudio bruto se estiver em Português direto E não-mutado
           audioTrack.enabled = (selectedLanguage.code === 'pt') && !isMuted;
         }
         const videoTrack = localStream.getVideoTracks()[0];
@@ -241,6 +265,7 @@ export default function MeetSoberanoPage() {
       // Monitor de candidatos ICE locais
       pc.onicecandidate = (event) => {
         if (event.candidate) {
+          logToAtena(`[WebRTC] Novo candidato ICE local gerado.`);
           fetch('/api/meet/signal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -250,33 +275,81 @@ export default function MeetSoberanoPage() {
               sender: localPeerId,
               data: event.candidate
             })
-          }).catch(e => console.error("Falha ao enviar ICE candidato:", e));
+          })
+          .then(res => {
+            if (!res.ok) logToAtena(`[Sinalização] Falha ao enviar ICE: status ${res.status}`);
+          })
+          .catch(e => console.error("Falha ao enviar ICE candidato:", e));
+        }
+      };
+
+      pc.oniceconnectionstatechange = () => {
+        logToAtena(`[WebRTC] ICE Connection State: ${pc.iceConnectionState}`);
+        if (pc.iceConnectionState === 'failed' || pc.iceConnectionState === 'disconnected') {
+          setConnectionStatus('Falha na conexão P2P.');
         }
       };
 
       // Receber track remota
       pc.ontrack = (event) => {
         console.log("WebRTC: Recebeu track remota!", event.streams[0]);
+        logToAtena(`[WebRTC] Feed de mídia do parceiro recebido com sucesso!`);
         if (remoteVideoRef.current) {
           remoteVideoRef.current.srcObject = event.streams[0];
           setIsRemoteConnected(true);
-          setRemotePeerName("Ivoni (Conectada)");
+          setRemotePeerName(isJoiner ? "Diretor Geanderson" : "Ivoni (Conectada)");
+          setConnectionStatus('Conexão Estabelecida com Sucesso!');
         }
       };
+
+      // Se for o Host: Cria o DataChannel e a Oferta
+      if (!isJoiner) {
+        logToAtena(`[WebRTC] Criando DataChannel...`);
+        const dc = pc.createDataChannel('meet-chat');
+        dataChannelRef.current = dc;
+        setupDataChannel(dc);
+
+        try {
+          const offer = await pc.createOffer();
+          await pc.setLocalDescription(offer);
+
+          const res = await fetch('/api/meet/signal', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              roomId,
+              type: 'webrtc-offer',
+              sender: localPeerId,
+              data: offer
+            })
+          });
+          
+          if (res.ok) {
+            logToAtena(`[Sinalização] Oferta do Host salva no DynamoDB.`);
+          } else {
+            const errData = await res.json();
+            logToAtena(`[Sinalização] Erro ao salvar oferta: ${errData.error || res.statusText}`);
+          }
+        } catch (e: any) {
+          logToAtena(`[WebRTC] Erro ao criar oferta: ${e.message}`);
+        }
+      }
     };
 
     const setupDataChannel = (channel: RTCDataChannel) => {
-      channel.onopen = () => console.log("WebRTC DataChannel: ABERTO");
+      channel.onopen = () => {
+        logToAtena(`[DataChannel] Canal de dados conectado.`);
+        setConnectionStatus('Conexão de Dados Ativa!');
+      };
       channel.onclose = () => {
-        console.log("WebRTC DataChannel: FECHADO");
+        logToAtena(`[DataChannel] Canal de dados fechado.`);
         setIsRemoteConnected(false);
-        setRemotePeerName("Aguardando...");
+        setConnectionStatus('Participante desconectou.');
       };
       channel.onmessage = async (event) => {
         try {
           const msg = JSON.parse(event.data);
           if (msg.type === 'transcript') {
-            console.log("DataChannel recebeu transcrição:", msg);
             await handleIncomingTranscript(msg.text, msg.senderName);
           }
         } catch (err) {
@@ -289,7 +362,6 @@ export default function MeetSoberanoPage() {
       const isPt = selectedLanguage.code === 'pt';
 
       if (isPt) {
-        // Modo Direto: Apenas exibe a legenda (o áudio original já tocou via WebRTC)
         setActiveSubtitle({
           sender: 'client',
           original: text,
@@ -311,7 +383,6 @@ export default function MeetSoberanoPage() {
           setActiveSubtitle(null);
         }, 4000);
       } else {
-        // Modo Tradução: Parceiro falou. Capturamos o texto, traduzimos para Português, mostramos legenda e tocamos TTS!
         setActiveSubtitle({
           sender: 'client',
           original: text,
@@ -319,7 +390,6 @@ export default function MeetSoberanoPage() {
           stage: 'translating'
         });
 
-        // Toca efeito abafado local para simular a interceptação
         playMuffledAudioEffect();
 
         try {
@@ -378,6 +448,10 @@ export default function MeetSoberanoPage() {
 
       try {
         const response = await fetch(`/api/meet/signal?roomId=${roomId}`);
+        if (!response.ok) {
+          logToAtena(`[Sinalização] Erro de rede na consulta: status ${response.status}`);
+          return;
+        }
         const resData = await response.json();
         const signals = resData.signals || [];
 
@@ -390,16 +464,18 @@ export default function MeetSoberanoPage() {
         const candidateSignals = remoteSignals.filter((s: any) => s.type === 'webrtc-candidate');
 
         // Fluxo de Joiner (Peer B): Se houver uma oferta e ainda não criamos a nossa conexão local
-        if (offerSignal && !processedSignalsRef.current.has(offerSignal.id)) {
+        if (isJoiner && offerSignal && !processedSignalsRef.current.has(offerSignal.id)) {
           processedSignalsRef.current.add(offerSignal.id);
-          console.log("WebRTC: Oferta remota recebida. Configurando Joiner...");
+          logToAtena(`[Sinalização] Oferta do Host recebida via DynamoDB.`);
+          setConnectionStatus('Configurando conexão com o Host...');
 
           await pc.setRemoteDescription(new RTCSessionDescription(offerSignal.payload.data));
+          logToAtena(`[WebRTC] Remote Description configurada (Oferta).`);
 
           const answer = await pc.createAnswer();
           await pc.setLocalDescription(answer);
 
-          await fetch('/api/meet/signal', {
+          const res = await fetch('/api/meet/signal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -410,61 +486,69 @@ export default function MeetSoberanoPage() {
             })
           });
 
+          if (res.ok) {
+            logToAtena(`[Sinalização] Resposta do Joiner salva no DynamoDB.`);
+            setConnectionStatus('Resposta enviada. Conectando...');
+          } else {
+            logToAtena(`[Sinalização] Erro ao enviar resposta: status ${res.status}`);
+          }
+
           // Ouvir canal de dados que o Host criará
           pc.ondatachannel = (event) => {
-            console.log("WebRTC: Canal de dados recebido!");
+            logToAtena(`[WebRTC] Canal de dados remoto conectado.`);
             dataChannelRef.current = event.channel;
             setupDataChannel(event.channel);
           };
         }
 
         // Fluxo de Host (Peer A): Se nós criamos a oferta e recebemos a resposta
-        if (answerSignal && !processedSignalsRef.current.has(answerSignal.id)) {
+        if (!isJoiner && answerSignal && !processedSignalsRef.current.has(answerSignal.id)) {
           processedSignalsRef.current.add(answerSignal.id);
-          console.log("WebRTC: Resposta remota recebida. Conectando...");
+          logToAtena(`[Sinalização] Resposta do Joiner recebida via DynamoDB.`);
+          setConnectionStatus('Conectando ao participante...');
           await pc.setRemoteDescription(new RTCSessionDescription(answerSignal.payload.data));
-        }
-
-        // Se ainda não criamos uma oferta, e não há nenhuma oferta no servidor de ninguém: nos tornamos o Host!
-        const anyOffer = signals.find((s: any) => s.type === 'webrtc-offer');
-        if (!anyOffer && pc.signalingState === 'stable') {
-          console.log("WebRTC: Nenhuma oferta encontrada. Criando oferta como Host...");
-          
-          // Criar canal de dados
-          const dc = pc.createDataChannel('meet-chat');
-          dataChannelRef.current = dc;
-          setupDataChannel(dc);
-
-          // Criar e enviar oferta
-          const offer = await pc.createOffer();
-          await pc.setLocalDescription(offer);
-
-          await fetch('/api/meet/signal', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              roomId,
-              type: 'webrtc-offer',
-              sender: localPeerId,
-              data: offer
-            })
-          });
+          logToAtena(`[WebRTC] Remote Description configurada (Resposta).`);
         }
 
         // Processa candidatos ICE remotos recebidos
-        for (const cand of candidateSignals) {
-          if (!processedSignalsRef.current.has(cand.id)) {
-            processedSignalsRef.current.add(cand.id);
-            try {
-              await pc.addIceCandidate(new RTCIceCandidate(cand.payload.data));
-              console.log("WebRTC: Candidato ICE remoto adicionado.");
-            } catch (e) {
-              console.warn("Erro ao adicionar candidato ICE:", e);
+        if (pc.remoteDescription) {
+          // Adiciona candidatos novos que estavam na fila anterior
+          while (queuedCandidates.length > 0) {
+            const cand = queuedCandidates.shift();
+            if (cand) {
+              try {
+                await pc.addIceCandidate(new RTCIceCandidate(cand));
+                logToAtena(`[WebRTC] Candidato ICE da fila processado.`);
+              } catch (e) {
+                console.warn("Erro ao processar candidato da fila:", e);
+              }
+            }
+          }
+
+          for (const cand of candidateSignals) {
+            if (!processedSignalsRef.current.has(cand.id)) {
+              processedSignalsRef.current.add(cand.id);
+              try {
+                await pc.addIceCandidate(new RTCIceCandidate(cand.payload.data));
+                logToAtena(`[WebRTC] Candidato ICE remoto processado.`);
+              } catch (e) {
+                console.warn("ICE candidato remoto falhou ao adicionar:", e);
+              }
+            }
+          }
+        } else {
+          // Se remoteDescription ainda não está definida, guarda na fila
+          for (const cand of candidateSignals) {
+            if (!processedSignalsRef.current.has(cand.id)) {
+              processedSignalsRef.current.add(cand.id);
+              queuedCandidates.push(cand.payload.data);
+              logToAtena(`[WebRTC] Candidato ICE remoto enfileirado (aguardando Remote Description).`);
             }
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error("Erro no polling de sinalização:", err);
+        logToAtena(`[Sinalização] Falha: ${err.message || 'Erro de comunicação'}`);
       }
     };
 
@@ -484,7 +568,7 @@ export default function MeetSoberanoPage() {
         localStreamRef.current.getTracks().forEach(t => t.stop());
       }
     };
-  }, [isAuthorized, roomId, isMuted, isCameraOn, selectedLanguage]);
+  }, [isAuthorized, roomId, isMuted, isCameraOn, selectedLanguage, isJoiner]);
 
   // CONFIGURAÇÃO DO RECONHECIMENTO DE VOZ NATIVO (WEB SPEECH API)
   useEffect(() => {
