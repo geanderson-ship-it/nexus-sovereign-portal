@@ -4,8 +4,8 @@ import nodemailer from 'nodemailer';
 
 // Helper para enviar e-mails usando o SMTP do Gmail do Gean
 async function sendNotificationEmails(appointment: any) {
-  const gUser = process.env.GMAIL_EMPRESA_EMAIL || 'geanderson@nexustreinamento.com';
-  const gPass = (process.env.GMAIL_EMPRESA_PASS || 'wvcd ntmu hxou ejht').replace(/\s+/g, ''); // remove espaços
+  const gUser = process.env.GMAIL_EMPRESA_EMAIL || '';
+  const gPass = (process.env.GMAIL_EMPRESA_PASS || '').replace(/\s+/g, '');
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',

@@ -10,12 +10,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Identifica credenciais corretas do remetente
-    let fromEmail = 'geanderson@nexustreinamento.com';
-    let fromPass = 'wvcdntmuhxouejht'; // senha sem espaços de geanderson@nexustreinamento.com
+    let fromEmail = process.env.GMAIL_EMPRESA_EMAIL || 'geanderson@nexustreinamento.com';
+    let fromPass = (process.env.GMAIL_EMPRESA_PASS || '').replace(/\s+/g, '');
 
     if (sender === 'vendas@nexustreinamento.com') {
-      fromEmail = 'vendas@nexustreinamento.com';
-      fromPass = 'icxejuabdfgcuizy'; // senha sem espaços de vendas@nexustreinamento.com
+      fromEmail = process.env.GMAIL_VENDAS_EMAIL || 'vendas@nexustreinamento.com';
+      fromPass = (process.env.GMAIL_VENDAS_PASS || '').replace(/\s+/g, '');
     }
 
     // Configura o transportador SMTP do Gmail corporativo
