@@ -252,6 +252,17 @@ export default function VisionSoberanoPage() {
   const [isListening, setIsListening] = useState(false);
   const [micError, setMicError] = useState<string | null>(null);
 
+  const isMutedRef = useRef(isMuted);
+  const isInterpreterActiveRef = useRef(isInterpreterActive);
+
+  useEffect(() => {
+    isMutedRef.current = isMuted;
+  }, [isMuted]);
+
+  useEffect(() => {
+    isInterpreterActiveRef.current = isInterpreterActive;
+  }, [isInterpreterActive]);
+
   // Helper para atualizar estado e Ref simultaneamente (evita stale closure no onend)
   const updateMicError = (err: string | null) => {
     setMicError(err);
@@ -278,6 +289,29 @@ export default function VisionSoberanoPage() {
           updateMicError("Acesso ao microfone recusado. Por favor, clique no cadeado na barra de endereços para autorizar o microfone.");
         });
     }
+  };
+
+  const handleLeave = (targetUrl: string) => {
+    if (localStreamRef.current) {
+      localStreamRef.current.getTracks().forEach(track => {
+        try { track.stop(); } catch (e) {}
+      });
+      localStreamRef.current = null;
+    }
+    if (screenStreamRef.current) {
+      screenStreamRef.current.getTracks().forEach(track => {
+        try { track.stop(); } catch (e) {}
+      });
+      screenStreamRef.current = null;
+    }
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch (e) {}
+    }
+    for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
+      try { pc.close(); } catch (e) {}
+    }
+    peerConnectionsRef.current.clear();
+    router.push(targetUrl);
   };
 
   // URL de convite baseada no domínio atual com fallback para o oficial
@@ -791,12 +825,27 @@ https://nexustreinamento.com`;
       }
     };
 
+    const handleBeforeUnload = () => {
+      if (localStreamRef.current) {
+        localStreamRef.current.getTracks().forEach(t => {
+          try { t.stop(); } catch (e) {}
+        });
+      }
+      if (screenStreamRef.current) {
+        screenStreamRef.current.getTracks().forEach(t => {
+          try { t.stop(); } catch (e) {}
+        });
+      }
+    };
+
     // Inicialização
     initLocalMedia().then(() => {
       if (active) {
         sendPresence();
         presenceInterval = setInterval(sendPresence, 4000);
         pollInterval = setInterval(pollSignaling, 2000);
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('pagehide', handleBeforeUnload);
       }
     });
 
@@ -804,6 +853,8 @@ https://nexustreinamento.com`;
       active = false;
       clearInterval(pollInterval);
       clearInterval(presenceInterval);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('pagehide', handleBeforeUnload);
       
       // Fecha todas as conexões ativas do mapa
       for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
@@ -814,7 +865,14 @@ https://nexustreinamento.com`;
       candidateQueuesRef.current.clear();
 
       if (localStreamRef.current) {
-        localStreamRef.current.getTracks().forEach(t => t.stop());
+        localStreamRef.current.getTracks().forEach(t => {
+          try { t.stop(); } catch (e) {}
+        });
+      }
+      if (screenStreamRef.current) {
+        screenStreamRef.current.getTracks().forEach(t => {
+          try { t.stop(); } catch (e) {}
+        });
       }
     };
   }, [isAuthorized, roomId, isJoiner, hasEnteredName]);
@@ -832,6 +890,19 @@ https://nexustreinamento.com`;
       }
     }
   }, [selectedLanguage, isMuted, isCameraOn]);
+
+  // Garante que o stream local seja sempre acoplado ao elemento de vídeo local
+  useEffect(() => {
+    if (myVideoRef.current) {
+      if (isScreenSharing && screenStreamRef.current) {
+        myVideoRef.current.srcObject = screenStreamRef.current;
+      } else if (localStreamRef.current) {
+        myVideoRef.current.srcObject = localStreamRef.current;
+      } else if (stream) {
+        myVideoRef.current.srcObject = stream;
+      }
+    }
+  }, [stream, isCameraOn, isScreenSharing, myVideoRef.current]);
 
   // CONFIGURAÇÃO DO RECONHECIMENTO DE VOZ NATIVO (WEB SPEECH API)
   useEffect(() => {
@@ -872,7 +943,7 @@ https://nexustreinamento.com`;
           
           // Reinicia após um pequeno delay se o intérprete ainda estiver ativo, sem erro crítico e sem TTS tocando
           setTimeout(() => {
-            if (isInterpreterActive && !isMuted && !micErrorRef.current && !isTtsPlayingRef.current) {
+            if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
               try { rec.start(); } catch (e) {
                 console.warn("Falha ao reiniciar microfone:", e);
               }
@@ -890,7 +961,7 @@ https://nexustreinamento.com`;
 
         recognitionRef.current = rec;
 
-        if (isInterpreterActive && !isMuted) {
+        if (isInterpreterActiveRef.current && !isMutedRef.current) {
           // Solicita permissão explicitamente pelo getUserMedia primeiro para ativar o prompt nativo
           navigator.mediaDevices.getUserMedia({ audio: true })
             .then(s => {
@@ -1347,17 +1418,23 @@ https://nexustreinamento.com`;
           )}
 
           {isJoiner ? (
-            <Link href="/">
-              <Button size="sm" variant="outline" className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs">
-                Sair da Sala
-              </Button>
-            </Link>
+            <Button 
+              onClick={() => handleLeave('/')}
+              size="sm" 
+              variant="outline" 
+              className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs"
+            >
+              Sair da Sala
+            </Button>
           ) : (
-            <Link href="/gabinete">
-              <Button size="sm" variant="outline" className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs">
-                Voltar ao Gabinete
-              </Button>
-            </Link>
+            <Button 
+              onClick={() => handleLeave('/gabinete')}
+              size="sm" 
+              variant="outline" 
+              className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs"
+            >
+              Voltar ao Gabinete
+            </Button>
           )}
         </div>
       </header>
@@ -1385,155 +1462,238 @@ https://nexustreinamento.com`;
           }`}>
             
             {/* GEAN'S FEED (LOCAL USER) */}
-            <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex items-center justify-center group shadow-xl">
-              {isCameraOn || isScreenSharing ? (
-                <video 
-                  ref={myVideoRef} 
-                  autoPlay 
-                  playsInline 
-                  muted 
-                  className={`w-full h-full object-cover ${isScreenSharing ? '' : 'transform -scale-x-100'}`}
-                />
-              ) : (
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-24 h-24 rounded-full border-4 border-blue-500/20 bg-blue-950/50 flex items-center justify-center text-blue-400 text-3xl font-headline font-bold shadow-[0_0_30px_rgba(59,130,246,0.15)]">
-                    {isJoiner ? (guestName.charAt(0).toUpperCase() || 'C') : 'G'}
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-white">{isJoiner ? guestName : 'Diretor Geanderson'}</p>
-                    <p className="text-xs text-slate-500">Câmera Desativada</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Dynamic Overlay labels */}
-              <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-xs font-semibold text-white flex items-center gap-2">
-                <User className="w-3.5 h-3.5 text-blue-400" />
-                <span>{isJoiner ? `${guestName} (Você)` : 'Diretor Geanderson (Você)'}</span>
-              </div>
-
-              {isGeanSpeaking && (
-                <div className="absolute inset-0 border-2 border-blue-500 rounded-3xl pointer-events-none animate-pulse" />
-              )}
-              
-              {isGeanSpeaking && (
-                <div className="absolute bottom-4 right-4 flex items-center gap-1 bg-blue-950/80 backdrop-blur-md border border-blue-500/30 px-3 py-1.5 rounded-full">
-                  <div className="w-1.5 h-3 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                  <div className="w-1.5 h-6 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                  <div className="w-1.5 h-4 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
-                  <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest ml-1">Falando</span>
-                </div>
-              )}
-            </div>
-
-            {/* MOCK CLIENT SIMULATOR (Only shown when no real peers are connected, for offline demonstrations) */}
-            {remotePeers.length === 0 && (
-              <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex items-center justify-center group shadow-xl">
-                {isRemoteConnected ? (
+            <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl h-full">
+              {/* Video container */}
+              <div className="relative flex-1 flex items-center justify-center bg-black/40 overflow-hidden">
+                {isCameraOn || isScreenSharing ? (
                   <video 
-                    ref={remoteVideoRef} 
+                    ref={myVideoRef} 
                     autoPlay 
                     playsInline 
-                    className="w-full h-full object-cover"
+                    muted 
+                    className={`w-full h-full object-cover ${isScreenSharing ? '' : 'transform -scale-x-100'}`}
                   />
-                ) : isJoiner ? (
-                  <div className="flex flex-col items-center gap-5">
-                    <div className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
-                      <Globe className="w-10 h-10 text-indigo-500 animate-spin" style={{ animationDuration: '6s' }} />
-                    </div>
-                    <div className="text-center">
-                      <p className="text-sm font-semibold text-white">Diretor Geanderson</p>
-                      <p className="text-xs text-slate-500">Aguardando Host iniciar a transmissão...</p>
-                    </div>
-                  </div>
                 ) : (
-                  <div className="flex flex-col items-center gap-5">
-                    {/* Client Avatar with dynamic ring */}
-                    <div className={`relative w-28 h-28 rounded-full overflow-hidden border-4 flex-shrink-0 transition-all duration-500 ${isClientSpeaking ? 'border-amber-500 shadow-[0_0_35px_rgba(245,158,11,0.4)] scale-105' : 'border-slate-800 bg-slate-900'}`}>
-                      {isClientSpeaking ? (
-                        <div className="absolute inset-0 bg-amber-500/10 flex items-center justify-center">
-                          <Globe className="w-10 h-10 text-amber-500 animate-spin" style={{ animationDuration: '8s' }} />
-                        </div>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-900">
-                          <Image 
-                            src="/Vendedora Nexus/Isadora Nexus.png" 
-                            alt="Cliente" 
-                            fill 
-                            className="object-cover opacity-60 grayscale"
-                          />
-                        </div>
-                      )}
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-20 h-20 rounded-full border-4 border-blue-500/20 bg-blue-950/50 flex items-center justify-center text-blue-400 text-2xl font-headline font-bold shadow-[0_0_30px_rgba(59,130,246,0.15)]">
+                      {isJoiner ? (guestName.charAt(0).toUpperCase() || 'C') : 'G'}
                     </div>
-                    
                     <div className="text-center">
-                      <p className="text-sm font-semibold text-white flex items-center gap-1.5 justify-center">
-                        <span>Carlos Ortega (Madrid)</span>
-                        <span className="text-xs">{selectedLanguage.flag}</span>
-                      </p>
-                      <p className="text-xs text-slate-500">Cliente Simulador</p>
+                      <p className="text-xs font-semibold text-white">{isJoiner ? guestName : 'Diretor Geanderson'}</p>
+                      <p className="text-[10px] text-slate-500">Câmera Desativada</p>
                     </div>
-
-                    <Button 
-                      onClick={handleSimulateClientSpeech}
-                      disabled={isClientSpeaking || isGeanSpeaking}
-                      className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 text-xs flex items-center gap-2 shadow-lg shadow-amber-500/10 transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
-                    >
-                      <Play className="w-3.5 h-3.5 fill-current" />
-                      Simular Fala do Cliente
-                    </Button>
                   </div>
                 )}
 
                 {/* Dynamic Overlay labels */}
-                <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-xs font-semibold text-white flex items-center gap-2">
-                  <Globe className="w-3.5 h-3.5 text-amber-400" />
-                  <span>{isRemoteConnected ? remotePeerName : (isJoiner ? 'Diretor Geanderson' : `Cliente (${selectedLanguage.name})`)}</span>
+                <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
+                  <User className="w-3 h-3 text-blue-400" />
+                  <span>{isJoiner ? `${guestName} (Você)` : 'Diretor Geanderson (Você)'}</span>
                 </div>
 
-                {isClientSpeaking && !isRemoteConnected && (
-                  <div className="absolute inset-0 border-2 border-amber-500 rounded-3xl pointer-events-none animate-pulse" />
+                {isGeanSpeaking && (
+                  <div className="absolute inset-0 border-2 border-blue-500 rounded-3xl pointer-events-none animate-pulse" />
                 )}
-
-                {isClientSpeaking && activeSubtitle?.stage === 'translating' && !isRemoteConnected && (
-                  <div className="absolute top-16 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-red-600/90 border border-red-500/30 text-[10px] font-bold text-white uppercase tracking-widest flex items-center gap-2 animate-bounce shadow-lg shadow-red-600/20">
-                    <VolumeX className="w-3 h-3 animate-pulse" />
-                    Áudio Nativo Interceptado & Bloqueado
+                
+                {isGeanSpeaking && (
+                  <div className="absolute bottom-3 right-3 flex items-center gap-1 bg-blue-950/80 backdrop-blur-md border border-blue-500/30 px-2 py-1 rounded-full z-10">
+                    <div className="w-1 h-2.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                    <div className="w-1 h-5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                    <div className="w-1 h-3.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
+                    <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest ml-1">Falando</span>
                   </div>
                 )}
+              </div>
 
-                {isClientSpeaking && !isRemoteConnected && (
-                  <div className="absolute bottom-4 right-4 flex items-center gap-1 bg-amber-950/80 backdrop-blur-md border border-amber-500/30 px-3 py-1.5 rounded-full">
-                    <div className="w-1.5 h-4 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                    <div className="w-1.5 h-7 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                    <div className="w-1.5 h-3 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
-                    <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest ml-1">Traduzindo</span>
+              {/* Local Control Bar (directly below video) */}
+              <div className="bg-slate-950/90 border-t border-slate-800/60 px-4 py-3 flex items-center justify-center gap-3 flex-shrink-0 z-10">
+                <button 
+                  onClick={() => setIsMuted(!isMuted)}
+                  className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${isMuted ? 'bg-red-600 border-red-500 text-white' : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'}`}
+                  title={isMuted ? "Ativar Microfone" : "Mutar Microfone"}
+                >
+                  {isMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                </button>
+
+                <button 
+                  onClick={() => setIsCameraOn(!isCameraOn)}
+                  className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${!isCameraOn ? 'bg-red-600 border-red-500 text-white' : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'}`}
+                  title={isCameraOn ? "Desligar Câmera" : "Ligar Câmera"}
+                >
+                  {isCameraOn ? <Video className="w-4 h-4" /> : <VideoOff className="w-4 h-4" />}
+                </button>
+
+                <button 
+                  onClick={toggleScreenShare}
+                  className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${isScreenSharing ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]' : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-850'}`}
+                  title={isScreenSharing ? "Parar Compartilhamento de Tela" : "Compartilhar Tela"}
+                >
+                  {isScreenSharing ? <ScreenShareOff className="w-4 h-4" /> : <ScreenShare className="w-4 h-4" />}
+                </button>
+
+                <button 
+                  onClick={() => setIsInterpreterActive(!isInterpreterActive)}
+                  className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${isInterpreterActive ? 'bg-indigo-600 border-indigo-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]' : 'bg-slate-900 border-slate-800 text-slate-400'}`}
+                  title={isInterpreterActive ? "Pausar Tradutor" : "Iniciar Tradutor"}
+                >
+                  <Languages className={`w-4 h-4 ${isInterpreterActive ? 'animate-pulse' : ''}`} />
+                </button>
+
+                <Button 
+                  onClick={() => handleLeave(isJoiner ? "/" : "/gabinete")}
+                  variant="destructive"
+                  size="icon"
+                  className="w-9 h-9 rounded-full bg-red-600 hover:bg-red-500 text-white shadow-md shadow-red-600/10"
+                  title="Desligar Chamada"
+                >
+                  <PhoneOff className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
+            {/* MOCK CLIENT SIMULATOR (Only shown when no real peers are connected, for offline demonstrations) */}
+            {remotePeers.length === 0 && (
+              <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl h-full">
+                {/* Video container */}
+                <div className="relative flex-1 flex items-center justify-center bg-black/40 overflow-hidden">
+                  {isRemoteConnected ? (
+                    <video 
+                      ref={remoteVideoRef} 
+                      autoPlay 
+                      playsInline 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : isJoiner ? (
+                    <div className="flex flex-col items-center gap-5">
+                      <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
+                        <Globe className="w-10 h-10 text-indigo-500 animate-spin" style={{ animationDuration: '6s' }} />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-semibold text-white">Diretor Geanderson</p>
+                        <p className="text-xs text-slate-500">Aguardando Host iniciar a transmissão...</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-5">
+                      {/* Client Avatar with dynamic ring */}
+                      <div className={`relative w-24 h-24 rounded-full overflow-hidden border-4 flex-shrink-0 transition-all duration-500 ${isClientSpeaking ? 'border-amber-500 shadow-[0_0_35px_rgba(245,158,11,0.4)] scale-105' : 'border-slate-800 bg-slate-900'}`}>
+                        {isClientSpeaking ? (
+                          <div className="absolute inset-0 bg-amber-500/10 flex items-center justify-center">
+                            <Globe className="w-10 h-10 text-amber-500 animate-spin" style={{ animationDuration: '8s' }} />
+                          </div>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-900">
+                            <Image 
+                              src="/Vendedora Nexus/Isadora Nexus.png" 
+                              alt="Cliente" 
+                              fill 
+                              className="object-cover opacity-60 grayscale"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="text-center">
+                        <p className="text-xs font-semibold text-white flex items-center gap-1.5 justify-center">
+                          <span>Carlos Ortega (Madrid)</span>
+                          <span className="text-xs">{selectedLanguage.flag}</span>
+                        </p>
+                        <p className="text-[10px] text-slate-500">Cliente Simulador</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Dynamic Name Overlay label */}
+                  <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
+                    <Globe className="w-3 h-3 text-amber-400" />
+                    <span>{isRemoteConnected ? remotePeerName : (isJoiner ? 'Diretor Geanderson' : `Cliente (${selectedLanguage.name})`)}</span>
                   </div>
-                )}
+
+                  {isClientSpeaking && !isRemoteConnected && (
+                    <div className="absolute inset-0 border-2 border-amber-500 rounded-3xl pointer-events-none animate-pulse" />
+                  )}
+
+                  {isClientSpeaking && activeSubtitle?.stage === 'translating' && !isRemoteConnected && (
+                    <div className="absolute top-12 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-red-600/90 border border-red-500/30 text-[9px] font-bold text-white uppercase tracking-widest flex items-center gap-1.5 animate-bounce shadow-lg shadow-red-600/20 z-10">
+                      <VolumeX className="w-3 h-3 animate-pulse" />
+                      Áudio Nativo Bloqueado
+                    </div>
+                  )}
+
+                  {isClientSpeaking && !isRemoteConnected && (
+                    <div className="absolute bottom-3 right-3 flex items-center gap-1 bg-amber-950/80 backdrop-blur-md border border-amber-500/30 px-2 py-1 rounded-full z-10">
+                      <div className="w-1 h-3.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                      <div className="w-1 h-6 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                      <div className="w-1 h-2.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
+                      <span className="text-[9px] font-bold text-amber-400 uppercase tracking-widest ml-1">Traduzindo</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Remote Control/Status Bar (directly below video) */}
+                <div className="bg-slate-950/90 border-t border-slate-800/60 px-4 py-3 flex items-center justify-center gap-3 flex-shrink-0 z-10">
+                  {!isRemoteConnected && !isJoiner ? (
+                    <Button 
+                      onClick={handleSimulateClientSpeech}
+                      disabled={isClientSpeaking || isGeanSpeaking}
+                      size="sm"
+                      className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold h-9 px-4 text-xs flex items-center gap-1.5 shadow-lg shadow-amber-500/10 transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
+                    >
+                      <Play className="w-3.5 h-3.5 fill-current" />
+                      Simular Fala do Cliente
+                    </Button>
+                  ) : (
+                    <div className="flex items-center gap-4 text-[10px] text-slate-400 font-mono">
+                      <span className="flex items-center gap-1">
+                        <Mic className="w-3.5 h-3.5 text-emerald-400" /> Ativo
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Video className="w-3.5 h-3.5 text-emerald-400" /> Sinal OK
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
             {/* REAL REMOTE PEERS FEEDS (MESH WebRTC) */}
             {remotePeers.map((peer) => (
-              <div key={peer.peerId} className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex items-center justify-center group shadow-xl">
-                {peer.stream ? (
-                  <RemoteVideo peer={peer} />
-                ) : (
-                  <div className="flex flex-col items-center gap-5">
-                    <div className="relative w-28 h-28 rounded-full overflow-hidden border border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
-                      <User className="w-10 h-10 text-indigo-400" />
+              <div key={peer.peerId} className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl h-full">
+                {/* Video container */}
+                <div className="relative flex-1 flex items-center justify-center bg-black/40 overflow-hidden">
+                  {peer.stream ? (
+                    <RemoteVideo peer={peer} />
+                  ) : (
+                    <div className="flex flex-col items-center gap-5">
+                      <div className="relative w-24 h-24 rounded-full overflow-hidden border border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
+                        <User className="w-10 h-10 text-indigo-400" />
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-semibold text-white">{peer.name}</p>
+                        <p className="text-xs text-slate-500">Sem Sinal de Vídeo</p>
+                      </div>
                     </div>
-                    <div className="text-center">
-                      <p className="text-sm font-semibold text-white">{peer.name}</p>
-                      <p className="text-xs text-slate-500">Sem Sinal de Vídeo</p>
-                    </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Dynamic Overlay labels */}
-                <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-xs font-semibold text-white flex items-center gap-2">
-                  <User className="w-3.5 h-3.5 text-indigo-400" />
-                  <span>{peer.name}</span>
+                  {/* Dynamic Overlay labels */}
+                  <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
+                    <User className="w-3 h-3 text-indigo-400" />
+                    <span>{peer.name}</span>
+                  </div>
+                </div>
+
+                {/* Remote Participant Status Bar (directly below video) */}
+                <div className="bg-slate-950/90 border-t border-slate-800/60 px-4 py-3 flex items-center justify-center gap-3 flex-shrink-0 z-10">
+                  <div className="flex items-center gap-4 text-[10px] text-slate-400 font-mono">
+                    <span className="flex items-center gap-1">
+                      {peer.stream ? <Mic className="w-3.5 h-3.5 text-emerald-400" /> : <MicOff className="w-3.5 h-3.5 text-red-500" />} 
+                      {peer.stream ? 'Conectado' : 'Mutado'}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      {peer.stream ? <Video className="w-3.5 h-3.5 text-emerald-400" /> : <VideoOff className="w-3.5 h-3.5 text-red-500" />} 
+                      {peer.stream ? 'Vídeo Ativo' : 'Sem Sinal'}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -1691,74 +1851,7 @@ https://nexustreinamento.com`;
 
       </main>
 
-      {/* FOOTER CONTROLS BAR (GOOGLE MEET BOTTOM CONTROLS) */}
-      <footer className="relative z-10 px-6 py-5 border-t border-slate-800/80 bg-slate-950/80 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
-        
-        <div className="hidden md:flex flex-col text-left">
-          <p className="text-sm font-semibold text-white font-mono">
-            {mounted ? new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--:--"}
-          </p>
-          <p className="text-xs text-slate-500">nhg-vision-soberano-77</p>
-        </div>
 
-        {/* CONTROLS */}
-        <div className="flex items-center gap-4">
-          
-          {/* MUTE MIC BUTTON */}
-          <button 
-            onClick={() => setIsMuted(!isMuted)}
-            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${isMuted ? 'bg-red-600 border-red-500 text-white hover:bg-red-500' : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-850 hover:text-white'}`}
-            title={isMuted ? "Ativar Microfone" : "Mutar Microfone"}
-          >
-            {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-          </button>
-
-          {/* TOGGLE CAMERA BUTTON */}
-          <button 
-            onClick={() => setIsCameraOn(!isCameraOn)}
-            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${!isCameraOn ? 'bg-red-600 border-red-500 text-white hover:bg-red-500' : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-850 hover:text-white'}`}
-            title={isCameraOn ? "Desligar Câmera" : "Ligar Câmera"}
-          >
-            {isCameraOn ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
-          </button>
-
-          {/* SCREEN SHARE BUTTON */}
-          <button 
-            onClick={toggleScreenShare}
-            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${isScreenSharing ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:bg-emerald-505' : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-850 hover:text-white'}`}
-            title={isScreenSharing ? "Parar Compartilhamento de Tela" : "Compartilhar Tela"}
-          >
-            {isScreenSharing ? <ScreenShareOff className="w-5 h-5" /> : <ScreenShare className="w-5 h-5" />}
-          </button>
-
-          {/* INTERPRETER MOD ACTIVE BUTTON */}
-          <button 
-            onClick={() => setIsInterpreterActive(!isInterpreterActive)}
-            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${isInterpreterActive ? 'bg-indigo-600 border-indigo-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)] hover:bg-indigo-550' : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-850'}`}
-            title={isInterpreterActive ? "Pausar Tradutor Simultâneo" : "Iniciar Tradutor Simultâneo"}
-          >
-            <Languages className={`w-5 h-5 ${isInterpreterActive ? 'animate-pulse' : ''}`} />
-          </button>
-
-          {/* LEAVE CALL BUTTON */}
-          <Link href={isJoiner ? "/" : "/gabinete"}>
-            <button 
-              className="w-14 h-12 rounded-3xl bg-red-600 hover:bg-red-500 text-white flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-red-600/20"
-              title="Desligar Chamada"
-            >
-              <PhoneOff className="w-5 h-5" />
-            </button>
-          </Link>
-
-        </div>
-
-        {/* SYSTEM STATUS */}
-        <div className="hidden md:flex items-center gap-2 text-xs text-slate-500 font-mono">
-          <Sparkles className="w-3.5 h-3.5 text-indigo-500 animate-pulse" />
-          <span>Filtro de Ruído Inteligente Activo</span>
-        </div>
-
-      </footer>
 
       {/* MODAL CONVIDAR CONEXÃO POR E-MAIL */}
       <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
