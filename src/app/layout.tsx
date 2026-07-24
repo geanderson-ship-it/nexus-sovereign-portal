@@ -20,9 +20,9 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Nexus Holding Group | Tecnologia, Inovação e Inteligência Artificial',
-  description: 'A Nexus Holding Group é um ecossistema de tecnologia, inovação corporativa e soluções de ponta. Impulsione sua empresa com as nossas ferramentas de Inteligência Artificial.',
-  keywords: 'nexus, nexus holding, nexus holding group, nexus group, nexus tecnologia, tecnologia, holding de tecnologia, empresa de tecnologia, inovação corporativa, inteligência artificial, IA, B2B, dante safra, inova moda, inova revenda, vitrine inovadora, nexus rotas, martech, construtech, legaltech',
+  title: 'Nexus Holding Group | Tecnologia para Prefeituras, IA no Agronegócio e Inovação',
+  description: 'O ecossistema Nexus Holding Group oferece soluções avançadas de tecnologia para prefeituras (Cidades do Futuro) e IA no agronegócio com o Dante Safra, liderando a inovação em gestão pública e privada.',
+  keywords: 'tecnologia para prefeituras, IA no agronegócio, Dante Safra, cidades do futuro, nexus, nexus holding, inteligência artificial, inovação governamental, software agrícola, gestão municipal, legaltech, construtech, martech',
   openGraph: {
     title: 'Nexus Holding Group | Tecnologia e Inovação',
     description: 'A Nexus Holding Group é uma empresa de tecnologia e evolução focada em soluções avançadas de Inteligência Artificial.',
