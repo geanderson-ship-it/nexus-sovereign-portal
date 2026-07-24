@@ -150,6 +150,7 @@ export default function MeetSoberanoPage() {
   const dataChannelsRef = useRef<Map<string, RTCDataChannel>>(new Map());
   const localStreamRef = useRef<MediaStream | null>(null);
   const candidateQueuesRef = useRef<Map<string, RTCIceCandidateInit[]>>(new Map());
+  const hasConnectedRef = useRef(false);
 
   // ESTADO DE PARTICIPANTES REMOTOS
   const [remotePeers, setRemotePeers] = useState<RemotePeer[]>([]);
@@ -701,6 +702,20 @@ https://nexustreinamento.com`;
             candidateQueuesRef.current.delete(peerId);
             setRemotePeers(prev => prev.filter(p => p.peerId !== peerId));
             logToAtena(`[WebRTC] Participante desconectado.`);
+          }
+        }
+
+        // Se formos convidados (Joiner) e já tivemos participantes conectados na sala,
+        // mas agora todos saíram, encerra a sessão e redireciona para a tela inicial pública
+        if (isJoiner) {
+          const currentlyConnected = Array.from(peerConnectionsRef.current.keys()).length;
+          if (currentlyConnected > 0) {
+            hasConnectedRef.current = true;
+          } else if (hasConnectedRef.current) {
+            logToAtena(`[WebRTC] Reunião encerrada pelo Host. Redirecionando...`);
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 1500);
           }
         }
 
@@ -1331,11 +1346,19 @@ https://nexustreinamento.com`;
             </Button>
           )}
 
-          <Link href="/gabinete">
-            <Button size="sm" variant="outline" className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs">
-              Voltar ao Gabinete
-            </Button>
-          </Link>
+          {isJoiner ? (
+            <Link href="/">
+              <Button size="sm" variant="outline" className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs">
+                Sair da Sala
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/gabinete">
+              <Button size="sm" variant="outline" className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs">
+                Voltar ao Gabinete
+              </Button>
+            </Link>
+          )}
         </div>
       </header>
 
@@ -1718,7 +1741,7 @@ https://nexustreinamento.com`;
           </button>
 
           {/* LEAVE CALL BUTTON */}
-          <Link href="/gabinete">
+          <Link href={isJoiner ? "/" : "/gabinete"}>
             <button 
               className="w-14 h-12 rounded-3xl bg-red-600 hover:bg-red-500 text-white flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-red-600/20"
               title="Desligar Chamada"
