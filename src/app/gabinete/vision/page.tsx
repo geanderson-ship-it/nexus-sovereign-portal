@@ -1358,22 +1358,22 @@ https://nexustreinamento.com`;
 
       {/* HEADER */}
       <header className="relative z-10 px-6 py-4 border-b border-slate-800/80 bg-black/40 backdrop-blur-md flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl border border-blue-500/40 bg-blue-950/50 flex items-center justify-center text-blue-400 font-bold text-lg shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl border border-blue-500/40 bg-blue-950/50 flex items-center justify-center text-blue-400 font-bold text-xl shadow-[0_0_20px_rgba(59,130,246,0.25)]">
             N
           </div>
           <div>
-            <h1 className="text-base font-bold tracking-wide text-white flex items-center gap-2">
-              Nexus Vision <span className="text-[10px] bg-amber-500/20 border border-amber-500/30 text-amber-400 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">Soberano</span>
+            <h1 className="text-xl md:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+              Nexus Vision <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-semibold px-2 py-0.5 rounded-full uppercase tracking-widest">Soberano</span>
             </h1>
             <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold font-mono">Sala ID: nhg-vision-soberano-77</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-4 flex-wrap md:flex-nowrap">
-          {/* Seletor de Idioma do Cliente no Topo */}
-          <div className="flex items-center gap-2 bg-slate-900/80 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-300 shadow-lg shadow-black/40">
-            <Globe className="w-3.5 h-3.5 text-amber-400" />
+        <div className="flex items-center gap-2 flex-wrap md:flex-nowrap">
+          {/* Seletor de Idioma do Cliente */}
+          <div className="flex items-center gap-2 bg-[#090d16] border border-slate-800/80 rounded-lg px-2.5 py-1 text-[11px] text-slate-400 h-8 shadow-sm">
+            <Globe className="w-3.5 h-3.5 text-amber-500/90" />
             <span className="font-semibold hidden lg:inline">Idioma do Cliente:</span>
             <select 
               value={selectedLanguage.code}
@@ -1387,7 +1387,7 @@ https://nexustreinamento.com`;
               className="bg-transparent text-white font-bold cursor-pointer focus:outline-none"
             >
               {LANGUAGES.map(lang => (
-                <option key={lang.code} value={lang.code} className="bg-slate-950 text-white">
+                <option key={lang.code} value={lang.code} className="bg-[#090d16] text-white">
                   {lang.flag} {lang.name}
                 </option>
               ))}
@@ -1396,42 +1396,47 @@ https://nexustreinamento.com`;
 
           {/* Indicador de Idioma Detectado no modo Auto */}
           {selectedLanguage.code === 'auto' && (
-            <div className="flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-3 py-1.5 rounded-lg text-xs font-mono">
+            <div className="flex items-center gap-1.5 bg-amber-500/5 border border-amber-500/20 text-amber-400 px-2.5 py-1 rounded-lg text-[10px] font-mono h-8">
               <span className="font-bold">Detectado:</span>
               <span className="flex items-center gap-1 animate-pulse">
                 <span>{detectedLanguage.flag}</span>
-                <span className="uppercase text-[10px]">{detectedLanguage.name}</span>
+                <span className="uppercase text-[9px] font-semibold">{detectedLanguage.name}</span>
               </span>
             </div>
           )}
 
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-indigo-500/20 bg-indigo-950/20 font-mono text-xs text-indigo-400">
-            <span className={`w-2 h-2 rounded-full animate-pulse ${isRemoteConnected ? "bg-emerald-500" : "bg-amber-500"}`} />
+          {/* Status da Conexão */}
+          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg border border-indigo-500/10 bg-[#090d16] font-mono text-[10px] text-indigo-400 h-8">
+            <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${isRemoteConnected ? "bg-emerald-500" : "bg-amber-500"}`} />
             <span>{connectionStatus}</span>
           </div>
 
+          {/* Convidar Conexão */}
           {!isJoiner && (
-            <Button onClick={() => setIsInviteOpen(true)} size="sm" variant="outline" className="border-indigo-500/30 hover:bg-indigo-950 hover:text-white text-indigo-400 gap-2 text-xs font-bold shadow-lg shadow-indigo-500/10">
-              <Share2 className="w-4 h-4" />
+            <Button 
+              onClick={() => setIsInviteOpen(true)} 
+              variant="outline" 
+              className="h-8 border-slate-800 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white gap-1.5 text-[11px] font-bold px-3 shadow-sm rounded-lg"
+            >
+              <Share2 className="w-3.5 h-3.5" />
               Convidar Conexão
             </Button>
           )}
 
+          {/* Voltar ao Gabinete / Sair da Sala */}
           {isJoiner ? (
             <Button 
               onClick={() => handleLeave('/')}
-              size="sm" 
               variant="outline" 
-              className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs"
+              className="h-8 border-slate-800 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white gap-1.5 text-[11px] font-bold px-3 shadow-sm rounded-lg"
             >
               Sair da Sala
             </Button>
           ) : (
             <Button 
               onClick={() => handleLeave('/gabinete')}
-              size="sm" 
               variant="outline" 
-              className="border-slate-800 hover:bg-slate-950 hover:text-white gap-2 text-xs"
+              className="h-8 border-slate-800 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white gap-1.5 text-[11px] font-bold px-3 shadow-sm rounded-lg"
             >
               Voltar ao Gabinete
             </Button>
