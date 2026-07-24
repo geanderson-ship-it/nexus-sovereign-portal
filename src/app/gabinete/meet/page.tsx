@@ -70,6 +70,14 @@ interface TranscriptItem {
   timestamp: string;
 }
 
+interface RemotePeer {
+  peerId: string;
+  name: string;
+  stream: MediaStream | null;
+  isCameraOn?: boolean;
+  isMuted?: boolean;
+}
+
 export default function MeetSoberanoPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
@@ -138,9 +146,13 @@ export default function MeetSoberanoPage() {
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
   // WebRTC Refs
-  const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
-  const dataChannelRef = useRef<RTCDataChannel | null>(null);
+  const peerConnectionsRef = useRef<Map<string, RTCPeerConnection>>(new Map());
+  const dataChannelsRef = useRef<Map<string, RTCDataChannel>>(new Map());
   const localStreamRef = useRef<MediaStream | null>(null);
+  const candidateQueuesRef = useRef<Map<string, RTCIceCandidateInit[]>>(new Map());
+
+  // ESTADO DE PARTICIPANTES REMOTOS
+  const [remotePeers, setRemotePeers] = useState<RemotePeer[]>([]);
 
   // LEGENDAS & SUBTITLES
   const [activeSubtitle, setActiveSubtitle] = useState<{
@@ -178,15 +190,15 @@ export default function MeetSoberanoPage() {
         screenStreamRef.current = screenStream;
         const screenTrack = screenStream.getVideoTracks()[0];
 
-        // Se tiver conexão WebRTC ativa, substitui a track de vídeo
-        if (peerConnectionRef.current) {
-          const senders = peerConnectionRef.current.getSenders();
+        // Se tiver conexões WebRTC ativas, substitui a track de vídeo em todas elas
+        for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
+          const senders = pc.getSenders();
           const videoSender = senders.find(s => s.track && s.track.kind === 'video');
           if (videoSender) {
             await videoSender.replaceTrack(screenTrack);
-            logToAtena(`[WebRTC] Compartilhamento de tela ativo na chamada.`);
           }
         }
+        logToAtena(`[WebRTC] Compartilhamento de tela ativo na chamada.`);
 
         // Atualiza a visualização local do usuário
         if (myVideoRef.current) {
@@ -213,16 +225,16 @@ export default function MeetSoberanoPage() {
       screenStreamRef.current = null;
     }
 
-    // Reverte para a câmera local
+    // Reverte para a câmera local em todas as conexões
     const cameraTrack = localStreamRef.current?.getVideoTracks()[0];
-    if (peerConnectionRef.current) {
-      const senders = peerConnectionRef.current.getSenders();
+    for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
+      const senders = pc.getSenders();
       const videoSender = senders.find(s => s.track && s.track.kind === 'video');
       if (videoSender && cameraTrack) {
         await videoSender.replaceTrack(cameraTrack);
-        logToAtena(`[WebRTC] Vídeo da chamada restaurado para a câmera.`);
       }
     }
+    logToAtena(`[WebRTC] Vídeo da chamada restaurado para a câmera.`);
 
     // Restaura a visualização local
     if (myVideoRef.current && localStreamRef.current) {
@@ -416,22 +428,18 @@ https://nexustreinamento.com`;
     }
   }, [isAuthorized]);
 
-  // INICIALIZAR E POLICIA WebRTC (Conexão P2P + Sinalização DynamoDB)
+  // INICIALIZAR E POLICIA WebRTC (Conexão P2P + Sinalização DynamoDB - MESH para até 6 pessoas)
   useEffect(() => {
     if (!isAuthorized || typeof window === 'undefined') return;
     if (isJoiner && !hasEnteredName) return; // Aguarda o convidado digitar o nome
 
     let active = true;
     let pollInterval: NodeJS.Timeout;
-    const queuedCandidates: RTCIceCandidateInit[] = [];
+    let presenceInterval: NodeJS.Timeout;
 
-
-    const initWebRTC = async () => {
-      logToAtena(`[WebRTC] Inicializando sala: ${roomId}`);
-      logToAtena(`[WebRTC] Papel: ${isJoiner ? 'Joiner (Convidado)' : 'Host (Criador)'}`);
-      
+    // 1. Acessa mídia local (câmera e áudio)
+    const initLocalMedia = async () => {
       setConnectionStatus('Acessando câmera e microfone...');
-      // 1. Obter mídia local (câmera e áudio)
       let localStream: MediaStream;
       try {
         localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -458,10 +466,39 @@ https://nexustreinamento.com`;
           return;
         }
       }
+      setConnectionStatus('Conectado à sala local. Buscando parceiros...');
+    };
 
-      setConnectionStatus(isJoiner ? 'Buscando sinal do Host...' : 'Aguardando participante entrar...');
+    // 2. Envia nossa presença na sala
+    const sendPresence = async () => {
+      try {
+        await fetch('/api/meet/signal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            roomId,
+            type: 'presence',
+            sender: localPeerId,
+            data: {
+              name: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson'),
+              isCameraOn,
+              isMuted,
+              timestamp: Date.now()
+            }
+          })
+        });
+      } catch (e) {
+        console.warn("Erro ao enviar presença:", e);
+      }
+    };
 
-      // 2. Criar RTCPeerConnection com múltiplos STUN
+    // 3. Inicializa Conexão WebRTC com um Peer específico
+    const getOrCreatePeerConnection = (targetPeerId: string, peerName: string): RTCPeerConnection => {
+      if (peerConnectionsRef.current.has(targetPeerId)) {
+        return peerConnectionsRef.current.get(targetPeerId)!;
+      }
+
+      logToAtena(`[WebRTC] Criando conexão com ${peerName}...`);
       const pc = new RTCPeerConnection({
         iceServers: [
           { urls: 'stun:stun.l.google.com:19302' },
@@ -471,30 +508,19 @@ https://nexustreinamento.com`;
           { urls: 'stun:stun4.l.google.com:19302' }
         ]
       });
-      peerConnectionRef.current = pc;
 
-      // Adicionar tracks locais
-      localStream.getTracks().forEach(track => {
-        pc.addTrack(track, localStream);
-      });
-      logToAtena(`[WebRTC] Tracks de mídia adicionadas à conexão.`);
+      peerConnectionsRef.current.set(targetPeerId, pc);
 
-      const updateTracksState = () => {
-        const audioTrack = localStream.getAudioTracks()[0];
-        if (audioTrack) {
-          audioTrack.enabled = (selectedLanguage.code === 'pt') && !isMuted;
-        }
-        const videoTrack = localStream.getVideoTracks()[0];
-        if (videoTrack) {
-          videoTrack.enabled = isCameraOn;
-        }
-      };
-      updateTracksState();
+      // Adiciona tracks locais à conexão
+      if (localStreamRef.current) {
+        localStreamRef.current.getTracks().forEach(track => {
+          pc.addTrack(track, localStreamRef.current!);
+        });
+      }
 
-      // Monitor de candidatos ICE locais
+      // Handler para candidatos ICE locais
       pc.onicecandidate = (event) => {
         if (event.candidate) {
-          logToAtena(`[WebRTC] Novo candidato ICE local gerado.`);
           fetch('/api/meet/signal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -502,94 +528,91 @@ https://nexustreinamento.com`;
               roomId,
               type: 'webrtc-candidate',
               sender: localPeerId,
-              data: event.candidate
+              data: {
+                target: targetPeerId,
+                candidate: event.candidate
+              }
             })
-          })
-          .then(res => {
-            if (!res.ok) logToAtena(`[Sinalização] Falha ao enviar ICE: status ${res.status}`);
-          })
-          .catch(e => console.error("Falha ao enviar ICE candidato:", e));
+          }).catch(e => console.error("Falha ao enviar ICE candidato:", e));
         }
       };
 
       pc.oniceconnectionstatechange = () => {
-        logToAtena(`[WebRTC] ICE Connection State: ${pc.iceConnectionState}`);
+        console.log(`ICE Connection State com ${peerName}: ${pc.iceConnectionState}`);
         if (pc.iceConnectionState === 'failed' || pc.iceConnectionState === 'disconnected') {
-          setConnectionStatus('Falha na conexão P2P.');
+          logToAtena(`[WebRTC] Conexão perdida com ${peerName}.`);
         }
       };
 
-      // Receber track remota
+      // Receber track remota do parceiro
       pc.ontrack = (event) => {
-        console.log("WebRTC: Recebeu track remota!", event.streams[0]);
-        logToAtena(`[WebRTC] Feed de mídia do parceiro recebido com sucesso!`);
-        if (remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = event.streams[0];
-          setIsRemoteConnected(true);
-          setRemotePeerName(isJoiner ? "Diretor Geanderson" : "Ivoni (Conectada)");
-          setConnectionStatus('Conexão Estabelecida com Sucesso!');
-        }
+        console.log(`Recebeu track remota de ${peerName}`);
+        const remoteStream = event.streams[0] || null;
+        setRemotePeers(prev => {
+          const existing = prev.find(p => p.peerId === targetPeerId);
+          if (existing) {
+            return prev.map(p => p.peerId === targetPeerId ? { ...p, stream: remoteStream } : p);
+          }
+          return [...prev, { peerId: targetPeerId, name: peerName, stream: remoteStream }];
+        });
+        logToAtena(`[WebRTC] Feed de vídeo de ${peerName} conectado.`);
       };
 
-      // Se for o Host: Cria o DataChannel e a Oferta
-      if (!isJoiner) {
-        logToAtena(`[WebRTC] Criando DataChannel...`);
+      // Se fomos nós quem criamos a conexão por ter ID maior, iniciamos o DataChannel e a Oferta
+      if (localPeerId > targetPeerId) {
+        logToAtena(`[WebRTC] Iniciando chamada com ${peerName}...`);
         const dc = pc.createDataChannel('meet-chat');
-        dataChannelRef.current = dc;
-        setupDataChannel(dc);
+        dataChannelsRef.current.set(targetPeerId, dc);
+        setupDataChannel(targetPeerId, dc);
 
-        try {
-          const offer = await pc.createOffer();
+        pc.createOffer().then(async (offer) => {
           await pc.setLocalDescription(offer);
-
-          const res = await fetch('/api/meet/signal', {
+          await fetch('/api/meet/signal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               roomId,
               type: 'webrtc-offer',
               sender: localPeerId,
-              data: offer
+              data: {
+                target: targetPeerId,
+                offer
+              }
             })
           });
-          
-          if (res.ok) {
-            logToAtena(`[Sinalização] Oferta do Host salva no DynamoDB.`);
-          } else {
-            const errData = await res.json();
-            logToAtena(`[Sinalização] Erro ao salvar oferta: ${errData.error || res.statusText}`);
-          }
-        } catch (e: any) {
-          logToAtena(`[WebRTC] Erro ao criar oferta: ${e.message}`);
-        }
+        }).catch(err => console.error("Erro ao criar oferta:", err));
+      } else {
+        // Se formos o recebedor, escutamos o canal que o iniciador criará
+        pc.ondatachannel = (event) => {
+          dataChannelsRef.current.set(targetPeerId, event.channel);
+          setupDataChannel(targetPeerId, event.channel);
+        };
       }
+
+      return pc;
     };
 
-    const setupDataChannel = (channel: RTCDataChannel) => {
+    const setupDataChannel = (peerId: string, channel: RTCDataChannel) => {
       channel.onopen = () => {
         logToAtena(`[DataChannel] Canal de dados conectado.`);
         setConnectionStatus('Conexão de Dados Ativa!');
-        
-        // Envia identidade local
         try {
           channel.send(JSON.stringify({
             type: 'identity',
             name: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
           }));
         } catch (e) {
-          console.error("Erro ao enviar identidade inicial:", e);
+          console.error("Erro ao enviar identidade:", e);
         }
       };
       channel.onclose = () => {
-        logToAtena(`[DataChannel] Canal de dados fechado.`);
-        setIsRemoteConnected(false);
-        setConnectionStatus('Participante desconectou.');
+        logToAtena(`[DataChannel] Conexão encerrada.`);
       };
       channel.onmessage = async (event) => {
         try {
           const msg = JSON.parse(event.data);
           if (msg.type === 'identity') {
-            setRemotePeerName(msg.name);
+            setRemotePeers(prev => prev.map(p => p.peerId === peerId ? { ...p, name: msg.name } : p));
           } else if (msg.type === 'transcript') {
             await handleIncomingTranscript(msg.text, msg.senderName);
           }
@@ -599,202 +622,136 @@ https://nexustreinamento.com`;
       };
     };
 
-    const handleIncomingTranscript = async (text: string, senderName: string) => {
-      const isPt = selectedLanguage.code === 'pt';
-
-      if (isPt) {
-        setActiveSubtitle({
-          sender: 'client',
-          original: text,
-          translated: text,
-          stage: 'done'
-        });
-
-        const newItem: TranscriptItem = {
-          id: Math.random().toString(),
-          sender: 'client',
-          originalText: text,
-          translatedText: text,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        };
-        setTranscripts(prev => [...prev, newItem]);
-        updateAtenaInsights('client', text, text);
-
-        setTimeout(() => {
-          setActiveSubtitle(null);
-        }, 4000);
-      } else {
-        setActiveSubtitle({
-          sender: 'client',
-          original: text,
-          translated: `Traduzindo do ${selectedLanguage.name}...`,
-          stage: 'translating'
-        });
-
-        playMuffledAudioEffect();
-
-        try {
-          const response = await fetch('/api/translate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              text,
-              targetLanguage: 'portuguese',
-              sourceLanguage: selectedLanguage.code === 'auto' ? 'auto' : selectedLanguage.name
-            })
-          });
-          const resData = await response.json();
-          const translation = resData.translation || text;
-
-          setActiveSubtitle({
-            sender: 'client',
-            original: text,
-            translated: translation,
-            stage: 'done'
-          });
-
-          // Fala o áudio traduzido em voz alta
-          playTTS(translation, 'pt-BR');
-
-          // Salva no histórico
-          const newItem: TranscriptItem = {
-            id: Math.random().toString(),
-            sender: 'client',
-            originalText: text,
-            translatedText: translation,
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          };
-          setTranscripts(prev => [...prev, newItem]);
-          updateAtenaInsights('client', text, translation);
-
-          setTimeout(() => {
-            setActiveSubtitle(null);
-          }, 5000);
-        } catch (err) {
-          console.error("Falha ao traduzir fala remota:", err);
-          setActiveSubtitle({
-            sender: 'client',
-            original: text,
-            translated: text,
-            stage: 'done'
-          });
-        }
-      }
-    };
-
-    // Polling de sinalização
+    // 4. Polling de sinalização de malha (Mesh Discovery & Signaling)
     const pollSignaling = async () => {
-      const pc = peerConnectionRef.current;
-      if (!pc) return;
-
       try {
         const response = await fetch(`/api/meet/signal?roomId=${roomId}`);
-        if (!response.ok) {
-          logToAtena(`[Sinalização] Erro de rede na consulta: status ${response.status}`);
-          return;
-        }
+        if (!response.ok) return;
+
         const resData = await response.json();
         const signals = resData.signals || [];
+        const now = Date.now();
 
-        // Filtra sinais enviados por outras pessoas
-        const remoteSignals = signals.filter((s: any) => s.payload.sender !== localPeerId);
+        // A. Acha todos os participantes ativos por sinal de presença recente (últimos 15s)
+        const presenceSignals = signals.filter((s: any) => s.type === 'presence' && s.sender !== localPeerId);
+        
+        // Mantém apenas a última presença de cada remetente
+        const activePeersMap = new Map<string, { name: string; timestamp: number }>();
+        presenceSignals.forEach((s: any) => {
+          const timeDiff = now - new Date(s.timestamp).getTime();
+          if (timeDiff < 15000) {
+            if (!activePeersMap.has(s.sender) || new Date(s.timestamp).getTime() > activePeersMap.get(s.sender)!.timestamp) {
+              activePeersMap.set(s.sender, { name: s.payload.data?.name || 'Convidado', timestamp: new Date(s.timestamp).getTime() });
+            }
+          }
+        });
 
-        // Identifica se há uma oferta ativa de outro peer
-        const offerSignal = remoteSignals.find((s: any) => s.type === 'webrtc-offer');
-        const answerSignal = remoteSignals.find((s: any) => s.type === 'webrtc-answer');
-        const candidateSignals = remoteSignals.filter((s: any) => s.type === 'webrtc-candidate');
+        // Cria conexão de rede para cada participante ativo (limite de 6 pessoas na sala)
+        const activePeerIds = Array.from(activePeersMap.keys()).slice(0, 5); // 5 remotos + 1 local = 6 participantes max
 
-        // Fluxo de Joiner (Peer B): Se houver uma oferta e ainda não criamos a nossa conexão local
-        if (isJoiner && offerSignal && !processedSignalsRef.current.has(offerSignal.id)) {
-          processedSignalsRef.current.add(offerSignal.id);
-          logToAtena(`[Sinalização] Oferta do Host recebida via DynamoDB.`);
-          setConnectionStatus('Configurando conexão com o Host...');
-
-          await pc.setRemoteDescription(new RTCSessionDescription(offerSignal.payload.data));
-          logToAtena(`[WebRTC] Remote Description configurada (Oferta).`);
-
-          const answer = await pc.createAnswer();
-          await pc.setLocalDescription(answer);
-
-          const res = await fetch('/api/meet/signal', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              roomId,
-              type: 'webrtc-answer',
-              sender: localPeerId,
-              data: answer
-            })
+        activePeerIds.forEach((peerId) => {
+          const peerInfo = activePeersMap.get(peerId)!;
+          // Garante a existência do peer no estado visual
+          setRemotePeers(prev => {
+            if (!prev.some(p => p.peerId === peerId)) {
+              return [...prev, { peerId, name: peerInfo.name, stream: null }];
+            }
+            return prev;
           });
+          // Inicializa conexão WebRTC
+          getOrCreatePeerConnection(peerId, peerInfo.name);
+        });
 
-          if (res.ok) {
-            logToAtena(`[Sinalização] Resposta do Joiner salva no DynamoDB.`);
-            setConnectionStatus('Resposta enviada. Conectando...');
-          } else {
-            logToAtena(`[Sinalização] Erro ao enviar resposta: status ${res.status}`);
+        // Fecha e remove conexões com participantes inativos
+        for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
+          if (!activePeerIds.includes(peerId)) {
+            console.log("Fechando peer inativo:", peerId);
+            pc.close();
+            peerConnectionsRef.current.delete(peerId);
+            dataChannelsRef.current.delete(peerId);
+            candidateQueuesRef.current.delete(peerId);
+            setRemotePeers(prev => prev.filter(p => p.peerId !== peerId));
+            logToAtena(`[WebRTC] Participante desconectado.`);
           }
-
-          // Ouvir canal de dados que o Host criará
-          pc.ondatachannel = (event) => {
-            logToAtena(`[WebRTC] Canal de dados remoto conectado.`);
-            dataChannelRef.current = event.channel;
-            setupDataChannel(event.channel);
-          };
         }
 
-        // Fluxo de Host (Peer A): Se nós criamos a oferta e recebemos a resposta
-        if (!isJoiner && answerSignal && !processedSignalsRef.current.has(answerSignal.id)) {
-          processedSignalsRef.current.add(answerSignal.id);
-          logToAtena(`[Sinalização] Resposta do Joiner recebida via DynamoDB.`);
-          setConnectionStatus('Conectando ao participante...');
-          await pc.setRemoteDescription(new RTCSessionDescription(answerSignal.payload.data));
-          logToAtena(`[WebRTC] Remote Description configurada (Resposta).`);
-        }
+        // B. Processa ofertas, respostas e candidatos ICE direcionados a nós
+        const targetedSignals = signals.filter((s: any) => s.sender !== localPeerId && s.payload.data?.target === localPeerId);
 
-        // Processa candidatos ICE remotos recebidos
-        if (pc.remoteDescription) {
-          // Adiciona candidatos novos que estavam na fila anterior
-          while (queuedCandidates.length > 0) {
-            const cand = queuedCandidates.shift();
-            if (cand) {
-              try {
-                await pc.addIceCandidate(new RTCIceCandidate(cand));
-                logToAtena(`[WebRTC] Candidato ICE da fila processado.`);
-              } catch (e) {
-                console.warn("Erro ao processar candidato da fila:", e);
+        for (const signal of targetedSignals) {
+          const senderId = signal.sender;
+          const pc = peerConnectionsRef.current.get(senderId);
+          if (!pc) continue;
+
+          if (signal.type === 'webrtc-offer' && !processedSignalsRef.current.has(signal.id)) {
+            processedSignalsRef.current.add(signal.id);
+            logToAtena(`[WebRTC] Recebeu oferta de sinalização.`);
+            await pc.setRemoteDescription(new RTCSessionDescription(signal.payload.data.offer));
+            const answer = await pc.createAnswer();
+            await pc.setLocalDescription(answer);
+            
+            await fetch('/api/meet/signal', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                roomId,
+                type: 'webrtc-answer',
+                sender: localPeerId,
+                data: {
+                  target: senderId,
+                  answer
+                }
+              })
+            });
+
+            // Processa ICE candidatos acumulados na fila para este sender
+            const queue = candidateQueuesRef.current.get(senderId) || [];
+            while (queue.length > 0) {
+              const cand = queue.shift();
+              if (cand) {
+                try { await pc.addIceCandidate(new RTCIceCandidate(cand)); } catch (e) {}
               }
             }
           }
 
-          for (const cand of candidateSignals) {
-            if (!processedSignalsRef.current.has(cand.id)) {
-              processedSignalsRef.current.add(cand.id);
-              try {
-                await pc.addIceCandidate(new RTCIceCandidate(cand.payload.data));
-                logToAtena(`[WebRTC] Candidato ICE remoto processado.`);
-              } catch (e) {
-                console.warn("ICE candidato remoto falhou ao adicionar:", e);
+          if (signal.type === 'webrtc-answer' && !processedSignalsRef.current.has(signal.id)) {
+            processedSignalsRef.current.add(signal.id);
+            logToAtena(`[WebRTC] Conexão respondida.`);
+            await pc.setRemoteDescription(new RTCSessionDescription(signal.payload.data.answer));
+            
+            // Processa ICE candidatos acumulados na fila para este sender
+            const queue = candidateQueuesRef.current.get(senderId) || [];
+            while (queue.length > 0) {
+              const cand = queue.shift();
+              if (cand) {
+                try { await pc.addIceCandidate(new RTCIceCandidate(cand)); } catch (e) {}
               }
             }
           }
-        } else {
-          // Se remoteDescription ainda não está definida, guarda na fila
-          for (const cand of candidateSignals) {
-            if (!processedSignalsRef.current.has(cand.id)) {
-              processedSignalsRef.current.add(cand.id);
-              queuedCandidates.push(cand.payload.data);
-              logToAtena(`[WebRTC] Candidato ICE remoto enfileirado (aguardando Remote Description).`);
+
+          if (signal.type === 'webrtc-candidate' && !processedSignalsRef.current.has(signal.id)) {
+            processedSignalsRef.current.add(signal.id);
+            const cand = signal.payload.data.candidate;
+            if (pc.remoteDescription) {
+              try { await pc.addIceCandidate(new RTCIceCandidate(cand)); } catch (e) {}
+            } else {
+              if (!candidateQueuesRef.current.has(senderId)) {
+                candidateQueuesRef.current.set(senderId, []);
+              }
+              candidateQueuesRef.current.get(senderId)!.push(cand);
             }
           }
         }
       } catch (err: any) {
         console.error("Erro no polling de sinalização:", err);
-        logToAtena(`[Sinalização] Falha: ${err.message || 'Erro de comunicação'}`);
       }
     };
 
-    initWebRTC().then(() => {
+    // Inicialização
+    initLocalMedia().then(() => {
       if (active) {
+        sendPresence();
+        presenceInterval = setInterval(sendPresence, 4000);
         pollInterval = setInterval(pollSignaling, 2000);
       }
     });
@@ -802,9 +759,16 @@ https://nexustreinamento.com`;
     return () => {
       active = false;
       clearInterval(pollInterval);
-      if (peerConnectionRef.current) {
-        peerConnectionRef.current.close();
+      clearInterval(presenceInterval);
+      
+      // Fecha todas as conexões ativas do mapa
+      for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
+        pc.close();
       }
+      peerConnectionsRef.current.clear();
+      dataChannelsRef.current.clear();
+      candidateQueuesRef.current.clear();
+
       if (localStreamRef.current) {
         localStreamRef.current.getTracks().forEach(t => t.stop());
       }
@@ -920,18 +884,19 @@ https://nexustreinamento.com`;
       stage: 'done'
     });
 
-    // Transmitir o texto reconhecido via WebRTC DataChannel
-    // Transmitir o texto reconhecido via WebRTC DataChannel
-    if (dataChannelRef.current && dataChannelRef.current.readyState === 'open') {
-      try {
-        dataChannelRef.current.send(JSON.stringify({
-          type: 'transcript',
-          text: text,
-          senderName: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
-        }));
-        console.log("WebRTC: Transcrição enviada via DataChannel:", text);
-      } catch (err) {
-        console.error("Falha ao enviar transcrição via DataChannel:", err);
+    // Transmitir o texto reconhecido via WebRTC DataChannel para todos os canais conectados
+    for (const [peerId, dc] of dataChannelsRef.current.entries()) {
+      if (dc.readyState === 'open') {
+        try {
+          dc.send(JSON.stringify({
+            type: 'transcript',
+            text: text,
+            senderName: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
+          }));
+          console.log(`WebRTC: Transcrição enviada via DataChannel para ${peerId}:`, text);
+        } catch (err) {
+          console.error(`Falha ao enviar transcrição via DataChannel para ${peerId}:`, err);
+        }
       }
     }
 
@@ -1352,7 +1317,20 @@ https://nexustreinamento.com`;
         <div className="flex-1 flex flex-col justify-between gap-6 min-h-0">
           
           {/* VIDEO GRID */}
-          <div className="flex-1 grid md:grid-cols-2 gap-6 min-h-0 items-stretch">
+          <div className={`flex-1 grid gap-6 min-h-0 items-stretch ${
+            remotePeers.length === 0
+              ? 'md:grid-cols-2 grid-cols-1'
+              : (remotePeers.length + 1 === 1 
+                  ? 'grid-cols-1' 
+                  : (remotePeers.length + 1 === 2 
+                      ? 'md:grid-cols-2 grid-cols-1' 
+                      : (remotePeers.length + 1 <= 4 
+                          ? 'md:grid-cols-2 grid-cols-1' 
+                          : 'md:grid-cols-3 grid-cols-2'
+                        )
+                    )
+                )
+          }`}>
             
             {/* GEAN'S FEED (LOCAL USER) */}
             <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex items-center justify-center group shadow-xl">
@@ -1396,91 +1374,117 @@ https://nexustreinamento.com`;
               )}
             </div>
 
-            {/* CLIENT'S FEED (SIMULATED FOREIGN CLIENT / REAL PEER CONNECTION) */}
-            <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex items-center justify-center group shadow-xl">
-              {isRemoteConnected ? (
-                <video 
-                  ref={remoteVideoRef} 
-                  autoPlay 
-                  playsInline 
-                  className="w-full h-full object-cover"
-                />
-              ) : isJoiner ? (
-                <div className="flex flex-col items-center gap-5">
-                  <div className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
-                    <Globe className="w-10 h-10 text-indigo-500 animate-spin" style={{ animationDuration: '6s' }} />
+            {/* MOCK CLIENT SIMULATOR (Only shown when no real peers are connected, for offline demonstrations) */}
+            {remotePeers.length === 0 && (
+              <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex items-center justify-center group shadow-xl">
+                {isRemoteConnected ? (
+                  <video 
+                    ref={remoteVideoRef} 
+                    autoPlay 
+                    playsInline 
+                    className="w-full h-full object-cover"
+                  />
+                ) : isJoiner ? (
+                  <div className="flex flex-col items-center gap-5">
+                    <div className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
+                      <Globe className="w-10 h-10 text-indigo-500 animate-spin" style={{ animationDuration: '6s' }} />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-white">Diretor Geanderson</p>
+                      <p className="text-xs text-slate-500">Aguardando Host iniciar a transmissão...</p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-white">Diretor Geanderson</p>
-                    <p className="text-xs text-slate-500">Aguardando Host iniciar a transmissão...</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center gap-5">
-                  {/* Client Avatar with dynamic ring */}
-                  <div className={`relative w-28 h-28 rounded-full overflow-hidden border-4 flex-shrink-0 transition-all duration-500 ${isClientSpeaking ? 'border-amber-500 shadow-[0_0_35px_rgba(245,158,11,0.4)] scale-105' : 'border-slate-800 bg-slate-900'}`}>
-                    {isClientSpeaking ? (
-                      <div className="absolute inset-0 bg-amber-500/10 flex items-center justify-center">
-                        <Globe className="w-10 h-10 text-amber-500 animate-spin" style={{ animationDuration: '8s' }} />
-                      </div>
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-900">
-                        <Image 
-                          src="/Vendedora Nexus/Isadora Nexus.png" 
-                          alt="Cliente" 
-                          fill 
-                          className="object-cover opacity-60 grayscale"
-                        />
-                      </div>
-                    )}
-                  </div>
-                  
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-white flex items-center gap-1.5 justify-center">
-                      <span>Carlos Ortega (Madrid)</span>
-                      <span className="text-xs">{selectedLanguage.flag}</span>
-                    </p>
-                    <p className="text-xs text-slate-500">Cliente Simulador</p>
-                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-5">
+                    {/* Client Avatar with dynamic ring */}
+                    <div className={`relative w-28 h-28 rounded-full overflow-hidden border-4 flex-shrink-0 transition-all duration-500 ${isClientSpeaking ? 'border-amber-500 shadow-[0_0_35px_rgba(245,158,11,0.4)] scale-105' : 'border-slate-800 bg-slate-900'}`}>
+                      {isClientSpeaking ? (
+                        <div className="absolute inset-0 bg-amber-500/10 flex items-center justify-center">
+                          <Globe className="w-10 h-10 text-amber-500 animate-spin" style={{ animationDuration: '8s' }} />
+                        </div>
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-900">
+                          <Image 
+                            src="/Vendedora Nexus/Isadora Nexus.png" 
+                            alt="Cliente" 
+                            fill 
+                            className="object-cover opacity-60 grayscale"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-white flex items-center gap-1.5 justify-center">
+                        <span>Carlos Ortega (Madrid)</span>
+                        <span className="text-xs">{selectedLanguage.flag}</span>
+                      </p>
+                      <p className="text-xs text-slate-500">Cliente Simulador</p>
+                    </div>
 
-                  <Button 
-                    onClick={handleSimulateClientSpeech}
-                    disabled={isClientSpeaking || isGeanSpeaking}
-                    className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 text-xs flex items-center gap-2 shadow-lg shadow-amber-500/10 transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
-                  >
-                    <Play className="w-3.5 h-3.5 fill-current" />
-                    Simular Fala do Cliente
-                  </Button>
-                </div>
-              )}
+                    <Button 
+                      onClick={handleSimulateClientSpeech}
+                      disabled={isClientSpeaking || isGeanSpeaking}
+                      className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 text-xs flex items-center gap-2 shadow-lg shadow-amber-500/10 transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
+                    >
+                      <Play className="w-3.5 h-3.5 fill-current" />
+                      Simular Fala do Cliente
+                    </Button>
+                  </div>
+                )}
 
-              {/* Dynamic Overlay labels */}
-              <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-xs font-semibold text-white flex items-center gap-2">
-                <Globe className="w-3.5 h-3.5 text-amber-400" />
-                <span>{isRemoteConnected ? remotePeerName : (isJoiner ? 'Diretor Geanderson' : `Cliente (${selectedLanguage.name})`)}</span>
+                {/* Dynamic Overlay labels */}
+                <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-xs font-semibold text-white flex items-center gap-2">
+                  <Globe className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{isRemoteConnected ? remotePeerName : (isJoiner ? 'Diretor Geanderson' : `Cliente (${selectedLanguage.name})`)}</span>
+                </div>
+
+                {isClientSpeaking && !isRemoteConnected && (
+                  <div className="absolute inset-0 border-2 border-amber-500 rounded-3xl pointer-events-none animate-pulse" />
+                )}
+
+                {isClientSpeaking && activeSubtitle?.stage === 'translating' && !isRemoteConnected && (
+                  <div className="absolute top-16 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-red-600/90 border border-red-500/30 text-[10px] font-bold text-white uppercase tracking-widest flex items-center gap-2 animate-bounce shadow-lg shadow-red-600/20">
+                    <VolumeX className="w-3 h-3 animate-pulse" />
+                    Áudio Nativo Interceptado & Bloqueado
+                  </div>
+                )}
+
+                {isClientSpeaking && !isRemoteConnected && (
+                  <div className="absolute bottom-4 right-4 flex items-center gap-1 bg-amber-950/80 backdrop-blur-md border border-amber-500/30 px-3 py-1.5 rounded-full">
+                    <div className="w-1.5 h-4 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                    <div className="w-1.5 h-7 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                    <div className="w-1.5 h-3 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
+                    <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest ml-1">Traduzindo</span>
+                  </div>
+                )}
               </div>
+            )}
 
-              {isClientSpeaking && !isRemoteConnected && (
-                <div className="absolute inset-0 border-2 border-amber-500 rounded-3xl pointer-events-none animate-pulse" />
-              )}
+            {/* REAL REMOTE PEERS FEEDS (MESH WebRTC) */}
+            {remotePeers.map((peer) => (
+              <div key={peer.peerId} className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex items-center justify-center group shadow-xl">
+                {peer.stream ? (
+                  <RemoteVideo peer={peer} />
+                ) : (
+                  <div className="flex flex-col items-center gap-5">
+                    <div className="relative w-28 h-28 rounded-full overflow-hidden border border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
+                      <User className="w-10 h-10 text-indigo-400" />
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-white">{peer.name}</p>
+                      <p className="text-xs text-slate-500">Sem Sinal de Vídeo</p>
+                    </div>
+                  </div>
+                )}
 
-              {isClientSpeaking && activeSubtitle?.stage === 'translating' && !isRemoteConnected && (
-                <div className="absolute top-16 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-red-600/90 border border-red-500/30 text-[10px] font-bold text-white uppercase tracking-widest flex items-center gap-2 animate-bounce shadow-lg shadow-red-600/20">
-                  <VolumeX className="w-3 h-3 animate-pulse" />
-                  Áudio Nativo Interceptado & Bloqueado
+                {/* Dynamic Overlay labels */}
+                <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-xs font-semibold text-white flex items-center gap-2">
+                  <User className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>{peer.name}</span>
                 </div>
-              )}
-
-              {isClientSpeaking && !isRemoteConnected && (
-                <div className="absolute bottom-4 right-4 flex items-center gap-1 bg-amber-950/80 backdrop-blur-md border border-amber-500/30 px-3 py-1.5 rounded-full">
-                  <div className="w-1.5 h-4 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                  <div className="w-1.5 h-7 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                  <div className="w-1.5 h-3 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
-                  <span className="text-[10px] font-bold text-amber-400 uppercase tracking-widest ml-1">Traduzindo</span>
-                </div>
-              )}
-            </div>
-
+              </div>
+            ))}
           </div>
 
           {/* DYNAMIC SUBTITLES DISPLAY OVERLAY */}
@@ -1859,5 +1863,28 @@ https://nexustreinamento.com`;
       </Dialog>
 
     </div>
+  );
+}
+
+interface RemoteVideoProps {
+  peer: RemotePeer;
+}
+
+function RemoteVideo({ peer }: RemoteVideoProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    if (videoRef.current && peer.stream) {
+      videoRef.current.srcObject = peer.stream;
+    }
+  }, [peer.stream]);
+
+  return (
+    <video 
+      ref={videoRef} 
+      autoPlay 
+      playsInline 
+      className="w-full h-full object-cover"
+    />
   );
 }
