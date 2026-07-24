@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { 
   Lock, Mic, MicOff, Video, VideoOff, PhoneOff, Languages, 
   Sparkles, Globe, Shield, Play, VolumeX, Terminal, User, Share2, Clipboard,
-  Mail, Send, Check, ExternalLink, Search, Plus
+  Mail, Send, Check, ExternalLink, Search, Plus, ScreenShare, ScreenShareOff
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -157,6 +157,81 @@ export default function MeetSoberanoPage() {
     "Aguardando interações para gerar insights de negócios."
   ]);
 
+  // COMPARTILHAMENTO DE TELA (SCREEN SHARE)
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const screenStreamRef = useRef<MediaStream | null>(null);
+
+  const logToAtena = (msg: string) => {
+    setAtenaInsights(prev => {
+      if (prev[0] === msg) return prev;
+      return [msg, ...prev.slice(0, 4)];
+    });
+  };
+
+  const toggleScreenShare = async () => {
+    if (isScreenSharing) {
+      stopScreenShare();
+    } else {
+      try {
+        logToAtena(`[WebRTC] Solicitando compartilhamento de tela...`);
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        screenStreamRef.current = screenStream;
+        const screenTrack = screenStream.getVideoTracks()[0];
+
+        // Se tiver conexão WebRTC ativa, substitui a track de vídeo
+        if (peerConnectionRef.current) {
+          const senders = peerConnectionRef.current.getSenders();
+          const videoSender = senders.find(s => s.track && s.track.kind === 'video');
+          if (videoSender) {
+            await videoSender.replaceTrack(screenTrack);
+            logToAtena(`[WebRTC] Compartilhamento de tela ativo na chamada.`);
+          }
+        }
+
+        // Atualiza a visualização local do usuário
+        if (myVideoRef.current) {
+          myVideoRef.current.srcObject = screenStream;
+        }
+
+        // Detecta quando o usuário clica em "Parar compartilhamento" na barra nativa do navegador
+        screenTrack.onended = () => {
+          logToAtena(`[WebRTC] Compartilhamento de tela interrompido.`);
+          stopScreenShare();
+        };
+
+        setIsScreenSharing(true);
+      } catch (err: any) {
+        console.error("Falha ao iniciar compartilhamento de tela:", err);
+        logToAtena(`[WebRTC] Falha ao compartilhar tela.`);
+      }
+    }
+  };
+
+  const stopScreenShare = async () => {
+    if (screenStreamRef.current) {
+      screenStreamRef.current.getTracks().forEach(track => track.stop());
+      screenStreamRef.current = null;
+    }
+
+    // Reverte para a câmera local
+    const cameraTrack = localStreamRef.current?.getVideoTracks()[0];
+    if (peerConnectionRef.current) {
+      const senders = peerConnectionRef.current.getSenders();
+      const videoSender = senders.find(s => s.track && s.track.kind === 'video');
+      if (videoSender && cameraTrack) {
+        await videoSender.replaceTrack(cameraTrack);
+        logToAtena(`[WebRTC] Vídeo da chamada restaurado para a câmera.`);
+      }
+    }
+
+    // Restaura a visualização local
+    if (myVideoRef.current && localStreamRef.current) {
+      myVideoRef.current.srcObject = localStreamRef.current;
+    }
+
+    setIsScreenSharing(false);
+  };
+
   // RECONHECIMENTO DE VOZ (SPEECH RECOGNITION)
   const recognitionRef = useRef<any>(null);
   const micErrorRef = useRef<string | null>(null);
@@ -192,8 +267,10 @@ export default function MeetSoberanoPage() {
     }
   };
 
-  // URL de convite baseada no domínio oficial solicitado
-  const inviteUrl = `https://nexustreinamento.com/gabinete/meet?room=${roomId}&join=true`;
+  // URL de convite baseada no domínio atual com fallback para o oficial
+  const inviteUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/gabinete/meet?room=${roomId}&join=true`
+    : `https://nexustreinamento.com/gabinete/meet?room=${roomId}&join=true`;
 
   const agendaUrlWithParams = useMemo(() => {
     const to = selectedRecipient === 'custom' ? customEmail : selectedRecipient;
@@ -209,7 +286,8 @@ export default function MeetSoberanoPage() {
     }
     
     const paramStr = params.toString();
-    return `https://nexustreinamento.com/agenda${paramStr ? '?' + paramStr : ''}`;
+    const baseOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://nexustreinamento.com';
+    return `${baseOrigin}/agenda${paramStr ? '?' + paramStr : ''}`;
   }, [selectedRecipient, customEmail, leadsList]);
 
   const senderSignature = useMemo(() => {
@@ -347,13 +425,6 @@ https://nexustreinamento.com`;
     let pollInterval: NodeJS.Timeout;
     const queuedCandidates: RTCIceCandidateInit[] = [];
 
-    const logToAtena = (msg: string) => {
-      setAtenaInsights(prev => {
-        // Evita duplicar logs idênticos em sequência
-        if (prev[prev.length - 1] === msg) return prev;
-        return [...prev, msg];
-      });
-    };
 
     const initWebRTC = async () => {
       logToAtena(`[WebRTC] Inicializando sala: ${roomId}`);
@@ -1285,13 +1356,13 @@ https://nexustreinamento.com`;
             
             {/* GEAN'S FEED (LOCAL USER) */}
             <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex items-center justify-center group shadow-xl">
-              {isCameraOn ? (
+              {isCameraOn || isScreenSharing ? (
                 <video 
                   ref={myVideoRef} 
                   autoPlay 
                   playsInline 
                   muted 
-                  className="w-full h-full object-cover transform -scale-x-100"
+                  className={`w-full h-full object-cover ${isScreenSharing ? '' : 'transform -scale-x-100'}`}
                 />
               ) : (
                 <div className="flex flex-col items-center gap-4">
@@ -1593,6 +1664,15 @@ https://nexustreinamento.com`;
             title={isCameraOn ? "Desligar Câmera" : "Ligar Câmera"}
           >
             {isCameraOn ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
+          </button>
+
+          {/* SCREEN SHARE BUTTON */}
+          <button 
+            onClick={toggleScreenShare}
+            className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${isScreenSharing ? 'bg-emerald-600 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:bg-emerald-505' : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-850 hover:text-white'}`}
+            title={isScreenSharing ? "Parar Compartilhamento de Tela" : "Compartilhar Tela"}
+          >
+            {isScreenSharing ? <ScreenShareOff className="w-5 h-5" /> : <ScreenShare className="w-5 h-5" />}
           </button>
 
           {/* INTERPRETER MOD ACTIVE BUTTON */}

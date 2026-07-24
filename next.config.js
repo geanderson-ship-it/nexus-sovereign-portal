@@ -57,7 +57,17 @@ const nextConfig = {
       '@genkit-ai/core',
       '@genkit-ai/ai',
       'yt-search',
-      'cheerio'
+      'cheerio',
+      '@aws-sdk/client-bedrock-runtime',
+      '@aws-sdk/client-bedrock',
+      '@aws-sdk/client-bedrock-agent',
+      '@aws-sdk/client-bedrock-agent-runtime',
+      '@aws-sdk/client-dynamodb',
+      '@aws-sdk/client-polly',
+      '@aws-sdk/client-rekognition',
+      '@aws-sdk/client-s3',
+      '@aws-sdk/client-transcribe',
+      '@aws-sdk/lib-dynamodb'
     ],
   },
   output: 'standalone',
