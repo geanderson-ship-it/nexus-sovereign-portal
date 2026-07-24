@@ -505,7 +505,22 @@ https://nexustreinamento.com`;
           { urls: 'stun:stun1.l.google.com:19302' },
           { urls: 'stun:stun2.l.google.com:19302' },
           { urls: 'stun:stun3.l.google.com:19302' },
-          { urls: 'stun:stun4.l.google.com:19302' }
+          { urls: 'stun:stun4.l.google.com:19302' },
+          {
+            urls: 'turn:openrelay.metered.ca:80',
+            username: 'openrelayproject',
+            credential: 'openrelayproject'
+          },
+          {
+            urls: 'turn:openrelay.metered.ca:443',
+            username: 'openrelayproject',
+            credential: 'openrelayproject'
+          },
+          {
+            urls: 'turn:openrelay.metered.ca:443?transport=tcp',
+            username: 'openrelayproject',
+            credential: 'openrelayproject'
+          }
         ]
       });
 
@@ -633,15 +648,15 @@ https://nexustreinamento.com`;
         const now = Date.now();
 
         // A. Acha todos os participantes ativos por sinal de presença recente (últimos 15s)
-        const presenceSignals = signals.filter((s: any) => s.type === 'presence' && s.sender !== localPeerId);
+        const presenceSignals = signals.filter((s: any) => s.type === 'presence' && s.payload.sender !== localPeerId);
         
         // Mantém apenas a última presença de cada remetente
         const activePeersMap = new Map<string, { name: string; timestamp: number }>();
         presenceSignals.forEach((s: any) => {
           const timeDiff = now - new Date(s.timestamp).getTime();
           if (timeDiff < 15000) {
-            if (!activePeersMap.has(s.sender) || new Date(s.timestamp).getTime() > activePeersMap.get(s.sender)!.timestamp) {
-              activePeersMap.set(s.sender, { name: s.payload.data?.name || 'Convidado', timestamp: new Date(s.timestamp).getTime() });
+            if (!activePeersMap.has(s.payload.sender) || new Date(s.timestamp).getTime() > activePeersMap.get(s.payload.sender)!.timestamp) {
+              activePeersMap.set(s.payload.sender, { name: s.payload.data?.name || 'Convidado', timestamp: new Date(s.timestamp).getTime() });
             }
           }
         });
@@ -676,10 +691,10 @@ https://nexustreinamento.com`;
         }
 
         // B. Processa ofertas, respostas e candidatos ICE direcionados a nós
-        const targetedSignals = signals.filter((s: any) => s.sender !== localPeerId && s.payload.data?.target === localPeerId);
+        const targetedSignals = signals.filter((s: any) => s.payload.sender !== localPeerId && s.payload.data?.target === localPeerId);
 
         for (const signal of targetedSignals) {
-          const senderId = signal.sender;
+          const senderId = signal.payload.sender;
           const pc = peerConnectionsRef.current.get(senderId);
           if (!pc) continue;
 
