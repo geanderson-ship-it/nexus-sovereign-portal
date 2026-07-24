@@ -442,7 +442,14 @@ https://nexustreinamento.com`;
       setConnectionStatus('Acessando câmera e microfone...');
       let localStream: MediaStream;
       try {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 640, max: 800 },
+            height: { ideal: 480, max: 600 },
+            frameRate: { ideal: 15, max: 24 }
+          },
+          audio: true
+        });
         localStreamRef.current = localStream;
         setStream(localStream);
         if (myVideoRef.current) {
@@ -452,7 +459,14 @@ https://nexustreinamento.com`;
       } catch (err) {
         console.warn("Falha ao obter mídia local completa. Tentando apenas vídeo...", err);
         try {
-          localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          localStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              width: { ideal: 640, max: 800 },
+              height: { ideal: 480, max: 600 },
+              frameRate: { ideal: 15, max: 24 }
+            },
+            audio: false
+          });
           localStreamRef.current = localStream;
           setStream(localStream);
           if (myVideoRef.current) {
