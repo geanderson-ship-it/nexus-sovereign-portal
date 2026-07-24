@@ -2,10 +2,21 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
 
 const client = new DynamoDBClient({
-  region: process.env.BEDROCK_REGION || process.env.AWS_REGION || process.env.REGIÃO_AWS || 'us-east-1',
+  region: process.env.BEDROCK_REGION || process.env.AWS_REGION || process.env.NEXUS_REGION || 'us-east-1',
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || process.env.ID_DA_CHAVE_DE_ACESSO_AWS || process.env['ID_DA_CHAVE_DE_ACESSO_AWS'] || '',
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+    accessKeyId: 
+      process.env.AMPLIFY_ACCESS_KEY_ID || 
+      process.env.BEDROCK_ACCESS_KEY_ID || 
+      process.env.NEXUS_ACCESS_KEY_ID || 
+      process.env.AWS_ACCESS_KEY_ID || 
+      process.env.ID_DA_CHAVE_DE_ACESSO_AWS || 
+      '',
+    secretAccessKey: 
+      process.env.AMPLIFY_SECRET_ACCESS_KEY || 
+      process.env.BEDROCK_SECRET_ACCESS_KEY || 
+      process.env.NEXUS_SECRET_ACCESS_KEY || 
+      process.env.AWS_SECRET_ACCESS_KEY || 
+      '',
   },
 });
 

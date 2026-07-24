@@ -82,7 +82,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ signals: [...activeSignals, ...dbSignals] });
   } catch (error: any) {
-    console.error('[Meet Signal API GET Error]', error);
+    console.error('[Vision Signal API GET Error]', error);
     return NextResponse.json({ error: error.message || 'Erro ao buscar sinais.' }, { status: 500 });
   }
 }
@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
-    console.error('[Meet Signal API POST Error]', error);
+    console.error('[Vision Signal API POST Error]', error);
     return NextResponse.json({ error: error.message || 'Erro ao salvar sinal.' }, { status: 500 });
   }
 }

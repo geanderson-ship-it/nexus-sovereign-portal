@@ -78,7 +78,7 @@ interface RemotePeer {
   isMuted?: boolean;
 }
 
-export default function MeetSoberanoPage() {
+export default function VisionSoberanoPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -121,7 +121,7 @@ export default function MeetSoberanoPage() {
 
   // WebRTC Room e Peer IDs
   const localPeerId = useMemo(() => Math.random().toString(36).substring(7), []);
-  const [roomId, setRoomId] = useState('nhg-meet-soberano-default');
+  const [roomId, setRoomId] = useState('nhg-vision-soberano-default');
   const [isRemoteConnected, setIsRemoteConnected] = useState(false);
   const [remotePeerName, setRemotePeerName] = useState('Aguardando...');
   const [isJoiner, setIsJoiner] = useState(false);
@@ -132,7 +132,7 @@ export default function MeetSoberanoPage() {
     setMounted(true);
     if (typeof window !== 'undefined') {
       const searchParams = new URLSearchParams(window.location.search);
-      const room = searchParams.get('room') || 'nhg-meet-soberano-default';
+      const room = searchParams.get('room') || 'nhg-vision-soberano-default';
       const join = searchParams.get('join') === 'true';
       setRoomId(room);
       setIsJoiner(join);
@@ -282,8 +282,8 @@ export default function MeetSoberanoPage() {
 
   // URL de convite baseada no domínio atual com fallback para o oficial
   const inviteUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/gabinete/meet?room=${roomId}&join=true`
-    : `https://nexustreinamento.com/gabinete/meet?room=${roomId}&join=true`;
+    ? `${window.location.origin}/gabinete/vision?room=${roomId}&join=true`
+    : `https://nexustreinamento.com/gabinete/vision?room=${roomId}&join=true`;
 
   const agendaUrlWithParams = useMemo(() => {
     const to = selectedRecipient === 'custom' ? customEmail : selectedRecipient;
@@ -487,7 +487,7 @@ https://nexustreinamento.com`;
     // 2. Envia nossa presença na sala
     const sendPresence = async () => {
       try {
-        await fetch('/api/meet/signal', {
+        await fetch('/api/vision/signal', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -551,7 +551,7 @@ https://nexustreinamento.com`;
       // Handler para candidatos ICE locais
       pc.onicecandidate = (event) => {
         if (event.candidate) {
-          fetch('/api/meet/signal', {
+          fetch('/api/vision/signal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -591,13 +591,13 @@ https://nexustreinamento.com`;
       // Se fomos nós quem criamos a conexão por ter ID maior, iniciamos o DataChannel e a Oferta
       if (localPeerId > targetPeerId) {
         logToAtena(`[WebRTC] Iniciando chamada com ${peerName}...`);
-        const dc = pc.createDataChannel('meet-chat');
+        const dc = pc.createDataChannel('vision-chat');
         dataChannelsRef.current.set(targetPeerId, dc);
         setupDataChannel(targetPeerId, dc);
 
         pc.createOffer().then(async (offer) => {
           await pc.setLocalDescription(offer);
-          await fetch('/api/meet/signal', {
+          await fetch('/api/vision/signal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -655,7 +655,7 @@ https://nexustreinamento.com`;
     // 4. Polling de sinalização de malha (Mesh Discovery & Signaling)
     const pollSignaling = async () => {
       try {
-        const response = await fetch(`/api/meet/signal?roomId=${roomId}`);
+        const response = await fetch(`/api/vision/signal?roomId=${roomId}`);
         if (!response.ok) return;
 
         const resData = await response.json();
@@ -734,7 +734,7 @@ https://nexustreinamento.com`;
             const answer = await pc.createAnswer();
             await pc.setLocalDescription(answer);
             
-            await fetch('/api/meet/signal', {
+            await fetch('/api/vision/signal', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -1240,7 +1240,7 @@ https://nexustreinamento.com`;
             N
           </div>
           <h1 className="text-2xl font-black tracking-tight text-white mb-2 uppercase">
-            Nexus Meet <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1">Soberano</span>
+            Nexus Vision <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1">Soberano</span>
           </h1>
           <p className="text-xs text-slate-400 mb-8 max-w-xs mx-auto leading-relaxed">
             Identifique-se para entrar na videoconferência criptografada e traduzida da Nexus Holding Group.
@@ -1293,9 +1293,9 @@ https://nexustreinamento.com`;
           </div>
           <div>
             <h1 className="text-base font-bold tracking-wide text-white flex items-center gap-2">
-              Nexus Meet <span className="text-[10px] bg-amber-500/20 border border-amber-500/30 text-amber-400 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">Soberano</span>
+              Nexus Vision <span className="text-[10px] bg-amber-500/20 border border-amber-500/30 text-amber-400 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">Soberano</span>
             </h1>
-            <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold font-mono">Sala ID: nhg-meet-soberano-77</p>
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold font-mono">Sala ID: nhg-vision-soberano-77</p>
           </div>
         </div>
 
@@ -1698,7 +1698,7 @@ https://nexustreinamento.com`;
           <p className="text-sm font-semibold text-white font-mono">
             {mounted ? new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--:--"}
           </p>
-          <p className="text-xs text-slate-500">nhg-meet-soberano-77</p>
+          <p className="text-xs text-slate-500">nhg-vision-soberano-77</p>
         </div>
 
         {/* CONTROLS */}

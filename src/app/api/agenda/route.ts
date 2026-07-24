@@ -56,7 +56,7 @@ async function sendNotificationEmails(appointment: any) {
       <div style="text-align: center; margin-bottom: 30px;">
         <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">Acesse a sala de videoconferência soberana no horário agendado clicando abaixo:</p>
         <a href="${appointment.local}" target="_blank" style="display: inline-block; background-color: #4f46e5; color: #ffffff; font-weight: bold; text-decoration: none; padding: 14px 30px; border-radius: 8px; border: 1px solid #6366f1; box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4); text-transform: uppercase; font-size: 12px; letter-spacing: 0.1em;">
-          Acessar Nexus Meet
+          Acessar Nexus Vision
         </a>
       </div>
 
@@ -121,7 +121,7 @@ async function sendNotificationEmails(appointment: any) {
 
       <div style="text-align: center; margin-bottom: 20px;">
         <a href="${appointment.local}" target="_blank" style="display: inline-block; background-color: #0284c7; color: #ffffff; font-weight: bold; text-decoration: none; padding: 12px 25px; border-radius: 6px; text-transform: uppercase; font-size: 12px; border: 1px solid #0ea5e9;">
-          Iniciar Sala Nexus Meet (Host)
+          Iniciar Sala Nexus Vision (Host)
         </a>
       </div>
     </div>
@@ -196,9 +196,9 @@ export async function POST(req: NextRequest) {
       }, { status: 409 });
     }
 
-    // 2. Gerar sala e link real no meet
+    // 2. Gerar sala e link real no vision
     const roomId = 'room-' + Math.random().toString(36).substring(2, 9);
-    const meetUrl = `https://nexustreinamento.com/gabinete/meet?room=${roomId}&join=true`;
+    const visionUrl = `https://nexustreinamento.com/gabinete/vision?room=${roomId}&join=true`;
 
     // 3. Cria o novo agendamento
     const newAppointment: AgendaItem = {
@@ -206,7 +206,7 @@ export async function POST(req: NextRequest) {
       evento: `${empresa} — Reunião Estratégica`,
       data: formattedDate,
       horario: horario,
-      local: meetUrl,
+      local: visionUrl,
       anfitriao: nome,
       assunto: assunto || 'Apresentação de Soluções Soberanas',
       observacoes: `Agendamento automático via portal. E-mail: ${email} | WhatsApp: ${whatsapp}`,
@@ -234,7 +234,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ 
       success: true, 
       appointment: newAppointment, 
-      meetLink: meetUrl 
+      visionLink: visionUrl 
     });
   } catch (error: any) {
     console.error('[API Agenda POST Error]', error);

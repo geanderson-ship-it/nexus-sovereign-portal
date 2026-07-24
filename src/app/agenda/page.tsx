@@ -34,7 +34,7 @@ export default function PublicSchedulerPage() {
   const [assunto, setAssunto] = useState('');
   
   const [existingEvents, setExistingEvents] = useState<AgendaItem[]>([]);
-  const [generatedMeetLink, setGeneratedMeetLink] = useState('');
+  const [generatedVisionLink, setGeneratedVisionLink] = useState('');
   const [isCopied, setIsCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPreFilled, setIsPreFilled] = useState(false);
@@ -130,7 +130,7 @@ export default function PublicSchedulerPage() {
       const resData = await response.json();
       
       if (resData.success) {
-        setGeneratedMeetLink(resData.meetLink);
+        setGeneratedVisionLink(resData.visionLink);
         setExistingEvents(prev => [...prev, resData.appointment]);
         
         // Também atualiza localStorage local por segurança/redundância
@@ -154,7 +154,7 @@ export default function PublicSchedulerPage() {
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(generatedMeetLink);
+    navigator.clipboard.writeText(generatedVisionLink);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
   };
@@ -167,7 +167,7 @@ export default function PublicSchedulerPage() {
     return tomorrow.toISOString().split('T')[0];
   };
 
-  const getTestMeetLink = (url: string) => {
+  const getTestVisionLink = (url: string) => {
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
       return url.replace('https://nexustreinamento.com', 'http://localhost:3000');
     }
@@ -463,11 +463,11 @@ export default function PublicSchedulerPage() {
               </div>
 
               <div className="space-y-3 max-w-md mx-auto">
-                <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block text-left">Link Seguro do Nexus Meet (Videoconferência)</span>
+                <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block text-left">Link Seguro do Nexus Vision (Videoconferência)</span>
                 <div className="flex gap-2">
                   <Input
                     readOnly
-                    value={generatedMeetLink}
+                    value={generatedVisionLink}
                     className="bg-slate-950/80 border-slate-800 text-slate-300 font-mono text-[11px]"
                   />
                   <Button 
@@ -492,7 +492,7 @@ export default function PublicSchedulerPage() {
                   >
                     Novo Agendamento
                   </Button>
-                  <Link href={getTestMeetLink(generatedMeetLink)} className="w-1/2">
+                  <Link href={getTestVisionLink(generatedVisionLink)} className="w-1/2">
                     <Button className="w-full bg-emerald-600 hover:bg-emerald-550 text-white text-xs font-bold gap-2">
                       <Laptop className="w-4 h-4" />
                       Entrar na Sala
