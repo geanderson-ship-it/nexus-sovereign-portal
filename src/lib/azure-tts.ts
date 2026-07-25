@@ -1,12 +1,12 @@
 export type VoiceGender = 'female' | 'male';
 
 const VOICE_MAP: Record<string, { female: string; male: string }> = {
-  'pt-br': { female: 'pt-BR-BrendaNeural', male: 'pt-BR-JulioNeural' },
-  'en-us': { female: 'en-US-AvaNeural', male: 'en-US-AndrewNeural' },
+  'pt-br': { female: 'pt-BR-BrendaNeural', male: 'pt-BR-FabioNeural' }, // Fabio: neutro, limpo, sem arrastar, dição clara
+  'en-us': { female: 'en-US-AvaNeural',   male: 'en-US-GuyNeural'    }, // Guy: neutro americano, sem sotaque regional
   'es-es': { female: 'es-ES-ElviraNeural', male: 'es-ES-AlvaroNeural' },
-  'fr-fr': { female: 'fr-FR-DeniseNeural', male: 'fr-FR-HenriNeural' },
-  'it-it': { female: 'it-IT-ElsaNeural', male: 'it-IT-DiegoNeural' },
-  'de-de': { female: 'de-DE-KatjaNeural', male: 'de-DE-ConradNeural' },
+  'fr-fr': { female: 'fr-FR-DeniseNeural', male: 'fr-FR-HenriNeural'  },
+  'it-it': { female: 'it-IT-ElsaNeural',   male: 'it-IT-DiegoNeural'  },
+  'de-de': { female: 'de-DE-KatjaNeural',  male: 'de-DE-ConradNeural' },
 };
 
 export async function synthesizeSpeech(

@@ -1089,8 +1089,28 @@ https://nexustreinamento.com`;
     // Identifica o idioma de destino da tradução para o ouvinte local
     // Se local for Host (Gean), quer ouvir em Português.
     // Se local for Joiner (Ivoni), quer ouvir no seu próprio idioma selecionado.
-    const targetLangObj = isJoiner ? selectedLanguage : LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1];
-    const sourceLangObj = isJoiner ? LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1] : selectedLanguage;
+    // Se o idioma do Joiner for 'auto', tenta detectar a partir do texto recebido
+    const currentLang = selectedLanguageRef.current;
+    
+    let resolvedLang = currentLang;
+    if (currentLang.code === 'auto') {
+      // Detecção simples: verifica palavras-chave de idioma comum pelo padrão de texto
+      const lowerText = text.toLowerCase();
+      const ptIndicators = /[ãõâêîôûáéíóúàèìòùç]|\b(você|está|não|isso|para|com|que|uma|do|da|em|ser|ter|por|seu|sua|mais|como|mas|quando|então|muito|bem|sim|obrigado|bom dia|boa tarde|tudo)\b/;
+      const enIndicators = /\b(the|and|you|this|that|with|have|from|they|what|will|your|more|when|then|very|well|yes|thank|hello|good|morning|please|would|could|should|because)\b/;
+      const esIndicators = /[ñ]|\b(usted|está|que|para|con|una|del|los|las|también|muy|cuando|porque|cómo|gracias|buenos días|buenas|hola)\b/;
+      
+      if (enIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'en') || currentLang;
+      } else if (esIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'es') || currentLang;
+      } else if (ptIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'pt') || currentLang;
+      }
+    }
+    
+    const targetLangObj = isJoiner ? resolvedLang : LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1];
+    const sourceLangObj = isJoiner ? LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1] : resolvedLang;
 
     const isPt = targetLangObj.code === 'pt';
     const isBothPt = sourceLangObj.code === 'pt' && targetLangObj.code === 'pt';
@@ -1330,10 +1350,32 @@ https://nexustreinamento.com`;
       });
     };
 
-    // Prioriza ElevenLabs e Azure para todas as traduções de alta qualidade
+    // PRIORIDADE 1: Azure TTS Neural (cota generosa Microsoft, vozes naturais multilíngue)
     try {
-      // TENTATIVA 1: ElevenLabs (Voz do Orion - Masculina Ultra Realista)
-      const response = await fetch('/api/tts/elevenlabs', {
+      const azureResponse = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: text.trim(),
+          gender: 'male',
+          locale
+        })
+      });
+
+      if (!azureResponse.ok) throw new Error(`Azure TTS retornou ${azureResponse.status}`);
+
+      const audioBlob = await azureResponse.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      await playAudioStream(audioUrl);
+      console.log(`TTS: Azure Neural (${locale}) reproduzido com sucesso.`);
+      return;
+    } catch (azureErr) {
+      console.warn("Azure TTS falhou. Tentando ElevenLabs como fallback...", azureErr);
+    }
+
+    // PRIORIDADE 2: ElevenLabs (Voz Orion - fallback)
+    try {
+      const elevenResponse = await fetch('/api/tts/elevenlabs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1342,38 +1384,15 @@ https://nexustreinamento.com`;
         })
       });
 
-      if (!response.ok) throw new Error("ElevenLabs falhou");
-      
-      const audioBlob = await response.blob();
+      if (!elevenResponse.ok) throw new Error("ElevenLabs falhou");
+
+      const audioBlob = await elevenResponse.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
       await playAudioStream(audioUrl);
-      console.log("TTS: ElevenLabs (Orion) reproduzido com sucesso.");
+      console.log("TTS: ElevenLabs (Orion) reproduzido como fallback.");
       return;
-    } catch (err) {
-      console.warn("ElevenLabs indisponível ou cota excedida. Tentando Azure TTS...", err);
-      
-      try {
-        // TENTATIVA 2: Azure TTS (Masculino Neural correspondente ao idioma)
-        const response = await fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: text.trim(),
-            gender: 'male',
-            locale
-          })
-        });
-
-        if (!response.ok) throw new Error("Azure TTS falhou");
-
-        const audioBlob = await response.blob();
-        const audioUrl = URL.createObjectURL(audioBlob);
-        await playAudioStream(audioUrl);
-        console.log(`TTS: Azure TTS (${locale}) reproduzido com sucesso.`);
-        return;
-      } catch (azureErr) {
-        console.warn("Azure TTS falhou. Recorrendo ao sintetizador local do navegador...", azureErr);
-      }
+    } catch (elevenErr) {
+      console.warn("ElevenLabs também indisponível. Recorrendo ao sintetizador nativo...", elevenErr);
     }
 
     // FALLBACK: Sintetizador nativo do navegador
