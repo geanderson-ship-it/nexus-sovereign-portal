@@ -254,6 +254,7 @@ export default function VisionSoberanoPage() {
 
   const isMutedRef = useRef(isMuted);
   const isInterpreterActiveRef = useRef(isInterpreterActive);
+  const isComponentMountedRef = useRef(true);
 
   useEffect(() => {
     isMutedRef.current = isMuted;
@@ -262,6 +263,13 @@ export default function VisionSoberanoPage() {
   useEffect(() => {
     isInterpreterActiveRef.current = isInterpreterActive;
   }, [isInterpreterActive]);
+
+  useEffect(() => {
+    isComponentMountedRef.current = true;
+    return () => {
+      isComponentMountedRef.current = false;
+    };
+  }, []);
 
   // Helper para atualizar estado e Ref simultaneamente (evita stale closure no onend)
   const updateMicError = (err: string | null) => {
@@ -292,6 +300,14 @@ export default function VisionSoberanoPage() {
   };
 
   const handleLeave = (targetUrl: string) => {
+    isComponentMountedRef.current = false; // Garante o bloqueio de reinicialização da fala
+
+    if (stream) {
+      stream.getTracks().forEach(track => {
+        try { track.stop(); } catch (e) {}
+      });
+      setStream(null);
+    }
     if (localStreamRef.current) {
       localStreamRef.current.getTracks().forEach(track => {
         try { track.stop(); } catch (e) {}
@@ -704,7 +720,7 @@ https://nexustreinamento.com`;
         const activePeersMap = new Map<string, { name: string; timestamp: number }>();
         presenceSignals.forEach((s: any) => {
           const timeDiff = now - new Date(s.timestamp).getTime();
-          if (timeDiff < 15000) {
+          if (timeDiff < 60000) {
             if (!activePeersMap.has(s.payload.sender) || new Date(s.timestamp).getTime() > activePeersMap.get(s.payload.sender)!.timestamp) {
               activePeersMap.set(s.payload.sender, { name: s.payload.data?.name || 'Convidado', timestamp: new Date(s.timestamp).getTime() });
             }
@@ -944,7 +960,7 @@ https://nexustreinamento.com`;
           
           // Reinicia após um pequeno delay se o intérprete ainda estiver ativo, sem erro crítico e sem TTS tocando
           setTimeout(() => {
-            if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
+            if (isComponentMountedRef.current && isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
               try { rec.start(); } catch (e) {
                 console.warn("Falha ao reiniciar microfone:", e);
               }
@@ -1465,7 +1481,7 @@ https://nexustreinamento.com`;
           }`}>
             
             {/* GEAN'S FEED (LOCAL USER) */}
-            <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl h-full">
+            <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl aspect-[4/3] w-full">
               {/* Video container */}
               <div className="relative flex-1 flex items-center justify-center bg-black/40 overflow-hidden">
                 {isCameraOn || isScreenSharing ? (
@@ -1556,7 +1572,7 @@ https://nexustreinamento.com`;
 
             {/* MOCK CLIENT SIMULATOR (Only shown when no real peers are connected, for offline demonstrations) */}
             {remotePeers.length === 0 && (
-              <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl h-full">
+              <div className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl aspect-[4/3] w-full">
                 {/* Video container */}
                 <div className="relative flex-1 flex items-center justify-center bg-black/40 overflow-hidden">
                   {isRemoteConnected ? (
@@ -1661,7 +1677,7 @@ https://nexustreinamento.com`;
 
             {/* REAL REMOTE PEERS FEEDS (MESH WebRTC) */}
             {remotePeers.map((peer) => (
-              <div key={peer.peerId} className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl h-full">
+              <div key={peer.peerId} className="relative rounded-3xl border border-slate-800/80 bg-slate-950/60 overflow-hidden flex flex-col group shadow-xl aspect-[4/3] w-full">
                 {/* Video container */}
                 <div className="relative flex-1 flex items-center justify-center bg-black/40 overflow-hidden">
                   {peer.stream ? (
