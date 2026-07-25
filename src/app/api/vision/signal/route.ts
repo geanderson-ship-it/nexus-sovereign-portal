@@ -1,39 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { saveAtenaMemory, searchAtenaMemories } from '@/lib/atena-db';
 
-// Cache global de sinais em memória para conexões WebRTC instantâneas
-// Usamos a propriedade 'global' para persistir a referência em hot reloads de desenvolvimento
-const getGlobalSignals = (): Array<{
-  id: string;
-  roomId: string;
-  type: string;
-  sender: string;
-  timestamp: number;
-  data: any;
-}> => {
-  if (typeof global !== 'undefined') {
-    if (!(global as any).nexusSignalsStore) {
-      (global as any).nexusSignalsStore = [];
-    }
-    return (global as any).nexusSignalsStore;
-  }
-  return [];
-};
+// SINALIZAÇÃO WEBRTC — 100% via DynamoDB
+// Motivo: AWS Amplify usa múltiplas instâncias de servidor.
+// Memória local (global.*) não é compartilhada entre instâncias,
+// causando loop infinito de conexão. O DynamoDB é o único state centralizado.
 
-// Limpeza automática de lixo/sinais expirados
-if (typeof global !== 'undefined') {
-  if (!(global as any).nexusSignalsCleanupInterval) {
-    (global as any).nexusSignalsCleanupInterval = setInterval(() => {
-      const store = getGlobalSignals();
-      const now = Date.now();
-      for (let i = store.length - 1; i >= 0; i--) {
-        if (now - store[i].timestamp > 180000) { // 3 minutos
-          store.splice(i, 1);
-        }
-      }
-    }, 60000);
-  }
-}
+const SIGNAL_TTL_MS = 180000; // 3 minutos
 
 export async function GET(req: NextRequest) {
   try {
@@ -44,28 +17,12 @@ export async function GET(req: NextRequest) {
     }
 
     const now = Date.now();
-    const store = getGlobalSignals();
-    
-    // 1. Busca primeiro no cache em memória (resposta ultrarrápida de baixa latência)
-    const activeSignals = store
-      .filter(s => s.roomId === roomId && (now - s.timestamp < 180000))
-      .map(s => ({
-        id: s.id,
-        type: s.type,
-        timestamp: new Date(s.timestamp).toISOString(),
-        payload: { sender: s.sender, data: s.data }
-      }));
 
-    // 2. Tenta carregar do DynamoDB em paralelo (caso outro peer tenha gravado via servidor remoto)
-    let memories: any[] = [];
-    try {
-      memories = await searchAtenaMemories(roomId);
-    } catch (e) {
-      console.warn("DynamoDB temporariamente indisponível. Usando apenas sinalização em memória local.");
-    }
-    
-    const dbSignals = memories
-      .filter(m => now - new Date(m.timestamp).getTime() < 180000)
+    // Busca todos os sinais da sala no DynamoDB
+    const memories = await searchAtenaMemories(roomId);
+
+    const signals = memories
+      .filter(m => (now - new Date(m.timestamp).getTime()) < SIGNAL_TTL_MS)
       .map(m => {
         try {
           return {
@@ -78,9 +35,9 @@ export async function GET(req: NextRequest) {
           return null;
         }
       })
-      .filter(s => s !== null && !activeSignals.some(as => as.id === s.id));
+      .filter(Boolean);
 
-    return NextResponse.json({ signals: [...activeSignals, ...dbSignals] });
+    return NextResponse.json({ signals });
   } catch (error: any) {
     console.error('[Vision Signal API GET Error]', error);
     return NextResponse.json({ error: error.message || 'Erro ao buscar sinais.' }, { status: 500 });
@@ -94,26 +51,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Parâmetros incompletos.' }, { status: 400 });
     }
 
-    const signalId = crypto.randomUUID();
-    const store = getGlobalSignals();
-
-    // 1. Registra no cache de memória local
-    store.push({
-      id: signalId,
-      roomId,
-      type,
-      sender,
-      timestamp: Date.now(),
-      data
-    });
-
-    // 2. Persiste em segundo plano no DynamoDB (sem travar a requisição)
-    saveAtenaMemory({
+    // Persiste o sinal no DynamoDB (compartilhado entre todas as instâncias)
+    await saveAtenaMemory({
       userId: roomId,
       categoria: type,
       conteudo: JSON.stringify({ sender, data })
-    }).catch(err => {
-      console.warn("Erro ao salvar sinalizador em segundo plano no DynamoDB:", err);
     });
 
     return NextResponse.json({ success: true });
