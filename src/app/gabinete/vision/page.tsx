@@ -1350,7 +1350,29 @@ https://nexustreinamento.com`;
       });
     };
 
-    // PRIORIDADE 1: Azure TTS Neural (cota generosa Microsoft, vozes naturais multilíngue)
+    // PRIORIDADE 1: ElevenLabs — Orion (voz oficial do Nexus Vision)
+    try {
+      const elevenResponse = await fetch('/api/tts/elevenlabs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: text.trim(),
+          voiceId: 'lvkgCBi6spByiTZMPJEK' // Orion — voz oficial Nexus Vision
+        })
+      });
+
+      if (!elevenResponse.ok) throw new Error(`ElevenLabs retornou ${elevenResponse.status}`);
+
+      const audioBlob = await elevenResponse.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      await playAudioStream(audioUrl);
+      console.log("TTS: ElevenLabs Orion reproduzido com sucesso.");
+      return;
+    } catch (elevenErr) {
+      console.warn("ElevenLabs Orion indisponível. Ativando fallback Azure Neural...", elevenErr);
+    }
+
+    // PRIORIDADE 2: Azure TTS Neural (fallback de alta qualidade, cota Microsoft)
     try {
       const azureResponse = await fetch('/api/tts', {
         method: 'POST',
@@ -1367,32 +1389,10 @@ https://nexustreinamento.com`;
       const audioBlob = await azureResponse.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
       await playAudioStream(audioUrl);
-      console.log(`TTS: Azure Neural (${locale}) reproduzido com sucesso.`);
+      console.log(`TTS: Azure Neural (${locale}) reproduzido como fallback.`);
       return;
     } catch (azureErr) {
-      console.warn("Azure TTS falhou. Tentando ElevenLabs como fallback...", azureErr);
-    }
-
-    // PRIORIDADE 2: ElevenLabs (Voz Orion - fallback)
-    try {
-      const elevenResponse = await fetch('/api/tts/elevenlabs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: text.trim(),
-          voiceId: 'lvkgCBi6spByiTZMPJEK' // Orion ElevenLabs Voice ID
-        })
-      });
-
-      if (!elevenResponse.ok) throw new Error("ElevenLabs falhou");
-
-      const audioBlob = await elevenResponse.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      await playAudioStream(audioUrl);
-      console.log("TTS: ElevenLabs (Orion) reproduzido como fallback.");
-      return;
-    } catch (elevenErr) {
-      console.warn("ElevenLabs também indisponível. Recorrendo ao sintetizador nativo...", elevenErr);
+      console.warn("Azure TTS também indisponível. Recorrendo ao sintetizador nativo...", azureErr);
     }
 
     // FALLBACK: Sintetizador nativo do navegador
