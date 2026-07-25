@@ -1,12 +1,23 @@
 export type VoiceGender = 'female' | 'male';
 
-const VOICES: Record<VoiceGender, string> = {
-  female: 'pt-BR-BrendaNeural', // Voz mais madura e menos infantil
-  male: 'pt-BR-JulioNeural',
+const VOICE_MAP: Record<string, { female: string; male: string }> = {
+  'pt-br': { female: 'pt-BR-BrendaNeural', male: 'pt-BR-JulioNeural' },
+  'en-us': { female: 'en-US-AvaNeural', male: 'en-US-AndrewNeural' },
+  'es-es': { female: 'es-ES-ElviraNeural', male: 'es-ES-AlvaroNeural' },
+  'fr-fr': { female: 'fr-FR-DeniseNeural', male: 'fr-FR-HenriNeural' },
+  'it-it': { female: 'it-IT-ElsaNeural', male: 'it-IT-DiegoNeural' },
+  'de-de': { female: 'de-DE-KatjaNeural', male: 'de-DE-ConradNeural' },
 };
 
-export async function synthesizeSpeech(text: string, gender: VoiceGender = 'female'): Promise<Buffer> {
-  const voiceId = VOICES[gender];
+export async function synthesizeSpeech(
+  text: string, 
+  gender: VoiceGender = 'female', 
+  locale: string = 'pt-BR'
+): Promise<Buffer> {
+  const normLocale = locale.toLowerCase().replace('_', '-');
+  const voiceSet = VOICE_MAP[normLocale] || VOICE_MAP[normLocale.split('-')[0]] || VOICE_MAP['pt-br'];
+  const voiceId = voiceSet[gender];
+
   const apiKey = process.env.AZURE_SPEECH_KEY;
   
   if (!apiKey) {
@@ -24,7 +35,7 @@ export async function synthesizeSpeech(text: string, gender: VoiceGender = 'fema
   const rate = gender === 'male' ? '+5%' : '+8%';
   const pitch = gender === 'male' ? '+5%' : '+0%';
 
-  const ssml = `<speak version='1.0' xml:lang='pt-BR'><voice xml:lang='pt-BR' xml:gender='${gender === 'female' ? 'Female' : 'Male'}' name='${voiceId}'><prosody rate='${rate}' pitch='${pitch}'>${escapedText}</prosody></voice></speak>`;
+  const ssml = `<speak version='1.0' xml:lang='${voiceId.substring(0, 5)}'><voice xml:lang='${voiceId.substring(0, 5)}' xml:gender='${gender === 'female' ? 'Female' : 'Male'}' name='${voiceId}'><prosody rate='${rate}' pitch='${pitch}'>${escapedText}</prosody></voice></speak>`;
 
   const response = await fetch(endpoint, {
     method: 'POST',

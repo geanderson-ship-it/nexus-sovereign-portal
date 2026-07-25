@@ -276,6 +276,11 @@ export default function VisionSoberanoPage() {
     isInterpreterActiveRef.current = isInterpreterActive;
   }, [isInterpreterActive]);
 
+  const selectedLanguageRef = useRef(selectedLanguage);
+  useEffect(() => {
+    selectedLanguageRef.current = selectedLanguage;
+  }, [selectedLanguage]);
+
   useEffect(() => {
     isComponentMountedRef.current = true;
     return () => {
@@ -694,8 +699,16 @@ https://nexustreinamento.com`;
             type: 'identity',
             name: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
           }));
+
+          // Se for o Host, sincroniza o idioma atual com o convidado
+          if (!isJoiner) {
+            channel.send(JSON.stringify({
+              type: 'language-change',
+              code: selectedLanguageRef.current.code
+            }));
+          }
         } catch (e) {
-          console.error("Erro ao enviar identidade:", e);
+          console.error("Erro ao enviar identidade/idioma:", e);
         }
       };
       channel.onclose = () => {
@@ -708,6 +721,12 @@ https://nexustreinamento.com`;
             setRemotePeers(prev => prev.map(p => p.peerId === peerId ? { ...p, name: msg.name } : p));
           } else if (msg.type === 'transcript') {
             await handleIncomingTranscript(msg.text, msg.senderName);
+          } else if (msg.type === 'language-change') {
+            const lang = LANGUAGES.find(l => l.code === msg.code);
+            if (lang) {
+              setSelectedLanguage(lang);
+              logToAtena(`[Idioma] Sincronizado para ${lang.name} ${lang.flag}`);
+            }
           }
         } catch (err) {
           console.error("Erro ao ler mensagem do DataChannel:", err);
@@ -1074,8 +1093,35 @@ https://nexustreinamento.com`;
     const sourceLangObj = isJoiner ? LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1] : selectedLanguage;
 
     const isPt = targetLangObj.code === 'pt';
+    const isBothPt = sourceLangObj.code === 'pt' && targetLangObj.code === 'pt';
 
     setIsClientSpeaking(true);
+
+    if (isBothPt) {
+      // Se ambos estão em português, mostra a legenda nativa mas NÃO chama tradução nem toca TTS (o som vem limpo direto pelo canal de áudio WebRTC)
+      setActiveSubtitle({
+        sender: isJoiner ? 'gean' : 'client',
+        original: text,
+        translated: text,
+        stage: 'done'
+      });
+
+      const newItem: TranscriptItem = {
+        id: Math.random().toString(),
+        sender: isJoiner ? 'gean' : 'client',
+        originalText: text,
+        translatedText: text,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setTranscripts(prev => [...prev, newItem]);
+      updateAtenaInsights(isJoiner ? 'gean' : 'client', text, text);
+
+      setTimeout(() => {
+        setIsClientSpeaking(false);
+        setActiveSubtitle(null);
+      }, 5000);
+      return;
+    }
 
     // 1. Etapa de fala original (SIMULAÇÃO OU INTERCEPTAÇÃO REAL)
     setActiveSubtitle({
@@ -1284,50 +1330,49 @@ https://nexustreinamento.com`;
       });
     };
 
-    // Se for Português (o idioma que o Gean ouve), prioriza ElevenLabs e Azure
-    if (locale.toLowerCase().startsWith('pt')) {
+    // Prioriza ElevenLabs e Azure para todas as traduções de alta qualidade
+    try {
+      // TENTATIVA 1: ElevenLabs (Voz do Orion - Masculina Ultra Realista)
+      const response = await fetch('/api/tts/elevenlabs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: text.trim(),
+          voiceId: 'lvkgCBi6spByiTZMPJEK' // Orion ElevenLabs Voice ID
+        })
+      });
+
+      if (!response.ok) throw new Error("ElevenLabs falhou");
+      
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      await playAudioStream(audioUrl);
+      console.log("TTS: ElevenLabs (Orion) reproduzido com sucesso.");
+      return;
+    } catch (err) {
+      console.warn("ElevenLabs indisponível ou cota excedida. Tentando Azure TTS...", err);
+      
       try {
-        // TENTATIVA 1: ElevenLabs (Voz do Orion - Masculina Ultra Realista)
-        const response = await fetch('/api/tts/elevenlabs', {
+        // TENTATIVA 2: Azure TTS (Masculino Neural correspondente ao idioma)
+        const response = await fetch('/api/tts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             text: text.trim(),
-            voiceId: 'lvkgCBi6spByiTZMPJEK' // Orion ElevenLabs Voice ID
+            gender: 'male',
+            locale
           })
         });
 
-        if (!response.ok) throw new Error("ElevenLabs falhou");
-        
+        if (!response.ok) throw new Error("Azure TTS falhou");
+
         const audioBlob = await response.blob();
         const audioUrl = URL.createObjectURL(audioBlob);
         await playAudioStream(audioUrl);
-        console.log("TTS: ElevenLabs (Orion) reproduzido com sucesso.");
+        console.log(`TTS: Azure TTS (${locale}) reproduzido com sucesso.`);
         return;
-      } catch (err) {
-        console.warn("ElevenLabs indisponível ou cota excedida. Tentando Azure TTS...", err);
-        
-        try {
-          // TENTATIVA 2: Azure TTS (Julio - Masculino Neural)
-          const response = await fetch('/api/tts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              text: text.trim(),
-              gender: 'male'
-            })
-          });
-
-          if (!response.ok) throw new Error("Azure TTS falhou");
-
-          const audioBlob = await response.blob();
-          const audioUrl = URL.createObjectURL(audioBlob);
-          await playAudioStream(audioUrl);
-          console.log("TTS: Azure TTS (Julio) reproduzido com sucesso.");
-          return;
-        } catch (azureErr) {
-          console.warn("Azure TTS falhou. Recorrendo ao sintetizador local do navegador...", azureErr);
-        }
+      } catch (azureErr) {
+        console.warn("Azure TTS falhou. Recorrendo ao sintetizador local do navegador...", azureErr);
       }
     }
 
@@ -1498,6 +1543,18 @@ https://nexustreinamento.com`;
                 if (lang) {
                   setSelectedLanguage(lang);
                   setActiveSubtitle(null);
+                  
+                  // Envia atualização via DataChannel para os participantes
+                  for (const [peerId, dc] of dataChannelsRef.current.entries()) {
+                    if (dc.readyState === 'open') {
+                      try {
+                        dc.send(JSON.stringify({
+                          type: 'language-change',
+                          code: lang.code
+                        }));
+                      } catch (err) {}
+                    }
+                  }
                 }
               }}
               className="bg-transparent text-white font-bold cursor-pointer focus:outline-none"
