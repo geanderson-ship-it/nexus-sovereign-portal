@@ -8,9 +8,13 @@ const VOICE_MAP: Record<string, { female: string; male: string }> = {
   'it-it': { female: 'it-IT-ElsaNeural',   male: 'it-IT-DiegoNeural'  },
   'de-de': { female: 'de-DE-KatjaNeural',  male: 'de-DE-ConradNeural' },
   'ar-sa': { female: 'ar-SA-ZariyahNeural',male: 'ar-SA-HamedNeural'  }, // Árabe
+  'ar':    { female: 'ar-SA-ZariyahNeural',male: 'ar-SA-HamedNeural'  }, // Árabe shortcode
   'zh-cn': { female: 'zh-CN-XiaoxiaoNeural',male: 'zh-CN-YunxiNeural'},  // Mandarim
+  'zh':    { female: 'zh-CN-XiaoxiaoNeural',male: 'zh-CN-YunxiNeural'},  // Mandarim shortcode
   'ja-jp': { female: 'ja-JP-NanamiNeural', male: 'ja-JP-KeitaNeural'  }, // Japonês
+  'ja':    { female: 'ja-JP-NanamiNeural', male: 'ja-JP-KeitaNeural'  }, // Japonês shortcode
   'ko-kr': { female: 'ko-KR-SunHiNeural',  male: 'ko-KR-InJoonNeural' }, // Coreano
+  'ko':    { female: 'ko-KR-SunHiNeural',  male: 'ko-KR-InJoonPremium' }, // Coreano shortcode
 };
 
 export async function synthesizeSpeech(

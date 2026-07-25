@@ -26,6 +26,7 @@ const LANGUAGES = [
   { code: 'fr', name: 'Francês', flag: '🇫🇷', nativeName: 'Français', voiceLocale: 'fr-FR' },
   { code: 'it', name: 'Italiano', flag: '🇮🇹', nativeName: 'Italiano', voiceLocale: 'it-IT' },
   { code: 'de', name: 'Alemão', flag: '🇩🇪', nativeName: 'Deutsch', voiceLocale: 'de-DE' },
+  { code: 'ar', name: 'Árabe', flag: '🇸🇦', nativeName: 'العربية', voiceLocale: 'ar-SA' },
 ];
 
 // FALAS MOCKADAS DO CLIENTE POR IDIOMA PARA A SIMULAÇÃO DE INTERCEPTAÇÃO
@@ -59,6 +60,11 @@ const MOCK_CLIENT_SPEECHES: Record<string, { original: string; translation: stri
   de: [
     { original: "Guten Tag Gean. Wir sind sehr interessiert an einer langfristigen Kooperation mit der Nexus Holding Group.", translation: "Bom dia Gean. Estamos muito interessados em uma cooperação de longo prazo com o Nexus Holding Group." },
     { original: "Können Sie die Sicherheitsarchitektur der Übersetzungs-API im Detail erläutern?", translation: "Você pode explicar em detalhes a arquitetura de segurança da API de tradução?" }
+  ],
+  ar: [
+    { original: "مرحباً جيان، يسعدني التحدث معك. أنا أختبر مكالمة الصوت المباشرة من نكسس باللغة العربية.", translation: "Olá Gean, é um prazer falar com você. Estou testando a chamada de áudio direto da Nexus em Árabe." },
+    { original: "هذا عرض توضيحي لنقل الصوت بدون اعتراض. الصوت يتدفق بشكل مباشر ونظيف وفي الوقت الفعلي.", translation: "Esta é uma demonstração da transmissão de voz sem interceptação. O áudio flui direto, limpo e em tempo real." },
+    { original: "جودة صوت ممتازة من خدماتنا السحابية. الصوت واضح تماماً وبدون أي تداخل في مؤتمر الفيديو الخاص بنا.", translation: "Excelente qualidade de áudio dos nossos serviços em nuvem. O som está nítido e sem nenhuma microfonia na nossa videoconferência." }
   ]
 };
 
