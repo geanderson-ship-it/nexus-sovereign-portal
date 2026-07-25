@@ -12,10 +12,16 @@ export async function POST(req: NextRequest) {
     // Identifica credenciais corretas do remetente
     let fromEmail = process.env.GMAIL_EMPRESA_EMAIL || 'geanderson@nexustreinamento.com';
     let fromPass = (process.env.GMAIL_EMPRESA_PASS || '').replace(/\s+/g, '');
+    let displaySenderName = 'Diretoria Nexus';
 
     if (sender === 'vendas@nexustreinamento.com') {
       fromEmail = process.env.GMAIL_VENDAS_EMAIL || 'vendas@nexustreinamento.com';
       fromPass = (process.env.GMAIL_VENDAS_PASS || '').replace(/\s+/g, '');
+      displaySenderName = 'Vendas — Nexus Holding Group';
+    } else if (sender === 'geanderson@nexustreinamento.com') {
+      fromEmail = process.env.GMAIL_EMPRESA_EMAIL || 'geanderson@nexustreinamento.com';
+      fromPass = (process.env.GMAIL_EMPRESA_PASS || '').replace(/\s+/g, '');
+      displaySenderName = 'Diretor Geanderson — Nexus Holding Group';
     }
 
     // Configura o transportador SMTP do Gmail corporativo
@@ -52,7 +58,7 @@ export async function POST(req: NextRequest) {
 
     // Dispara o e-mail real
     await transporter.sendMail({
-      from: `"Diretoria Nexus" <${fromEmail}>`,
+      from: `"${displaySenderName}" <${fromEmail}>`,
       to,
       subject,
       text: body,

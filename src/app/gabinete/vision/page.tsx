@@ -342,6 +342,7 @@ export default function VisionSoberanoPage() {
       return customSender ? `${customSender} — Nexus Holding Group` : 'Diretoria — Nexus Holding Group';
     }
     if (selectedSender === 'vendas@nexustreinamento.com') return 'Vendas — Nexus Holding Group';
+    if (selectedSender === 'geanderson@nexustreinamento.com') return 'Diretor Geanderson — Nexus Holding Group';
     if (selectedSender === 'diretoria@nexustreinamento.com') return 'Diretoria — Nexus Holding Group';
     return 'Pessoal — Nexus Holding Group';
   }, [selectedSender, customSender]);
@@ -1882,7 +1883,8 @@ https://nexustreinamento.com`;
                 </SelectTrigger>
                 <SelectContent className="bg-[#0b0f19] border-slate-800 text-slate-200">
                   <SelectItem value="vendas@nexustreinamento.com" className="text-emerald-400 font-medium">💼 Vendas (vendas@nexustreinamento.com)</SelectItem>
-                  <SelectItem value="diretoria@nexustreinamento.com" className="text-blue-400 font-medium">👑 Diretoria (diretoria@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="geanderson@nexustreinamento.com" className="text-blue-400 font-medium">👑 Geanderson (geanderson@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="diretoria@nexustreinamento.com" className="text-indigo-400 font-medium">🏢 Diretoria (diretoria@nexustreinamento.com)</SelectItem>
                   <SelectItem value="pessoal@nexustreinamento.com" className="text-purple-400 font-medium">👤 Pessoal (pessoal@nexustreinamento.com)</SelectItem>
                   <SelectItem value="custom" className="text-amber-400 font-semibold">➕ Digitar Outra Conta...</SelectItem>
                 </SelectContent>
