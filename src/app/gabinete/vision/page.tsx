@@ -186,20 +186,27 @@ export default function VisionSoberanoPage() {
       stopScreenShare();
     } else {
       try {
-        logToAtena(`[WebRTC] Solicitando compartilhamento de tela...`);
-        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        logToAtena(`[WebRTC] Solicitando compartilhamento de tela com áudio...`);
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
         screenStreamRef.current = screenStream;
         const screenTrack = screenStream.getVideoTracks()[0];
+        const screenAudioTrack = screenStream.getAudioTracks()[0];
 
-        // Se tiver conexões WebRTC ativas, substitui a track de vídeo em todas elas
+        // Se tiver conexões WebRTC ativas, substitui a track de vídeo e áudio em todas elas
         for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
           const senders = pc.getSenders();
           const videoSender = senders.find(s => s.track && s.track.kind === 'video');
           if (videoSender) {
             await videoSender.replaceTrack(screenTrack);
           }
+          if (screenAudioTrack) {
+            const audioSender = senders.find(s => s.track && s.track.kind === 'audio');
+            if (audioSender) {
+              await audioSender.replaceTrack(screenAudioTrack);
+            }
+          }
         }
-        logToAtena(`[WebRTC] Compartilhamento de tela ativo na chamada.`);
+        logToAtena(`[WebRTC] Compartilhamento de tela e áudio ativo na chamada.`);
 
         // Atualiza a visualização local do usuário
         if (myVideoRef.current) {
@@ -226,16 +233,21 @@ export default function VisionSoberanoPage() {
       screenStreamRef.current = null;
     }
 
-    // Reverte para a câmera local em todas as conexões
+    // Reverte para a câmera local e microfone em todas as conexões
     const cameraTrack = localStreamRef.current?.getVideoTracks()[0];
+    const micTrack = localStreamRef.current?.getAudioTracks()[0];
     for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
       const senders = pc.getSenders();
       const videoSender = senders.find(s => s.track && s.track.kind === 'video');
       if (videoSender && cameraTrack) {
         await videoSender.replaceTrack(cameraTrack);
       }
+      const audioSender = senders.find(s => s.track && s.track.kind === 'audio');
+      if (audioSender && micTrack) {
+        await audioSender.replaceTrack(micTrack);
+      }
     }
-    logToAtena(`[WebRTC] Vídeo da chamada restaurado para a câmera.`);
+    logToAtena(`[WebRTC] Vídeo e áudio da chamada restaurados.`);
 
     // Restaura a visualização local
     if (myVideoRef.current && localStreamRef.current) {
@@ -1049,6 +1061,93 @@ https://nexustreinamento.com`;
       setIsGeanSpeaking(false);
       setActiveSubtitle(null);
     }, 4000);
+  };
+
+  // LOGICA QUANDO CHEGA UMA TRANSCRIÇÃO REMOTA VIA DATA CHANNEL (TRADUÇÃO SOBERANA REAL)
+  const handleIncomingTranscript = async (text: string, senderName: string) => {
+    if (!isInterpreterActive) return;
+
+    // Identifica o idioma de destino da tradução para o ouvinte local
+    // Se local for Host (Gean), quer ouvir em Português.
+    // Se local for Joiner (Ivoni), quer ouvir no seu próprio idioma selecionado.
+    const targetLangObj = isJoiner ? selectedLanguage : LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1];
+    const sourceLangObj = isJoiner ? LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1] : selectedLanguage;
+
+    const isPt = targetLangObj.code === 'pt';
+
+    setIsClientSpeaking(true);
+
+    // 1. Etapa de fala original (SIMULAÇÃO OU INTERCEPTAÇÃO REAL)
+    setActiveSubtitle({
+      sender: isJoiner ? 'gean' : 'client', // 'gean' exibe banner GEANDERSON -> CLIENTE, 'client' exibe CLIENTE -> VOCÊ
+      original: text,
+      translated: isPt 
+        ? 'Transmitindo áudio em tempo real (Português direto)...'
+        : `Interceptando e traduzindo áudio nativo...`,
+      stage: 'translating'
+    });
+
+    if (!isPt) {
+      playMuffledAudioEffect();
+    }
+
+    try {
+      // Faz a chamada de tradução real pelo servidor usando Claude 4.5
+      const response = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: text,
+          sourceLanguage: sourceLangObj.name,
+          targetLanguage: targetLangObj.name
+        })
+      });
+
+      if (!response.ok) throw new Error("Falha na tradução");
+      const data = await response.json();
+      const translatedText = data.translation || text;
+
+      // 2. Atualiza legenda com a tradução concluída
+      setActiveSubtitle({
+        sender: isJoiner ? 'gean' : 'client',
+        original: text,
+        translated: translatedText,
+        stage: 'done'
+      });
+
+      // 3. Toca a síntese de voz (TTS) correspondente ao idioma de destino
+      playTTS(translatedText, targetLangObj.voiceLocale);
+
+      // 4. Salva no histórico de transcrição local
+      const newItem: TranscriptItem = {
+        id: Math.random().toString(),
+        sender: isJoiner ? 'gean' : 'client',
+        originalText: text,
+        translatedText: translatedText,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setTranscripts(prev => [...prev, newItem]);
+
+      // Atualiza insights da Atena (só suporta 'gean' ou 'client')
+      updateAtenaInsights(isJoiner ? 'gean' : 'client', text, translatedText);
+
+    } catch (err) {
+      console.error("Erro ao traduzir transcrição remota:", err);
+      // Fallback em caso de erro na tradução
+      setActiveSubtitle({
+        sender: isJoiner ? 'gean' : 'client',
+        original: text,
+        translated: text,
+        stage: 'done'
+      });
+      playTTS(text, targetLangObj.voiceLocale);
+    }
+
+    // Limpa a legenda após 5 segundos
+    setTimeout(() => {
+      setIsClientSpeaking(false);
+      setActiveSubtitle(null);
+    }, 5000);
   };
 
   // SIMULAR FALA DO CLIENTE (INTERCEPTAÇÃO / DIRETO)
