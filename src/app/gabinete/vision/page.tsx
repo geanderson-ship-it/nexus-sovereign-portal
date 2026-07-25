@@ -137,6 +137,23 @@ export default function VisionSoberanoPage() {
       setRoomId(room);
       setIsJoiner(join);
       setConnectionStatus(join ? 'Aguardando convite do Host...' : 'Criando sala e aguardando Ivoni...');
+
+      // Telemetria em tempo real: Intercepta erros globais e rejeições de promises
+      const reportError = (message: string, detail?: string) => {
+        fetch('/api/vision/logs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message, type: 'error', detail })
+        }).catch(() => {}); // Falha silenciosa para não quebrar a UI
+      };
+
+      window.onerror = (message, source, lineno, colno, error) => {
+        reportError(String(message), `Source: ${source} | Line: ${lineno}:${colno} | Stack: ${error?.stack || ''}`);
+      };
+
+      window.onunhandledrejection = (event) => {
+        reportError('Unhandled Promise Rejection', String(event.reason?.message || event.reason || ''));
+      };
     }
   }, []);
 
@@ -179,6 +196,19 @@ export default function VisionSoberanoPage() {
       if (prev[0] === msg) return prev;
       return [msg, ...prev.slice(0, 4)];
     });
+
+    // Envia eventos estruturados (que começam com "[") para o banco de telemetria
+    if (msg.startsWith('[')) {
+      fetch('/api/vision/logs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: msg,
+          type: msg.toLowerCase().includes('erro') || msg.toLowerCase().includes('falha') ? 'error' : 'info',
+          detail: `UserAgent: ${typeof navigator !== 'undefined' ? navigator.userAgent : 'Server'} | Room: ${roomId}`
+        })
+      }).catch(() => {});
+    }
   };
 
   const toggleScreenShare = async () => {
