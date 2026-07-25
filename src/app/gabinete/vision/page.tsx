@@ -584,25 +584,18 @@ https://nexustreinamento.com`;
       logToAtena(`[WebRTC] Criando conexão com ${peerName}...`);
       const pc = new RTCPeerConnection({
         iceServers: [
+          // STUN — descoberta de IP público
           { urls: 'stun:stun.l.google.com:19302' },
           { urls: 'stun:stun1.l.google.com:19302' },
-          { urls: 'stun:stun2.l.google.com:19302' },
-          { urls: 'stun:stun3.l.google.com:19302' },
-          { urls: 'stun:stun4.l.google.com:19302' },
+          // TURN Nexus — servidor próprio EC2 (us-east-1) — garante conectividade atrás de firewalls corporativos
           {
-            urls: 'turn:openrelay.metered.ca:80',
-            username: 'openrelayproject',
-            credential: 'openrelayproject'
-          },
-          {
-            urls: 'turn:openrelay.metered.ca:443',
-            username: 'openrelayproject',
-            credential: 'openrelayproject'
-          },
-          {
-            urls: 'turn:openrelay.metered.ca:443?transport=tcp',
-            username: 'openrelayproject',
-            credential: 'openrelayproject'
+            urls: [
+              'turn:52.90.49.196:3478',           // UDP/TCP
+              'turn:52.90.49.196:3478?transport=tcp', // TCP forçado
+              'turns:52.90.49.196:5349'            // TLS
+            ],
+            username: process.env.NEXT_PUBLIC_TURN_USER || 'nexusvision',
+            credential: process.env.NEXT_PUBLIC_TURN_PASSWORD || 'NxV!5JR00DB3ms0lhbsr'
           }
         ]
       });
