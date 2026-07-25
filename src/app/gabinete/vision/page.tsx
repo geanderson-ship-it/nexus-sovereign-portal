@@ -1373,7 +1373,7 @@ https://nexustreinamento.com`;
         <div className="flex items-center gap-2 flex-wrap md:flex-nowrap">
           {/* Seletor de Idioma do Cliente */}
           <div className="flex items-center gap-2 bg-[#090d16] border border-slate-800/80 rounded-lg px-2.5 py-1 text-[11px] text-slate-400 h-8 shadow-sm">
-            <Globe className="w-3.5 h-3.5 text-amber-500/90" />
+            <Globe className="w-3.5 h-3.5 text-slate-400" />
             <span className="font-semibold hidden lg:inline">Idioma do Cliente:</span>
             <select 
               value={selectedLanguage.code}
@@ -1396,50 +1396,47 @@ https://nexustreinamento.com`;
 
           {/* Indicador de Idioma Detectado no modo Auto */}
           {selectedLanguage.code === 'auto' && (
-            <div className="flex items-center gap-1.5 bg-amber-500/5 border border-amber-500/20 text-amber-400 px-2.5 py-1 rounded-lg text-[10px] font-mono h-8">
-              <span className="font-bold">Detectado:</span>
-              <span className="flex items-center gap-1 animate-pulse">
+            <div className="flex items-center gap-1.5 bg-[#090d16] border border-slate-800/80 text-slate-300 px-2.5 py-1 rounded-lg text-[11px] h-8 shadow-sm">
+              <span className="font-semibold text-slate-400">Detectado:</span>
+              <span className="flex items-center gap-1">
                 <span>{detectedLanguage.flag}</span>
-                <span className="uppercase text-[9px] font-semibold">{detectedLanguage.name}</span>
+                <span className="uppercase text-[11px] font-bold text-white">{detectedLanguage.name}</span>
               </span>
             </div>
           )}
 
           {/* Status da Conexão */}
-          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg border border-indigo-500/10 bg-[#090d16] font-mono text-[10px] text-indigo-400 h-8">
+          <div className="flex items-center gap-2 bg-[#090d16] border border-slate-800/80 rounded-lg px-2.5 py-1 text-[11px] text-slate-300 h-8 shadow-sm">
             <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${isRemoteConnected ? "bg-emerald-500" : "bg-amber-500"}`} />
-            <span>{connectionStatus}</span>
+            <span className="font-medium text-slate-300">{connectionStatus}</span>
           </div>
 
           {/* Convidar Conexão */}
           {!isJoiner && (
-            <Button 
+            <button 
               onClick={() => setIsInviteOpen(true)} 
-              variant="outline" 
-              className="h-8 border-slate-800 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white gap-1.5 text-[11px] font-bold px-3 shadow-sm rounded-lg"
+              className="flex items-center gap-1.5 h-8 border border-slate-800/80 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white text-[11px] font-bold px-3 shadow-sm rounded-lg transition-all"
             >
-              <Share2 className="w-3.5 h-3.5" />
-              Convidar Conexão
-            </Button>
+              <Share2 className="w-3.5 h-3.5 text-slate-400" />
+              <span>Convidar Conexão</span>
+            </button>
           )}
 
           {/* Voltar ao Gabinete / Sair da Sala */}
           {isJoiner ? (
-            <Button 
+            <button 
               onClick={() => handleLeave('/')}
-              variant="outline" 
-              className="h-8 border-slate-800 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white gap-1.5 text-[11px] font-bold px-3 shadow-sm rounded-lg"
+              className="flex items-center gap-1.5 h-8 border border-slate-800/80 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white text-[11px] font-bold px-3 shadow-sm rounded-lg transition-all"
             >
-              Sair da Sala
-            </Button>
+              <span>Sair da Sala</span>
+            </button>
           ) : (
-            <Button 
+            <button 
               onClick={() => handleLeave('/gabinete')}
-              variant="outline" 
-              className="h-8 border-slate-800 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white gap-1.5 text-[11px] font-bold px-3 shadow-sm rounded-lg"
+              className="flex items-center gap-1.5 h-8 border border-slate-800/80 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white text-[11px] font-bold px-3 shadow-sm rounded-lg transition-all"
             >
-              Voltar ao Gabinete
-            </Button>
+              <span>Voltar ao Gabinete</span>
+            </button>
           )}
         </div>
       </header>
