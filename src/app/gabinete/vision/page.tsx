@@ -1350,29 +1350,8 @@ https://nexustreinamento.com`;
       });
     };
 
-    // PRIORIDADE 1: ElevenLabs — Orion (voz oficial do Nexus Vision)
-    try {
-      const elevenResponse = await fetch('/api/tts/elevenlabs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: text.trim(),
-          voiceId: 'lvkgCBi6spByiTZMPJEK' // Orion — voz oficial Nexus Vision
-        })
-      });
-
-      if (!elevenResponse.ok) throw new Error(`ElevenLabs retornou ${elevenResponse.status}`);
-
-      const audioBlob = await elevenResponse.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      await playAudioStream(audioUrl);
-      console.log("TTS: ElevenLabs Orion reproduzido com sucesso.");
-      return;
-    } catch (elevenErr) {
-      console.warn("ElevenLabs Orion indisponível. Ativando fallback Azure Neural...", elevenErr);
-    }
-
-    // PRIORIDADE 2: Azure TTS Neural (fallback de alta qualidade, cota Microsoft)
+    // TTS OFICIAL: Azure Neural — Antônio (pt-BR) e vozes neurais regionais para demais idiomas
+    // Azure garante cota robusta (5M chars/mês) sem risco de interrupção durante videoconferências
     try {
       const azureResponse = await fetch('/api/tts', {
         method: 'POST',
@@ -1380,7 +1359,7 @@ https://nexustreinamento.com`;
         body: JSON.stringify({
           text: text.trim(),
           gender: 'male',
-          locale
+          locale  // Antônio para pt-BR; vozes neurais regionais para outros idiomas
         })
       });
 
@@ -1389,10 +1368,10 @@ https://nexustreinamento.com`;
       const audioBlob = await azureResponse.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
       await playAudioStream(audioUrl);
-      console.log(`TTS: Azure Neural (${locale}) reproduzido como fallback.`);
+      console.log(`TTS: Azure Neural (${locale}) — Antônio/regional reproduzido com sucesso.`);
       return;
     } catch (azureErr) {
-      console.warn("Azure TTS também indisponível. Recorrendo ao sintetizador nativo...", azureErr);
+      console.warn("Azure TTS indisponível. Recorrendo ao sintetizador nativo de emergência...", azureErr);
     }
 
     // FALLBACK: Sintetizador nativo do navegador

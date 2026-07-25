@@ -1,12 +1,16 @@
 export type VoiceGender = 'female' | 'male';
 
 const VOICE_MAP: Record<string, { female: string; male: string }> = {
-  'pt-br': { female: 'pt-BR-BrendaNeural', male: 'pt-BR-FabioNeural' }, // Fabio: neutro, limpo, sem arrastar, dição clara
-  'en-us': { female: 'en-US-AvaNeural',   male: 'en-US-GuyNeural'    }, // Guy: neutro americano, sem sotaque regional
+  'pt-br': { female: 'pt-BR-BrendaNeural', male: 'pt-BR-AntonioNeural' }, // Antonio: voz oficial Nexus Vision — meia-idade, dição clara, natural
+  'en-us': { female: 'en-US-AvaNeural',    male: 'en-US-GuyNeural'    },
   'es-es': { female: 'es-ES-ElviraNeural', male: 'es-ES-AlvaroNeural' },
   'fr-fr': { female: 'fr-FR-DeniseNeural', male: 'fr-FR-HenriNeural'  },
   'it-it': { female: 'it-IT-ElsaNeural',   male: 'it-IT-DiegoNeural'  },
   'de-de': { female: 'de-DE-KatjaNeural',  male: 'de-DE-ConradNeural' },
+  'ar-sa': { female: 'ar-SA-ZariyahNeural',male: 'ar-SA-HamedNeural'  }, // Árabe
+  'zh-cn': { female: 'zh-CN-XiaoxiaoNeural',male: 'zh-CN-YunxiNeural'},  // Mandarim
+  'ja-jp': { female: 'ja-JP-NanamiNeural', male: 'ja-JP-KeitaNeural'  }, // Japonês
+  'ko-kr': { female: 'ko-KR-SunHiNeural',  male: 'ko-KR-InJoonNeural' }, // Coreano
 };
 
 export async function synthesizeSpeech(
