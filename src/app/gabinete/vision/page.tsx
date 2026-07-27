@@ -17,19 +17,34 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-// IDIOMAS DO CLIENTE DISPONÍVEIS
+// IDIOMAS DO CLIENTE DISPONÍVEIS — EXPANSÃO GLOBAL NEXUS
 const LANGUAGES = [
   { code: 'auto', name: 'Detecção Automática', flag: '🔍', nativeName: 'Auto Detect', voiceLocale: 'auto' },
+  // AMÉRICAS
   { code: 'pt', name: 'Português', flag: '🇧🇷', nativeName: 'Português', voiceLocale: 'pt-BR' },
   { code: 'es', name: 'Espanhol', flag: '🇪🇸', nativeName: 'Español', voiceLocale: 'es-ES' },
   { code: 'en', name: 'Inglês', flag: '🇺🇸', nativeName: 'English', voiceLocale: 'en-US' },
+  // EUROPA OCIDENTAL
   { code: 'fr', name: 'Francês', flag: '🇫🇷', nativeName: 'Français', voiceLocale: 'fr-FR' },
   { code: 'it', name: 'Italiano', flag: '🇮🇹', nativeName: 'Italiano', voiceLocale: 'it-IT' },
   { code: 'de', name: 'Alemão', flag: '🇩🇪', nativeName: 'Deutsch', voiceLocale: 'de-DE' },
+  { code: 'nl', name: 'Holandês', flag: '🇳🇱', nativeName: 'Nederlands', voiceLocale: 'nl-NL' },
+  // EUROPA DO NORTE
+  { code: 'sv', name: 'Sueco', flag: '🇸🇪', nativeName: 'Svenska', voiceLocale: 'sv-SE' },
+  // EUROPA DO LESTE
+  { code: 'ru', name: 'Russo', flag: '🇷🇺', nativeName: 'Русский', voiceLocale: 'ru-RU' },
+  { code: 'pl', name: 'Polonês', flag: '🇵🇱', nativeName: 'Polski', voiceLocale: 'pl-PL' },
+  // ORIENTE MÉDIO
   { code: 'ar', name: 'Árabe', flag: '🇸🇦', nativeName: 'العربية', voiceLocale: 'ar-SA' },
+  { code: 'tr', name: 'Turco', flag: '🇹🇷', nativeName: 'Türkçe', voiceLocale: 'tr-TR' },
+  // ÁSIA
+  { code: 'hi', name: 'Hindi', flag: '🇮🇳', nativeName: 'हिन्दी', voiceLocale: 'hi-IN' },
+  { code: 'ja', name: 'Japonês', flag: '🇯🇵', nativeName: '日本語', voiceLocale: 'ja-JP' },
+  { code: 'zh', name: 'Chinês (Mandarim)', flag: '🇨🇳', nativeName: '普通话', voiceLocale: 'zh-CN' },
+  { code: 'ko', name: 'Coreano', flag: '🇰🇷', nativeName: '한국어', voiceLocale: 'ko-KR' },
 ];
 
-// FALAS MOCKADAS DO CLIENTE POR IDIOMA PARA A SIMULAÇÃO DE INTERCEPTAÇÃO
+// FALAS MOCKADAS DO CLIENTE POR IDIOMA PARA A SIMULAÇÃO DE INTERCEPTAÇÃO — EXPANSÃO GLOBAL
 const MOCK_CLIENT_SPEECHES: Record<string, { original: string; translation: string }[]> = {
   pt: [
     { original: "Olá Gean, é um prazer falar com você. Estou testando a chamada de áudio direto da Nexus em Português.", translation: "Olá Gean, é um prazer falar com você. Estou testando a chamada de áudio direto da Nexus em Português." },
@@ -54,17 +69,68 @@ const MOCK_CLIENT_SPEECHES: Record<string, { original: string; translation: stri
     { original: "Pouvez-vous confirmer si le cryptage de bout en bout est bien actif lors de ces visioconférences ?", translation: "Você pode confirmer se a criptografia de ponta a ponta está realmente ativa durante estas videoconferências?" }
   ],
   it: [
-    { original: "Buongiorno Gean. La tecnologia Nexus è straordinaria, siamo pronti a firmare l'accordo di licenza oggi.", translation: "Bom dia Gean. A tecnologia Nexus é straordinaria, estamos prontos para assinar o acordo de licenza hoje." },
-    { original: "Quali sono i requisiti tecnici per implementare la linea di comunicazione protetta sui nossos server aziendali?", translation: "Quais são os requisitos técnicos para implementar a linha de comunicação protegida nos nossos servidores corporativos?" }
+    { original: "Buongiorno Gean. La tecnologia Nexus è straordinaria, siamo pronti a firmare l'accordo di licenza oggi.", translation: "Bom dia Gean. A tecnologia Nexus é extraordinária, estamos prontos para assinar o acordo de licença hoje." },
+    { original: "Quali sono i requisiti tecnici per implementare la linea di comunicazione protetta sui nostri server aziendali?", translation: "Quais são os requisitos técnicos para implementar a linha de comunicação protegida nos nossos servidores corporativos?" },
+    { original: "Il sistema di traduzione soberana della Nexus supera qualsiasi soluzione che abbiamo testato sul mercato.", translation: "O sistema de tradução soberana da Nexus supera qualquer solução que testamos no mercado." }
   ],
   de: [
     { original: "Guten Tag Gean. Wir sind sehr interessiert an einer langfristigen Kooperation mit der Nexus Holding Group.", translation: "Bom dia Gean. Estamos muito interessados em uma cooperação de longo prazo com o Nexus Holding Group." },
-    { original: "Können Sie die Sicherheitsarchitektur der Übersetzungs-API im Detail erläutern?", translation: "Você pode explicar em detalhes a arquitetura de segurança da API de tradução?" }
+    { original: "Können Sie die Sicherheitsarchitektur der Übersetzungs-API im Detail erläutern?", translation: "Você pode explicar em detalhes a arquitetura de segurança da API de tradução?" },
+    { original: "Unser Vorstand hat das Budget genehmigt. Wir möchten so schnell wie möglich mit der Implementierung beginnen.", translation: "Nosso conselho aprovou o orçamento. Queremos começar com a implementação o mais rápido possível." }
+  ],
+  nl: [
+    { original: "Goedemiddag Gean. Wij zijn onder de indruk van de Nexus Vision technologie en willen graag samenwerken.", translation: "Boa tarde Gean. Estamos impressionados com a tecnologia Nexus Vision e gostaríamos de colaborar." },
+    { original: "Kunt u ons meer vertellen over de beveiliging en gegevensbescherming van uw systeem?", translation: "Você pode nos contar mais sobre a segurança e proteção de dados do seu sistema?" },
+    { original: "Ons directieteam heeft de proposta goedgekeurd. Wat zijn de volgende stappen voor implementatie?", translation: "Nossa equipe diretiva aprovou a proposta. Quais são os próximos passos para a implementação?" }
+  ],
+  sv: [
+    { original: "Hej Gean! Nexus Vision är en fantastisk lösning för vår globala kommunikation. Vi är imponerade.", translation: "Olá Gean! O Nexus Vision é uma solução fantástica para nossa comunicação global. Estamos impressionados." },
+    { original: "Kan ni förklara hur er realtidsöversättning fungerar tekniskt sett?", translation: "Você pode explicar como a tradução em tempo real funciona do ponto de vista técnico?" },
+    { original: "Vi har godkänt budgeten och vill gärna starta samarbetet så snart som möjligt.", translation: "Aprovamos o orçamento e gostaríamos de iniciar a colaboração o mais breve possível." }
+  ],
+  ru: [
+    { original: "Добрый день, Жеан. Технология Nexus Vision произвела на нас огромное впечатление. Мы готовы к сотрудничеству.", translation: "Boa tarde, Gean. A tecnologia Nexus Vision nos impressionou muito. Estamos prontos para a colaboração." },
+    { original: "Можете ли вы подробнее объяснить архитектуру безопасности и суверенитет данных вашей системы?", translation: "Você poderia explicar com mais detalhes a arquitetura de segurança e a soberania dos dados do seu sistema?" },
+    { original: "Наш совет директоров одобрил бюджет. Нам нужно немедленно перейти к следующим шагам.", translation: "Nosso conselho de administração aprovou o orçamento. Precisamos avançar imediatamente para as próximas etapas." },
+    { original: "Это именно то решение для международных переговоров, которое мы искали много лет.", translation: "Esta é exatamente a solução para negociações internacionais que estávamos procurando há muitos anos." }
+  ],
+  pl: [
+    { original: "Dzień dobry Gean. Technologia Nexus Vision to przełomowe rozwiązanie dla naszych międzynarodowych operacji.", translation: "Bom dia Gean. A tecnologia Nexus Vision é uma solução revolucionária para nossas operações internacionais." },
+    { original: "Czy mógłby Pan wyjaśnić, jak działa system tłumaczenia w czasie rzeczywistym i jakie są jego ograniczenia?", translation: "Você poderia explicar como funciona o sistema de tradução em tempo real e quais são suas limitações?" },
+    { original: "Nasz zarząd zatwierdził propozycję. Chcemy podpisać umowę jak najszybciej.", translation: "Nossa diretoria aprovou a proposta. Queremos assinar o contrato o mais rápido possível." }
   ],
   ar: [
     { original: "مرحباً جيان، يسعدني التحدث معك. أنا أختبر مكالمة الصوت المباشرة من نكسس باللغة العربية.", translation: "Olá Gean, é um prazer falar com você. Estou testando a chamada de áudio direto da Nexus em Árabe." },
     { original: "هذا عرض توضيحي لنقل الصوت بدون اعتراض. الصوت يتدفق بشكل مباشر ونظيف وفي الوقت الفعلي.", translation: "Esta é uma demonstração da transmissão de voz sem interceptação. O áudio flui direto, limpo e em tempo real." },
-    { original: "جودة صوت ممتازة من خدماتنا السحابية. الصوت واضح تماماً وبدون أي تداخل في مؤتمر الفيديو الخاص بنا.", translation: "Excelente qualidade de áudio dos nossos serviços em nuvem. O som está nítido e sem nenhuma microfonia na nossa videoconferência." }
+    { original: "لقد وافق مجلسنا التنفيذي على الميزانية ونرغب في الشروع في التنفيذ الفوري.", translation: "Nosso conselho executivo aprovou o orçamento e desejamos prosseguir com a implementação imediata." }
+  ],
+  tr: [
+    { original: "Merhaba Gean. Nexus Vision teknolojisi gerçekten çok etkileyici. Ortaklık kurmak istiyoruz.", translation: "Olá Gean. A tecnologia Nexus Vision é realmente muito impressionante. Queremos estabelecer uma parceria." },
+    { original: "Gerçek zamanlı çeviri sisteminin teknik mimarisini biraz daha açıklayabilir misiniz?", translation: "Você poderia explicar um pouco mais a arquitetura técnica do sistema de tradução em tempo real?" },
+    { original: "Yönetim kurulumuz teklifi onayladı. Sözleşmeyi bir an önce imzalamak istiyoruz.", translation: "Nosso conselho de administração aprovou a proposta. Queremos assinar o contrato o mais breve possível." }
+  ],
+  hi: [
+    { original: "नमस्ते जियान जी। नेक्सस विज़न की तकनीक वास्तव में अद्भुत है। हम इस साझेदारी को आगे बढ़ाना चाहते हैं।", translation: "Olá, Gean. A tecnologia do Nexus Vision é verdadeiramente incrível. Queremos avançar com essa parceria." },
+    { original: "क्या आप हमें अपने सुरक्षा बुनियादी ढांचे और डेटा संप्रभुता के बारे में अधिक जानकारी दे सकते हैं?", translation: "Você poderia nos fornecer mais informações sobre sua infraestrutura de segurança e soberania de dados?" },
+    { original: "हमारे बोर्ड ने बजट को मंजूरी दे दी है। हम जल्द से जल्द अनुबंध पर हस्ताक्षर करना चाहते हैं।", translation: "Nosso conselho aprovou o orçamento. Queremos assinar o contrato o mais rápido possível." }
+  ],
+  ja: [
+    { original: "こんにちは、ジアンさん。Nexus Visionの技術は非常に革新的です。ぜひパートナーシップを進めたいと思います。", translation: "Olá, Gean. A tecnologia do Nexus Vision é muito inovadora. Gostaríamos muito de avançar com a parceria." },
+    { original: "リアルタイム翻訳システムのセキュリティアーキテクチャについて、もう少し詳しく説明していただけますか？", translation: "Você poderia explicar com um pouco mais de detalhes a arquitetura de segurança do sistema de tradução em tempo real?" },
+    { original: "取締役会が予算を承認しました。できるだけ早く契約を締結したいと考えています。", translation: "Nosso conselho de administração aprovou o orçamento. Esperamos fechar o contrato o mais breve possível." },
+    { original: "この技術は、私たちの国際ビジネス交渉において大きなアドバンテージをもたらすでしょう。", translation: "Esta tecnologia trará uma grande vantagem em nossas negociações internacionais de negócios." }
+  ],
+  zh: [
+    { original: "您好，吉安先生。Nexus Vision的技术令我们印象深刻。我们非常希望建立长期合作关系。", translation: "Olá, Gean. A tecnologia do Nexus Vision nos impressionou muito. Temos muito interesse em estabelecer uma parceria de longo prazo." },
+    { original: "能否详细介绍一下您的实时翻译系统的安全架构和数据主权保障措施？", translation: "Você poderia detalhar a arquitetura de segurança do seu sistema de tradução em tempo real e as medidas de soberania de dados?" },
+    { original: "我们的董事会已经批准了预算。我们希望尽快签署合作协议并开始实施。", translation: "Nosso conselho de administração aprovou o orçamento. Esperamos assinar o acordo de cooperação e iniciar a implementação o mais breve possível." },
+    { original: "这项技术将彻底改变我们在亚太地区的商业谈判方式。非常感谢您的演示。", translation: "Esta tecnologia vai transformar completamente nossa forma de conduzir negociações comerciais na região Ásia-Pacífico. Muito obrigado pela demonstração." }
+  ],
+  ko: [
+    { original: "안녕하세요, 지안 씨. Nexus Vision 기술은 정말 혁신적입니다. 파트너십을 진행하고 싶습니다.", translation: "Olá, Gean. A tecnologia do Nexus Vision é realmente inovadora. Gostaríamos de avançar com a parceria." },
+    { original: "실시간 번역 시스템의 보안 아키텍처와 데이터 주권에 대해 좀 더 자세히 설명해 주실 수 있나요?", translation: "Você poderia explicar com mais detalhes a arquitetura de segurança do sistema de tradução em tempo real e a soberania dos dados?" },
+    { original: "이사회에서 예산을 승인했습니다. 가능한 한 빨리 계약을 체결하고 싶습니다.", translation: "Nosso conselho de administração aprovou o orçamento. Gostaríamos de fechar o contrato o mais rápido possível." },
+    { original: "이 기술은 아시아 태평양 지역에서의 국제 비즈니스 협상 방식을 완전히 바꿀 것입니다.", translation: "Esta tecnologia irá transformar completamente a maneira de conduzir negociações internacionais de negócios na região Ásia-Pacífico." }
   ]
 };
 
@@ -682,6 +748,11 @@ https://nexustreinamento.com`;
           }
           return [...prev, { peerId: targetPeerId, name: peerName, stream: remoteStream }];
         });
+        // BUG CORRIGIDO: marca o status de conexão remota como ativo
+        if (remoteStream) {
+          setIsRemoteConnected(true);
+          setRemotePeerName(peerName);
+        }
         logToAtena(`[WebRTC] Feed de vídeo de ${peerName} conectado.`);
       };
 
@@ -957,16 +1028,18 @@ https://nexustreinamento.com`;
   // Controle em tempo real de mídias (Mute/Camera/Idioma) sem reconectar
   useEffect(() => {
     if (localStreamRef.current) {
+      // BUG CORRIGIDO: o áudio NUNCA deve ser silenciado pelo idioma selecionado.
+      // O WebRTC transmite áudio cru independente do idioma — a tradução é feita via DataChannel + TTS.
       const audioTrack = localStreamRef.current.getAudioTracks()[0];
       if (audioTrack) {
-        audioTrack.enabled = (selectedLanguage.code === 'pt') && !isMuted;
+        audioTrack.enabled = !isMuted; // Só desativa se o usuário clicar em Mutar
       }
       const videoTrack = localStreamRef.current.getVideoTracks()[0];
       if (videoTrack) {
         videoTrack.enabled = isCameraOn;
       }
     }
-  }, [selectedLanguage, isMuted, isCameraOn]);
+  }, [isMuted, isCameraOn]);
 
   // Garante que o stream local seja sempre acoplado ao elemento de vídeo local
   useEffect(() => {
@@ -1123,16 +1196,54 @@ https://nexustreinamento.com`;
     
     let resolvedLang = currentLang;
     if (currentLang.code === 'auto') {
-      // Detecção simples: verifica palavras-chave de idioma comum pelo padrão de texto
+      // Detecção multi-idioma: verifica padrões de escrita e palavras-chave por idioma
       const lowerText = text.toLowerCase();
+      // Detecção por scripts/caracteres únicos de escrita
+      const hasJapanese = /[\u3040-\u30FF\u4E00-\u9FAF]/.test(text) && /[\u3040-\u30FF]/.test(text);
+      const hasChinese = /[\u4E00-\u9FAF]/.test(text) && !/[\u3040-\u30FF\uAC00-\uD7AF]/.test(text);
+      const hasKorean = /[\uAC00-\uD7AF]/.test(text);
+      const hasCyrillic = /[\u0400-\u04FF]/.test(text);
+      const hasArabic = /[\u0600-\u06FF]/.test(text);
+      const hasDevanagari = /[\u0900-\u097F]/.test(text);
+      // Detecção por vocabulário (idiomas latinos)
       const ptIndicators = /[ãõâêîôûáéíóúàèìòùç]|\b(você|está|não|isso|para|com|que|uma|do|da|em|ser|ter|por|seu|sua|mais|como|mas|quando|então|muito|bem|sim|obrigado|bom dia|boa tarde|tudo)\b/;
       const enIndicators = /\b(the|and|you|this|that|with|have|from|they|what|will|your|more|when|then|very|well|yes|thank|hello|good|morning|please|would|could|should|because)\b/;
       const esIndicators = /[ñ]|\b(usted|está|que|para|con|una|del|los|las|también|muy|cuando|porque|cómo|gracias|buenos días|buenas|hola)\b/;
-      
-      if (enIndicators.test(lowerText)) {
+      const deIndicators = /[äöüß]|\b(ich|sie|wir|das|die|der|und|mit|auf|für|nicht|eine|haben|werden|können|möchten|guten|danke)\b/;
+      const frIndicators = /\b(je|vous|nous|les|des|une|dans|pour|avec|est|sont|avons|bonjour|merci|s'il vous plaît|très|bien|notre|votre)\b/;
+      const nlIndicators = /\b(de|het|een|ik|wij|zij|met|voor|van|niet|kunnen|hebben|bedankt|goedemiddag|goedemorgen|onze)\b/;
+      const svIndicators = /\b(det|den|och|för|att|med|som|han|hon|vi|de|är|har|kan|tack|hej|goddag|vår)\b/;
+      const trIndicators = /[ğışöüç]|\b(bir|bu|için|ile|da|de|ki|ben|biz|siz|onlar|evet|hayır|teşekkür|merhaba|iyi günler)\b/;
+      const plIndicators = /[ąćęłńóśźż]|\b(jest|nie|tak|dla|lub|jak|który|gdzie|kiedy|dziękuję|dzień dobry|proszę|nasz|może)\b/;
+
+      if (hasJapanese) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'ja') || currentLang;
+      } else if (hasKorean) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'ko') || currentLang;
+      } else if (hasChinese) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'zh') || currentLang;
+      } else if (hasCyrillic) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'ru') || currentLang;
+      } else if (hasArabic) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'ar') || currentLang;
+      } else if (hasDevanagari) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'hi') || currentLang;
+      } else if (enIndicators.test(lowerText)) {
         resolvedLang = LANGUAGES.find(l => l.code === 'en') || currentLang;
       } else if (esIndicators.test(lowerText)) {
         resolvedLang = LANGUAGES.find(l => l.code === 'es') || currentLang;
+      } else if (deIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'de') || currentLang;
+      } else if (frIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'fr') || currentLang;
+      } else if (nlIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'nl') || currentLang;
+      } else if (svIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'sv') || currentLang;
+      } else if (trIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'tr') || currentLang;
+      } else if (plIndicators.test(lowerText)) {
+        resolvedLang = LANGUAGES.find(l => l.code === 'pl') || currentLang;
       } else if (ptIndicators.test(lowerText)) {
         resolvedLang = LANGUAGES.find(l => l.code === 'pt') || currentLang;
       }
@@ -1318,9 +1429,13 @@ https://nexustreinamento.com`;
   };
 
   // EFEITO SONORO DE INTERCEPTAÇÃO (BEERS/STATIC AUDIO ABAFADO)
-  const playMuffledAudioEffect = () => {
+  const playMuffledAudioEffect = async () => {
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      // BUG CORRIGIDO: AudioContext pode estar suspenso por política de autoplay do browser
+      if (audioCtx.state === 'suspended') {
+        await audioCtx.resume();
+      }
       const osc = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
       
@@ -1379,8 +1494,7 @@ https://nexustreinamento.com`;
       });
     };
 
-    // TTS OFICIAL: Azure Neural — Antônio (pt-BR) e vozes neurais regionais para demais idiomas
-    // Azure garante cota robusta (5M chars/mês) sem risco de interrupção durante videoconferências
+    // TTS OFICIAL: Azure Neural
     try {
       const azureResponse = await fetch('/api/tts', {
         method: 'POST',
@@ -1388,7 +1502,7 @@ https://nexustreinamento.com`;
         body: JSON.stringify({
           text: text.trim(),
           gender: 'male',
-          locale  // Antônio para pt-BR; vozes neurais regionais para outros idiomas
+          locale
         })
       });
 
@@ -1397,7 +1511,8 @@ https://nexustreinamento.com`;
       const audioBlob = await azureResponse.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
       await playAudioStream(audioUrl);
-      console.log(`TTS: Azure Neural (${locale}) — Antônio/regional reproduzido com sucesso.`);
+      URL.revokeObjectURL(audioUrl); // Libera memória
+      console.log(`TTS: Azure Neural (${locale}) reproduzido com sucesso.`);
       return;
     } catch (azureErr) {
       console.warn("Azure TTS indisponível. Recorrendo ao sintetizador nativo de emergência...", azureErr);
@@ -2224,6 +2339,11 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
   useEffect(() => {
     if (videoRef.current && peer.stream) {
       videoRef.current.srcObject = peer.stream;
+      // BUG CORRIGIDO: garante que o áudio remoto não está silenciado
+      videoRef.current.muted = false;
+      videoRef.current.volume = 1.0;
+      // Força play (necessário em alguns browsers após assign de srcObject)
+      videoRef.current.play().catch(e => console.warn('RemoteVideo play() falhou:', e));
     }
   }, [peer.stream]);
 
@@ -2232,6 +2352,7 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
       ref={videoRef} 
       autoPlay 
       playsInline 
+      muted={false}
       className="w-full h-full object-cover"
     />
   );

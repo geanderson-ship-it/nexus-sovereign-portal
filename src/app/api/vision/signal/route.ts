@@ -1,12 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { saveAtenaMemory, searchAtenaMemories } from '@/lib/atena-db';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, PutCommand, ScanCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
 
-// SINALIZAÇÃO WEBRTC — 100% via DynamoDB
-// Motivo: AWS Amplify usa múltiplas instâncias de servidor.
-// Memória local (global.*) não é compartilhada entre instâncias,
-// causando loop infinito de conexão. O DynamoDB é o único state centralizado.
+// SINALIZAÇÃO WEBRTC — API DEDICADA PARA O NEXUS VISION
+// Separada da tabela Atena_Memories para evitar colisão de dados e garantir performance.
+// Usa ScanCommand com FilterExpression duplo (roomId + TTL no servidor) para máxima compatibilidade
+// com DynamoDB sem necessidade de GSI adicional.
 
-const SIGNAL_TTL_MS = 180000; // 3 minutos
+const client = new DynamoDBClient({
+  region: process.env.BEDROCK_REGION || process.env.AWS_REGION || 'us-east-1',
+  credentials: {
+    accessKeyId:
+      process.env.AMPLIFY_ACCESS_KEY_ID ||
+      process.env.BEDROCK_ACCESS_KEY_ID ||
+      process.env.NEXUS_ACCESS_KEY_ID ||
+      process.env.AWS_ACCESS_KEY_ID ||
+      '',
+    secretAccessKey:
+      process.env.AMPLIFY_SECRET_ACCESS_KEY ||
+      process.env.BEDROCK_SECRET_ACCESS_KEY ||
+      process.env.NEXUS_SECRET_ACCESS_KEY ||
+      process.env.AWS_SECRET_ACCESS_KEY ||
+      '',
+  },
+});
+
+const docClient = DynamoDBDocumentClient.from(client);
+
+// MESMA TABELA — mas com prefixo "vision#" no userId para isolar os dados
+const TABLE_NAME = 'Nexus_Atena_Memories';
+const SIGNAL_TTL_MS = 60000; // 60 segundos — sinais WebRTC devem ser efêmeros
+const VISION_PREFIX = 'vision#';
 
 export async function GET(req: NextRequest) {
   try {
@@ -17,19 +41,33 @@ export async function GET(req: NextRequest) {
     }
 
     const now = Date.now();
+    const cutoffIso = new Date(now - SIGNAL_TTL_MS).toISOString();
+    const scopedUserId = `${VISION_PREFIX}${roomId}`;
 
-    // Busca todos os sinais da sala no DynamoDB
-    const memories = await searchAtenaMemories(roomId);
+    // Busca TODOS os sinais desta sala com filtro de userId e timestamp recente
+    const command = new ScanCommand({
+      TableName: TABLE_NAME,
+      FilterExpression: 'userId = :uid AND #ts >= :cutoff',
+      ExpressionAttributeNames: {
+        '#ts': 'timestamp', // "timestamp" é palavra reservada no DynamoDB
+      },
+      ExpressionAttributeValues: {
+        ':uid': scopedUserId,
+        ':cutoff': cutoffIso,
+      },
+    });
 
-    const signals = memories
-      .filter(m => (now - new Date(m.timestamp).getTime()) < SIGNAL_TTL_MS)
-      .map(m => {
+    const response = await docClient.send(command);
+    const items = response.Items || [];
+
+    const signals = items
+      .map((m: any) => {
         try {
           return {
             id: m.id,
             type: m.categoria,
             timestamp: m.timestamp,
-            payload: JSON.parse(m.conteudo)
+            payload: JSON.parse(m.conteudo),
           };
         } catch (e) {
           return null;
@@ -37,30 +75,44 @@ export async function GET(req: NextRequest) {
       })
       .filter(Boolean);
 
+    // Ordena do mais antigo para o mais recente (importante para WebRTC offer/answer ordering)
+    signals.sort((a: any, b: any) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
     return NextResponse.json({ signals });
   } catch (error: any) {
-    console.error('[Vision Signal API GET Error]', error);
+    console.error('[Vision Signal GET Error]', error);
     return NextResponse.json({ error: error.message || 'Erro ao buscar sinais.' }, { status: 500 });
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { roomId, type, sender, data } = await req.json();
-    if (!roomId || !type || !sender || !data) {
-      return NextResponse.json({ error: 'Parâmetros incompletos.' }, { status: 400 });
+    const body = await req.json();
+    const { roomId, type, sender, data } = body;
+
+    if (!roomId || !type || !sender) {
+      return NextResponse.json({ error: 'Parâmetros incompletos: roomId, type e sender são obrigatórios.' }, { status: 400 });
     }
 
-    // Persiste o sinal no DynamoDB (compartilhado entre todas as instâncias)
-    await saveAtenaMemory({
-      userId: roomId,
-      categoria: type,
-      conteudo: JSON.stringify({ sender, data })
-    });
+    const scopedUserId = `${VISION_PREFIX}${roomId}`;
+    const now = new Date().toISOString();
 
-    return NextResponse.json({ success: true });
+    const item = {
+      id: crypto.randomUUID(),
+      userId: scopedUserId,   // Chave de partição prefixada para isolamento
+      timestamp: now,         // Chave de ordenação e filtro de TTL
+      categoria: type,        // tipo do sinal: presence, webrtc-offer, webrtc-answer, webrtc-candidate
+      conteudo: JSON.stringify({ sender, data }),
+    };
+
+    await docClient.send(new PutCommand({
+      TableName: TABLE_NAME,
+      Item: item,
+    }));
+
+    return NextResponse.json({ success: true, id: item.id });
   } catch (error: any) {
-    console.error('[Vision Signal API POST Error]', error);
+    console.error('[Vision Signal POST Error]', error);
     return NextResponse.json({ error: error.message || 'Erro ao salvar sinal.' }, { status: 500 });
   }
 }
