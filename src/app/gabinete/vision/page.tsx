@@ -154,6 +154,7 @@ export default function VisionSoberanoPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isMediaReady, setIsMediaReady] = useState(false);
 
   // ESTADOS DO CONVIDADO (GUEST)
   const [hasEnteredName, setHasEnteredName] = useState(false);
@@ -626,6 +627,7 @@ https://nexustreinamento.com`;
         if (myVideoRef.current) {
           myVideoRef.current.srcObject = localStream;
         }
+        setIsMediaReady(true);
         logToAtena(`[WebRTC] Áudio e vídeo capturados.`);
       } catch (err) {
         console.warn("Falha ao obter mídia local completa. Tentando apenas vídeo...", err);
@@ -643,6 +645,7 @@ https://nexustreinamento.com`;
           if (myVideoRef.current) {
             myVideoRef.current.srcObject = localStream;
           }
+          setIsMediaReady(true);
           logToAtena(`[WebRTC] Apenas vídeo capturado (sem áudio).`);
         } catch (e2) {
           console.error("Falha total de mídia:", e2);
@@ -1056,7 +1059,7 @@ https://nexustreinamento.com`;
 
   // CONFIGURAÇÃO DO RECONHECIMENTO DE VOZ NATIVO (WEB SPEECH API)
   useEffect(() => {
-    if (!isAuthorized) return;
+    if (!isAuthorized || !isMediaReady) return;
 
     let rec: any = null;
 
@@ -1112,17 +1115,7 @@ https://nexustreinamento.com`;
         recognitionRef.current = rec;
 
         if (isInterpreterActiveRef.current && !isMutedRef.current) {
-          // Solicita permissão explicitamente pelo getUserMedia primeiro para ativar o prompt nativo
-          navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(s => {
-              s.getTracks().forEach(track => track.stop()); // fecha o stream de teste
-              updateMicError(null);
-              try { rec.start(); } catch (e) {}
-            })
-            .catch(err => {
-              console.error("Audio access rejected:", err);
-              updateMicError("Acesso ao microfone bloqueado pelo navegador. Libere a permissão para que a tradução em tempo real funcione.");
-            });
+          try { rec.start(); } catch (e) {}
         }
       } else {
         updateMicError("Seu navegador não suporta reconhecimento de voz em tempo real. Por favor, utilize o Google Chrome ou o Microsoft Edge.");
@@ -1134,7 +1127,7 @@ https://nexustreinamento.com`;
         try { rec.stop(); } catch (e) {}
       }
     };
-  }, [isInterpreterActive, isMuted, isAuthorized]);
+  }, [isInterpreterActive, isMuted, isAuthorized, isMediaReady]);
 
   // LOGICA QUANDO O GEAN FALA (Envia transcrição local via DataChannel)
   const handleGeanSpeech = async (text: string) => {
