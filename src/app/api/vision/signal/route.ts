@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, PutCommand, ScanCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
 
+export const dynamic = 'force-dynamic';
+
 // SINALIZAÇÃO WEBRTC — API DEDICADA PARA O NEXUS VISION
 // Separada da tabela Atena_Memories para evitar colisão de dados e garantir performance.
 // Usa ScanCommand com FilterExpression duplo (roomId + TTL no servidor) para máxima compatibilidade
