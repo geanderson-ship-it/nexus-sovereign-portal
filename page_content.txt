@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { useUser } from '@/auth';
@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { 
   Lock, Mic, MicOff, Video, VideoOff, PhoneOff, Languages, 
   Sparkles, Globe, Shield, Play, VolumeX, Terminal, User, Share2, Clipboard,
-  Mail, Send, Check, ExternalLink, Search, Plus, ScreenShare, ScreenShareOff, Info
+  Mail, Send, Check, ExternalLink, Search, Plus, ScreenShare, ScreenShareOff
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -17,190 +17,120 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-// IDIOMAS DO CLIENTE DISPONÍVEIS — EXPANSÃO GLOBAL NEXUS
+// IDIOMAS DO CLIENTE DISPONÃVEIS â€” EXPANSÃƒO GLOBAL NEXUS
 const LANGUAGES = [
-  { code: 'auto', name: 'Detecção Automática', flag: '🔍', nativeName: 'Auto Detect', voiceLocale: 'auto' },
-  // AMÉRICAS
-  { code: 'pt', name: 'Português', flag: '🇧🇷', nativeName: 'Português', voiceLocale: 'pt-BR' },
-  { code: 'es', name: 'Espanhol', flag: '🇪🇸', nativeName: 'Español', voiceLocale: 'es-ES' },
-  { code: 'en', name: 'Inglês', flag: '🇺🇸', nativeName: 'English', voiceLocale: 'en-US' },
+  { code: 'auto', name: 'DetecÃ§Ã£o AutomÃ¡tica', flag: 'ðŸ”', nativeName: 'Auto Detect', voiceLocale: 'auto' },
+  // AMÃ‰RICAS
+  { code: 'pt', name: 'PortuguÃªs', flag: 'ðŸ‡§ðŸ‡·', nativeName: 'PortuguÃªs', voiceLocale: 'pt-BR' },
+  { code: 'es', name: 'Espanhol', flag: 'ðŸ‡ªðŸ‡¸', nativeName: 'EspaÃ±ol', voiceLocale: 'es-ES' },
+  { code: 'en', name: 'InglÃªs', flag: 'ðŸ‡ºðŸ‡¸', nativeName: 'English', voiceLocale: 'en-US' },
   // EUROPA OCIDENTAL
-  { code: 'fr', name: 'Francês', flag: '🇫🇷', nativeName: 'Français', voiceLocale: 'fr-FR' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹', nativeName: 'Italiano', voiceLocale: 'it-IT' },
-  { code: 'de', name: 'Alemão', flag: '🇩🇪', nativeName: 'Deutsch', voiceLocale: 'de-DE' },
-  { code: 'nl', name: 'Holandês', flag: '🇳🇱', nativeName: 'Nederlands', voiceLocale: 'nl-NL' },
+  { code: 'fr', name: 'FrancÃªs', flag: 'ðŸ‡«ðŸ‡·', nativeName: 'FranÃ§ais', voiceLocale: 'fr-FR' },
+  { code: 'it', name: 'Italiano', flag: 'ðŸ‡®ðŸ‡¹', nativeName: 'Italiano', voiceLocale: 'it-IT' },
+  { code: 'de', name: 'AlemÃ£o', flag: 'ðŸ‡©ðŸ‡ª', nativeName: 'Deutsch', voiceLocale: 'de-DE' },
+  { code: 'nl', name: 'HolandÃªs', flag: 'ðŸ‡³ðŸ‡±', nativeName: 'Nederlands', voiceLocale: 'nl-NL' },
   // EUROPA DO NORTE
-  { code: 'sv', name: 'Sueco', flag: '🇸🇪', nativeName: 'Svenska', voiceLocale: 'sv-SE' },
+  { code: 'sv', name: 'Sueco', flag: 'ðŸ‡¸ðŸ‡ª', nativeName: 'Svenska', voiceLocale: 'sv-SE' },
   // EUROPA DO LESTE
-  { code: 'ru', name: 'Russo', flag: '🇷🇺', nativeName: 'Русский', voiceLocale: 'ru-RU' },
-  { code: 'pl', name: 'Polonês', flag: '🇵🇱', nativeName: 'Polski', voiceLocale: 'pl-PL' },
-  // ORIENTE MÉDIO
-  { code: 'ar', name: 'Árabe', flag: '🇸🇦', nativeName: 'العربية', voiceLocale: 'ar-SA' },
-  { code: 'tr', name: 'Turco', flag: '🇹🇷', nativeName: 'Türkçe', voiceLocale: 'tr-TR' },
-  // ÁSIA
-  { code: 'hi', name: 'Hindi', flag: '🇮🇳', nativeName: 'हिन्दी', voiceLocale: 'hi-IN' },
-  { code: 'ja', name: 'Japonês', flag: '🇯🇵', nativeName: '日本語', voiceLocale: 'ja-JP' },
-  { code: 'zh', name: 'Chinês (Mandarim)', flag: '🇨🇳', nativeName: '普通话', voiceLocale: 'zh-CN' },
-  { code: 'ko', name: 'Coreano', flag: '🇰🇷', nativeName: '한국어', voiceLocale: 'ko-KR' },
+  { code: 'ru', name: 'Russo', flag: 'ðŸ‡·ðŸ‡º', nativeName: 'Ð ÑƒÑÑÐºÐ¸Ð¹', voiceLocale: 'ru-RU' },
+  { code: 'pl', name: 'PolonÃªs', flag: 'ðŸ‡µðŸ‡±', nativeName: 'Polski', voiceLocale: 'pl-PL' },
+  // ORIENTE MÃ‰DIO
+  { code: 'ar', name: 'Ãrabe', flag: 'ðŸ‡¸ðŸ‡¦', nativeName: 'Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©', voiceLocale: 'ar-SA' },
+  { code: 'tr', name: 'Turco', flag: 'ðŸ‡¹ðŸ‡·', nativeName: 'TÃ¼rkÃ§e', voiceLocale: 'tr-TR' },
+  // ÃSIA
+  { code: 'hi', name: 'Hindi', flag: 'ðŸ‡®ðŸ‡³', nativeName: 'à¤¹à¤¿à¤¨à¥à¤¦à¥€', voiceLocale: 'hi-IN' },
+  { code: 'ja', name: 'JaponÃªs', flag: 'ðŸ‡¯ðŸ‡µ', nativeName: 'æ—¥æœ¬èªž', voiceLocale: 'ja-JP' },
+  { code: 'zh', name: 'ChinÃªs (Mandarim)', flag: 'ðŸ‡¨ðŸ‡³', nativeName: 'æ™®é€šè¯', voiceLocale: 'zh-CN' },
+  { code: 'ko', name: 'Coreano', flag: 'ðŸ‡°ðŸ‡·', nativeName: 'í•œêµ­ì–´', voiceLocale: 'ko-KR' },
 ];
 
-// Dicionário Multilíngue de Dicas de Tradução (Lobby)
-const PRE_JOIN_TIPS: Record<string, { title: string; t1: string; t2: string; t3: string }> = {
-  pt: {
-    title: "Boas Práticas de Tradução",
-    t1: "Fale pausadamente: O sistema traduz a cada pausa. Frases mais curtas geram traduções mais rápidas.",
-    t2: "Use fones de ouvido: Evita que seu microfone capte a voz da Inteligência Artificial.",
-    t3: "Aguarde o câmbio: Espere a voz traduzida terminar de falar na sua tela antes de responder."
-  },
-  en: {
-    title: "Translation Best Practices",
-    t1: "Speak slowly: The system translates at every pause. Shorter sentences generate faster translations.",
-    t2: "Use headphones: Essential to prevent your microphone from picking up the Artificial Intelligence voice.",
-    t3: "Wait your turn: Wait for the translated voice to finish speaking before you reply."
-  },
-  es: {
-    title: "Buenas Prácticas de Traducción",
-    t1: "Hable pausadamente: El sistema traduce en cada pausa. Las frases cortas generan traducciones más rápidas.",
-    t2: "Use auriculares: Esencial para evitar que su micrófono capte la voz de la Inteligencia Artificial.",
-    t3: "Espere el cambio: Espere a que la voz traducida termine de hablar antes de responder."
-  },
-  fr: {
-    title: "Bonnes Pratiques de Traduction",
-    t1: "Parlez lentement : Le système traduit à chaque pause. Des phrases plus courtes génèrent des traductions plus rapides.",
-    t2: "Utilisez des écouteurs : Essentiel pour éviter que votre microphone ne capte la voix de l'Intelligence Artificielle.",
-    t3: "Attendez votre tour : Attendez que la voix traduite termine de parler avant de répondre."
-  },
-  it: {
-    title: "Migliori Pratiche di Traduzione",
-    t1: "Parla lentamente: Il sistema traduce ad ogni pausa. Le frasi più brevi generano traduzioni più veloci.",
-    t2: "Usa le cuffie: Essenziale per evitare che il tuo microfono catturi la voce dell'Intelligenza Artificiale.",
-    t3: "Aspetta il tuo turno: Aspetta che la voce tradotta finisca di parlare prima di rispondere."
-  },
-  de: {
-    title: "Übersetzungs-Best-Practices",
-    t1: "Sprechen Sie langsam: Das System übersetzt bei jeder Pause. Kürzere Sätze erzeugen schnellere Übersetzungen.",
-    t2: "Verwenden Sie Kopfhörer: Wichtig, um zu verhindern, dass Ihr Mikrofon die KI-Stimme aufnimmt.",
-    t3: "Warten Sie: Warten Sie, bis die übersetzte Stimme fertig gesprochen hat, bevor Sie antworten."
-  },
-  zh: {
-    title: "翻译最佳实践",
-    t1: "请慢慢说：系统在每次停顿时进行翻译。较短的句子会产生更快的翻译。",
-    t2: "使用耳机：这对于防止麦克风捕捉到人工智能的声音至关重要。",
-    t3: "等待轮换：在回答之前，请等待翻译的声音说完。"
-  },
-  ko: {
-    title: "번역 모범 사례",
-    t1: "천천히 말하세요: 시스템은 일시 정지할 때마다 번역합니다. 짧은 문장이 더 빠른 번역을 생성합니다.",
-    t2: "헤드폰 사용: 마이크가 인공지능 목소리를 수음하지 않도록 하는 데 필수적입니다.",
-    t3: "순서 기다리기: 대답하기 전에 번역된 목소리가 끝날 때까지 기다리세요."
-  },
-  ja: {
-    title: "翻訳のベストプラクティス",
-    t1: "ゆっくり話す：システムは一時停止ごとに翻訳します。短い文の方が早く翻訳されます。",
-    t2: "ヘッドフォンを使用する：マイクが人工知能の声を拾うのを防ぐために不可欠です。",
-    t3: "順番を待つ：応答する前に、翻訳された音声が話し終わるのを待ってください。"
-  }
-};
-
-const FOOTER_REMINDER: Record<string, string> = {
-  pt: "Fale pausadamente para melhor interpretação do tradutor.",
-  en: "Please speak slowly for better translation accuracy.",
-  es: "Hable pausadamente para una mejor interpretación del traductor.",
-  fr: "Parlez lentement pour une meilleure interprétation du traducteur.",
-  it: "Parla lentamente per una migliore interpretazione del traduttore.",
-  de: "Bitte sprechen Sie langsam für eine bessere Übersetzungsgenauigkeit.",
-  zh: "请缓慢发言，以便翻译器更好地进行口译。",
-  ko: "번역기의 더 나은 해석을 위해 천천히 말씀해 주십시오.",
-  ja: "翻訳機の解釈を良くするため、ゆっくり話してください。"
-};
-
-// FALAS MOCKADAS DO CLIENTE POR IDIOMA PARA A SIMULAÇÃO DE INTERCEPTAÇÃO — EXPANSÃO GLOBAL
+// FALAS MOCKADAS DO CLIENTE POR IDIOMA PARA A SIMULAÃ‡ÃƒO DE INTERCEPTAÃ‡ÃƒO â€” EXPANSÃƒO GLOBAL
 const MOCK_CLIENT_SPEECHES: Record<string, { original: string; translation: string }[]> = {
   pt: [
-    { original: "Olá Gean, é um prazer falar com você. Estou testando a chamada de áudio direto da Nexus em Português.", translation: "Olá Gean, é um prazer falar com você. Estou testando a chamada de áudio direto da Nexus em Português." },
-    { original: "Esta é uma demonstração da transmissão de voz sem interceptação. O áudio flui direto, limpo e em tempo real.", translation: "Esta é uma demonstração da transmissão de voz sem interceptação. O áudio flui direto, limpo e em tempo real." },
-    { original: "Excelente qualidade de áudio da ElevenLabs. O som está nítido e sem nenhuma microfonia na nossa videoconferência.", translation: "Excelente qualidade de áudio da ElevenLabs. O som está nítido e sem nenhuma microfonia na nossa videoconferência." }
+    { original: "OlÃ¡ Gean, Ã© um prazer falar com vocÃª. Estou testando a chamada de Ã¡udio direto da Nexus em PortuguÃªs.", translation: "OlÃ¡ Gean, Ã© um prazer falar com vocÃª. Estou testando a chamada de Ã¡udio direto da Nexus em PortuguÃªs." },
+    { original: "Esta Ã© uma demonstraÃ§Ã£o da transmissÃ£o de voz sem interceptaÃ§Ã£o. O Ã¡udio flui direto, limpo e em tempo real.", translation: "Esta Ã© uma demonstraÃ§Ã£o da transmissÃ£o de voz sem interceptaÃ§Ã£o. O Ã¡udio flui direto, limpo e em tempo real." },
+    { original: "Excelente qualidade de Ã¡udio da ElevenLabs. O som estÃ¡ nÃ­tido e sem nenhuma microfonia na nossa videoconferÃªncia.", translation: "Excelente qualidade de Ã¡udio da ElevenLabs. O som estÃ¡ nÃ­tido e sem nenhuma microfonia na nossa videoconferÃªncia." }
   ],
   es: [
-    { original: "Hola Gean, es un placer saludarte. El projeto de Nexus me parece sumamente innovador y queremos avanzar hoy mismo.", translation: "Olá Gean, é um prazer te saudar. O projeto da Nexus me parece extremamente inovador e queremos avançar hoje mesmo." },
-    { original: "¿Qué garantías nos ofrece el sistema de segurança on-premise que han desarrollado para proteger nuestros datos estratégicos?", translation: "Que garantias nos oferece o sistema de segurança local que vocês desenvolveram para proteger nossos dados estratégicos?" },
-    { original: "Estamos de acuerdo con los valores de la proposta. ¿Cuáles son los próximos pasos para la firma del contrato comercial?", translation: "Estamos de acordo com os valores da proposta. Quais são os próximos passos para a assinatura do contrato comercial?" },
-    { original: "La demostración de la traducción soberana es impresionante. Resuelve un gran problema de comunicação internacional.", translation: "A demonstração da tradução soberana é impressionante. Resolve um grande problema de comunicação internacional." }
+    { original: "Hola Gean, es un placer saludarte. El projeto de Nexus me parece sumamente innovador y queremos avanzar hoy mismo.", translation: "OlÃ¡ Gean, Ã© um prazer te saudar. O projeto da Nexus me parece extremamente inovador e queremos avanÃ§ar hoje mesmo." },
+    { original: "Â¿QuÃ© garantÃ­as nos ofrece el sistema de seguranÃ§a on-premise que han desarrollado para proteger nuestros datos estratÃ©gicos?", translation: "Que garantias nos oferece o sistema de seguranÃ§a local que vocÃªs desenvolveram para proteger nossos dados estratÃ©gicos?" },
+    { original: "Estamos de acuerdo con los valores de la proposta. Â¿CuÃ¡les son los prÃ³ximos pasos para la firma del contrato comercial?", translation: "Estamos de acordo com os valores da proposta. Quais sÃ£o os prÃ³ximos passos para a assinatura do contrato comercial?" },
+    { original: "La demostraciÃ³n de la traducciÃ³n soberana es impresionante. Resuelve un gran problema de comunicaÃ§Ã£o internacional.", translation: "A demonstraÃ§Ã£o da traduÃ§Ã£o soberana Ã© impressionante. Resolve um grande problema de comunicaÃ§Ã£o internacional." }
   ],
   en: [
-    { original: "Hello Gean, great to see you. The Nexus proposal is solid and we are ready to move forward with the partnership.", translation: "Olá Gean, bom ver você. A proposta da Nexus é sólida e estamos prontos para seguir em frente com a parceria." },
-    { original: "Can you explain how the real-time audio interception handles latency during unstable internet connections?", translation: "Você pode explicar como a interceptação de áudio em tempo real lida com a latência durante conexões instáveis de internet?" },
-    { original: "We have reviewed the strategic budget and approved all the terms. Let's schedule the kickoff meeting for next Monday.", translation: "Revisamos o orçamento estratégico e aprovamos todos os termos. Vamos agendar a reunião de pontapé inicial para a próxima segunda-feira." },
-    { original: "This sovereign communication tool is exactly what our multinational executive board has been looking for.", translation: "Esta ferramenta de comunicação soberana é exatamente o que o nosso conselho executivo multinacional estava procurando." }
+    { original: "Hello Gean, great to see you. The Nexus proposal is solid and we are ready to move forward with the partnership.", translation: "OlÃ¡ Gean, bom ver vocÃª. A proposta da Nexus Ã© sÃ³lida e estamos prontos para seguir em frente com a parceria." },
+    { original: "Can you explain how the real-time audio interception handles latency during unstable internet connections?", translation: "VocÃª pode explicar como a interceptaÃ§Ã£o de Ã¡udio em tempo real lida com a latÃªncia durante conexÃµes instÃ¡veis de internet?" },
+    { original: "We have reviewed the strategic budget and approved all the terms. Let's schedule the kickoff meeting for next Monday.", translation: "Revisamos o orÃ§amento estratÃ©gico e aprovamos todos os termos. Vamos agendar a reuniÃ£o de pontapÃ© inicial para a prÃ³xima segunda-feira." },
+    { original: "This sovereign communication tool is exactly what our multinational executive board has been looking for.", translation: "Esta ferramenta de comunicaÃ§Ã£o soberana Ã© exatamente o que o nosso conselho executivo multinacional estava procurando." }
   ],
   fr: [
-    { original: "Bonjour Gean. C'est un plaisir d'être ici. Votre technologie de traduction intégrée est tout simplement révolutionnaire.", translation: "Bom dia Gean. É um prazer estar aqui. Sua tecnologia de tradução integrada é simplesmente revolucionária." },
-    { original: "Le budget de la proposition commerciale est validé par notre comité exécutif. Nous attendons le contrat final.", translation: "O orçamento da proposta comercial foi validado pelo nosso comitê executivo. Estamos aguardando o contrato final." },
-    { original: "Pouvez-vous confirmer si le cryptage de bout en bout est bien actif lors de ces visioconférences ?", translation: "Você pode confirmer se a criptografia de ponta a ponta está realmente ativa durante estas videoconferências?" }
+    { original: "Bonjour Gean. C'est un plaisir d'Ãªtre ici. Votre technologie de traduction intÃ©grÃ©e est tout simplement rÃ©volutionnaire.", translation: "Bom dia Gean. Ã‰ um prazer estar aqui. Sua tecnologia de traduÃ§Ã£o integrada Ã© simplesmente revolucionÃ¡ria." },
+    { original: "Le budget de la proposition commerciale est validÃ© par notre comitÃ© exÃ©cutif. Nous attendons le contrat final.", translation: "O orÃ§amento da proposta comercial foi validado pelo nosso comitÃª executivo. Estamos aguardando o contrato final." },
+    { original: "Pouvez-vous confirmer si le cryptage de bout en bout est bien actif lors de ces visioconfÃ©rences ?", translation: "VocÃª pode confirmer se a criptografia de ponta a ponta estÃ¡ realmente ativa durante estas videoconferÃªncias?" }
   ],
   it: [
-    { original: "Buongiorno Gean. La tecnologia Nexus è straordinaria, siamo pronti a firmare l'accordo di licenza oggi.", translation: "Bom dia Gean. A tecnologia Nexus é extraordinária, estamos prontos para assinar o acordo de licença hoje." },
-    { original: "Quali sono i requisiti tecnici per implementare la linea di comunicazione protetta sui nostri server aziendali?", translation: "Quais são os requisitos técnicos para implementar a linha de comunicação protegida nos nossos servidores corporativos?" },
-    { original: "Il sistema di traduzione soberana della Nexus supera qualsiasi soluzione che abbiamo testato sul mercato.", translation: "O sistema de tradução soberana da Nexus supera qualquer solução que testamos no mercado." }
+    { original: "Buongiorno Gean. La tecnologia Nexus Ã¨ straordinaria, siamo pronti a firmare l'accordo di licenza oggi.", translation: "Bom dia Gean. A tecnologia Nexus Ã© extraordinÃ¡ria, estamos prontos para assinar o acordo de licenÃ§a hoje." },
+    { original: "Quali sono i requisiti tecnici per implementare la linea di comunicazione protetta sui nostri server aziendali?", translation: "Quais sÃ£o os requisitos tÃ©cnicos para implementar a linha de comunicaÃ§Ã£o protegida nos nossos servidores corporativos?" },
+    { original: "Il sistema di traduzione soberana della Nexus supera qualsiasi soluzione che abbiamo testato sul mercato.", translation: "O sistema de traduÃ§Ã£o soberana da Nexus supera qualquer soluÃ§Ã£o que testamos no mercado." }
   ],
   de: [
-    { original: "Guten Tag Gean. Wir sind sehr interessiert an einer langfristigen Kooperation mit der Nexus Holding Group.", translation: "Bom dia Gean. Estamos muito interessados em uma cooperação de longo prazo com o Nexus Holding Group." },
-    { original: "Können Sie die Sicherheitsarchitektur der Übersetzungs-API im Detail erläutern?", translation: "Você pode explicar em detalhes a arquitetura de segurança da API de tradução?" },
-    { original: "Unser Vorstand hat das Budget genehmigt. Wir möchten so schnell wie möglich mit der Implementierung beginnen.", translation: "Nosso conselho aprovou o orçamento. Queremos começar com a implementação o mais rápido possível." }
+    { original: "Guten Tag Gean. Wir sind sehr interessiert an einer langfristigen Kooperation mit der Nexus Holding Group.", translation: "Bom dia Gean. Estamos muito interessados em uma cooperaÃ§Ã£o de longo prazo com o Nexus Holding Group." },
+    { original: "KÃ¶nnen Sie die Sicherheitsarchitektur der Ãœbersetzungs-API im Detail erlÃ¤utern?", translation: "VocÃª pode explicar em detalhes a arquitetura de seguranÃ§a da API de traduÃ§Ã£o?" },
+    { original: "Unser Vorstand hat das Budget genehmigt. Wir mÃ¶chten so schnell wie mÃ¶glich mit der Implementierung beginnen.", translation: "Nosso conselho aprovou o orÃ§amento. Queremos comeÃ§ar com a implementaÃ§Ã£o o mais rÃ¡pido possÃ­vel." }
   ],
   nl: [
-    { original: "Goedemiddag Gean. Wij zijn onder de indruk van de Nexus Vision technologie en willen graag samenwerken.", translation: "Boa tarde Gean. Estamos impressionados com a tecnologia Nexus Vision e gostaríamos de colaborar." },
-    { original: "Kunt u ons meer vertellen over de beveiliging en gegevensbescherming van uw systeem?", translation: "Você pode nos contar mais sobre a segurança e proteção de dados do seu sistema?" },
-    { original: "Ons directieteam heeft de proposta goedgekeurd. Wat zijn de volgende stappen voor implementatie?", translation: "Nossa equipe diretiva aprovou a proposta. Quais são os próximos passos para a implementação?" }
+    { original: "Goedemiddag Gean. Wij zijn onder de indruk van de Nexus Vision technologie en willen graag samenwerken.", translation: "Boa tarde Gean. Estamos impressionados com a tecnologia Nexus Vision e gostarÃ­amos de colaborar." },
+    { original: "Kunt u ons meer vertellen over de beveiliging en gegevensbescherming van uw systeem?", translation: "VocÃª pode nos contar mais sobre a seguranÃ§a e proteÃ§Ã£o de dados do seu sistema?" },
+    { original: "Ons directieteam heeft de proposta goedgekeurd. Wat zijn de volgende stappen voor implementatie?", translation: "Nossa equipe diretiva aprovou a proposta. Quais sÃ£o os prÃ³ximos passos para a implementaÃ§Ã£o?" }
   ],
   sv: [
-    { original: "Hej Gean! Nexus Vision är en fantastisk lösning för vår globala kommunikation. Vi är imponerade.", translation: "Olá Gean! O Nexus Vision é uma solução fantástica para nossa comunicação global. Estamos impressionados." },
-    { original: "Kan ni förklara hur er realtidsöversättning fungerar tekniskt sett?", translation: "Você pode explicar como a tradução em tempo real funciona do ponto de vista técnico?" },
-    { original: "Vi har godkänt budgeten och vill gärna starta samarbetet så snart som möjligt.", translation: "Aprovamos o orçamento e gostaríamos de iniciar a colaboração o mais breve possível." }
+    { original: "Hej Gean! Nexus Vision Ã¤r en fantastisk lÃ¶sning fÃ¶r vÃ¥r globala kommunikation. Vi Ã¤r imponerade.", translation: "OlÃ¡ Gean! O Nexus Vision Ã© uma soluÃ§Ã£o fantÃ¡stica para nossa comunicaÃ§Ã£o global. Estamos impressionados." },
+    { original: "Kan ni fÃ¶rklara hur er realtidsÃ¶versÃ¤ttning fungerar tekniskt sett?", translation: "VocÃª pode explicar como a traduÃ§Ã£o em tempo real funciona do ponto de vista tÃ©cnico?" },
+    { original: "Vi har godkÃ¤nt budgeten och vill gÃ¤rna starta samarbetet sÃ¥ snart som mÃ¶jligt.", translation: "Aprovamos o orÃ§amento e gostarÃ­amos de iniciar a colaboraÃ§Ã£o o mais breve possÃ­vel." }
   ],
   ru: [
-    { original: "Добрый день, Жеан. Технология Nexus Vision произвела на нас огромное впечатление. Мы готовы к сотрудничеству.", translation: "Boa tarde, Gean. A tecnologia Nexus Vision nos impressionou muito. Estamos prontos para a colaboração." },
-    { original: "Можете ли вы подробнее объяснить архитектуру безопасности и суверенитет данных вашей системы?", translation: "Você poderia explicar com mais detalhes a arquitetura de segurança e a soberania dos dados do seu sistema?" },
-    { original: "Наш совет директоров одобрил бюджет. Нам нужно немедленно перейти к следующим шагам.", translation: "Nosso conselho de administração aprovou o orçamento. Precisamos avançar imediatamente para as próximas etapas." },
-    { original: "Это именно то решение для международных переговоров, которое мы искали много лет.", translation: "Esta é exatamente a solução para negociações internacionais que estávamos procurando há muitos anos." }
+    { original: "Ð”Ð¾Ð±Ñ€Ñ‹Ð¹ Ð´ÐµÐ½ÑŒ, Ð–ÐµÐ°Ð½. Ð¢ÐµÑ…Ð½Ð¾Ð»Ð¾Ð³Ð¸Ñ Nexus Vision Ð¿Ñ€Ð¾Ð¸Ð·Ð²ÐµÐ»Ð° Ð½Ð° Ð½Ð°Ñ Ð¾Ð³Ñ€Ð¾Ð¼Ð½Ð¾Ðµ Ð²Ð¿ÐµÑ‡Ð°Ñ‚Ð»ÐµÐ½Ð¸Ðµ. ÐœÑ‹ Ð³Ð¾Ñ‚Ð¾Ð²Ñ‹ Ðº ÑÐ¾Ñ‚Ñ€ÑƒÐ´Ð½Ð¸Ñ‡ÐµÑÑ‚Ð²Ñƒ.", translation: "Boa tarde, Gean. A tecnologia Nexus Vision nos impressionou muito. Estamos prontos para a colaboraÃ§Ã£o." },
+    { original: "ÐœÐ¾Ð¶ÐµÑ‚Ðµ Ð»Ð¸ Ð²Ñ‹ Ð¿Ð¾Ð´Ñ€Ð¾Ð±Ð½ÐµÐµ Ð¾Ð±ÑŠÑÑÐ½Ð¸Ñ‚ÑŒ Ð°Ñ€Ñ…Ð¸Ñ‚ÐµÐºÑ‚ÑƒÑ€Ñƒ Ð±ÐµÐ·Ð¾Ð¿Ð°ÑÐ½Ð¾ÑÑ‚Ð¸ Ð¸ ÑÑƒÐ²ÐµÑ€ÐµÐ½Ð¸Ñ‚ÐµÑ‚ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð²Ð°ÑˆÐµÐ¹ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹?", translation: "VocÃª poderia explicar com mais detalhes a arquitetura de seguranÃ§a e a soberania dos dados do seu sistema?" },
+    { original: "ÐÐ°Ñˆ ÑÐ¾Ð²ÐµÑ‚ Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¾Ñ€Ð¾Ð² Ð¾Ð´Ð¾Ð±Ñ€Ð¸Ð» Ð±ÑŽÐ´Ð¶ÐµÑ‚. ÐÐ°Ð¼ Ð½ÑƒÐ¶Ð½Ð¾ Ð½ÐµÐ¼ÐµÐ´Ð»ÐµÐ½Ð½Ð¾ Ð¿ÐµÑ€ÐµÐ¹Ñ‚Ð¸ Ðº ÑÐ»ÐµÐ´ÑƒÑŽÑ‰Ð¸Ð¼ ÑˆÐ°Ð³Ð°Ð¼.", translation: "Nosso conselho de administraÃ§Ã£o aprovou o orÃ§amento. Precisamos avanÃ§ar imediatamente para as prÃ³ximas etapas." },
+    { original: "Ð­Ñ‚Ð¾ Ð¸Ð¼ÐµÐ½Ð½Ð¾ Ñ‚Ð¾ Ñ€ÐµÑˆÐµÐ½Ð¸Ðµ Ð´Ð»Ñ Ð¼ÐµÐ¶Ð´ÑƒÐ½Ð°Ñ€Ð¾Ð´Ð½Ñ‹Ñ… Ð¿ÐµÑ€ÐµÐ³Ð¾Ð²Ð¾Ñ€Ð¾Ð², ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ðµ Ð¼Ñ‹ Ð¸ÑÐºÐ°Ð»Ð¸ Ð¼Ð½Ð¾Ð³Ð¾ Ð»ÐµÑ‚.", translation: "Esta Ã© exatamente a soluÃ§Ã£o para negociaÃ§Ãµes internacionais que estÃ¡vamos procurando hÃ¡ muitos anos." }
   ],
   pl: [
-    { original: "Dzień dobry Gean. Technologia Nexus Vision to przełomowe rozwiązanie dla naszych międzynarodowych operacji.", translation: "Bom dia Gean. A tecnologia Nexus Vision é uma solução revolucionária para nossas operações internacionais." },
-    { original: "Czy mógłby Pan wyjaśnić, jak działa system tłumaczenia w czasie rzeczywistym i jakie są jego ograniczenia?", translation: "Você poderia explicar como funciona o sistema de tradução em tempo real e quais são suas limitações?" },
-    { original: "Nasz zarząd zatwierdził propozycję. Chcemy podpisać umowę jak najszybciej.", translation: "Nossa diretoria aprovou a proposta. Queremos assinar o contrato o mais rápido possível." }
+    { original: "DzieÅ„ dobry Gean. Technologia Nexus Vision to przeÅ‚omowe rozwiÄ…zanie dla naszych miÄ™dzynarodowych operacji.", translation: "Bom dia Gean. A tecnologia Nexus Vision Ã© uma soluÃ§Ã£o revolucionÃ¡ria para nossas operaÃ§Ãµes internacionais." },
+    { original: "Czy mÃ³gÅ‚by Pan wyjaÅ›niÄ‡, jak dziaÅ‚a system tÅ‚umaczenia w czasie rzeczywistym i jakie sÄ… jego ograniczenia?", translation: "VocÃª poderia explicar como funciona o sistema de traduÃ§Ã£o em tempo real e quais sÃ£o suas limitaÃ§Ãµes?" },
+    { original: "Nasz zarzÄ…d zatwierdziÅ‚ propozycjÄ™. Chcemy podpisaÄ‡ umowÄ™ jak najszybciej.", translation: "Nossa diretoria aprovou a proposta. Queremos assinar o contrato o mais rÃ¡pido possÃ­vel." }
   ],
   ar: [
-    { original: "مرحباً جيان، يسعدني التحدث معك. أنا أختبر مكالمة الصوت المباشرة من نكسس باللغة العربية.", translation: "Olá Gean, é um prazer falar com você. Estou testando a chamada de áudio direto da Nexus em Árabe." },
-    { original: "هذا عرض توضيحي لنقل الصوت بدون اعتراض. الصوت يتدفق بشكل مباشر ونظيف وفي الوقت الفعلي.", translation: "Esta é uma demonstração da transmissão de voz sem interceptação. O áudio flui direto, limpo e em tempo real." },
-    { original: "لقد وافق مجلسنا التنفيذي على الميزانية ونرغب في الشروع في التنفيذ الفوري.", translation: "Nosso conselho executivo aprovou o orçamento e desejamos prosseguir com a implementação imediata." }
+    { original: "Ù…Ø±Ø­Ø¨Ø§Ù‹ Ø¬ÙŠØ§Ù†ØŒ ÙŠØ³Ø¹Ø¯Ù†ÙŠ Ø§Ù„ØªØ­Ø¯Ø« Ù…Ø¹Ùƒ. Ø£Ù†Ø§ Ø£Ø®ØªØ¨Ø± Ù…ÙƒØ§Ù„Ù…Ø© Ø§Ù„ØµÙˆØª Ø§Ù„Ù…Ø¨Ø§Ø´Ø±Ø© Ù…Ù† Ù†ÙƒØ³Ø³ Ø¨Ø§Ù„Ù„ØºØ© Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©.", translation: "OlÃ¡ Gean, Ã© um prazer falar com vocÃª. Estou testando a chamada de Ã¡udio direto da Nexus em Ãrabe." },
+    { original: "Ù‡Ø°Ø§ Ø¹Ø±Ø¶ ØªÙˆØ¶ÙŠØ­ÙŠ Ù„Ù†Ù‚Ù„ Ø§Ù„ØµÙˆØª Ø¨Ø¯ÙˆÙ† Ø§Ø¹ØªØ±Ø§Ø¶. Ø§Ù„ØµÙˆØª ÙŠØªØ¯ÙÙ‚ Ø¨Ø´ÙƒÙ„ Ù…Ø¨Ø§Ø´Ø± ÙˆÙ†Ø¸ÙŠÙ ÙˆÙÙŠ Ø§Ù„ÙˆÙ‚Øª Ø§Ù„ÙØ¹Ù„ÙŠ.", translation: "Esta Ã© uma demonstraÃ§Ã£o da transmissÃ£o de voz sem interceptaÃ§Ã£o. O Ã¡udio flui direto, limpo e em tempo real." },
+    { original: "Ù„Ù‚Ø¯ ÙˆØ§ÙÙ‚ Ù…Ø¬Ù„Ø³Ù†Ø§ Ø§Ù„ØªÙ†ÙÙŠØ°ÙŠ Ø¹Ù„Ù‰ Ø§Ù„Ù…ÙŠØ²Ø§Ù†ÙŠØ© ÙˆÙ†Ø±ØºØ¨ ÙÙŠ Ø§Ù„Ø´Ø±ÙˆØ¹ ÙÙŠ Ø§Ù„ØªÙ†ÙÙŠØ° Ø§Ù„ÙÙˆØ±ÙŠ.", translation: "Nosso conselho executivo aprovou o orÃ§amento e desejamos prosseguir com a implementaÃ§Ã£o imediata." }
   ],
   tr: [
-    { original: "Merhaba Gean. Nexus Vision teknolojisi gerçekten çok etkileyici. Ortaklık kurmak istiyoruz.", translation: "Olá Gean. A tecnologia Nexus Vision é realmente muito impressionante. Queremos estabelecer uma parceria." },
-    { original: "Gerçek zamanlı çeviri sisteminin teknik mimarisini biraz daha açıklayabilir misiniz?", translation: "Você poderia explicar um pouco mais a arquitetura técnica do sistema de tradução em tempo real?" },
-    { original: "Yönetim kurulumuz teklifi onayladı. Sözleşmeyi bir an önce imzalamak istiyoruz.", translation: "Nosso conselho de administração aprovou a proposta. Queremos assinar o contrato o mais breve possível." }
+    { original: "Merhaba Gean. Nexus Vision teknolojisi gerÃ§ekten Ã§ok etkileyici. OrtaklÄ±k kurmak istiyoruz.", translation: "OlÃ¡ Gean. A tecnologia Nexus Vision Ã© realmente muito impressionante. Queremos estabelecer uma parceria." },
+    { original: "GerÃ§ek zamanlÄ± Ã§eviri sisteminin teknik mimarisini biraz daha aÃ§Ä±klayabilir misiniz?", translation: "VocÃª poderia explicar um pouco mais a arquitetura tÃ©cnica do sistema de traduÃ§Ã£o em tempo real?" },
+    { original: "YÃ¶netim kurulumuz teklifi onayladÄ±. SÃ¶zleÅŸmeyi bir an Ã¶nce imzalamak istiyoruz.", translation: "Nosso conselho de administraÃ§Ã£o aprovou a proposta. Queremos assinar o contrato o mais breve possÃ­vel." }
   ],
   hi: [
-    { original: "नमस्ते जियान जी। नेक्सस विज़न की तकनीक वास्तव में अद्भुत है। हम इस साझेदारी को आगे बढ़ाना चाहते हैं।", translation: "Olá, Gean. A tecnologia do Nexus Vision é verdadeiramente incrível. Queremos avançar com essa parceria." },
-    { original: "क्या आप हमें अपने सुरक्षा बुनियादी ढांचे और डेटा संप्रभुता के बारे में अधिक जानकारी दे सकते हैं?", translation: "Você poderia nos fornecer mais informações sobre sua infraestrutura de segurança e soberania de dados?" },
-    { original: "हमारे बोर्ड ने बजट को मंजूरी दे दी है। हम जल्द से जल्द अनुबंध पर हस्ताक्षर करना चाहते हैं।", translation: "Nosso conselho aprovou o orçamento. Queremos assinar o contrato o mais rápido possível." }
+    { original: "à¤¨à¤®à¤¸à¥à¤¤à¥‡ à¤œà¤¿à¤¯à¤¾à¤¨ à¤œà¥€à¥¤ à¤¨à¥‡à¤•à¥à¤¸à¤¸ à¤µà¤¿à¤œà¤¼à¤¨ à¤•à¥€ à¤¤à¤•à¤¨à¥€à¤• à¤µà¤¾à¤¸à¥à¤¤à¤µ à¤®à¥‡à¤‚ à¤…à¤¦à¥à¤­à¥à¤¤ à¤¹à¥ˆà¥¤ à¤¹à¤® à¤‡à¤¸ à¤¸à¤¾à¤à¥‡à¤¦à¤¾à¤°à¥€ à¤•à¥‹ à¤†à¤—à¥‡ à¤¬à¤¢à¤¼à¤¾à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚à¥¤", translation: "OlÃ¡, Gean. A tecnologia do Nexus Vision Ã© verdadeiramente incrÃ­vel. Queremos avanÃ§ar com essa parceria." },
+    { original: "à¤•à¥à¤¯à¤¾ à¤†à¤ª à¤¹à¤®à¥‡à¤‚ à¤…à¤ªà¤¨à¥‡ à¤¸à¥à¤°à¤•à¥à¤·à¤¾ à¤¬à¥à¤¨à¤¿à¤¯à¤¾à¤¦à¥€ à¤¢à¤¾à¤‚à¤šà¥‡ à¤”à¤° à¤¡à¥‡à¤Ÿà¤¾ à¤¸à¤‚à¤ªà¥à¤°à¤­à¥à¤¤à¤¾ à¤•à¥‡ à¤¬à¤¾à¤°à¥‡ à¤®à¥‡à¤‚ à¤…à¤§à¤¿à¤• à¤œà¤¾à¤¨à¤•à¤¾à¤°à¥€ à¤¦à¥‡ à¤¸à¤•à¤¤à¥‡ à¤¹à¥ˆà¤‚?", translation: "VocÃª poderia nos fornecer mais informaÃ§Ãµes sobre sua infraestrutura de seguranÃ§a e soberania de dados?" },
+    { original: "à¤¹à¤®à¤¾à¤°à¥‡ à¤¬à¥‹à¤°à¥à¤¡ à¤¨à¥‡ à¤¬à¤œà¤Ÿ à¤•à¥‹ à¤®à¤‚à¤œà¥‚à¤°à¥€ à¤¦à¥‡ à¤¦à¥€ à¤¹à¥ˆà¥¤ à¤¹à¤® à¤œà¤²à¥à¤¦ à¤¸à¥‡ à¤œà¤²à¥à¤¦ à¤…à¤¨à¥à¤¬à¤‚à¤§ à¤ªà¤° à¤¹à¤¸à¥à¤¤à¤¾à¤•à¥à¤·à¤° à¤•à¤°à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚à¥¤", translation: "Nosso conselho aprovou o orÃ§amento. Queremos assinar o contrato o mais rÃ¡pido possÃ­vel." }
   ],
   ja: [
-    { original: "こんにちは、ジアンさん。Nexus Visionの技術は非常に革新的です。ぜひパートナーシップを進めたいと思います。", translation: "Olá, Gean. A tecnologia do Nexus Vision é muito inovadora. Gostaríamos muito de avançar com a parceria." },
-    { original: "リアルタイム翻訳システムのセキュリティアーキテクチャについて、もう少し詳しく説明していただけますか？", translation: "Você poderia explicar com um pouco mais de detalhes a arquitetura de segurança do sistema de tradução em tempo real?" },
-    { original: "取締役会が予算を承認しました。できるだけ早く契約を締結したいと考えています。", translation: "Nosso conselho de administração aprovou o orçamento. Esperamos fechar o contrato o mais breve possível." },
-    { original: "この技術は、私たちの国際ビジネス交渉において大きなアドバンテージをもたらすでしょう。", translation: "Esta tecnologia trará uma grande vantagem em nossas negociações internacionais de negócios." }
+    { original: "ã“ã‚“ã«ã¡ã¯ã€ã‚¸ã‚¢ãƒ³ã•ã‚“ã€‚Nexus Visionã®æŠ€è¡“ã¯éžå¸¸ã«é©æ–°çš„ã§ã™ã€‚ãœã²ãƒ‘ãƒ¼ãƒˆãƒŠãƒ¼ã‚·ãƒƒãƒ—ã‚’é€²ã‚ãŸã„ã¨æ€ã„ã¾ã™ã€‚", translation: "OlÃ¡, Gean. A tecnologia do Nexus Vision Ã© muito inovadora. GostarÃ­amos muito de avanÃ§ar com a parceria." },
+    { original: "ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ ç¿»è¨³ã‚·ã‚¹ãƒ†ãƒ ã®ã‚»ã‚­ãƒ¥ãƒªãƒ†ã‚£ã‚¢ãƒ¼ã‚­ãƒ†ã‚¯ãƒãƒ£ã«ã¤ã„ã¦ã€ã‚‚ã†å°‘ã—è©³ã—ãèª¬æ˜Žã—ã¦ã„ãŸã ã‘ã¾ã™ã‹ï¼Ÿ", translation: "VocÃª poderia explicar com um pouco mais de detalhes a arquitetura de seguranÃ§a do sistema de traduÃ§Ã£o em tempo real?" },
+    { original: "å–ç· å½¹ä¼šãŒäºˆç®—ã‚’æ‰¿èªã—ã¾ã—ãŸã€‚ã§ãã‚‹ã ã‘æ—©ãå¥‘ç´„ã‚’ç· çµã—ãŸã„ã¨è€ƒãˆã¦ã„ã¾ã™ã€‚", translation: "Nosso conselho de administraÃ§Ã£o aprovou o orÃ§amento. Esperamos fechar o contrato o mais breve possÃ­vel." },
+    { original: "ã“ã®æŠ€è¡“ã¯ã€ç§ãŸã¡ã®å›½éš›ãƒ“ã‚¸ãƒã‚¹äº¤æ¸‰ã«ãŠã„ã¦å¤§ããªã‚¢ãƒ‰ãƒãƒ³ãƒ†ãƒ¼ã‚¸ã‚’ã‚‚ãŸã‚‰ã™ã§ã—ã‚‡ã†ã€‚", translation: "Esta tecnologia trarÃ¡ uma grande vantagem em nossas negociaÃ§Ãµes internacionais de negÃ³cios." }
   ],
   zh: [
-    { original: "您好，吉安先生。Nexus Vision的技术令我们印象深刻。我们非常希望建立长期合作关系。", translation: "Olá, Gean. A tecnologia do Nexus Vision nos impressionou muito. Temos muito interesse em estabelecer uma parceria de longo prazo." },
-    { original: "能否详细介绍一下您的实时翻译系统的安全架构和数据主权保障措施？", translation: "Você poderia detalhar a arquitetura de segurança do seu sistema de tradução em tempo real e as medidas de soberania de dados?" },
-    { original: "我们的董事会已经批准了预算。我们希望尽快签署合作协议并开始实施。", translation: "Nosso conselho de administração aprovou o orçamento. Esperamos assinar o acordo de cooperação e iniciar a implementação o mais breve possível." },
-    { original: "这项技术将彻底改变我们在亚太地区的商业谈判方式。非常感谢您的演示。", translation: "Esta tecnologia vai transformar completamente nossa forma de conduzir negociações comerciais na região Ásia-Pacífico. Muito obrigado pela demonstração." }
+    { original: "æ‚¨å¥½ï¼Œå‰å®‰å…ˆç”Ÿã€‚Nexus Visionçš„æŠ€æœ¯ä»¤æˆ‘ä»¬å°è±¡æ·±åˆ»ã€‚æˆ‘ä»¬éžå¸¸å¸Œæœ›å»ºç«‹é•¿æœŸåˆä½œå…³ç³»ã€‚", translation: "OlÃ¡, Gean. A tecnologia do Nexus Vision nos impressionou muito. Temos muito interesse em estabelecer uma parceria de longo prazo." },
+    { original: "èƒ½å¦è¯¦ç»†ä»‹ç»ä¸€ä¸‹æ‚¨çš„å®žæ—¶ç¿»è¯‘ç³»ç»Ÿçš„å®‰å…¨æž¶æž„å’Œæ•°æ®ä¸»æƒä¿éšœæŽªæ–½ï¼Ÿ", translation: "VocÃª poderia detalhar a arquitetura de seguranÃ§a do seu sistema de traduÃ§Ã£o em tempo real e as medidas de soberania de dados?" },
+    { original: "æˆ‘ä»¬çš„è‘£äº‹ä¼šå·²ç»æ‰¹å‡†äº†é¢„ç®—ã€‚æˆ‘ä»¬å¸Œæœ›å°½å¿«ç­¾ç½²åˆä½œåè®®å¹¶å¼€å§‹å®žæ–½ã€‚", translation: "Nosso conselho de administraÃ§Ã£o aprovou o orÃ§amento. Esperamos assinar o acordo de cooperaÃ§Ã£o e iniciar a implementaÃ§Ã£o o mais breve possÃ­vel." },
+    { original: "è¿™é¡¹æŠ€æœ¯å°†å½»åº•æ”¹å˜æˆ‘ä»¬åœ¨äºšå¤ªåœ°åŒºçš„å•†ä¸šè°ˆåˆ¤æ–¹å¼ã€‚éžå¸¸æ„Ÿè°¢æ‚¨çš„æ¼”ç¤ºã€‚", translation: "Esta tecnologia vai transformar completamente nossa forma de conduzir negociaÃ§Ãµes comerciais na regiÃ£o Ãsia-PacÃ­fico. Muito obrigado pela demonstraÃ§Ã£o." }
   ],
   ko: [
-    { original: "안녕하세요, 지안 씨. Nexus Vision 기술은 정말 혁신적입니다. 파트너십을 진행하고 싶습니다.", translation: "Olá, Gean. A tecnologia do Nexus Vision é realmente inovadora. Gostaríamos de avançar com a parceria." },
-    { original: "실시간 번역 시스템의 보안 아키텍처와 데이터 주권에 대해 좀 더 자세히 설명해 주실 수 있나요?", translation: "Você poderia explicar com mais detalhes a arquitetura de segurança do sistema de tradução em tempo real e a soberania dos dados?" },
-    { original: "이사회에서 예산을 승인했습니다. 가능한 한 빨리 계약을 체결하고 싶습니다.", translation: "Nosso conselho de administração aprovou o orçamento. Gostaríamos de fechar o contrato o mais rápido possível." },
-    { original: "이 기술은 아시아 태평양 지역에서의 국제 비즈니스 협상 방식을 완전히 바꿀 것입니다.", translation: "Esta tecnologia irá transformar completamente a maneira de conduzir negociações internacionais de negócios na região Ásia-Pacífico." }
+    { original: "ì•ˆë…•í•˜ì„¸ìš”, ì§€ì•ˆ ì”¨. Nexus Vision ê¸°ìˆ ì€ ì •ë§ í˜ì‹ ì ìž…ë‹ˆë‹¤. íŒŒíŠ¸ë„ˆì‹­ì„ ì§„í–‰í•˜ê³  ì‹¶ìŠµë‹ˆë‹¤.", translation: "OlÃ¡, Gean. A tecnologia do Nexus Vision Ã© realmente inovadora. GostarÃ­amos de avanÃ§ar com a parceria." },
+    { original: "ì‹¤ì‹œê°„ ë²ˆì—­ ì‹œìŠ¤í…œì˜ ë³´ì•ˆ ì•„í‚¤í…ì²˜ì™€ ë°ì´í„° ì£¼ê¶Œì— ëŒ€í•´ ì¢€ ë” ìžì„¸ížˆ ì„¤ëª…í•´ ì£¼ì‹¤ ìˆ˜ ìžˆë‚˜ìš”?", translation: "VocÃª poderia explicar com mais detalhes a arquitetura de seguranÃ§a do sistema de traduÃ§Ã£o em tempo real e a soberania dos dados?" },
+    { original: "ì´ì‚¬íšŒì—ì„œ ì˜ˆì‚°ì„ ìŠ¹ì¸í–ˆìŠµë‹ˆë‹¤. ê°€ëŠ¥í•œ í•œ ë¹¨ë¦¬ ê³„ì•½ì„ ì²´ê²°í•˜ê³  ì‹¶ìŠµë‹ˆë‹¤.", translation: "Nosso conselho de administraÃ§Ã£o aprovou o orÃ§amento. GostarÃ­amos de fechar o contrato o mais rÃ¡pido possÃ­vel." },
+    { original: "ì´ ê¸°ìˆ ì€ ì•„ì‹œì•„ íƒœí‰ì–‘ ì§€ì—­ì—ì„œì˜ êµ­ì œ ë¹„ì¦ˆë‹ˆìŠ¤ í˜‘ìƒ ë°©ì‹ì„ ì™„ì „ížˆ ë°”ê¿€ ê²ƒìž…ë‹ˆë‹¤.", translation: "Esta tecnologia irÃ¡ transformar completamente a maneira de conduzir negociaÃ§Ãµes internacionais de negÃ³cios na regiÃ£o Ãsia-PacÃ­fico." }
   ]
 };
 
@@ -247,7 +177,7 @@ export default function VisionSoberanoPage() {
   const [customEmail, setCustomEmail] = useState('');
   const [selectedSender, setSelectedSender] = useState('vendas@nexustreinamento.com');
   const [customSender, setCustomSender] = useState('');
-  const [emailSubject, setEmailSubject] = useState('Convite para Reunião Virtual Segura — Nexus Holding Group');
+  const [emailSubject, setEmailSubject] = useState('Convite para ReuniÃ£o Virtual Segura â€” Nexus Holding Group');
   const [isEmailCopied, setIsEmailCopied] = useState(false);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
@@ -256,8 +186,8 @@ export default function VisionSoberanoPage() {
   const [isMuted, setIsMuted] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isInterpreterActive, setIsInterpreterActive] = useState(true);
-  const [myLanguage, setMyLanguage] = useState(LANGUAGES[0]); // padrão inicial: português
-  const [peerLanguage, setPeerLanguage] = useState(LANGUAGES[0]); // padrão inicial: português
+  const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGES[0]);
+  const [detectedLanguage, setDetectedLanguage] = useState(LANGUAGES[0]); // padrÃ£o inicial: portuguÃªs
   const [isClientSpeaking, setIsClientSpeaking] = useState(false);
   const [isGeanSpeaking, setIsGeanSpeaking] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -281,13 +211,13 @@ export default function VisionSoberanoPage() {
       setIsJoiner(join);
       setConnectionStatus(join ? 'Aguardando convite do Host...' : 'Criando sala e aguardando Ivoni...');
 
-      // Telemetria em tempo real: Intercepta erros globais e rejeições de promises
+      // Telemetria em tempo real: Intercepta erros globais e rejeiÃ§Ãµes de promises
       const reportError = (message: string, detail?: string) => {
         fetch('/api/vision/logs', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message, type: 'error', detail })
-        }).catch(() => {}); // Falha silenciosa para não quebrar a UI
+        }).catch(() => {}); // Falha silenciosa para nÃ£o quebrar a UI
       };
 
       window.onerror = (message, source, lineno, colno, error) => {
@@ -300,7 +230,7 @@ export default function VisionSoberanoPage() {
     }
   }, []);
 
-  // FLUXO DE VÍDEO
+  // FLUXO DE VÃDEO
   const [stream, setStream] = useState<MediaStream | null>(null);
   const myVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -323,11 +253,11 @@ export default function VisionSoberanoPage() {
     stage: 'speaking' | 'translating' | 'done';
   } | null>(null);
 
-  // TRANSCRIÇÃO & HISTÓRICO
+  // TRANSCRIÃ‡ÃƒO & HISTÃ“RICO
   const [transcripts, setTranscripts] = useState<TranscriptItem[]>([]);
   const [atenaInsights, setAtenaInsights] = useState<string[]>([
-    "Canal de comunicação seguro estabelecido.",
-    "Aguardando interações para gerar insights de negócios."
+    "Canal de comunicaÃ§Ã£o seguro estabelecido.",
+    "Aguardando interaÃ§Ãµes para gerar insights de negÃ³cios."
   ]);
 
   // COMPARTILHAMENTO DE TELA (SCREEN SHARE)
@@ -340,7 +270,7 @@ export default function VisionSoberanoPage() {
       return [msg, ...prev.slice(0, 4)];
     });
 
-    // Envia eventos estruturados (que começam com "[") para o banco de telemetria
+    // Envia eventos estruturados (que comeÃ§am com "[") para o banco de telemetria
     if (msg.startsWith('[')) {
       fetch('/api/vision/logs', {
         method: 'POST',
@@ -359,13 +289,13 @@ export default function VisionSoberanoPage() {
       stopScreenShare();
     } else {
       try {
-        logToAtena(`[WebRTC] Solicitando compartilhamento de tela com áudio...`);
+        logToAtena(`[WebRTC] Solicitando compartilhamento de tela com Ã¡udio...`);
         const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
         screenStreamRef.current = screenStream;
         const screenTrack = screenStream.getVideoTracks()[0];
         const screenAudioTrack = screenStream.getAudioTracks()[0];
 
-        // Se tiver conexões WebRTC ativas, substitui a track de vídeo e áudio em todas elas
+        // Se tiver conexÃµes WebRTC ativas, substitui a track de vÃ­deo e Ã¡udio em todas elas
         for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
           const senders = pc.getSenders();
           const videoSender = senders.find(s => s.track && s.track.kind === 'video');
@@ -379,14 +309,14 @@ export default function VisionSoberanoPage() {
             }
           }
         }
-        logToAtena(`[WebRTC] Compartilhamento de tela e áudio ativo na chamada.`);
+        logToAtena(`[WebRTC] Compartilhamento de tela e Ã¡udio ativo na chamada.`);
 
-        // Atualiza a visualização local do usuário
+        // Atualiza a visualizaÃ§Ã£o local do usuÃ¡rio
         if (myVideoRef.current) {
           myVideoRef.current.srcObject = screenStream;
         }
 
-        // Detecta quando o usuário clica em "Parar compartilhamento" na barra nativa do navegador
+        // Detecta quando o usuÃ¡rio clica em "Parar compartilhamento" na barra nativa do navegador
         screenTrack.onended = () => {
           logToAtena(`[WebRTC] Compartilhamento de tela interrompido.`);
           stopScreenShare();
@@ -406,7 +336,7 @@ export default function VisionSoberanoPage() {
       screenStreamRef.current = null;
     }
 
-    // Reverte para a câmera local e microfone em todas as conexões
+    // Reverte para a cÃ¢mera local e microfone em todas as conexÃµes
     const cameraTrack = localStreamRef.current?.getVideoTracks()[0];
     const micTrack = localStreamRef.current?.getAudioTracks()[0];
     for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
@@ -420,9 +350,9 @@ export default function VisionSoberanoPage() {
         await audioSender.replaceTrack(micTrack);
       }
     }
-    logToAtena(`[WebRTC] Vídeo e áudio da chamada restaurados.`);
+    logToAtena(`[WebRTC] VÃ­deo e Ã¡udio da chamada restaurados.`);
 
-    // Restaura a visualização local
+    // Restaura a visualizaÃ§Ã£o local
     if (myVideoRef.current && localStreamRef.current) {
       myVideoRef.current.srcObject = localStreamRef.current;
     }
@@ -449,12 +379,10 @@ export default function VisionSoberanoPage() {
     isInterpreterActiveRef.current = isInterpreterActive;
   }, [isInterpreterActive]);
 
-  const myLanguageRef = useRef(myLanguage);
-  const peerLanguageRef = useRef(peerLanguage);
+  const selectedLanguageRef = useRef(selectedLanguage);
   useEffect(() => {
-    myLanguageRef.current = myLanguage;
-    peerLanguageRef.current = peerLanguage;
-  }, [myLanguage, peerLanguage]);
+    selectedLanguageRef.current = selectedLanguage;
+  }, [selectedLanguage]);
 
   useEffect(() => {
     isComponentMountedRef.current = true;
@@ -469,7 +397,7 @@ export default function VisionSoberanoPage() {
     micErrorRef.current = err;
   };
 
-  // Solicitar permissão e reiniciar microfone manualmente
+  // Solicitar permissÃ£o e reiniciar microfone manualmente
   const requestMicPermission = () => {
     updateMicError(null);
     if (typeof navigator !== 'undefined' && navigator.mediaDevices) {
@@ -486,13 +414,13 @@ export default function VisionSoberanoPage() {
         })
         .catch(err => {
           console.error("Mic permission request failed:", err);
-          updateMicError("Acesso ao microfone recusado. Por favor, clique no cadeado na barra de endereços para autorizar o microfone.");
+          updateMicError("Acesso ao microfone recusado. Por favor, clique no cadeado na barra de endereÃ§os para autorizar o microfone.");
         });
     }
   };
 
   const handleLeave = (targetUrl: string) => {
-    isComponentMountedRef.current = false; // Garante o bloqueio de reinicialização da fala
+    isComponentMountedRef.current = false; // Garante o bloqueio de reinicializaÃ§Ã£o da fala
 
     if (stream) {
       stream.getTracks().forEach(track => {
@@ -522,7 +450,7 @@ export default function VisionSoberanoPage() {
     router.push(targetUrl);
   };
 
-  // URL de convite baseada no domínio atual com fallback para o oficial
+  // URL de convite baseada no domÃ­nio atual com fallback para o oficial
   const inviteUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/gabinete/vision?room=${roomId}&join=true`
     : `https://nexustreinamento.com/gabinete/vision?room=${roomId}&join=true`;
@@ -536,7 +464,7 @@ export default function VisionSoberanoPage() {
     if (lead) {
       params.set('name', `${lead.firstName || ''} ${lead.lastName || ''}`.trim());
       params.set('company', lead.company || '');
-      // Prefere whatsapp se disponível, senão fone
+      // Prefere whatsapp se disponÃ­vel, senÃ£o fone
       params.set('phone', lead.phone || lead.whatsapp || '');
     }
     
@@ -547,23 +475,23 @@ export default function VisionSoberanoPage() {
 
   const senderSignature = useMemo(() => {
     if (selectedSender === 'custom') {
-      return customSender ? `${customSender} — Nexus Holding Group` : 'Diretoria — Nexus Holding Group';
+      return customSender ? `${customSender} â€” Nexus Holding Group` : 'Diretoria â€” Nexus Holding Group';
     }
-    if (selectedSender === 'vendas@nexustreinamento.com') return 'Vendas — Nexus Holding Group';
-    if (selectedSender === 'geanderson@nexustreinamento.com') return 'Diretor Geanderson — Nexus Holding Group';
-    if (selectedSender === 'diretoria@nexustreinamento.com') return 'Diretoria — Nexus Holding Group';
-    return 'Pessoal — Nexus Holding Group';
+    if (selectedSender === 'vendas@nexustreinamento.com') return 'Vendas â€” Nexus Holding Group';
+    if (selectedSender === 'geanderson@nexustreinamento.com') return 'Diretor Geanderson â€” Nexus Holding Group';
+    if (selectedSender === 'diretoria@nexustreinamento.com') return 'Diretoria â€” Nexus Holding Group';
+    return 'Pessoal â€” Nexus Holding Group';
   }, [selectedSender, customSender]);
 
   const emailBody = useMemo(() => {
     return `Prezado(a),
 
-Gostaria de convidá-lo(a) para uma reunião virtual de apresentação e alinhamento estratégico das soluções da Nexus Holding Group.
+Gostaria de convidÃ¡-lo(a) para uma reuniÃ£o virtual de apresentaÃ§Ã£o e alinhamento estratÃ©gico das soluÃ§Ãµes da Nexus Holding Group.
 
-Para escolher o melhor dia e horário para o nosso atendimento exclusivo, por favor acesse a nossa agenda online no link abaixo:
+Para escolher o melhor dia e horÃ¡rio para o nosso atendimento exclusivo, por favor acesse a nossa agenda online no link abaixo:
 ${agendaUrlWithParams}
 
-Ao confirmar o agendamento, o sistema gerará automaticamente o link seguro para a nossa videoconferência.
+Ao confirmar o agendamento, o sistema gerarÃ¡ automaticamente o link seguro para a nossa videoconferÃªncia.
 
 Atenciosamente,
 ${senderSignature}
@@ -573,7 +501,7 @@ https://nexustreinamento.com`;
   const handleOpenEmailClient = () => {
     const to = selectedRecipient === 'custom' ? customEmail : selectedRecipient;
     if (!to) {
-      alert("Por favor, selecione ou insira um e-mail de destinatário.");
+      alert("Por favor, selecione ou insira um e-mail de destinatÃ¡rio.");
       return;
     }
     const params = new URLSearchParams();
@@ -598,7 +526,7 @@ https://nexustreinamento.com`;
   const handleSendDirectEmail = async () => {
     const to = selectedRecipient === 'custom' ? customEmail : selectedRecipient;
     if (!to) {
-      alert("Por favor, selecione ou insira um e-mail de destinatário.");
+      alert("Por favor, selecione ou insira um e-mail de destinatÃ¡rio.");
       return;
     }
     
@@ -631,7 +559,7 @@ https://nexustreinamento.com`;
     }
   };
 
-  // VERIFICAÇÃO DE AUTORIZAÇÃO E CARREGAMENTO DE CONTATOS
+  // VERIFICAÃ‡ÃƒO DE AUTORIZAÃ‡ÃƒO E CARREGAMENTO DE CONTATOS
   useEffect(() => {
     if (!isUserLoading) {
       const searchParams = new URLSearchParams(window.location.search);
@@ -663,8 +591,8 @@ https://nexustreinamento.com`;
           console.log("Usando leads de backup para convite:", err);
           const backupLeads = [
             { email: 'gilberto.schumann@passodosobrado.rs.gov.br', firstName: 'Gilberto', lastName: 'Schumann', company: 'Prefeitura de Passo do Sobrado' },
-            { email: 'luciana.v@grupocalcados.com.br', firstName: 'Luciana', lastName: 'Vanderlei', company: 'Polo Calçadista de Mato Leitão' },
-            { email: 'carlos.medeiros@ipe.rs.gov.br', firstName: 'Carlos', lastName: 'Medeiros', company: 'Prefeitura de Ipê' }
+            { email: 'luciana.v@grupocalcados.com.br', firstName: 'Luciana', lastName: 'Vanderlei', company: 'Polo CalÃ§adista de Mato LeitÃ£o' },
+            { email: 'carlos.medeiros@ipe.rs.gov.br', firstName: 'Carlos', lastName: 'Medeiros', company: 'Prefeitura de IpÃª' }
           ];
           setLeadsList(backupLeads);
           setSelectedRecipient(backupLeads[0].email);
@@ -672,7 +600,7 @@ https://nexustreinamento.com`;
     }
   }, [isAuthorized]);
 
-  // INICIALIZAR E POLICIA WebRTC (Conexão P2P + Sinalização DynamoDB - MESH para até 6 pessoas)
+  // INICIALIZAR E POLICIA WebRTC (ConexÃ£o P2P + SinalizaÃ§Ã£o DynamoDB - MESH para atÃ© 6 pessoas)
   useEffect(() => {
     if (!isAuthorized || typeof window === 'undefined') return;
     if (isJoiner && !hasEnteredName) return; // Aguarda o convidado digitar o nome
@@ -681,9 +609,9 @@ https://nexustreinamento.com`;
     let pollInterval: NodeJS.Timeout;
     let presenceInterval: NodeJS.Timeout;
 
-    // 1. Acessa mídia local (câmera e áudio)
+    // 1. Acessa mÃ­dia local (cÃ¢mera e Ã¡udio)
     const initLocalMedia = async () => {
-      setConnectionStatus('Acessando câmera e microfone...');
+      setConnectionStatus('Acessando cÃ¢mera e microfone...');
       let localStream: MediaStream;
       try {
         localStream = await navigator.mediaDevices.getUserMedia({
@@ -700,9 +628,9 @@ https://nexustreinamento.com`;
           myVideoRef.current.srcObject = localStream;
         }
         setIsMediaReady(true);
-        logToAtena(`[WebRTC] Áudio e vídeo capturados.`);
+        logToAtena(`[WebRTC] Ãudio e vÃ­deo capturados.`);
       } catch (err) {
-        console.warn("Falha ao obter mídia local completa. Tentando apenas vídeo...", err);
+        console.warn("Falha ao obter mÃ­dia local completa. Tentando apenas vÃ­deo...", err);
         try {
           localStream = await navigator.mediaDevices.getUserMedia({
             video: {
@@ -718,18 +646,18 @@ https://nexustreinamento.com`;
             myVideoRef.current.srcObject = localStream;
           }
           setIsMediaReady(true);
-          logToAtena(`[WebRTC] Apenas vídeo capturado (sem áudio).`);
+          logToAtena(`[WebRTC] Apenas vÃ­deo capturado (sem Ã¡udio).`);
         } catch (e2) {
-          console.error("Falha total de mídia:", e2);
-          setConnectionStatus('Erro: Câmera não detectada');
-          logToAtena(`[WebRTC] Erro de hardware: Nenhuma câmera detectada.`);
+          console.error("Falha total de mÃ­dia:", e2);
+          setConnectionStatus('Erro: CÃ¢mera nÃ£o detectada');
+          logToAtena(`[WebRTC] Erro de hardware: Nenhuma cÃ¢mera detectada.`);
           return;
         }
       }
-      setConnectionStatus('Conectado à sala local. Buscando parceiros...');
+      setConnectionStatus('Conectado Ã  sala local. Buscando parceiros...');
     };
 
-    // 2. Envia nossa presença na sala
+    // 2. Envia nossa presenÃ§a na sala
     const sendPresence = async () => {
       try {
         await fetch('/api/vision/signal', {
@@ -748,27 +676,27 @@ https://nexustreinamento.com`;
           })
         });
       } catch (e) {
-        console.warn("Erro ao enviar presença:", e);
+        console.warn("Erro ao enviar presenÃ§a:", e);
       }
     };
 
-    // 3. Inicializa Conexão WebRTC com um Peer específico
+    // 3. Inicializa ConexÃ£o WebRTC com um Peer especÃ­fico
     const getOrCreatePeerConnection = (targetPeerId: string, peerName: string): RTCPeerConnection => {
       if (peerConnectionsRef.current.has(targetPeerId)) {
         return peerConnectionsRef.current.get(targetPeerId)!;
       }
 
-      logToAtena(`[WebRTC] Criando conexão com ${peerName}...`);
+      logToAtena(`[WebRTC] Criando conexÃ£o com ${peerName}...`);
       const pc = new RTCPeerConnection({
         iceServers: [
-          // STUN — descoberta de IP público
+          // STUN â€” descoberta de IP pÃºblico
           { urls: 'stun:stun.l.google.com:19302' },
           { urls: 'stun:stun1.l.google.com:19302' },
-          // TURN Nexus — servidor próprio EC2 (us-east-1) — garante conectividade atrás de firewalls corporativos
+          // TURN Nexus â€” servidor prÃ³prio EC2 (us-east-1) â€” garante conectividade atrÃ¡s de firewalls corporativos
           {
             urls: [
               'turn:52.90.49.196:3478',           // UDP/TCP
-              'turn:52.90.49.196:3478?transport=tcp', // TCP forçado
+              'turn:52.90.49.196:3478?transport=tcp', // TCP forÃ§ado
               'turns:52.90.49.196:5349'            // TLS
             ],
             username: process.env.NEXT_PUBLIC_TURN_USER || 'nexusvision',
@@ -779,7 +707,7 @@ https://nexustreinamento.com`;
 
       peerConnectionsRef.current.set(targetPeerId, pc);
 
-      // Adiciona tracks locais à conexão
+      // Adiciona tracks locais Ã  conexÃ£o
       if (localStreamRef.current) {
         localStreamRef.current.getTracks().forEach(track => {
           pc.addTrack(track, localStreamRef.current!);
@@ -808,7 +736,7 @@ https://nexustreinamento.com`;
       pc.oniceconnectionstatechange = () => {
         console.log(`ICE Connection State com ${peerName}: ${pc.iceConnectionState}`);
         if (pc.iceConnectionState === 'failed' || pc.iceConnectionState === 'disconnected') {
-          logToAtena(`[WebRTC] Conexão perdida com ${peerName}.`);
+          logToAtena(`[WebRTC] ConexÃ£o perdida com ${peerName}.`);
         }
       };
 
@@ -823,15 +751,15 @@ https://nexustreinamento.com`;
           }
           return [...prev, { peerId: targetPeerId, name: peerName, stream: remoteStream }];
         });
-        // BUG CORRIGIDO: marca o status de conexão remota como ativo
+        // BUG CORRIGIDO: marca o status de conexÃ£o remota como ativo
         if (remoteStream) {
           setIsRemoteConnected(true);
           setRemotePeerName(peerName);
         }
-        logToAtena(`[WebRTC] Feed de vídeo de ${peerName} conectado.`);
+        logToAtena(`[WebRTC] Feed de vÃ­deo de ${peerName} conectado.`);
       };
 
-      // Se fomos nós quem criamos a conexão por ter ID maior, iniciamos o DataChannel e a Oferta
+      // Se fomos nÃ³s quem criamos a conexÃ£o por ter ID maior, iniciamos o DataChannel e a Oferta
       if (localPeerId > targetPeerId) {
         logToAtena(`[WebRTC] Iniciando chamada com ${peerName}...`);
         const dc = pc.createDataChannel('vision-chat');
@@ -855,7 +783,7 @@ https://nexustreinamento.com`;
           });
         }).catch(err => console.error("Erro ao criar oferta:", err));
       } else {
-        // Se formos o recebedor, escutamos o canal que o iniciador criará
+        // Se formos o recebedor, escutamos o canal que o iniciador criarÃ¡
         pc.ondatachannel = (event) => {
           dataChannelsRef.current.set(targetPeerId, event.channel);
           setupDataChannel(targetPeerId, event.channel);
@@ -868,24 +796,26 @@ https://nexustreinamento.com`;
     const setupDataChannel = (peerId: string, channel: RTCDataChannel) => {
       channel.onopen = () => {
         logToAtena(`[DataChannel] Canal de dados conectado.`);
-        setConnectionStatus('Conexão de Dados Ativa!');
+        setConnectionStatus('ConexÃ£o de Dados Ativa!');
         try {
           channel.send(JSON.stringify({
             type: 'identity',
             name: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
           }));
 
-          // Sempre envia seu idioma ao abrir o canal para o peer (seja Host ou Joiner)
-          channel.send(JSON.stringify({
-            type: 'language-change',
-            code: myLanguageRef.current.code
-          }));
+          // Se for o Host, sincroniza o idioma atual com o convidado
+          if (!isJoiner) {
+            channel.send(JSON.stringify({
+              type: 'language-change',
+              code: selectedLanguageRef.current.code
+            }));
+          }
         } catch (e) {
           console.error("Erro ao enviar identidade/idioma:", e);
         }
       };
       channel.onclose = () => {
-        logToAtena(`[DataChannel] Conexão encerrada.`);
+        logToAtena(`[DataChannel] ConexÃ£o encerrada.`);
       };
       channel.onmessage = async (event) => {
         try {
@@ -897,7 +827,7 @@ https://nexustreinamento.com`;
           } else if (msg.type === 'language-change') {
             const lang = LANGUAGES.find(l => l.code === msg.code);
             if (lang) {
-              setPeerLanguage(lang);
+              setSelectedLanguage(lang);
               logToAtena(`[Idioma] Sincronizado para ${lang.name} ${lang.flag}`);
             }
           }
@@ -907,7 +837,7 @@ https://nexustreinamento.com`;
       };
     };
 
-    // 4. Polling de sinalização de malha (Mesh Discovery & Signaling)
+    // 4. Polling de sinalizaÃ§Ã£o de malha (Mesh Discovery & Signaling)
     const pollSignaling = async () => {
       try {
         const response = await fetch(`/api/vision/signal?roomId=${roomId}`);
@@ -917,10 +847,10 @@ https://nexustreinamento.com`;
         const signals = resData.signals || [];
         const now = Date.now();
 
-        // A. Acha todos os participantes ativos por sinal de presença recente (últimos 15s)
+        // A. Acha todos os participantes ativos por sinal de presenÃ§a recente (Ãºltimos 15s)
         const presenceSignals = signals.filter((s: any) => s.type === 'presence' && s.payload.sender !== localPeerId);
         
-        // Mantém apenas a última presença de cada remetente
+        // MantÃ©m apenas a Ãºltima presenÃ§a de cada remetente
         const activePeersMap = new Map<string, { name: string; timestamp: number }>();
         presenceSignals.forEach((s: any) => {
           const timeDiff = now - new Date(s.timestamp).getTime();
@@ -931,23 +861,23 @@ https://nexustreinamento.com`;
           }
         });
 
-        // Cria conexão de rede para cada participante ativo (limite de 6 pessoas na sala)
+        // Cria conexÃ£o de rede para cada participante ativo (limite de 6 pessoas na sala)
         const activePeerIds = Array.from(activePeersMap.keys()).slice(0, 5); // 5 remotos + 1 local = 6 participantes max
 
         activePeerIds.forEach((peerId) => {
           const peerInfo = activePeersMap.get(peerId)!;
-          // Garante a existência do peer no estado visual
+          // Garante a existÃªncia do peer no estado visual
           setRemotePeers(prev => {
             if (!prev.some(p => p.peerId === peerId)) {
               return [...prev, { peerId, name: peerInfo.name, stream: null }];
             }
             return prev;
           });
-          // Inicializa conexão WebRTC
+          // Inicializa conexÃ£o WebRTC
           getOrCreatePeerConnection(peerId, peerInfo.name);
         });
 
-        // Fecha e remove conexões com participantes inativos
+        // Fecha e remove conexÃµes com participantes inativos
         for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
           if (!activePeerIds.includes(peerId)) {
             console.log("Fechando peer inativo:", peerId);
@@ -960,21 +890,21 @@ https://nexustreinamento.com`;
           }
         }
 
-        // Se formos convidados (Joiner) e já tivemos participantes conectados na sala,
-        // mas agora todos saíram, encerra a sessão e redireciona para a tela inicial pública
+        // Se formos convidados (Joiner) e jÃ¡ tivemos participantes conectados na sala,
+        // mas agora todos saÃ­ram, encerra a sessÃ£o e redireciona para a tela inicial pÃºblica
         if (isJoiner) {
           const currentlyConnected = Array.from(peerConnectionsRef.current.keys()).length;
           if (currentlyConnected > 0) {
             hasConnectedRef.current = true;
           } else if (hasConnectedRef.current) {
-            logToAtena(`[WebRTC] Reunião encerrada pelo Host. Redirecionando...`);
+            logToAtena(`[WebRTC] ReuniÃ£o encerrada pelo Host. Redirecionando...`);
             setTimeout(() => {
               window.location.href = '/';
             }, 1500);
           }
         }
 
-        // B. Processa ofertas, respostas e candidatos ICE direcionados a nós
+        // B. Processa ofertas, respostas e candidatos ICE direcionados a nÃ³s
         const targetedSignals = signals.filter((s: any) => s.payload.sender !== localPeerId && s.payload.data?.target === localPeerId);
 
         for (const signal of targetedSignals) {
@@ -984,7 +914,7 @@ https://nexustreinamento.com`;
 
           if (signal.type === 'webrtc-offer' && !processedSignalsRef.current.has(signal.id)) {
             processedSignalsRef.current.add(signal.id);
-            logToAtena(`[WebRTC] Recebeu oferta de sinalização.`);
+            logToAtena(`[WebRTC] Recebeu oferta de sinalizaÃ§Ã£o.`);
             await pc.setRemoteDescription(new RTCSessionDescription(signal.payload.data.offer));
             const answer = await pc.createAnswer();
             await pc.setLocalDescription(answer);
@@ -1015,7 +945,7 @@ https://nexustreinamento.com`;
 
           if (signal.type === 'webrtc-answer' && !processedSignalsRef.current.has(signal.id)) {
             processedSignalsRef.current.add(signal.id);
-            logToAtena(`[WebRTC] Conexão respondida.`);
+            logToAtena(`[WebRTC] ConexÃ£o respondida.`);
             await pc.setRemoteDescription(new RTCSessionDescription(signal.payload.data.answer));
             
             // Processa ICE candidatos acumulados na fila para este sender
@@ -1042,7 +972,7 @@ https://nexustreinamento.com`;
           }
         }
       } catch (err: any) {
-        console.error("Erro no polling de sinalização:", err);
+        console.error("Erro no polling de sinalizaÃ§Ã£o:", err);
       }
     };
 
@@ -1059,7 +989,7 @@ https://nexustreinamento.com`;
       }
     };
 
-    // Inicialização
+    // InicializaÃ§Ã£o
     initLocalMedia().then(() => {
       if (active) {
         sendPresence();
@@ -1077,7 +1007,7 @@ https://nexustreinamento.com`;
       window.removeEventListener('beforeunload', handleBeforeUnload);
       window.removeEventListener('pagehide', handleBeforeUnload);
       
-      // Fecha todas as conexões ativas do mapa
+      // Fecha todas as conexÃµes ativas do mapa
       for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
         pc.close();
       }
@@ -1098,14 +1028,14 @@ https://nexustreinamento.com`;
     };
   }, [isAuthorized, roomId, isJoiner, hasEnteredName]);
 
-  // Controle em tempo real de mídias (Mute/Camera/Idioma) sem reconectar
+  // Controle em tempo real de mÃ­dias (Mute/Camera/Idioma) sem reconectar
   useEffect(() => {
     if (localStreamRef.current) {
-      // BUG CORRIGIDO: o áudio NUNCA deve ser silenciado pelo idioma selecionado.
-      // O WebRTC transmite áudio cru independente do idioma — a tradução é feita via DataChannel + TTS.
+      // BUG CORRIGIDO: o Ã¡udio NUNCA deve ser silenciado pelo idioma selecionado.
+      // O WebRTC transmite Ã¡udio cru independente do idioma â€” a traduÃ§Ã£o Ã© feita via DataChannel + TTS.
       const audioTrack = localStreamRef.current.getAudioTracks()[0];
       if (audioTrack) {
-        audioTrack.enabled = !isMuted; // Só desativa se o usuário clicar em Mutar
+        audioTrack.enabled = !isMuted; // SÃ³ desativa se o usuÃ¡rio clicar em Mutar
       }
       const videoTrack = localStreamRef.current.getVideoTracks()[0];
       if (videoTrack) {
@@ -1114,7 +1044,7 @@ https://nexustreinamento.com`;
     }
   }, [isMuted, isCameraOn]);
 
-  // Garante que o stream local seja sempre acoplado ao elemento de vídeo local
+  // Garante que o stream local seja sempre acoplado ao elemento de vÃ­deo local
   useEffect(() => {
     if (myVideoRef.current) {
       if (isScreenSharing && screenStreamRef.current) {
@@ -1127,7 +1057,7 @@ https://nexustreinamento.com`;
     }
   }, [stream, isCameraOn, isScreenSharing, myVideoRef.current]);
 
-  // CONFIGURAÇÃO DO RECONHECIMENTO DE VOZ NATIVO (WEB SPEECH API)
+  // CONFIGURAÃ‡ÃƒO DO RECONHECIMENTO DE VOZ NATIVO (WEB SPEECH API)
   useEffect(() => {
     if (!isAuthorized || !isMediaReady) return;
 
@@ -1137,9 +1067,9 @@ https://nexustreinamento.com`;
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       if (SpeechRecognition) {
         rec = new SpeechRecognition();
-        rec.continuous = false; // Configuração ideal para evitar travamentos e loops eternos
+        rec.continuous = false; // ConfiguraÃ§Ã£o ideal para evitar travamentos e loops eternos
         rec.interimResults = false;
-        rec.lang = myLanguage.voiceLocale === 'auto' ? 'pt-BR' : myLanguage.voiceLocale;
+        rec.lang = 'pt-BR';
 
         rec.onstart = () => {
           setIsListening(true);
@@ -1150,11 +1080,11 @@ https://nexustreinamento.com`;
         rec.onerror = (event: any) => {
           console.error("Speech recognition error:", event.error);
           if (event.error === 'not-allowed') {
-            updateMicError("Acesso ao microfone negado. Por favor, clique no cadeado ao lado da URL no navegador e ative a permissão do microfone.");
+            updateMicError("Acesso ao microfone negado. Por favor, clique no cadeado ao lado da URL no navegador e ative a permissÃ£o do microfone.");
           } else if (event.error === 'audio-capture') {
-            updateMicError("Nenhum microfone detectado. Verifique se o dispositivo está conectado.");
+            updateMicError("Nenhum microfone detectado. Verifique se o dispositivo estÃ¡ conectado.");
           } else if (event.error === 'no-speech') {
-            // Ignora silêncio temporário
+            // Ignora silÃªncio temporÃ¡rio
           } else {
             updateMicError(`Erro no microfone: ${event.error}`);
           }
@@ -1164,7 +1094,7 @@ https://nexustreinamento.com`;
           setIsListening(false);
           console.log("Speech recognition ended.");
           
-          // Reinicia após um pequeno delay se o intérprete ainda estiver ativo, sem erro crítico e sem TTS tocando
+          // Reinicia apÃ³s um pequeno delay se o intÃ©rprete ainda estiver ativo, sem erro crÃ­tico e sem TTS tocando
           setTimeout(() => {
             if (isComponentMountedRef.current && isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
               try { rec.start(); } catch (e) {
@@ -1188,7 +1118,7 @@ https://nexustreinamento.com`;
           try { rec.start(); } catch (e) {}
         }
       } else {
-        updateMicError("Seu navegador não suporta reconhecimento de voz em tempo real. Por favor, utilize o Google Chrome ou o Microsoft Edge.");
+        updateMicError("Seu navegador nÃ£o suporta reconhecimento de voz em tempo real. Por favor, utilize o Google Chrome ou o Microsoft Edge.");
       }
     }
 
@@ -1199,7 +1129,7 @@ https://nexustreinamento.com`;
     };
   }, [isInterpreterActive, isMuted, isAuthorized, isMediaReady]);
 
-  // LOGICA QUANDO O GEAN FALA (Envia transcrição local via DataChannel)
+  // LOGICA QUANDO O GEAN FALA (Envia transcriÃ§Ã£o local via DataChannel)
   const handleGeanSpeech = async (text: string) => {
     if (!isInterpreterActive) return;
     
@@ -1208,7 +1138,7 @@ https://nexustreinamento.com`;
     setActiveSubtitle({
       sender: 'gean',
       original: text,
-      translated: text, // Exibe o que você falou em português no seu próprio painel
+      translated: text, // Exibe o que vocÃª falou em portuguÃªs no seu prÃ³prio painel
       stage: 'done'
     });
 
@@ -1221,14 +1151,14 @@ https://nexustreinamento.com`;
             text: text,
             senderName: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
           }));
-          console.log(`WebRTC: Transcrição enviada via DataChannel para ${peerId}:`, text);
+          console.log(`WebRTC: TranscriÃ§Ã£o enviada via DataChannel para ${peerId}:`, text);
         } catch (err) {
-          console.error(`Falha ao enviar transcrição via DataChannel para ${peerId}:`, err);
+          console.error(`Falha ao enviar transcriÃ§Ã£o via DataChannel para ${peerId}:`, err);
         }
       }
     }
 
-    // Salva no histórico local
+    // Salva no histÃ³rico local
     const newItem: TranscriptItem = {
       id: Math.random().toString(),
       sender: 'gean',
@@ -1247,37 +1177,37 @@ https://nexustreinamento.com`;
     }, 4000);
   };
 
-  // LOGICA QUANDO CHEGA UMA TRANSCRIÇÃO REMOTA VIA DATA CHANNEL (TRADUÇÃO SOBERANA REAL)
+  // LOGICA QUANDO CHEGA UMA TRANSCRIÃ‡ÃƒO REMOTA VIA DATA CHANNEL (TRADUÃ‡ÃƒO SOBERANA REAL)
   const handleIncomingTranscript = async (text: string, senderName: string) => {
     if (!isInterpreterActive) return;
 
-    // Identifica o idioma de destino da tradução para o ouvinte local
-    // sourceLanguage é o idioma do peer (ou o idioma detectado se for auto)
-    // targetLanguage é o meu idioma (myLanguage)
-    const currentLang = peerLanguageRef.current;
-    const currentMyLang = myLanguageRef.current;
+    // Identifica o idioma de destino da traduÃ§Ã£o para o ouvinte local
+    // Se local for Host (Gean), quer ouvir em PortuguÃªs.
+    // Se local for Joiner (Ivoni), quer ouvir no seu prÃ³prio idioma selecionado.
+    // Se o idioma do Joiner for 'auto', tenta detectar a partir do texto recebido
+    const currentLang = selectedLanguageRef.current;
     
     let resolvedLang = currentLang;
     if (currentLang.code === 'auto') {
-      // Detecção multi-idioma: verifica padrões de escrita e palavras-chave por idioma
+      // DetecÃ§Ã£o multi-idioma: verifica padrÃµes de escrita e palavras-chave por idioma
       const lowerText = text.toLowerCase();
-      // Detecção por scripts/caracteres únicos de escrita
+      // DetecÃ§Ã£o por scripts/caracteres Ãºnicos de escrita
       const hasJapanese = /[\u3040-\u30FF\u4E00-\u9FAF]/.test(text) && /[\u3040-\u30FF]/.test(text);
       const hasChinese = /[\u4E00-\u9FAF]/.test(text) && !/[\u3040-\u30FF\uAC00-\uD7AF]/.test(text);
       const hasKorean = /[\uAC00-\uD7AF]/.test(text);
       const hasCyrillic = /[\u0400-\u04FF]/.test(text);
       const hasArabic = /[\u0600-\u06FF]/.test(text);
       const hasDevanagari = /[\u0900-\u097F]/.test(text);
-      // Detecção por vocabulário (idiomas latinos)
-      const ptIndicators = /[ãõâêîôûáéíóúàèìòùç]|\b(você|está|não|isso|para|com|que|uma|do|da|em|ser|ter|por|seu|sua|mais|como|mas|quando|então|muito|bem|sim|obrigado|bom dia|boa tarde|tudo)\b/;
+      // DetecÃ§Ã£o por vocabulÃ¡rio (idiomas latinos)
+      const ptIndicators = /[Ã£ÃµÃ¢ÃªÃ®Ã´Ã»Ã¡Ã©Ã­Ã³ÃºÃ Ã¨Ã¬Ã²Ã¹Ã§]|\b(vocÃª|estÃ¡|nÃ£o|isso|para|com|que|uma|do|da|em|ser|ter|por|seu|sua|mais|como|mas|quando|entÃ£o|muito|bem|sim|obrigado|bom dia|boa tarde|tudo)\b/;
       const enIndicators = /\b(the|and|you|this|that|with|have|from|they|what|will|your|more|when|then|very|well|yes|thank|hello|good|morning|please|would|could|should|because)\b/;
-      const esIndicators = /[ñ]|\b(usted|está|que|para|con|una|del|los|las|también|muy|cuando|porque|cómo|gracias|buenos días|buenas|hola)\b/;
-      const deIndicators = /[äöüß]|\b(ich|sie|wir|das|die|der|und|mit|auf|für|nicht|eine|haben|werden|können|möchten|guten|danke)\b/;
-      const frIndicators = /\b(je|vous|nous|les|des|une|dans|pour|avec|est|sont|avons|bonjour|merci|s'il vous plaît|très|bien|notre|votre)\b/;
+      const esIndicators = /[Ã±]|\b(usted|estÃ¡|que|para|con|una|del|los|las|tambiÃ©n|muy|cuando|porque|cÃ³mo|gracias|buenos dÃ­as|buenas|hola)\b/;
+      const deIndicators = /[Ã¤Ã¶Ã¼ÃŸ]|\b(ich|sie|wir|das|die|der|und|mit|auf|fÃ¼r|nicht|eine|haben|werden|kÃ¶nnen|mÃ¶chten|guten|danke)\b/;
+      const frIndicators = /\b(je|vous|nous|les|des|une|dans|pour|avec|est|sont|avons|bonjour|merci|s'il vous plaÃ®t|trÃ¨s|bien|notre|votre)\b/;
       const nlIndicators = /\b(de|het|een|ik|wij|zij|met|voor|van|niet|kunnen|hebben|bedankt|goedemiddag|goedemorgen|onze)\b/;
-      const svIndicators = /\b(det|den|och|för|att|med|som|han|hon|vi|de|är|har|kan|tack|hej|goddag|vår)\b/;
-      const trIndicators = /[ğışöüç]|\b(bir|bu|için|ile|da|de|ki|ben|biz|siz|onlar|evet|hayır|teşekkür|merhaba|iyi günler)\b/;
-      const plIndicators = /[ąćęłńóśźż]|\b(jest|nie|tak|dla|lub|jak|który|gdzie|kiedy|dziękuję|dzień dobry|proszę|nasz|może)\b/;
+      const svIndicators = /\b(det|den|och|fÃ¶r|att|med|som|han|hon|vi|de|Ã¤r|har|kan|tack|hej|goddag|vÃ¥r)\b/;
+      const trIndicators = /[ÄŸÄ±ÅŸÃ¶Ã¼Ã§]|\b(bir|bu|iÃ§in|ile|da|de|ki|ben|biz|siz|onlar|evet|hayÄ±r|teÅŸekkÃ¼r|merhaba|iyi gÃ¼nler)\b/;
+      const plIndicators = /[Ä…Ä‡Ä™Å‚Å„Ã³Å›ÅºÅ¼]|\b(jest|nie|tak|dla|lub|jak|ktÃ³ry|gdzie|kiedy|dziÄ™kujÄ™|dzieÅ„ dobry|proszÄ™|nasz|moÅ¼e)\b/;
 
       if (hasJapanese) {
         resolvedLang = LANGUAGES.find(l => l.code === 'ja') || currentLang;
@@ -1312,16 +1242,16 @@ https://nexustreinamento.com`;
       }
     }
     
-    const targetLangObj = currentMyLang;
-    const sourceLangObj = resolvedLang;
+    const targetLangObj = isJoiner ? resolvedLang : LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1];
+    const sourceLangObj = isJoiner ? LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1] : resolvedLang;
 
     const isPt = targetLangObj.code === 'pt';
-    const isBothPt = sourceLangObj.code === targetLangObj.code; // Ignora tradução se os dois idiomas forem idênticos (simetria perfeita)
+    const isBothPt = sourceLangObj.code === 'pt' && targetLangObj.code === 'pt';
 
     setIsClientSpeaking(true);
 
     if (isBothPt) {
-      // Se ambos estão em português, mostra a legenda nativa mas NÃO chama tradução nem toca TTS (o som vem limpo direto pelo canal de áudio WebRTC)
+      // Se ambos estÃ£o em portuguÃªs, mostra a legenda nativa mas NÃƒO chama traduÃ§Ã£o nem toca TTS (o som vem limpo direto pelo canal de Ã¡udio WebRTC)
       setActiveSubtitle({
         sender: isJoiner ? 'gean' : 'client',
         original: text,
@@ -1346,13 +1276,13 @@ https://nexustreinamento.com`;
       return;
     }
 
-    // 1. Etapa de fala original (SIMULAÇÃO OU INTERCEPTAÇÃO REAL)
+    // 1. Etapa de fala original (SIMULAÃ‡ÃƒO OU INTERCEPTAÃ‡ÃƒO REAL)
     setActiveSubtitle({
-      sender: isJoiner ? 'gean' : 'client', // 'gean' exibe banner GEANDERSON -> CLIENTE, 'client' exibe CLIENTE -> VOCÊ
+      sender: isJoiner ? 'gean' : 'client', // 'gean' exibe banner GEANDERSON -> CLIENTE, 'client' exibe CLIENTE -> VOCÃŠ
       original: text,
       translated: isPt 
-        ? 'Transmitindo áudio em tempo real (Português direto)...'
-        : `Interceptando e traduzindo áudio nativo...`,
+        ? 'Transmitindo Ã¡udio em tempo real (PortuguÃªs direto)...'
+        : `Interceptando e traduzindo Ã¡udio nativo...`,
       stage: 'translating'
     });
 
@@ -1361,7 +1291,7 @@ https://nexustreinamento.com`;
     }
 
     try {
-      // Faz a chamada de tradução real pelo servidor usando Claude 4.5
+      // Faz a chamada de traduÃ§Ã£o real pelo servidor usando Claude 4.5
       const response = await fetch('/api/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1372,11 +1302,11 @@ https://nexustreinamento.com`;
         })
       });
 
-      if (!response.ok) throw new Error("Falha na tradução");
+      if (!response.ok) throw new Error("Falha na traduÃ§Ã£o");
       const data = await response.json();
       const translatedText = data.translation || text;
 
-      // 2. Atualiza legenda com a tradução concluída
+      // 2. Atualiza legenda com a traduÃ§Ã£o concluÃ­da
       setActiveSubtitle({
         sender: isJoiner ? 'gean' : 'client',
         original: text,
@@ -1384,10 +1314,10 @@ https://nexustreinamento.com`;
         stage: 'done'
       });
 
-      // 3. Toca a síntese de voz (TTS) correspondente ao idioma de destino
+      // 3. Toca a sÃ­ntese de voz (TTS) correspondente ao idioma de destino
       playTTS(translatedText, targetLangObj.voiceLocale);
 
-      // 4. Salva no histórico de transcrição local
+      // 4. Salva no histÃ³rico de transcriÃ§Ã£o local
       const newItem: TranscriptItem = {
         id: Math.random().toString(),
         sender: isJoiner ? 'gean' : 'client',
@@ -1397,12 +1327,12 @@ https://nexustreinamento.com`;
       };
       setTranscripts(prev => [...prev, newItem]);
 
-      // Atualiza insights da Atena (só suporta 'gean' ou 'client')
+      // Atualiza insights da Atena (sÃ³ suporta 'gean' ou 'client')
       updateAtenaInsights(isJoiner ? 'gean' : 'client', text, translatedText);
 
     } catch (err) {
-      console.error("Erro ao traduzir transcrição remota:", err);
-      // Fallback em caso de erro na tradução
+      console.error("Erro ao traduzir transcriÃ§Ã£o remota:", err);
+      // Fallback em caso de erro na traduÃ§Ã£o
       setActiveSubtitle({
         sender: isJoiner ? 'gean' : 'client',
         original: text,
@@ -1412,20 +1342,20 @@ https://nexustreinamento.com`;
       playTTS(text, targetLangObj.voiceLocale);
     }
 
-    // Limpa a legenda após 5 segundos
+    // Limpa a legenda apÃ³s 5 segundos
     setTimeout(() => {
       setIsClientSpeaking(false);
       setActiveSubtitle(null);
     }, 5000);
   };
 
-  // SIMULAR FALA DO CLIENTE (INTERCEPTAÇÃO / DIRETO)
+  // SIMULAR FALA DO CLIENTE (INTERCEPTAÃ‡ÃƒO / DIRETO)
   const handleSimulateClientSpeech = async () => {
     if (isClientSpeaking || isGeanSpeaking) return;
 
     setIsClientSpeaking(true);
     
-    // Se estiver em modo Automático, escolhe aleatoriamente um idioma real
+    // Se estiver em modo AutomÃ¡tico, escolhe aleatoriamente um idioma real
     let activeLang = selectedLanguage;
     const isAutoMode = selectedLanguage.code === 'auto';
     if (isAutoMode) {
@@ -1438,18 +1368,18 @@ https://nexustreinamento.com`;
     const phrases = MOCK_CLIENT_SPEECHES[activeLang.code] || MOCK_CLIENT_SPEECHES.es;
     const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
 
-    // Se o idioma for Português, a transmissão é DIRETA, sem interceptação e sem ruído!
+    // Se o idioma for PortuguÃªs, a transmissÃ£o Ã© DIRETA, sem interceptaÃ§Ã£o e sem ruÃ­do!
     const isPt = activeLang.code === 'pt';
 
-    // 1. Etapa de fala original (SIMULAÇÃO DE INTERCEPTAÇÃO)
+    // 1. Etapa de fala original (SIMULAÃ‡ÃƒO DE INTERCEPTAÃ‡ÃƒO)
     setActiveSubtitle({
       sender: 'client',
       original: randomPhrase.original,
       translated: isPt 
-        ? 'Transmitindo áudio em tempo real (Português direto)...'
+        ? 'Transmitindo Ã¡udio em tempo real (PortuguÃªs direto)...'
         : (isAutoMode 
             ? `[Auto Detect] Identificando idioma do cliente... Detectado: ${activeLang.name} ${activeLang.flag}` 
-            : `Interceptando e traduzindo áudio nativo em ${activeLang.name}...`),
+            : `Interceptando e traduzindo Ã¡udio nativo em ${activeLang.name}...`),
       stage: isPt ? 'done' : 'translating'
     });
 
@@ -1457,7 +1387,7 @@ https://nexustreinamento.com`;
       playMuffledAudioEffect();
     }
 
-    // 2. Aguarda delay (2s para interceptação estrangeira, 100ms para português direto)
+    // 2. Aguarda delay (2s para interceptaÃ§Ã£o estrangeira, 100ms para portuguÃªs direto)
     const delay = isPt ? 100 : 2000;
 
     setTimeout(() => {
@@ -1468,10 +1398,10 @@ https://nexustreinamento.com`;
         stage: 'done'
       });
 
-      // Fala a tradução/áudio em Português para o Gean ouvir
+      // Fala a traduÃ§Ã£o/Ã¡udio em PortuguÃªs para o Gean ouvir
       playTTS(randomPhrase.translation, 'pt-BR');
 
-      // Salva no histórico
+      // Salva no histÃ³rico
       const newItem: TranscriptItem = {
         id: Math.random().toString(),
         sender: 'client',
@@ -1491,11 +1421,11 @@ https://nexustreinamento.com`;
     }, delay);
   };
 
-  // EFEITO SONORO DE INTERCEPTAÇÃO (BEERS/STATIC AUDIO ABAFADO)
+  // EFEITO SONORO DE INTERCEPTAÃ‡ÃƒO (BEERS/STATIC AUDIO ABAFADO)
   const playMuffledAudioEffect = async () => {
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      // BUG CORRIGIDO: AudioContext pode estar suspenso por política de autoplay do browser
+      // BUG CORRIGIDO: AudioContext pode estar suspenso por polÃ­tica de autoplay do browser
       if (audioCtx.state === 'suspended') {
         await audioCtx.resume();
       }
@@ -1514,15 +1444,15 @@ https://nexustreinamento.com`;
       osc.start();
       osc.stop(audioCtx.currentTime + 1.8);
     } catch (e) {
-      console.warn("AudioContext indisponível.", e);
+      console.warn("AudioContext indisponÃ­vel.", e);
     }
   };
 
-  // REPRODUZIR SÍNTESE DE VOZ (TTS)
+  // REPRODUZIR SÃNTESE DE VOZ (TTS)
   const playTTS = async (text: string, locale: string) => {
     if (typeof window === 'undefined') return;
     
-    // Função auxiliar para tocar stream de áudio com bloqueio de reconhecimento
+    // FunÃ§Ã£o auxiliar para tocar stream de Ã¡udio com bloqueio de reconhecimento
     const playAudioStream = (audioUrl: string) => {
       return new Promise<void>((resolve, reject) => {
         const audio = new Audio(audioUrl);
@@ -1537,7 +1467,7 @@ https://nexustreinamento.com`;
         audio.onended = () => {
           isTtsPlayingRef.current = false;
           resolve();
-          // Agenda reinício do reconhecimento se ainda estiver ativo e não mudo
+          // Agenda reinÃ­cio do reconhecimento se ainda estiver ativo e nÃ£o mudo
           setTimeout(() => {
             if (isInterpreterActive && !isMuted && !micErrorRef.current && !isTtsPlayingRef.current) {
               try { recognitionRef.current.start(); } catch (e) {}
@@ -1574,11 +1504,11 @@ https://nexustreinamento.com`;
       const audioBlob = await azureResponse.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
       await playAudioStream(audioUrl);
-      URL.revokeObjectURL(audioUrl); // Libera memória
+      URL.revokeObjectURL(audioUrl); // Libera memÃ³ria
       console.log(`TTS: Azure Neural (${locale}) reproduzido com sucesso.`);
       return;
     } catch (azureErr) {
-      console.warn("Azure TTS indisponível. Recorrendo ao sintetizador nativo de emergência...", azureErr);
+      console.warn("Azure TTS indisponÃ­vel. Recorrendo ao sintetizador nativo de emergÃªncia...", azureErr);
     }
 
     // FALLBACK: Sintetizador nativo do navegador
@@ -1646,20 +1576,20 @@ https://nexustreinamento.com`;
     window.speechSynthesis.speak(utterance);
   };
 
-  // ATUALIZAÇÃO AUTOMÁTICA DE INSIGHTS DA ATENA (MOCK INTELIGÊNCIA)
+  // ATUALIZAÃ‡ÃƒO AUTOMÃTICA DE INSIGHTS DA ATENA (MOCK INTELIGÃŠNCIA)
   const updateAtenaInsights = (sender: 'gean' | 'client', original: string, translation: string) => {
     const textToCheck = sender === 'gean' ? original : translation;
     const lowerText = textToCheck.toLowerCase();
     let newInsight = "";
 
     if (lowerText.includes("assinar") || lowerText.includes("contrato") || lowerText.includes("firmar")) {
-      newInsight = "Alerta comercial: Cliente manifestou intenção de assinatura de contrato imediata. Atena recomenda preparar minuta contratual.";
-    } else if (lowerText.includes("segurança") || lowerText.includes("criptografia") || lowerText.includes("proteger")) {
-      newInsight = "Foco em Segurança: Demonstração da criptografia ponta a ponta e auditoria local recomendadas para fechamento.";
-    } else if (lowerText.includes("orçamento") || lowerText.includes("valores") || lowerText.includes("preço") || lowerText.includes("comercial")) {
-      newInsight = "Orçamento Aprovado: Os termos financeiros foram aceitos. Próxima ação é o link de pagamento ou faturamento.";
+      newInsight = "Alerta comercial: Cliente manifestou intenÃ§Ã£o de assinatura de contrato imediata. Atena recomenda preparar minuta contratual.";
+    } else if (lowerText.includes("seguranÃ§a") || lowerText.includes("criptografia") || lowerText.includes("proteger")) {
+      newInsight = "Foco em SeguranÃ§a: DemonstraÃ§Ã£o da criptografia ponta a ponta e auditoria local recomendadas para fechamento.";
+    } else if (lowerText.includes("orÃ§amento") || lowerText.includes("valores") || lowerText.includes("preÃ§o") || lowerText.includes("comercial")) {
+      newInsight = "OrÃ§amento Aprovado: Os termos financeiros foram aceitos. PrÃ³xima aÃ§Ã£o Ã© o link de pagamento ou faturamento.";
     } else {
-      newInsight = `Interação registrada: ${sender === 'gean' ? 'Diretor Gean' : 'Cliente'} comentou sobre detalhes operacionais da tecnologia de tradução.`;
+      newInsight = `InteraÃ§Ã£o registrada: ${sender === 'gean' ? 'Diretor Gean' : 'Cliente'} comentou sobre detalhes operacionais da tecnologia de traduÃ§Ã£o.`;
     }
 
     setAtenaInsights(prev => [newInsight, ...prev.slice(0, 4)]);
@@ -1679,54 +1609,9 @@ https://nexustreinamento.com`;
           <h1 className="text-2xl font-black tracking-tight text-white mb-2 uppercase">
             Nexus Vision <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1">Soberano</span>
           </h1>
-          <p className="text-xs text-slate-400 mb-6 max-w-xs mx-auto leading-relaxed">
-            Identifique-se para entrar na videoconferência criptografada e traduzida da Nexus Holding Group.
+          <p className="text-xs text-slate-400 mb-8 max-w-xs mx-auto leading-relaxed">
+            Identifique-se para entrar na videoconferÃªncia criptografada e traduzida da Nexus Holding Group.
           </p>
-          <div className="mb-6 text-left space-y-2">
-            <label htmlFor="lang-select" className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block mb-1">
-              Select your Language / Selecione seu Idioma
-            </label>
-            <div className="relative">
-              <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-              <select 
-                id="lang-select"
-                value={myLanguage.code}
-                onChange={(e) => {
-                  const lang = LANGUAGES.find(l => l.code === e.target.value);
-                  if (lang) setMyLanguage(lang);
-                }}
-                className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors shadow-inner appearance-none cursor-pointer"
-              >
-                {LANGUAGES.map(lang => (
-                  <option key={lang.code} value={lang.code} className="bg-[#090d16] text-white">
-                    {lang.flag} {lang.nativeName} ({lang.name})
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {myLanguage.code !== 'pt' && (
-            <div className="bg-indigo-950/30 border border-indigo-500/20 rounded-xl p-4 mb-6 text-left space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
-              <h3 className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-1.5 mb-2">
-                <Sparkles className="w-3 h-3" /> {(PRE_JOIN_TIPS[myLanguage.code] || PRE_JOIN_TIPS['en']).title}
-              </h3>
-              <ul className="text-[11px] text-slate-300 space-y-2 leading-relaxed">
-                <li className="flex items-start gap-1.5">
-                  <span className="text-indigo-500 mt-0.5">▪</span>
-                  <span>{(PRE_JOIN_TIPS[myLanguage.code] || PRE_JOIN_TIPS['en']).t1}</span>
-                </li>
-                <li className="flex items-start gap-1.5">
-                  <span className="text-indigo-500 mt-0.5">▪</span>
-                  <span>{(PRE_JOIN_TIPS[myLanguage.code] || PRE_JOIN_TIPS['en']).t2}</span>
-                </li>
-                <li className="flex items-start gap-1.5">
-                  <span className="text-indigo-500 mt-0.5">▪</span>
-                  <span>{(PRE_JOIN_TIPS[myLanguage.code] || PRE_JOIN_TIPS['en']).t3}</span>
-                </li>
-              </ul>
-            </div>
-          )}
 
           <form onSubmit={(e) => {
             e.preventDefault();
@@ -1751,7 +1636,7 @@ https://nexustreinamento.com`;
               disabled={!guestName.trim()}
               className="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-bold h-12 rounded-xl transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:scale-[1.02] active:scale-[0.98]"
             >
-              Entrar na Reunião
+              Entrar na ReuniÃ£o
             </button>
           </form>
         </div>
@@ -1782,22 +1667,66 @@ https://nexustreinamento.com`;
         </div>
 
         <div className="flex items-center gap-2 flex-wrap md:flex-nowrap">
-          {/* Ocultar o detectedLanguage e o myLanguage do header para deixar a UI limpa (escolha feita no Lobby) */}
+          {/* Seletor de Idioma do Cliente */}
+          <div className="flex items-center gap-2 bg-[#090d16] border border-slate-800/80 rounded-lg px-2.5 py-1 text-[11px] text-slate-400 h-8 shadow-sm">
+            <Globe className="w-3.5 h-3.5 text-slate-400" />
+            <span className="font-semibold hidden lg:inline">Idioma do Cliente:</span>
+            <select 
+              value={selectedLanguage.code}
+              onChange={(e) => {
+                const lang = LANGUAGES.find(l => l.code === e.target.value);
+                if (lang) {
+                  setSelectedLanguage(lang);
+                  setActiveSubtitle(null);
+                  
+                  // Envia atualizaÃ§Ã£o via DataChannel para os participantes
+                  for (const [peerId, dc] of dataChannelsRef.current.entries()) {
+                    if (dc.readyState === 'open') {
+                      try {
+                        dc.send(JSON.stringify({
+                          type: 'language-change',
+                          code: lang.code
+                        }));
+                      } catch (err) {}
+                    }
+                  }
+                }
+              }}
+              className="bg-transparent text-white font-bold cursor-pointer focus:outline-none"
+            >
+              {LANGUAGES.map(lang => (
+                <option key={lang.code} value={lang.code} className="bg-[#090d16] text-white">
+                  {lang.flag} {lang.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          {/* Status da Conexão */}
+          {/* Indicador de Idioma Detectado no modo Auto */}
+          {selectedLanguage.code === 'auto' && (
+            <div className="flex items-center gap-1.5 bg-[#090d16] border border-slate-800/80 text-slate-300 px-2.5 py-1 rounded-lg text-[11px] h-8 shadow-sm">
+              <span className="font-semibold text-slate-400">Detectado:</span>
+              <span className="flex items-center gap-1">
+                <span>{detectedLanguage.flag}</span>
+                <span className="uppercase text-[11px] font-bold text-white">{detectedLanguage.name}</span>
+              </span>
+            </div>
+          )}
+
+          {/* Status da ConexÃ£o */}
           <div className="flex items-center gap-2 bg-[#090d16] border border-slate-800/80 rounded-lg px-2.5 py-1 text-[11px] text-slate-300 h-8 shadow-sm">
             <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${isRemoteConnected ? "bg-emerald-500" : "bg-amber-500"}`} />
             <span className="font-medium text-slate-300">{connectionStatus}</span>
           </div>
 
-          {/* Convidar Conexão */}
+          {/* Convidar ConexÃ£o */}
           {!isJoiner && (
             <button 
               onClick={() => setIsInviteOpen(true)} 
               className="flex items-center gap-1.5 h-8 border border-slate-800/80 bg-[#090d16] hover:bg-slate-900 text-slate-300 hover:text-white text-[11px] font-bold px-3 shadow-sm rounded-lg transition-all"
             >
               <Share2 className="w-3.5 h-3.5 text-slate-400" />
-              <span>Convidar Conexão</span>
+              <span>Convidar ConexÃ£o</span>
             </button>
           )}
 
@@ -1861,7 +1790,7 @@ https://nexustreinamento.com`;
                     </div>
                     <div className="text-center">
                       <p className="text-xs font-semibold text-white">{isJoiner ? guestName : 'Diretor Geanderson'}</p>
-                      <p className="text-[10px] text-slate-500">Câmera Desativada</p>
+                      <p className="text-[10px] text-slate-500">CÃ¢mera Desativada</p>
                     </div>
                   </div>
                 )}
@@ -1869,7 +1798,7 @@ https://nexustreinamento.com`;
                 {/* Dynamic Overlay labels */}
                 <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
                   <User className="w-3 h-3 text-blue-400" />
-                  <span>{isJoiner ? `${guestName} (Você)` : 'Diretor Geanderson (Você)'}</span>
+                  <span>{isJoiner ? `${guestName} (VocÃª)` : 'Diretor Geanderson (VocÃª)'}</span>
                 </div>
 
                 {isGeanSpeaking && (
@@ -1899,7 +1828,7 @@ https://nexustreinamento.com`;
                 <button 
                   onClick={() => setIsCameraOn(!isCameraOn)}
                   className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${!isCameraOn ? 'bg-red-600 border-red-500 text-white' : 'bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800'}`}
-                  title={isCameraOn ? "Desligar Câmera" : "Ligar Câmera"}
+                  title={isCameraOn ? "Desligar CÃ¢mera" : "Ligar CÃ¢mera"}
                 >
                   {isCameraOn ? <Video className="w-4 h-4" /> : <VideoOff className="w-4 h-4" />}
                 </button>
@@ -1951,7 +1880,7 @@ https://nexustreinamento.com`;
                       </div>
                       <div className="text-center">
                         <p className="text-sm font-semibold text-white">Diretor Geanderson</p>
-                        <p className="text-xs text-slate-500">Aguardando Host iniciar a transmissão...</p>
+                        <p className="text-xs text-slate-500">Aguardando Host iniciar a transmissÃ£o...</p>
                       </div>
                     </div>
                   ) : (
@@ -1977,7 +1906,7 @@ https://nexustreinamento.com`;
                       <div className="text-center">
                         <p className="text-xs font-semibold text-white flex items-center gap-1.5 justify-center">
                           <span>Carlos Ortega (Madrid)</span>
-                          <span className="text-xs">{peerLanguage.flag}</span>
+                          <span className="text-xs">{selectedLanguage.flag}</span>
                         </p>
                         <p className="text-[10px] text-slate-500">Cliente Simulador</p>
                       </div>
@@ -1987,7 +1916,7 @@ https://nexustreinamento.com`;
                   {/* Dynamic Name Overlay label */}
                   <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
                     <Globe className="w-3 h-3 text-amber-400" />
-                    <span>{isRemoteConnected ? remotePeerName : `Cliente (${peerLanguage.name})`}</span>
+                    <span>{isRemoteConnected ? remotePeerName : (isJoiner ? 'Diretor Geanderson' : `Cliente (${selectedLanguage.name})`)}</span>
                   </div>
 
                   {isClientSpeaking && !isRemoteConnected && (
@@ -1997,7 +1926,7 @@ https://nexustreinamento.com`;
                   {isClientSpeaking && activeSubtitle?.stage === 'translating' && !isRemoteConnected && (
                     <div className="absolute top-12 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-red-600/90 border border-red-500/30 text-[9px] font-bold text-white uppercase tracking-widest flex items-center gap-1.5 animate-bounce shadow-lg shadow-red-600/20 z-10">
                       <VolumeX className="w-3 h-3 animate-pulse" />
-                      Áudio Nativo Bloqueado
+                      Ãudio Nativo Bloqueado
                     </div>
                   )}
 
@@ -2051,7 +1980,7 @@ https://nexustreinamento.com`;
                       </div>
                       <div className="text-center">
                         <p className="text-sm font-semibold text-white">{peer.name}</p>
-                        <p className="text-xs text-slate-500">Sem Sinal de Vídeo</p>
+                        <p className="text-xs text-slate-500">Sem Sinal de VÃ­deo</p>
                       </div>
                     </div>
                   )}
@@ -2072,7 +2001,7 @@ https://nexustreinamento.com`;
                     </span>
                     <span className="flex items-center gap-1">
                       {peer.stream ? <Video className="w-3.5 h-3.5 text-emerald-400" /> : <VideoOff className="w-3.5 h-3.5 text-red-500" />} 
-                      {peer.stream ? 'Vídeo Ativo' : 'Sem Sinal'}
+                      {peer.stream ? 'VÃ­deo Ativo' : 'Sem Sinal'}
                     </span>
                   </div>
                 </div>
@@ -2107,14 +2036,14 @@ https://nexustreinamento.com`;
                   {activeSubtitle.sender === 'gean' ? (
                     <>
                       <span className="text-blue-400">GEANDERSON</span>
-                      <span className="text-slate-600">→</span>
+                      <span className="text-slate-600">â†’</span>
                       <span className="text-slate-400">CLIENTE ({selectedLanguage.name.toUpperCase()})</span>
                     </>
                   ) : (
                     <>
                       <span className="text-amber-400">CLIENTE ({selectedLanguage.name.toUpperCase()})</span>
-                      <span className="text-slate-600">→</span>
-                      <span className="text-blue-400">VOCÊ (TRADUZIDO EM PORTUGUÊS)</span>
+                      <span className="text-slate-600">â†’</span>
+                      <span className="text-blue-400">VOCÃŠ (TRADUZIDO EM PORTUGUÃŠS)</span>
                     </>
                   )}
                   <span className="text-[9px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded font-sans uppercase tracking-widest font-normal animate-pulse">
@@ -2124,7 +2053,7 @@ https://nexustreinamento.com`;
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-slate-500 uppercase tracking-widest font-bold">Áudio Original</p>
+                    <p className="text-xs text-slate-500 uppercase tracking-widest font-bold">Ãudio Original</p>
                     <p className="text-xs md:text-sm text-slate-300 truncate md:normal-case font-light italic">
                       "{activeSubtitle.original}"
                     </p>
@@ -2132,7 +2061,7 @@ https://nexustreinamento.com`;
                   <div className="border-l border-slate-850 pl-4">
                     <p className="text-xs text-amber-400/80 uppercase tracking-widest font-bold flex items-center gap-1">
                       <Sparkles className="w-3 h-3" />
-                      Tradução Soberana
+                      TraduÃ§Ã£o Soberana
                     </p>
                     <p className="text-sm font-semibold text-white">
                       "{activeSubtitle.translated}"
@@ -2148,8 +2077,8 @@ https://nexustreinamento.com`;
                 </p>
                 <p className="text-xs">
                   {isListening 
-                    ? "Comece a falar em português... Sua voz será traduzida automaticamente." 
-                    : "Ative o Intérprete para iniciar a captação de áudio."}
+                    ? "Comece a falar em portuguÃªs... Sua voz serÃ¡ traduzida automaticamente." 
+                    : "Ative o IntÃ©rprete para iniciar a captaÃ§Ã£o de Ã¡udio."}
                 </p>
               </div>
             )}
@@ -2163,7 +2092,7 @@ https://nexustreinamento.com`;
           <div className="border-b border-slate-800/80 p-4 bg-slate-950/80 flex items-center justify-between">
             <span className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2">
               <Terminal className="w-4 h-4 text-amber-500" />
-              Monitor de Transmissão
+              Monitor de TransmissÃ£o
             </span>
             <div className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
@@ -2173,17 +2102,17 @@ https://nexustreinamento.com`;
 
           {/* TRANSCRIPT PANEL */}
           <div className="flex-1 p-4 overflow-y-auto space-y-4 max-h-[250px] lg:max-h-[350px]">
-            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Histórico de Traduções</p>
+            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">HistÃ³rico de TraduÃ§Ãµes</p>
             
             {transcripts.length === 0 ? (
               <div className="h-32 flex flex-col items-center justify-center text-center text-slate-600 text-xs italic">
-                <span>Nenhuma interação registrada ainda.</span>
+                <span>Nenhuma interaÃ§Ã£o registrada ainda.</span>
               </div>
             ) : (
               transcripts.map((t) => (
                 <div key={t.id} className={`flex flex-col gap-1.5 ${t.sender === 'gean' ? 'items-end' : 'items-start'}`}>
                   <div className={`flex items-center gap-1.5 text-[10px] font-bold ${t.sender === 'gean' ? 'text-blue-400' : 'text-amber-400'}`}>
-                    <span>{t.sender === 'gean' ? `Você (${myLanguage.flag})` : `Parceiro (${peerLanguage.flag})`}</span>
+                    <span>{t.sender === 'gean' ? 'Diretor Gean' : `Cliente (${selectedLanguage.flag})`}</span>
                     <span className="text-slate-600 font-normal">{t.timestamp}</span>
                   </div>
                   
@@ -2204,7 +2133,7 @@ https://nexustreinamento.com`;
             <div className="flex items-center justify-between mb-3">
               <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-indigo-400 animate-pulse" />
-                Inteligência Atena Activa
+                InteligÃªncia Atena Activa
               </span>
               <span className="text-[9px] font-bold text-slate-500 font-mono">V4.5</span>
             </div>
@@ -2212,7 +2141,7 @@ https://nexustreinamento.com`;
             <div className="bg-slate-900/60 border border-indigo-500/10 rounded-2xl p-3 space-y-2 shadow-inner">
               {atenaInsights.map((insight, idx) => (
                 <div key={idx} className="flex gap-2 text-[11px] leading-relaxed text-slate-300">
-                  <span className="text-indigo-400 shrink-0 mt-0.5">•</span>
+                  <span className="text-indigo-400 shrink-0 mt-0.5">â€¢</span>
                   <span>{insight}</span>
                 </div>
               ))}
@@ -2225,37 +2154,29 @@ https://nexustreinamento.com`;
               <Shield className="w-3 h-3 text-emerald-500" />
               AWS Bedrock Security
             </span>
-            <span className="uppercase">Vazamento Áudio: 0%</span>
+            <span className="uppercase">Vazamento Ãudio: 0%</span>
           </div>
 
         </aside>
 
       </main>
 
-      {/* FOOTER - LEMBRETE DE TRADUÇÃO (SOMENTE SE NÃO FOR PT) */}
-      {myLanguage.code !== 'pt' && (
-        <footer className="w-full bg-indigo-950/30 border-t border-indigo-500/20 py-2.5 px-6 flex items-center justify-center z-20 backdrop-blur-md">
-          <span className="text-indigo-300 text-xs font-semibold flex items-center gap-2 tracking-wide">
-            <Info className="w-3.5 h-3.5 text-indigo-400" /> 
-            {FOOTER_REMINDER[myLanguage.code] || FOOTER_REMINDER['en']}
-          </span>
-        </footer>
-      )}
 
-      {/* MODAL CONVIDAR CONEXÃO POR E-MAIL */}
+
+      {/* MODAL CONVIDAR CONEXÃƒO POR E-MAIL */}
       <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
         <DialogContent className="bg-[#0b0f19] border border-slate-800 text-slate-100 max-w-lg shadow-[0_0_50px_rgba(99,102,241,0.15)] rounded-2xl max-h-[90vh] flex flex-col">
           <DialogHeader className="shrink-0">
             <DialogTitle className="text-white text-lg font-headline flex items-center gap-2">
               <Mail className="w-5 h-5 text-indigo-400" />
-              Convidar Conexão por E-mail
+              Convidar ConexÃ£o por E-mail
             </DialogTitle>
             <DialogDescription className="text-xs text-slate-400">
-              Selecione o destinatário dos seus leads da Nexus ou insira um e-mail personalizado para enviar o link seguro.
+              Selecione o destinatÃ¡rio dos seus leads da Nexus ou insira um e-mail personalizado para enviar o link seguro.
             </DialogDescription>
           </DialogHeader>
 
-          {/* Container rolável para evitar que o modal fique preso/cortado */}
+          {/* Container rolÃ¡vel para evitar que o modal fique preso/cortado */}
           <div className="flex-1 overflow-y-auto space-y-4 py-3 pr-1.5 scrollbar-thin scrollbar-thumb-slate-850 scrollbar-track-transparent">
             {/* Campo Remetente */}
             <div className="space-y-1">
@@ -2268,11 +2189,11 @@ https://nexustreinamento.com`;
                   <SelectValue placeholder="Selecione a conta" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#0b0f19] border-slate-800 text-slate-200">
-                  <SelectItem value="vendas@nexustreinamento.com" className="text-emerald-400 font-medium">💼 Vendas (vendas@nexustreinamento.com)</SelectItem>
-                  <SelectItem value="geanderson@nexustreinamento.com" className="text-blue-400 font-medium">👑 Geanderson (geanderson@nexustreinamento.com)</SelectItem>
-                  <SelectItem value="diretoria@nexustreinamento.com" className="text-indigo-400 font-medium">🏢 Diretoria (diretoria@nexustreinamento.com)</SelectItem>
-                  <SelectItem value="pessoal@nexustreinamento.com" className="text-purple-400 font-medium">👤 Pessoal (pessoal@nexustreinamento.com)</SelectItem>
-                  <SelectItem value="custom" className="text-amber-400 font-semibold">➕ Digitar Outra Conta...</SelectItem>
+                  <SelectItem value="vendas@nexustreinamento.com" className="text-emerald-400 font-medium">ðŸ’¼ Vendas (vendas@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="geanderson@nexustreinamento.com" className="text-blue-400 font-medium">ðŸ‘‘ Geanderson (geanderson@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="diretoria@nexustreinamento.com" className="text-indigo-400 font-medium">ðŸ¢ Diretoria (diretoria@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="pessoal@nexustreinamento.com" className="text-purple-400 font-medium">ðŸ‘¤ Pessoal (pessoal@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="custom" className="text-amber-400 font-semibold">âž• Digitar Outra Conta...</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -2291,9 +2212,9 @@ https://nexustreinamento.com`;
               </div>
             )}
 
-            {/* Campo Destinatário */}
+            {/* Campo DestinatÃ¡rio */}
             <div className="space-y-1">
-              <label className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider block">Destinatário (Leads da Isadora / Contatos)</label>
+              <label className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider block">DestinatÃ¡rio (Leads da Isadora / Contatos)</label>
               <Select value={selectedRecipient} onValueChange={(val) => {
                 setSelectedRecipient(val);
                 if (val !== 'custom') setCustomEmail('');
@@ -2304,10 +2225,10 @@ https://nexustreinamento.com`;
                 <SelectContent className="bg-[#0b0f19] border-slate-800 text-slate-200">
                   {leadsList.map((lead, idx) => (
                     <SelectItem key={idx} value={lead.email}>
-                      👤 {lead.firstName} {lead.lastName} ({lead.company || 'Lead'})
+                      ðŸ‘¤ {lead.firstName} {lead.lastName} ({lead.company || 'Lead'})
                     </SelectItem>
                   ))}
-                  <SelectItem value="custom" className="text-amber-400 font-semibold">➕ Inserir Outro E-mail...</SelectItem>
+                  <SelectItem value="custom" className="text-amber-400 font-semibold">âž• Inserir Outro E-mail...</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -2326,7 +2247,7 @@ https://nexustreinamento.com`;
               </div>
             )}
 
-            {/* Visualização de Assunto */}
+            {/* VisualizaÃ§Ã£o de Assunto */}
             <div className="space-y-1">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Assunto</label>
               <Input
@@ -2336,10 +2257,10 @@ https://nexustreinamento.com`;
               />
             </div>
 
-            {/* Visualização de Conteúdo do E-mail */}
+            {/* VisualizaÃ§Ã£o de ConteÃºdo do E-mail */}
             <div className="space-y-1">
               <div className="flex justify-between items-center mb-1">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Conteúdo do E-mail</label>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">ConteÃºdo do E-mail</label>
                 <Button 
                   onClick={handleCopyEmailBody} 
                   variant="ghost" 
@@ -2411,10 +2332,10 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
   useEffect(() => {
     if (videoRef.current && peer.stream) {
       videoRef.current.srcObject = peer.stream;
-      // BUG CORRIGIDO: garante que o áudio remoto não está silenciado
+      // BUG CORRIGIDO: garante que o Ã¡udio remoto nÃ£o estÃ¡ silenciado
       videoRef.current.muted = false;
       videoRef.current.volume = 1.0;
-      // Força play (necessário em alguns browsers após assign de srcObject)
+      // ForÃ§a play (necessÃ¡rio em alguns browsers apÃ³s assign de srcObject)
       videoRef.current.play().catch(e => console.warn('RemoteVideo play() falhou:', e));
     }
   }, [peer.stream]);

@@ -7,15 +7,10 @@ export default function LanguageSwitcher() {
   
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const lang = e.target.value;
-    
-    // Find the hidden Google Translate select box
-    const googleSelect = document.querySelector('.goog-te-combo') as HTMLSelectElement;
-    
-    if (googleSelect) {
-      googleSelect.value = lang;
-      // Trigger the change event so Google knows to translate
-      googleSelect.dispatchEvent(new Event('change'));
-    }
+    const domain = window.location.hostname;
+    document.cookie = `googtrans=/pt/${lang}; path=/`;
+    document.cookie = `googtrans=/pt/${lang}; path=/; domain=.${domain}`;
+    window.location.reload();
   };
 
   return (

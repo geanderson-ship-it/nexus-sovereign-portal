@@ -72,6 +72,25 @@ export function SiteHeader() {
     }
   };
 
+  const applyGoogleTranslate = (langCode: string) => {
+    setLocale(langCode as any);
+    const googleCodeMap: Record<string, string> = {
+      'pt-BR': 'pt',
+      'en-US': 'en',
+      'es-ES': 'es',
+      'de-DE': 'de',
+      'fr-FR': 'fr',
+      'ja-JP': 'ja',
+      'zh-CN': 'zh-CN',
+      'ar-AE': 'ar'
+    };
+    const gCode = googleCodeMap[langCode] || 'pt';
+    const domain = window.location.hostname;
+    document.cookie = `googtrans=/pt/${gCode}; path=/`;
+    document.cookie = `googtrans=/pt/${gCode}; path=/; domain=.${domain}`;
+    window.location.reload();
+  };
+
   const userInitials = useMemo(() => {
     const name = user?.displayName;
     if (!name) return '';
@@ -141,7 +160,7 @@ export function SiteHeader() {
                  { code: 'zh-CN', name: '简体中文', sub: '中国', flag: 'cn' },
                  { code: 'ar-AE', name: 'العربية', sub: 'دبي', flag: 'ae' }
                ].map((lang) => (
-                 <DropdownMenuItem key={lang.code} onClick={() => setLocale(lang.code as any)} className="flex items-center gap-3 cursor-pointer hover:bg-primary/10 transition-colors">
+                 <DropdownMenuItem key={lang.code} onClick={() => applyGoogleTranslate(lang.code)} className="flex items-center gap-3 cursor-pointer hover:bg-primary/10 transition-colors">
                    <img src={`https://flagcdn.com/w20/${lang.flag}.png`} width="20" alt={lang.code} className="rounded-xs" />
                    <div className="flex flex-col">
                      <span className="text-sm font-medium">{lang.name}</span>
@@ -423,7 +442,7 @@ export function SiteHeader() {
                               key={lang.code}
                               variant={locale === lang.code ? 'default' : 'outline'} 
                               size="sm" 
-                              onClick={() => { setLocale(lang.code as any); setMobileMenuOpen(false); }} 
+                              onClick={() => { applyGoogleTranslate(lang.code); setMobileMenuOpen(false); }} 
                               className="gap-2 h-auto py-2 justify-start px-3 border-border/40 text-xs"
                             >
                               <img src={`https://flagcdn.com/w40/${lang.flag}.png`} width="20" alt={lang.label} className="rounded-sm" />
