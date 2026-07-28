@@ -187,7 +187,7 @@ export default function VisionSoberanoPage() {
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isInterpreterActive, setIsInterpreterActive] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGES[0]);
-  const [detectedLanguage, setDetectedLanguage] = useState(LANGUAGES[1]); // padrão inicial: espanhol
+  const [detectedLanguage, setDetectedLanguage] = useState(LANGUAGES[0]); // padrão inicial: português
   const [isClientSpeaking, setIsClientSpeaking] = useState(false);
   const [isGeanSpeaking, setIsGeanSpeaking] = useState(false);
   const [mounted, setMounted] = useState(false);
