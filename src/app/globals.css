@@ -262,3 +262,20 @@ body {
     border-color: rgba(139, 92, 246, 0.6) !important;
     box-shadow: 0 0 30px rgba(139, 92, 246, 0.3) !important;
 }
+
+/* Hide Google Translate top banner and prevent body shift */
+body {
+    top: 0 !important;
+}
+.skiptranslate iframe.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+}
+#goog-gt-tt {
+    display: none !important;
+    visibility: hidden !important;
+}
+.goog-text-highlight {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
