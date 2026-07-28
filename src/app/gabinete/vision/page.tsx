@@ -186,8 +186,8 @@ export default function VisionSoberanoPage() {
   const [isMuted, setIsMuted] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isInterpreterActive, setIsInterpreterActive] = useState(true);
-  const [selectedLanguage, setSelectedLanguage] = useState(LANGUAGES[0]);
-  const [detectedLanguage, setDetectedLanguage] = useState(LANGUAGES[0]); // padrão inicial: português
+  const [myLanguage, setMyLanguage] = useState(LANGUAGES[0]); // padrão inicial: português
+  const [peerLanguage, setPeerLanguage] = useState(LANGUAGES[0]); // padrão inicial: português
   const [isClientSpeaking, setIsClientSpeaking] = useState(false);
   const [isGeanSpeaking, setIsGeanSpeaking] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -379,10 +379,12 @@ export default function VisionSoberanoPage() {
     isInterpreterActiveRef.current = isInterpreterActive;
   }, [isInterpreterActive]);
 
-  const selectedLanguageRef = useRef(selectedLanguage);
+  const myLanguageRef = useRef(myLanguage);
+  const peerLanguageRef = useRef(peerLanguage);
   useEffect(() => {
-    selectedLanguageRef.current = selectedLanguage;
-  }, [selectedLanguage]);
+    myLanguageRef.current = myLanguage;
+    peerLanguageRef.current = peerLanguage;
+  }, [myLanguage, peerLanguage]);
 
   useEffect(() => {
     isComponentMountedRef.current = true;
@@ -803,13 +805,11 @@ https://nexustreinamento.com`;
             name: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
           }));
 
-          // Se for o Host, sincroniza o idioma atual com o convidado
-          if (!isJoiner) {
-            channel.send(JSON.stringify({
-              type: 'language-change',
-              code: selectedLanguageRef.current.code
-            }));
-          }
+          // Sempre envia seu idioma ao abrir o canal para o peer (seja Host ou Joiner)
+          channel.send(JSON.stringify({
+            type: 'language-change',
+            code: myLanguageRef.current.code
+          }));
         } catch (e) {
           console.error("Erro ao enviar identidade/idioma:", e);
         }
@@ -827,7 +827,7 @@ https://nexustreinamento.com`;
           } else if (msg.type === 'language-change') {
             const lang = LANGUAGES.find(l => l.code === msg.code);
             if (lang) {
-              setSelectedLanguage(lang);
+              setPeerLanguage(lang);
               logToAtena(`[Idioma] Sincronizado para ${lang.name} ${lang.flag}`);
             }
           }
@@ -1069,7 +1069,7 @@ https://nexustreinamento.com`;
         rec = new SpeechRecognition();
         rec.continuous = false; // Configuração ideal para evitar travamentos e loops eternos
         rec.interimResults = false;
-        rec.lang = 'pt-BR';
+        rec.lang = myLanguage.voiceLocale === 'auto' ? 'pt-BR' : myLanguage.voiceLocale;
 
         rec.onstart = () => {
           setIsListening(true);
@@ -1182,10 +1182,10 @@ https://nexustreinamento.com`;
     if (!isInterpreterActive) return;
 
     // Identifica o idioma de destino da tradução para o ouvinte local
-    // Se local for Host (Gean), quer ouvir em Português.
-    // Se local for Joiner (Ivoni), quer ouvir no seu próprio idioma selecionado.
-    // Se o idioma do Joiner for 'auto', tenta detectar a partir do texto recebido
-    const currentLang = selectedLanguageRef.current;
+    // sourceLanguage é o idioma do peer (ou o idioma detectado se for auto)
+    // targetLanguage é o meu idioma (myLanguage)
+    const currentLang = peerLanguageRef.current;
+    const currentMyLang = myLanguageRef.current;
     
     let resolvedLang = currentLang;
     if (currentLang.code === 'auto') {
@@ -1242,11 +1242,11 @@ https://nexustreinamento.com`;
       }
     }
     
-    const targetLangObj = isJoiner ? resolvedLang : LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1];
-    const sourceLangObj = isJoiner ? LANGUAGES.find(l => l.code === 'pt') || LANGUAGES[1] : resolvedLang;
+    const targetLangObj = currentMyLang;
+    const sourceLangObj = resolvedLang;
 
     const isPt = targetLangObj.code === 'pt';
-    const isBothPt = sourceLangObj.code === 'pt' && targetLangObj.code === 'pt';
+    const isBothPt = sourceLangObj.code === targetLangObj.code; // Ignora tradução se os dois idiomas forem idênticos (simetria perfeita)
 
     setIsClientSpeaking(true);
 
@@ -1667,16 +1667,16 @@ https://nexustreinamento.com`;
         </div>
 
         <div className="flex items-center gap-2 flex-wrap md:flex-nowrap">
-          {/* Seletor de Idioma do Cliente */}
+          {/* Seletor do Meu Idioma */}
           <div className="flex items-center gap-2 bg-[#090d16] border border-slate-800/80 rounded-lg px-2.5 py-1 text-[11px] text-slate-400 h-8 shadow-sm">
             <Globe className="w-3.5 h-3.5 text-slate-400" />
-            <span className="font-semibold hidden lg:inline">Idioma do Cliente:</span>
+            <span className="font-semibold hidden lg:inline">Meu Idioma:</span>
             <select 
-              value={selectedLanguage.code}
+              value={myLanguage.code}
               onChange={(e) => {
                 const lang = LANGUAGES.find(l => l.code === e.target.value);
                 if (lang) {
-                  setSelectedLanguage(lang);
+                  setMyLanguage(lang);
                   setActiveSubtitle(null);
                   
                   // Envia atualização via DataChannel para os participantes
@@ -1701,17 +1701,7 @@ https://nexustreinamento.com`;
               ))}
             </select>
           </div>
-
-          {/* Indicador de Idioma Detectado no modo Auto */}
-          {selectedLanguage.code === 'auto' && (
-            <div className="flex items-center gap-1.5 bg-[#090d16] border border-slate-800/80 text-slate-300 px-2.5 py-1 rounded-lg text-[11px] h-8 shadow-sm">
-              <span className="font-semibold text-slate-400">Detectado:</span>
-              <span className="flex items-center gap-1">
-                <span>{detectedLanguage.flag}</span>
-                <span className="uppercase text-[11px] font-bold text-white">{detectedLanguage.name}</span>
-              </span>
-            </div>
-          )}
+          {/* Ocultar o detectedLanguage que era usado para auto, a nova arquitetura usa peerLanguage explicitamente enviado pelo outro peer */}
 
           {/* Status da Conexão */}
           <div className="flex items-center gap-2 bg-[#090d16] border border-slate-800/80 rounded-lg px-2.5 py-1 text-[11px] text-slate-300 h-8 shadow-sm">
@@ -1906,7 +1896,7 @@ https://nexustreinamento.com`;
                       <div className="text-center">
                         <p className="text-xs font-semibold text-white flex items-center gap-1.5 justify-center">
                           <span>Carlos Ortega (Madrid)</span>
-                          <span className="text-xs">{selectedLanguage.flag}</span>
+                          <span className="text-xs">{peerLanguage.flag}</span>
                         </p>
                         <p className="text-[10px] text-slate-500">Cliente Simulador</p>
                       </div>
@@ -1916,7 +1906,7 @@ https://nexustreinamento.com`;
                   {/* Dynamic Name Overlay label */}
                   <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
                     <Globe className="w-3 h-3 text-amber-400" />
-                    <span>{isRemoteConnected ? remotePeerName : (isJoiner ? 'Diretor Geanderson' : `Cliente (${selectedLanguage.name})`)}</span>
+                    <span>{isRemoteConnected ? remotePeerName : `Cliente (${peerLanguage.name})`}</span>
                   </div>
 
                   {isClientSpeaking && !isRemoteConnected && (
@@ -2112,7 +2102,7 @@ https://nexustreinamento.com`;
               transcripts.map((t) => (
                 <div key={t.id} className={`flex flex-col gap-1.5 ${t.sender === 'gean' ? 'items-end' : 'items-start'}`}>
                   <div className={`flex items-center gap-1.5 text-[10px] font-bold ${t.sender === 'gean' ? 'text-blue-400' : 'text-amber-400'}`}>
-                    <span>{t.sender === 'gean' ? 'Diretor Gean' : `Cliente (${selectedLanguage.flag})`}</span>
+                    <span>{t.sender === 'gean' ? `Você (${myLanguage.flag})` : `Parceiro (${peerLanguage.flag})`}</span>
                     <span className="text-slate-600 font-normal">{t.timestamp}</span>
                   </div>
                   
