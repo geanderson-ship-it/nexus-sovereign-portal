@@ -786,22 +786,27 @@ https://nexustreinamento.com`;
         });
       }
 
-      // Handler para candidatos ICE locais
+      // Handler para candidatos ICE locais (com escalonamento para evitar sobrecarregar o DynamoDB com bursts rápidos de Trickle ICE)
+      let candidateIndex = 0;
       pc.onicecandidate = (event) => {
         if (event.candidate) {
-          fetch('/api/vision/signal', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              roomId,
-              type: 'webrtc-candidate',
-              sender: localPeerId,
-              data: {
-                target: targetPeerId,
-                candidate: event.candidate
-              }
-            })
-          }).catch(e => console.error("Falha ao enviar ICE candidato:", e));
+          candidateIndex++;
+          const staggerDelay = candidateIndex * 200; // 200ms de intervalo entre cada candidato
+          setTimeout(() => {
+            fetch('/api/vision/signal', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                roomId,
+                type: 'webrtc-candidate',
+                sender: localPeerId,
+                data: {
+                  target: targetPeerId,
+                  candidate: event.candidate
+                }
+              })
+            }).catch(e => console.error("Falha ao enviar ICE candidato:", e));
+          }, staggerDelay);
         }
       };
 
