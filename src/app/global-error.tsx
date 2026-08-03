@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
-import { useLocale } from '@/hooks/use-locale';
 
 export default function GlobalError({
   error,
@@ -12,47 +11,43 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  const { t } = useLocale();
   const isPermissionError = false;
-  
   const errorMessage = error?.message || 'An unexpected error occurred.';
 
   return (
     <html>
       <body>
-        <div className="flex min-h-screen flex-col items-center justify-center bg-background text-foreground">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-[#020617] text-slate-100 p-4">
           <div className="mb-8">
              <Link href="/">
                 <Logo width={300} height={101} />
             </Link>
           </div>
-          <div className="max-w-2xl rounded-lg border bg-card p-8 text-center text-card-foreground shadow-lg">
-            <h1 className="text-3xl font-bold text-destructive">
-              {isPermissionError ? t('globalError.deniedTitle') : t('globalError.errorTitle')}
+          <div className="max-w-2xl rounded-lg border border-slate-800 bg-slate-950 p-8 text-center text-slate-200 shadow-lg">
+            <h1 className="text-3xl font-bold text-red-500">
+              Ocorreu um erro inesperado / Unexpected Error
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              {isPermissionError
-                ? t('globalError.deniedMessage')
-                : t('globalError.errorMessage')}
+            <p className="mt-4 text-base text-slate-400">
+              Algo deu errado na inicialização ou conexão da página. Por favor, tente recarregar ou volte para a página inicial.
             </p>
-            {isPermissionError && process.env.NODE_ENV === 'development' && (
-                 <div className="mt-4 rounded bg-destructive/10 p-4 text-left text-xs text-destructive-foreground opacity-70">
-                    <p className="font-mono">{errorMessage}</p>
-                 </div>
-            )}
+            <p className="mt-2 text-sm text-slate-500 font-mono bg-black/40 p-3 rounded border border-slate-900 text-left max-h-40 overflow-auto">
+              Error details: {errorMessage}
+            </p>
             <div className="mt-8 flex gap-4 justify-center">
                 <Button
-                onClick={() => reset()}
-                size="lg"
+                  onClick={() => reset()}
+                  size="lg"
+                  className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold"
                 >
-                {t('globalError.retry')}
+                  Tentar Novamente / Retry
                 </Button>
                 <Button
                     asChild
                     variant="outline"
                     size="lg"
+                    className="border-slate-800 hover:bg-slate-900 text-slate-300"
                 >
-                    <Link href="/">{t('globalError.goHome')}</Link>
+                    <Link href="/">Página Inicial / Home</Link>
                 </Button>
             </div>
           </div>
