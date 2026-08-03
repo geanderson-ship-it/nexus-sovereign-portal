@@ -14,20 +14,28 @@ const bucketName = 'amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg
 
 const filesToUpload = [
   {
-    localPath: 'public/Nexus Intelligence Édge/Tenente Coronel Ávila.mp4',
+    localPath: 'public/Tenente_Coronel_Avila.mp4',
     s3Key: 'public/Premium/Avila_Egide.mp4'
   },
   {
-    localPath: 'public/Nexus Pactum/Artur - Pactum.mp4',
+    localPath: 'public/Artur_Pactum.mp4',
     s3Key: 'public/Premium/Artur_Pactum.mp4'
   },
   {
-    localPath: 'public/Video Orion Premium/orion Premium.mp4',
+    localPath: 'public/orion_Premium.mp4',
     s3Key: 'public/Premium/Orion.mp4'
   },
   {
-    localPath: 'public/Video Magadot Premium/Magadot_Nexus.mp4',
+    localPath: 'public/Magadot_Nexus.mp4',
     s3Key: 'public/Premium/Magadot_Nexus.mp4'
+  },
+  {
+    localPath: 'public/Magadot_Nexus.mp4',
+    s3Key: 'public/Magadot_Nexus.mp4'
+  },
+  {
+    localPath: 'public/visao_camera.mp4',
+    s3Key: 'public/visao_camera.mp4'
   }
 ];
 
@@ -36,7 +44,7 @@ async function uploadFiles() {
     try {
       const fullPath = path.resolve(file.localPath);
       if (!existsSync(fullPath)) {
-        console.log(`Arquivo não encontrado: ${fullPath}`);
+        console.log(`Arquivo nao encontrado: ${fullPath}`);
         continue;
       }
       
@@ -49,9 +57,9 @@ async function uploadFiles() {
       });
       
       await s3.send(command);
-      console.log(`✅ Upload sucesso: ${file.s3Key}`);
+      console.log(`Upload sucesso: ${file.s3Key}`);
     } catch (err) {
-      console.error(`❌ Erro no upload de ${file.s3Key}:`, err);
+      console.error(`Erro no upload de ${file.s3Key}:`, err);
     }
   }
 }

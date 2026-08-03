@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScanFace, UserX, UserCheck, AlertTriangle, Crosshair } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { getVideoUrl } from '@/lib/video-helper';
 
 // Tipos
 type Tracker = {
@@ -131,7 +132,7 @@ export function BiometricScanner({ isOpen, onClose }: { isOpen: boolean; onClose
         
         <div className="absolute inset-0 z-0">
           <video 
-            src="/visao_camera.mp4" 
+            src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/visao_camera.mp4", "visao_camera.mp4")} 
             className="w-full h-full object-cover"
             autoPlay
             loop

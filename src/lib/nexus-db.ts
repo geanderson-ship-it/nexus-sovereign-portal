@@ -63,37 +63,116 @@ export const tabelaPrecosNexus = [
     id: "NEX-006",
     nome: "Inova Moda 360 (Provador Virtual)",
     categoria: "SaaS Enterprise",
-    precoVenda: 45000.00,
-    mensalidade: 15000.00,
+    precoVenda: 15000.00,
+    mensalidade: 5000.00,
     custoEstimado: 5000.00,
     moeda: "BRL",
     status: "Ativo",
     nicho: "moda",
     descricao: "+40% conversão | -70% devoluções"
   },
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // VITRINE INOVADORA - PACOTES POR VOLUME
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   {
-    id: "NEX-007",
-    nome: "Vitrine Inovadora (Sinalização Digital)",
+    id: "NEX-007-B",
+    nome: "Vitrine Inovadora - Plano Bronze",
     categoria: "SaaS Enterprise",
-    precoVenda: 45000.00,
-    mensalidade: 15000.00,
-    custoEstimado: 5000.00,
+    precoVenda: 5000.00,
+    mensalidade: 1000.00,
+    custoEstimado: 1000.00,
     moeda: "BRL",
     status: "Ativo",
     nicho: "moveis",
-    descricao: "QR Code → WhatsApp vendedor em segundos"
+    descricao: "Bronze (Até 10 lojas) | Setup R$ 5k/loja | Mensal R$ 1k/loja"
   },
   {
-    id: "NEX-008",
-    nome: "Inova Revenda (Vitrine Digital + Simulador)",
+    id: "NEX-007-P",
+    nome: "Vitrine Inovadora - Plano Prata",
     categoria: "SaaS Enterprise",
-    precoVenda: 35000.00,
-    mensalidade: 12000.00,
-    custoEstimado: 4000.00,
+    precoVenda: 4000.00,
+    mensalidade: 800.00,
+    custoEstimado: 900.00,
+    moeda: "BRL",
+    status: "Ativo",
+    nicho: "moveis",
+    descricao: "Prata (11 a 50 lojas) | Setup R$ 4k/loja | Mensal R$ 800/loja"
+  },
+  {
+    id: "NEX-007-O",
+    nome: "Vitrine Inovadora - Plano Ouro",
+    categoria: "SaaS Enterprise",
+    precoVenda: 3250.00,
+    mensalidade: 650.00,
+    custoEstimado: 800.00,
+    moeda: "BRL",
+    status: "Ativo",
+    nicho: "moveis",
+    descricao: "Ouro (51 a 150 lojas) | Setup R$ 3.25k/loja | Mensal R$ 650/loja"
+  },
+  {
+    id: "NEX-007-S",
+    nome: "Vitrine Inovadora - Plano Soberano",
+    categoria: "SaaS Enterprise",
+    precoVenda: 450000.00,
+    mensalidade: 80000.00,
+    custoEstimado: 50000.00,
+    moeda: "BRL",
+    status: "Ativo",
+    nicho: "moveis",
+    descricao: "Soberano (Rede > 150 lojas) | Setup R$ 450k (flat) | Mensal R$ 80k/mês (flat)"
+  },
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // INOVA REVENDA - PACOTES POR VOLUME
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  {
+    id: "NEX-008-B",
+    nome: "Inova Revenda - Plano Bronze",
+    categoria: "SaaS Enterprise",
+    precoVenda: 10000.00,
+    mensalidade: 3000.00,
+    custoEstimado: 3000.00,
     moeda: "BRL",
     status: "Ativo",
     nicho: "veiculo",
-    descricao: "Cliente simula parcela online | Score de crédito em tempo real"
+    descricao: "Bronze (1 Concessionária) | Setup R$ 10k/loja | Mensal R$ 3k/loja"
+  },
+  {
+    id: "NEX-008-P",
+    nome: "Inova Revenda - Plano Prata",
+    categoria: "SaaS Enterprise",
+    precoVenda: 8000.00,
+    mensalidade: 2400.00,
+    custoEstimado: 2500.00,
+    moeda: "BRL",
+    status: "Ativo",
+    nicho: "veiculo",
+    descricao: "Prata (2 a 5 lojas) | Setup R$ 8k/loja | Mensal R$ 2.4k/loja"
+  },
+  {
+    id: "NEX-008-O",
+    nome: "Inova Revenda - Plano Ouro",
+    categoria: "SaaS Enterprise",
+    precoVenda: 6500.00,
+    mensalidade: 1950.00,
+    custoEstimado: 2000.00,
+    moeda: "BRL",
+    status: "Ativo",
+    nicho: "veiculo",
+    descricao: "Ouro (6 a 15 lojas) | Setup R$ 6.5k/loja | Mensal R$ 1.95k/loja"
+  },
+  {
+    id: "NEX-008-S",
+    nome: "Inova Revenda - Plano Soberano",
+    categoria: "SaaS Enterprise",
+    precoVenda: 90000.00,
+    mensalidade: 30000.00,
+    custoEstimado: 25000.00,
+    moeda: "BRL",
+    status: "Ativo",
+    nicho: "veiculo",
+    descricao: "Soberano (Rede > 15 lojas) | Setup R$ 90k (flat) | Mensal R$ 30k/mês (flat)"
   },
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -133,6 +212,34 @@ export const tabelaPrecosNexus = [
     status: "Ativo",
     nicho: "agricultura",
     descricao: "Solução governamental para desenvolvimento rural"
+  },
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // EMBAIXADORA DIGITAL - GOVTECH B2G
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  {
+    id: "NEX-028-B",
+    nome: "Embaixadora Digital - Plano Beta 180 Dias",
+    categoria: "SaaS B2G",
+    precoVenda: 59900.00,
+    mensalidade: 0.00,
+    custoEstimado: 6800.00,
+    moeda: "BRL",
+    status: "Ativo",
+    nicho: "turismo",
+    descricao: "Plano Piloto Homologação 180 dias | Vídeos Pré-gravados + ElevenLabs | Dispensa Licitação"
+  },
+  {
+    id: "NEX-028-L",
+    nome: "Embaixadora Digital - Plano Live Avatar (Fidelidade)",
+    categoria: "SaaS B2G",
+    precoVenda: 30000.00,
+    mensalidade: 10000.00,
+    custoEstimado: 5000.00,
+    moeda: "USD",
+    status: "Ativo",
+    nicho: "turismo",
+    descricao: "Live Avatar HeyGen WebRTC | 3.000 mins inclusos | Co-participação e Patrocínio Privado"
   },
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

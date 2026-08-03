@@ -119,13 +119,41 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-pink-500/10',
     tagText: 'text-pink-400',
     tagBorder: 'border-pink-500/15',
-    startupPrice: 'R$ 45.000',
-    monthlyPrice: 'R$ 15.000/mês'
+    startupPrice: 'R$ 15.000',
+    monthlyPrice: 'R$ 5.000/mês'
+  },
+  {
+    name: 'Vitrine Inovadora (Sinalização Digital)',
+    category: 'premium',
+    description: 'Prateleira Infinita interativa e QR Code Leads para Móveis, Eletrodomésticos e Imóveis.',
+    icon: ShoppingBag,
+    iconColor: 'text-emerald-400',
+    iconBg: 'bg-emerald-500/10 border-emerald-500/20',
+    tag: 'Retail Signage',
+    tagBg: 'bg-emerald-500/10',
+    tagText: 'text-emerald-400',
+    tagBorder: 'border-emerald-500/15',
+    startupPrice: 'R$ 5.000',
+    monthlyPrice: 'R$ 1.000/mês'
+  },
+  {
+    name: 'Inova Revenda (Vitrine + Simulador)',
+    category: 'premium',
+    description: 'Vitrine Digital com Simulador de Financiamento e Análise de Crédito (Score) em Tempo Real para Concessionárias.',
+    icon: Cpu,
+    iconColor: 'text-blue-400',
+    iconBg: 'bg-blue-500/10 border-blue-500/20',
+    tag: 'Auto Intel',
+    tagBg: 'bg-blue-500/10',
+    tagText: 'text-blue-400',
+    tagBorder: 'border-blue-500/15',
+    startupPrice: 'R$ 10.000',
+    monthlyPrice: 'R$ 3.000/mês'
   },
   {
     name: 'Embaixadora Digital (GovTech B2G)',
     category: 'premium',
-    description: 'Servidor Digital Autônomo com Avatar de Vídeo (Live Avatar) para Prefeituras e Turismo.',
+    description: 'Servidor Digital Autônomo com Avatar de Vídeo Interativo (Live Avatar) para Prefeituras e Turismo.',
     icon: Building2,
     iconColor: 'text-rose-400',
     iconBg: 'bg-rose-500/10 border-rose-500/20',
@@ -133,8 +161,8 @@ const priceItems: PriceItem[] = [
     tagBg: 'bg-rose-500/10',
     tagText: 'text-rose-400',
     tagBorder: 'border-rose-500/15',
-    startupPrice: 'R$ 40.000',
-    monthlyPrice: 'R$ 10.000/mês'
+    startupPrice: 'R$ 59.900',
+    monthlyPrice: 'R$ 15.000/mês'
   },
 
   // Empresas (B2B)
@@ -500,6 +528,169 @@ export default function PrecificacaoPage() {
 
           {/* Cards de Justificativa do SLA Condicionais */}
           <div className="mt-12 mb-8">
+            {activeCategory === 'premium' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 mb-12">
+                <h3 className="text-xl font-bold text-white mb-6 font-headline flex items-center gap-2">
+                  <Package className="w-6 h-6 text-emerald-400" />
+                  Planos por Volume: Varejo Físico (Vitrine Inovadora)
+                </h3>
+                <div className="grid md:grid-cols-4 gap-6">
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">🥉 Bronze</CardTitle>
+                      <CardDescription>Até 10 lojas</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 5.000 / loja</p>
+                      <p><strong>Mensal:</strong> R$ 1.000 / loja</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">🥈 Prata</CardTitle>
+                      <CardDescription>11 a 50 lojas</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 4.000 / loja</p>
+                      <p><strong>Mensal:</strong> R$ 800 / loja</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">🥇 Ouro</CardTitle>
+                      <CardDescription>51 a 150 lojas</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 3.250 / loja</p>
+                      <p><strong>Mensal:</strong> R$ 650 / loja</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-emerald-950/80 border-2 hover:border-emerald-500/50 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-emerald-400 text-base">👑 Soberano</CardTitle>
+                      <CardDescription>Acima de 150 lojas (Rede)</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-300">
+                      <p><strong>Setup Total:</strong> R$ 450k (Equiv. R$ 1.800/loja)</p>
+                      <p><strong>Mensal Total:</strong> R$ 80k/mês (Equiv. R$ 320/loja)</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            )}
+
+            {activeCategory === 'premium' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 mb-12 border-t border-slate-800/50 pt-8">
+                <h3 className="text-xl font-bold text-white mb-6 font-headline flex items-center gap-2">
+                  <Cpu className="w-6 h-6 text-blue-400" />
+                  Planos por Volume: Concessionárias (Inova Revenda)
+                </h3>
+                <div className="grid md:grid-cols-4 gap-6">
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">🥉 Bronze</CardTitle>
+                      <CardDescription>1 Concessionária</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 10.000 / loja</p>
+                      <p><strong>Mensal:</strong> R$ 3.000 / loja</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">🥈 Prata</CardTitle>
+                      <CardDescription>2 a 5 Lojas / Filiais</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 8.000 / loja</p>
+                      <p><strong>Mensal:</strong> R$ 2.400 / loja</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">🥇 Ouro</CardTitle>
+                      <CardDescription>6 a 15 Lojas / Filiais</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 6.500 / loja</p>
+                      <p><strong>Mensal:</strong> R$ 1.950 / loja</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-blue-950/80 border-2 hover:border-blue-500/50 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-blue-400 text-base">👑 Soberano</CardTitle>
+                      <CardDescription>Rede Completa (> 15 Lojas)</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-300">
+                      <p><strong>Setup Total:</strong> R$ 90k (Equiv. R$ 4.500/loja)</p>
+                      <p><strong>Mensal Total:</strong> R$ 30k/mês (Equiv. R$ 1.500/loja)</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            )}
+
+            {activeCategory === 'premium' && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 mb-12 border-t border-slate-800/50 pt-8">
+                <h3 className="text-xl font-bold text-white mb-6 font-headline flex items-center gap-2">
+                  <Building2 className="w-6 h-6 text-rose-400" />
+                  Planos por Porte: Setor Público (Embaixadora Digital)
+                </h3>
+                <div className="grid md:grid-cols-4 gap-6">
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">Bronze 🥉</CardTitle>
+                      <CardDescription>Cidades até 50k hab.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 45.000</p>
+                      <p><strong>Mensal:</strong> R$ 6.000 / mês</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">Prata 🥈 (Noronha/Arar.)</CardTitle>
+                      <CardDescription>Cidades 50k a 150k hab.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 59.900 (Dispensa)</p>
+                      <p><strong>Mensal:</strong> R$ 10.000 / mês</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-white text-base">Ouro 🥇</CardTitle>
+                      <CardDescription>Cidades 150k a 500k hab.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-400">
+                      <p><strong>Setup:</strong> R$ 95.000</p>
+                      <p><strong>Mensal:</strong> R$ 18.000 / mês</p>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-slate-900/60 border-rose-950/80 border-2 hover:border-rose-500/50 transition-colors">
+                    <CardHeader>
+                      <CardTitle className="text-rose-400 text-base">Soberano 👑 (Nacional)</CardTitle>
+                      <CardDescription>Capitais / Órgão Nacional</CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-xs space-y-2 text-slate-300">
+                      <p><strong>Setup:</strong> $ 30.000 USD</p>
+                      <p><strong>Mensal:</strong> $ 10.000 USD/mês</p>
+                      <p className="text-[9px] text-slate-500 italic">* 100% Patrocinado por Parceiros</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            )}
+
             {activeCategory === 'premium' && (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <h3 className="text-xl font-bold text-white mb-6 font-headline flex items-center gap-2">
