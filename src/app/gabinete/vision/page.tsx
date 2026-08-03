@@ -1210,7 +1210,7 @@ https://nexustreinamento.com`;
         try { rec.stop(); } catch (e) {}
       }
     };
-  }, [isInterpreterActive, isMuted, isAuthorized, isMediaReady]);
+  }, [isInterpreterActive, isMuted, isAuthorized, isMediaReady, myLanguage]);
 
   // LOGICA QUANDO O GEAN FALA (Envia transcrição local via DataChannel)
   const handleGeanSpeech = async (text: string) => {
@@ -1932,6 +1932,43 @@ https://nexustreinamento.com`;
                 >
                   <Languages className={`w-4 h-4 ${isInterpreterActive ? 'animate-pulse' : ''}`} />
                 </button>
+
+                {/* Seletor de Idioma em Tempo Real */}
+                <div className="relative flex items-center gap-1.5 bg-slate-900 border border-slate-800/80 rounded-full pl-2.5 pr-2 py-1.5 h-9 hover:border-slate-700 transition-colors">
+                  <Globe className="w-3.5 h-3.5 text-slate-400" />
+                  <select 
+                    value={myLanguage.code}
+                    onChange={(e) => {
+                      const lang = LANGUAGES.find(l => l.code === e.target.value);
+                      if (lang) {
+                        setMyLanguage(lang);
+                        logToAtena(`[Idioma] Você alterou seu idioma para ${lang.name} ${lang.flag}`);
+                        
+                        // Sincroniza o novo idioma com os parceiros conectados via DataChannel
+                        for (const [peerId, dc] of dataChannelsRef.current.entries()) {
+                          if (dc.readyState === 'open') {
+                            try {
+                              dc.send(JSON.stringify({
+                                type: 'language-change',
+                                code: lang.code
+                              }));
+                            } catch (err) {
+                              console.error("Erro ao enviar alteração de idioma:", err);
+                            }
+                          }
+                        }
+                      }
+                    }}
+                    className="bg-transparent text-xs font-semibold text-slate-300 focus:outline-none cursor-pointer pr-1"
+                    title="Selecione o seu idioma de fala"
+                  >
+                    {LANGUAGES.map(lang => (
+                      <option key={lang.code} value={lang.code} className="bg-slate-950 text-slate-200">
+                        {lang.flag} {lang.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 <Button 
                   onClick={() => handleLeave(isJoiner ? "/" : "/gabinete")}
