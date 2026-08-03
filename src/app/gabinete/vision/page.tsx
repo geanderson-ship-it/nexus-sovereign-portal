@@ -1330,7 +1330,10 @@ https://nexustreinamento.com`;
       }
     }
     
-    const targetLangObj = currentMyLang;
+    // Se o meu idioma estiver em 'auto' (Detecção Automática), o destino padrão de audição deve ser sempre o Português (pt-BR)
+    const targetLangObj = currentMyLang.code === 'auto'
+      ? (LANGUAGES.find(l => l.code === 'pt') || currentMyLang)
+      : currentMyLang;
     const sourceLangObj = resolvedLang;
 
     const isPt = targetLangObj.code === 'pt';
