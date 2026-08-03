@@ -1444,12 +1444,12 @@ https://nexustreinamento.com`;
     setIsClientSpeaking(true);
     
     // Se estiver em modo Automático, escolhe aleatoriamente um idioma real
-    let activeLang = selectedLanguage;
-    const isAutoMode = selectedLanguage.code === 'auto';
+    let activeLang = peerLanguage;
+    const isAutoMode = peerLanguage.code === 'auto';
     if (isAutoMode) {
       const realLangs = LANGUAGES.slice(1); // pega todos menos o 'auto'
       const randomLang = realLangs[Math.floor(Math.random() * realLangs.length)];
-      setDetectedLanguage(randomLang);
+      setPeerLanguage(randomLang);
       activeLang = randomLang;
     }
     
@@ -2163,11 +2163,11 @@ https://nexustreinamento.com`;
                     <>
                       <span className="text-blue-400">GEANDERSON</span>
                       <span className="text-slate-600">→</span>
-                      <span className="text-slate-400">CLIENTE ({selectedLanguage.name.toUpperCase()})</span>
+                      <span className="text-slate-400">CLIENTE ({peerLanguage.name.toUpperCase()})</span>
                     </>
                   ) : (
                     <>
-                      <span className="text-amber-400">CLIENTE ({selectedLanguage.name.toUpperCase()})</span>
+                      <span className="text-amber-400">CLIENTE ({peerLanguage.name.toUpperCase()})</span>
                       <span className="text-slate-600">→</span>
                       <span className="text-blue-400">VOCÊ (TRADUZIDO EM PORTUGUÊS)</span>
                     </>
