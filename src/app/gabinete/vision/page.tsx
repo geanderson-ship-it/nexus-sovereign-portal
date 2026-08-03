@@ -923,8 +923,10 @@ https://nexustreinamento.com`;
         // Mantém apenas a última presença de cada remetente
         const activePeersMap = new Map<string, { name: string; timestamp: number }>();
         presenceSignals.forEach((s: any) => {
-          const timeDiff = now - new Date(s.timestamp).getTime();
-          if (timeDiff < 60000) {
+          // Usamos uma tolerância de 10 minutos (600.000ms) com valor absoluto para evitar
+          // que descompassos de relógios locais (clock drift) descartem participantes ativos.
+          const timeDiff = Math.abs(now - new Date(s.timestamp).getTime());
+          if (timeDiff < 600000) {
             if (!activePeersMap.has(s.payload.sender) || new Date(s.timestamp).getTime() > activePeersMap.get(s.payload.sender)!.timestamp) {
               activePeersMap.set(s.payload.sender, { name: s.payload.data?.name || 'Convidado', timestamp: new Date(s.timestamp).getTime() });
             }
