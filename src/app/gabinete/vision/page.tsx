@@ -2469,11 +2469,29 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
   useEffect(() => {
     if (videoRef.current && peer.stream) {
       videoRef.current.srcObject = peer.stream;
-      // BUG CORRIGIDO: garante que o áudio remoto não está silenciado
-      videoRef.current.muted = false;
       videoRef.current.volume = 1.0;
-      // Força play (necessário em alguns browsers após assign de srcObject)
-      videoRef.current.play().catch(e => console.warn('RemoteVideo play() falhou:', e));
+      
+      // Tentamos dar play sem som (ou com som dependendo da permissão anterior)
+      videoRef.current.play()
+        .then(() => {
+          // Se deu play com sucesso, garante que o som está ativado
+          if (videoRef.current) videoRef.current.muted = false;
+        })
+        .catch(e => {
+          console.warn('RemoteVideo play() falhou com som, tentando modo silencioso:', e);
+          // Se o autoplay barrou por causa do som, forçamos mutar para que o vídeo pelo menos comece a rodar
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            videoRef.current.play()
+              .then(() => {
+                // Tenta desmutar logo em seguida após o início da reprodução
+                setTimeout(() => {
+                  if (videoRef.current) videoRef.current.muted = false;
+                }, 800);
+              })
+              .catch(err => console.error("Falha crítica ao dar play no vídeo remoto:", err));
+          }
+        });
     }
   }, [peer.stream]);
 
@@ -2482,7 +2500,7 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
       ref={videoRef} 
       autoPlay 
       playsInline 
-      muted={false}
+      muted={true} // Inicia mutado no DOM para passar pelas restrições de autoplay de dispositivos móveis
       className="w-full h-full object-cover"
     />
   );
