@@ -1132,6 +1132,7 @@ https://nexustreinamento.com`;
     if (!isAuthorized || !isMediaReady) return;
 
     let rec: any = null;
+    let noSpeechCount = 0;
 
     if (typeof window !== 'undefined') {
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
@@ -1148,13 +1149,19 @@ https://nexustreinamento.com`;
         };
 
         rec.onerror = (event: any) => {
-          console.error("Speech recognition error:", event.error);
+          // Filtra erros normais de silêncio ou cancelamento para não poluir o console como erro crítico
+          if (event.error !== 'no-speech' && event.error !== 'aborted') {
+            console.error("Speech recognition error:", event.error);
+          } else {
+            console.log("Speech recognition warning/silence:", event.error);
+          }
+
           if (event.error === 'not-allowed') {
             updateMicError("Acesso ao microfone negado. Por favor, clique no cadeado ao lado da URL no navegador e ative a permissão do microfone.");
           } else if (event.error === 'audio-capture') {
             updateMicError("Nenhum microfone detectado. Verifique se o dispositivo está conectado.");
           } else if (event.error === 'no-speech') {
-            // Ignora silêncio temporário
+            noSpeechCount++;
           } else {
             updateMicError(`Erro no microfone: ${event.error}`);
           }
@@ -1164,17 +1171,21 @@ https://nexustreinamento.com`;
           setIsListening(false);
           console.log("Speech recognition ended.");
           
-          // Reinicia após um pequeno delay se o intérprete ainda estiver ativo, sem erro crítico e sem TTS tocando
+          // Se houver muito silêncio consecutivo (mais de 3 vezes), aumentamos o delay para 3 segundos (backoff)
+          // Isso evita que o navegador trave ou gere loops rápidos que consomem muita CPU
+          const backoffDelay = noSpeechCount > 3 ? 3000 : 400;
+          
           setTimeout(() => {
             if (isComponentMountedRef.current && isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
               try { rec.start(); } catch (e) {
                 console.warn("Falha ao reiniciar microfone:", e);
               }
             }
-          }, 400);
+          }, backoffDelay);
         };
 
         rec.onresult = async (event: any) => {
+          noSpeechCount = 0; // Reseta o contador de silêncio no primeiro áudio com sucesso
           const resultIndex = event.resultIndex;
           const transcriptText = event.results[resultIndex][0].transcript;
           if (transcriptText.trim()) {
