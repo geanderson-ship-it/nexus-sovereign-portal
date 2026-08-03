@@ -1548,9 +1548,9 @@ https://nexustreinamento.com`;
         audio.onended = () => {
           isTtsPlayingRef.current = false;
           resolve();
-          // Agenda reinício do reconhecimento se ainda estiver ativo e não mudo
+          // Agenda reinício do reconhecimento se ainda estiver ativo e não mudo (usando refs para evitar fechamento de estado obsoleto)
           setTimeout(() => {
-            if (isInterpreterActive && !isMuted && !micErrorRef.current && !isTtsPlayingRef.current) {
+            if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
               try { recognitionRef.current.start(); } catch (e) {}
             }
           }, 500);
@@ -1607,7 +1607,7 @@ https://nexustreinamento.com`;
     const handleSpeechSynthesisEnded = () => {
       isTtsPlayingRef.current = false;
       setTimeout(() => {
-        if (isInterpreterActive && !isMuted && !micErrorRef.current && !isTtsPlayingRef.current) {
+        if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
           try { recognitionRef.current.start(); } catch (e) {}
         }
       }, 500);
