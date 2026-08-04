@@ -845,7 +845,7 @@ https://nexustreinamento.com`;
 
         pc.createOffer().then(async (offer) => {
           await pc.setLocalDescription(offer);
-          await fetch('/api/vision/signal', {
+          const response = await fetch('/api/vision/signal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -858,7 +858,15 @@ https://nexustreinamento.com`;
               }
             })
           });
-        }).catch(err => console.error("Erro ao criar oferta:", err));
+          if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(`Servidor sinalizador retornou status ${response.status}: ${errText}`);
+          }
+          logToAtena(`[WebRTC] Oferta enviada com sucesso.`);
+        }).catch(err => {
+          console.error("Erro ao criar/enviar oferta:", err);
+          logToAtena(`[Erro] Falha ao criar/enviar oferta: ${err.message}`);
+        });
       } else {
         // Se formos o recebedor, escutamos o canal que o iniciador criará
         pc.ondatachannel = (event) => {
@@ -992,23 +1000,33 @@ https://nexustreinamento.com`;
           if (signal.type === 'webrtc-offer' && !processedSignalsRef.current.has(signal.id)) {
             processedSignalsRef.current.add(signal.id);
             logToAtena(`[WebRTC] Recebeu oferta de sinalização.`);
-            await pc.setRemoteDescription(new RTCSessionDescription(signal.payload.data.offer));
-            const answer = await pc.createAnswer();
-            await pc.setLocalDescription(answer);
-            
-            await fetch('/api/vision/signal', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                roomId,
-                type: 'webrtc-answer',
-                sender: localPeerId,
-                data: {
-                  target: senderId,
-                  answer
-                }
-              })
-            });
+            try {
+              await pc.setRemoteDescription(new RTCSessionDescription(signal.payload.data.offer));
+              const answer = await pc.createAnswer();
+              await pc.setLocalDescription(answer);
+              
+              const response = await fetch('/api/vision/signal', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  roomId,
+                  type: 'webrtc-answer',
+                  sender: localPeerId,
+                  data: {
+                    target: senderId,
+                    answer
+                  }
+                })
+              });
+              if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`Servidor sinalizador retornou status ${response.status}: ${errText}`);
+              }
+              logToAtena(`[WebRTC] Resposta enviada com sucesso.`);
+            } catch (err: any) {
+              console.error("Erro ao responder oferta:", err);
+              logToAtena(`[Erro] Falha ao responder oferta: ${err.message}`);
+            }
 
             // Processa ICE candidatos acumulados na fila para este sender
             const queue = candidateQueuesRef.current.get(senderId) || [];
@@ -1023,7 +1041,12 @@ https://nexustreinamento.com`;
           if (signal.type === 'webrtc-answer' && !processedSignalsRef.current.has(signal.id)) {
             processedSignalsRef.current.add(signal.id);
             logToAtena(`[WebRTC] Conexão respondida.`);
-            await pc.setRemoteDescription(new RTCSessionDescription(signal.payload.data.answer));
+            try {
+              await pc.setRemoteDescription(new RTCSessionDescription(signal.payload.data.answer));
+            } catch (err: any) {
+              console.error("Erro ao aplicar resposta:", err);
+              logToAtena(`[Erro] Falha ao aplicar resposta: ${err.message}`);
+            }
             
             // Processa ICE candidatos acumulados na fila para este sender
             const queue = candidateQueuesRef.current.get(senderId) || [];
