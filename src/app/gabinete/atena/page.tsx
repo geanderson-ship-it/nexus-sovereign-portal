@@ -587,18 +587,16 @@ export default function AtenaTerminalPage() {
         </div>
 
         {/* CONTROLE DE TELA */}
-        <div className="pointer-events-auto">
-          <button 
-            onClick={() => setViewMode(viewMode === 'fullscreen' ? 'split' : 'fullscreen')}
-            className="bg-black/50 backdrop-blur-md border border-indigo-900/50 text-indigo-300 px-4 py-2 rounded-full flex items-center gap-2 text-xs uppercase tracking-widest hover:bg-indigo-900/40 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-          >
-            {viewMode === 'fullscreen' ? (
-              <><MonitorPlay className="w-4 h-4" /> Abrir Terminal</>
-            ) : (
-              <><ChevronLeft className="w-4 h-4" /> Tela Cheia</>
-            )}
-          </button>
-        </div>
+        {viewMode === 'fullscreen' && (
+          <div className="pointer-events-auto">
+            <button 
+              onClick={() => setViewMode('split')}
+              className="bg-black/50 backdrop-blur-md border border-indigo-900/50 text-indigo-300 px-4 py-2 rounded-full flex items-center gap-2 text-xs uppercase tracking-widest hover:bg-indigo-900/40 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)] cursor-pointer"
+            >
+              <MonitorPlay className="w-4 h-4" /> Abrir Terminal
+            </button>
+          </div>
+        )}
       </div>
 
       {/* ÁREA PRINCIPAL (DINÂMICA) */}
@@ -717,6 +715,15 @@ export default function AtenaTerminalPage() {
               >
                 <History className="w-3 h-3" />
                 Histórico
+              </button>
+
+              <button
+                onClick={() => setViewMode('fullscreen')}
+                className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 border border-slate-700 text-slate-300 text-[10px] font-mono uppercase tracking-wider rounded hover:bg-slate-700 transition-all cursor-pointer"
+                title="Fechar Terminal (Tela Cheia)"
+              >
+                <ChevronLeft className="w-3 h-3" />
+                Tela Cheia
               </button>
             </div>
           </div>
