@@ -226,6 +226,7 @@ export default function AtenaTerminalPage() {
       setMessages(session.messages);
       setIsHistoryOpen(false);
       stopAudio();
+      setViewMode('fullscreen'); // Fecha o terminal e volta para a tela cheia do avatar
     }
   };
 
