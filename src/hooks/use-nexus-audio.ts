@@ -72,6 +72,9 @@ function preprocessAudioText(text: string | undefined): string {
     processedText = processedText.replace(/[\u{1F680}-\u{1F6FF}]/gu, '');
     processedText = processedText.replace(/[\u{2600}-\u{26FF}]/gu, '');
     processedText = processedText.replace(/[\u{1F1E0}-\u{1F1FF}]/gu, '');
+    processedText = processedText.replace(/[\u{2B00}-\u{2BFF}]/gu, ''); // Estrelas, setas, formas geométricas (como ⭐)
+    processedText = processedText.replace(/[\u{2300}-\u{23FF}]/gu, ''); // Símbolos técnicos (ampulhetas, relógios)
+    processedText = processedText.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, ''); // Todos os novos Emojis e pictogramas unicode
 
     return processedText.replace(/\s+/g, ' ').trim();
 }
