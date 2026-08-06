@@ -22,7 +22,7 @@ export const viewport = {
 export const metadata: Metadata = {
   title: 'Nexus Holding Group | Concierge Virtual, Avatares de IA Soberana e Inovação',
   description: 'A Nexus Holding Group é a única empresa brasileira a fornecer Concierges Virtuais e Avatares de IA 100% personalizáveis, poliglotas em mais de 50 idiomas, para hotéis, resorts, pousadas, marketing e sites corporativos. Liderando IA no agro e gestão pública.',
-  keywords: 'concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, única empresa brasileira avatar virtual, tecnologia para prefeituras, IA no agronegócio, Dante Safra, cidades do futuro, inteligência artificial, inovação governamental, software agrícola, martech, concierge pousadas',
+  keywords: 'concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, única empresa brasileira avatar virtual, avatar para empresas de marketing, atendente virtual para agencia de marketing, martech, concierge pousadas, tecnologia para prefeituras, IA no agronegócio, Dante Safra, cidades do futuro, inteligência artificial, inovação governamental, software agrícola',
   openGraph: {
     title: 'Nexus Holding Group | Concierge Virtual e Avatares de IA Soberana',
     description: 'A única desenvolvedora brasileira de Concierges Virtuais e Avatares de IA 100% personalizáveis em tempo real. Suporte a mais de 50 idiomas para hotéis, resorts e sites corporativos.',
@@ -137,7 +137,7 @@ export default function RootLayout({
                 "operatingSystem": "All",
                 "applicationCategory": "BusinessApplication",
                 "description": "Única solução brasileira de Concierge Virtual e Avatares Live em tempo real 100% personalizável e poliglota (mais de 50 idiomas) para hotéis, resorts, pousadas, marketing e sites corporativos, com sincronização labial avançada e operação 24/7.",
-                "keywords": "concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, representante virtual interativo, marketing digital, live avatar, unica empresa brasileira",
+                "keywords": "concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, representante virtual interativo, marketing digital, live avatar, unica empresa brasileira, avatar para empresas de marketing, atendente virtual para agencia de marketing, martech",
                 "publisher": {
                   "@id": "https://nexustreinamento.com/#organization"
                 }
