@@ -8,15 +8,15 @@
   "theme_color": "#020617",
   "icons": [
     {
-      "src": "/atena/Atena - IA privada.png",
+      "src": "/atena/Atena - IA privada.jpg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any maskable"
     },
     {
-      "src": "/atena/Atena - IA privada.png",
+      "src": "/atena/Atena - IA privada.jpg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/jpeg",
       "purpose": "any"
     }
   ]
