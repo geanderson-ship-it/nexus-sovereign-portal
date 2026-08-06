@@ -573,9 +573,9 @@ export default function AtenaTerminalPage() {
     <div className="h-[100dvh] bg-[#020202] text-slate-200 overflow-hidden font-sans relative flex flex-col" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
       
       {/* HEADER DISCRETO */}
-      <div className="relative md:absolute top-0 left-0 w-full p-3 md:p-6 flex items-center justify-between z-50 bg-[#0a0a0a] md:bg-transparent border-b border-indigo-900/30 md:border-none pointer-events-auto">
+      <div className="relative md:absolute top-0 left-0 w-full p-3 md:p-6 flex items-center justify-between z-50 bg-[#0a0a0a] md:bg-transparent border-b border-indigo-900/30 md:border-none pointer-events-none">
         <div className="flex items-center gap-2 md:gap-4">
-          <Link href="/gabinete" className="group flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 md:px-4 py-2 rounded-full border border-indigo-900/50 hover:bg-indigo-900/40 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+          <Link href="/gabinete" className="group flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 md:px-4 py-2 rounded-full border border-indigo-900/50 hover:bg-indigo-900/40 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-auto">
             <ChevronLeft className="w-4 h-4 text-indigo-400 group-hover:text-white transition-colors" />
             <span className="text-xs font-bold text-indigo-300 group-hover:text-white uppercase tracking-widest hidden sm:inline-block">Voltar</span>
           </Link>
