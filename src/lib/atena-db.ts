@@ -1,5 +1,5 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocumentClient, PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBDocumentClient, PutCommand, ScanCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
 
 const client = new DynamoDBClient({
   region: process.env.BEDROCK_REGION || process.env.AWS_REGION || process.env.NEXUS_REGION || 'us-east-1',
@@ -49,10 +49,10 @@ export async function saveAtenaMemory(memory: Omit<AtenaMemory, 'id' | 'timestam
     });
 
     await docClient.send(command);
-    return true;
+    return newMemory; // Retorna a memória criada para obter o ID gerado
   } catch (error) {
     console.error(`[Atena DB] Erro ao salvar memória:`, error);
-    return false;
+    return null;
   }
 }
 
@@ -61,8 +61,6 @@ export async function saveAtenaMemory(memory: Omit<AtenaMemory, 'id' | 'timestam
  */
 export async function searchAtenaMemories(userId: string, termoBusca?: string): Promise<AtenaMemory[]> {
   try {
-    // Usamos Scan para buscar no banco. 
-    // Em produção com milhões de dados, usaríamos Query com Global Secondary Index (GSI)
     const command = new ScanCommand({
       TableName: TABLE_NAME,
       FilterExpression: 'userId = :userId',
@@ -74,7 +72,6 @@ export async function searchAtenaMemories(userId: string, termoBusca?: string): 
     const response = await docClient.send(command);
     let memories = (response.Items as AtenaMemory[]) || [];
 
-    // Se a Atena passou um termo de busca, filtramos pelo termo no conteúdo ou categoria
     if (termoBusca && termoBusca.trim() !== '') {
       const termo = termoBusca.toLowerCase();
       memories = memories.filter(m => 
@@ -83,12 +80,28 @@ export async function searchAtenaMemories(userId: string, termoBusca?: string): 
       );
     }
 
-    // Ordenamos das mais recentes para as mais antigas
     memories.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
     return memories;
   } catch (error) {
     console.error(`[Atena DB] Erro ao buscar memórias:`, error);
     return [];
+  }
+}
+
+/**
+ * Exclui uma memória pelo ID
+ */
+export async function deleteAtenaMemory(id: string) {
+  try {
+    const command = new DeleteCommand({
+      TableName: TABLE_NAME,
+      Key: { id },
+    });
+    await docClient.send(command);
+    return true;
+  } catch (error) {
+    console.error(`[Atena DB] Erro ao excluir memória:`, error);
+    return false;
   }
 }

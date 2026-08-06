@@ -8,7 +8,7 @@ import {
   Lock, Mic, MicOff, Video, VideoOff, PhoneOff, Languages, 
   Sparkles, Globe, Shield, Play, VolumeX, Terminal, User, Share2, Clipboard,
   Mail, Send, Check, ExternalLink, Search, Plus, ScreenShare, ScreenShareOff, Info,
-  ChevronLeft, ChevronRight, Eye
+  ChevronLeft, ChevronRight, Eye, X, Trash2
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -274,6 +274,13 @@ export default function VisionSoberanoPage() {
   const [isAnalysisMode, setIsAnalysisMode] = useState(false);
   const processedSignalsRef = useRef<Set<string>>(new Set());
 
+  // Estados para o Atena Vision Summarizer
+  const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false);
+  const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
+  const [generatedSummary, setGeneratedSummary] = useState('');
+  const [savedSummaryId, setSavedSummaryId] = useState<string | null>(null);
+  const [leaveTargetUrl, setLeaveTargetUrl] = useState('');
+
   useEffect(() => {
     setMounted(true);
     if (typeof window !== 'undefined') {
@@ -431,6 +438,136 @@ export default function VisionSoberanoPage() {
     }
 
     setIsScreenSharing(false);
+  };
+
+  const handleGenerateSummary = async () => {
+    setIsGeneratingSummary(true);
+    try {
+      const res = await fetch('/api/vision/summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'generate',
+          transcripts,
+          roomName: roomId
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.summary) {
+        setGeneratedSummary(data.summary);
+      } else {
+        setGeneratedSummary("Não foi possível gerar o resumo. Ocorreu um erro no servidor Bedrock.");
+      }
+    } catch (e) {
+      console.error(e);
+      setGeneratedSummary("Erro ao conectar com a API da Atena.");
+    } finally {
+      setIsGeneratingSummary(false);
+    }
+  };
+
+  const handleSaveSummary = async () => {
+    try {
+      const res = await fetch('/api/vision/summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'save',
+          transcripts,
+          summary: generatedSummary,
+          roomName: roomId
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSavedSummaryId(data.id);
+        alert("✅ Ata de Reunião salva com sucesso na nuvem soberana!");
+      } else {
+        alert("❌ Falha ao salvar ata: " + data.error);
+      }
+    } catch (e) {
+      console.error(e);
+      alert("❌ Erro de rede ao salvar a ata.");
+    }
+  };
+
+  const handleDeleteSummary = async () => {
+    if (!savedSummaryId) return;
+    if (!confirm("Tem certeza que deseja excluir esta ata de reunião da nuvem permanentemente?")) return;
+
+    try {
+      const res = await fetch('/api/vision/summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'delete',
+          id: savedSummaryId
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSavedSummaryId(null);
+        alert("🗑️ Ata de Reunião excluída permanentemente da nuvem.");
+      } else {
+        alert("❌ Falha ao excluir ata: " + data.error);
+      }
+    } catch (e) {
+      console.error(e);
+      alert("❌ Erro de rede ao excluir a ata.");
+    }
+  };
+
+  const handleCloseSummaryAndLeave = () => {
+    setIsSummaryModalOpen(false);
+    router.push(leaveTargetUrl || (isJoiner ? '/' : '/gabinete'));
+  };
+
+  const handleLeave = (targetUrl: string) => {
+    isComponentMountedRef.current = false; // Garante o bloqueio de reinicialização da fala
+
+    if (stream) {
+      stream.getTracks().forEach(track => {
+        try { track.stop(); } catch (e) {}
+      });
+      setStream(null);
+    }
+    if (localStreamRef.current) {
+      localStreamRef.current.getTracks().forEach(track => {
+        try { track.stop(); } catch (e) {}
+      });
+      localStreamRef.current = null;
+    }
+    if (screenStreamRef.current) {
+      screenStreamRef.current.getTracks().forEach(track => {
+        try { track.stop(); } catch (e) {}
+      });
+      screenStreamRef.current = null;
+    }
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch (e) {}
+    }
+    for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
+      try { pc.close(); } catch (e) {}
+    }
+    peerConnectionsRef.current.clear();
+
+    // Se houver transcrição, abre a Ata com a Atena antes de sair!
+    if (transcripts.length > 0) {
+      setLeaveTargetUrl(targetUrl);
+      setIsSummaryModalOpen(true);
+      handleGenerateSummary();
+    } else {
+      if (isJoiner && typeof window !== 'undefined') {
+        try {
+          window.close();
+        } catch (e) {}
+        setTimeout(() => {
+          router.push('/');
+        }, 100);
+        return;
+      }
+      router.push(targetUrl);
+    }
   };
 
   // RECONHECIMENTO DE VOZ (SPEECH RECOGNITION)
@@ -2540,6 +2677,81 @@ https://nexustreinamento.com`;
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* MODAL DE ATA E RESUMO EXECUTIVO DA ATENA */}
+      {isSummaryModalOpen && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+          <div className="bg-[#020617] border border-indigo-900/50 rounded-3xl w-full max-w-3xl max-h-[85vh] flex flex-col overflow-hidden shadow-[0_0_80px_rgba(99,102,241,0.25)] relative animate-fade-in">
+            
+            {/* Header */}
+            <div className="p-6 border-b border-slate-800/80 bg-[#090d16] flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-bold text-indigo-400 uppercase tracking-widest font-mono flex items-center gap-2">
+                  <Languages className="w-5 h-5 animate-pulse text-indigo-400" /> Ata de Reunião da Atena
+                </h3>
+                <p className="text-[10px] text-slate-500 uppercase tracking-wider font-mono mt-1">
+                  Nexus Vision - Compilado via Inteligência Artificial Soberana
+                </p>
+              </div>
+              <button 
+                onClick={handleCloseSummaryAndLeave}
+                className="text-slate-400 hover:text-white transition-colors cursor-pointer"
+                title="Fechar e Sair"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Content Area */}
+            <div className="flex-1 overflow-y-auto p-8 pr-6 space-y-6 scrollbar-thin scrollbar-thumb-slate-800">
+              {isGeneratingSummary ? (
+                <div className="flex flex-col items-center justify-center py-20 gap-4">
+                  <span className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+                  <p className="text-xs text-indigo-300 font-mono tracking-wider animate-pulse">
+                    Atena está estruturando a Ata de Reunião...
+                  </p>
+                </div>
+              ) : (
+                <div className="prose prose-invert max-w-none text-slate-300 text-xs md:text-sm font-sans whitespace-pre-line leading-relaxed">
+                  {generatedSummary}
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="p-6 border-t border-slate-800/85 bg-[#090d16]/50 flex items-center justify-between">
+              <div className="flex gap-2">
+                {!savedSummaryId ? (
+                  <Button
+                    onClick={handleSaveSummary}
+                    disabled={isGeneratingSummary || !generatedSummary}
+                    className="bg-emerald-600 hover:bg-emerald-550 text-white text-xs font-bold px-4 h-9 shadow-lg shadow-emerald-600/10 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Salvar na Nuvem
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleDeleteSummary}
+                    className="bg-red-950/40 hover:bg-red-900/30 border border-red-900/40 text-red-400 text-xs font-bold px-4 h-9 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Excluir da Nuvem
+                  </Button>
+                )}
+              </div>
+
+              <Button
+                onClick={handleCloseSummaryAndLeave}
+                className="bg-indigo-600 hover:bg-indigo-550 text-white text-xs font-bold px-6 h-9 shadow-lg shadow-indigo-600/25 cursor-pointer"
+              >
+                Concluir e Sair
+              </Button>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
