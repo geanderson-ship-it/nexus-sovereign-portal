@@ -12,20 +12,28 @@ export function PWAManifestInjector({ manifestUrl }: { manifestUrl: string }) {
       return;
     }
 
-    // Se existir um diferente, remove
+    let originalHref: string | null = null;
+    let customLink: HTMLLinkElement | null = null;
+
     if (existingManifest) {
-      existingManifest.remove();
+      // Em vez de deletar o elemento gerenciado pelo Next.js, apenas alteramos o href e guardamos o original
+      originalHref = existingManifest.getAttribute('href');
+      existingManifest.setAttribute('href', manifestUrl);
+    } else {
+      // Se não existir, criamos um novo
+      customLink = document.createElement('link');
+      customLink.rel = 'manifest';
+      customLink.href = manifestUrl;
+      document.head.appendChild(customLink);
     }
 
-    // Injeta o novo manifesto secreto
-    const link = document.createElement('link');
-    link.rel = 'manifest';
-    link.href = manifestUrl;
-    document.head.appendChild(link);
-
     return () => {
-      // Quando sair do módulo protegido, remove o manifesto
-      link.remove();
+      // Ao desmontar, restaura o estado original sem alterar a estrutura do DOM do Next.js
+      if (existingManifest && originalHref) {
+        existingManifest.setAttribute('href', originalHref);
+      } else if (customLink) {
+        customLink.remove();
+      }
     };
   }, [manifestUrl]);
 

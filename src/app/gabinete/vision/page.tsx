@@ -7,7 +7,8 @@ import { useRouter } from 'next/navigation';
 import { 
   Lock, Mic, MicOff, Video, VideoOff, PhoneOff, Languages, 
   Sparkles, Globe, Shield, Play, VolumeX, Terminal, User, Share2, Clipboard,
-  Mail, Send, Check, ExternalLink, Search, Plus, ScreenShare, ScreenShareOff, Info
+  Mail, Send, Check, ExternalLink, Search, Plus, ScreenShare, ScreenShareOff, Info,
+  ChevronLeft, ChevronRight, Eye
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -269,6 +270,8 @@ export default function VisionSoberanoPage() {
   const [remotePeerName, setRemotePeerName] = useState('Aguardando...');
   const [isJoiner, setIsJoiner] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState('Inicializando...');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isAnalysisMode, setIsAnalysisMode] = useState(false);
   const processedSignalsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
@@ -519,6 +522,17 @@ export default function VisionSoberanoPage() {
       try { pc.close(); } catch (e) {}
     }
     peerConnectionsRef.current.clear();
+
+    if (isJoiner && typeof window !== 'undefined') {
+      try {
+        window.close();
+      } catch (e) {}
+      setTimeout(() => {
+        router.push('/');
+      }, 100);
+      return;
+    }
+
     router.push(targetUrl);
   };
 
@@ -1566,6 +1580,12 @@ https://nexustreinamento.com`;
   const playTTS = async (text: string, locale: string) => {
     if (typeof window === 'undefined') return;
     
+    // Remove emojis, símbolos e dingbats para evitar que o motor de síntese de voz (TTS) os leia em voz alta
+    const cleanText = text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2700}-\u{27BF}]|[\u{2600}-\u{26FF}]|[\u{2B00}-\u{2BFF}]/gu, '').trim();
+    
+    // Se sobrar apenas string vazia pós limpeza, cancela para evitar chamada sem conteúdo
+    if (!cleanText) return;
+    
     // Função auxiliar para tocar stream de áudio com bloqueio de reconhecimento
     const playAudioStream = (audioUrl: string) => {
       return new Promise<void>((resolve, reject) => {
@@ -1607,7 +1627,7 @@ https://nexustreinamento.com`;
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: text.trim(),
+          text: cleanText,
           gender: 'male',
           locale
         })
@@ -1627,7 +1647,7 @@ https://nexustreinamento.com`;
 
     // FALLBACK: Sintetizador nativo do navegador
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
+    const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = locale;
     
     utterance.onstart = () => {
@@ -1870,18 +1890,14 @@ https://nexustreinamento.com`;
         {/* LEFT COLUMN: MEET VIDEO GRID & SUBTITLES */}
         <div className="flex-1 flex flex-col justify-between gap-6 min-h-0">
           
-          {/* VIDEO GRID */}
-          <div className={`flex-1 grid gap-6 min-h-0 items-stretch ${
-            remotePeers.length === 0
-              ? 'md:grid-cols-2 grid-cols-1'
-              : (remotePeers.length + 1 === 1 
-                  ? 'grid-cols-1' 
-                  : (remotePeers.length + 1 === 2 
-                      ? 'md:grid-cols-2 grid-cols-1' 
-                      : (remotePeers.length + 1 <= 4 
-                          ? 'md:grid-cols-2 grid-cols-1' 
-                          : 'md:grid-cols-3 grid-cols-2'
-                        )
+          <div className={`flex-1 grid gap-6 min-h-0 items-stretch transition-all duration-500 ${
+            (remotePeers.length === 0 || remotePeers.length + 1 === 2)
+              ? (isAnalysisMode ? 'md:grid-cols-[1fr_2.8fr] grid-cols-1' : 'md:grid-cols-2 grid-cols-1')
+              : (remotePeers.length + 1 === 3
+                  ? 'md:grid-cols-3 grid-cols-1'
+                  : (remotePeers.length + 1 === 4
+                      ? 'md:grid-cols-2 grid-cols-1'
+                      : 'md:grid-cols-3 grid-cols-2'
                     )
                 )
           }`}>
@@ -2001,6 +2017,23 @@ https://nexustreinamento.com`;
                   </select>
                 </div>
 
+                {!isJoiner && (
+                  <button 
+                    onClick={() => {
+                      setIsAnalysisMode(!isAnalysisMode);
+                      logToAtena(`[Modo Analítico] Modo Foco no Cliente ${!isAnalysisMode ? 'Ativado 🔍' : 'Desativado 🛡️'}`);
+                    }}
+                    className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 ${
+                      isAnalysisMode 
+                        ? 'bg-amber-500 border-amber-400 text-slate-950 shadow-[0_0_15px_rgba(245,158,11,0.4)]' 
+                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:bg-slate-850 hover:text-slate-200'
+                    }`}
+                    title={isAnalysisMode ? "Restaurar Visualização Padrão" : "Ativar Foco Analítico (Expandir Cliente)"}
+                  >
+                    <Eye className="w-4 h-4" />
+                  </button>
+                )}
+
                 <Button 
                   onClick={() => handleLeave(isJoiner ? "/" : "/gabinete")}
                   variant="destructive"
@@ -2036,31 +2069,29 @@ https://nexustreinamento.com`;
                       </div>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center gap-5">
-                      {/* Client Avatar with dynamic ring */}
-                      <div className={`relative w-24 h-24 rounded-full overflow-hidden border-4 flex-shrink-0 transition-all duration-500 ${isClientSpeaking ? 'border-amber-500 shadow-[0_0_35px_rgba(245,158,11,0.4)] scale-105' : 'border-slate-800 bg-slate-900'}`}>
-                        {isClientSpeaking ? (
-                          <div className="absolute inset-0 bg-amber-500/10 flex items-center justify-center">
-                            <Globe className="w-10 h-10 text-amber-500 animate-spin" style={{ animationDuration: '8s' }} />
-                          </div>
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-slate-400 bg-slate-900">
-                            <Image 
-                              src="/Vendedora Nexus/Isadora Nexus.png" 
-                              alt="Cliente" 
-                              fill 
-                              className="object-cover opacity-60 grayscale"
-                            />
-                          </div>
-                        )}
+                    <div className="flex flex-col items-center justify-center gap-5 p-4 text-center w-full max-w-sm mx-auto">
+                      {/* Logo of Nexus Holding Group (Horizontal banner format) */}
+                      <div className={`relative w-64 h-20 rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 flex-shrink-0 transition-all duration-500 shadow-2xl mx-auto ${isClientSpeaking ? 'border-amber-500 shadow-[0_0_35px_rgba(245,158,11,0.4)] scale-105' : ''}`}>
+                        <Image 
+                          src="/nexus-holding-group-logo.jpg" 
+                          alt="Nexus Holding Group Logo" 
+                          fill 
+                          className="object-contain p-1.5"
+                        />
                       </div>
                       
-                      <div className="text-center">
-                        <p className="text-xs font-semibold text-white flex items-center gap-1.5 justify-center">
-                          <span>Carlos Ortega (Madrid)</span>
+                      <div className="space-y-2">
+                        <p className="text-sm font-semibold text-white flex items-center gap-1.5 justify-center">
+                          <span>Visitante</span>
                           <span className="text-xs">{peerLanguage.flag}</span>
                         </p>
-                        <p className="text-[10px] text-slate-500">Cliente Simulador</p>
+                        <p className="text-[10px] text-indigo-400 font-mono tracking-wider uppercase font-bold">Conexão Segura</p>
+                        
+                        <div className="pt-3 border-t border-slate-800/40 max-w-[240px] mx-auto">
+                          <p className="text-[11px] md:text-xs text-slate-300 leading-relaxed font-sans font-normal tracking-wide">
+                            Nexus Vision — Tradução poliglota em tempo real, segurança absoluta e videoconferência soberana corporativa.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -2068,7 +2099,7 @@ https://nexustreinamento.com`;
                   {/* Dynamic Name Overlay label */}
                   <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
                     <Globe className="w-3 h-3 text-amber-400" />
-                    <span>{isRemoteConnected ? remotePeerName : `Cliente (${peerLanguage.name})`}</span>
+                    <span>{isRemoteConnected ? remotePeerName : `Visitante (${peerLanguage.name})`}</span>
                   </div>
 
                   {isClientSpeaking && !isRemoteConnected && (
@@ -2126,13 +2157,26 @@ https://nexustreinamento.com`;
                   {peer.stream ? (
                     <RemoteVideo peer={peer} />
                   ) : (
-                    <div className="flex flex-col items-center gap-5">
-                      <div className="relative w-24 h-24 rounded-full overflow-hidden border border-slate-800 bg-slate-900 flex-shrink-0 flex items-center justify-center">
-                        <User className="w-10 h-10 text-indigo-400" />
+                    <div className="flex flex-col items-center justify-center gap-5 p-4 text-center w-full max-w-sm mx-auto">
+                      {/* Logo of Nexus Holding Group (Horizontal banner format) */}
+                      <div className="relative w-64 h-20 rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 flex-shrink-0 shadow-2xl mx-auto">
+                        <Image 
+                          src="/nexus-holding-group-logo.jpg" 
+                          alt="Nexus Holding Group Logo" 
+                          fill 
+                          className="object-contain p-1.5"
+                        />
                       </div>
-                      <div className="text-center">
+                      
+                      <div className="space-y-2">
                         <p className="text-sm font-semibold text-white">{peer.name}</p>
-                        <p className="text-xs text-slate-500">Sem Sinal de Vídeo</p>
+                        <p className="text-[10px] text-indigo-400 font-mono tracking-wider uppercase font-bold">Conexão Segura</p>
+                        
+                        <div className="pt-3 border-t border-slate-800/40 max-w-[240px] mx-auto">
+                          <p className="text-[11px] md:text-xs text-slate-300 leading-relaxed font-sans font-normal tracking-wide">
+                            Nexus Vision — Tradução poliglota em tempo real, segurança absoluta e videoconferência soberana corporativa.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -2239,77 +2283,96 @@ https://nexustreinamento.com`;
         </div>
 
         {/* RIGHT COLUMN: TRANSCRIPT LOG & ATENA INSIGHTS PANEL */}
-        <aside className="w-full lg:w-96 rounded-3xl border border-slate-800/80 bg-slate-950/40 backdrop-blur-xl flex flex-col justify-between overflow-hidden shadow-2xl max-h-full">
-          
-          <div className="border-b border-slate-800/80 p-4 bg-slate-950/80 flex items-center justify-between">
-            <span className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2">
-              <Terminal className="w-4 h-4 text-amber-500" />
-              Monitor de Transmissão
-            </span>
-            <div className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-              Seguro
-            </div>
-          </div>
-
-          {/* TRANSCRIPT PANEL */}
-          <div className="flex-1 p-4 overflow-y-auto space-y-4 max-h-[250px] lg:max-h-[350px]">
-            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Histórico de Traduções</p>
+        {isSidebarOpen ? (
+          <aside className="relative w-full lg:w-96 rounded-3xl border border-slate-800/80 bg-slate-950/40 backdrop-blur-xl flex flex-col justify-between overflow-hidden shadow-2xl max-h-full transition-all duration-300">
+            {/* Toggle Arrow (Open -> Collapse) */}
+            <button 
+              onClick={() => setIsSidebarOpen(false)}
+              className="absolute top-1/2 -left-3 -translate-y-1/2 z-30 w-6 h-12 rounded-l-xl border-y border-l border-slate-800 bg-slate-950/90 text-slate-400 hover:text-white flex items-center justify-center transition-all hover:bg-slate-900 group shadow-md"
+              title="Ocultar Painel"
+            >
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </button>
             
-            {transcripts.length === 0 ? (
-              <div className="h-32 flex flex-col items-center justify-center text-center text-slate-600 text-xs italic">
-                <span>Nenhuma interação registrada ainda.</span>
+            <div className="border-b border-slate-800/80 p-4 bg-slate-950/80 flex items-center justify-between">
+              <span className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-amber-500" />
+                Monitor de Transmissão
+              </span>
+              <div className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+                Seguro
               </div>
-            ) : (
-              transcripts.map((t) => (
-                <div key={t.id} className={`flex flex-col gap-1.5 ${t.sender === 'gean' ? 'items-end' : 'items-start'}`}>
-                  <div className={`flex items-center gap-1.5 text-[10px] font-bold ${t.sender === 'gean' ? 'text-blue-400' : 'text-amber-400'}`}>
-                    <span>{t.sender === 'gean' ? `Você (${myLanguage.flag})` : `Parceiro (${peerLanguage.flag})`}</span>
-                    <span className="text-slate-600 font-normal">{t.timestamp}</span>
-                  </div>
-                  
-                  <div className={`max-w-[85%] rounded-2xl p-3 text-xs leading-relaxed ${t.sender === 'gean' ? 'bg-blue-600/10 border border-blue-500/20 text-blue-100 rounded-tr-none' : 'bg-amber-600/10 border border-amber-500/20 text-amber-100 rounded-tl-none'}`}>
-                    <p className="text-slate-400 italic mb-1">"{t.originalText}"</p>
-                    <div className="border-t border-slate-800/80 pt-1 mt-1 font-semibold flex items-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5 shrink-0 text-amber-400" />
-                      <span>{t.translatedText}</span>
+            </div>
+
+            {/* TRANSCRIPT PANEL */}
+            <div className="flex-1 p-4 overflow-y-auto space-y-4 max-h-[250px] lg:max-h-[350px]">
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Histórico de Traduções</p>
+              
+              {transcripts.length === 0 ? (
+                <div className="h-32 flex flex-col items-center justify-center text-center text-slate-600 text-xs italic">
+                  <span>Nenhuma interação registrada ainda.</span>
+                </div>
+              ) : (
+                transcripts.map((t) => (
+                  <div key={t.id} className={`flex flex-col gap-1.5 ${t.sender === 'gean' ? 'items-end' : 'items-start'}`}>
+                    <div className={`flex items-center gap-1.5 text-[10px] font-bold ${t.sender === 'gean' ? 'text-blue-400' : 'text-amber-400'}`}>
+                      <span>{t.sender === 'gean' ? `Você (${myLanguage.flag})` : `Parceiro (${peerLanguage.flag})`}</span>
+                      <span className="text-slate-600 font-normal">{t.timestamp}</span>
+                    </div>
+                    
+                    <div className={`max-w-[85%] rounded-2xl p-3 text-xs leading-relaxed ${t.sender === 'gean' ? 'bg-blue-600/10 border border-blue-500/20 text-blue-100 rounded-tr-none' : 'bg-amber-600/10 border border-amber-500/20 text-amber-100 rounded-tl-none'}`}>
+                      <p className="text-slate-400 italic mb-1">"{t.originalText}"</p>
+                      <div className="border-t border-slate-800/80 pt-1 mt-1 font-semibold flex items-center gap-1">
+                        <Sparkles className="w-3.5 h-3.5 shrink-0 text-amber-400" />
+                        <span>{t.translatedText}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            )}
-          </div>
+                ))
+              )}
+            </div>
 
-          {/* ATENA REAL-TIME BUSINESS INSIGHTS */}
-          <div className="border-t border-slate-800/80 p-4 bg-slate-950/60 flex-shrink-0">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-indigo-400 animate-pulse" />
-                Inteligência Atena Activa
+            {/* ATENA REAL-TIME BUSINESS INSIGHTS */}
+            <div className="border-t border-slate-800/80 p-4 bg-slate-950/60 flex-shrink-0">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-indigo-400 animate-pulse" />
+                  Inteligência Atena Activa
+                </span>
+                <span className="text-[9px] font-bold text-slate-500 font-mono">V4.5</span>
+              </div>
+              
+              <div className="bg-slate-900/60 border border-indigo-500/10 rounded-2xl p-3 space-y-2 shadow-inner">
+                {atenaInsights.map((insight, idx) => (
+                  <div key={idx} className="flex gap-2 text-[11px] leading-relaxed text-slate-300">
+                    <span className="text-indigo-400 shrink-0 mt-0.5">•</span>
+                    <span>{insight}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* FOOTER SYSTEM STATE */}
+            <div className="bg-slate-950/90 border-t border-slate-800/80 p-3 text-[9px] font-mono text-slate-500 flex items-center justify-between">
+              <span className="flex items-center gap-1 uppercase">
+                <Shield className="w-3 h-3 text-emerald-500" />
+                AWS Bedrock Security
               </span>
-              <span className="text-[9px] font-bold text-slate-500 font-mono">V4.5</span>
+              <span className="uppercase">Vazamento Áudio: 0%</span>
             </div>
-            
-            <div className="bg-slate-900/60 border border-indigo-500/10 rounded-2xl p-3 space-y-2 shadow-inner">
-              {atenaInsights.map((insight, idx) => (
-                <div key={idx} className="flex gap-2 text-[11px] leading-relaxed text-slate-300">
-                  <span className="text-indigo-400 shrink-0 mt-0.5">•</span>
-                  <span>{insight}</span>
-                </div>
-              ))}
-            </div>
-          </div>
 
-          {/* FOOTER SYSTEM STATE */}
-          <div className="bg-slate-950/90 border-t border-slate-800/80 p-3 text-[9px] font-mono text-slate-500 flex items-center justify-between">
-            <span className="flex items-center gap-1 uppercase">
-              <Shield className="w-3 h-3 text-emerald-500" />
-              AWS Bedrock Security
-            </span>
-            <span className="uppercase">Vazamento Áudio: 0%</span>
-          </div>
-
-        </aside>
+          </aside>
+        ) : (
+          /* FLOATING TRIGGER BUTTON TO EXPAND SIDEBAR */
+          <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="fixed right-0 top-1/2 -translate-y-1/2 z-40 w-8 h-16 rounded-l-2xl border-y border-l border-slate-800 bg-slate-950/90 text-slate-400 hover:text-white flex items-center justify-center transition-all hover:bg-slate-900 group shadow-2xl shadow-indigo-500/10 animate-fade-in"
+            title="Exibir Painel de Transmissão"
+          >
+            <ChevronLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform text-indigo-400 animate-pulse" />
+          </button>
+        )}
 
       </main>
 

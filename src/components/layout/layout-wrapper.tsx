@@ -22,6 +22,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
                        pathname?.startsWith('/djeny-design') ||
                        pathname?.startsWith('/atena') ||
                        pathname?.startsWith('/gabinete/atena') ||
+                       pathname?.startsWith('/gabinete/vision') ||
                        pathname?.startsWith('/afubra') ||
                        pathname?.startsWith('/demo') ||
                        pathname?.includes('-live') ||

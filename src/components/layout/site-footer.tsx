@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 export function SiteFooter() {
   const { t } = useLocale();
   const pathname = usePathname() || '';
-  const isExcluded = pathname.includes('/about') || pathname.includes('/proposito') || pathname.includes('/exclusive/egide');
+  const isExcluded = pathname.includes('/about') || pathname.includes('/proposito');
 
   return (
     <footer className="border-t border-border/40 py-6 md:py-8 relative z-50 mt-12 space-y-12">

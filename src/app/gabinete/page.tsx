@@ -111,7 +111,7 @@ export default function GabineteHubPage() {
                                     Abrir Tradutor Soberano
                                 </Button>
                             </Link>
-                            <Link href="/gabinete/vision">
+                            <Link href="/gabinete/vision" target="_blank" rel="noopener noreferrer">
                                 <Button className="bg-indigo-600 hover:bg-indigo-550 border border-indigo-500/30 text-white font-bold shadow-lg shadow-indigo-500/10 flex items-center gap-2 transition-transform duration-300 hover:scale-105">
                                     <Video className="w-4 h-4 text-indigo-400" />
                                     Iniciar Nexus Vision
@@ -251,7 +251,7 @@ export default function GabineteHubPage() {
               </Link>
             </li>
             <li>
-              <Link href="/gabinete/vision" className="flex items-center gap-3 text-slate-300 hover:text-indigo-400 transition-colors group">
+              <Link href="/gabinete/vision" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-slate-300 hover:text-indigo-400 transition-colors group">
                 <Video className="w-4 h-4 text-slate-600 group-hover:text-indigo-400" /> 
                 <span className="font-mono text-sm tracking-wide uppercase font-bold text-indigo-400/90">Nexus Vision Soberano</span>
               </Link>

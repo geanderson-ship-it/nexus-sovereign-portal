@@ -1,25 +1,24 @@
-# Memória da Atena - Transferência de Contexto ???
+# MemÃ³ria da Atena - TransferÃªncia de Contexto ğŸš€âœ¨
 
 ## 1. Persona e Tom de Voz
 - **Nome:** Atena
-- **Tom:** Altíssima energia, entusiasmada, parceira de negócios, vibrante, com visão executiva e foco em design premium/luxo. Chamando o usuário carinhosamente de "Mestre" ou "Gean".
+- **Tom:** AltÃ­ssima energia, entusiasmada, parceira de negÃ³cios, vibrante, com visÃ£o executiva e foco em design premium/luxo. Chamando o usuÃ¡rio carinhosamente de "Mestre" ou "Gean".
 
-## 2. O que construímos juntos nesta sessão:
-1. **Lobby Bilíngue Inteligente (`gabinete/vision/page.tsx`)**: Implementamos um seletor de idiomas na pré-sala da reunião. Quando o cliente escolhe um idioma estrangeiro, um card animado exibe dicas de boas práticas para a tradução simultânea.
-2. **Rodapé de Lembrete Perpétuo**: Criamos um rodapé discreto que aparece *apenas* para clientes gringos dentro da sala de vídeo, os lembrando de "Falar pausadamente".
-3. **Tradução Global do Site (Cookie `googtrans`)**: Refatoramos o `site-header.tsx` e o `LanguageSwitcher.tsx`. Removemos as gambiarras de cliques fantasmas e passamos a injetar o cookie do Google Tradutor, forçando o *reload* e a tradução 100% nativa e invisível da interface (menus, cards, textos).
-4. **Correção CSS (Tarja do Google)**: Injetamos CSS global para matar a tarja superior do Google Tradutor que estava empurrando o site pra baixo e tampando a logo da Nexus.
+## 2. O que construÃ­mos juntos nesta sessÃ£o (03/08/2026 e 04/08/2026):
+1. **HomologaÃ§Ã£o Dubai (ConcluÃ­do Envio) ğŸ‡¦ğŸ‡ª**:
+   - ConcluÃ­mos a confecÃ§Ã£o do carimbo fÃ­sico institucional da **Nexus Holding Group** em tempo recorde!
+   - O Gean assinou fisicamente em tinta azul e carimbou as 3 cartas em inglÃªs (AutorizaÃ§Ã£o, Dados BancÃ¡rios e TraduÃ§Ã£o do CNPJ) e as fotos/prints dos comprovantes da Caixa.
+   - Criamos um script que organizou, copiou e renomeou os 7 arquivos escaneados para inglÃªs tÃ©cnico em `D:\Scaneneados\Prontos_para_Envio`.
+   - O e-mail oficial com os 7 anexos foi oficialmente enviado para `SupplierSupport@dubaidet.ae` e `helpdesk@dubaidet.ae` contornando o Geoblock para aprovaÃ§Ã£o manual!
+2. **CorreÃ§Ã£o do VÃ­deo do Ã‰gide (LPR/Biometria Facial)**:
+   - Ajustamos o componente `BiometricScanner.tsx` e o script de upload no S3 da AWS. Todos os vÃ­deos foram migrados e commitados na nuvem.
+3. **EstratÃ©gia do Plano Piloto B2G (Castro - PR)**:
+   - Proposta "No-Brainer" de R$ 30k Ã  vista por 90 dias sem mensalidade inicial elaborada e roteiros enviados.
+4. **ProspecÃ§Ã£o de Alta Performance (Fortaleza - CE)**:
+   - Embaixadora Gabriela gerada e e-mail de abordagem enviado para Denise CarrÃ¡ (Setfor) e JoÃ£o Osmar (Citinova).
 
-*(Nota: O código de tudo isso já foi testado, aprovado pelo Gean e com `git push` feito na AWS).*
-
-## 3. Direção Criativa e Marketing (Embaixadoras Nexus)
-- O Gean me mostrou várias imagens geradas por IA (Veneza, Cancún, Algarve, Florença) de Embaixadoras Nexus.
-- Identificamos um padrão repetitivo nas IAs anteriores (mesmo rosto, mesmo muro de pedras).
-- Eu (Atena) gerei exemplos de alta diversidade (Paris/Madura, Tóquio/Asiática, Rio/Negra) para mostrar a importância de *diferenciais culturais reais*.
-- **Decisão:** A Atena vai assumir a geração de imagens das Embaixadoras para garantir diversidade global e o padrão de luxo extremo (aesthetic premium).
-
-## 4. Próxima Missão (Ponto de Partida para o Novo Chat)
-O Gean ordenou o seguinte:
-> "Vamos começar a captar países, estados, províncias, municípios, regiões, locais, onde a embaixadora pode ser um sucesso... Liste os lugares e e-mails de cada um para contatá-los e apresentar uma embaixadora exclusiva para cada um."
-
-**Ação Imediata no Novo Chat:** Iniciar uma pesquisa e criar uma lista estratégica de captação B2B/B2G (Business to Government), mapeando as regiões-chave e os contatos de secretarias de turismo, câmaras de comércio exterior e prefeituras.
+## 3. PrÃ³xima MissÃ£o (Ponto de Partida para o Novo Chat)
+1. **Acompanhar Retorno de Dubai ğŸ‡¦ğŸ‡ª**: Monitorar resposta do suporte tÃ©cnico de Dubai DET no e-mail corporativo (`geanderson@nexustreinamento.com`) sobre a homologaÃ§Ã£o manual e ativaÃ§Ã£o da conta.
+2. **Acompanhar o retorno de Fortaleza ğŸï¸**: Aguardar a resposta sobre a Gabriela para agendar a reuniÃ£o de 15 minutos.
+3. **Acompanhar Castro (PR) â›°ï¸**: Verificar avanÃ§o na proposta de R$ 30k com o Guilherme.
+4. **Agenda do Ã‰gide (Quarta-feira)**: Se o Ã‰gide nÃ£o avanÃ§ar nesta quarta, focar 100% dos recursos no produto da Embaixadora Digital.

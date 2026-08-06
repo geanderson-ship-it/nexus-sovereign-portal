@@ -200,34 +200,6 @@ export default function ProspectorHubPage() {
             </Card>
           </Link>
 
-          {/* Égide Segurança */}
-          <Link href="/gabinete/egide">
-            <Card className="bg-slate-900/40 border-slate-800 hover:border-rose-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-3xl group-hover:bg-rose-500/10 transition-colors" />
-              <div className="absolute top-4 right-4 flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
-                </span>
-                <span className="text-[8px] font-mono text-rose-500 tracking-widest uppercase">Live</span>
-              </div>
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-rose-500/20">
-                  <Activity className="w-6 h-6 text-rose-400" />
-                </div>
-                <CardTitle className="text-xl text-white group-hover:text-rose-400 transition-colors font-headline">Cerco Égide</CardTitle>
-                <CardDescription>Segurança & Biometria Cidadã</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-400">
-                  Painel de monitoramento inteligente (LPR), alertas do Dante's Safe e métricas de criminalidade em tempo real.
-                </p>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-rose-500">
-                  Acessar Câmeras <Activity className="w-3 h-3" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
 
         </div>
       </div>

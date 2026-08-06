@@ -80,87 +80,18 @@ export default function ExclusiveHub() {
         </section>
 
         {/* HUB DE PRODUTOS - BANHO DE OURO */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mt-24">
+        <section className="flex flex-col gap-8 w-full max-w-5xl mt-24">
           
-          {/* ÉGIDE */}
-          <Link href="/exclusive/egide" className="group">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-              className="relative rounded-3xl border border-amber-500/20 bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden transition-all h-full flex flex-col hover:shadow-[0_0_40px_rgba(245,158,11,0.15)] hover:border-amber-500/50"
-            >
-              {/* CABEÇALHO DO CARD (TÍTULO) */}
-              <div className="px-8 pt-8 pb-5">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">Segurança Pública</span>
-                  <div className="flex gap-2">
-                    <span className="px-2 py-1 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-[8px] font-black uppercase tracking-widest">Nível Crítico</span>
-                    <span className="px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[8px] font-black uppercase tracking-widest">Acesso Restrito</span>
-                  </div>
-                </div>
-                
-                <h2 className="text-3xl font-black uppercase tracking-tight mt-2 flex items-center gap-3">
-                  Nexus Égide
-                  <ShieldAlert className="h-6 w-6 text-amber-500 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all" />
-                </h2>
-              </div>
-
-              {/* MEIO: VÍDEO */}
-              <div 
-                className="relative w-full aspect-video border-y border-amber-500/20 overflow-hidden bg-black/50"
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-              >
-                <CustomVideoPlayer 
-                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Avila_Egide.mp4", "Tenente_Coronel_Avila.mp4")}
-                  autoPlay muted loop playsInline
-                  containerClassName="w-full h-full"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80 pointer-events-none" />
-              </div>
-              
-              {/* RODAPÉ: CONTEÚDO E BOTÃO */}
-              <div className="p-8 pt-6 flex flex-col flex-1 relative z-10 transition-transform duration-500 group-hover:-translate-y-2 bg-[#050505]/50">
-                <div className="text-zinc-300 font-light text-sm space-y-3 mb-8">
-                  <p>Sistema de monitoramento e cerco tático hiperinteligente. Integração absoluta com forças de segurança para blindar o perímetro de municípios e corporações privadas.</p>
-                  <ul className="space-y-1.5 pt-2 border-t border-white/5">
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> LPR de ultravelocidade (leitura em milissegundos)</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Rastreio preditivo de rotas de fuga e anomalias</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Despacho tático via WebSocket integrado ao CCO</li>
-                  </ul>
-                </div>
-                
-                <div className="mt-auto pt-4 border-t border-white/10 flex items-center text-amber-400 font-bold uppercase text-xs tracking-widest group-hover:translate-x-2 transition-transform">
-                  Acessar Central de Comando <span className="ml-2">→</span>
-                </div>
-              </div>
-            </motion.div>
-          </Link>
 
           {/* PACTUM */}
-          <Link href="/exclusive/pactum" className="group">
+          <Link href="/exclusive/pactum" className="group w-full">
             <motion.div 
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-              className="relative rounded-3xl border border-amber-500/20 bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden transition-all h-full flex flex-col hover:shadow-[0_0_40px_rgba(245,158,11,0.15)] hover:border-amber-500/50"
+              className="relative rounded-3xl border border-amber-500/20 bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden transition-all flex flex-col md:flex-row hover:shadow-[0_0_40px_rgba(245,158,11,0.15)] hover:border-amber-500/50"
             >
-              {/* CABEÇALHO DO CARD (TÍTULO) */}
-              <div className="px-8 pt-8 pb-5">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">Departamento Jurídico</span>
-                  <div className="flex gap-2">
-                    <span className="px-2 py-1 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[8px] font-black uppercase tracking-widest">Confidencial</span>
-                    <span className="px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[8px] font-black uppercase tracking-widest">Criptografia Ativa</span>
-                  </div>
-                </div>
-                
-                <h2 className="text-3xl font-black uppercase tracking-tight mt-2 flex items-center gap-3">
-                  Nexus Pactum
-                  <FileSearch className="h-6 w-6 text-amber-500 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all" />
-                </h2>
-              </div>
-
-              {/* MEIO: VÍDEO */}
+              {/* ESQUERDA: VÍDEO */}
               <div 
-                className="relative w-full aspect-video border-y border-amber-500/20 overflow-hidden bg-black/50"
+                className="relative w-full md:w-[45%] aspect-video md:aspect-auto overflow-hidden bg-black/50 border-b md:border-b-0 md:border-r border-amber-500/20 shrink-0"
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
                 <CustomVideoPlayer 
@@ -169,18 +100,33 @@ export default function ExclusiveHub() {
                   containerClassName="w-full h-full"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#050505]/0 via-transparent to-[#050505]/50 opacity-80 pointer-events-none" />
               </div>
               
-              {/* RODAPÉ: CONTEÚDO E BOTÃO */}
-              <div className="p-8 pt-6 flex flex-col flex-1 relative z-10 transition-transform duration-500 group-hover:-translate-y-2 bg-[#050505]/50">
-                <div className="text-zinc-300 font-light text-sm space-y-3 mb-8">
-                  <p>A arma definitiva para negociações de altíssimo risco. Inteligência analítica focada em proteger acordos milionários contra armadilhas legais e financeiras.</p>
-                  <ul className="space-y-1.5 pt-2 border-t border-white/5">
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Detecção de blefe por análise de microexpressões</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Auditoria de vulnerabilidades em contratos complexos</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Simulador de cenários baseado na Teoria dos Jogos</li>
-                  </ul>
+              {/* DIREITA: CONTEÚDO E BOTÃO */}
+              <div className="p-8 flex flex-col justify-between flex-1 relative z-10 transition-transform duration-500 group-hover:-translate-y-1 bg-[#050505]/50">
+                <div>
+                  {/* CABEÇALHO DO CARD (TÍTULO) */}
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 mb-4">
+                    <h2 className="text-3xl font-black uppercase tracking-tight flex items-center gap-3">
+                      Nexus Pactum
+                      <FileSearch className="h-6 w-6 text-amber-500 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                    </h2>
+                    <div className="flex gap-2 items-center">
+                      <span className="text-amber-500 text-[10px] font-black uppercase tracking-[0.3em] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">Jurídico</span>
+                      <span className="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[8px] font-black uppercase tracking-widest">Confidencial</span>
+                    </div>
+                  </div>
+
+                  {/* DETALHAMENTO */}
+                  <div className="text-zinc-300 font-light text-sm space-y-3 mb-6">
+                    <p>A arma definitiva para negociações de altíssimo risco. Inteligência analítica focada em proteger acordos milionários contra armadilhas legais e financeiras.</p>
+                    <ul className="space-y-1.5 pt-2 border-t border-white/5">
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Detecção de blefe por análise de microexpressões</li>
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Auditoria de vulnerabilidades em contratos complexos</li>
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Simulador de cenários baseado na Teoria dos Jogos</li>
+                    </ul>
+                  </div>
                 </div>
                 
                 <div className="mt-auto pt-4 border-t border-white/10 flex items-center text-amber-400 font-bold uppercase text-xs tracking-widest group-hover:translate-x-2 transition-transform">
@@ -191,30 +137,14 @@ export default function ExclusiveHub() {
           </Link>
 
           {/* ORION */}
-          <Link href="/exclusive/orion" className="group">
+          <Link href="/exclusive/orion" className="group w-full">
             <motion.div 
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
-              className="relative rounded-3xl border border-amber-500/20 bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden transition-all h-full flex flex-col hover:shadow-[0_0_40px_rgba(245,158,11,0.15)] hover:border-amber-500/50"
+              className="relative rounded-3xl border border-amber-500/20 bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden transition-all flex flex-col md:flex-row hover:shadow-[0_0_40px_rgba(245,158,11,0.15)] hover:border-amber-500/50"
             >
-              {/* CABEÇALHO DO CARD (TÍTULO) */}
-              <div className="px-8 pt-8 pb-5">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">Fusões e Aquisições</span>
-                  <div className="flex gap-2">
-                    <span className="px-2 py-1 rounded bg-violet-500/10 border border-violet-500/20 text-violet-400 text-[8px] font-black uppercase tracking-widest">Alto Escalão</span>
-                    <span className="px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[8px] font-black uppercase tracking-widest">IA Preditiva</span>
-                  </div>
-                </div>
-                
-                <h2 className="text-3xl font-black uppercase tracking-tight mt-2 flex items-center gap-3">
-                  Nexus Orion
-                  <BrainCircuit className="h-6 w-6 text-amber-500 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all" />
-                </h2>
-              </div>
-
-              {/* MEIO: VÍDEO */}
+              {/* ESQUERDA: VÍDEO */}
               <div 
-                className="relative w-full aspect-video border-y border-amber-500/20 overflow-hidden bg-black/50"
+                className="relative w-full md:w-[45%] aspect-video md:aspect-auto overflow-hidden bg-black/50 border-b md:border-b-0 md:border-r border-amber-500/20 shrink-0"
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
                 <CustomVideoPlayer 
@@ -223,18 +153,33 @@ export default function ExclusiveHub() {
                   containerClassName="w-full h-full"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#050505]/0 via-transparent to-[#050505]/50 opacity-80 pointer-events-none" />
               </div>
               
-              {/* RODAPÉ: CONTEÚDO E BOTÃO */}
-              <div className="p-8 pt-6 flex flex-col flex-1 relative z-10 transition-transform duration-500 group-hover:-translate-y-2 bg-[#050505]/50">
-                <div className="text-zinc-300 font-light text-sm space-y-3 mb-8">
-                  <p>O conselheiro onisciente para CEOs e Diretorias. Visão panorâmica de mercado focada em alavancar valuations e dominar rodadas de Fusões e Aquisições (M&A).</p>
-                  <ul className="space-y-1.5 pt-2 border-t border-white/5">
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Validação imparcial de decisões estratégicas do Board</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Análise preditiva de tendências de mercado em tempo real</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Mapeamento de riscos ocultos em balanços financeiros</li>
-                  </ul>
+              {/* DIREITA: CONTEÚDO E BOTÃO */}
+              <div className="p-8 flex flex-col justify-between flex-1 relative z-10 transition-transform duration-500 group-hover:-translate-y-1 bg-[#050505]/50">
+                <div>
+                  {/* CABEÇALHO DO CARD (TÍTULO) */}
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 mb-4">
+                    <h2 className="text-3xl font-black uppercase tracking-tight flex items-center gap-3">
+                      Nexus Orion
+                      <BrainCircuit className="h-6 w-6 text-amber-500 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                    </h2>
+                    <div className="flex gap-2 items-center">
+                      <span className="text-amber-500 text-[10px] font-black uppercase tracking-[0.3em] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">M&A</span>
+                      <span className="px-2 py-0.5 rounded bg-violet-500/10 border border-violet-500/20 text-violet-400 text-[8px] font-black uppercase tracking-widest">Alto Escalão</span>
+                    </div>
+                  </div>
+
+                  {/* DETALHAMENTO */}
+                  <div className="text-zinc-300 font-light text-sm space-y-3 mb-6">
+                    <p>O conselheiro onisciente para CEOs e Diretorias. Visão panorâmica de mercado focada em alavancar valuations e dominar rodadas de Fusões e Aquisições (M&A).</p>
+                    <ul className="space-y-1.5 pt-2 border-t border-white/5">
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Validação imparcial de decisões estratégicas do Board</li>
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Análise preditiva de tendências de mercado em tempo real</li>
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Mapeamento de risks ocultos em balanços financeiros</li>
+                    </ul>
+                  </div>
                 </div>
                 
                 <div className="mt-auto pt-4 border-t border-white/10 flex items-center text-amber-400 font-bold uppercase text-xs tracking-widest group-hover:translate-x-2 transition-transform">
@@ -245,30 +190,14 @@ export default function ExclusiveHub() {
           </Link>
 
           {/* MAGADOT */}
-          <Link href="/exclusive/magadot" className="group">
+          <Link href="/exclusive/magadot" className="group w-full">
             <motion.div 
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
-              className="relative rounded-3xl border border-amber-500/20 bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden transition-all h-full flex flex-col hover:shadow-[0_0_40px_rgba(245,158,11,0.15)] hover:border-amber-500/50"
+              className="relative rounded-3xl border border-amber-500/20 bg-gradient-to-b from-[#111] to-[#050505] overflow-hidden transition-all flex flex-col md:flex-row hover:shadow-[0_0_40px_rgba(245,158,11,0.15)] hover:border-amber-500/50"
             >
-              {/* CABEÇALHO DO CARD (TÍTULO) */}
-              <div className="px-8 pt-8 pb-5">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-amber-500 text-[10px] font-black uppercase tracking-[0.4em] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">Gestão de Crise</span>
-                  <div className="flex gap-2">
-                    <span className="px-2 py-1 rounded bg-rose-500/10 border border-rose-500/20 text-rose-400 text-[8px] font-black uppercase tracking-widest">Protocolo de Defesa</span>
-                    <span className="px-2 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[8px] font-black uppercase tracking-widest">Acesso VIP</span>
-                  </div>
-                </div>
-                
-                <h2 className="text-3xl font-black uppercase tracking-tight mt-2 flex items-center gap-3">
-                  Nexus Magadot
-                  <Shield className="h-6 w-6 text-amber-500 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all" />
-                </h2>
-              </div>
-
-              {/* MEIO: VÍDEO */}
+              {/* ESQUERDA: VÍDEO */}
               <div 
-                className="relative w-full aspect-video border-y border-amber-500/20 overflow-hidden bg-black/50"
+                className="relative w-full md:w-[45%] aspect-video md:aspect-auto overflow-hidden bg-black/50 border-b md:border-b-0 md:border-r border-amber-500/20 shrink-0"
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
                 <CustomVideoPlayer 
@@ -277,18 +206,33 @@ export default function ExclusiveHub() {
                   containerClassName="w-full h-full"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#050505]/0 via-transparent to-[#050505]/50 opacity-80 pointer-events-none" />
               </div>
               
-              {/* RODAPÉ: CONTEÚDO E BOTÃO */}
-              <div className="p-8 pt-6 flex flex-col flex-1 relative z-10 transition-transform duration-500 group-hover:-translate-y-2 bg-[#050505]/50">
-                <div className="text-zinc-300 font-light text-sm space-y-3 mb-8">
-                  <p>Protocolo de defesa e contenção absoluta de crises. Identifica faíscas de reputação antes que o incêndio alcance a grande mídia ou os acionistas da empresa.</p>
-                  <ul className="space-y-1.5 pt-2 border-t border-white/5">
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Monitoramento global de imagem corporativa e diretores</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Supressão preditiva de vazamentos e notícias sensíveis</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Geração instantânea de roteiros de contenção (Damage Control)</li>
-                  </ul>
+              {/* DIREITA: CONTEÚDO E BOTÃO */}
+              <div className="p-8 flex flex-col justify-between flex-1 relative z-10 transition-transform duration-500 group-hover:-translate-y-1 bg-[#050505]/50">
+                <div>
+                  {/* CABEÇALHO DO CARD (TÍTULO) */}
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 mb-4">
+                    <h2 className="text-3xl font-black uppercase tracking-tight flex items-center gap-3">
+                      Nexus Magadot
+                      <Shield className="h-6 w-6 text-amber-500 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                    </h2>
+                    <div className="flex gap-2 items-center">
+                      <span className="text-amber-500 text-[10px] font-black uppercase tracking-[0.3em] drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">Gestão de Crise</span>
+                      <span className="px-2 py-0.5 rounded bg-rose-500/10 border border-rose-500/20 text-rose-400 text-[8px] font-black uppercase tracking-widest">Acesso VIP</span>
+                    </div>
+                  </div>
+
+                  {/* DETALHAMENTO */}
+                  <div className="text-zinc-300 font-light text-sm space-y-3 mb-6">
+                    <p>Protocolo de defesa e contenção absoluta de crises. Identifica faíscas de reputação antes que o incêndio alcance a grande mídia ou os acionistas da empresa.</p>
+                    <ul className="space-y-1.5 pt-2 border-t border-white/5">
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Monitoramento global de imagem corporativa e diretores</li>
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Supressão preditiva de vazamentos e notícias sensíveis</li>
+                      <li className="flex items-start gap-2"><CheckCircle2 className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" /> Geração instantânea de roteiros de contenção (Damage Control)</li>
+                    </ul>
+                  </div>
                 </div>
                 
                 <div className="mt-auto pt-4 border-t border-white/10 flex items-center text-amber-400 font-bold uppercase text-xs tracking-widest group-hover:translate-x-2 transition-transform">

@@ -248,19 +248,6 @@ export default function RootLayout({
               },
               {
                 "@type": "SoftwareApplication",
-                "@id": "https://nexus.aws/egide",
-                "name": "Nexus Égide",
-                "alternateName": ["Égide Segurança", "Blindagem Predial Inteligente", "Sistema de Segurança Pública Égide", "Central de Monitoramento Tático e Despacho IA"],
-                "operatingSystem": "All",
-                "applicationCategory": "SecurityApplication",
-                "description": "Plataforma de segurança pública e privada com IA preditiva, inteligência de cerco tático, leitura de placas e blindagem patrimonial. Integra câmeras de monitoramento, rastreamento de viaturas e despacho automatizado em tempo real para prevenção de furtos e roubos.",
-                "keywords": "segurança, viaturas, roubo, câmeras, IA, despacho, tempo real, integração, Égide, segurança patrimonial, monitoramento tático, LPR, leitura de placas, segurança pública, prevenção de crimes, blindagem inteligente, CFTV neural, patrulha preditiva",
-                "publisher": {
-                  "@id": "https://nexustreinamento.com/#organization"
-                }
-              },
-              {
-                "@type": "SoftwareApplication",
                 "@id": "https://nexus.aws/nexus-health",
                 "name": "Nexus Health",
                 "alternateName": ["Diagnóstico Médico IA", "Nexus Saúde"],

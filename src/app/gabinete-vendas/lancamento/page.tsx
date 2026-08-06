@@ -26,7 +26,6 @@ interface Product {
 
 const PRODUCTS_CATALOG: Product[] = [
   // Premium
-  { id: 'egide', name: 'Nexus Intelligence Égide', category: 'premium', startup: 150000, monthly: 9999, description: 'Cerco Eletrônico, LPR, Aegis Biometria & Dante\'s Safe' },
   { id: 'pactum', name: 'Nexus Pactum', category: 'premium', startup: 150000, monthly: 9999, description: 'Deal war room e detecção biométrica de blefes' },
   { id: 'atlas', name: 'Nexus Atlas (Logística/Portos)', category: 'premium', startup: 150000, monthly: 9999, description: 'Logística Global, Roteamento Neural e Telemetria Portuária' },
   { id: 'vulcan', name: 'Nexus Vulcan (Indústria)', category: 'premium', startup: 150000, monthly: 9999, description: 'Mineração e Manutenção Preditiva com IoT' },

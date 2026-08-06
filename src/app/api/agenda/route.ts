@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAppointments, saveAppointment, AgendaItem } from '@/lib/agenda-db';
+import { getAppointments, saveAppointment, deleteAppointment, AgendaItem } from '@/lib/agenda-db';
 import nodemailer from 'nodemailer';
 
 // Helper para enviar e-mails usando o SMTP do Gmail do Gean
