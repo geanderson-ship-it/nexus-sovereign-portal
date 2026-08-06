@@ -20,11 +20,13 @@ const VOICE_MAP: Record<string, { female: string; male: string }> = {
 export async function synthesizeSpeech(
   text: string, 
   gender: VoiceGender = 'female', 
-  locale: string = 'pt-BR'
+  locale: string = 'pt-BR',
+  customVoiceId?: string,
+  style?: string
 ): Promise<Buffer> {
   const normLocale = locale.toLowerCase().replace('_', '-');
   const voiceSet = VOICE_MAP[normLocale] || VOICE_MAP[normLocale.split('-')[0]] || VOICE_MAP['pt-br'];
-  const voiceId = voiceSet[gender];
+  const finalVoiceId = customVoiceId || voiceSet[gender];
 
   const apiKey = process.env.AZURE_SPEECH_KEY;
   
@@ -38,12 +40,16 @@ export async function synthesizeSpeech(
   const escapedText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
   // Ajustando a prosódia:
-  // Julio (male): pitch +5% (voz mais fina/alta conforme pedido) e rate normal/levemente acelerado para não ficar engessado.
-  // Brenda (female): prosódia natural de rádio.
   const rate = gender === 'male' ? '+5%' : '+8%';
   const pitch = gender === 'male' ? '+5%' : '+0%';
 
-  const ssml = `<speak version='1.0' xml:lang='${voiceId.substring(0, 5)}'><voice xml:lang='${voiceId.substring(0, 5)}' xml:gender='${gender === 'female' ? 'Female' : 'Male'}' name='${voiceId}'><prosody rate='${rate}' pitch='${pitch}'>${escapedText}</prosody></voice></speak>`;
+  let innerVoiceContent = `<prosody rate='${rate}' pitch='${pitch}'>${escapedText}</prosody>`;
+  
+  if (style && style !== 'none') {
+    innerVoiceContent = `<mstts:express-as style='${style}'>${innerVoiceContent}</mstts:express-as>`;
+  }
+
+  const ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='${finalVoiceId.substring(0, 5)}'><voice name='${finalVoiceId}'>${innerVoiceContent}</voice></speak>`;
 
   const response = await fetch(endpoint, {
     method: 'POST',
