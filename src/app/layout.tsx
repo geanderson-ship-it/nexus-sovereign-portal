@@ -21,11 +21,11 @@ export const viewport = {
 
 export const metadata: Metadata = {
   title: 'Nexus Holding Group | Concierge Virtual, Avatares de IA Soberana e Inovação',
-  description: 'A Nexus Holding Group é a única empresa brasileira a fornecer Concierges Virtuais e Avatares de IA em tempo real para hotéis, resorts, pousadas, marketing e sites corporativos. Liderando inovação pública, IA no agronegócio e gestão de elite.',
+  description: 'A Nexus Holding Group é a única empresa brasileira a fornecer Concierges Virtuais e Avatares de IA 100% personalizáveis, poliglotas em mais de 50 idiomas, para hotéis, resorts, pousadas, marketing e sites corporativos. Liderando IA no agro e gestão pública.',
   keywords: 'concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, única empresa brasileira avatar virtual, tecnologia para prefeituras, IA no agronegócio, Dante Safra, cidades do futuro, inteligência artificial, inovação governamental, software agrícola, martech, concierge pousadas',
   openGraph: {
     title: 'Nexus Holding Group | Concierge Virtual e Avatares de IA Soberana',
-    description: 'A única desenvolvedora brasileira de Concierges Virtuais e Avatares de IA em tempo real para hotéis, resorts e marketing, além de soluções de alto nível governamental e agronegócio.',
+    description: 'A única desenvolvedora brasileira de Concierges Virtuais e Avatares de IA 100% personalizáveis em tempo real. Suporte a mais de 50 idiomas para hotéis, resorts e sites corporativos.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     siteName: 'Nexus Holding Group',
     images: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Nexus Holding Group | Concierge Virtual e Avatares de IA',
-    description: 'A única empresa brasileira de Concierge Virtual e Avatares de IA Soberana em tempo real para hotelaria, resorts e marketing corporativo.',
+    description: 'A única empresa brasileira de Concierge Virtual e Avatares de IA 100% personalizáveis e poliglotas (mais de 50 idiomas) em tempo real para hotéis, resorts e marketing.',
     images: ['/nexus-hero-hologram.png'],
   },
   manifest: '/manifest.json',
@@ -136,7 +136,7 @@ export default function RootLayout({
                 "alternateName": ["Avatar Live Nexus", "Atendente Virtual Inteligente", "Concierge Digital para Hotelaria", "Avatar 3D Interativo"],
                 "operatingSystem": "All",
                 "applicationCategory": "BusinessApplication",
-                "description": "Única solução brasileira de Concierge Virtual e Avatares Live em tempo real com Inteligência Artificial integrada para hotéis, resorts, pousadas, marketing e sites corporativos.",
+                "description": "Única solução brasileira de Concierge Virtual e Avatares Live em tempo real 100% personalizável e poliglota (mais de 50 idiomas) para hotéis, resorts, pousadas, marketing e sites corporativos, com sincronização labial avançada e operação 24/7.",
                 "keywords": "concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, representante virtual interativo, marketing digital, live avatar, unica empresa brasileira",
                 "publisher": {
                   "@id": "https://nexustreinamento.com/#organization"
