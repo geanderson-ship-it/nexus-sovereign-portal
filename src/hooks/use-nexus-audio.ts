@@ -28,6 +28,8 @@ const globalWithCache = globalThis as typeof globalThis & {
 };
 if (!globalWithCache.nexusAudioCache) {
   globalWithCache.nexusAudioCache = new Map<string, TextToSpeechOutput>();
+} else {
+  globalWithCache.nexusAudioCache.clear(); // Limpa caches antigos de desenvolvimento ao recarregar o módulo
 }
 const audioCache = globalWithCache.nexusAudioCache;
 
@@ -35,7 +37,7 @@ const audioCache = globalWithCache.nexusAudioCache;
 // Creates a unique key for the cache based on voice, text content and locale.
 function getCacheKey(text: string, voice: string, locale: string): string {
   // Trim the text to ensure consistency and avoid cache misses due to whitespace.
-  return `${voice}::${locale}::${text.trim()}`;
+  return `${voice}::${locale}::v3::${text.trim()}`;
 }
 
 
