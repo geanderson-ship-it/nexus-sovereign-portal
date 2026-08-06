@@ -21,6 +21,23 @@ import {
   SpeechMarkType 
 } from "@aws-sdk/client-polly";
 
+function removeEmojis(input: string | undefined): string {
+  if (!input) return '';
+  let processed = input;
+  processed = processed.replace(/[\u{1F300}-\u{1F9FF}]/gu, '');
+  processed = processed.replace(/[\u{1F600}-\u{1F64F}]/gu, '');
+  processed = processed.replace(/[\u{2700}-\u{27BF}]/gu, '');
+  processed = processed.replace(/[\u{1F680}-\u{1F6FF}]/gu, '');
+  processed = processed.replace(/[\u{2600}-\u{26FF}]/gu, '');
+  processed = processed.replace(/[\u{1F1E0}-\u{1F1FF}]/gu, '');
+  processed = processed.replace(/[\u{2B00}-\u{2BFF}]/gu, ''); // Estrelas, setas, formas geométricas (como ⭐)
+  processed = processed.replace(/[\u{2300}-\u{23FF}]/gu, ''); // Símbolos técnicos (ampulhetas, relógios)
+  try {
+    processed = processed.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+  } catch (e) {}
+  return processed.trim();
+}
+
 /**
  * Motor de Fala Nexus v3.0 - Movido pela Amazon Polly
  * Aproveita créditos AWS e oferece vozes Neural ultra-realistas.
@@ -32,7 +49,8 @@ const textToSpeechFlow = ai.defineFlow(
     outputSchema: TextToSpeechOutputSchema,
   },
   async (input) => {
-    const { text, voice, locale } = input;
+    const { text: rawText, voice, locale } = input;
+    const text = removeEmojis(rawText);
 
     // Configuração do Cliente Polly seguindo o protocolo AWS do Nexus
     const region = process.env.NEXUS_REGION || process.env.AMPLIFY_REGION || 'us-east-1';
