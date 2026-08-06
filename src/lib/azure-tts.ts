@@ -1,7 +1,7 @@
 export type VoiceGender = 'female' | 'male';
 
 const VOICE_MAP: Record<string, { female: string; male: string }> = {
-  'pt-br': { female: 'pt-BR-BrendaNeural', male: 'pt-BR-AntonioNeural' }, // Antonio: voz oficial Nexus Vision — meia-idade, dição clara, natural
+  'pt-br': { female: 'pt-BR-FranciscaNeural', male: 'pt-BR-AntonioNeural' }, // Francisca: voz oficial Atena (madura, leve, sorridente) | Antonio: voz oficial Nexus Vision (natural)
   'en-us': { female: 'en-US-AvaNeural',    male: 'en-US-GuyNeural'    },
   'es-es': { female: 'es-ES-ElviraNeural', male: 'es-ES-AlvaroNeural' },
   'fr-fr': { female: 'fr-FR-DeniseNeural', male: 'fr-FR-HenriNeural'  },
@@ -43,10 +43,16 @@ export async function synthesizeSpeech(
   const rate = gender === 'male' ? '+5%' : '+8%';
   const pitch = gender === 'male' ? '+5%' : '+0%';
 
+  // Default a Francisca para o estilo 'cheerful' (sorridente / alegre) se nenhum estilo diferente for requisitado
+  let finalStyle = style;
+  if (finalVoiceId === 'pt-BR-FranciscaNeural' && (!style || style === 'none')) {
+    finalStyle = 'cheerful';
+  }
+
   let innerVoiceContent = `<prosody rate='${rate}' pitch='${pitch}'>${escapedText}</prosody>`;
   
-  if (style && style !== 'none') {
-    innerVoiceContent = `<mstts:express-as style='${style}'>${innerVoiceContent}</mstts:express-as>`;
+  if (finalStyle && finalStyle !== 'none') {
+    innerVoiceContent = `<mstts:express-as style='${finalStyle}'>${innerVoiceContent}</mstts:express-as>`;
   }
 
   const ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xmlns:mstts='http://www.w3.org/2001/mstts' xml:lang='${finalVoiceId.substring(0, 5)}'><voice name='${finalVoiceId}'>${innerVoiceContent}</voice></speak>`;
