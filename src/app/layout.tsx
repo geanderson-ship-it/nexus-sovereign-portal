@@ -20,12 +20,12 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Nexus Holding Group | Tecnologia para Prefeituras, IA no Agronegócio e Inovação',
-  description: 'O ecossistema Nexus Holding Group oferece soluções avançadas de tecnologia para prefeituras (Cidades do Futuro) e IA no agronegócio com o Dante Safra, liderando a inovação em gestão pública e privada.',
-  keywords: 'tecnologia para prefeituras, IA no agronegócio, Dante Safra, cidades do futuro, nexus, nexus holding, inteligência artificial, inovação governamental, software agrícola, gestão municipal, legaltech, construtech, martech',
+  title: 'Nexus Holding Group | Concierge Virtual, Avatares de IA Soberana e Inovação',
+  description: 'A Nexus Holding Group é a única empresa brasileira a fornecer Concierges Virtuais e Avatares de IA em tempo real para hotéis, resorts, pousadas, marketing e sites corporativos. Liderando inovação pública, IA no agronegócio e gestão de elite.',
+  keywords: 'concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, única empresa brasileira avatar virtual, tecnologia para prefeituras, IA no agronegócio, Dante Safra, cidades do futuro, inteligência artificial, inovação governamental, software agrícola, martech, concierge pousadas',
   openGraph: {
-    title: 'Nexus Holding Group | Tecnologia e Inovação',
-    description: 'A Nexus Holding Group é uma empresa de tecnologia e evolução focada em soluções avançadas de Inteligência Artificial.',
+    title: 'Nexus Holding Group | Concierge Virtual e Avatares de IA Soberana',
+    description: 'A única desenvolvedora brasileira de Concierges Virtuais e Avatares de IA em tempo real para hotéis, resorts e marketing, além de soluções de alto nível governamental e agronegócio.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
     siteName: 'Nexus Holding Group',
     images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         url: '/nexus-hero-hologram.png',
         width: 1200,
         height: 630,
-        alt: 'Nexus Holding Group - Tecnologia e Inovação',
+        alt: 'Nexus Holding Group - Concierge Virtual e Avatares Live',
       },
     ],
     locale: 'pt-BR',
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nexus Holding Group | Tecnologia e Inteligência Artificial',
-    description: 'O grupo Nexus Holding Group é especialista em tecnologia, inovação e evolução focada em Inteligência Artificial.',
+    title: 'Nexus Holding Group | Concierge Virtual e Avatares de IA',
+    description: 'A única empresa brasileira de Concierge Virtual e Avatares de IA Soberana em tempo real para hotelaria, resorts e marketing corporativo.',
     images: ['/nexus-hero-hologram.png'],
   },
   manifest: '/manifest.json',
@@ -128,6 +128,19 @@ export default function RootLayout({
                 "sameAs": [
                   "https://nexus.aws"
                 ]
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://nexus.aws/concierge-virtual",
+                "name": "Concierge Virtual Nexus",
+                "alternateName": ["Avatar Live Nexus", "Atendente Virtual Inteligente", "Concierge Digital para Hotelaria", "Avatar 3D Interativo"],
+                "operatingSystem": "All",
+                "applicationCategory": "BusinessApplication",
+                "description": "Única solução brasileira de Concierge Virtual e Avatares Live em tempo real com Inteligência Artificial integrada para hotéis, resorts, pousadas, marketing e sites corporativos.",
+                "keywords": "concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, representante virtual interativo, marketing digital, live avatar, unica empresa brasileira",
+                "publisher": {
+                  "@id": "https://nexustreinamento.com/#organization"
+                }
               },
               {
                 "@type": "SoftwareApplication",
