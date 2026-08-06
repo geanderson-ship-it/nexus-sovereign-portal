@@ -631,47 +631,6 @@ export default function VisionSoberanoPage() {
     }
   };
 
-  const handleLeave = (targetUrl: string) => {
-    isComponentMountedRef.current = false; // Garante o bloqueio de reinicialização da fala
-
-    if (stream) {
-      stream.getTracks().forEach(track => {
-        try { track.stop(); } catch (e) {}
-      });
-      setStream(null);
-    }
-    if (localStreamRef.current) {
-      localStreamRef.current.getTracks().forEach(track => {
-        try { track.stop(); } catch (e) {}
-      });
-      localStreamRef.current = null;
-    }
-    if (screenStreamRef.current) {
-      screenStreamRef.current.getTracks().forEach(track => {
-        try { track.stop(); } catch (e) {}
-      });
-      screenStreamRef.current = null;
-    }
-    if (recognitionRef.current) {
-      try { recognitionRef.current.stop(); } catch (e) {}
-    }
-    for (const [peerId, pc] of peerConnectionsRef.current.entries()) {
-      try { pc.close(); } catch (e) {}
-    }
-    peerConnectionsRef.current.clear();
-
-    if (isJoiner && typeof window !== 'undefined') {
-      try {
-        window.close();
-      } catch (e) {}
-      setTimeout(() => {
-        router.push('/');
-      }, 100);
-      return;
-    }
-
-    router.push(targetUrl);
-  };
 
   // URL de convite baseada no domínio atual com fallback para o oficial
   const inviteUrl = typeof window !== 'undefined'
