@@ -4,7 +4,7 @@ import { useUser } from '@/auth';
 import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
-import { Terminal, Shield, ShieldAlert, Cpu, Network, MonitorPlay, ChevronLeft, Mic, Video, VideoOff, Paperclip, X, Send, Play, Pause, Square, Volume2, Globe, VolumeX, Activity } from 'lucide-react';
+import { Terminal, Shield, ShieldAlert, Cpu, Network, MonitorPlay, ChevronLeft, Mic, Video, VideoOff, Paperclip, X, Send, Play, Pause, Square, Volume2, Globe, VolumeX, Activity, History, Plus, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -131,10 +131,146 @@ export default function AtenaTerminalPage() {
     alert(data.success ? "✅ Rosto da Mamãe Ivoni salvo com sucesso!" : "❌ Erro: " + data.error);
   };
   
-  const [messages, setMessages] = useState<Message[]>([
+  // Memória Prolongada (Chat History / Sessions)
+  interface ChatSession {
+    id: string;
+    title: string;
+    timestamp: string;
+    messages: Message[];
+  }
+
+  const INITIAL_MESSAGES: Message[] = [
     { role: 'system', content: 'Iniciando Kernel Neural... Conectando ao AWS Bedrock (us-east-1)...' },
     { role: 'system', content: 'Acesso Soberano Autorizado. Bem-vindo, Comandante.' }
-  ]);
+  ];
+
+  const [sessions, setSessions] = useState<ChatSession[]>([]);
+  const [activeSessionId, setActiveSessionId] = useState<string>('');
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+
+  // Carregar sessões e mensagens do localStorage na montagem do componente
+  useEffect(() => {
+    const savedSessions = localStorage.getItem('nexus_atena_sessions');
+    const savedActiveId = localStorage.getItem('nexus_atena_active_session_id');
+
+    let parsedSessions: ChatSession[] = [];
+    if (savedSessions) {
+      try {
+        parsedSessions = JSON.parse(savedSessions);
+      } catch (e) {
+        console.error("Erro ao carregar sessões de chat:", e);
+      }
+    }
+
+    if (parsedSessions.length === 0) {
+      const defaultSession: ChatSession = {
+        id: crypto.randomUUID(),
+        title: 'Nova Conversa',
+        timestamp: new Date().toISOString(),
+        messages: INITIAL_MESSAGES
+      };
+      parsedSessions = [defaultSession];
+      localStorage.setItem('nexus_atena_sessions', JSON.stringify(parsedSessions));
+      localStorage.setItem('nexus_atena_active_session_id', defaultSession.id);
+      setSessions(parsedSessions);
+      setActiveSessionId(defaultSession.id);
+      setMessages(INITIAL_MESSAGES);
+    } else {
+      setSessions(parsedSessions);
+      const activeId = savedActiveId && parsedSessions.some(s => s.id === savedActiveId)
+        ? savedActiveId
+        : parsedSessions[0].id;
+      setActiveSessionId(activeId);
+      localStorage.setItem('nexus_atena_active_session_id', activeId);
+      const activeSession = parsedSessions.find(s => s.id === activeId);
+      setMessages(activeSession ? activeSession.messages : INITIAL_MESSAGES);
+    }
+  }, []);
+
+  // Salvar as mensagens da sessão ativa sempre que houver alteração
+  useEffect(() => {
+    if (!activeSessionId || sessions.length === 0 || messages.length === 0) return;
+
+    const updatedSessions = sessions.map(session => {
+      if (session.id === activeSessionId) {
+        let title = session.title;
+        if (title === 'Nova Conversa') {
+          const firstUserMsg = messages.find(m => m.role === 'user');
+          if (firstUserMsg) {
+            const cleanTitle = firstUserMsg.content.substring(0, 30) + (firstUserMsg.content.length > 30 ? '...' : '');
+            title = cleanTitle;
+          }
+        }
+        return {
+          ...session,
+          title,
+          messages
+        };
+      }
+      return session;
+    });
+
+    const sessionsChanged = JSON.stringify(updatedSessions) !== JSON.stringify(sessions);
+    if (sessionsChanged) {
+      setSessions(updatedSessions);
+      localStorage.setItem('nexus_atena_sessions', JSON.stringify(updatedSessions));
+    }
+  }, [messages, activeSessionId, sessions]);
+
+  const handleSelectSession = (sessionId: string) => {
+    const session = sessions.find(s => s.id === sessionId);
+    if (session) {
+      setActiveSessionId(sessionId);
+      localStorage.setItem('nexus_atena_active_session_id', sessionId);
+      setMessages(session.messages);
+      setIsHistoryOpen(false);
+      stopAudio();
+    }
+  };
+
+  const handleNewChat = () => {
+    const newSession: ChatSession = {
+      id: crypto.randomUUID(),
+      title: 'Nova Conversa',
+      timestamp: new Date().toISOString(),
+      messages: INITIAL_MESSAGES
+    };
+
+    const updatedSessions = [newSession, ...sessions];
+    setSessions(updatedSessions);
+    setActiveSessionId(newSession.id);
+    localStorage.setItem('nexus_atena_sessions', JSON.stringify(updatedSessions));
+    localStorage.setItem('nexus_atena_active_session_id', newSession.id);
+    setMessages(INITIAL_MESSAGES);
+    setIsHistoryOpen(false);
+    stopAudio();
+  };
+
+  const handleDeleteSession = (e: React.MouseEvent, sessionId: string) => {
+    e.stopPropagation();
+    
+    if (sessions.length <= 1) {
+      handleNewChat();
+      const remainingSessions = sessions.filter(s => s.id !== sessionId);
+      if (remainingSessions.length > 0) {
+        setSessions(remainingSessions);
+        localStorage.setItem('nexus_atena_sessions', JSON.stringify(remainingSessions));
+      }
+      return;
+    }
+
+    const updatedSessions = sessions.filter(s => s.id !== sessionId);
+    setSessions(updatedSessions);
+    localStorage.setItem('nexus_atena_sessions', JSON.stringify(updatedSessions));
+
+    if (activeSessionId === sessionId) {
+      const nextSession = updatedSessions[0];
+      setActiveSessionId(nextSession.id);
+      localStorage.setItem('nexus_atena_active_session_id', nextSession.id);
+      setMessages(nextSession.messages);
+    }
+  };
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -558,10 +694,84 @@ export default function AtenaTerminalPage() {
           `}
         >
           {/* Header do Terminal */}
-          <div className="h-16 border-b border-slate-800 bg-[#0a0a0a] flex items-center px-6 gap-3 pt-4">
-            <Terminal className="w-4 h-4 text-emerald-500" />
-            <span className="text-xs text-emerald-500/70 tracking-wider">root@nexus-sovereign:~# ./atena_core.sh</span>
+          <div className="h-16 border-b border-slate-800 bg-[#0a0a0a] flex items-center justify-between px-6 pt-4 relative">
+            <div className="flex items-center gap-3">
+              <Terminal className="w-4 h-4 text-emerald-500" />
+              <span className="text-xs text-emerald-500/70 tracking-wider font-mono">root@nexus-sovereign:~# ./atena_core.sh</span>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleNewChat}
+                className="flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono uppercase tracking-wider rounded hover:bg-emerald-500/20 transition-all cursor-pointer"
+                title="Iniciar Novo Chat"
+              >
+                <Plus className="w-3 h-3" />
+                Novo Chat
+              </button>
+              
+              <button
+                onClick={() => setIsHistoryOpen(!isHistoryOpen)}
+                className="flex items-center gap-1.5 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-mono uppercase tracking-wider rounded hover:bg-indigo-500/20 transition-all cursor-pointer"
+                title="Ver Histórico de Conversas"
+              >
+                <History className="w-3 h-3" />
+                Histórico
+              </button>
+            </div>
           </div>
+
+          {/* PAINEL DE HISTÓRICO (DRAWER DESLIZANTE) */}
+          {isHistoryOpen && (
+            <div className="absolute inset-x-0 bottom-0 top-16 bg-black/95 backdrop-blur-md z-45 border-t border-slate-800 flex flex-col p-6 animate-fade-in">
+              <div className="flex items-center justify-between mb-6">
+                <h4 className="text-xs font-bold text-indigo-400 uppercase tracking-widest font-mono flex items-center gap-2">
+                  <History className="w-4 h-4" /> Histórico de Conversas
+                </h4>
+                <button 
+                  onClick={() => setIsHistoryOpen(false)}
+                  className="text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-slate-800">
+                {sessions.length === 0 ? (
+                  <p className="text-xs text-slate-500 text-center font-mono py-8">Nenhuma conversa salva.</p>
+                ) : (
+                  sessions.map((session) => (
+                    <div 
+                      key={session.id}
+                      onClick={() => handleSelectSession(session.id)}
+                      className={`flex items-center justify-between p-4 rounded-xl border transition-all cursor-pointer group
+                        ${session.id === activeSessionId 
+                          ? 'bg-indigo-950/20 border-indigo-500/30' 
+                          : 'bg-slate-950/40 border-slate-900 hover:border-slate-800 hover:bg-slate-900/30'}
+                      `}
+                    >
+                      <div className="flex flex-col gap-1 min-w-0 pr-4">
+                        <span className={`text-xs font-medium truncate ${session.id === activeSessionId ? 'text-indigo-400 font-bold' : 'text-slate-300'}`}>
+                          {session.title}
+                        </span>
+                        <span className="text-[9px] text-slate-500 font-mono">
+                          {new Date(session.timestamp).toLocaleDateString('pt-BR')} às {new Date(session.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+
+                      <button 
+                        onClick={(e) => handleDeleteSession(e, session.id)}
+                        className="opacity-0 group-hover:opacity-100 text-slate-500 hover:text-red-400 p-1.5 rounded transition-all hover:bg-red-500/10 cursor-pointer"
+                        title="Excluir conversa"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Área de Logs e Chat */}
           <div 
