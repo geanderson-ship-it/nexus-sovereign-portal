@@ -257,15 +257,33 @@ export async function POST(req: NextRequest) {
     while (!isDone && loopCount < MAX_LOOPS) {
       loopCount++;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
-        contents: geminiMessages,
-        config: {
-          systemInstruction: systemInstruction + memoryContext,
-          temperature: 0.7,
-          tools: geminiTools
+      let response;
+      let lastError;
+      const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-3.6-flash'];
+
+      for (const modelName of modelsToTry) {
+        try {
+          response = await ai.models.generateContent({
+            model: modelName,
+            contents: geminiMessages,
+            config: {
+              systemInstruction: systemInstruction + memoryContext,
+              temperature: 0.7,
+              tools: geminiTools
+            }
+          });
+          if (response) {
+            break;
+          }
+        } catch (err: any) {
+          console.warn(`[ATENA_NEURAL_FALLBACK]: Falha ao conectar usando o modelo ${modelName}. Tentando próximo... Erro:`, err.message);
+          lastError = err;
         }
-      });
+      }
+
+      if (!response) {
+        throw lastError || new Error("Todos os modelos de IA do Gemini falharam.");
+      }
 
       const candidate = response.candidates?.[0];
       const parts = candidate?.content?.parts || [];
