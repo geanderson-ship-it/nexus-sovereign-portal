@@ -12,18 +12,13 @@ interface CustomVideoPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElem
   playButtonClassName?: string;
 }
 
-// Supported languages list for subtitles
-const supportedSubLanguages = [
-  { code: 'en-US', label: 'English', srclang: 'en' },
-  { code: 'es-ES', label: 'Español', srclang: 'es' },
-  { code: 'de-DE', label: 'Deutsch', srclang: 'de' },
-  { code: 'fr-FR', label: 'Français', srclang: 'fr' },
-  { code: 'ja-JP', label: '日本語', srclang: 'ja' },
-  { code: 'zh-CN', label: '简体中文', srclang: 'zh' },
-  { code: 'ar-AE', label: 'العربية', srclang: 'ar' }
-];
+interface Cue {
+  start: number;
+  end: number;
+  text: string;
+}
 
-// Helper to parse filename from src URL and map local filenames to S3 counterparts
+// Helper to parse filename from src URL
 const getFileName = (url: string) => {
   try {
     const parts = url.split('/');
@@ -41,10 +36,61 @@ const getFileName = (url: string) => {
   }
 };
 
+// WebVTT Time Parser (Handles both MM:SS.mmm and HH:MM:SS.mmm)
+const parseTime = (timeStr: string): number => {
+  const parts = timeStr.trim().split(':');
+  let seconds = 0;
+  if (parts.length === 3) {
+    seconds += parseInt(parts[0], 10) * 3600;
+    seconds += parseInt(parts[1], 10) * 60;
+    seconds += parseFloat(parts[2]);
+  } else if (parts.length === 2) {
+    seconds += parseInt(parts[0], 10) * 60;
+    seconds += parseFloat(parts[1]);
+  }
+  return seconds;
+};
+
+// WebVTT Parser
+const parseVTT = (text: string): Cue[] => {
+  const lines = text.split(/\r?\n/);
+  const cues: Cue[] = [];
+  let currentCue: Partial<Cue> = {};
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (line.includes('-->')) {
+      const parts = line.split('-->');
+      if (parts.length === 2) {
+        currentCue.start = parseTime(parts[0]);
+        currentCue.end = parseTime(parts[1]);
+      }
+    } else if (line === '' && currentCue.start !== undefined) {
+      if (currentCue.text) {
+        cues.push(currentCue as Cue);
+      }
+      currentCue = {};
+    } else if (currentCue.start !== undefined) {
+      // Skip WebVTT note lines or formatting tags if any
+      if (!line.startsWith('NOTE') && line !== 'WEBVTT') {
+        // Strip out HTML formatting tags like <b> or <i> if present in VTT
+        const cleanText = line.replace(/<[^>]*>/g, '');
+        currentCue.text = currentCue.text ? currentCue.text + ' ' + cleanText : cleanText;
+      }
+    }
+  }
+  if (currentCue.start !== undefined && currentCue.text) {
+    cues.push(currentCue as Cue);
+  }
+  return cues;
+};
+
 export function CustomVideoPlayer({ src, className, containerClassName, playButtonClassName, ...props }: CustomVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [cues, setCues] = useState<Cue[]>([]);
+  const [currentCueText, setCurrentCueText] = useState('');
   const { locale } = useLocale();
 
   const fileName = getFileName(src);
@@ -68,34 +114,48 @@ export function CustomVideoPlayer({ src, className, containerClassName, playButt
     }
   }, []);
 
-  // Bulletproof subtitles activation effect
+  // Fetch and parse VTT subtitles when video or locale changes
   useEffect(() => {
-    if (videoRef.current) {
-      const video = videoRef.current;
-      const textTracks = video.textTracks;
-      
-      const updateTracks = () => {
-        for (let i = 0; i < textTracks.length; i++) {
-          const track = textTracks[i];
-          // Match standard language code (e.g. 'en-US' starts with 'en')
-          if (locale.startsWith(track.language)) {
-            track.mode = 'showing';
-          } else {
-            track.mode = 'disabled';
-          }
-        }
-      };
-
-      // Run immediately
-      updateTracks();
-      
-      // Run when tracks finish loading
-      video.addEventListener('loadedmetadata', updateTracks);
-      return () => {
-        video.removeEventListener('loadedmetadata', updateTracks);
-      };
+    if (!fileName || locale === 'pt-BR') {
+      setCues([]);
+      setCurrentCueText('');
+      return;
     }
-  }, [locale, src]);
+
+    const subtitleUrl = `/subtitles/${fileName}_${locale}.vtt`;
+    
+    fetch(subtitleUrl)
+      .then((res) => {
+        if (res.ok) return res.text();
+        throw new Error(`Subtitles file not found: ${subtitleUrl}`);
+      })
+      .then((text) => {
+        const parsed = parseVTT(text);
+        setCues(parsed);
+      })
+      .catch((err) => {
+        // Silently fail if subtitle file is missing for this video/locale
+        setCues([]);
+        setCurrentCueText('');
+      });
+  }, [fileName, locale]);
+
+  // Synchronize active subtitle display with video current time
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const onTimeUpdate = () => {
+      const time = video.currentTime;
+      const activeCue = cues.find(c => time >= c.start && time <= c.end);
+      setCurrentCueText(activeCue ? activeCue.text : '');
+    };
+
+    video.addEventListener('timeupdate', onTimeUpdate);
+    return () => {
+      video.removeEventListener('timeupdate', onTimeUpdate);
+    };
+  }, [cues]);
 
   const togglePlay = (e?: React.MouseEvent) => {
     if (e) {
@@ -137,18 +197,16 @@ export function CustomVideoPlayer({ src, className, containerClassName, playButt
         webkit-playsinline="true"
         preload="auto"
         {...props}
-      >
-        {fileName && supportedSubLanguages.map((lang) => (
-          <track
-            key={lang.code}
-            kind="subtitles"
-            src={`/subtitles/${fileName}_${lang.code}.vtt`}
-            srcLang={lang.srclang}
-            label={lang.label}
-            default={locale === lang.code}
-          />
-        ))}
-      </video>
+      />
+
+      {/* Custom Styled Subtitles Overlay */}
+      {currentCueText && (
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-30 max-w-[85%] text-center pointer-events-none transition-all duration-200">
+          <span className="px-4 py-2 rounded-xl bg-black/85 text-[#f0f6fc] font-sans text-sm md:text-base font-bold shadow-2xl border border-white/10 [text-shadow:1px_1px_3px_rgba(0,0,0,0.9)] tracking-wide">
+            {currentCueText}
+          </span>
+        </div>
+      )}
 
       {/* Center Play/Pause Overlay */}
       <div className={cn(
