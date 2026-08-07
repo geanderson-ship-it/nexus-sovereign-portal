@@ -23,13 +23,19 @@ const supportedSubLanguages = [
   { code: 'ar-AE', label: 'العربية', srclang: 'ar' }
 ];
 
-// Helper to parse filename from src URL
+// Helper to parse filename from src URL and map local filenames to S3 counterparts
 const getFileName = (url: string) => {
   try {
     const parts = url.split('/');
     const lastPart = parts[parts.length - 1];
     const cleanName = lastPart.split('?')[0];
-    return cleanName.replace(/\.[^/.]+$/, "");
+    let name = decodeURIComponent(cleanName.replace(/\.[^/.]+$/, ""));
+    
+    // Map local filename to S3 counterpart for local development testing
+    if (name === "Nexus Holding Group") {
+      return "Avatar_IV_Video";
+    }
+    return name;
   } catch (e) {
     return '';
   }
@@ -61,6 +67,35 @@ export function CustomVideoPlayer({ src, className, containerClassName, playButt
       };
     }
   }, []);
+
+  // Bulletproof subtitles activation effect
+  useEffect(() => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+      const textTracks = video.textTracks;
+      
+      const updateTracks = () => {
+        for (let i = 0; i < textTracks.length; i++) {
+          const track = textTracks[i];
+          // Match standard language code (e.g. 'en-US' starts with 'en')
+          if (locale.startsWith(track.language)) {
+            track.mode = 'showing';
+          } else {
+            track.mode = 'disabled';
+          }
+        }
+      };
+
+      // Run immediately
+      updateTracks();
+      
+      // Run when tracks finish loading
+      video.addEventListener('loadedmetadata', updateTracks);
+      return () => {
+        video.removeEventListener('loadedmetadata', updateTracks);
+      };
+    }
+  }, [locale, src]);
 
   const togglePlay = (e?: React.MouseEvent) => {
     if (e) {
