@@ -195,6 +195,39 @@ export async function POST(req: NextRequest) {
     let loopCount = 0;
     const MAX_LOOPS = 5;
 
+    // Injetar memória de longo prazo de forma dinâmica (RAG)
+    let memoryContext = "";
+    try {
+      const allMemories = await searchAtenaMemories('geanderson');
+      if (allMemories && allMemories.length > 0) {
+        const lastUserMsgText = (geminiMessages.findLast((m: any) => m.role === 'user')?.parts?.[0]?.text || "").toLowerCase();
+        
+        // Filtrar memórias por palavras-chave em comum
+        const stopWords = new Set(['o', 'a', 'os', 'as', 'um', 'uma', 'de', 'do', 'da', 'em', 'no', 'na', 'para', 'com', 'que', 'e', 'se', 'por', 'uma', 'seu', 'sua']);
+        const queryWords = lastUserMsgText.split(/\W+/).filter((w: string) => w.length > 2 && !stopWords.has(w));
+        
+        let matchedMemories = allMemories.filter(mem => {
+          const contentLower = mem.conteudo.toLowerCase();
+          const categoryLower = mem.categoria.toLowerCase();
+          return queryWords.some((word: string) => contentLower.includes(word) || categoryLower.includes(word));
+        });
+
+        // Se não encontrar nenhuma por palavra-chave, pegar as 3 memórias mais recentes como contexto geral
+        if (matchedMemories.length === 0) {
+          matchedMemories = allMemories.slice(0, 3);
+        } else {
+          matchedMemories = matchedMemories.slice(0, 5); // Limita a 5 memórias mais relevantes
+        }
+
+        if (matchedMemories.length > 0) {
+          memoryContext = "\n\n[CONTEXTO DE MEMÓRIA DE LONGO PRAZO RECUPERADO]:\n" + 
+            matchedMemories.map(m => `- Categoria [${m.categoria}] (${new Date(m.timestamp).toLocaleDateString('pt-BR')}): ${m.conteudo}`).join('\n');
+        }
+      }
+    } catch (dbErr) {
+      console.error("[ATENA_RAG_ERROR]: Erro ao recuperar memórias automáticas:", dbErr);
+    }
+
     // Converter as ferramentas do Bedrock para o formato do Gemini
     const geminiTools = [
       {
@@ -227,7 +260,7 @@ export async function POST(req: NextRequest) {
         model: 'gemini-3.6-flash',
         contents: geminiMessages,
         config: {
-          systemInstruction: systemInstruction,
+          systemInstruction: systemInstruction + memoryContext,
           temperature: 0.7,
           tools: geminiTools
         }

@@ -279,6 +279,7 @@ export default function AtenaTerminalPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const typingIntervalRef = useRef<any>(null);
 
   const stopAudio = () => {
     if (currentAudioRef.current) {
@@ -374,12 +375,15 @@ export default function AtenaTerminalPage() {
     }
   }, [messages, viewMode]);
 
-  // Limpar a câmera ao desmontar
+  // Limpar a câmera e intervalos ao desmontar
   useEffect(() => {
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
         const stream = videoRef.current.srcObject as MediaStream;
         stream.getTracks().forEach(track => track.stop());
+      }
+      if (typingIntervalRef.current) {
+        clearInterval(typingIntervalRef.current);
       }
     };
   }, []);
@@ -399,6 +403,10 @@ export default function AtenaTerminalPage() {
   const handleSendMessage = async (e?: React.FormEvent) => {
     e?.preventDefault();
     if (!input.trim() || isLoading) return;
+
+    if (typingIntervalRef.current) {
+      clearInterval(typingIntervalRef.current);
+    }
 
     // Desliga o microfone se estiver ouvindo
     if (isListening && recognitionRef.current) {
@@ -447,7 +455,32 @@ export default function AtenaTerminalPage() {
         throw new Error(data.error || 'Erro de comunicação');
       }
 
-      setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
+      // Efeito de Digitação de Ultra Velocidade (Simulated Streaming)
+      setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+      
+      let currentText = "";
+      let charIndex = 0;
+      const fullText = data.content || "";
+      
+      typingIntervalRef.current = setInterval(() => {
+        if (charIndex < fullText.length) {
+          const charsToAppend = fullText.length > 500 ? 3 : 1;
+          currentText += fullText.substring(charIndex, charIndex + charsToAppend);
+          charIndex += charsToAppend;
+          
+          setMessages(prev => {
+            const next = [...prev];
+            if (next[next.length - 1]?.role === 'assistant') {
+              next[next.length - 1].content = currentText;
+            }
+            return next;
+          });
+        } else {
+          if (typingIntervalRef.current) {
+            clearInterval(typingIntervalRef.current);
+          }
+        }
+      }, 10);
 
       // Reproduzir a voz da Atena
       if (data.audioBase64 && !isAudioMuted) {
