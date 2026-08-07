@@ -26,6 +26,7 @@
     "@genkit-ai/ai": "^1.29.0",
     "@genkit-ai/core": "^1.31.0",
     "@genkit-ai/google-genai": "^1.0.0",
+    "@google/genai": "^2.16.0",
     "@google/generative-ai": "^0.24.1",
     "@heygen/streaming-avatar": "^2.1.0",
     "@hookform/resolvers": "3.9.0",

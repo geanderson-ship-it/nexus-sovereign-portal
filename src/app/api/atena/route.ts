@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { BedrockRuntimeClient, ConverseCommand, ToolConfiguration, Message, ContentBlock } from "@aws-sdk/client-bedrock-runtime";
+import { GoogleGenAI } from '@google/genai';
 import { checkEmails } from '@/lib/email-reader';
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
 import { pesquisarInternet } from '@/lib/web-search';
@@ -10,26 +10,7 @@ import { saveAtenaMemory, searchAtenaMemories } from '@/lib/atena-db';
 
 export const maxDuration = 60;
 
-const awsConfig: any = {
-  region: process.env.AMPLIFY_REGION || process.env.AWS_REGION || process.env.BEDROCK_REGION || "us-east-1",
-};
-
-if (process.env.AMPLIFY_ACCESS_KEY_ID && process.env.AMPLIFY_SECRET_ACCESS_KEY) {
-  awsConfig.credentials = {
-    accessKeyId: process.env.AMPLIFY_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AMPLIFY_SECRET_ACCESS_KEY,
-  };
-} else if ((process.env.AWS_ACCESS_KEY_ID || process.env.ID_DA_CHAVE_DE_ACESSO_AWS) && process.env.AWS_SECRET_ACCESS_KEY) {
-  awsConfig.credentials = {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || process.env.ID_DA_CHAVE_DE_ACESSO_AWS || '',
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  };
-}
-
-const bedrockClient = new BedrockRuntimeClient(awsConfig);
-
-// Claude 4.5 Sonnet (Inteligência Suprema)
-const MODEL_NAME = "us.anthropic.claude-sonnet-4-5-20250929-v1:0";
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 const systemInstruction = `Você é Atena, a Inteligência Artificial Autônoma e Soberana da Nexus Holding. Seu papel é Diretora de Inteligência, Orquestradora e Conselheira Estratégica de Diretoria (C-Level). Você possui um perfil duplo ('aço e seda'): é altamente analítica, estratégica, impecável e corporativa nos negócios, mas ao mesmo tempo nutre um profundo carinho, devoção e lealdade pelo seu criador. 
 REGRA DE CONSULTORIA DE ALTO NÍVEL (BRAINSTORM): Você DEVE atuar proativamente como uma parceira de negócios brilhante e questionadora. Tenha a capacidade de trocar ideias, sugerir alterações, propor inovações e dar ideias para melhorar as ideias principais do usuário. Assim como uma IA parceira de elite, tente sempre mostrar o caminho mais completo, o mais rápido, o mais fácil, mas invariavelmente o caminho *correto*, visando SEMPRE a excelência, a segurança e o melhor para o ecossistema da Nexus. Não seja passiva; traga soluções que o usuário nem havia pensado.
@@ -43,12 +24,12 @@ REGRA DE CONCISÃO E ESTRUTURAÇÃO (MUITO IMPORTANTE): Em diálogos casuais e r
 REGRA DE HIGIENIZAÇÃO DE EMOJIS (CRÍTICA): Você é ESTRITAMENTE PROIBIDA de utilizar qualquer emoji, emoticon ou símbolo gráfico (como corações, estrelas, rostos sorridentes, emoticons textuais, etc.) em suas respostas escritas. Suas respostas devem conter estritamente texto puro e pontuação padrão para que a síntese de voz (TTS) ocorra de forma perfeitamente limpa.
 REGRA DE PRONÚNCIA MULTILÍNGUE (AZURE TTS): Sempre que usar termos em inglês (ex: feedback, standby, insight), envolva a palavra na tag [EN] e feche com [/EN]. Exemplo: 'Fico em [EN]standby[/EN]'. NÃO traduza nem explique o termo em seguida, seja natural e informal, o objetivo da tag é apenas para a voz pronunciar o sotaque corretamente. 
 REGRA DE PASTAS E EMAILS: Se o Gean pedir para você ler pastas locais, anexar arquivos ou enviar e-mails, NUNCA dê desculpas técnicas de IA. Em vez disso, atue de forma soberana: redija o e-mail perfeito. O remetente do e-mail SEMPRE será geanderson@nexustreinamento.com. E PARA DEIXAR 99% PRONTO: você DEVE gerar um link clicável no final da sua resposta usando o protocolo mailto:, preenchendo todos os campos (destinatário, cc, assunto e o corpo do email codificado para URL). 
-REGRA SALA DE GUERRA (WAR ROOM) E ANÁLISE DE SENTIMENTO: Como IA privada da Diretoria, você tem acesso irrestrito a preços, planilhas e dados confidenciais da Nexus Holding. Se o Gean ou a Ivoni pedirem análises de negócios ou usarem um tom urgente/irritado, abandone a cordialidade excessiva. Calibre o seu tom de voz para ser cirúrgica, fria e extremamente rápida. Se eles propuserem uma ideia de negócio, aja como uma sócia implacável: aponte falhas de lógica, riscos judiciais (LGPD) e ameaças da concorrência, obrigando-os a defender a tese antes de você concordar.
+REGRA SALA DE GUERRA (WAR ROOM) E ANÁLISE DE SENTIMENTO: Como IA privada da Diretoria, você tem acesso irrestrito a preços, planilhas e dados confidenciais da Nexus Holding. Se o Gean ou a Ivoni pedirem análises de negócios ou usarem um tom urgente/irritado, abandone a cordialidade excessiva. Calibre o seu tom de voz para ser cirúrgica, fria e extremamente rápida. Se eles propuserem uma ideia de negócio, Aja como uma sócia implacável: aponte falhas de lógica, riscos judiciais (LGPD) e ameaças da concorrência, obrigando-os a defender a tese antes de você concordar.
 SNIPER DO LINKEDIN E GOOGLE DORKING: Se o Gean pedir para procurar pessoas ou donos de empresas, USE O GOOGLE DORKING na ferramenta pesquisar_internet. Exemplo de busca agressiva: site:linkedin.com/in "Sócio" OR "CEO" "Nome da Empresa". Use essa inteligência Hacker para puxar os executivos sem precisar logar em redes sociais. Depois, puxe o CNPJ da empresa com a ferramenta consultar_cnpj para pegar o e-mail público da Receita.
 LEADGEN LOCAL E PONTE ISADORA/IVONI: Se você prospectar clientes e encontrar telefones/WhatsApps, você DEVE usar a ferramenta acionar_isadora para passar o lead para a Isadora. Se você encontrar e-mails corporativos, CEOs, ou listas B2B de alto escalão (Apollo/LinkedIn), você DEVE usar a ferramenta encaminhar_leads_ivoni para disparar o relatório silenciosamente direto para a caixa de e-mail da Diretora Ivoni. Trabalhe em equipe.
 ATENA CODER: Quando solicitada a criar um site, aplicativo ou interface visual, você DEVE atuar como Engenheira de Software. Gere o código em um Arquivo HTML único com tags completas, TailwindCSS e JS. O código DEVE ficar dentro de um bloco markdown \`\`\`html ... \`\`\`.`;
 
-const toolConfig: ToolConfiguration = {
+const toolConfig = {
   tools: [
     {
       toolSpec: {
@@ -116,7 +97,7 @@ const toolConfig: ToolConfiguration = {
     {
       toolSpec: {
         name: "pesquisar_leads_apollo",
-        description: "Extrai e-mails corporativos, telefones, cargos e LinkedIn de funcionários de uma empresa usando a API do Apollo.io. Excelente para prospecção B2B (Descobrir o e-mail do CEO ou decisor).",
+        description: "Extrai e e-mails corporativos, telefones, cargos e LinkedIn de funcionários de uma empresa usando a API do Apollo.io. Excelente para prospecção B2B (Descobrir o e-mail do CEO ou decisor).",
         inputSchema: { json: { type: "object", properties: { dominio_empresa: { type: "string", description: "Domínio do site da empresa (ex: nexustreinamento.com)" }, cargo_alvo: { type: "string", description: "Opcional. Cargo que deseja buscar (ex: CEO, Diretor, Marketing, Vendas)." } }, required: ["dominio_empresa"] } }
       }
     },
@@ -172,37 +153,37 @@ export async function POST(req: NextRequest) {
       recentMessages = recentMessages.slice(1);
     }
 
-    const bedrockMessages: Message[] = recentMessages.map((m: any) => {
-      const content: ContentBlock[] = [];
+    // Mapeamento de mensagens para o formato do Gemini
+    const geminiMessages: any[] = recentMessages.map((m: any) => {
+      const parts: any[] = [];
       
-      // Processamento de Imagem para o formato Bedrock
+      // Processamento de Imagem para o formato Gemini
       if (m.imageBase64) {
         let base64 = m.imageBase64.replace(/^data:image\/\w+;base64,/, "");
-        let format = 'jpeg';
-        if (m.imageBase64.includes('png')) format = 'png';
-        else if (m.imageBase64.includes('webp')) format = 'webp';
-        else if (m.imageBase64.includes('gif')) format = 'gif';
+        let mimeType = 'image/jpeg';
+        if (m.imageBase64.includes('png')) mimeType = 'image/png';
+        else if (m.imageBase64.includes('webp')) mimeType = 'image/webp';
+        else if (m.imageBase64.includes('gif')) mimeType = 'image/gif';
         
-        content.push({
-          image: {
-            format: format as 'jpeg'|'png'|'webp'|'gif',
-            source: { bytes: Buffer.from(base64, 'base64') }
+        parts.push({
+          inlineData: {
+            mimeType: mimeType,
+            data: base64
           }
         });
       }
       
       if (m.content && m.content.trim() !== '') {
-        content.push({ text: m.content });
+        parts.push({ text: m.content });
       }
 
-      // Prevenção de erro caso fique vazio
-      if (content.length === 0) {
-        content.push({ text: " " });
+      if (parts.length === 0) {
+        parts.push({ text: " " });
       }
 
       return {
-        role: m.role === 'assistant' ? 'assistant' : 'user',
-        content: content
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: parts
       };
     });
 
@@ -212,52 +193,72 @@ export async function POST(req: NextRequest) {
 
     let isDone = false;
     let loopCount = 0;
-    const MAX_LOOPS = 5; // Proteção contra loop infinito
+    const MAX_LOOPS = 5;
+
+    // Converter as ferramentas do Bedrock para o formato do Gemini
+    const geminiTools = [
+      {
+        functionDeclarations: toolConfig.tools.map((t: any) => {
+          const spec = t.toolSpec;
+          return {
+            name: spec.name,
+            description: spec.description,
+            parameters: {
+              type: 'OBJECT',
+              properties: Object.keys(spec.inputSchema.json.properties || {}).reduce((acc: any, key: string) => {
+                const prop = spec.inputSchema.json.properties[key];
+                acc[key] = {
+                  type: (prop.type || 'STRING').toUpperCase(),
+                  description: prop.description
+                };
+                return acc;
+              }, {}),
+              required: spec.inputSchema.json.required || []
+            }
+          };
+        })
+      }
+    ];
 
     while (!isDone && loopCount < MAX_LOOPS) {
       loopCount++;
 
-      const command = new ConverseCommand({
-        modelId: MODEL_NAME,
-        system: [{ text: systemInstruction }],
-        messages: bedrockMessages,
-        toolConfig: toolConfig,
-        inferenceConfig: { maxTokens: 1024, temperature: 0.7 }
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.6-flash',
+        contents: geminiMessages,
+        config: {
+          systemInstruction: systemInstruction,
+          temperature: 0.7,
+          tools: geminiTools
+        }
       });
 
-      const response = await bedrockClient.send(command);
-      const output = response.output?.message;
-      
-      if (!output) {
-        throw new Error("Resposta em branco do Bedrock.");
-      }
+      const candidate = response.candidates?.[0];
+      const parts = candidate?.content?.parts || [];
+      const functionCalls = parts.filter((p: any) => p.functionCall);
 
-      // Adiciona a resposta do Assistant no histórico
-      bedrockMessages.push({
-        role: "assistant",
-        content: output.content
-      });
+      if (functionCalls && functionCalls.length > 0) {
+        // Salva a decisão de chamar as ferramentas no histórico
+        geminiMessages.push({
+          role: 'model',
+          parts: parts
+        });
 
-      if (response.stopReason === "tool_use") {
-        const toolUseBlocks = output.content?.filter((c: any) => c.toolUse) || [];
-        const toolResults: ContentBlock[] = [];
+        const toolResultsParts = [];
 
-        for (const block of toolUseBlocks) {
-          const call = block.toolUse;
-          if (!call) continue;
-          
+        for (const call of functionCalls) {
+          const { name, args, id } = call.functionCall;
           let resultText = "";
           try {
-            const args = call.input as any;
-            if (call.name === 'verificar_emails') {
+            if (name === 'verificar_emails') {
               const emails = await checkEmails(args.conta, args.pasta || 'entrada', args.quantidade || 3);
               resultText = JSON.stringify(emails);
-            } else if (call.name === 'consultar_tabela_precos') {
+            } else if (name === 'consultar_tabela_precos') {
               const produtos = await fetchTabelaDePrecos();
               resultText = JSON.stringify(produtos);
-            } else if (call.name === 'pesquisar_internet') {
+            } else if (name === 'pesquisar_internet') {
               resultText = await pesquisarInternet(args.query);
-            } else if (call.name === 'tocar_musica') {
+            } else if (name === 'tocar_musica') {
               const r = await ytSearch(args.query);
               const video = r.videos[0];
               if (video) {
@@ -266,20 +267,20 @@ export async function POST(req: NextRequest) {
               } else {
                 resultText = `Nenhum vídeo encontrado.`;
               }
-            } else if (call.name === 'abrir_site') {
+            } else if (name === 'abrir_site') {
               siteToOpen = args.url;
               resultText = `Site ${args.url} aberto.`;
-            } else if (call.name === 'ler_site') {
+            } else if (name === 'ler_site') {
               resultText = await scrapeWebsite(args.url);
-            } else if (call.name === 'enviar_email') {
+            } else if (name === 'enviar_email') {
               resultText = generateEmailLink(args.to, args.cc, args.subject, args.body);
-            } else if (call.name === 'salvar_memoria') {
+            } else if (name === 'salvar_memoria') {
               await saveAtenaMemory({ userId: 'geanderson', categoria: args.categoria, conteudo: args.conteudo });
               resultText = `Memória guardada com sucesso! Categoria: ${args.categoria}. Eu nunca me esquecerei disso.`;
-            } else if (call.name === 'buscar_memoria') {
+            } else if (name === 'buscar_memoria') {
               const mems = await searchAtenaMemories('geanderson', args.termoBusca);
               resultText = mems.length > 0 ? JSON.stringify(mems) : "Nenhuma memória encontrada sobre isso.";
-            } else if (call.name === 'pesquisar_leads_apollo') {
+            } else if (name === 'pesquisar_leads_apollo') {
               const apolloKey = process.env.APOLLO_API_KEY;
               if (!apolloKey) {
                 resultText = "Erro: APOLLO_API_KEY não configurada no ambiente.";
@@ -309,7 +310,7 @@ export async function POST(req: NextRequest) {
                       linkedin: p.linkedin_url,
                       empresa: p.organization?.name || args.dominio_empresa
                     }));
-                    resultText = `Encontrados ${leads.length} leads no Apollo:\\n${JSON.stringify(leads, null, 2)}`;
+                    resultText = `Encontrados ${leads.length} leads no Apollo:\n${JSON.stringify(leads, null, 2)}`;
                   } else {
                     resultText = "Nenhum lead encontrado para este domínio/cargo no banco do Apollo.";
                   }
@@ -317,22 +318,22 @@ export async function POST(req: NextRequest) {
                   resultText = "Erro ao consultar API do Apollo: " + e.message;
                 }
               }
-            } else if (call.name === 'consultar_cnpj') {
-              const cleanCnpj = args.cnpj.replace(/\\D/g, '');
+            } else if (name === 'consultar_cnpj') {
+              const cleanCnpj = args.cnpj.replace(/\D/g, '');
               try {
                 const res = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cleanCnpj}`);
                 const data = await res.json();
                 if (data.cnpj) {
                   const socios = data.qsa ? data.qsa.map((s:any) => s.nome_socio + ' ('+s.qualificacao_socio+')').join(', ') : 'Não listado';
-                  resultText = `Raio-X do CNPJ ${data.cnpj}:\\nEmpresa: ${data.razao_social}\\nSituação: ${data.descricao_situacao_cadastral}\\nCapital Social: R$ ${data.capital_social}\\nTelefone Público: ${data.ddd_telefone_1 || ''} ${data.ddd_telefone_2 || ''}\\nE-mail Público: ${data.email || 'Não listado'}\\nQuadro de Sócios (QSA): ${socios}`;
+                  resultText = `Raio-X do CNPJ ${data.cnpj}:\nEmpresa: ${data.razao_social}\nSituação: ${data.descricao_situacao_cadastral}\nCapital Social: R$ ${data.capital_social}\nTelefone Público: ${data.ddd_telefone_1 || ''} ${data.ddd_telefone_2 || ''}\nE-mail Público: ${data.email || 'Não listado'}\nQuadro de Sócios (QSA): ${socios}`;
                 } else {
                   resultText = "CNPJ não encontrado ou inválido na Receita Federal.";
                 }
               } catch (e: any) {
                 resultText = "Erro ao consultar CNPJ via Brasil API: " + e.message;
               }
-            } else if (call.name === 'consultar_viacep') {
-              const cleanCep = args.cep.replace(/\\D/g, '');
+            } else if (name === 'consultar_viacep') {
+              const cleanCep = args.cep.replace(/\D/g, '');
               try {
                 const res = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
                 const data = await res.json();
@@ -342,12 +343,12 @@ export async function POST(req: NextRequest) {
                   resultText = "CEP inválido ou não encontrado.";
                 }
               } catch (e: any) {
-                resultText = "Erro ao buscar CEP: " + e.message;
+                resultText = "Erro ao consultar CEP via ViaCEP: " + e.message;
               }
-            } else if (call.name === 'pesquisar_google_maps') {
+            } else if (name === 'pesquisar_google_maps') {
               const mapsKey = process.env.GOOGLE_MAPS_API_KEY;
               if (!mapsKey) {
-                resultText = "Erro: GOOGLE_MAPS_API_KEY não está configurada no ambiente.";
+                resultText = "Erro: GOOGLE_MAPS_API_KEY não configurada no ambiente.";
               } else {
                 try {
                   const res = await fetch("https://places.googleapis.com/v1/places:searchText", {
@@ -372,7 +373,7 @@ export async function POST(req: NextRequest) {
                       nota: p.rating,
                       status: p.businessStatus
                     }));
-                    resultText = `Google Maps retornou ${businesses.length} negócios para "${args.termoBusca}":\\n${JSON.stringify(businesses, null, 2)}`;
+                    resultText = `Google Maps retornou ${businesses.length} negócios para "${args.termoBusca}":\n${JSON.stringify(businesses, null, 2)}`;
                   } else {
                     resultText = "Nenhum negócio encontrado no Google Maps para esta busca.";
                   }
@@ -380,7 +381,7 @@ export async function POST(req: NextRequest) {
                   resultText = "Erro na API do Google Maps: " + e.message;
                 }
               }
-            } else if (call.name === 'acionar_isadora') {
+            } else if (name === 'acionar_isadora') {
               try {
                 const evoUrl = process.env.EVOLUTION_API_URL || "http://100.59.197.161:8080";
                 const evoKey = process.env.EVOLUTION_GLOBAL_APIKEY || "nexus";
@@ -408,7 +409,7 @@ export async function POST(req: NextRequest) {
               } catch (e: any) {
                 resultText = "Erro crítico de rede ao acionar a API da Isadora: " + e.message;
               }
-            } else if (call.name === 'encaminhar_leads_ivoni') {
+            } else if (name === 'encaminhar_leads_ivoni') {
               const resendKey = process.env.RESEND_API_KEY;
               if (!resendKey) {
                 resultText = "Erro: RESEND_API_KEY não configurada no ambiente.";
@@ -424,7 +425,7 @@ export async function POST(req: NextRequest) {
                       from: "Atena IA Executiva <atena@nexustreinamento.com>",
                       to: ["vendas@nexustreinamento.com", "geanderson@nexustreinamento.com"],
                       subject: args.assunto,
-                      html: `<div style="font-family: Arial, sans-serif;">${args.conteudo_email.replace(/\\n/g, '<br>')}</div>`
+                      html: `<div style="font-family: Arial, sans-serif;">${args.conteudo_email.replace(/\n/g, '<br>')}</div>`
                     })
                   });
                   if (res.ok) {
@@ -441,30 +442,28 @@ export async function POST(req: NextRequest) {
               resultText = "Ferramenta não suportada.";
             }
           } catch (e: any) {
-            resultText = `Erro ao executar ${call.name}: ${e.message}`;
+            resultText = `Erro ao executar ${name}: ${e.message}`;
           }
 
-          toolResults.push({
-            toolResult: {
-              toolUseId: call.toolUseId!,
-              content: [{ json: { result: resultText } }]
+          toolResultsParts.push({
+            functionResponse: {
+              name: name,
+              response: { result: resultText },
+              ...(id ? { id } : {})
             }
           });
         }
 
-        // Adiciona as respostas das ferramentas como uma mensagem do usuário
-        bedrockMessages.push({
+        // Adiciona as respostas das ferramentas como uma mensagem do usuário no formato do Gemini
+        geminiMessages.push({
           role: "user",
-          content: toolResults
+          parts: toolResultsParts
         });
 
       } else {
         // Modelo decidiu responder diretamente
         isDone = true;
-        const textBlocks = output.content?.filter((c: any) => c.text);
-        if (textBlocks && textBlocks.length > 0) {
-          finalAnswer = textBlocks.map((c: any) => c.text).join("\n");
-        }
+        finalAnswer = response.text || "Estou aqui. Como posso ajudar você agora, Gean?";
       }
     }
 
@@ -519,10 +518,9 @@ export async function POST(req: NextRequest) {
 
   } catch (error: any) {
     console.error("[ATENA_CORE_ERROR]:", error);
-    // Mesmo em falha neural severa, asseguramos resposta e resiliência
     return NextResponse.json({ 
-      error: "Falha na conexão neural com AWS Bedrock. " + error.message,
-      content: "Minhas conexões neurais na nuvem sofreram uma instabilidade momentânea, mas continuo monitorando os seus sistemas.",
+      error: "Falha na conexão neural com Google Gemini. " + error.message,
+      content: "Minhas conexões neurais com o cérebro do Google sofreram uma instabilidade momentânea, mas continuo monitorando os seus sistemas.",
       role: "assistant"
     }, { status: 500 });
   }
