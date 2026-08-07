@@ -140,14 +140,31 @@ export default function AtenaTerminalPage() {
   }
 
   const INITIAL_MESSAGES: Message[] = [
-    { role: 'system', content: 'Iniciando Kernel Neural... Conectando ao AWS Bedrock (us-east-1)...' },
-    { role: 'system', content: 'Acesso Soberano Autorizado. Bem-vindo, Comandante.' }
+    { role: 'system', content: 'Iniciando Kernel Neural... Conectando ao Google Gemini (gemini-3.6-flash)...' },
+    { role: 'system', content: 'Acesso Soberano Autorizado. Bem-vindo, Gean.' }
   ];
 
   const [sessions, setSessions] = useState<ChatSession[]>([]);
   const [activeSessionId, setActiveSessionId] = useState<string>('');
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [visitorName, setVisitorName] = useState('Gean');
+
+  // Detectar nome do interlocutor a partir das mensagens da sessão atual
+  useEffect(() => {
+    let detected = "Gean";
+    for (const msg of messages) {
+      if (msg.role === 'user' && msg.content) {
+        const text = msg.content.toLowerCase();
+        const match = text.match(/(?:meu nome é|me chamo|eu sou a|eu sou o|aqui é a|aqui é o)\s+([a-zA-ZáéíóúâêîôûãõçñÀ-ÖØ-öø-ÿ]+)/i);
+        if (match && match[1]) {
+          const rawName = match[1].trim();
+          detected = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+        }
+      }
+    }
+    setVisitorName(detected);
+  }, [messages]);
 
   // Carregar sessões e mensagens do localStorage na montagem do componente
   useEffect(() => {
@@ -822,7 +839,7 @@ export default function AtenaTerminalPage() {
             {messages.map((msg, i) => (
               <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'} w-full`}>
                 <span className="text-[10px] text-slate-600 mb-2 uppercase tracking-widest">
-                  {msg.role === 'user' ? 'Comandante' : msg.role === 'system' ? 'System' : 'Atena'}
+                  {msg.role === 'user' ? visitorName : msg.role === 'system' ? 'System' : 'Atena'}
                 </span>
                 <div 
                   className={`w-full p-5 rounded-lg text-sm leading-relaxed whitespace-pre-wrap
