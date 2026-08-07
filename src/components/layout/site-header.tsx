@@ -87,7 +87,9 @@ export function SiteHeader() {
     const gCode = googleCodeMap[langCode] || 'pt';
     const domain = window.location.hostname;
     document.cookie = `googtrans=/pt/${gCode}; path=/`;
-    document.cookie = `googtrans=/pt/${gCode}; path=/; domain=.${domain}`;
+    if (domain.includes('.') && !domain.includes('localhost')) {
+      document.cookie = `googtrans=/pt/${gCode}; path=/; domain=.${domain}`;
+    }
     window.location.reload();
   };
 

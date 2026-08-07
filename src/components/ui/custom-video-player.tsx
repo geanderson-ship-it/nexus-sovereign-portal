@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLocale } from '@/hooks/use-locale';
 
 interface CustomVideoPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
   src: string;
@@ -11,10 +12,36 @@ interface CustomVideoPlayerProps extends React.VideoHTMLAttributes<HTMLVideoElem
   playButtonClassName?: string;
 }
 
+// Supported languages list for subtitles
+const supportedSubLanguages = [
+  { code: 'en-US', label: 'English', srclang: 'en' },
+  { code: 'es-ES', label: 'Español', srclang: 'es' },
+  { code: 'de-DE', label: 'Deutsch', srclang: 'de' },
+  { code: 'fr-FR', label: 'Français', srclang: 'fr' },
+  { code: 'ja-JP', label: '日本語', srclang: 'ja' },
+  { code: 'zh-CN', label: '简体中文', srclang: 'zh' },
+  { code: 'ar-AE', label: 'العربية', srclang: 'ar' }
+];
+
+// Helper to parse filename from src URL
+const getFileName = (url: string) => {
+  try {
+    const parts = url.split('/');
+    const lastPart = parts[parts.length - 1];
+    const cleanName = lastPart.split('?')[0];
+    return cleanName.replace(/\.[^/.]+$/, "");
+  } catch (e) {
+    return '';
+  }
+};
+
 export function CustomVideoPlayer({ src, className, containerClassName, playButtonClassName, ...props }: CustomVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const { locale } = useLocale();
+
+  const fileName = getFileName(src);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -75,7 +102,18 @@ export function CustomVideoPlayer({ src, className, containerClassName, playButt
         webkit-playsinline="true"
         preload="auto"
         {...props}
-      />
+      >
+        {fileName && supportedSubLanguages.map((lang) => (
+          <track
+            key={lang.code}
+            kind="subtitles"
+            src={`/subtitles/${fileName}_${lang.code}.vtt`}
+            srcLang={lang.srclang}
+            label={lang.label}
+            default={locale === lang.code}
+          />
+        ))}
+      </video>
 
       {/* Center Play/Pause Overlay */}
       <div className={cn(
