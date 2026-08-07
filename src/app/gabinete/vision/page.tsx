@@ -869,123 +869,131 @@ https://nexustreinamento.com`;
       }
 
       logToAtena(`[WebRTC] Criando conexão com ${peerName}...`);
-      const pc = new RTCPeerConnection({
-        iceServers: [
-          // STUN — descoberta de IP público
-          { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:stun1.l.google.com:19302' },
-          // TURN Nexus — servidor próprio EC2 (us-east-1) — garante conectividade atrás de firewalls corporativos
-          {
-            urls: [
-              'turn:52.90.49.196:3478',           // UDP/TCP
-              'turn:52.90.49.196:3478?transport=tcp', // TCP forçado
-              'turns:52.90.49.196:5349'            // TLS
-            ],
-            username: process.env.NEXT_PUBLIC_TURN_USER || 'nexusvision',
-            credential: process.env.NEXT_PUBLIC_TURN_PASSWORD || 'NxV!5JR00DB3ms0lhbsr'
-          }
-        ]
-      });
-
-      peerConnectionsRef.current.set(targetPeerId, pc);
-
-      // Adiciona tracks locais à conexão
-      if (localStreamRef.current) {
-        localStreamRef.current.getTracks().forEach(track => {
-          pc.addTrack(track, localStreamRef.current!);
+      try {
+        const pc = new RTCPeerConnection({
+          iceServers: [
+            // STUN — descoberta de IP público
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'stun:stun1.l.google.com:19302' },
+            // TURN Nexus — servidor próprio EC2 (us-east-1) — garante conectividade atrás de firewalls corporativos
+            {
+              urls: [
+                'turn:52.90.49.196:3478',           // UDP/TCP
+                'turn:52.90.49.196:3478?transport=tcp', // TCP forçado
+                'turns:52.90.49.196:5349'            // TLS
+              ],
+              username: process.env.NEXT_PUBLIC_TURN_USER || 'nexusvision',
+              credential: process.env.NEXT_PUBLIC_TURN_PASSWORD || 'NxV!5JR00DB3ms0lhbsr'
+            }
+          ]
         });
-      }
 
-      // Handler para candidatos ICE locais (com escalonamento para evitar sobrecarregar o DynamoDB com bursts rápidos de Trickle ICE)
-      let candidateIndex = 0;
-      pc.onicecandidate = (event) => {
-        if (event.candidate) {
-          candidateIndex++;
-          const staggerDelay = candidateIndex * 200; // 200ms de intervalo entre cada candidato
-          setTimeout(() => {
-            fetch('/api/vision/signal', {
+        peerConnectionsRef.current.set(targetPeerId, pc);
+
+        // Adiciona tracks locais à conexão
+        if (localStreamRef.current) {
+          localStreamRef.current.getTracks().forEach(track => {
+            try {
+              pc.addTrack(track, localStreamRef.current!);
+            } catch (err: any) {
+              logToAtena(`[Erro Track] Falha ao adicionar track: ${err.message}`);
+            }
+          });
+        }
+
+        // Handler para candidatos ICE locais (com escalonamento para evitar sobrecarregar o DynamoDB com bursts rápidos de Trickle ICE)
+        let candidateIndex = 0;
+        pc.onicecandidate = (event) => {
+          if (event.candidate) {
+            candidateIndex++;
+            const staggerDelay = candidateIndex * 200; // 200ms de intervalo entre cada candidato
+            setTimeout(() => {
+              fetch('/api/vision/signal', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  roomId,
+                  type: 'webrtc-candidate',
+                  sender: localPeerId,
+                  data: {
+                    target: targetPeerId,
+                    candidate: event.candidate
+                  }
+                })
+              }).catch(e => console.error("Falha ao enviar ICE candidato:", e));
+            }, staggerDelay);
+          }
+        };
+
+        pc.oniceconnectionstatechange = () => {
+          console.log(`ICE Connection State com ${peerName}: ${pc.iceConnectionState}`);
+          if (pc.iceConnectionState === 'failed' || pc.iceConnectionState === 'disconnected') {
+            logToAtena(`[WebRTC] Conexão perdida com ${peerName}.`);
+          }
+        };
+
+        // Receber track remota do parceiro
+        pc.ontrack = (event) => {
+          console.log(`Recebeu track remota de ${peerName}`);
+          const remoteStream = event.streams[0] || null;
+          setRemotePeers(prev => {
+            const existing = prev.find(p => p.peerId === targetPeerId);
+            if (existing) {
+              return prev.map(p => p.peerId === targetPeerId ? { ...p, stream: remoteStream } : p);
+            }
+            return [...prev, { peerId: targetPeerId, name: peerName, stream: remoteStream }];
+          });
+          // BUG CORRIGIDO: marca o status de conexão remota como ativo
+          if (remoteStream) {
+            setIsRemoteConnected(true);
+            setRemotePeerName(peerName);
+          }
+          logToAtena(`[WebRTC] Feed de vídeo de ${peerName} conectado.`);
+        };
+
+        // Se fomos nós quem criamos a conexão por ter ID maior, iniciamos o DataChannel e a Oferta
+        if (localPeerId > targetPeerId) {
+          logToAtena(`[WebRTC] Iniciando chamada com ${peerName}...`);
+          const dc = pc.createDataChannel('vision-chat');
+          dataChannelsRef.current.set(targetPeerId, dc);
+          setupDataChannel(targetPeerId, dc);
+
+          pc.createOffer().then(async (offer) => {
+            await pc.setLocalDescription(offer);
+            const response = await fetch('/api/vision/signal', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 roomId,
-                type: 'webrtc-candidate',
+                type: 'webrtc-offer',
                 sender: localPeerId,
                 data: {
                   target: targetPeerId,
-                  candidate: event.candidate
+                  offer
                 }
               })
-            }).catch(e => console.error("Falha ao enviar ICE candidato:", e));
-          }, staggerDelay);
-        }
-      };
-
-      pc.oniceconnectionstatechange = () => {
-        console.log(`ICE Connection State com ${peerName}: ${pc.iceConnectionState}`);
-        if (pc.iceConnectionState === 'failed' || pc.iceConnectionState === 'disconnected') {
-          logToAtena(`[WebRTC] Conexão perdida com ${peerName}.`);
-        }
-      };
-
-      // Receber track remota do parceiro
-      pc.ontrack = (event) => {
-        console.log(`Recebeu track remota de ${peerName}`);
-        const remoteStream = event.streams[0] || null;
-        setRemotePeers(prev => {
-          const existing = prev.find(p => p.peerId === targetPeerId);
-          if (existing) {
-            return prev.map(p => p.peerId === targetPeerId ? { ...p, stream: remoteStream } : p);
-          }
-          return [...prev, { peerId: targetPeerId, name: peerName, stream: remoteStream }];
-        });
-        // BUG CORRIGIDO: marca o status de conexão remota como ativo
-        if (remoteStream) {
-          setIsRemoteConnected(true);
-          setRemotePeerName(peerName);
-        }
-        logToAtena(`[WebRTC] Feed de vídeo de ${peerName} conectado.`);
-      };
-
-      // Se fomos nós quem criamos a conexão por ter ID maior, iniciamos o DataChannel e a Oferta
-      if (localPeerId > targetPeerId) {
-        logToAtena(`[WebRTC] Iniciando chamada com ${peerName}...`);
-        const dc = pc.createDataChannel('vision-chat');
-        dataChannelsRef.current.set(targetPeerId, dc);
-        setupDataChannel(targetPeerId, dc);
-
-        pc.createOffer().then(async (offer) => {
-          await pc.setLocalDescription(offer);
-          const response = await fetch('/api/vision/signal', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              roomId,
-              type: 'webrtc-offer',
-              sender: localPeerId,
-              data: {
-                target: targetPeerId,
-                offer
-              }
-            })
+            });
+            if (!response.ok) {
+              const errText = await response.text();
+              throw new Error(`Servidor sinalizador retornou status ${response.status}: ${errText}`);
+            }
+            logToAtena(`[WebRTC] Oferta enviada com sucesso.`);
+          }).catch(err => {
+            console.error("Erro ao criar/enviar oferta:", err);
+            logToAtena(`[Erro] Falha ao criar/enviar oferta: ${err.message}`);
           });
-          if (!response.ok) {
-            const errText = await response.text();
-            throw new Error(`Servidor sinalizador retornou status ${response.status}: ${errText}`);
-          }
-          logToAtena(`[WebRTC] Oferta enviada com sucesso.`);
-        }).catch(err => {
-          console.error("Erro ao criar/enviar oferta:", err);
-          logToAtena(`[Erro] Falha ao criar/enviar oferta: ${err.message}`);
-        });
-      } else {
-        // Se formos o recebedor, escutamos o canal que o iniciador criará
-        pc.ondatachannel = (event) => {
-          dataChannelsRef.current.set(targetPeerId, event.channel);
-          setupDataChannel(targetPeerId, event.channel);
-        };
-      }
+        } else {
+          // Se formos o recebedor, escutamos o canal que o iniciador criará
+          pc.ondatachannel = (event) => {
+            dataChannelsRef.current.set(targetPeerId, event.channel);
+            setupDataChannel(targetPeerId, event.channel);
+          };
+        }
 
-      return pc;
+        return pc;
+      } catch (err: any) {
+        logToAtena(`[Erro WebRTC Geral] Falha ao instanciar conexão para ${peerName}: ${err.message}`);
+        throw err;
     };
 
     const setupDataChannel = (peerId: string, channel: RTCDataChannel) => {
