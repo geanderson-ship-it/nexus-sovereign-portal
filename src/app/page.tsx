@@ -19,7 +19,9 @@ import {
     GitBranch, 
     ChevronDown, 
     Plus, 
-    Search 
+    Search,
+    X,
+    PhoneCall 
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -36,6 +38,7 @@ export default function HomePage() {
 
     return (
         <div className="min-h-screen bg-[#080b10] text-[#f0f6fc] font-sans selection:bg-blue-500/30 relative">
+            <WelcomeAmbassadorGate />
 
             {/* BACKGROUND IMAGE */}
             <div className="fixed inset-0 z-0 pointer-events-none">
@@ -367,4 +370,108 @@ export default function HomePage() {
             </div>
         </div>
     );
+}
+
+const HAS_ACTIVE_AMBASSADOR = false; // Mude para true quando fecharmos o primeiro cliente!
+
+function WelcomeAmbassadorGate() {
+  const [isOpen, setIsOpen] = React.useState(HAS_ACTIVE_AMBASSADOR);
+  
+  if (!isOpen) return null;
+  
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 animate-in fade-in duration-500">
+      
+      {/* GLOWS */}
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+      {/* GATE CONTAINER */}
+      <div className="relative w-full max-w-5xl bg-gradient-to-b from-[#0f141c] to-[#080b10] border border-blue-500/30 rounded-[32px] p-6 md:p-10 shadow-[0_0_100px_rgba(37,99,235,0.25)] flex flex-col md:flex-row gap-8 overflow-hidden group">
+        
+        {/* CYBER LINES */}
+        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-400 rounded-tl-xl" />
+        <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-blue-400 rounded-tr-xl" />
+        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-blue-400 rounded-bl-xl" />
+        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-blue-400 rounded-br-xl" />
+
+        {/* CLOSE BUTTON */}
+        <button 
+          onClick={() => setIsOpen(false)}
+          className="absolute top-6 right-6 z-50 p-2 rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-all shadow-lg hover:scale-105 cursor-pointer"
+          title="Entrar no Portal Principal"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* LEFT COLUMN: THE VIDEOPLAYER */}
+        <div className="w-full md:w-[55%] flex flex-col justify-center">
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-blue-500/20 bg-black shadow-2xl">
+            <video 
+              src="https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Sofia_Inova_moda.mp4"
+              controls
+              autoPlay
+              muted
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: INFORMATION & CTAs */}
+        <div className="w-full md:w-[45%] flex flex-col justify-between py-2 text-left">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-emerald-400">Novo Case Global</span>
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl font-headline font-black uppercase text-white leading-none">
+              A Primeira Cidade <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400">
+                Embaixadora Nexus
+              </span>
+            </h2>
+
+            <p className="text-xs text-slate-400 leading-relaxed font-sans font-light">
+              Nossa tecnologia inteligente de governança foi oficialmente implantada. Conheça a embaixadora virtual local e veja como as rotas de turismo, segurança e inteligência comercial estão operando sob a nossa infraestrutura soberana.
+            </p>
+
+            {/* QUICK STATS */}
+            <div className="grid grid-cols-2 gap-4 py-2">
+              <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl">
+                <span className="block text-[8px] text-slate-500 uppercase tracking-widest">Cidade</span>
+                <span className="text-xs font-semibold text-white">Cidade Modelo</span>
+              </div>
+              <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl">
+                <span className="block text-[8px] text-slate-500 uppercase tracking-widest">Tecnologia</span>
+                <span className="text-xs font-semibold text-blue-400">Embaixadora AI</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3 mt-6">
+            {/* CTA 1: WHATSAPP GEAN */}
+            <a 
+              href="https://wa.me/5551999799582?text=Olá%20Gean,%20gostaria%20de%20saber%20mais%20sobre%20como%20trazer%20a%20Embaixadora%20Nexus%20para%20minha%20cidade."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-black uppercase tracking-widest rounded-full transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:scale-[1.02]"
+            >
+              <PhoneCall className="w-3.5 h-3.5" />
+              Trazer para Minha Cidade
+            </a>
+
+            {/* CTA 2: PROCEED */}
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="w-full py-3 px-4 bg-transparent border border-slate-700 hover:border-blue-500 text-slate-300 hover:text-white text-xs font-bold uppercase tracking-widest rounded-full transition-all text-center cursor-pointer"
+            >
+              Entrar no Portal da Nexus
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
 }
