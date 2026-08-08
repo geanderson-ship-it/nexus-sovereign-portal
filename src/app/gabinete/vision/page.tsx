@@ -802,7 +802,11 @@ https://nexustreinamento.com`;
             height: { ideal: 480, max: 600 },
             frameRate: { ideal: 15, max: 24 }
           },
-          audio: true
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }
         });
         localStreamRef.current = localStream;
         setStream(localStream);
