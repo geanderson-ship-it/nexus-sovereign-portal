@@ -19,7 +19,7 @@ type Proposal = {
   id: string;
   city: string; // Para empresas, isso será o nome do Cliente/Rede
   title: string;
-  category?: 'municipios' | 'lojas' | 'empresas';
+  category?: 'municipios' | 'lojas' | 'empresas' | 'internacionais';
   tiers: PricingTier[];
 };
 
@@ -587,12 +587,58 @@ const proposalsData: Proposal[] = [
         ]
       }
     ]
+  },
+  {
+    id: "costa-rica",
+    city: "Costa Rica (ICT)",
+    title: "Elena: Embajadora Virtual y Concierge Digital de Costa Rica",
+    category: "internacionais",
+    tiers: [
+      {
+        id: "cr-tier-1",
+        title: "Plano Soberano",
+        subtitle: "Totems, WhatsApp, Voz e Interacciones Ilimitadas",
+        color: "amber",
+        setup: "$ 120.000 USD",
+        mensalidade: "$ 8.000 USD/mês",
+        features: [
+          "Elena conversando en más de 50 idiomas vía WhatsApp sin límite de tokens.",
+          "Guía oficial de ecoturismo: playas, parques, reservas y hospedajes.",
+          "Totems interactivos con IA de Avatar en Vídeo en aeropuertos y parques.",
+          "Módulo de monetización: patrocinio del comercio local (Hoteles, Marinas, Guías).",
+          "Nube privada y blindada con soberanía de datos del Gobierno sin límite de tráfico."
+        ]
+      }
+    ]
+  },
+  {
+    id: "dubai",
+    city: "Dubai (DET)",
+    title: "Amira: Digital Concierge & Smart City Hub",
+    category: "internacionais",
+    tiers: [
+      {
+        id: "db-tier-1",
+        title: "Plano Soberano",
+        subtitle: "CCO, Smart Airport e Interacciones Ilimitadas",
+        color: "amber",
+        setup: "$ 150.000 USD",
+        mensalidade: "$ 15.000 USD/mês",
+        features: [
+          "Amira Concierge conversando en 50+ idiomas vía web y WhatsApp sin límite de tokens.",
+          "Totems interactivos físicos en el Aeropuerto de Dubai (DXB) y centros comerciales.",
+          "Flujo de voz con bajísima latencia para atención presencial.",
+          "Mapeo de datos integrado al CCO gubernamental (eSupply/Smart Supplier).",
+          "Infraestructura cloud dedicada de alta performance y procesamiento ilimitado."
+        ]
+      }
+    ]
   }
 ];
 
 export default function PropostasPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState<'municipios' | 'lojas' | 'empresas'>('municipios');
+  const [activeCategory, setActiveCategory] = useState<'municipios' | 'lojas' | 'empresas' | 'internacionais'>('municipios');
   const [expandedTiers, setExpandedTiers] = useState<Record<string, boolean>>({});
 
   const toggleTier = (tierId: string) => {
@@ -649,7 +695,7 @@ export default function PropostasPage() {
 
         {/* Categoria Tabs */}
         <div className="flex flex-wrap gap-3 mb-8">
-          {(['municipios', 'lojas', 'empresas'] as const).map((cat) => (
+          {(['municipios', 'lojas', 'empresas', 'internacionais'] as const).map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
@@ -661,7 +707,8 @@ export default function PropostasPage() {
             >
               {cat === 'municipios' ? 'Municípios (GovTech)' : 
                cat === 'lojas' ? 'Varejo (Lojas/InovaModa)' : 
-               'Indústria (B2B)'}
+               cat === 'empresas' ? 'Indústria (B2B)' : 
+               'Internacionais (Dólar)'}
             </button>
           ))}
         </div>

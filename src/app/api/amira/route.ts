@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Tentativa em cascata de modelos da família Flash (menor latência e menor custo)
-    const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-3.6-flash'];
+    const modelsToTry = ['gemini-1.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash', 'gemini-3.6-flash'];
     let responseText = '';
     let lastError = null;
 

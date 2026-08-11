@@ -76,7 +76,7 @@ export function useGeminiLive(persona: 'maga' | 'orion' = 'maga', options: { isF
 
         const setupMessage = {
           setup: {
-            model: 'models/gemini-2.0-flash-exp',
+            model: 'models/gemini-3.1-flash-live-preview',
             generation_config: {
               response_modalities: ['audio'],
               speech_config: {

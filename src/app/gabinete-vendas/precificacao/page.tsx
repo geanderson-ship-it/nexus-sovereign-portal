@@ -625,7 +625,7 @@ export default function PrecificacaoPage() {
                   <Card className="bg-slate-900/60 border-blue-950/80 border-2 hover:border-blue-500/50 transition-colors">
                     <CardHeader>
                       <CardTitle className="text-blue-400 text-base">👑 Soberano</CardTitle>
-                      <CardDescription>Rede Completa (> 15 Lojas)</CardDescription>
+                      <CardDescription>Rede Completa (&gt; 15 Lojas)</CardDescription>
                     </CardHeader>
                     <CardContent className="text-xs space-y-2 text-slate-300">
                       <p><strong>Setup Total:</strong> R$ 90k (Equiv. R$ 4.500/loja)</p>

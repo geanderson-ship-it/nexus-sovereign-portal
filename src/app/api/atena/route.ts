@@ -256,10 +256,9 @@ export async function POST(req: NextRequest) {
 
     while (!isDone && loopCount < MAX_LOOPS) {
       loopCount++;
-
       let response;
       let lastError;
-      const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-3.6-flash'];
+      const modelsToTry = ['gemini-1.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash', 'gemini-3.6-flash'];
 
       for (const modelName of modelsToTry) {
         try {

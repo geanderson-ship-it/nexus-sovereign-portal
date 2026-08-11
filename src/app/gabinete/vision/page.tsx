@@ -998,6 +998,7 @@ https://nexustreinamento.com`;
       } catch (err: any) {
         logToAtena(`[Erro WebRTC Geral] Falha ao instanciar conexão para ${peerName}: ${err.message}`);
         throw err;
+      }
     };
 
     const setupDataChannel = (peerId: string, channel: RTCDataChannel) => {
