@@ -463,7 +463,7 @@ export default function PublicSchedulerPage() {
               </div>
 
               <div className="space-y-3 max-w-md mx-auto">
-                <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block text-left">Link Seguro do Nexus Vision (Videoconferência)</span>
+                <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block text-left">Link Seguro do Nexus Vision Connection (Videoconferência)</span>
                 <div className="flex gap-2">
                   <Input
                     readOnly

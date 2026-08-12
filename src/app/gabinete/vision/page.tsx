@@ -1850,7 +1850,7 @@ https://nexustreinamento.com`;
             N
           </div>
           <h1 className="text-2xl font-black tracking-tight text-white mb-2 uppercase">
-            Nexus Vision <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1">Soberano</span>
+            Nexus Vision Connection <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1">Soberano</span>
           </h1>
           <p className="text-xs text-slate-400 mb-6 max-w-xs mx-auto leading-relaxed">
             Identifique-se para entrar na videoconferência criptografada e traduzida da Nexus Holding Group.
@@ -1947,8 +1947,10 @@ https://nexustreinamento.com`;
             N
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-black tracking-tight text-white flex items-center gap-2">
-              Nexus Vision <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-semibold px-2 py-0.5 rounded-full uppercase tracking-widest">Soberano</span>
+            <h1 className="text-xl md:text-2xl font-black tracking-wider text-white flex items-center gap-2">
+              <span className="text-slate-100 font-extrabold">Nexus Vision</span>
+              <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent font-medium animate-pulse">Connection</span>
+              <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-semibold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1 shadow-[0_0_10px_rgba(99,102,241,0.2)]">Soberano</span>
             </h1>
             <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold font-mono">Sala ID: nhg-vision-soberano-77</p>
           </div>
@@ -2198,7 +2200,7 @@ https://nexustreinamento.com`;
                         
                         <div className="pt-3 border-t border-slate-800/40 max-w-[240px] mx-auto">
                           <p className="text-[11px] md:text-xs text-slate-300 leading-relaxed font-sans font-normal tracking-wide">
-                            Nexus Vision — Tradução poliglota em tempo real, segurança absoluta e videoconferência soberana corporativa.
+                            Nexus Vision Connection — Tradução poliglota em tempo real, segurança absoluta e videoconferência soberana corporativa.
                           </p>
                         </div>
                       </div>
@@ -2283,7 +2285,7 @@ https://nexustreinamento.com`;
                         
                         <div className="pt-3 border-t border-slate-800/40 max-w-[240px] mx-auto">
                           <p className="text-[11px] md:text-xs text-slate-300 leading-relaxed font-sans font-normal tracking-wide">
-                            Nexus Vision — Tradução poliglota em tempo real, segurança absoluta e videoconferência soberana corporativa.
+                            Nexus Vision Connection — Tradução poliglota em tempo real, segurança absoluta e videoconferência soberana corporativa.
                           </p>
                         </div>
                       </div>
@@ -2662,7 +2664,7 @@ https://nexustreinamento.com`;
                   <Languages className="w-5 h-5 animate-pulse text-indigo-400" /> Ata de Reunião da Atena
                 </h3>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wider font-mono mt-1">
-                  Nexus Vision - Compilado via Inteligência Artificial Soberana
+                  Nexus Vision Connection - Compilado via Inteligência Artificial Soberana
                 </p>
               </div>
               <button 
