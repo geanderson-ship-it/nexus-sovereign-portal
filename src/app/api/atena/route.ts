@@ -543,6 +543,13 @@ export async function POST(req: NextRequest) {
         .replace(/\[EN\]/gi, "<lang xml:lang='en-US'>")
         .replace(/\[\/EN\]/gi, "</lang>");
 
+      // Correções fonéticas para o Azure TTS pronunciar com som de J e acentuação correta
+      cleanText = cleanText
+        .replace(/Geânderson/gi, 'Jeânderson')
+        .replace(/Geanderson/gi, 'Jeânderson')
+        .replace(/\bGean\b/gi, 'Jeân')
+        .replace(/Nexus/gi, 'Nécsus');
+
       const azureKey = process.env.AZURE_SPEECH_KEY || "";
       const ssml = `<speak version='1.0' xml:lang='pt-BR'><voice xml:lang='pt-BR' xml:gender='Female' name='pt-BR-FranciscaNeural'>${cleanText}</voice></speak>`;
 
