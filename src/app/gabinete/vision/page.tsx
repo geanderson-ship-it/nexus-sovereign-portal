@@ -582,6 +582,12 @@ export default function VisionSoberanoPage() {
   const isComponentMountedRef = useRef(true);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      document.title = "Nexus Vision Connection | Nexus Holding Group";
+    }
+  }, []);
+
+  useEffect(() => {
     isMutedRef.current = isMuted;
   }, [isMuted]);
 
@@ -2038,8 +2044,8 @@ https://nexustreinamento.com`;
                 )}
 
                 {/* Dynamic Overlay labels */}
-                <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
-                  <User className="w-3 h-3 text-blue-400" />
+                <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-amber-500/20 backdrop-blur-md border border-amber-500/40 text-[10px] font-bold text-amber-300 flex items-center gap-1.5 z-10 shadow-[0_0_15px_rgba(245,158,11,0.25)] animate-pulse">
+                  <User className="w-3 h-3 text-amber-400" />
                   <span>{isJoiner ? `${guestName} (Você)` : 'Diretor Geanderson (Você)'}</span>
                 </div>
 
