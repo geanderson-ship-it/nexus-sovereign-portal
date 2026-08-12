@@ -150,6 +150,34 @@ export default function AtenaTerminalPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [visitorName, setVisitorName] = useState('Gean');
 
+  const saveSessionsToLocalStorage = (sessionsList: ChatSession[]) => {
+    const sanitized = sessionsList.map(session => ({
+      ...session,
+      messages: session.messages.map(m => {
+        if (m.imageBase64) {
+          const { imageBase64, ...rest } = m;
+          return { ...rest, imagePlaceholder: true };
+        }
+        return m;
+      })
+    }));
+
+    try {
+      localStorage.setItem('nexus_atena_sessions', JSON.stringify(sanitized));
+    } catch (e) {
+      console.warn("Falha ao salvar no localStorage devido ao limite de quota:", e);
+      try {
+        const sliced = sanitized.slice(0, 3);
+        localStorage.setItem('nexus_atena_sessions', JSON.stringify(sliced));
+      } catch (e2) {
+        console.error("Limpando histórico do localStorage para evitar crash da aplicação.", e2);
+        try {
+          localStorage.removeItem('nexus_atena_sessions');
+        } catch (e3) {}
+      }
+    }
+  };
+
   // Detectar nome do interlocutor a partir das mensagens da sessão atual
   useEffect(() => {
     let detected = "Gean";
@@ -168,8 +196,14 @@ export default function AtenaTerminalPage() {
 
   // Carregar sessões e mensagens do localStorage na montagem do componente
   useEffect(() => {
-    const savedSessions = localStorage.getItem('nexus_atena_sessions');
-    const savedActiveId = localStorage.getItem('nexus_atena_active_session_id');
+    let savedSessions = null;
+    let savedActiveId = null;
+    try {
+      savedSessions = localStorage.getItem('nexus_atena_sessions');
+      savedActiveId = localStorage.getItem('nexus_atena_active_session_id');
+    } catch (e) {
+      console.warn("Falha ao ler do localStorage:", e);
+    }
 
     let parsedSessions: ChatSession[] = [];
     if (savedSessions) {
@@ -188,8 +222,10 @@ export default function AtenaTerminalPage() {
         messages: INITIAL_MESSAGES
       };
       parsedSessions = [defaultSession];
-      localStorage.setItem('nexus_atena_sessions', JSON.stringify(parsedSessions));
-      localStorage.setItem('nexus_atena_active_session_id', defaultSession.id);
+      saveSessionsToLocalStorage(parsedSessions);
+      try {
+        localStorage.setItem('nexus_atena_active_session_id', defaultSession.id);
+      } catch (e) {}
       setSessions(parsedSessions);
       setActiveSessionId(defaultSession.id);
       setMessages(INITIAL_MESSAGES);
@@ -199,7 +235,9 @@ export default function AtenaTerminalPage() {
         ? savedActiveId
         : parsedSessions[0].id;
       setActiveSessionId(activeId);
-      localStorage.setItem('nexus_atena_active_session_id', activeId);
+      try {
+        localStorage.setItem('nexus_atena_active_session_id', activeId);
+      } catch (e) {}
       const activeSession = parsedSessions.find(s => s.id === activeId);
       setMessages(activeSession ? activeSession.messages : INITIAL_MESSAGES);
     }
@@ -231,7 +269,7 @@ export default function AtenaTerminalPage() {
     const sessionsChanged = JSON.stringify(updatedSessions) !== JSON.stringify(sessions);
     if (sessionsChanged) {
       setSessions(updatedSessions);
-      localStorage.setItem('nexus_atena_sessions', JSON.stringify(updatedSessions));
+      saveSessionsToLocalStorage(updatedSessions);
     }
   }, [messages, activeSessionId, sessions]);
 
@@ -239,7 +277,9 @@ export default function AtenaTerminalPage() {
     const session = sessions.find(s => s.id === sessionId);
     if (session) {
       setActiveSessionId(sessionId);
-      localStorage.setItem('nexus_atena_active_session_id', sessionId);
+      try {
+        localStorage.setItem('nexus_atena_active_session_id', sessionId);
+      } catch (e) {}
       setMessages(session.messages);
       setIsHistoryOpen(false);
       stopAudio();
@@ -258,8 +298,10 @@ export default function AtenaTerminalPage() {
     const updatedSessions = [newSession, ...sessions];
     setSessions(updatedSessions);
     setActiveSessionId(newSession.id);
-    localStorage.setItem('nexus_atena_sessions', JSON.stringify(updatedSessions));
-    localStorage.setItem('nexus_atena_active_session_id', newSession.id);
+    saveSessionsToLocalStorage(updatedSessions);
+    try {
+      localStorage.setItem('nexus_atena_active_session_id', newSession.id);
+    } catch (e) {}
     setMessages(INITIAL_MESSAGES);
     setIsHistoryOpen(false);
     stopAudio();
@@ -273,19 +315,21 @@ export default function AtenaTerminalPage() {
       const remainingSessions = sessions.filter(s => s.id !== sessionId);
       if (remainingSessions.length > 0) {
         setSessions(remainingSessions);
-        localStorage.setItem('nexus_atena_sessions', JSON.stringify(remainingSessions));
+        saveSessionsToLocalStorage(remainingSessions);
       }
       return;
     }
 
     const updatedSessions = sessions.filter(s => s.id !== sessionId);
     setSessions(updatedSessions);
-    localStorage.setItem('nexus_atena_sessions', JSON.stringify(updatedSessions));
+    saveSessionsToLocalStorage(updatedSessions);
 
     if (activeSessionId === sessionId) {
       const nextSession = updatedSessions[0];
       setActiveSessionId(nextSession.id);
-      localStorage.setItem('nexus_atena_active_session_id', nextSession.id);
+      try {
+        localStorage.setItem('nexus_atena_active_session_id', nextSession.id);
+      } catch (err) {}
       setMessages(nextSession.messages);
     }
   };
