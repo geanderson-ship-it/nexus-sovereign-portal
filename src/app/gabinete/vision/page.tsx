@@ -942,22 +942,28 @@ https://nexustreinamento.com`;
           }
         };
 
-        // Receber track remota do parceiro
+        // Receber track remota do parceiro (com fallback robusto para navegadores/dispositivos sem agrupamento automático de stream)
         pc.ontrack = (event) => {
           console.log(`Recebeu track remota de ${peerName}`);
           const remoteStream = event.streams[0] || null;
+          
           setRemotePeers(prev => {
             const existing = prev.find(p => p.peerId === targetPeerId);
-            if (existing) {
-              return prev.map(p => p.peerId === targetPeerId ? { ...p, stream: remoteStream } : p);
+            let streamToUse = remoteStream;
+            
+            if (!streamToUse) {
+              streamToUse = existing?.stream || new MediaStream();
+              (streamToUse as MediaStream).addTrack(event.track);
             }
-            return [...prev, { peerId: targetPeerId, name: peerName, stream: remoteStream }];
+            
+            if (existing) {
+              return prev.map(p => p.peerId === targetPeerId ? { ...p, stream: streamToUse } : p);
+            }
+            return [...prev, { peerId: targetPeerId, name: peerName, stream: streamToUse }];
           });
-          // BUG CORRIGIDO: marca o status de conexão remota como ativo
-          if (remoteStream) {
-            setIsRemoteConnected(true);
-            setRemotePeerName(peerName);
-          }
+          
+          setIsRemoteConnected(true);
+          setRemotePeerName(peerName);
           logToAtena(`[WebRTC] Feed de vídeo de ${peerName} conectado.`);
         };
 
