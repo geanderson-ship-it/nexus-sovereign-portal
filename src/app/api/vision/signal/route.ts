@@ -112,6 +112,29 @@ export async function POST(req: NextRequest) {
       Item: item,
     }));
 
+    // EXCLUSÃO AUTOMÁTICA DE SINAIS EXPIRADOS (AUTO-LIMPEZA DYNAMODB)
+    // Limpa registros obsoletos da sala em paralelo para manter a tabela leve (<1MB) e evitar lentidão ou paginação no Scan
+    try {
+      const cutoff = new Date(Date.now() - SIGNAL_TTL_MS).toISOString();
+      const expiredRes = await docClient.send(new ScanCommand({
+        TableName: TABLE_NAME,
+        FilterExpression: 'userId = :uid AND #ts < :cutoff',
+        ExpressionAttributeNames: { '#ts': 'timestamp' },
+        ExpressionAttributeValues: { ':uid': scopedUserId, ':cutoff': cutoff }
+      }));
+      const itemsToDelete = expiredRes.Items || [];
+      if (itemsToDelete.length > 0) {
+        await Promise.all(itemsToDelete.map(expiredItem => 
+          docClient.send(new DeleteCommand({
+            TableName: TABLE_NAME,
+            Key: { id: expiredItem.id }
+          }))
+        ));
+      }
+    } catch (e) {
+      console.warn('[Vision TTL Cleanup Error]', e);
+    }
+
     return NextResponse.json({ success: true, id: item.id });
   } catch (error: any) {
     console.error('[Vision Signal POST Error]', error);
