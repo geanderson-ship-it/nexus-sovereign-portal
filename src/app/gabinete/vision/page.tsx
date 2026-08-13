@@ -1948,17 +1948,20 @@ https://nexustreinamento.com`;
 
       {/* HEADER */}
       <header className="relative z-10 px-6 py-4 border-b border-slate-800/80 bg-black/40 backdrop-blur-md flex items-center justify-between">
-        <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl border border-blue-500/40 bg-blue-950/50 flex items-center justify-center text-blue-400 font-bold text-xl shadow-[0_0_20px_rgba(59,130,246,0.25)]">
+        <div className="relative flex items-center gap-3.5 px-4 py-2.5 rounded-2xl border border-amber-500/30 bg-slate-950/60 shadow-[0_0_30px_rgba(245,158,11,0.15)] overflow-hidden">
+          {/* Fundo laranja pulsante integrado com o estilo do gabinete */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-amber-500/5 animate-[pulse_3.5s_infinite] pointer-events-none" />
+          
+          <div className="relative z-10 w-10 h-10 rounded-lg border border-amber-500/40 bg-amber-950/50 flex items-center justify-center text-amber-400 font-bold text-lg shadow-[0_0_15px_rgba(245,158,11,0.2)]">
             N
           </div>
-          <div>
-            <h1 className="text-xl md:text-2xl font-black tracking-wider text-white flex items-center gap-2">
+          <div className="relative z-10">
+            <h1 className="text-lg md:text-xl font-black tracking-wider text-white flex items-center gap-2">
               <span className="text-slate-100 font-extrabold">Nexus Vision</span>
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent font-medium animate-pulse">Connection</span>
-              <span className="text-xs bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 font-semibold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1 shadow-[0_0_10px_rgba(99,102,241,0.2)]">Soberano</span>
+              <span className="text-amber-400 font-bold">Connection</span>
+              <span className="text-[10px] bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold px-2 py-0.5 rounded-full uppercase tracking-widest ml-1 shadow-[0_0_8px_rgba(245,158,11,0.2)]">Soberano</span>
             </h1>
-            <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold font-mono">Sala ID: nhg-vision-soberano-77</p>
+            <p className="text-[9px] text-amber-500/60 uppercase tracking-wider font-semibold font-mono">Sala ID: nhg-vision-soberano-77</p>
           </div>
         </div>
 
@@ -2044,8 +2047,8 @@ https://nexustreinamento.com`;
                 )}
 
                 {/* Dynamic Overlay labels */}
-                <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-amber-500/20 backdrop-blur-md border border-amber-500/40 text-[10px] font-bold text-amber-300 flex items-center gap-1.5 z-10 shadow-[0_0_15px_rgba(245,158,11,0.25)] animate-pulse">
-                  <User className="w-3 h-3 text-amber-400" />
+                <div className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-slate-800/60 text-[10px] font-semibold text-white flex items-center gap-1.5 z-10">
+                  <User className="w-3 h-3 text-blue-400" />
                   <span>{isJoiner ? `${guestName} (Você)` : 'Diretor Geanderson (Você)'}</span>
                 </div>
 
