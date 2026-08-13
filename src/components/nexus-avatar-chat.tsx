@@ -163,6 +163,7 @@ export function NexusAvatarChat() {
 
   // --- Logic Helpers ---
   const isDashboardPage = useMemo(() => {
+    if (pathname === '/gabinete/vision') return false; // Oculta o chat de avatar na videoconferência do Vision
     const dashboardPaths = ['/gabinete', '/intelligence', '/excellence'];
     return dashboardPaths.some(path => pathname?.startsWith(path));
   }, [pathname]);

@@ -584,6 +584,15 @@ export default function VisionSoberanoPage() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       document.title = "Nexus Vision Connection | Nexus Holding Group";
+      
+      // Altera o favicon dinamicamente para uma câmera de vídeo premium (estilo Lucide Video)
+      let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'shortcut icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.href = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m22 8-6 4 6 4V8Z'/%3E%3Crect width='14' height='12' x='2' y='6' rx='2' ry='2'/%3E%3C/svg%3E";
     }
   }, []);
 
