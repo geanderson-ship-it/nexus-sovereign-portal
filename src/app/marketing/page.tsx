@@ -92,7 +92,7 @@ const pillars: PillarData[] = [
     color: 'emerald',
     tagline: 'Navegação sem fricção pelo maior refúgio de lazer.',
     description: 'Resorts possuem operações vastas e complexas. Nossa IA atua como um mordomo digital dedicado, ajudando os hóspedes a agendarem sessões de spa, reservarem mesas nos restaurantes temáticos internos, conferirem a programação de lazer infantil e se localizarem no complexo.',
-    image: 'https://images.unsplash.com/photo-1545231027-63b3f1e37be1?auto=format&fit=crop&q=80&w=800',
+    image: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora%20Nexus/Reorts.mp4', 'Reorts.mp4'),
     features: [
       'Agendamento de quadras, spas e atividades esportivas',
       'Reserva de mesas em restaurantes internos do complexo',
@@ -113,7 +113,7 @@ const pillars: PillarData[] = [
     color: 'cyan',
     tagline: 'Transforme tráfego frio em reuniões agendadas.',
     description: 'Para agências de marketing e portais corporativos que exigem alta taxa de captação. O avatar interativo de IA age como um assistente ativo na landing page, aumentando o tempo de permanência no site, quebrando objeções e capturando dados ricos de contato de forma natural e interativa.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
+    image: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora%20Nexus/Marketing.mp4', 'Marketing.mp4'),
     features: [
       'Abordagem proativa ao visitante por voz ou texto',
       'Qualificação de leads B2B em tempo real (SDR integrada)',
