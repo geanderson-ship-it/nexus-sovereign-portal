@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
@@ -343,8 +343,12 @@ const colorMap = {
 
 export default function MarketingPage() {
   const [activeMacro, setActiveMacro] = useState<string | null>(null);
-  const [aberto, setAberto] = useState<ModuleData | null>(null);
-  const [modalTab, setModalTab] = useState<'detalhes' | 'investimento'>('detalhes');
+  const [expandedCard, setExpandedCard] = useState<string | null>(null);
+
+  // Reset expanded card when leaving/switching sections
+  useEffect(() => {
+    setExpandedCard(null);
+  }, [activeMacro]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -504,21 +508,22 @@ export default function MarketingPage() {
               </div>
 
               {/* Grid dos Módulos do Canal */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
                 {activeModules.map((mod, i) => {
                   const c = colorMap[mod.color];
+                  const isExpanded = expandedCard === mod.id;
                   return (
-                    <motion.button
+                    <motion.div
                       key={mod.id}
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
-                      onClick={() => {
-                        setAberto(mod);
-                        setModalTab('detalhes');
-                      }}
-                      className="relative rounded-[32px] overflow-hidden border border-slate-900 bg-[#0a0a0c]/80 backdrop-blur-xl group text-left hover:-translate-y-2 hover:border-white/10 transition-all duration-500 cursor-pointer flex flex-col h-full"
+                      layout
+                      className={cn(
+                        "rounded-[32px] overflow-hidden border bg-[#0a0a0c]/80 backdrop-blur-xl transition-all duration-500 flex flex-col h-fit",
+                        isExpanded ? `${c.border} ${c.glow} border-opacity-100 ring-1 ring-orange-500/20` : "border-slate-900 hover:border-white/10"
+                      )}
                     >
                       {/* IMAGEM DE TOPO DO CARD */}
                       <div className="relative h-48 w-full overflow-hidden bg-slate-950 shrink-0">
@@ -531,7 +536,7 @@ export default function MarketingPage() {
                         </div>
                       </div>
 
-                      {/* INFO DO CARD */}
+                      {/* CORPO DO CARD */}
                       <div className="p-6 flex flex-col flex-grow justify-between">
                         <div className="space-y-3">
                           <div className="flex items-center gap-2.5">
@@ -544,18 +549,79 @@ export default function MarketingPage() {
                             <h3 className="text-xl font-black uppercase tracking-tight text-white mb-1">
                               {mod.highlight}
                             </h3>
-                            <p className="text-xs text-slate-400 leading-relaxed line-clamp-3 font-light">{mod.subtitle}</p>
+                            <p className="text-xs text-slate-400 leading-relaxed font-light">{mod.subtitle}</p>
                           </div>
                         </div>
 
-                        <div className={`flex items-center justify-between pt-4 mt-6 border-t ${c.border}`}>
-                          <span className="text-[10px] font-black uppercase tracking-widest text-white">Ver Detalhes</span>
-                          <div className={`p-2 rounded-full ${c.bg} group-hover:translate-x-1 transition-transform`}>
+                        {/* TOGGLE BUTTON */}
+                        <button
+                          onClick={() => setExpandedCard(isExpanded ? null : mod.id)}
+                          className="flex items-center justify-between pt-4 mt-6 border-t border-slate-900/50 w-full text-left cursor-pointer group"
+                        >
+                          <span className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-slate-300 transition-colors">
+                            {isExpanded ? 'Ocultar Detalhes' : 'Ver Detalhes'}
+                          </span>
+                          <div className={`p-2 rounded-full ${c.bg} transition-transform duration-300 ${isExpanded ? 'rotate-90' : 'group-hover:translate-x-1'}`}>
                             <ArrowRight className={`h-3 w-3 ${c.text}`} />
                           </div>
-                        </div>
+                        </button>
+
+                        {/* EXPANDABLE SECTION */}
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pt-6 mt-6 border-t border-slate-900/50 space-y-6">
+                                <p className="text-xs text-slate-300 leading-relaxed font-light">
+                                  {mod.description}
+                                </p>
+
+                                <div className="space-y-3">
+                                  <h4 className="text-[10px] font-black text-white uppercase tracking-wider">Diferenciais:</h4>
+                                  <div className="grid grid-cols-1 gap-2.5">
+                                    {mod.features.map((feature, idx) => (
+                                      <div key={idx} className="flex items-start gap-2">
+                                        <div className="p-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
+                                          <Check className="w-3 h-3" />
+                                        </div>
+                                        <span className="text-[11px] text-slate-300 leading-snug">{feature}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                <div className="bg-black/40 border border-slate-900/50 p-4 rounded-xl space-y-3">
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest font-mono">Licença:</span>
+                                    <span className="text-xs font-bold text-white">{mod.licenca}</span>
+                                  </div>
+                                  <div className="flex justify-between items-center border-t border-slate-900/20 pt-2">
+                                    <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest font-mono">Suporte:</span>
+                                    <span className="text-xs font-bold text-white">{mod.suporte}</span>
+                                  </div>
+                                  <div className="border-t border-slate-900/20 pt-2 space-y-1">
+                                    <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest font-mono">Retorno (ROI):</span>
+                                    <p className="text-[10px] text-slate-400 leading-relaxed font-light">{mod.roi}</p>
+                                  </div>
+                                </div>
+
+                                <Button asChild className={`w-full text-white font-bold uppercase tracking-widest text-[10px] h-10 rounded-xl transition-all hover:scale-102 ${c.btn}`}>
+                                  <Link href={getWhatsAppMessage(mod.highlight)} target="_blank">
+                                    <MessageSquare className="w-3.5 h-3.5 mr-2" />
+                                    Falar com Comercial
+                                  </Link>
+                                </Button>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
-                    </motion.button>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -563,128 +629,7 @@ export default function MarketingPage() {
           )}
         </AnimatePresence>
 
-        {/* DETAIL DIALOG MODAL (MODULE DETAILS) */}
-        <Dialog open={!!aberto} onOpenChange={(open) => !open && setAberto(null)}>
-          {aberto && (() => {
-            const c = colorMap[aberto.color];
-            return (
-              <DialogContent className="bg-slate-950 border border-slate-800 text-white max-w-4xl p-6 sm:p-8 rounded-[32px] shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-orange-500/5 to-transparent rounded-tr-[32px] rounded-bl-full pointer-events-none" />
 
-                <DialogHeader className="mb-4">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className={`p-2.5 rounded-xl ${c.bg} border ${c.border}`}>
-                      <aberto.icon className={`w-5 h-5 ${c.text}`} />
-                    </div>
-                    <span className={`text-[10px] font-bold uppercase tracking-widest ${c.text} font-mono`}>
-                      Módulo Nexus IA
-                    </span>
-                  </div>
-                  
-                  <DialogTitle className="text-2xl sm:text-4xl font-black uppercase tracking-tighter text-white">
-                    {aberto.highlight}
-                  </DialogTitle>
-                  
-                  <DialogDescription className="text-slate-400 text-sm mt-1">
-                    {aberto.subtitle}
-                  </DialogDescription>
-                </DialogHeader>
-
-                {/* MODAL TABS (DETALHES vs INVESTIMENTO) */}
-                <div className="flex border-b border-slate-900 mb-6">
-                  <button 
-                    onClick={() => setModalTab('detalhes')}
-                    className={`pb-3 text-xs uppercase font-bold tracking-widest border-b-2 px-4 transition-all cursor-pointer ${modalTab === 'detalhes' ? 'border-orange-500 text-white' : 'border-transparent text-slate-500 hover:text-slate-300'}`}
-                  >
-                    Detalhamento do Módulo
-                  </button>
-                  <button 
-                    onClick={() => setModalTab('investimento')}
-                    className={`pb-3 text-xs uppercase font-bold tracking-widest border-b-2 px-4 transition-all cursor-pointer ${modalTab === 'investimento' ? 'border-orange-500 text-white' : 'border-transparent text-slate-500 hover:text-slate-300'}`}
-                  >
-                    Investimento & ROI
-                  </button>
-                </div>
-
-                <div className="min-h-[250px]">
-                  {modalTab === 'detalhes' ? (
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start my-2">
-                      <div className="md:col-span-7 space-y-6">
-                        <p className="text-slate-300 text-sm leading-relaxed font-light">
-                          {aberto.description}
-                        </p>
-
-                        <div className="border-t border-slate-900 pt-4">
-                          <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-3">Diferenciais e Funcionalidades:</h4>
-                          <div className="grid grid-cols-1 gap-2.5">
-                            {aberto.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-start gap-2">
-                                <div className="p-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
-                                  <Check className="w-3.5 h-3.5" />
-                                </div>
-                                <span className="text-xs text-slate-300 leading-snug">{feature}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="md:col-span-5 relative aspect-square sm:aspect-video md:aspect-square rounded-2xl overflow-hidden border border-slate-900">
-                        <Image src={aberto.image} alt={aberto.highlight} fill className="object-cover" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-start my-2">
-                      <div className="md:col-span-7 space-y-6">
-                        <div className="space-y-4">
-                          <div className="bg-slate-900/35 border border-slate-900 p-5 rounded-2xl">
-                            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-2">Retorno Sobre Investimento (ROI):</h4>
-                            <p className="text-xs text-slate-300 leading-relaxed font-light">{aberto.roi}</p>
-                          </div>
-                          
-                          <div className="bg-slate-900/35 border border-slate-900 p-5 rounded-2xl">
-                            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-2">Licenciamento do Silo:</h4>
-                            <p className="text-xs text-slate-300 leading-relaxed font-light">
-                              Os custos de licenciamento cobrem a implantação, treinamento inicial e personalização da voz corporativa da inteligência.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Investimento Box */}
-                      <div className="md:col-span-5 space-y-6 bg-black/40 border border-slate-900 p-6 rounded-2xl flex flex-col justify-between h-full min-h-[220px]">
-                        <div>
-                          <h4 className="text-xs font-bold text-white uppercase tracking-wider border-b border-slate-900 pb-2">Composição de Custos:</h4>
-                          <div className="space-y-4 mt-4">
-                            <div className="flex justify-between items-center">
-                              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">Licença de Uso:</span>
-                              <span className="text-sm font-black text-white">{aberto.licenca}</span>
-                            </div>
-                            <div className="flex justify-between items-center border-t border-slate-900/50 pt-3">
-                              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">Suporte e Cloud:</span>
-                              <span className="text-sm font-black text-white">{aberto.suporte}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="pt-4">
-                          <Button asChild className={`w-full text-white font-bold uppercase tracking-widest text-xs h-12 rounded-xl transition-all hover:scale-103 ${c.btn}`}>
-                            <Link href={getWhatsAppMessage(aberto.highlight)} target="_blank">
-                              <MessageSquare className="w-4 h-4 mr-2" />
-                              Acionar Comercial
-                            </Link>
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-              </DialogContent>
-            );
-          })()}
-        </Dialog>
 
         {/* SECONDARY CALL TO ACTION */}
         <div className="bg-gradient-to-br from-[#0a0a0c] to-[#111114] border border-slate-900 rounded-[32px] p-8 md:p-12 text-center relative overflow-hidden shadow-2xl max-w-5xl mx-auto">
