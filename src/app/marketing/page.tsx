@@ -236,7 +236,7 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Sincronia de Agenda',
         description: 'Verificação em tempo real dos terapeutas disponíveis e bloqueio automático de horários marcados.',
-        image: '/integracao_pms.jpg'
+        image: '/spa_agenda_sync.png'
       },
       {
         title: 'Lembretes Automáticos',
@@ -335,7 +335,7 @@ const marketingModules: ModuleData[] = [
     description: 'Humanização e conversão extrema. A Djeny atua como uma assistente virtual interativa por vídeo em seu site, falando de forma fluida por voz para prender a atenção do usuário.',
     icon: Bot,
     color: 'cyan',
-    image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=800',
+    image: '/mkt_sintese_video.png',
     licenca: 'Sob Consulta',
     suporte: 'SLA Customizado',
     roi: 'Dobra a permanência média do usuário em landing pages de vendas.',
@@ -343,22 +343,22 @@ const marketingModules: ModuleData[] = [
       {
         title: 'Síntese de Vídeo Realista',
         description: 'Vídeo IA humanizado respondendo aos visitantes com voz expressiva e movimentos de lábios naturais.',
-        image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=800'
+        image: '/mkt_sintese_video.png'
       },
       {
         title: 'Pitches Comerciais de Vendas',
         description: 'Diálogos estruturados sob medida para quebrar objeções comuns e conduzir o tráfego à conversão.',
-        image: 'https://images.unsplash.com/photo-1552581230-c0159146269a?auto=format&fit=crop&q=80&w=800'
+        image: '/mkt_pitches_comerciais.png'
       },
       {
         title: 'Integração Visual de Marca',
         description: 'Avatar integrado perfeitamente ao layout e identidade cromática das suas landing pages.',
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800'
+        image: '/mkt_integracao_marca.png'
       },
       {
         title: 'Gatilho Inteligente de Tela',
         description: 'Abordagem proativa por voz baseada no tempo de tela e movimentação do mouse do usuário.',
-        image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800'
+        image: '/mkt_gatilho_tela.png'
       }
     ]
   },
