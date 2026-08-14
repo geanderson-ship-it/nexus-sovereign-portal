@@ -88,7 +88,7 @@ const hoteisPousadasModules: ModuleData[] = [
       {
         title: 'Check-in & Check-out Express',
         description: 'Envio automático de instruções de entrada, chaves digitais e links de fichas cadastrais FNRH para o WhatsApp.',
-        image: 'https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&q=80&w=800'
+        image: '/checkin_express.jpg'
       },
       {
         title: 'Tira-Dúvidas Instantâneo',
