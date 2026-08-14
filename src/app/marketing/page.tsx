@@ -223,7 +223,7 @@ const resortsModules: ModuleData[] = [
     description: 'Aumente o faturamento de serviços complementares. Os hóspedes do resort podem consultar o menu de terapias, conferir os preços e agendar sessões de spa diretamente pelo celular de forma autônoma.',
     icon: Sparkles,
     color: 'emerald',
-    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800',
+    image: '/resort_spa.jpg',
     licenca: 'Sob Consulta',
     suporte: 'SLA Customizado',
     roi: 'Aumenta em até 30% a ocupação dos spas e terapias do complexo.',
@@ -231,22 +231,22 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Catálogo de Terapias',
         description: 'Menu completo de massagens, banhos aromáticos e tratamentos estéticos por áudio ou texto.',
-        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800'
+        image: '/resort_spa.jpg'
       },
       {
         title: 'Sincronia de Agenda',
         description: 'Verificação em tempo real dos terapeutas disponíveis e bloqueio automático de horários marcados.',
-        image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800'
+        image: '/resort_spa.jpg'
       },
       {
         title: 'Lembretes Automáticos',
         description: 'Notificações de confirmação enviadas no WhatsApp do hóspede antes do horário agendado.',
-        image: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&q=80&w=800'
+        image: '/checkin_express.jpg'
       },
       {
         title: 'Cobrança Consolidada',
         description: 'Integração para debitar o valor da sessão direto na conta do quarto para pagamento no check-out.',
-        image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800'
+        image: '/integracao_pms.jpg'
       }
     ]
   },
@@ -259,7 +259,7 @@ const resortsModules: ModuleData[] = [
     description: 'Elimine filas e gargalos nos restaurantes à la carte do resort. A IA gerencia os agendamentos de mesas por horários e notifica os hóspedes quando a mesa deles estiver pronta para o jantar.',
     icon: Hotel,
     color: 'emerald',
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=800',
+    image: '/resort_restaurante.jpg',
     licenca: 'Sob Consulta',
     suporte: 'SLA Customizado',
     roi: 'Zera as reclamações de hóspedes relacionadas a filas de jantar.',
@@ -267,22 +267,22 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Agendamento de Jantares',
         description: 'Reserva instantânea de mesas em restaurantes temáticos e bufês especiais do resort.',
-        image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=800'
+        image: '/resort_restaurante.jpg'
       },
       {
         title: 'Menus Multilíngues',
         description: 'Cardápios completos exibidos em mais de 50 idiomas para comodidade de turistas estrangeiros.',
-        image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=800'
+        image: '/recepcao_poliglota.jpg'
       },
       {
         title: 'Notificação de Mesa Pronta',
         description: 'Hóspedes aguardam confortavelmente no quarto e recebem alerta de mesa liberada via chat.',
-        image: 'https://images.unsplash.com/photo-1513530534585-c7b1394c6d51?auto=format&fit=crop&q=80&w=800'
+        image: '/tira_duvidas.jpg'
       },
       {
         title: 'Controle de Lotação',
         description: 'Regulação de turnos de refeição inteligente para evitar filas e aglomerações na recepção gastronômica.',
-        image: 'https://images.unsplash.com/photo-1507208773393-4009075449b5?auto=format&fit=crop&q=80&w=800'
+        image: '/fila_logistica.jpg'
       }
     ]
   },
@@ -295,7 +295,7 @@ const resortsModules: ModuleData[] = [
     description: 'Mantenha os hóspedes entusiasmados. A IA divulga a agenda diária de shows, atividades infantis do Kids Club e gerencia o agendamento de quadras de tênis e beach tennis.',
     icon: Compass,
     color: 'emerald',
-    image: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=800',
+    image: '/resort_lazer.jpg',
     licenca: 'Sob Consulta',
     suporte: 'SLA Customizado',
     roi: 'Maximiza o uso das instalações de lazer sem conflito de reservas.',
@@ -303,22 +303,22 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Agenda Recreativa Diária',
         description: 'Exibição dinâmica das atividades infantis, shows noturnos, hidroginástica e torneios esportivos.',
-        image: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=800'
+        image: '/resort_lazer.jpg'
       },
       {
         title: 'Agendamento de Quadras',
         description: 'Reserva automatizada de quadras de tênis, beach tennis e empréstimo de raquetes/bolas.',
-        image: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&q=80&w=800'
+        image: '/resort_lazer.jpg'
       },
       {
         title: 'Lembretes de Atividades',
         description: 'Envio de alertas sobre início de atrações sinalizadas como favoritas pelo hóspede no celular.',
-        image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800'
+        image: '/checkin_express.jpg'
       },
       {
         title: 'Suporte Kids Club',
         description: 'Canal de comunicação seguro entre pais e a equipe de recreadores infantis do resort.',
-        image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800'
+        image: '/resort_lazer.jpg'
       }
     ]
   }
