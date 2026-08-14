@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Hotel, 
   Palmtree, 
-  Home, 
   Megaphone, 
   Languages, 
   Check, 
@@ -13,7 +12,6 @@ import {
   Sparkles, 
   Bot, 
   MessageSquare, 
-  X,
   Compass
 } from 'lucide-react';
 import Link from 'next/link';
@@ -29,7 +27,7 @@ interface PillarData {
   title: string;
   subtitle: string;
   icon: any;
-  color: 'orange' | 'amber' | 'emerald' | 'cyan';
+  color: 'orange' | 'emerald' | 'cyan';
   tagline: string;
   description: string;
   video: string;
@@ -43,44 +41,23 @@ interface PillarData {
 
 const pillars: PillarData[] = [
   {
-    id: 'hoteis',
-    title: 'Hotéis',
-    subtitle: 'Concierge Virtual & Atendimento 5 Estrelas',
+    id: 'hoteis-pousadas',
+    title: 'Hotéis & Pousadas',
+    subtitle: 'Concierge Virtual, Acolhimento & Reservas Diretas',
     icon: Hotel,
     color: 'orange',
-    tagline: 'Eleve o padrão de hospitalidade com atendimento inteligente.',
-    description: 'Transforme a experiência de hospedagem desde o primeiro clique. Nosso Concierge Virtual responde a dúvidas frequentes sobre check-in/out, horários do café da manhã, regras do hotel e comodidades, liberando sua equipe física para focar no atendimento presencial de excelência.',
+    tagline: 'Eleve o padrão de hospitalidade e potencialize suas reservas diretas.',
+    description: 'Desde grandes hotéis de rede até pousadas boutique acolhedoras. Nosso Concierge Virtual responde a dúvidas frequentes sobre check-in/out, horários de café da manhã e comodidades, além de atuar como guia local sugerindo passeios turísticos e praias. Ao mesmo tempo, conduz o visitante pelo fluxo de reservas diretas, reduzindo comissões para plataformas terceiras.',
     video: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora%20Nexus/Hoteis.mp4', 'Hoteis.mp4'),
     features: [
-      'Respostas instantâneas sobre comodidades e horários',
+      'Respostas instantâneas sobre comodidades, café e horários',
+      'Indicação personalizada de pontos turísticos e roteiros locais',
       'Integração direta com motores de reserva de diárias',
-      'Suporte para solicitação de serviços de quarto e toalhas',
-      'Painel de gestão de solicitações para a governança'
+      'Atendimento humanizado 24h/7 via WhatsApp e Web'
     ],
     specs: {
       idiomas: 'Mais de 50 idiomas com sotaque nativo',
-      integracao: 'PMS do hotel, WhatsApp e Site Corporativo',
-      roi: 'Redução de até 40% no volume de chamados na recepção.'
-    }
-  },
-  {
-    id: 'pousadas',
-    title: 'Pousadas',
-    subtitle: 'Proximidade, Acolhimento & Reservas Diretas',
-    icon: Home,
-    color: 'amber',
-    tagline: 'O charme do acolhimento local com a eficiência da IA.',
-    description: 'Pousadas prosperam na proximidade e no turismo local. Nossa IA atua como um guia local experiente, sugerindo roteiros turísticos, praias, restaurantes e passeios na região, ao mesmo tempo em que conduz o visitante do site pelo fluxo de reserva direta, reduzindo as comissões pagas a OTAs.',
-    video: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800',
-    features: [
-      'Indicação personalizada de pontos turísticos locais',
-      'Automação de cotação de pacotes e diárias',
-      'Atendimento humanizado 24 horas por dia, 7 dias por semana',
-      'Resgate ativo de leads que abandonaram a conversa'
-    ],
-    specs: {
-      idiomas: 'Português, Inglês, Espanhol e Alemão',
-      integracao: 'WhatsApp Link, Instagram Direct e Site',
+      integracao: 'PMS de hotéis/pousadas, WhatsApp e Site',
       roi: 'Aumento de até 25% nas reservas diretas sem intermediários.'
     }
   },
@@ -138,15 +115,6 @@ const colorMap = {
     btn: 'bg-orange-600 hover:bg-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.3)]',
     overlay: 'bg-orange-950/20'
   },
-  amber: {
-    border: 'border-amber-500/30',
-    text: 'text-amber-400',
-    bg: 'bg-amber-500/5',
-    glow: 'shadow-[0_0_60px_rgba(245,158,11,0.15)]',
-    badge: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    btn: 'bg-amber-600 hover:bg-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)]',
-    overlay: 'bg-amber-950/20'
-  },
   emerald: {
     border: 'border-emerald-500/30',
     text: 'text-emerald-400',
@@ -200,34 +168,25 @@ export default function MarketingPage() {
 
         {/* GRID OF CINEMATIC CARD PLAYERS */}
         <section className="mb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {pillars.map((pillar) => {
               const c = colorMap[pillar.color];
               return (
                 <button
                   key={pillar.id}
                   onClick={() => setSelectedPillar(pillar)}
-                  className="relative h-64 md:h-96 w-full rounded-[40px] overflow-hidden border border-slate-900 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl cursor-pointer"
+                  className="relative h-64 md:h-[450px] w-full rounded-[40px] overflow-hidden border border-slate-900 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl cursor-pointer"
                 >
-                  {/* BACKGROUND VIDEO OR IMAGE */}
+                  {/* BACKGROUND VIDEO */}
                   <div className="absolute inset-0 z-0 bg-slate-950">
-                    {pillar.video.endsWith('.mp4') ? (
-                      <video 
-                        src={pillar.video} 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline 
-                        className="w-full h-full object-cover opacity-35 group-hover:opacity-65 transition-opacity duration-1000" 
-                      />
-                    ) : (
-                      <Image 
-                        src={pillar.video} 
-                        alt={pillar.title} 
-                        fill 
-                        className="object-cover opacity-35 group-hover:opacity-65 transition-opacity duration-1000" 
-                      />
-                    )}
+                    <video 
+                      src={pillar.video} 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      className="w-full h-full object-cover opacity-35 group-hover:opacity-65 transition-opacity duration-1000" 
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#02050b] via-[#02050b]/60 to-transparent" />
                     <div className={`absolute inset-0 ${c.overlay} mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
                   </div>
@@ -240,10 +199,10 @@ export default function MarketingPage() {
                       </div>
                     </div>
                     
-                    <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-white mb-1.5 leading-none group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-500">
+                    <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-1.5 leading-tight group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-500">
                       {pillar.title}
                     </h3>
-                    <p className="text-xs md:text-base text-slate-400 max-w-sm leading-relaxed group-hover:text-white transition-colors duration-500">
+                    <p className="text-xs md:text-sm text-slate-400 max-w-sm leading-relaxed group-hover:text-white transition-colors duration-500">
                       {pillar.subtitle}
                     </p>
                     
