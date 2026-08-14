@@ -236,7 +236,7 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Sincronia de Agenda',
         description: 'Verificação em tempo real dos terapeutas disponíveis e bloqueio automático de horários marcados.',
-        image: '/resort_spa.jpg'
+        image: '/integracao_pms.jpg'
       },
       {
         title: 'Lembretes Automáticos',
