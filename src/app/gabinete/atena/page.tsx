@@ -337,6 +337,8 @@ export default function AtenaTerminalPage() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [pendingVideoTranscript, setPendingVideoTranscript] = useState<string | null>(null);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -368,6 +370,48 @@ export default function AtenaTerminalPage() {
             return;
           }
           setSelectedImage(result.dataUrl);
+
+          // Transcrever áudio do vídeo usando o serviço AWS Transcribe
+          setMessages(prev => [...prev, { 
+            role: 'system', 
+            content: '🎙️ Transcrevendo áudio do vídeo via AWS Transcribe... Por favor, aguarde alguns segundos.' 
+          }]);
+          setIsTranscribing(true);
+
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = async () => {
+            const base64Clean = (reader.result as string).split(',')[1];
+            try {
+              const res = await fetch('/api/transcribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  base64: base64Clean,
+                  mimeType: file.type,
+                  fileName: file.name
+                })
+              });
+              const data = await res.json();
+              if (data.transcript) {
+                setPendingVideoTranscript(data.transcript);
+                setMessages(prev => [...prev, { 
+                  role: 'system', 
+                  content: '✅ Áudio do vídeo transcrito com sucesso! Digite sua pergunta e envie.' 
+                }]);
+              } else {
+                throw new Error(data.error || 'Erro na transcrição');
+              }
+            } catch (err: any) {
+              console.error("Erro na transcrição:", err);
+              setMessages(prev => [...prev, { 
+                role: 'system', 
+                content: `⚠️ Não foi possível transcrever o áudio do vídeo (${err.message || err}). O vídeo será analisado apenas visualmente.` 
+              }]);
+            } finally {
+              setIsTranscribing(false);
+            }
+          };
         } else {
           const reader = new FileReader();
           reader.onloadend = () => {
@@ -522,17 +566,24 @@ export default function AtenaTerminalPage() {
     }
     setSelectedImage(null); // limpa o anexo
     
-    const newMessage: Message = { role: 'user', content: userMessage, imageBase64 };
-    setMessages(prev => [...prev, newMessage]);
+    const cleanMessage: Message = { role: 'user', content: userMessage, imageBase64 };
+    setMessages(prev => [...prev, cleanMessage]);
     setIsLoading(true);
 
     try {
       const conversationHistory = messages.filter(m => m.role !== 'system');
       
+      // Injeta a transcrição de áudio do vídeo no prompt enviado para a IA
+      let messageToSend = { ...cleanMessage };
+      if (pendingVideoTranscript) {
+        messageToSend.content = `${userMessage}\n\n[Transcrição de Áudio do Vídeo Anexado]: "${pendingVideoTranscript}"`;
+        setPendingVideoTranscript(null); // reseta o estado de anexo de transcrição
+      }
+
       const res = await fetch('/api/atena', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [...conversationHistory, newMessage] })
+        body: JSON.stringify({ messages: [...conversationHistory, messageToSend] })
       });
 
       const text = await res.text();
