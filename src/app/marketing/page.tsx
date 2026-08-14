@@ -93,7 +93,7 @@ const hoteisPousadasModules: ModuleData[] = [
       {
         title: 'Tira-Dúvidas Instantâneo',
         description: 'Respostas inmediatas em menos de 5 segundos no WhatsApp e Web sobre Wi-Fi, horários, voltagem e políticas.',
-        image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800'
+        image: '/tira_duvidas.jpg'
       },
       {
         title: 'Integração PMS de Sistemas',
