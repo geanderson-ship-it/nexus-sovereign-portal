@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 const WHATSAPP_URL = 'https://wa.me/5551999799582';
 
@@ -48,7 +50,7 @@ const pillars: PillarData[] = [
     color: 'orange',
     tagline: 'Eleve o padrão de hospitalidade com atendimento inteligente.',
     description: 'Transforme a experiência de hospedagem desde o primeiro clique. Nosso Concierge Virtual responde a dúvidas frequentes sobre check-in/out, horários do café da manhã, regras do hotel e comodidades, liberando sua equipe física para focar no atendimento presencial de excelência.',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800',
+    image: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora%20Nexus/Hoteis.mp4', 'Hoteis.mp4'),
     features: [
       'Respostas instantâneas sobre comodidades e horários',
       'Integração direta com motores de reserva de diárias',
@@ -283,16 +285,23 @@ export default function MarketingPage() {
                 </div>
               </div>
 
-              {/* Lado Direito: Imagem e Destaque */}
-              <div className="lg:col-span-5 relative w-full aspect-square sm:aspect-video lg:aspect-square rounded-2xl overflow-hidden border border-slate-900">
-                <Image 
-                  src={currentPillar.image} 
-                  alt={currentPillar.title} 
-                  fill 
-                  className="object-cover group-hover:scale-105 transition-transform duration-700" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-                <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md border border-white/5 p-4 rounded-xl">
+              {/* Lado Direito: Imagem/Vídeo e Destaque */}
+              <div className="lg:col-span-5 relative w-full aspect-square sm:aspect-video lg:aspect-square rounded-2xl overflow-hidden border border-slate-900 bg-slate-950">
+                {currentPillar.image.endsWith('.mp4') ? (
+                  <CustomVideoPlayer 
+                    src={currentPillar.image} 
+                    className="w-full h-full object-cover" 
+                  />
+                ) : (
+                  <Image 
+                    src={currentPillar.image} 
+                    alt={currentPillar.title} 
+                    fill 
+                    className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+                <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md border border-white/5 p-4 rounded-xl pointer-events-none z-10">
                   <div className="flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider mb-1">
                     <Bot className="w-4 h-4 text-orange-400" />
                     Inteligência Artificial Ativa
