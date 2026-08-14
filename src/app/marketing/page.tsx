@@ -479,6 +479,20 @@ export default function MarketingPage() {
                 <span className="text-sm font-black uppercase tracking-widest">Voltar aos Canais</span>
               </button>
 
+              {/* APRESENTAÇÃO DE VÍDEO DO SETOR */}
+              {activeMacroData?.video && (
+                <div className="w-full mb-12 flex flex-col items-center">
+                  <div className={`relative w-full max-w-4xl aspect-video rounded-[32px] overflow-hidden border ${macroColor.border} bg-slate-900/50 shadow-[0_0_80px_rgba(0,0,0,0.5)] group`}>
+                    <CustomVideoPlayer src={activeMacroData.video} className="w-full h-full object-cover" />
+                    <div className={`absolute inset-0 pointer-events-none border-[2px] border-transparent group-hover:${macroColor.border} rounded-[32px] transition-colors duration-700`} />
+                  </div>
+                  <div className="mt-4 flex items-center gap-2 text-slate-500">
+                    <Sparkles className="h-4 w-4 text-orange-400" />
+                    <span className="text-[10px] uppercase tracking-widest font-bold">Demonstração da Embaixadora Virtual</span>
+                  </div>
+                </div>
+              )}
+
               {/* Cabeçalho do Setor */}
               <div className="flex flex-col md:flex-row gap-6 md:items-end justify-between mb-12 border-b border-slate-900 pb-8">
                 <div>
@@ -498,20 +512,6 @@ export default function MarketingPage() {
                   </p>
                 </div>
               </div>
-
-              {/* APRESENTAÇÃO DE VÍDEO DO SETOR */}
-              {activeMacroData?.video && (
-                <div className="w-full mb-16 flex flex-col items-center">
-                  <div className={`relative w-full max-w-4xl aspect-video rounded-[32px] overflow-hidden border ${macroColor.border} bg-slate-900/50 shadow-[0_0_80px_rgba(0,0,0,0.5)] group`}>
-                    <CustomVideoPlayer src={activeMacroData.video} className="w-full h-full object-cover" />
-                    <div className={`absolute inset-0 pointer-events-none border-[2px] border-transparent group-hover:${macroColor.border} rounded-[32px] transition-colors duration-700`} />
-                  </div>
-                  <div className="mt-4 flex items-center gap-2 text-slate-500">
-                    <Sparkles className="h-4 w-4 text-orange-400" />
-                    <span className="text-[10px] uppercase tracking-widest font-bold">Demonstração da Embaixadora Virtual</span>
-                  </div>
-                </div>
-              )}
 
               {/* Grid dos Módulos do Canal */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
