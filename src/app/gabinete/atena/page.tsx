@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { eventEmitter } from '@/auth/event-emitter';
 import { MiniYouTubePlayer } from '@/components/mini-youtube-player';
+import { extractVideoFramesGrid } from '@/lib/utils';
 
 interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -350,15 +351,41 @@ export default function AtenaTerminalPage() {
     }
   };
 
-  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setIsLoading(true);
+      try {
+        if (file.type.startsWith('video/')) {
+          const result = await extractVideoFramesGrid(file);
+          if (result.duration > 120) {
+            setMessages(prev => [...prev, { 
+              role: 'system', 
+              content: '⚠️ O tempo máximo permitido para análise de vídeo é de 2 minutos. Por favor, envie um vídeo mais curto.' 
+            }]);
+            setIsLoading(false);
+            if (e.target) e.target.value = '';
+            return;
+          }
+          setSelectedImage(result.dataUrl);
+        } else {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setSelectedImage(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        }
+      } catch (err: any) {
+        console.error("Erro ao processar arquivo:", err);
+        setMessages(prev => [...prev, { 
+          role: 'system', 
+          content: '⚠️ Falha ao processar o arquivo de vídeo ou imagem.' 
+        }]);
+      } finally {
+        setIsLoading(false);
+      }
     }
+    if (e.target) e.target.value = '';
   };
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -975,7 +1002,7 @@ export default function AtenaTerminalPage() {
               type="file" 
               ref={fileInputRef}
               onChange={handleImageSelect}
-              accept="image/*"
+              accept="image/*,video/*"
               className="hidden" 
             />
 
