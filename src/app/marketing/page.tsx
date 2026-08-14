@@ -303,12 +303,12 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Agenda Recreativa Diária',
         description: 'Exibição dinâmica das atividades infantis, shows noturnos, hidroginástica e torneios esportivos.',
-        image: '/resort_lazer.jpg'
+        image: '/agenda_recreativa.jpg'
       },
       {
         title: 'Agendamento de Quadras',
         description: 'Reserva automatizada de quadras de tênis, beach tennis e empréstimo de raquetes/bolas.',
-        image: '/resort_lazer.jpg'
+        image: '/quadras_resort.jpg'
       },
       {
         title: 'Lembretes de Atividades',
