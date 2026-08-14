@@ -494,23 +494,13 @@ export default function MarketingPage() {
               )}
 
               {/* Cabeçalho do Setor */}
-              <div className="flex flex-col md:flex-row gap-6 md:items-end justify-between mb-12 border-b border-slate-900 pb-8">
-                <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className={`p-3 rounded-2xl ${macroColor.bg} border ${macroColor.border}`}>
-                      {activeMacroData && <activeMacroData.icon className={`h-6 w-6 ${macroColor.text}`} />}
-                    </div>
-                    <Badge className={`${macroColor.badge} px-3 py-1 text-[10px] uppercase tracking-widest`}>
-                      Canal Ativo
-                    </Badge>
-                  </div>
-                  <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white leading-none">
-                    {activeMacroData?.title}
-                  </h1>
-                  <p className="text-slate-400 mt-4 max-w-2xl text-lg leading-relaxed font-light">
-                    {activeMacroData?.description}
-                  </p>
-                </div>
+              <div className="text-center max-w-3xl mx-auto mb-12 border-b border-slate-900 pb-8">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter text-white leading-none">
+                  {activeMacroData?.title}
+                </h1>
+                <p className="text-slate-400 mt-4 text-sm sm:text-base md:text-lg leading-relaxed font-light max-w-2xl mx-auto">
+                  {activeMacroData?.description}
+                </p>
               </div>
 
               {/* Grid dos Módulos do Canal */}
