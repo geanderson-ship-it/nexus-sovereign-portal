@@ -371,7 +371,7 @@ const marketingModules: ModuleData[] = [
     description: 'Automatize a captação de grandes contas. O Apollo localiza cargos decisores (CEOs, Diretores de RH/Operações) dentro de filtros específicos e inicia conexões personalizadas em escala.',
     icon: Megaphone,
     color: 'cyan',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
+    image: '/integracao_pms.jpg',
     licenca: 'Sob Consulta',
     suporte: 'SLA Customizado',
     roi: 'Gera de 10 a 15 novas oportunidades comerciais B2B qualificadas/mês.',
@@ -384,7 +384,7 @@ const marketingModules: ModuleData[] = [
       {
         title: 'Mensagens Sequenciais Inteligentes',
         description: 'Workflows automáticos de contatos personalizados com follow-ups baseados em inteligência artificial.',
-        image: 'https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&q=80&w=800'
+        image: '/mkt_mensagens_sequenciais.jpg'
       },
       {
         title: 'Alertas de Resposta Comercial',
@@ -407,7 +407,7 @@ const marketingModules: ModuleData[] = [
     description: 'Diga adeus ao tempo perdido com leads frios. A Isadora recebe os contatos vindos de anúncios e realiza a triagem imediata no WhatsApp, agendando chamadas diretamente no calendário dos vendedores.',
     icon: MessageSquare,
     color: 'cyan',
-    image: 'https://images.unsplash.com/photo-1552581230-c0159146269a?auto=format&fit=crop&q=80&w=800',
+    image: '/mkt_isadora_sdr.jpg',
     licenca: 'Sob Consulta',
     suporte: 'SLA Customizado',
     roi: 'Aumenta a conversão de leads vindos de tráfego pago em até 300%.',
@@ -425,7 +425,7 @@ const marketingModules: ModuleData[] = [
       {
         title: 'Agendamento Direto Calendly/Google',
         description: 'Após triagem positiva, IA envia link de agenda integrada para hóspede marcar chamada com comercial.',
-        image: 'https://images.unsplash.com/photo-1507208773393-4009075449b5?auto=format&fit=crop&q=80&w=800'
+        image: '/mkt_agendamento_calendario.jpg'
       },
       {
         title: 'Resgate de Leads Frios',
