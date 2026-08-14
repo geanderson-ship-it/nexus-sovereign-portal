@@ -81,8 +81,8 @@ const hoteisPousadasModules: ModuleData[] = [
       'Integração de Sistemas: Conexão direta com sistemas PMS (Desbravador, Totvs, Hospedin)'
     ],
     image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 9.800,00',
-    suporte: 'R$ 480,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Reduz os custos operacionais de recepção e atendimento ao cliente em até 35%.'
   },
   {
@@ -101,8 +101,8 @@ const hoteisPousadasModules: ModuleData[] = [
       'Agenda de eventos e shows locais atualizada dinamicamente'
     ],
     image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 7.500,00',
-    suporte: 'R$ 350,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Gera receitas adicionais fechando parcerias de comissão cruzada com guias e restaurantes.'
   },
   {
@@ -121,8 +121,8 @@ const hoteisPousadasModules: ModuleData[] = [
       'Sugestão de Upgrades: Venda inteligente de adicionais e categorias superiores'
     ],
     image: 'https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 12.500,00',
-    suporte: 'R$ 580,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Zera as comissões abusivas de 15% a 22% cobradas por OTAs (Booking, Expedia).'
   },
   {
@@ -141,8 +141,8 @@ const hoteisPousadasModules: ModuleData[] = [
       'Pesquisa de NPS e satisfação disparada logo após a conclusão'
     ],
     image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 8.900,00',
-    suporte: 'R$ 420,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Aumenta em até 40% o ticket médio de consumo interno devido à facilidade de compra.'
   }
 ];
@@ -165,8 +165,8 @@ const resortsModules: ModuleData[] = [
       'Integração de cobrança direta na conta do quarto do hóspede'
     ],
     image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 8.500,00',
-    suporte: 'R$ 380,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Aumenta em até 30% a ocupação dos spas e terapias do complexo.'
   },
   {
@@ -185,8 +185,8 @@ const resortsModules: ModuleData[] = [
       'Controle inteligente de lotação por restaurante'
     ],
     image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 9.500,00',
-    suporte: 'R$ 400,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Zera as reclamações de hóspedes relacionadas a filas de jantar.'
   },
   {
@@ -205,8 +205,8 @@ const resortsModules: ModuleData[] = [
       'Tira-dúvidas sobre regras e restrições de idade para tobogãs'
     ],
     image: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 8.000,00',
-    suporte: 'R$ 350,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Maximiza o uso das instalações de lazer sem conflito de reservas.'
   }
 ];
@@ -226,11 +226,11 @@ const marketingModules: ModuleData[] = [
       'Síntese realista de vídeo em tempo real (avatar humanizado)',
       'Conversação integrada a pitches comerciais de vendas',
       'Estilo customizado alinhado às cores do seu site corporativo',
-      'Abordagem ativa no momento certo de navegação'
+      'Abordagem active no momento certo de navegação'
     ],
     image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 15.000,00',
-    suporte: 'R$ 600,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Dobra a permanência média do usuário em landing pages de vendas.'
   },
   {
@@ -249,8 +249,8 @@ const marketingModules: ModuleData[] = [
       'Blindagem de segurança para respeitar os limites do LinkedIn'
     ],
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 12.000,00',
-    suporte: 'R$ 500,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Gera de 10 a 15 novas oportunidades comerciais B2B qualificadas/mês.'
   },
   {
@@ -269,8 +269,8 @@ const marketingModules: ModuleData[] = [
       'Abordagem ativa para ressuscitar leads frios de sua base'
     ],
     image: 'https://images.unsplash.com/photo-1552581230-c0159146269a?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 10.500,00',
-    suporte: 'R$ 450,00/mês',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
     roi: 'Aumenta a conversão de leads vindos de tráfego pago em até 300%.'
   }
 ];
