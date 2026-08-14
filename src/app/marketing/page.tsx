@@ -98,7 +98,7 @@ const hoteisPousadasModules: ModuleData[] = [
       {
         title: 'Integração PMS de Sistemas',
         description: 'Conexão direta com sistemas de gestão hoteleira (Desbravador, Totvs, Hospedin) para sincronia de dados.',
-        image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800'
+        image: '/integracao_pms.jpg'
       }
     ]
   },
