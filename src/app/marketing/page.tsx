@@ -71,19 +71,19 @@ const hoteisPousadasModules: ModuleData[] = [
     title: 'Helena',
     highlight: 'CONCIERGE VIRTUAL',
     subtitle: 'Atendimento e Recepção Digital 24/7',
-    description: 'Sua recepção nunca dorme. A Helena atende os hóspedes a qualquer hora, tirando dúvidas sobre check-in, check-out, café da manhã, regras de hospedagem e políticas internas, liberando sua recepção para focar no atendimento presencial.',
+    description: 'Sua recepção nunca dorme. A Helena acolhe seus hóspedes de forma imediata e autônoma, respondendo sobre horários de café da manhã, regras de hospedagem, voltagem das tomadas, política de pets, senha do Wi-Fi e estacionamento. Reduz drasticamente o volume de contatos repetitivos e libera sua recepção física para focar em check-ins presenciais complexos.',
     icon: Hotel,
     color: 'orange',
     features: [
-      'Suporte multilíngue em mais de 50 idiomas',
-      'Atendimento simultâneo de centenas de hóspedes',
-      'Respostas automatizadas integradas no WhatsApp e Site',
-      'Instruções e mapas de check-in encaminhados na hora'
+      'Recepção Autônoma Poliglota: Atendimento com sotaque nativo em mais de 50 idiomas',
+      'Check-in & Check-out Express: Envio automático de instruções e fichas FNRH',
+      'Tira-Dúvidas Instantâneo: Respostas em menos de 5 segundos no WhatsApp e Web',
+      'Integração de Sistemas: Conexão direta com sistemas PMS (Desbravador, Totvs, Hospedin)'
     ],
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 8.500,00',
-    suporte: 'R$ 380,00/mês',
-    roi: 'Economiza em média 30 horas mensais por atendente de recepção.'
+    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800',
+    licenca: 'R$ 9.800,00',
+    suporte: 'R$ 480,00/mês',
+    roi: 'Reduz os custos operacionais de recepção e atendimento ao cliente em até 35%.'
   },
   {
     id: 'hp_guialocal',
@@ -91,19 +91,19 @@ const hoteisPousadasModules: ModuleData[] = [
     title: 'Helena',
     highlight: 'GUIA TURÍSTICO DIGITAL',
     subtitle: 'Roteiros, Dicas Locais e Experiências',
-    description: 'Ofereça experiências memoráveis aos hóspedes. A IA sugere as melhores praias, passeios de buggy, bares e restaurantes da região baseando-se no perfil de quem pergunta, integrando links de rotas no mapa.',
+    description: 'Entregue o verdadeiro segredo local. A inteligência atua como um guia experiente, recomendando praias ideais por horário, trilhas de aventura, monumentos históricos, pontos turísticos e roteiros sob medida de acordo com o perfil do hóspede. Melhora radicalmente a experiência do visitante e fideliza clientes.',
     icon: Compass,
     color: 'orange',
     features: [
-      'Indicação inteligente de passeios turísticos locais',
-      'Dicas gastronômicas customizadas pelo tipo de culinária',
-      'Rotas de deslocamento enviadas direto pelo Google Maps',
-      'Previsão do tempo local em tempo real com dicas de vestuário'
+      'Curadoria dinâmica de pontos turísticos e segredos locais',
+      'Recomendações gastronômicas inteligentes com envio de cardápios',
+      'Rotas diretas integradas e caminhos prontos do Google Maps e Waze',
+      'Agenda de eventos e shows locais atualizada dinamicamente'
     ],
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 6.000,00',
-    suporte: 'R$ 250,00/mês',
-    roi: 'Eleva a nota de avaliação do estabelecimento no Booking e TripAdvisor.'
+    image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&q=80&w=800',
+    licenca: 'R$ 7.500,00',
+    suporte: 'R$ 350,00/mês',
+    roi: 'Gera receitas adicionais fechando parcerias de comissão cruzada com guias e restaurantes.'
   },
   {
     id: 'hp_reservas',
@@ -111,19 +111,19 @@ const hoteisPousadasModules: ModuleData[] = [
     title: 'Helena',
     highlight: 'RESERVAS INTELIGENTES',
     subtitle: 'Cotação de Pacotes e Vendas Diretas',
-    description: 'Acelere as vendas de diárias. A IA realiza cotações de pacotes, verifica a disponibilidade em tempo real e conduz o lead até o fechamento seguro por Pix ou Cartão, sem cobrar taxas de intermediação.',
+    description: 'A máquina de vendas diretas que o seu hotel precisa. O visitante insere o período e número de pessoas por WhatsApp ou site, a IA calcula as tarifas flutuantes e apresenta os quartos disponíveis em segundos. Ela faz o checkout imediato via Pix ou link de cartão e resgata orçamentos abandonados de forma proativa.',
     icon: Calendar,
     color: 'orange',
     features: [
-      'Cálculo e cotação de diárias por número de hóspedes',
-      'Integração direta com o sistema PMS de reservas do hotel',
-      'Fluxo de checkout e pagamento via Pix ou link seguro',
-      'Recuperação proativa de orçamentos e cotações abandonadas'
+      'Orçamento Express: Tarifas e disponibilidade calculados em 10 segundos',
+      'Checkout Instantâneo Integrado com geração de chaves Pix ou links de cartão',
+      'Recuperação de orçamentos abandonados com contato proativo inteligente',
+      'Sugestão de Upgrades: Venda inteligente de adicionais e categorias superiores'
     ],
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 10.500,00',
-    suporte: 'R$ 450,00/mês',
-    roi: 'Elimina as comissões abusivas de 15% a 22% cobradas por OTAs.'
+    image: 'https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&q=80&w=800',
+    licenca: 'R$ 12.500,00',
+    suporte: 'R$ 580,00/mês',
+    roi: 'Zera as comissões abusivas de 15% a 22% cobradas por OTAs (Booking, Expedia).'
   },
   {
     id: 'hp_governanca',
@@ -131,19 +131,19 @@ const hoteisPousadasModules: ModuleData[] = [
     title: 'Helena',
     highlight: 'ROOM SERVICE DIGITAL',
     subtitle: 'Pedidos de Quarto e Chamados de Limpeza',
-    description: 'Simplifique a logística interna do seu hotel. O hóspede solicita toalhas limpas, reposição do frigobar, relata problemas no quarto ou pede serviço de lavanderia por WhatsApp, disparando alertas para a equipe física.',
+    description: 'Leve a conveniência para o quarto do hóspede. Ele pode visualizar o cardápio completo, fazer pedidos de refeições e bebidas ou solicitar itens de frigobar diretamente pelo WhatsApp. A IA roteia o chamado automaticamente para a cozinha ou bar e permite solicitar serviços de lavanderia e manutenção.',
     icon: MessageSquare,
     color: 'orange',
     features: [
-      'Pedido digital de petiscos, bebidas e amenities do quarto',
-      'Abertura de chamados de governança e manutenção',
-      'Painel em tempo real para a equipe física organizar demandas',
-      'Pesquisa de satisfação disparada logo após a conclusão'
+      'Cardápio Interativo por WhatsApp para pratos, bebidas e frigobar',
+      'Chamados de governança instantâneos (limpeza, reposição de travesseiros e toalhas)',
+      'Painel centralizado e fila de pedidos para otimização da equipe interna',
+      'Pesquisa de NPS e satisfação disparada logo após a conclusão'
     ],
-    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&q=80&w=800',
-    licenca: 'R$ 7.500,00',
-    suporte: 'R$ 320,00/mês',
-    roi: 'Reduz o tempo de atendimento de solicitações de quarto em 50%.'
+    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800',
+    licenca: 'R$ 8.900,00',
+    suporte: 'R$ 420,00/mês',
+    roi: 'Aumenta em até 40% o ticket médio de consumo interno devido à facilidade de compra.'
   }
 ];
 
