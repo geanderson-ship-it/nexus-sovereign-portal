@@ -109,7 +109,6 @@ export function SiteHeader() {
     { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
     { title: 'Embaixadora', href: '/nexus-rotas' },
     { title: 'Marketing', href: '/marketing' },
-    { title: 'Energia', href: '/energia' },
     { title: 'Enterprise', href: '/nexus-empresas' },
     { title: 'Nexus Health', href: '/nexus-health' },
     { title: t('navAgro') || 'Agro', href: '/agro' },

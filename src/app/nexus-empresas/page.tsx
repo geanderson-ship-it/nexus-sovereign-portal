@@ -4,11 +4,13 @@ import { getVideoUrl } from '@/lib/video-helper';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory, Sparkles, Scale, Building2, Palette, ArrowLeft, FileText } from 'lucide-react';
+import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory, Sparkles, Scale, Building2, Palette, ArrowLeft, FileText, Zap } from 'lucide-react';
 import * as gtag from '@/lib/gtag';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
@@ -19,6 +21,7 @@ const macroCards = [
   { id: 'legaltech', title: 'LEGALTECH', subtitle: 'Jurimetria e Contratos', icon: Scale, color: 'amber', video: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4', 'Justine - Pactum.mp4'), avatarVideo: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Premium/Justine_Pactum.mp4', 'Justine - Pactum.mp4'), overlayClass: 'bg-amber-900/20', glowClass: 'shadow-[0_0_80px_rgba(245,158,11,0.3)]', badgeClass: 'bg-amber-500/20 text-amber-400 border-amber-500/30' },
   { id: 'construtech', title: 'CONSTRUTECH', subtitle: 'Engenharia Civil e Arquitetura', icon: Building2, color: 'emerald', video: '/images/augusto_construtech.mp4', avatarVideo: '/images/augusto_construtech.mp4', overlayClass: 'bg-emerald-900/20', glowClass: 'shadow-[0_0_80px_rgba(16,185,129,0.3)]', badgeClass: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' },
   { id: 'martech', title: 'MARTECH', subtitle: 'Marketing, Design e Branding', icon: Palette, color: 'pink', video: '/images/djeny_martech.mp4', avatarVideo: '/images/djeny_martech.mp4', overlayClass: 'bg-pink-900/20', glowClass: 'shadow-[0_0_80px_rgba(236,72,153,0.3)]', badgeClass: 'bg-pink-500/20 text-pink-400 border-pink-500/30' },
+  { id: 'energia', title: 'NEXUS ENERGIA', subtitle: 'Energia Solar e Eficiência Sustentável', icon: Zap, color: 'orange', video: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Energia/Helena_energia.mp4', 'Helena_energia.mp4'), avatarVideo: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Energia/Helena_energia.mp4', 'Helena_energia.mp4'), overlayClass: 'bg-orange-900/20', glowClass: 'shadow-[0_0_80px_rgba(249,115,22,0.3)]', badgeClass: 'bg-orange-500/20 text-orange-400 border-orange-500/30', href: '/energia' },
 ];
 
 const industrialModules = [
@@ -430,6 +433,7 @@ const colorMap: Record<string, { border: string; badge: string; text: string; gl
 type Mod = typeof industrialModules[0];
 
 export default function NexusEmpresasPage() {
+  const router = useRouter();
   const [aberto, setAberto] = useState<Mod | null>(null);
   const [modalTab, setModalTab] = useState<'detalhes' | 'investimento'>('detalhes');
   const [activeMacro, setActiveMacro] = useState<string | null>(null);
@@ -524,17 +528,25 @@ export default function NexusEmpresasPage() {
             {/* 4 MACRO CARDS - OS 4 SILOS CINEMÁTICOS */}
             <section className="container mx-auto px-4 pt-10 pb-24">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
-                {macroCards.map((macro) => {
+                {macroCards.map((macro, index) => {
                   const c = colorMap[macro.color];
+                  const isLastOdd = index === macroCards.length - 1 && macroCards.length % 2 !== 0;
                   return (
                     <button
                       key={macro.id}
                       onClick={() => {
+                        if (macro.href) {
+                          router.push(macro.href);
+                          return;
+                        }
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                         setActiveMacro(macro.id);
                         window.history.pushState(null, '', `?macro=${macro.id}`);
                       }}
-                      className="relative h-64 md:h-96 w-full rounded-[40px] overflow-hidden border border-slate-800 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl"
+                      className={cn(
+                        "relative h-64 md:h-96 w-full rounded-[40px] overflow-hidden border border-slate-800 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl",
+                        isLastOdd && "md:col-span-2"
+                      )}
                     >
                       {/* BACKGROUND VIDEO OR IMAGE */}
                       <div className="absolute inset-0 z-0 bg-slate-950">
