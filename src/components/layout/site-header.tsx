@@ -108,6 +108,7 @@ export function SiteHeader() {
     { title: 'Inova Revenda', href: '/inova-revenda' },
     { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
     { title: 'Embaixadora', href: '/nexus-rotas' },
+    { title: 'Marketing', href: '/marketing' },
     { title: 'Energia', href: '/energia' },
     { title: 'Enterprise', href: '/nexus-empresas' },
     { title: 'Nexus Health', href: '/nexus-health' },
@@ -306,6 +307,8 @@ export function SiteHeader() {
                       ? 'bg-violet-500/10 border border-violet-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:shadow-[0_0_25px_rgba(139,92,246,0.4)] hover:bg-violet-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/nexus-rotas'
                       ? 'bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold capitalize tracking-wide'
+                      : item.href === '/marketing'
+                      ? 'bg-orange-500/10 border border-orange-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(249,115,22,0.15)] hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] hover:bg-orange-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/proposito'
                       ? 'bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/about'
@@ -380,6 +383,8 @@ export function SiteHeader() {
                             ? 'bg-violet-500/10 text-white drop-shadow-[0_0_8px_rgba(139,92,246,0.8)] font-bold border border-violet-500/50 capitalize tracking-wide'
                             : item.href === '/nexus-rotas'
                             ? 'bg-teal-500/10 text-white drop-shadow-[0_0_8px_rgba(20,184,166,0.8)] font-bold border border-teal-500/50 capitalize tracking-wide'
+                            : item.href === '/marketing'
+                            ? 'bg-orange-500/10 text-white drop-shadow-[0_0_8px_rgba(249,115,22,0.8)] font-bold border border-orange-500/50 capitalize tracking-wide'
                             : item.href === '/proposito'
                             ? 'bg-amber-500/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 capitalize tracking-wide'
                             : item.href === '/about'
