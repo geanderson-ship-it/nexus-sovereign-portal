@@ -282,7 +282,7 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Controle de Lotação',
         description: 'Regulação de turnos de refeição inteligente para evitar filas e aglomerações na recepção gastronômica.',
-        image: '/fila_logistica.jpg'
+        image: '/controle_lotacao.jpg'
       }
     ]
   },
@@ -318,7 +318,7 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Suporte Kids Club',
         description: 'Canal de comunicação seguro entre pais e a equipe de recreadores infantis do resort.',
-        image: '/resort_lazer.jpg'
+        image: '/kids_club.jpg'
       }
     ]
   }
