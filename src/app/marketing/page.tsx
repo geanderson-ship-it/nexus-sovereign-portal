@@ -201,7 +201,7 @@ const hoteisPousadasModules: ModuleData[] = [
       {
         title: 'Fila Logística de Pedidos',
         description: 'Painel administrativo centralizado para as equipes de cozinha e camareiras organizarem os chamados.',
-        image: 'https://images.unsplash.com/photo-1507208773393-4009075449b5?auto=format&fit=crop&q=80&w=800'
+        image: '/fila_logistica.jpg'
       },
       {
         title: 'Pesquisa NPS Automática',
@@ -805,6 +805,35 @@ export default function MarketingPage() {
                     </motion.div>
                   );
                 })}
+              </div>
+
+              {/* CARD DE PERSONALIZAÇÃO 100% */}
+              <div className={cn(
+                "relative overflow-hidden rounded-[32px] border p-8 md:p-10 max-w-4xl mx-auto my-16 bg-gradient-to-r from-white/5 via-transparent to-transparent",
+                colorMap[activeModuleDetail.color].border
+              )}>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
+                <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                  <div className={cn(
+                    "p-4 rounded-3xl border shrink-0",
+                    colorMap[activeModuleDetail.color].bg,
+                    colorMap[activeModuleDetail.color].border,
+                    colorMap[activeModuleDetail.color].text
+                  )}>
+                    <Palette className="h-10 w-10" />
+                  </div>
+                  <div className="space-y-2 text-left">
+                    <span className={cn("text-[10px] font-bold uppercase tracking-widest font-mono", colorMap[activeModuleDetail.color].text)}>
+                      Customização Total
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
+                      Soluções 100% Personalizáveis
+                    </h3>
+                    <p className="text-slate-400 text-xs sm:text-sm font-light leading-relaxed">
+                      Cada concierge é única. Personalizamos **100% do avatar visual (imagem/vídeo)**, o **tom e sotaque da voz falada**, a personalidade de atendimento e a base de conhecimento técnica para representar com total fidelidade a identidade da sua marca.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* BOX DE INVESTIMENTO & ROI DO MÓDULO */}
