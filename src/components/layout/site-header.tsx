@@ -110,8 +110,6 @@ export function SiteHeader() {
     { title: 'Embaixadora', href: '/nexus-rotas' },
     { title: 'Marketing', href: '/marketing' },
     { title: 'Enterprise', href: '/nexus-empresas' },
-    { title: 'Nexus Health', href: '/nexus-health' },
-    { title: t('navAgro') || 'Agro', href: '/agro' },
     { title: t('navPremium') || 'Exclusive', href: '/exclusive' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
     { title: t('navSobre') || 'Sobre', href: '/about' },

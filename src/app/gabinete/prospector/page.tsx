@@ -5,7 +5,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Lock, Search, Briefcase, Calendar, Users, Coins, Database, Activity, ChevronLeft } from 'lucide-react';
+import { Lock, Search, Briefcase, Calendar, Users, Coins, Database, Activity, ChevronLeft, Target } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -68,6 +68,28 @@ export default function ProspectorHubPage() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           
+          {/* Atlas B2B Prospector */}
+          <Link href="/gabinete/prospector/atlas">
+            <Card className="bg-slate-900/40 border-cyan-900/50 hover:border-cyan-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl group-hover:bg-cyan-500/10 transition-colors" />
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform border border-cyan-500/20">
+                  <Target className="w-6 h-6 text-cyan-400" />
+                </div>
+                <CardTitle className="text-xl text-white group-hover:text-cyan-400 transition-colors font-headline">Atlas B2B</CardTitle>
+                <CardDescription>Robô de Prospecção Estratégica</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-400">
+                  Extraia cargos decisores (CEOs, Diretores de RH/Operações) dentro de filtros específicos e inicie conexões personalizadas em escala.
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-cyan-500">
+                  Acessar Atlas <Target className="w-3 h-3" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
           {/* Prospector IBGE Core */}
           <Link href="/gabinete/prospector/core">
             <Card className="bg-slate-900/40 border-blue-900/50 hover:border-blue-500/50 hover:bg-slate-900/80 transition-all cursor-pointer group h-full relative overflow-hidden">

@@ -147,7 +147,7 @@ const hoteisPousadasModules: ModuleData[] = [
     description: 'A máquina de vendas diretas que o seu hotel precisa. O visitante insere o período e número de pessoas por WhatsApp ou site, a IA calcula as tarifas flutuantes e apresenta os quartos disponíveis em segundos. Ela faz o checkout imediato via Pix ou link de cartão e resgata orçamentos abandonados de forma proativa.',
     icon: Calendar,
     color: 'orange',
-    image: 'https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&q=80&w=800',
+    image: '/marketing-assets/hp_reservas_main.jpg',
     licenca: 'Sob Consulta',
     suporte: 'SLA Customizado',
     roi: 'Zera as comissões abusivas de 15% a 22% cobradas por OTAs (Booking, Expedia).',
@@ -155,22 +155,22 @@ const hoteisPousadasModules: ModuleData[] = [
       {
         title: 'Orçamento Express',
         description: 'Cálculo de tarifas flutuantes e disponibilidade de diárias gerados em menos de 10 segundos no chat.',
-        image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800'
+        image: '/marketing-assets/hp_reservas_orcamento.jpg'
       },
       {
         title: 'Checkout Instantâneo Integrado',
         description: 'Geração imediata de chaves Pix automáticas ou links de cartão de crédito para fechar a reserva de forma segura.',
-        image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800'
+        image: '/marketing-assets/hp_reservas_checkout.jpg'
       },
       {
         title: 'Recuperação de Carrinho Abandonado',
         description: 'Contato inteligente e ativo no WhatsApp com clientes que simularam tarifas mas não fecharam a diária.',
-        image: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&q=80&w=800'
+        image: '/marketing-assets/hp_reservas_carrinho.jpg'
       },
       {
         title: 'Venda Inteligente de Upgrades',
         description: 'IA oferece upgrades de quarto, adicionais de espumantes, decoração ou meia-pensão antes do pagamento.',
-        image: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800'
+        image: '/marketing-assets/hp_reservas_upgrade.jpg'
       }
     ]
   },
@@ -206,7 +206,7 @@ const hoteisPousadasModules: ModuleData[] = [
       {
         title: 'Pesquisa NPS Automática',
         description: 'IA dispara pesquisa rápida de satisfação logo após o chamado de serviço de quarto constar como concluído.',
-        image: 'https://images.unsplash.com/photo-1513530534585-c7b1394c6d51?auto=format&fit=crop&q=80&w=800'
+        image: '/marketing-assets/hp_governanca_nps.jpg'
       }
     ]
   }
@@ -241,7 +241,7 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Lembretes Automáticos',
         description: 'Notificações de confirmação enviadas no WhatsApp do hóspede antes do horário agendado.',
-        image: '/checkin_express.jpg'
+        image: '/marketing-assets/resort_lembrete_automatico.jpg'
       },
       {
         title: 'Cobrança Consolidada',
@@ -272,12 +272,12 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Menus Multilíngues',
         description: 'Cardápios completos exibidos em mais de 50 idiomas para comodidade de turistas estrangeiros.',
-        image: '/recepcao_poliglota.jpg'
+        image: '/marketing-assets/resort_menu_multilingue.jpg'
       },
       {
         title: 'Notificação de Mesa Pronta',
         description: 'Hóspedes aguardam confortavelmente no quarto e recebem alerta de mesa liberada via chat.',
-        image: '/tira_duvidas.jpg'
+        image: '/marketing-assets/resort_mesa_pronta.jpg'
       },
       {
         title: 'Controle de Lotação',
@@ -313,7 +313,7 @@ const resortsModules: ModuleData[] = [
       {
         title: 'Lembretes de Atividades',
         description: 'Envio de alertas sobre início de atrações sinalizadas como favoritas pelo hóspede no celular.',
-        image: '/checkin_express.jpg'
+        image: '/marketing-assets/resort_lembrete_atividade.jpg'
       },
       {
         title: 'Suporte Kids Club',
@@ -371,7 +371,7 @@ const marketingModules: ModuleData[] = [
     description: 'Automatize a captação de grandes contas. O Apollo localiza cargos decisores (CEOs, Diretores de RH/Operações) dentro de filtros específicos e inicia conexões personalizadas em escala.',
     icon: Megaphone,
     color: 'cyan',
-    image: '/integracao_pms.jpg',
+    image: '/marketing-assets/mkt_apollo_main.jpg',
     licenca: 'Sob Consulta',
     suporte: 'SLA Customizado',
     roi: 'Gera de 10 a 15 novas oportunidades comerciais B2B qualificadas/mês.',
@@ -379,7 +379,7 @@ const marketingModules: ModuleData[] = [
       {
         title: 'LinkedIn Prospector',
         description: 'Busca e conexão automática com perfis de decisores e leads corporativos com filtros refinados.',
-        image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800'
+        image: '/marketing-assets/mkt_apollo_prospector.jpg'
       },
       {
         title: 'Mensagens Sequenciais Inteligentes',
@@ -430,7 +430,7 @@ const marketingModules: ModuleData[] = [
       {
         title: 'Resgate de Leads Frios',
         description: 'Disparos estratégicos automatizados de reaquecimento no WhatsApp de leads que ficaram inativos na base.',
-        image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800'
+        image: '/marketing-assets/mkt_isadora_resgate.jpg'
       }
     ]
   }
@@ -523,6 +523,25 @@ export default function MarketingPage() {
 
   return (
     <div className="min-h-screen bg-[#050506] text-slate-200 relative overflow-hidden pt-28 pb-24 font-sans">
+      {/* Background Image Textures with Fade Transition */}
+      <div 
+        className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
+          (!activeMacro || activeMacro === 'hoteis-pousadas') ? 'opacity-[0.35]' : 'opacity-0'
+        }`}
+        style={{ backgroundImage: "url('/marketing-assets/marketing_bg.jpg')" }}
+      />
+      <div 
+        className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
+          activeMacro === 'resorts' ? 'opacity-[0.35]' : 'opacity-0'
+        }`}
+        style={{ backgroundImage: "url('/marketing-assets/resort_bg.jpg')" }}
+      />
+      <div 
+        className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
+          activeMacro === 'marketing' ? 'opacity-[0.35]' : 'opacity-0'
+        }`}
+        style={{ backgroundImage: "url('/marketing-assets/mkt_bg.png')" }}
+      />
       {/* Background Decorative Glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-orange-600/5 rounded-full blur-[130px] pointer-events-none z-0" />
       <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[100px] pointer-events-none z-0" />

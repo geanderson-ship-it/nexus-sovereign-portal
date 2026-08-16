@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory, Sparkles, Scale, Building2, Palette, ArrowLeft, FileText, Zap } from 'lucide-react';
+import { ShoppingCart, Cpu, BarChart3, Shield, CheckCircle, ArrowRight, Phone, Eye, Timer, Package, Truck, ShoppingBag, Users, BrainCircuit, Database, ShieldCheck, Factory, Sparkles, Scale, Building2, Palette, ArrowLeft, FileText, Zap, Heart } from 'lucide-react';
 import * as gtag from '@/lib/gtag';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 
@@ -22,6 +22,7 @@ const macroCards = [
   { id: 'construtech', title: 'CONSTRUTECH', subtitle: 'Engenharia Civil e Arquitetura', icon: Building2, color: 'emerald', video: '/images/augusto_construtech.mp4', avatarVideo: '/images/augusto_construtech.mp4', overlayClass: 'bg-emerald-900/20', glowClass: 'shadow-[0_0_80px_rgba(16,185,129,0.3)]', badgeClass: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' },
   { id: 'martech', title: 'MARTECH', subtitle: 'Marketing, Design e Branding', icon: Palette, color: 'pink', video: '/images/djeny_martech.mp4', avatarVideo: '/images/djeny_martech.mp4', overlayClass: 'bg-pink-900/20', glowClass: 'shadow-[0_0_80px_rgba(236,72,153,0.3)]', badgeClass: 'bg-pink-500/20 text-pink-400 border-pink-500/30' },
   { id: 'energia', title: 'NEXUS ENERGIA', subtitle: 'Energia Solar e Eficiência Sustentável', icon: Zap, color: 'orange', video: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Energia/Helena_energia.mp4', 'Helena_energia.mp4'), avatarVideo: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Energia/Helena_energia.mp4', 'Helena_energia.mp4'), overlayClass: 'bg-orange-900/20', glowClass: 'shadow-[0_0_80px_rgba(249,115,22,0.3)]', badgeClass: 'bg-orange-500/20 text-orange-400 border-orange-500/30', href: '/energia' },
+  { id: 'health', title: 'NEXUS HEALTH', subtitle: 'Gestão Farmacêutica e Clínicas Inteligentes', icon: Heart, color: 'emerald', video: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora%20Nexus/Hoteis.mp4', 'Hoteis.mp4'), avatarVideo: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora%20Nexus/Hoteis.mp4', 'Hoteis.mp4'), overlayClass: 'bg-emerald-900/20', glowClass: 'shadow-[0_0_80px_rgba(16,185,129,0.3)]', badgeClass: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30', href: '/nexus-health' },
 ];
 
 const industrialModules = [

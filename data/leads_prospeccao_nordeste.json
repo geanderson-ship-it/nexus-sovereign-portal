@@ -1,0 +1,50 @@
+[
+  {
+    "empresa": "Dom Pedro Laguna (Ceara)",
+    "dominio": "dompedrolaguna.com",
+    "decisor": "Diretor Geral / Gerente Geral",
+    "email": "gerencia@dompedrolaguna.com",
+    "status": "novo",
+    "regiao": "Nordeste - CE"
+  },
+  {
+    "empresa": "Carmel Taiba Exclusive Resort (Ceara)",
+    "dominio": "carmelresorts.com.br",
+    "decisor": "Diretor de Marketing",
+    "email": "marketing@carmelresorts.com.br",
+    "status": "novo",
+    "regiao": "Nordeste - CE"
+  },
+  {
+    "empresa": "Tivoli Ecoresort Praia do Forte (Bahia)",
+    "dominio": "tivolihotels.com",
+    "decisor": "Gerente Geral de Marketing",
+    "email": "marketing.tepf@tivolihotels.com",
+    "status": "novo",
+    "regiao": "Nordeste - BA"
+  },
+  {
+    "empresa": "Iberostar Selection Praia do Forte (Bahia)",
+    "dominio": "iberostar.com",
+    "decisor": "Diretor de Vendas & Marketing Brasil",
+    "email": "comercial.br@iberostar.com",
+    "status": "novo",
+    "regiao": "Nordeste - BA"
+  },
+  {
+    "empresa": "Nannai Muro Alto Resort (Pernambuco)",
+    "dominio": "nannai.com.br",
+    "decisor": "Diretor Executivo / Gerente de Reservas",
+    "email": "reservas@nannai.com.br",
+    "status": "novo",
+    "regiao": "Nordeste - PE"
+  },
+  {
+    "empresa": "Grand Palladium Imbassai (Bahia)",
+    "dominio": "palladiumhotelgroup.com",
+    "decisor": "Diretor de Marketing Latinoamerica",
+    "email": "marketing.brasil@palladiumhotelgroup.com",
+    "status": "novo",
+    "regiao": "Nordeste - BA"
+  }
+]
