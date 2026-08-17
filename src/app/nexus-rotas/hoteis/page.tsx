@@ -16,6 +16,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 export default function NexusRotasHoteisPage() {
   const { toast } = useToast();
@@ -258,6 +260,69 @@ export default function NexusRotasHoteisPage() {
                   <span className="text-base font-bold text-emerald-400">Retorno Total Estimado:</span>
                   <span className="text-2xl font-black text-emerald-400">R$ {roi.total} <span className="text-xs font-normal">/ mês</span></span>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* GALERIA DE AMOSTRAS HOTEIS/RESORTS */}
+        <section className="py-12 border-t border-zinc-800/60 mt-12">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-black uppercase tracking-tight text-white font-headline">Galeria de Amostras</h2>
+            <p className="text-zinc-400 mt-2 text-xs">
+              Conheça exemplos práticos de Embaixadoras Virtuais voltadas para a hotelaria, resorts e hospitalidade de alto padrão.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Amostra 1: Sofia - Hoteis */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Hoteis.mp4", "Hoteis.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded bg-emerald-950/40 mb-2 inline-block">Hotelaria Standard</span>
+                <h3 className="font-bold text-white text-base">Sofia — Concierge de Hotéis</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Automação de recepção 24h: respostas rápidas sobre Wi-Fi, horários de café e políticas de recepção.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 2: Clara - Resorts */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Reorts.mp4", "Reorts.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded bg-emerald-950/40 mb-2 inline-block">Resorts de Lazer</span>
+                <h3 className="font-bold text-white text-base">Clara — Concierge de Resorts</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Guiamento por complexos amplos, agendamento de SPA, reservas de restaurantes e atividades esportivas.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 3: Mia - Miami */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Mia_Miami.mp4", "Mia - Miami.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded bg-emerald-950/40 mb-2 inline-block">Multilíngue Premium</span>
+                <h3 className="font-bold text-white text-base">Mia — Embaixadora Miami</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Suporte internacional de luxo, projetado para orientar turistas de fora em múltiplos idiomas.
+                </p>
               </div>
             </div>
           </div>

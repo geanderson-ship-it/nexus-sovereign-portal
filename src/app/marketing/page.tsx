@@ -924,12 +924,6 @@ export default function MarketingPage() {
                 Falar com Engenharia Comercial
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link 
-                href="/gabinete"
-                className="inline-flex items-center gap-2 px-8 py-3.5 bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white font-bold uppercase tracking-widest text-xs rounded-full transition-all hover:scale-105 cursor-pointer"
-              >
-                Acessar Gabinete
-              </Link>
             </div>
           </div>
         )}

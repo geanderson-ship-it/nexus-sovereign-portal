@@ -18,6 +18,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { CustomVideoPlayer } from '@/components/ui/custom-video-player';
+import { getVideoUrl } from '@/lib/video-helper';
 
 export default function NexusRotasEmbaixadoraPage() {
   const { toast } = useToast();
@@ -188,6 +190,69 @@ export default function NexusRotasEmbaixadoraPage() {
               <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" /> Suporte completo à Secretaria Municipal de Turismo.</li>
               <li className="flex items-center gap-2"><ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" /> Painel de Analytics detalhado de fluxos e dúvidas mais comuns de turistas.</li>
             </ul>
+          </div>
+        </section>
+
+        {/* GALERIA DE AMOSTRAS B2G */}
+        <section className="py-12 border-t border-zinc-800/60 mt-12">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-black uppercase tracking-tight text-white font-headline">Galeria de Amostras</h2>
+            <p className="text-zinc-400 mt-2 text-xs">
+              Conheça exemplos práticos de Embaixadoras Virtuais implantadas em diferentes municípios e destinos turísticos.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Amostra 1: Castro PR */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Video_Ana_Castro_PR.mp4", "Video - Ana - Castro - PR.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded bg-blue-950/40 mb-2 inline-block">Piloto B2G</span>
+                <h3 className="font-bold text-white text-base">Ana — Embaixadora Castro (PR)</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Fomento ao turismo local holandês, guia cultural de museus e rotas históricas do município.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 2: Gramado RS */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Video_Clara_Gramado_RS.mp4", "Video - Clara - Gramado - RS.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded bg-blue-950/40 mb-2 inline-block">Turismo de Inverno</span>
+                <h3 className="font-bold text-white text-base">Clara — Embaixadora Gramado (RS)</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Informações de eventos sazonais (Natal Luz), roteiros gastronômicos e guiamento de hotelaria da serra.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 3: Vitória */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Vitoria_Embaixadora.mp4", "Vitoria_Embaixadora_virtual.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded bg-blue-950/40 mb-2 inline-block">Modelo de Referência</span>
+                <h3 className="font-bold text-white text-base">Vitória — Embaixadora Virtual</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Demonstração padrão de recepção multilíngue e respostas instantâneas para portais de cidades parceiras.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
