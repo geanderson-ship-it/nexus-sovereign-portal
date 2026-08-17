@@ -274,7 +274,7 @@ export default function NexusRotasHoteisPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Amostra 1: Sofia - Hoteis */}
             <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
               <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
@@ -305,23 +305,6 @@ export default function NexusRotasHoteisPage() {
                 <h3 className="font-bold text-white text-base">Clara — Concierge de Resorts</h3>
                 <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
                   Guiamento por complexos amplos, agendamento de SPA, reservas de restaurantes e atividades esportivas.
-                </p>
-              </div>
-            </div>
-
-            {/* Amostra 3: Mia - Miami */}
-            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
-              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
-                <CustomVideoPlayer 
-                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Mia_Miami.mp4", "Mia - Miami.mp4")}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded bg-emerald-950/40 mb-2 inline-block">Multilíngue Premium</span>
-                <h3 className="font-bold text-white text-base">Mia — Embaixadora Miami</h3>
-                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
-                  Suporte internacional de luxo, projetado para orientar turistas de fora em múltiplos idiomas.
                 </p>
               </div>
             </div>
