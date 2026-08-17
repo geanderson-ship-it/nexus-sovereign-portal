@@ -58,7 +58,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/nexus-empresas/legaltech/trabalhista',
     '/privacy',
     '/terms',
-    '/suporte'
+    '/suporte',
+    '/demo-corteva.html'
   ];
 
   const allRoutes = [...staticRoutes];
