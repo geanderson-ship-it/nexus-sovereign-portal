@@ -270,11 +270,11 @@ export default function NexusRotasHoteisPage() {
           <div className="text-center mb-10">
             <h2 className="text-2xl font-black uppercase tracking-tight text-white font-headline">Galeria de Amostras</h2>
             <p className="text-zinc-400 mt-2 text-xs">
-              Conheça exemplos práticos de Embaixadoras Virtuais voltadas para a hotelaria, resorts e hospitalidade de alto padrão.
+              Conheça exemplos práticos de Embaixadoras Virtuais, fluentes em mais de 50 idiomas e voltadas para a hotelaria, resorts e hospitalidade de alto padrão.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Amostra 1: Sofia - Hoteis */}
             <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
               <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
@@ -305,6 +305,40 @@ export default function NexusRotasHoteisPage() {
                 <h3 className="font-bold text-white text-base">Clara — Concierge de Resorts</h3>
                 <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
                   Guiamento por complexos amplos, agendamento de SPA, reservas de restaurantes e atividades esportivas.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 3: Valéria - Cancún */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Valeria_Cancun.mp4", "Valeria_Cancun.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded bg-emerald-950/40 mb-2 inline-block">Destinos de Sol & Praia</span>
+                <h3 className="font-bold text-white text-base">Valéria — Concierge Cancún</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Suporte completo de hotelaria internacional, sugestões de passeios, restaurantes e logística praiana.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 4: Kelie - Austrália */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Kelie_Australia.mp4", "Kelie_Australia.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded bg-emerald-950/40 mb-2 inline-block">Atendimento Poliglota</span>
+                <h3 className="font-bold text-white text-base">Kelie — Concierge Austrália</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Demonstração de suporte poliglota de alta fluidez para hóspedes de língua inglesa e estrangeiros.
                 </p>
               </div>
             </div>

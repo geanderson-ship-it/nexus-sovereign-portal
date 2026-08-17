@@ -193,6 +193,86 @@ export default function NexusRotasEmbaixadoraPage() {
           </div>
         </section>
 
+        {/* GALERIA DE AMOSTRAS B2G */}
+        <section className="py-12 border-t border-zinc-800/60 mt-12">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-black uppercase tracking-tight text-white font-headline">Galeria de Amostras</h2>
+            <p className="text-zinc-400 mt-2 text-xs">
+              Conheça exemplos práticos e demonstrações das nossas Embaixadoras Virtuais, fluentes em mais de 50 idiomas e voltadas para o turismo inteligente.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Amostra 1: Valéria - Explicativo */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Valeria_Explicativo.mp4", "Valeria_Explicativo.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded bg-blue-950/40 mb-2 inline-block">Demonstração Explicativa</span>
+                <h3 className="font-bold text-white text-base">Valéria — Apresentação de Tecnologia</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Visão geral de como a embaixadora digital interage, explica rotas de cidades e orienta os visitantes de forma unificada.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 2: Vitória */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Vitoria_Embaixadora.mp4", "Vitoria_Embaixadora_virtual.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded bg-blue-950/40 mb-2 inline-block">Modelo de Referência</span>
+                <h3 className="font-bold text-white text-base">Vitória — Embaixadora Virtual</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Demonstração padrão de recepção multilíngue, voz natural e suporte a dúvidas frequentes para portais municipais.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 3: Hana - Japão */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Hana_Japao.mp4", "Hana_Japao.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded bg-blue-950/40 mb-2 inline-block">Ásia / Turismo Internacional</span>
+                <h3 className="font-bold text-white text-base">Hana — Concierge Japão</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Demonstração de suporte multilíngue focado em destinos orientais de alta sofisticação cultural.
+                </p>
+              </div>
+            </div>
+
+            {/* Amostra 4: Isabel - Mendoza */}
+            <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
+              <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
+                <CustomVideoPlayer 
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Isabel_Mendoza.mp4", "Isabel_Mendoza.mp4")}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-widest text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded bg-blue-950/40 mb-2 inline-block">América do Sul / Enoturismo</span>
+                <h3 className="font-bold text-white text-base">Isabel — Concierge Mendoza</h3>
+                <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                  Suporte focado em rotas de vinhos, reservas de vinícolas e atrativos turísticos da Cordilheira dos Andes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* LEAD CAPTURE FORM */}
         <section id="contato-form" className="py-12 border-t border-zinc-900 max-w-2xl mx-auto">
           <div className="text-center mb-10">
