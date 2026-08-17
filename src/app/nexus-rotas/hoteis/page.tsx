@@ -330,7 +330,7 @@ export default function NexusRotasHoteisPage() {
             <div className="p-5 rounded-2xl border border-zinc-800 bg-zinc-950/65 flex flex-col justify-between shadow-lg">
               <div className="rounded-xl overflow-hidden mb-4 border border-zinc-800/80 aspect-video relative">
                 <CustomVideoPlayer 
-                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Kelie_Australia.mp4", "Kelie_Australia.mp4")}
+                  src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora/Kelie_Australia.mp4", "Kelie_Australia.mp4")}
                   className="w-full h-full object-cover"
                 />
               </div>
