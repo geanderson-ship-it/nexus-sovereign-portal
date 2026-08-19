@@ -3,11 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - nvm install 20
-        - nvm use 20
+        - nvm use 20 || nvm install 20 || true
         - node -v
         - npm install --legacy-peer-deps
-        - env | grep -e GMAIL_ -e EVOLUTION_ -e BEDROCK_ -e NEXT_PUBLIC_ -e NEXUS_ -e ZAPI_ -e ELEVENLABS_ -e AZURE_ > .env.production
+        - env | grep -e GMAIL_ -e EVOLUTION_ -e BEDROCK_ -e NEXT_PUBLIC_ -e NEXUS_ -e ZAPI_ -e ELEVENLABS_ -e AZURE_ > .env.production || true
     build:
       commands:
         - npm run build
@@ -17,4 +16,5 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - node_modules/**
+      - .next/cache/**/*
+      - node_modules/**/*
