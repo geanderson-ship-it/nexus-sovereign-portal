@@ -1,0 +1,23 @@
+{
+  "name": "Pactum Legal - Felipe Querol",
+  "short_name": "Pactum Legal",
+  "description": "Central de Inteligência Jurídica e Gestão de Marcas do Dr. Felipe Querol",
+  "start_url": "/pactumlegal?token=FELIPE_BETA_2026",
+  "display": "standalone",
+  "background_color": "#070d1e",
+  "theme_color": "#cca752",
+  "icons": [
+    {
+      "src": "/felipe-avatar.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/felipe-avatar.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

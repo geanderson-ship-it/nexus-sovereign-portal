@@ -414,10 +414,20 @@ export default function NexusPactumCockpit() {
           ))}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button asChild className="bg-[#cca752] hover:bg-[#e6c16c] text-[#0a0a0c] shadow-[0_0_20px_rgba(204,167,82,0.3)] border border-[#cca752]/50 font-black uppercase tracking-widest text-[10px] rounded-2xl px-6 h-12 group transition-all">
             <Link href="/pactum-legal">
               <Scale className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" /> Acessar Justine (IA)
+            </Link>
+          </Button>
+          <Button asChild className="bg-violet-600 hover:bg-violet-500 text-white shadow-[0_0_20px_rgba(139,92,246,0.3)] border border-violet-500/50 font-black uppercase tracking-widest text-[10px] rounded-2xl px-6 h-12 group transition-all">
+            <Link href="/pactum-legal/marcas?view=societario">
+              <Scale className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" /> Pactum Societário
+            </Link>
+          </Button>
+          <Button asChild className="bg-cyan-600 hover:bg-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.3)] border border-cyan-500/50 font-black uppercase tracking-widest text-[10px] rounded-2xl px-6 h-12 group transition-all">
+            <Link href="/pactum-legal/marcas?view=marcas">
+              <Scale className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" /> Pactum Marcas (INPI)
             </Link>
           </Button>
           <Button variant="ghost" asChild className="text-slate-500 hover:text-white group bg-white/5 hover:bg-white/10 border border-white/5 rounded-2xl px-6 h-12">

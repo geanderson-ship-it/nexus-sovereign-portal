@@ -99,6 +99,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/pactumlegal',
+        destination: '/pactum-legal/marcas',
+        permanent: true,
+      },
+      {
         source: '/gallery',
         destination: '/',
         permanent: true,

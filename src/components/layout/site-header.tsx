@@ -25,18 +25,27 @@ import { useLocale } from '@/hooks/use-locale';
 
 function TextLogo() {
   return (
-    <div className="flex flex-col items-start md:items-center relative group cursor-pointer">
+    <div className="flex flex-col items-center relative group cursor-pointer">
       {/* Efeito UAU de Brilho Fundo */}
       <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/0 via-blue-500/30 to-blue-600/0 blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000 pointer-events-none"></div>
-      
-      <span className="font-headline uppercase flex flex-col md:flex-row items-start md:items-center gap-0 md:gap-3 leading-tight md:leading-normal relative z-10 transition-all duration-500 group-hover:scale-105">
-        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.9)] text-3xl sm:text-5xl tracking-[0.15em] md:tracking-[0.2em]">
-          Nexus
+
+      <div className="flex items-center gap-3 relative z-10 transition-all duration-500 group-hover:scale-105">
+        {/* Ícone oficial N com flecha da Nexus */}
+        <img
+          src="/nexus-n-symbol.png"
+          alt="Nexus N"
+          className="h-16 sm:h-20 w-auto object-contain object-bottom self-center translate-y-2 shrink-0 drop-shadow-[0_0_12px_rgba(59,130,246,0.5)]"
+        />
+
+        <span className="font-headline uppercase flex flex-col md:flex-row items-center gap-0 md:gap-3 leading-none">
+          <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.9)] text-3xl sm:text-5xl tracking-[0.15em] md:tracking-[0.2em] leading-none">
+            Nexus
+          </span>
+          <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-3xl whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] leading-none">
+            Holding Group
+          </span>
         </span>
-        <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-3xl mt-0 md:mt-1 whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-          Holding Group
-        </span>
-      </span>
+      </div>
     </div>
   );
 }

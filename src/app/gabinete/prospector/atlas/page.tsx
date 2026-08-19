@@ -45,6 +45,8 @@ export default function AtlasProspectorPage() {
   
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [domain, setDomain] = useState('');
+  const [location, setLocation] = useState('');
+  const [keyword, setKeyword] = useState('');
   const [cargo, setCargo] = useState('');
   const [leads, setLeads] = useState<Lead[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -85,11 +87,18 @@ export default function AtlasProspectorPage() {
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!domain.trim()) return;
+    if (!domain.trim() && !location.trim() && !keyword.trim()) return;
 
     setIsSearching(true);
     setLeads([]);
-    addLog(`Buscando dominio: ${domain.trim()} com filtro de cargo: ${cargo.trim() || 'Nenhum'}`);
+    
+    let logMsg = 'Buscando ';
+    if (domain.trim()) logMsg += `dominio: ${domain.trim()} | `;
+    if (location.trim()) logMsg += `localizacao: ${location.trim()} | `;
+    if (keyword.trim()) logMsg += `palavra-chave: ${keyword.trim()} | `;
+    logMsg += `com filtro de cargo: ${cargo.trim() || 'Nenhum'}`;
+    
+    addLog(logMsg);
 
     try {
       const res = await fetch('/api/atlas', {
@@ -97,7 +106,9 @@ export default function AtlasProspectorPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'search',
-          domain: domain.trim(),
+          domain: domain.trim() || undefined,
+          location: location.trim() || undefined,
+          keyword: keyword.trim() || undefined,
           title: cargo.trim() || undefined
         })
       });
@@ -109,16 +120,25 @@ export default function AtlasProspectorPage() {
 
       if (data.leads && data.leads.length > 0) {
         setLeads(data.leads);
-        addLog(`Busca concluida. Encontrados ${data.leads.length} decisores.`);
-        toast({
-          title: 'Prospecccao Concluida',
-          description: `Encontrados ${data.leads.length} leads corporativos.`
-        });
+        if (data.isSandbox) {
+          addLog('SANDBOX: Chave do Apollo limitada (Plano Gratuito). Exibindo leads simulados de demonstração.');
+          toast({
+            title: 'Modo Sandbox Ativo 🛡️',
+            description: 'A API do Apollo está no plano gratuito. Exibindo leads de teste da sandbox.',
+            style: { backgroundColor: '#020617', color: '#22d3ee', border: '1px solid #0891b2' }
+          });
+        } else {
+          addLog(`Busca concluida. Encontrados ${data.leads.length} decisores.`);
+          toast({
+            title: 'Prospecccao Concluida',
+            description: `Encontrados ${data.leads.length} leads corporativos.`
+          });
+        }
       } else {
         addLog('A API do Apollo nao retornou nenhum lead para estes criterios.');
         toast({
           title: 'Nenhum lead encontrado',
-          description: 'Verifique o dominio e os filtros de cargo.',
+          description: 'Verifique os criterios e os filtros de busca.',
           variant: 'destructive'
         });
       }
@@ -330,7 +350,7 @@ export default function AtlasProspectorPage() {
               <CardContent>
                 <form onSubmit={handleSearch} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="domain" className="text-slate-300">Domínio da Empresa</Label>
+                    <Label htmlFor="domain" className="text-slate-300">Domínio da Empresa (Opcional)</Label>
                     <Input
                       id="domain"
                       placeholder="ex: ambev.com.br"
@@ -338,7 +358,30 @@ export default function AtlasProspectorPage() {
                       onChange={e => setDomain(e.target.value)}
                       className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500 focus:ring-cyan-500"
                       disabled={isSearching}
-                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="location" className="text-slate-300">Localização (Opcional)</Label>
+                    <Input
+                      id="location"
+                      placeholder="ex: Portugal ou Lisboa, Portugal"
+                      value={location}
+                      onChange={e => setLocation(e.target.value)}
+                      className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500 focus:ring-cyan-500"
+                      disabled={isSearching}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="keyword" className="text-slate-300">Palavra-chave do Setor (Opcional)</Label>
+                    <Input
+                      id="keyword"
+                      placeholder="ex: hotel, resort, hospitality"
+                      value={keyword}
+                      onChange={e => setKeyword(e.target.value)}
+                      className="bg-slate-900 border-slate-700 text-white focus:border-cyan-500 focus:ring-cyan-500"
+                      disabled={isSearching}
                     />
                   </div>
 
@@ -357,7 +400,7 @@ export default function AtlasProspectorPage() {
                   <Button 
                     type="submit" 
                     className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold tracking-wider"
-                    disabled={isSearching || !domain.trim()}
+                    disabled={isSearching || (!domain.trim() && !location.trim() && !keyword.trim())}
                   >
                     {isSearching ? (
                       <>
