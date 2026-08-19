@@ -110,17 +110,17 @@ export default function HomePage() {
                             <div className="flex flex-col items-center text-center relative z-10 space-y-6">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/25 shadow-[0_0_15px_rgba(59,130,246,0.15)] mb-2">
                                     <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-blue-300">Nexus Sovereign Operations</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-blue-300">Nexus Holding Group</span>
                                 </div>
 
                                 <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold font-headline tracking-tighter leading-tight drop-shadow-lg max-w-4xl">
                                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-blue-400">
-                                        A Convergência da Excelência Humana com a Arquitetura Cibernética
+                                        Inteligência Artificial e Tecnologia Prática para Fazer Sua Empresa Crescer
                                     </span>
                                 </h1>
 
                                 <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-3xl leading-relaxed font-light opacity-95">
-                                    A <strong className="text-white font-semibold">Nexus Holding Group</strong> é o ecossistema definitivo para operações que exigem vanguarda tecnológica. Sob a engenharia estratégica do <strong className="text-blue-400 font-semibold">Diretor Geanderson</strong>, o grupo atua como a espinha dorsal da inovação corporativa, orquestrando soluções 100% <em>On-Premise</em> através de nossos dois braços de elite:
+                                    Desenvolvemos inteligência artificial sob medida, automação de processos e soluções de alta tecnologia para proteger seus dados, aumentar suas vendas e acelerar seus resultados. Conheça nossas duas divisões principais:
                                 </p>
 
                                 {/* High-tech stats block inside card */}
@@ -130,15 +130,15 @@ export default function HomePage() {
                                         <span className="text-sm font-semibold text-white font-headline">Dir. Geanderson</span>
                                     </div>
                                     <div className="flex flex-col items-center p-3 bg-white/[0.02] border border-white/5 rounded-xl hover:bg-white/[0.04] transition-colors">
-                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Infraestrutura</span>
-                                        <span className="text-sm font-semibold text-blue-400 font-headline">100% On-Premise</span>
+                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Privacidade</span>
+                                        <span className="text-sm font-semibold text-blue-400 font-headline">100% Segura & Privada</span>
                                     </div>
                                     <div className="flex flex-col items-center p-3 bg-white/[0.02] border border-white/5 rounded-xl hover:bg-white/[0.04] transition-colors">
-                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Divisões Core</span>
-                                        <span className="text-sm font-semibold text-white font-headline">Intelligence & Inovação</span>
+                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Especialidades</span>
+                                        <span className="text-sm font-semibold text-white font-headline">Inovação & IA</span>
                                     </div>
                                     <div className="flex flex-col items-center p-3 bg-white/[0.02] border border-white/5 rounded-xl hover:bg-white/[0.04] transition-colors">
-                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Status de Rede</span>
+                                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Proteção</span>
                                         <span className="text-sm font-semibold text-green-400 font-headline flex items-center gap-1.5">
                                             <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                                             Criptografado
@@ -177,17 +177,17 @@ export default function HomePage() {
                                <Logo width={400} height={134} />
                             </div>
                             <h3 className="text-2xl font-bold font-headline text-primary text-center uppercase tracking-wider">
-                                Tecnologia, Inovação e Evolução
+                                Tecnologia, Inovação e Treinamento
                             </h3>
                             
                             <div className="flex flex-col items-center gap-6 mt-4">
                                 <p className="text-foreground/90 text-lg leading-relaxed font-light">
-                                    A revolução corporativa começa aqui. Moldamos o futuro de empresas visionárias através de estratégias tecnológicas de vanguarda e arquiteturas disruptivas que redefinem o mercado.
+                                    Preparamos sua empresa para o futuro com estratégias modernas de tecnologia, capacitação de equipes e automações que aceleram o crescimento do seu negócio.
                                 </p>
                             </div>
                             
                             <blockquote className="mt-6 border-l-4 border-primary pl-4 py-2 italic text-muted-foreground text-left text-sm">
-                                "Evoluir não é mais uma opção, é a única garantia de soberania no mercado de amanhã."
+                                "Inovar com simplicidade é o caminho mais rápido e seguro para liderar seu mercado."
                             </blockquote>
                         </div>
 
@@ -210,17 +210,17 @@ export default function HomePage() {
                                 <NexusIntelligenceLogo width={400} height={134} />
                             </div>
                             <h3 className="text-2xl font-bold font-headline text-blue-400 text-center uppercase tracking-wider">
-                                Inteligência Artificial e Soluções Avançadas
+                                Inteligência Artificial Sob Medida
                             </h3>
                             
                             <div className="flex flex-col items-center gap-6 mt-4">
                                 <p className="text-foreground/90 text-lg leading-relaxed font-light">
-                                    O ecossistema definitivo de I.A. para o alto escalão corporativo. Soluções <strong className="text-blue-400 font-medium">100% On-Premise</strong> que conferem poder de decisão absoluto e orquestração preditiva em tempo real.
+                                    Desenvolvemos assistentes virtuais inteligentes e sistemas de IA de alta segurança, integrados à sua rotina para automatizar tarefas e aumentar a precisão das suas decisões.
                                 </p>
                             </div>
 
                             <blockquote className="mt-6 border-l-4 border-blue-500 pl-4 py-2 italic text-muted-foreground text-left text-sm">
-                                "Para corporações que exigem o topo, a intuição não basta. A margem de erro é zero."
+                                "Tomar decisões guiadas por IA e dados exatos elimina o risco e multiplica os resultados."
                             </blockquote>
                         </div>
                         <div className="pt-6 flex flex-col gap-2">
@@ -243,17 +243,17 @@ export default function HomePage() {
                     <Card className="backdrop-blur-md border-2 border-primary/40 p-6 md:p-10 text-center">
                         <CardHeader>
                             <CardTitle className="font-headline text-4xl lg:text-5xl uppercase tracking-tighter">
-                                <span className="text-foreground">Seu problema,</span>
-                                <span className="text-primary ml-3">nossa engenharia.</span>
+                                <span className="text-foreground">Seu desafio,</span>
+                                <span className="text-primary ml-3">nossa solução.</span>
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="max-w-3xl mx-auto space-y-6">
                               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                                Na <strong className="text-primary font-semibold">Nexus</strong>, projetamos a tecnologia e a inovação que impulsionam a sua evolução.<br/>
-                                Na <strong className="text-blue-400 font-semibold">Nexus Intelligence</strong>, orquestramos a sua conexão definitiva com o futuro.
+                                Na <strong className="text-primary font-semibold">Nexus</strong>, criamos a tecnologia que simplifica e acelera a evolução do seu negócio.<br/>
+                                Na <strong className="text-blue-400 font-semibold">Nexus Intelligence</strong>, conectamos sua empresa às ferramentas de IA mais avançadas do mercado.
                             </p>
                             <blockquote className="text-xl md:text-2xl font-semibold text-foreground italic border-l-4 border-primary pl-6 py-2 text-left">
-                                "Somos a Nexus Holding Group: o ecossistema de elite onde a visão estratégica humana encontra a arquitetura cibernética mais avançada do planeta."
+                                "Nexus Holding Group: onde a experiência estratégica humana e a tecnologia de ponta se unem para transformar o seu negócio."
                             </blockquote>
                         </CardContent>
                         <CardFooter className="justify-center mt-6">
@@ -274,43 +274,46 @@ export default function HomePage() {
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
                             <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/40" />
                             <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-primary/40" />
-                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">Pilares Soberanos</h2>
+                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">Nossos Valores</h2>
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
                         </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {/* Pillar Cards */}
-                        <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
-                            <CardHeader>
-                                <Heart className="mx-auto h-10 w-10 text-primary mb-4" />
-                                <CardTitle className="font-headline">Humanidade</CardTitle>
-                                <CardDescription className="font-semibold">A essência de tudo</CardDescription>
-                            </CardHeader>
-                             <CardContent><p className="text-muted-foreground">A tecnologia existe para potencializar a capacidade humana, nunca para substituí-la. Construímos sistemas onde as pessoas detêm o controle absoluto.</p></CardContent>
-                        </Card>
+                        {/* Base 1: Respeito */}
                         <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
                                 <Handshake className="mx-auto h-10 w-10 text-primary mb-4" />
-                                <CardTitle className="font-headline">Respeito</CardTitle>
-                                <CardDescription className="font-semibold">Autonomia e privacidade</CardDescription>
+                                <CardTitle className="font-headline text-xl">Respeito</CardTitle>
+                                <CardDescription className="font-semibold text-primary/80">Autonomia & Sigilo</CardDescription>
                             </CardHeader>
-                             <CardContent><p className="text-muted-foreground">Honramos a autonomia, o sigilo corporativo e o tempo dos nossos parceiros, desenvolvendo ecossistemas focados no seu modelo de negócios.</p></CardContent>
+                             <CardContent><p className="text-muted-foreground text-sm">Respeitamos a história, a privacidade e o tempo de cada parceiro, protegendo as informações e o sigilo do seu negócio.</p></CardContent>
                         </Card>
-                        <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
-                            <CardHeader>
-                                <ShieldCheck className="mx-auto h-10 w-10 text-primary mb-4" />
-                                <CardTitle className="font-headline">Confiança</CardTitle>
-                                <CardDescription className="font-semibold">Soberania digital</CardDescription>
-                            </CardHeader>
-                             <CardContent><p className="text-muted-foreground">A união de humanidade, respeito e ética gera a confiança inabalável. Entregamos uma infraestrutura onde o capital intelectual é impenetrável.</p></CardContent>
-                        </Card>
+                        {/* Base 2: Ética */}
                         <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
                                 <Scale className="mx-auto h-10 w-10 text-primary mb-4" />
-                                <CardTitle className="font-headline">Ética</CardTitle>
-                                <CardDescription className="font-semibold">Integridade e legalidade</CardDescription>
+                                <CardTitle className="font-headline text-xl">Ética</CardTitle>
+                                <CardDescription className="font-semibold text-primary/80">Integridade Total</CardDescription>
                             </CardHeader>
-                             <CardContent><p className="text-muted-foreground">Nossos algoritmos e códigos operam pautados na integridade, garantindo auditoria limpa (WORM), legalidade e ausência de vieses.</p></CardContent>
+                             <CardContent><p className="text-muted-foreground text-sm">Operamos com transparência e integridade em cada linha de código, garantindo conformidade com as leis e rigor moral.</p></CardContent>
+                        </Card>
+                        {/* Base 3: Confiança */}
+                        <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
+                            <CardHeader>
+                                <ShieldCheck className="mx-auto h-10 w-10 text-primary mb-4" />
+                                <CardTitle className="font-headline text-xl">Confiança</CardTitle>
+                                <CardDescription className="font-semibold text-primary/80">Segurança & Solidez</CardDescription>
+                            </CardHeader>
+                             <CardContent><p className="text-muted-foreground text-sm">Construímos soluções seguras e estáveis. Entregamos a tranquilidade de uma infraestrutura forte e impenetrável.</p></CardContent>
+                        </Card>
+                        {/* Base 4: Humanidade */}
+                        <Card className="text-center bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
+                            <CardHeader>
+                                <Heart className="mx-auto h-10 w-10 text-primary mb-4" />
+                                <CardTitle className="font-headline text-xl">Humanidade</CardTitle>
+                                <CardDescription className="font-semibold text-primary/80">Pessoas no Controle</CardDescription>
+                            </CardHeader>
+                             <CardContent><p className="text-muted-foreground text-sm">A tecnologia existe para servir e potencializar as pessoas. Desenvolvemos sistemas onde o ser humano mantém a decisão final.</p></CardContent>
                         </Card>
                     </div>
                 </div>
@@ -324,24 +327,24 @@ export default function HomePage() {
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
                             <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-primary/40" />
                             <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-primary/40" />
-                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">Impulsos de Crescimento</h2>
+                            <h2 className="text-3xl font-bold font-headline text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">Como Impulsionamos Seu Negócio</h2>
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
                         </div>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
                         <Card className="bg-transparent border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
-                                <CardTitle className="text-primary flex items-center gap-3"><Repeat className="h-7 w-7"/>Reciprocidade Evolutiva</CardTitle>
-                                <CardDescription className="font-semibold">Parceria de Alto Nível</CardDescription>
+                                <CardTitle className="text-primary flex items-center gap-3"><Repeat className="h-7 w-7"/>Parceria de Resultados</CardTitle>
+                                <CardDescription className="font-semibold">Crescimento Conjunto</CardDescription>
                             </CardHeader>
-                            <CardContent><p className="text-muted-foreground">Crescemos e evoluímos na exata proporção em que escalamos os lucros, os resultados e a autonomia dos nossos parceiros de negócios.</p></CardContent>
+                            <CardContent><p className="text-muted-foreground">Crescemos junto com você. Nosso compromisso é aumentar a eficiência, o lucro e a autonomia dos nossos parceiros.</p></CardContent>
                         </Card>
                          <Card className="bg-transparent backdrop-blur-md border-2 border-primary/20 hover:border-primary/50 transition-colors">
                             <CardHeader>
-                                <CardTitle className="text-primary flex items-center gap-3"><Sparkles className="h-7 w-7"/>Vanguarda Tecnológica</CardTitle>
-                                <CardDescription className="font-semibold">Liderança Pioneira</CardDescription>
+                                <CardTitle className="text-primary flex items-center gap-3"><Sparkles className="h-7 w-7"/>Inovação Prática</CardTitle>
+                                <CardDescription className="font-semibold">Liderança no Mercado</CardDescription>
                             </CardHeader>
-                            <CardContent><p className="text-muted-foreground">Não acompanhamos as tendências. Nós moldamos e desenvolvemos as tecnologias que vão ditar as regras do mercado nas próximas décadas.</p></CardContent>
+                            <CardContent><p className="text-muted-foreground">Desenvolvemos e aplicamos as tecnologias que colocam e mantêm a sua empresa à frente da concorrência.</p></CardContent>
                         </Card>
                     </div>
                     <div className="mt-20 text-center max-w-4xl mx-auto">
@@ -353,13 +356,13 @@ export default function HomePage() {
                             <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/30" />
                             <div className="space-y-6">
                                 <p className="text-2xl md:text-3xl font-semibold text-primary [text-shadow:0_0_20px_hsl(var(--primary)/0.4)]">
-                                    Na Nexus, projetamos a tecnologia e a inovação que impulsionam a sua evolução.
+                                    Na Nexus, criamos a tecnologia que simplifica e acelera o seu negócio.
                                 </p>
                                 <p className="text-2xl md:text-3xl font-semibold text-blue-400 [text-shadow:0_0_20px_rgba(96,165,250,0.4)]">
-                                    Na Nexus Intelligence, orquestramos a sua conexão definitiva com o futuro.
+                                    Na Nexus Intelligence, conectamos sua empresa ao futuro da inteligência artificial.
                                 </p>
                                 <p className="text-2xl md:text-3xl font-bold font-headline text-white mt-8 pt-6 border-t border-white/10">
-                                    Somos a Nexus Holding Group: o ecossistema de elite onde a visão estratégica humana encontra a arquitetura cibernética mais avançada do planeta.
+                                    Nexus Holding Group: onde a visão estratégica humana encontra a tecnologia mais avançada do mercado.
                                 </p>
                             </div>
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />

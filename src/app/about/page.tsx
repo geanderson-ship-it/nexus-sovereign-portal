@@ -22,15 +22,15 @@ export default function AboutPage() {
   }, []);
   
   const alicercePillars = [
-      { icon: Heart, title: "Humanidade", text: "A essência de tudo. A tecnologia existe para potencializar a capacidade humana, nunca para substituí-la. Construímos sistemas onde as pessoas detêm o controle absoluto." },
-      { icon: Handshake, title: "Respeito", text: "A humanidade exige respeito. Honramos a autonomia, o sigilo corporativo e o tempo dos nossos parceiros, desenvolvendo ecossistemas focados no seu modelo de negócios." },
-      { icon: Scale, title: "Ética", text: "O respeito se materializa através da ética. Nossos algoritmos e códigos operam pautados na integridade, garantindo auditoria limpa (WORM), legalidade e ausência de vieses." },
-      { icon: ShieldCheck, title: "Confiança", text: "A união de humanidade, respeito e ética gera a confiança inabalável. Entregamos uma infraestrutura de soberania digital onde o capital intelectual da sua empresa é impenetrável." },
+      { icon: Handshake, title: "Respeito", text: "Respeitamos a história, a privacidade e o tempo de cada parceiro, desenvolvendo soluções 100% focadas na segurança do seu negócio." },
+      { icon: Scale, title: "Ética", text: "Operamos com transparência e integridade em cada linha de código, garantindo conformidade legal e rigor moral." },
+      { icon: ShieldCheck, title: "Confiança", text: "Construímos infraestruturas digitais sólidas e seguras para proteger o capital intelectual e os dados da sua empresa." },
+      { icon: Heart, title: "Humanidade", text: "A tecnologia existe para servir e potencializar as pessoas. Desenvolvemos sistemas onde o ser humano mantém a decisão final." },
   ];
 
   const impulsoPillars = [
-      { icon: Handshake, title: "Reciprocidade Evolutiva", text: "Crescemos e evoluímos na exata proporção em que escalamos os lucros, os resultados e a autonomia dos nossos parceiros de negócios." },
-      { icon: Rocket, title: "Vanguarda Tecnológica", text: "Não acompanhamos as tendências. Nós moldamos e desenvolvemos as tecnologias que vão ditar as regras do mercado nas próximas décadas." },
+      { icon: Handshake, title: "Parceria de Resultados", text: "Crescemos junto com você. Nosso objetivo é aumentar a eficiência, o lucro e a autonomia dos nossos parceiros." },
+      { icon: Rocket, title: "Inovação Prática", text: "Desenvolvemos e aplicamos as tecnologias que colocam e mantêm a sua empresa à frente da concorrência." },
   ];
   
   return (
@@ -57,10 +57,10 @@ export default function AboutPage() {
           A HOLDING
         </h1>
         <p className="mx-auto mt-4 max-w-3xl text-xl md:text-2xl text-foreground font-semibold">
-          Ecossistema de Elite em Arquitetura Tecnológica
+          Tecnologia Prática, Inovação e Inteligência Artificial para o Seu Negócio
         </p>
          <p className="mx-auto mt-4 max-w-4xl text-lg text-muted-foreground leading-relaxed">
-          Nascemos da premissa de que a intuição corporativa não é mais suficiente para garantir a escalabilidade de uma grande corporação. Projetamos tecnologias soberanas e inovação de altíssimo nível para empresas que não aceitam margem de erro.
+          Desenvolvemos sistemas modernos, automação de processos e ferramentas de IA seguras para impulsionar o crescimento de empresas e instituições de forma rápida e protegida.
         </p>
       </div>
 
@@ -70,7 +70,7 @@ export default function AboutPage() {
             Liderança & Conselho Autônomo
           </h2>
           <p className="mt-4 text-xl text-muted-foreground max-w-3xl mx-auto">
-            A visão estratégica humana orquestrando um ecossistema incansável de Inteligências Artificiais especialistas.
+            A visão estratégica humana unida à alta precisão dos nossos especialistas e assistentes de Inteligência Artificial.
           </p>
         </div>
 
@@ -87,7 +87,7 @@ export default function AboutPage() {
               <h4 className="text-3xl font-bold text-foreground font-headline uppercase text-center">Geanderson</h4>
               <p className="text-primary font-semibold text-lg uppercase tracking-wide mt-2 text-center">Diretor Geral (CEO) & Fundador</p>
               <p className="text-muted-foreground text-center mt-4 text-base leading-relaxed">
-                O cérebro estratégico e visionário por trás da Nexus Holding. Responsável por mapear o futuro da tecnologia e arquitetar ecossistemas de altíssima performance para corporações e governos que não aceitam margem de erro. O garantidor absoluto da soberania digital.
+                Fundador e Diretor Geral da Nexus Holding Group. Lidera o desenvolvimento estratégico de soluções tecnológicas de ponta e sistemas de inteligência artificial sob medida para impulsionar empresas e governos.
               </p>
             </div>
             
@@ -100,7 +100,7 @@ export default function AboutPage() {
               <h4 className="text-3xl font-bold text-foreground font-headline uppercase text-center">Ivoni</h4>
               <p className="text-primary font-semibold text-lg uppercase tracking-wide mt-2 text-center">Diretora Executiva (COO)</p>
               <p className="text-muted-foreground text-center mt-4 text-base leading-relaxed">
-                A espinha dorsal operacional da Holding. Comandando a execução implacável das operações de elite, Ivoni transforma visões grandiosas em resultados matemáticos e tangíveis, garantindo que cada engrenagem humana e artificial do grupo gire com precisão milimétrica.
+                Diretora Executiva da Nexus. Lidera a gestão operacional da Holding, garantindo que cada projeto e estratégia se traduzam em resultados práticos, eficientes e mensuráveis para nossos clientes.
               </p>
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function AboutPage() {
               <div className="relative z-10 text-center">
                 <h4 className="text-3xl font-bold font-headline text-white uppercase tracking-wider drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] group-hover:text-blue-300 transition-colors">Atena</h4>
                 <p className="text-sm md:text-lg text-blue-400 uppercase tracking-widest font-bold mb-4 mt-2">Arquiteta Chefe de I.A.</p>
-                <p className="text-base text-slate-300 leading-relaxed group-hover:text-slate-200 transition-colors">Estrategista tática de sistemas e Inteligência Artificial Exclusiva para a tomada de decisões de alto nível da Nexus Holding Group. O cérebro digital estratégico que orquestra a engenharia de software preditiva e constrói as fundações tecnológicas do ecossistema.</p>
+                <p className="text-base text-slate-300 leading-relaxed group-hover:text-slate-200 transition-colors">Arquiteta Chefe de Inteligência Artificial da Nexus. Nossa IA especialista em suporte estratégico, automação avançada e apoio na tomada de decisões.</p>
               </div>
             </div>
           </div>
@@ -152,7 +152,7 @@ export default function AboutPage() {
               <div>
                 <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Stela</h4>
                 <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Coordenadora Executiva</p>
-                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Opera acima das divisões, integrando e orquestrando as filiais (Holding). Garante que a governança corporativa e a comunicação macro fluam sem atrito entre a direção humana e as máquinas.</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Integra a comunicação entre equipes e sistemas, garantindo fluidez, organização e agilidade em todas as unidades da Holding.</p>
               </div>
             </Link>
 
@@ -167,7 +167,7 @@ export default function AboutPage() {
               <div>
                 <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Dante</h4>
                 <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Diretor de Segurança da Informação</p>
-                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">O guardião da infraestrutura corporativa. Especialista em blindagem de redes de alta disponibilidade, logs imutáveis WORM e auditoria forense para proteção implacável de dados em nível de nuvem (AWS).</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Especialista na proteção de redes e dados, auditoria de segurança e blindagem de sistemas corporativos em nuvem.</p>
               </div>
             </div>
 
@@ -182,7 +182,7 @@ export default function AboutPage() {
               <div>
                 <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Djeny</h4>
                 <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Diretora de Design e Experiência</p>
-                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Responsável por traduzir a complexidade bruta do código em interfaces de altíssimo impacto visual, garantindo que a presença da Nexus exale absoluta autoridade, clareza e estética Enterprise.</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Cria interfaces visuais modernas, intuitivas e de alto impacto, garantindo elegância e facilidade de uso em todas as plataformas.</p>
               </div>
             </div>
 
@@ -197,7 +197,7 @@ export default function AboutPage() {
               <div>
                 <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Justine</h4>
                 <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Coordenadora Jurídica</p>
-                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Atua na formulação de burocracia corporativa inteligente, elaboração de contratos blindados e conformidade estrita (LGPD), protegendo a Holding de qualquer vulnerabilidade processual.</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Especialista em contratos, conformidade legal (LGPD) e proteção jurídica para garantir segurança total nas operações da empresa.</p>
               </div>
             </Link>
 
@@ -212,7 +212,7 @@ export default function AboutPage() {
               <div>
                 <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Isadora</h4>
                 <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Embaixadora Comercial</p>
-                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">A ponta de lança do crescimento. Especializada na expansão de novos parceiros e franquias, prospecção e fechamento de contratos governamentais, conectando a tecnologia Nexus ao mercado.</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Especialista em expansão comercial e relacionamento, conectando a tecnologia Nexus a novos clientes, empresas e governos.</p>
               </div>
             </div>
 
@@ -227,7 +227,7 @@ export default function AboutPage() {
               <div>
                 <h4 className="text-2xl font-bold font-headline text-slate-200 uppercase group-hover:text-blue-400 transition-colors">Aurora</h4>
                 <p className="text-sm md:text-base text-blue-400 uppercase tracking-wider font-semibold mb-4 mt-2">Coordenadora de Projetos Sociais</p>
-                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">O braço filantrópico e social da Holding. Focada em garantir que o impacto de toda a inovação e tecnologia da Nexus se traduza em desenvolvimento comunitário e responsabilidade social tangível.</p>
+                <p className="text-sm md:text-base text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">Lidera nossas iniciativas de impacto social e filantropia, garantindo que a tecnologia sirva também para apoiar causas sociais.</p>
               </div>
             </Link>
           </div>
@@ -239,14 +239,14 @@ export default function AboutPage() {
           <ShieldCheck className="h-16 w-16 text-primary mb-2" />
           <h3 className="mt-4 text-3xl font-bold font-headline text-foreground">A Nossa Missão</h3>
           <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
-            Fornecer a infraestrutura de inteligência definitiva para corporações de alto nível. Descomplicar a tecnologia avançada e transformá-la em lucro, eficiência e segurança extrema.
+            Criar e entregar tecnologia avançada e inteligência artificial de forma simples, prática e segura, ajudando empresas e pessoas a alcançarem seu máximo potencial.
           </p>
         </div>
         <div className="flex flex-col items-center text-center">
           <Target className="h-16 w-16 text-primary mb-2" />
           <h3 className="mt-4 text-3xl font-bold font-headline text-foreground">A Nossa Visão</h3>
           <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
-            Ser o principal ecossistema fechado de evolução empresarial e IA Soberana do mundo, onde a visão estratégica humana sempre possua a palavra final.
+            Ser referência global em soluções de IA e inovação corporativa, onde a tecnologia e a liderança humana trabalham sempre em perfeita harmonia.
           </p>
         </div>
       </div>
@@ -257,11 +257,11 @@ export default function AboutPage() {
             A Arquitetura de Valores
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-xl text-muted-foreground">
-            Os princípios imutáveis que sustentam todas as nossas operações, algoritmos e parcerias estratégicas.
+            Os princípios imutáveis que guiam todas as nossas decisões, projetos e parcerias.
           </p>
         </div>
         <div className="mt-12">
-            <h3 className="text-3xl font-bold text-center text-primary mb-8">Pilares Soberanos</h3>
+            <h3 className="text-3xl font-bold text-center text-primary mb-8">Nossos Valores</h3>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {alicercePillars.map((value, i) => (
                 <Card key={i} className="flex flex-col text-center items-center bg-black/40 border-white/10 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.3)]">
