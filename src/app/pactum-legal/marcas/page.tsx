@@ -171,11 +171,11 @@ export default function PactumLegalUnifiedDashboard() {
   const [currentView, setCurrentView] = useState<'lobby' | 'marcas' | 'societario'>('lobby');
 
   // Branding Customization States (Interactive Header)
-  const [avatarImage, setAvatarImage] = useState<string | null>('/felipe-avatar.png');
-  const [monogram, setMonogram] = useState('FQ');
-  const [logoImage, setLogoImage] = useState<string | null>('/felipe-logo.png');
-  const [customName, setCustomName] = useState('FELIPE QUEROL');
-  const [customSubtitle, setCustomSubtitle] = useState('CONSULTORIA JURÍDICA');
+  const [avatarImage, setAvatarImage] = useState<string | null>('/nexus-n-symbol.png');
+  const [monogram, setMonogram] = useState('NHG');
+  const [logoImage, setLogoImage] = useState<string | null>('/nexus-n-logo.png');
+  const [customName, setCustomName] = useState('NEXUS HOLDING GROUP');
+  const [customSubtitle, setCustomSubtitle] = useState('GESTÃO JURÍDICA DE MARCAS');
 
   // Parse search parameters on client side to dynamically adjust the initial view and load custom branding
   useEffect(() => {
