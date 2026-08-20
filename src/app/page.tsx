@@ -157,82 +157,135 @@ export default function HomePage() {
                 <div className="absolute bottom-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             </section>
 
-            {/* Section 2: Divisions */}
+            {/* Section 2: Divisões da Holding */}
             <section className="py-16 md:py-24 border-y border-white/5">
-                <div className="container flex flex-col gap-16 items-center">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch w-full">
-                    
-                    {/* Nexus Treinamento */}
-                    <div className="relative rounded-2xl md:rounded-3xl border border-primary/15 bg-black/30 backdrop-blur-md p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
-                        {/* Top accent line */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-                        {/* Corner accents */}
-                        <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-primary/30 rounded-tl-sm" />
-                        <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-primary/30 rounded-tr-sm" />
-                        <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-primary/30 rounded-bl-sm" />
-                        <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-primary/30 rounded-br-sm" />
+                <div className="container flex flex-col items-center gap-0">
 
-                        <div className="flex-grow space-y-6 text-center">
-                            <div className="flex justify-center">
-                               <Logo width={400} height={134} />
-                            </div>
-                            <h3 className="text-2xl font-bold font-headline text-primary text-center uppercase tracking-wider">
-                                Tecnologia, Inovação e Treinamento
-                            </h3>
-                            
-                            <div className="flex flex-col items-center gap-6 mt-4">
-                                <p className="text-foreground/90 text-lg leading-relaxed font-light">
-                                    Preparamos sua empresa para o futuro com estratégias modernas de tecnologia, capacitação de equipes e automações que aceleram o crescimento do seu negócio.
-                                </p>
-                            </div>
-                            
-                            <blockquote className="mt-6 border-l-4 border-primary pl-4 py-2 italic text-muted-foreground text-left text-sm">
-                                "Inovar com simplicidade é o caminho mais rápido e seguro para liderar seu mercado."
-                            </blockquote>
+                    {/* ── TOPO: Logo Nexus Holding Group centralizado ── */}
+                    <div className="flex flex-col items-center relative z-10 w-full">
+                        <div className="relative w-full max-w-3xl mx-auto">
+                            {/* Glow atrás da imagem */}
+                            <div className="absolute inset-0 blur-3xl bg-blue-500/20 rounded-3xl scale-105 pointer-events-none" />
+                            <Image
+                                src="/nexus-holding-youtube.png"
+                                alt="Nexus Holding Group"
+                                width={960}
+                                height={540}
+                                className="relative z-10 w-full h-auto rounded-2xl drop-shadow-[0_0_50px_rgba(37,99,235,0.6)] object-cover"
+                                priority
+                            />
                         </div>
-
-                        {/* Bottom glow */}
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+                        {/* Linha conectora central descendo para os dois cards */}
+                        <div className="flex items-start justify-center w-full mt-2 mb-0 gap-0">
+                            {/* Linha esquerda */}
+                            <div className="flex-1 flex justify-end">
+                                <div className="w-1/2 h-px bg-gradient-to-l from-blue-500/60 to-transparent mt-3" />
+                                <div className="w-px h-6 bg-blue-500/60" />
+                            </div>
+                            {/* Ponto central */}
+                            <div className="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)] mt-2 mx-0" />
+                            {/* Linha direita */}
+                            <div className="flex-1 flex justify-start">
+                                <div className="w-px h-6 bg-blue-500/60" />
+                                <div className="w-1/2 h-px bg-gradient-to-r from-blue-500/60 to-transparent mt-3" />
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Nexus Intelligence */}
-                    <div className="relative rounded-2xl md:rounded-3xl border border-blue-500/15 bg-black/30 backdrop-blur-md p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
-                        {/* Top accent line */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-                        {/* Corner accents */}
-                        <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-blue-500/30 rounded-tl-sm" />
-                        <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-blue-500/30 rounded-tr-sm" />
-                        <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-blue-500/30 rounded-bl-sm" />
-                        <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-blue-500/30 rounded-br-sm" />
+                    {/* ── BAIXO: Dois cards das divisões ── */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch w-full mt-0">
 
-                        <div className="flex-grow space-y-6 text-center">
-                            <div className="flex justify-center">
-                                <NexusIntelligenceLogo width={400} height={134} />
-                            </div>
-                            <h3 className="text-2xl font-bold font-headline text-blue-400 text-center uppercase tracking-wider">
-                                Inteligência Artificial Sob Medida
-                            </h3>
-                            
-                            <div className="flex flex-col items-center gap-6 mt-4">
-                                <p className="text-foreground/90 text-lg leading-relaxed font-light">
-                                    Desenvolvemos assistentes virtuais inteligentes e sistemas de IA de alta segurança, integrados à sua rotina para automatizar tarefas e aumentar a precisão das suas decisões.
-                                </p>
+                        {/* Card 1: Nexus Commerce */}
+                        <div className="relative rounded-2xl md:rounded-3xl border border-blue-400/20 bg-black/30 backdrop-blur-md p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
+                            {/* Top accent */}
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent" />
+                            {/* Corner accents */}
+                            <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-blue-400/30 rounded-tl-sm" />
+                            <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-blue-400/30 rounded-tr-sm" />
+                            <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-blue-400/30 rounded-bl-sm" />
+                            <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-blue-400/30 rounded-br-sm" />
+                            {/* Badge holding */}
+                            <div className="absolute top-4 right-4 text-[9px] font-black uppercase tracking-widest text-blue-400/60 border border-blue-400/20 rounded-full px-2 py-0.5">
+                                Nexus Holding Group
                             </div>
 
-                            <blockquote className="mt-6 border-l-4 border-blue-500 pl-4 py-2 italic text-muted-foreground text-left text-sm">
-                                "Tomar decisões guiadas por IA e dados exatos elimina o risco e multiplica os resultados."
-                            </blockquote>
-                        </div>
-                        <div className="pt-6 flex flex-col gap-2">
-                           <Button asChild size="lg" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold h-14 text-lg shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                               <Link href="/intelligence">{t('inicio.intelligence.cta')}</Link>
-                           </Button>
+                            <div className="flex-grow space-y-6 text-center">
+                                {/* Área da logo — altura fixa igual ao Intelligence */}
+                                <div className="flex items-center justify-center h-52">
+                                    <Image
+                                        src="/nexus-commerce-logo.jpg"
+                                        alt="Nexus Commerce"
+                                        width={320}
+                                        height={320}
+                                        className="h-full w-auto object-contain rounded-xl drop-shadow-[0_0_25px_rgba(37,99,235,0.4)]"
+                                    />
+                                </div>
+                                <h3 className="text-2xl font-bold font-headline text-blue-300 text-center uppercase tracking-wider">
+                                    Ecossistema de Negócios
+                                </h3>
+                                <div className="flex flex-col items-center gap-6 mt-4">
+                                    <p className="text-foreground/90 text-lg leading-relaxed font-light">
+                                        Moda, Revenda, Vitrine Digital, Embaixadoras e Marketing — um ecossistema completo para impulsionar seu negócio com tecnologia e estratégia.
+                                    </p>
+                                </div>
+                                <blockquote className="mt-6 border-l-4 border-blue-400 pl-4 py-2 italic text-muted-foreground text-left text-sm">
+                                    "Conectamos pessoas, produtos e oportunidades em um único ecossistema poderoso."
+                                </blockquote>
+                            </div>
+                            <div className="pt-6">
+                                <Button asChild size="lg" className="w-full bg-gradient-to-r from-blue-700 to-blue-500 hover:from-blue-600 hover:to-blue-400 text-white font-bold h-14 text-lg shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+                                    <Link href="/inovamoda">Acessar Nexus Commerce</Link>
+                                </Button>
+                            </div>
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent" />
                         </div>
 
-                        {/* Bottom glow */}
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
+                        {/* Card 2: Nexus Intelligence */}
+                        <div className="relative rounded-2xl md:rounded-3xl border border-cyan-500/20 bg-black/30 backdrop-blur-md p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.35)] overflow-hidden flex flex-col">
+                            {/* Top accent */}
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+                            {/* Corner accents */}
+                            <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-cyan-500/30 rounded-tl-sm" />
+                            <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-cyan-500/30 rounded-tr-sm" />
+                            <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-cyan-500/30 rounded-bl-sm" />
+                            <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-cyan-500/30 rounded-br-sm" />
+                            {/* Badge holding */}
+                            <div className="absolute top-4 right-4 text-[9px] font-black uppercase tracking-widest text-cyan-400/60 border border-cyan-400/20 rounded-full px-2 py-0.5">
+                                Nexus Holding Group
+                            </div>
+
+                            <div className="flex-grow space-y-6 text-center">
+                                {/* Área da logo — mesma altura h-52 do Commerce */}
+                                <div className="flex items-center justify-center h-52">
+                                    <Image
+                                        src="/nexus-intelligence-logo.jpg"
+                                        alt="Nexus Intelligence"
+                                        width={320}
+                                        height={320}
+                                        className="h-full w-auto object-contain rounded-xl drop-shadow-[0_0_25px_rgba(6,182,212,0.4)]"
+                                    />
+                                </div>
+                                <h3 className="text-2xl font-bold font-headline text-cyan-400 text-center uppercase tracking-wider">
+                                    Inteligência Artificial Sob Medida
+                                </h3>
+                                <div className="flex flex-col items-center gap-6 mt-4">
+                                    <p className="text-foreground/90 text-lg leading-relaxed font-light">
+                                        Desenvolvemos assistentes virtuais inteligentes e sistemas de IA de alta segurança, integrados à sua rotina para automatizar tarefas e aumentar a precisão das suas decisões.
+                                    </p>
+                                </div>
+                                <blockquote className="mt-6 border-l-4 border-cyan-500 pl-4 py-2 italic text-muted-foreground text-left text-sm">
+                                    "Tomar decisões guiadas por IA e dados exatos elimina o risco e multiplica os resultados."
+                                </blockquote>
+                            </div>
+                            <div className="pt-6">
+                                <Button asChild size="lg" className="w-full bg-gradient-to-r from-cyan-700 to-blue-600 hover:from-cyan-600 hover:to-blue-500 text-white font-bold h-14 text-lg shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+                                    <Link href="/intelligence">{t('inicio.intelligence.cta')}</Link>
+                                </Button>
+                            </div>
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
+                        </div>
+
                     </div>
-                </div>
                 </div>
             </section>
 

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { useUser } from '@/auth';
@@ -246,7 +246,7 @@ export default function VisionSoberanoPage() {
   const [leadsList, setLeadsList] = useState<any[]>([]);
   const [selectedRecipient, setSelectedRecipient] = useState('');
   const [customEmail, setCustomEmail] = useState('');
-  const [selectedSender, setSelectedSender] = useState('vendas@nexustreinamento.com');
+  const [selectedSender, setSelectedSender] = useState('vendas@nexusholdinggroup.com.br');
   const [customSender, setCustomSender] = useState('');
   const [emailSubject, setEmailSubject] = useState('Convite para Reunião Virtual Segura — Nexus Holding Group');
   const [isEmailCopied, setIsEmailCopied] = useState(false);
@@ -674,8 +674,8 @@ export default function VisionSoberanoPage() {
     if (selectedSender === 'custom') {
       return customSender ? `${customSender} — Nexus Holding Group` : 'Diretoria — Nexus Holding Group';
     }
-    if (selectedSender === 'vendas@nexustreinamento.com') return 'Vendas — Nexus Holding Group';
-    if (selectedSender === 'geanderson@nexustreinamento.com') return 'Diretor Geanderson — Nexus Holding Group';
+    if (selectedSender === 'vendas@nexusholdinggroup.com.br') return 'Vendas — Nexus Holding Group';
+    if (selectedSender === 'geanderson@nexusholdinggroup.com.br') return 'Diretor Geanderson — Nexus Holding Group';
     if (selectedSender === 'diretoria@nexustreinamento.com') return 'Diretoria — Nexus Holding Group';
     return 'Pessoal — Nexus Holding Group';
   }, [selectedSender, customSender]);
@@ -2547,8 +2547,8 @@ https://nexustreinamento.com`;
                   <SelectValue placeholder="Selecione a conta" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#0b0f19] border-slate-800 text-slate-200">
-                  <SelectItem value="vendas@nexustreinamento.com" className="text-emerald-400 font-medium">💼 Vendas (vendas@nexustreinamento.com)</SelectItem>
-                  <SelectItem value="geanderson@nexustreinamento.com" className="text-blue-400 font-medium">👑 Geanderson (geanderson@nexustreinamento.com)</SelectItem>
+                  <SelectItem value="vendas@nexusholdinggroup.com.br" className="text-emerald-400 font-medium">💼 Vendas (vendas@nexusholdinggroup.com.br)</SelectItem>
+                  <SelectItem value="geanderson@nexusholdinggroup.com.br" className="text-blue-400 font-medium">👑 Geanderson (geanderson@nexusholdinggroup.com.br)</SelectItem>
                   <SelectItem value="diretoria@nexustreinamento.com" className="text-indigo-400 font-medium">🏢 Diretoria (diretoria@nexustreinamento.com)</SelectItem>
                   <SelectItem value="pessoal@nexustreinamento.com" className="text-purple-400 font-medium">👤 Pessoal (pessoal@nexustreinamento.com)</SelectItem>
                   <SelectItem value="custom" className="text-amber-400 font-semibold">➕ Digitar Outra Conta...</SelectItem>

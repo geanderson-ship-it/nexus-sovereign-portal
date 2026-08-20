@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { getAppointments, saveAppointment, deleteAppointment, AgendaItem } from '@/lib/agenda-db';
 import nodemailer from 'nodemailer';
 
@@ -132,7 +132,7 @@ async function sendNotificationEmails(appointment: any) {
     // E-mail 1: Para os anfitriões (Gean e Vendas)
     await transporter.sendMail({
       from: `"Nexus Agenda Core" <${gUser}>`,
-      to: ['geanderson@nexustreinamento.com', 'vendas@nexustreinamento.com'],
+      to: ['geanderson@nexusholdinggroup.com.br', 'vendas@nexusholdinggroup.com.br'],
       subject: `🚨 Novo Agendamento: ${appointment.empresa} — ${appointment.horario} em ${appointment.data}`,
       html: hostHtml,
     });

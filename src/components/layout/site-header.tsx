@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useMemo, useState, useEffect } from 'react';
@@ -25,25 +24,16 @@ import { useLocale } from '@/hooks/use-locale';
 
 function TextLogo() {
   return (
-    <div className="flex flex-col items-center relative group cursor-pointer h-full justify-center">
-      {/* Efeito UAU de Brilho Fundo */}
-      <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/0 via-blue-500/30 to-blue-600/0 blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000 pointer-events-none"></div>
+    <div className="flex items-center justify-center relative group cursor-pointer py-1">
+      {/* Efeito sutil de Brilho Fundo */}
+      <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/0 via-blue-500/25 to-blue-600/0 blur-2xl opacity-0 group-hover:opacity-100 transition duration-700 pointer-events-none" />
 
-      <div className="flex items-center gap-3 relative z-10 transition-all duration-500 group-hover:scale-105">
-        {/* Ícone oficial N com flecha da Nexus */}
-        <img
-          src="/nexus-n-symbol.png"
-          alt="Nexus N"
-          className="h-20 sm:h-24 lg:h-[88px] w-auto object-contain shrink-0 drop-shadow-[0_0_12px_rgba(59,130,246,0.6)]"
-        />
-
-        <span className="font-headline uppercase flex flex-col md:flex-row items-center gap-0 md:gap-3 leading-none">
-          <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.9)] text-3xl sm:text-5xl tracking-[0.15em] md:tracking-[0.2em] leading-none">
-            Nexus
-          </span>
-          <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-3xl whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] leading-none">
-            Holding Group
-          </span>
+      <div className="flex flex-col md:flex-row items-center gap-0 md:gap-3 leading-none font-headline uppercase relative z-10 transition-transform duration-300 group-hover:scale-105">
+        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.9)] text-3xl sm:text-5xl tracking-[0.15em] md:tracking-[0.2em] leading-none">
+          Nexus
+        </span>
+        <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-3xl whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] leading-none">
+          Holding Group
         </span>
       </div>
     </div>
@@ -128,185 +118,159 @@ export function SiteHeader() {
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="w-full px-4 lg:px-8 max-w-[1920px] mx-auto flex flex-row items-stretch">
-        
-        {/* ESQUERDA: Apenas o símbolo N, espaço vazio cortado */}
-        <Link href="/" className="flex items-center justify-center px-3 shrink-0 overflow-hidden border-r border-border/20" onClick={() => setMobileMenuOpen(false)}>
-          <div className="overflow-hidden flex items-center justify-center">
-            <img
-              src="/nexus-n-symbol.png"
-              alt="Nexus"
-              className="h-24 w-auto object-contain -my-4 scale-[1.15]"
-            />
+      <div className="w-full px-4 lg:px-8 max-w-[1920px] mx-auto flex flex-col py-3">
+        {/* ═══ LINHA 1 (TOPO): Grid 3 colunas → [vazio] | [NEXUS HOLDING GROUP] | [controles] ═══ */}
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center w-full">
+          {/* Coluna Esquerda: vazia (empurra o título para o centro real) */}
+          <div className="hidden md:block" />
+          {/* Coluna Central: NEXUS HOLDING GROUP absolutamente centralizado */}
+          <div className="flex justify-center py-1">
+            <Link href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
+              <TextLogo />
+            </Link>
           </div>
-        </Link>
-
-        {/* DIREITA: Controls no topo + Nav embaixo */}
-        <div className="flex flex-col flex-1">
-
-          {/* TOP ROW: Spacer | Nome Centralizado | Controls */}
-          <div className="flex items-center w-full py-3">
-            {/* Spacer esquerdo */}
-            <div className="flex-1" />
-
-            {/* Nome da marca — centralizado por extenso */}
-            <div className="flex items-center gap-2 sm:gap-3 leading-none shrink-0 font-headline uppercase">
-              <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.9)] text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] leading-none">
-                NEXUS
-              </span>
-              <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-lg sm:text-2xl md:text-3xl whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] leading-none">
-                HOLDING GROUP
-              </span>
-            </div>
-
-            {/* Controls — direita */}
-            <div className="flex-1 flex items-center justify-end gap-1 sm:gap-2">
-           {/* Language Selector (Desktop Only) */}
-           <div className="hidden md:block">
-            <DropdownMenu>
-             <DropdownMenuTrigger asChild>
-               <Button variant="ghost" size="sm" className="flex items-center gap-2 px-2 h-9 border border-border/50 hover:bg-accent/50 transition-colors">
-                 {locale === 'pt-BR' && <><img src="https://flagcdn.com/w20/br.png" width="20" alt="BR" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">PT</span></>}
-                 {locale === 'en-US' && <><img src="https://flagcdn.com/w20/us.png" width="20" alt="US" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">EN</span></>}
-                 {locale === 'es-ES' && <><img src="https://flagcdn.com/w20/es.png" width="20" alt="ES" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">ES</span></>}
-                 {locale === 'de-DE' && <><img src="https://flagcdn.com/w20/de.png" width="20" alt="DE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">DE</span></>}
-                 {locale === 'fr-FR' && <><img src="https://flagcdn.com/w20/fr.png" width="20" alt="FR" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">FR</span></>}
-                 {locale === 'ja-JP' && <><img src="https://flagcdn.com/w20/jp.png" width="20" alt="JA" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">JA</span></>}
-                 {locale === 'zh-CN' && <><img src="https://flagcdn.com/w20/cn.png" width="20" alt="CN" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">CN</span></>}
-                 {locale === 'ar-AE' && <><img src="https://flagcdn.com/w20/ae.png" width="20" alt="AE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">AR</span></>}
-                 <span className="sr-only">{t('navChangeLanguage')}</span>
-               </Button>
-             </DropdownMenuTrigger>
-             <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur border-primary/20">
-               {[
-                 { code: 'pt-BR', name: 'Português', sub: 'Brasil', flag: 'br' },
-                 { code: 'en-US', name: 'English', sub: 'United States', flag: 'us' },
-                 { code: 'es-ES', name: 'Español', sub: 'España', flag: 'es' },
-                 { code: 'de-DE', name: 'Deutsch', sub: 'Deutschland', flag: 'de' },
-                 { code: 'fr-FR', name: 'Français', sub: 'France', flag: 'fr' },
-                 { code: 'ja-JP', name: '日本語', sub: '日本', flag: 'jp' },
-                 { code: 'zh-CN', name: '简体中文', sub: '中国', flag: 'cn' },
-                 { code: 'ar-AE', name: 'العربية', sub: 'دبي', flag: 'ae' }
-               ].map((lang) => (
-                 <DropdownMenuItem key={lang.code} onClick={() => applyGoogleTranslate(lang.code)} className="flex items-center gap-3 cursor-pointer hover:bg-primary/10 transition-colors">
-                   <img src={`https://flagcdn.com/w20/${lang.flag}.png`} width="20" alt={lang.code} className="rounded-xs" />
-                   <div className="flex flex-col">
-                     <span className="text-sm font-medium">{lang.name}</span>
-                     <span className="text-[10px] text-muted-foreground uppercase">{lang.sub}</span>
-                   </div>
-                 </DropdownMenuItem>
-               ))}
-             </DropdownMenuContent>
-            </DropdownMenu>
-           </div>
-
-          {/* Desktop Auth Controls */}
-          <div className="hidden md:flex items-center gap-2">
-            {isUserLoading ? (
-              <div className="flex items-center gap-2">
-                <Skeleton className="h-10 w-20" />
-                <Skeleton className="h-10 w-28" />
-              </div>
-            ) : user ? (
-              <div className="flex items-center gap-3">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 border border-primary/20 hover:border-primary/50 transition-all">
-                      <Avatar className="h-9 w-9">
-                        <AvatarImage src={user.photoURL || ''} alt={user.displayName || ''} />
-                        <AvatarFallback className="bg-primary/10 text-primary font-bold">
-                          {userInitials}
-                        </AvatarFallback>
-                      </Avatar>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56 bg-background/95 backdrop-blur border-primary/20" align="end" forceMount>
-                    <div className="flex flex-col p-2 border-b border-border/50 mb-1">
-                      <span className="text-sm font-bold truncate">{user.displayName}</span>
-                      <span className="text-xs text-muted-foreground truncate">{user.email}</span>
-                    </div>
-                    <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10">
-                      <Link href="/profile" className="flex items-center w-full">
-                        <UserIcon className="mr-2 h-4 w-4" />
-                        <span>{t('userArea')}</span>
-                      </Link>
+          {/* Coluna Direita: Idioma + Entrar + Cadastrar */}
+          <div className="flex items-center justify-end gap-1 sm:gap-2">
+            {/* Language Selector (Desktop Only) */}
+            <div className="hidden md:block">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="flex items-center gap-2 px-2 h-9 border border-border/50 hover:bg-accent/50 transition-colors">
+                    {locale === 'pt-BR' && <><img src="https://flagcdn.com/w20/br.png" width="20" alt="BR" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">PT</span></>}
+                    {locale === 'en-US' && <><img src="https://flagcdn.com/w20/us.png" width="20" alt="US" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">EN</span></>}
+                    {locale === 'es-ES' && <><img src="https://flagcdn.com/w20/es.png" width="20" alt="ES" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">ES</span></>}
+                    {locale === 'de-DE' && <><img src="https://flagcdn.com/w20/de.png" width="20" alt="DE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">DE</span></>}
+                    {locale === 'fr-FR' && <><img src="https://flagcdn.com/w20/fr.png" width="20" alt="FR" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">FR</span></>}
+                    {locale === 'ja-JP' && <><img src="https://flagcdn.com/w20/jp.png" width="20" alt="JA" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">JA</span></>}
+                    {locale === 'zh-CN' && <><img src="https://flagcdn.com/w20/cn.png" width="20" alt="CN" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">CN</span></>}
+                    {locale === 'ar-AE' && <><img src="https://flagcdn.com/w20/ae.png" width="20" alt="AE" className="rounded-sm" /> <span className="text-xs font-bold uppercase tracking-tight">AR</span></>}
+                    <span className="sr-only">{t('navChangeLanguage')}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur border-primary/20">
+                  {[
+                    { code: 'pt-BR', name: 'Português', sub: 'Brasil', flag: 'br' },
+                    { code: 'en-US', name: 'English', sub: 'United States', flag: 'us' },
+                    { code: 'es-ES', name: 'Español', sub: 'España', flag: 'es' },
+                    { code: 'de-DE', name: 'Deutsch', sub: 'Deutschland', flag: 'de' },
+                    { code: 'fr-FR', name: 'Français', sub: 'France', flag: 'fr' },
+                    { code: 'ja-JP', name: '日本語', sub: '日本', flag: 'jp' },
+                    { code: 'zh-CN', name: '简体中文', sub: '中国', flag: 'cn' },
+                    { code: 'ar-AE', name: 'العربية', sub: 'دبي', flag: 'ae' }
+                  ].map((lang) => (
+                    <DropdownMenuItem key={lang.code} onClick={() => applyGoogleTranslate(lang.code)} className="flex items-center gap-3 cursor-pointer hover:bg-primary/10 transition-colors">
+                      <img src={`https://flagcdn.com/w20/${lang.flag}.png`} width="20" alt={lang.code} className="rounded-xs" />
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium">{lang.name}</span>
+                        <span className="text-[10px] text-muted-foreground uppercase">{lang.sub}</span>
+                      </div>
                     </DropdownMenuItem>
-                    {isAdmin && (
-                      <>
-                        <DropdownMenuSeparator className="bg-border/50" />
-                        <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary/70">Gabinete Diretoria</div>
-                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10 text-primary font-medium">
-                          <Link href="/gabinete" className="flex items-center w-full">
-                            <Shield className="mr-2 h-4 w-4" />
-                            <span>{t('navGabinete')}</span>
-                          </Link>
-                        </DropdownMenuItem>
-
-                        
-                        <DropdownMenuSeparator className="bg-border/50" />
-                        <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500/70">Área Comercial</div>
-                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
-                          <Link href="/gabinete-vendas" className="flex items-center w-full">
-                            <Briefcase className="mr-2 h-4 w-4" />
-                            <span>Showroom Comercial</span>
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
-                          <Link href="/gabinete/precificacao" className="flex items-center w-full">
-                            <Coins className="mr-2 h-4 w-4" />
-                            <span>Catálogo de Produtos</span>
-                          </Link>
-                        </DropdownMenuItem>
-                      </>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            {/* Desktop Auth Controls */}
+            <div className="hidden md:flex items-center gap-2">
+              {isUserLoading ? (
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-10 w-20" />
+                  <Skeleton className="h-10 w-28" />
+                </div>
+              ) : user ? (
+                <div className="flex items-center gap-3">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 border border-primary/20 hover:border-primary/50 transition-all">
+                        <Avatar className="h-9 w-9">
+                          <AvatarImage src={user.photoURL || ''} alt={user.displayName || ''} />
+                          <AvatarFallback className="bg-primary/10 text-primary font-bold">
+                            {userInitials}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56 bg-background/95 backdrop-blur border-primary/20" align="end" forceMount>
+                      <div className="flex flex-col p-2 border-b border-border/50 mb-1">
+                        <span className="text-sm font-bold truncate">{user.displayName}</span>
+                        <span className="text-xs text-muted-foreground truncate">{user.email}</span>
+                      </div>
+                      <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10">
+                        <Link href="/profile" className="flex items-center w-full">
+                          <UserIcon className="mr-2 h-4 w-4" />
+                          <span>{t('userArea')}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      {isAdmin && (
+                        <>
+                          <DropdownMenuSeparator className="bg-border/50" />
+                          <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary/70">Gabinete Diretoria</div>
+                          <DropdownMenuItem asChild className="cursor-pointer hover:bg-primary/10 text-primary font-medium">
+                            <Link href="/gabinete" className="flex items-center w-full">
+                              <Shield className="mr-2 h-4 w-4" />
+                              <span>{t('navGabinete')}</span>
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator className="bg-border/50" />
+                          <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500/70">Área Comercial</div>
+                          <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
+                            <Link href="/gabinete-vendas" className="flex items-center w-full">
+                              <Briefcase className="mr-2 h-4 w-4" />
+                              <span>Showroom Comercial</span>
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem asChild className="cursor-pointer hover:bg-emerald-500/10 text-emerald-400 font-bold">
+                            <Link href="/gabinete/precificacao" className="flex items-center w-full">
+                              <Coins className="mr-2 h-4 w-4" />
+                              <span>Catálogo de Produtos</span>
+                            </Link>
+                          </DropdownMenuItem>
+                        </>
+                      )}
+                      <DropdownMenuSeparator className="bg-border/50" />
+                      <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive hover:bg-destructive/10 focus:text-destructive">
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>{t('logout')}</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 text-sm">
+                  <Link
+                    href="/login"
+                    className={cn(
+                      buttonVariants({ variant: 'default', size: 'sm' }),
+                      'bg-primary hover:bg-primary/90 transition-all shadow-[0_0_15px_rgba(37,99,235,0.3)]'
                     )}
-                    <DropdownMenuSeparator className="bg-border/50" />
-                    <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive hover:bg-destructive/10 focus:text-destructive">
-                      <LogOut className="mr-2 h-4 w-4" />
-                      <span>{t('logout')}</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 text-sm">
-                <Link 
-                  href="/login" 
-                  className={cn(
-                    buttonVariants({ variant: 'default', size: 'sm' }),
-                    'bg-primary hover:bg-primary/90 transition-all shadow-[0_0_15px_rgba(37,99,235,0.3)]'
-                  )}
-                >
-                  <UserIcon className="mr-2 h-4 w-4 hidden md:block" />
-                  {t('login')}
-                </Link>
-                <Link 
-                  href="/signup" 
-                  className={cn(
-                    buttonVariants({ variant: 'outline', size: 'sm' }),
-                    'border-primary/50 text-primary hover:bg-primary/10 transition-all'
-                  )}
-                >
-                  Cadastrar
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile Menu Trigger (Hamburger) */}
-          <div className="xl:hidden flex items-center ml-2 relative z-[60]">
-            <Button variant="outline" size="sm" className="h-10 w-10 p-0 border-white/20 bg-black/50 text-white hover:bg-white/10 hover:text-white" onClick={() => setMobileMenuOpen(true)}>
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </div>
-          {/* Fim do hamburguer */}
+                  >
+                    <UserIcon className="mr-2 h-4 w-4 hidden md:block" />
+                    {t('login')}
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className={cn(
+                      buttonVariants({ variant: 'outline', size: 'sm' }),
+                      'border-primary/50 text-primary hover:bg-primary/10 transition-all'
+                    )}
+                  >
+                    Cadastrar
+                  </Link>
+                </div>
+              )}
             </div>
-          {/* Fim dos Controls (flex-1 direita) */}
+            {/* Mobile Menu Trigger (Hamburger) */}
+            <div className="md:hidden flex items-center ml-2 relative z-[60]">
+              <Button variant="outline" size="sm" className="h-10 w-10 p-0 border-white/20 bg-black/50 text-white hover:bg-white/10 hover:text-white" onClick={() => setMobileMenuOpen(true)}>
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </div>
           </div>
-          {/* Fim do TOP ROW */}
+        </div>
+        {/* ═══ FIM LINHA 1 ═══ */}
 
-          {/* BOTTOM ROW: Navigation Menus (Desktop Only) */}
-          <nav className="hidden xl:flex justify-center items-center gap-x-3 2xl:gap-x-5 gap-y-2 text-[11px] xl:text-[12px] 2xl:text-[14px] flex-nowrap w-full pb-3 whitespace-nowrap overflow-x-auto no-scrollbar">
+        {/* ═══ LINHA 2: Navegação — full-width, centralizada, somente desktop ═══ */}
+        <nav className="hidden lg:flex justify-center items-center gap-x-2.5 2xl:gap-x-4 gap-y-2 mt-3 text-[11px] xl:text-[12px] 2xl:text-[13px] flex-wrap w-full pb-1 px-2">
             {mainNav.map((item) => {
               return (
                 <Link
@@ -366,8 +330,7 @@ export function SiteHeader() {
               </DropdownMenuContent>
             </DropdownMenu>
           </nav>
-        </div>
-        {/* Fim da coluna DIREITA */}
+        {/* Fim da linha 2 */}
 
         {/* Mobile Menu Sheet */}
         <div className="md:hidden">

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(req: NextRequest) {
@@ -10,16 +10,16 @@ export async function POST(req: NextRequest) {
     }
 
     // Identifica credenciais corretas do remetente
-    let fromEmail = process.env.GMAIL_EMPRESA_EMAIL || 'geanderson@nexustreinamento.com';
+    let fromEmail = process.env.GMAIL_EMPRESA_EMAIL || 'geanderson@nexusholdinggroup.com.br';
     let fromPass = (process.env.GMAIL_EMPRESA_PASS || '').replace(/\s+/g, '');
     let displaySenderName = 'Diretoria Nexus';
 
-    if (sender === 'vendas@nexustreinamento.com') {
-      fromEmail = process.env.GMAIL_VENDAS_EMAIL || 'vendas@nexustreinamento.com';
+    if (sender === 'vendas@nexusholdinggroup.com.br') {
+      fromEmail = process.env.GMAIL_VENDAS_EMAIL || 'vendas@nexusholdinggroup.com.br';
       fromPass = (process.env.GMAIL_VENDAS_PASS || '').replace(/\s+/g, '');
       displaySenderName = 'Vendas — Nexus Holding Group';
-    } else if (sender === 'geanderson@nexustreinamento.com') {
-      fromEmail = process.env.GMAIL_EMPRESA_EMAIL || 'geanderson@nexustreinamento.com';
+    } else if (sender === 'geanderson@nexusholdinggroup.com.br') {
+      fromEmail = process.env.GMAIL_EMPRESA_EMAIL || 'geanderson@nexusholdinggroup.com.br';
       fromPass = (process.env.GMAIL_EMPRESA_PASS || '').replace(/\s+/g, '');
       displaySenderName = 'Diretor Geanderson — Nexus Holding Group';
     }

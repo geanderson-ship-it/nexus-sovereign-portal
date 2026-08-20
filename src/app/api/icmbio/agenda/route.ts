@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { getICMBioBookings, saveICMBioBooking, deleteICMBioBooking, getBlockedDates, getICMBioSettings, ICMBioBooking } from '@/lib/icmbio-db';
 import nodemailer from 'nodemailer';
 
@@ -131,7 +131,7 @@ async function sendNotificationEmail(booking: ICMBioBooking, type: 'novo' | 'can
   try {
     await transporter.sendMail({
       from: `"Notificações ICMBio" <${gUser}>`,
-      to: ['geanderson@nexustreinamento.com', 'suporte@nexustreinamento.com'],
+      to: ['geanderson@nexusholdinggroup.com.br', 'suporte@nexustreinamento.com'],
       subject: `🚨 Atualização Agenda ICMBio: ${booking.partnerCompany} (${type.toUpperCase()})`,
       html: `
         <div style="font-family: sans-serif; padding: 20px; color: #333;">

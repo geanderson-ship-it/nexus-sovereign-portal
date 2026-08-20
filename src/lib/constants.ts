@@ -1,7 +1,7 @@
-export type UserLevel = 'ADMIN' | 'SALES' | 'USER';
+﻿export type UserLevel = 'ADMIN' | 'SALES' | 'USER';
 
 export const ADMIN_EMAILS = [
-    'geanderson@nexustreinamento.com',
+    'geanderson@nexusholdinggroup.com.br',
     'geandersonleo@gmail.com',
     'ivonisevero4@gmail.com',
 ];

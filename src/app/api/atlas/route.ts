@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 
 export const maxDuration = 60;
 
@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
         },
         body: JSON.stringify({
           from: 'Atlas IA Executiva <atena@nexustreinamento.com>',
-          to: ['vendas@nexustreinamento.com', 'geanderson@nexustreinamento.com'],
+          to: ['vendas@nexusholdinggroup.com.br', 'geanderson@nexusholdinggroup.com.br'],
           subject: subject,
           html: `<div style="font-family: Arial, sans-serif;">${htmlContent}</div>`,
         }),

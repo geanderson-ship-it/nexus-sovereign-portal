@@ -48,7 +48,7 @@ export function SiteFooter() {
         <div className="flex flex-col items-center gap-5">
             <div className="flex flex-col items-center">
                 <span className="font-headline text-2xl font-black uppercase tracking-[0.2em] text-blue-500 drop-shadow-md">
-                    Nexus Treinamento
+                    Nexus Holding Group
                 </span>
                 <span className="text-sm font-bold italic text-yellow-400 mt-1 drop-shadow-sm">
                     {t('footerSlogan')}
@@ -56,7 +56,7 @@ export function SiteFooter() {
             </div>
           <div className="text-center text-sm leading-relaxed text-yellow-400 font-bold drop-shadow-md space-y-1">
             <p>{t('footerRights')}</p>
-            <p>CNPJ: 62.938.531/0001-87 | geanderson@nexustreinamento.com</p>
+            <p>CNPJ: 62.938.531/0001-87 | geanderson@nexusholdinggroup.com.br</p>
           </div>
         </div>
         <div className="flex items-center gap-6 text-sm font-bold text-yellow-400 drop-shadow-md pt-4 md:pt-0">
@@ -89,7 +89,7 @@ export function SiteFooter() {
               <span className="sr-only">YouTube</span>
             </a>
             <a
-                href="mailto:geanderson@nexustreinamento.com"
+                href="mailto:geanderson@nexusholdinggroup.com.br"
                 className="transition-transform hover:scale-110 text-yellow-400 drop-shadow-md hover:text-yellow-300"
             >
                 <Mail className="h-6 w-6" />

@@ -1,4 +1,4 @@
-
+﻿
 'use client';
 
 import { Suspense } from 'react';
@@ -133,15 +133,15 @@ ${data.message}`.trim();
                   
                   <div className="border-l-2 border-primary/30 pl-3">
                     <p className="font-bold text-foreground">Diretor Geral: Geanderson Leandro Schuh</p>
-                    <a href="mailto:geanderson@nexustreinamento.com" className="text-primary hover:underline text-sm">
-                        geanderson@nexustreinamento.com
+                    <a href="mailto:geanderson@nexusholdinggroup.com.br" className="text-primary hover:underline text-sm">
+                        geanderson@nexusholdinggroup.com.br
                     </a>
                   </div>
 
                   <div className="border-l-2 border-blue-400/30 pl-3">
                     <p className="font-bold text-foreground">Diretora Executiva: Ivoni Severo Schuh</p>
-                    <a href="mailto:vendas@nexustreinamento.com" className="text-blue-400 hover:underline text-sm">
-                        vendas@nexustreinamento.com
+                    <a href="mailto:vendas@nexusholdinggroup.com.br" className="text-blue-400 hover:underline text-sm">
+                        vendas@nexusholdinggroup.com.br
                     </a>
                   </div>
                 </div>
