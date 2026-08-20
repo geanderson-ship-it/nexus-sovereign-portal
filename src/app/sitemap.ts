@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.nexustreinamento.com';
+  const baseUrl = 'https://www.nexusholdinggroup.com.br';
 
   // Static platform sections (excluding deleted courses, gallery, consulting, palestras)
   const staticRoutes = [
