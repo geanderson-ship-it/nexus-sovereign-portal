@@ -25,7 +25,7 @@ import { useLocale } from '@/hooks/use-locale';
 
 function TextLogo() {
   return (
-    <div className="flex flex-col items-center relative group cursor-pointer">
+    <div className="flex flex-col items-center relative group cursor-pointer h-full justify-center">
       {/* Efeito UAU de Brilho Fundo */}
       <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/0 via-blue-500/30 to-blue-600/0 blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000 pointer-events-none"></div>
 
@@ -34,7 +34,7 @@ function TextLogo() {
         <img
           src="/nexus-n-symbol.png"
           alt="Nexus N"
-          className="h-16 sm:h-20 w-auto object-contain object-bottom self-center translate-y-2 shrink-0 drop-shadow-[0_0_12px_rgba(59,130,246,0.5)]"
+          className="h-20 sm:h-24 lg:h-[88px] w-auto object-contain shrink-0 drop-shadow-[0_0_12px_rgba(59,130,246,0.6)]"
         />
 
         <span className="font-headline uppercase flex flex-col md:flex-row items-center gap-0 md:gap-3 leading-none">
@@ -128,20 +128,39 @@ export function SiteHeader() {
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="w-full px-4 lg:px-8 max-w-[1920px] mx-auto flex flex-col py-3">
+      <div className="w-full px-4 lg:px-8 max-w-[1920px] mx-auto flex flex-row items-stretch">
         
-        {/* TOP ROW: Logo & Controls */}
-        <div className="flex items-center justify-between w-full">
-          {/* Top Left Spacer */}
-          <div className="hidden md:flex w-1/3"></div>
-          
-          <div className="w-1/2 md:w-1/3 flex justify-start md:justify-center">
-            <Link href="/" className="items-center flex" onClick={() => setMobileMenuOpen(false)}>
-              <TextLogo />
-            </Link>
+        {/* ESQUERDA: Apenas o símbolo N, espaço vazio cortado */}
+        <Link href="/" className="flex items-center justify-center px-3 shrink-0 overflow-hidden border-r border-border/20" onClick={() => setMobileMenuOpen(false)}>
+          <div className="overflow-hidden flex items-center justify-center">
+            <img
+              src="/nexus-n-symbol.png"
+              alt="Nexus"
+              className="h-24 w-auto object-contain -my-4 scale-[1.15]"
+            />
           </div>
+        </Link>
 
-          <div className="flex-1 flex items-center justify-end gap-1 sm:gap-2">
+        {/* DIREITA: Controls no topo + Nav embaixo */}
+        <div className="flex flex-col flex-1">
+
+          {/* TOP ROW: Spacer | Nome Centralizado | Controls */}
+          <div className="flex items-center w-full py-3">
+            {/* Spacer esquerdo */}
+            <div className="flex-1" />
+
+            {/* Nome da marca — centralizado por extenso */}
+            <div className="flex items-center gap-2 sm:gap-3 leading-none shrink-0 font-headline uppercase">
+              <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.9)] text-2xl sm:text-3xl md:text-4xl tracking-[0.15em] md:tracking-[0.2em] leading-none">
+                NEXUS
+              </span>
+              <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-lg sm:text-2xl md:text-3xl whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] leading-none">
+                HOLDING GROUP
+              </span>
+            </div>
+
+            {/* Controls — direita */}
+            <div className="flex-1 flex items-center justify-end gap-1 sm:gap-2">
            {/* Language Selector (Desktop Only) */}
            <div className="hidden md:block">
             <DropdownMenu>
@@ -280,12 +299,14 @@ export function SiteHeader() {
               <span className="sr-only">Toggle menu</span>
             </Button>
           </div>
-        </div>
-        {/* End of TOP ROW */}
-        </div>
+          {/* Fim do hamburguer */}
+            </div>
+          {/* Fim dos Controls (flex-1 direita) */}
+          </div>
+          {/* Fim do TOP ROW */}
 
-        {/* BOTTOM ROW: Navigation Menus (Desktop Only) */}
-        <nav className="hidden xl:flex justify-center items-center gap-x-3 2xl:gap-x-5 gap-y-2 mt-5 text-[11px] xl:text-[12px] 2xl:text-[14px] flex-nowrap w-full pb-2 px-4 whitespace-nowrap overflow-x-auto no-scrollbar">
+          {/* BOTTOM ROW: Navigation Menus (Desktop Only) */}
+          <nav className="hidden xl:flex justify-center items-center gap-x-3 2xl:gap-x-5 gap-y-2 text-[11px] xl:text-[12px] 2xl:text-[14px] flex-nowrap w-full pb-3 whitespace-nowrap overflow-x-auto no-scrollbar">
             {mainNav.map((item) => {
               return (
                 <Link
@@ -344,7 +365,9 @@ export function SiteHeader() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-        </nav>
+          </nav>
+        </div>
+        {/* Fim da coluna DIREITA */}
 
         {/* Mobile Menu Sheet */}
         <div className="md:hidden">
