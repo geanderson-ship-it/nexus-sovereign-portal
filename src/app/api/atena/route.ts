@@ -278,32 +278,129 @@ export async function POST(req: NextRequest) {
             });
           }
 
-          const res = await fetch(`${gatewayUrl}/v1/chat/completions`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-              model: modelName,
-              messages: openaiMessages,
-              temperature: 0.7
-            })
+          // Converter ferramentas para especificação do OpenAI
+          const openAITools = toolConfig.tools.map((t: any) => {
+            const spec = t.toolSpec;
+            const props = spec.inputSchema.json.properties || {};
+            const cleanedProperties: any = {};
+            for (const key of Object.keys(props)) {
+              cleanedProperties[key] = {
+                type: (props[key].type || 'string').toLowerCase(),
+                description: props[key].description
+              };
+            }
+            return {
+              type: 'function',
+              function: {
+                name: spec.name,
+                description: spec.description,
+                parameters: {
+                  type: 'object',
+                  properties: cleanedProperties,
+                  required: spec.inputSchema.json.required || []
+                }
+              }
+            };
           });
 
-          if (!res.ok) {
-            const errTxt = await res.text();
-            throw new Error(`Erro do gateway privado: ${res.status} - ${errTxt}`);
+          let privateLoopCount = 0;
+          let privateMessages = [...openaiMessages];
+          let privateIsDone = false;
+
+          while (privateLoopCount < MAX_LOOPS) {
+            privateLoopCount++;
+
+            const res = await fetch(`${gatewayUrl}/v1/chat/completions`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+              },
+              body: JSON.stringify({
+                model: modelName,
+                messages: privateMessages,
+                tools: openAITools,
+                temperature: 0.7
+              })
+            });
+
+            if (!res.ok) {
+              const errTxt = await res.text();
+              throw new Error(`Erro do gateway privado: ${res.status} - ${errTxt}`);
+            }
+
+            const data = await res.json();
+            const choice = data.choices?.[0];
+            const message = choice?.message;
+            const toolCalls = message?.tool_calls;
+
+            if (toolCalls && toolCalls.length > 0) {
+              // Salva a decisão de chamar as ferramentas no histórico da conversa
+              privateMessages.push(message);
+
+              for (const call of toolCalls) {
+                const { name, arguments: argsString } = call.function;
+                const args = JSON.parse(argsString || '{}');
+                let resultText = "";
+
+                try {
+                  if (name === 'verificar_emails') {
+                    const emails = await checkEmails(args.conta, args.pasta || 'entrada', args.quantidade || 3);
+                    resultText = JSON.stringify(emails);
+                  } else if (name === 'consultar_tabela_precos') {
+                    const produtos = await fetchTabelaDePrecos();
+                    resultText = JSON.stringify(produtos);
+                  } else if (name === 'pesquisar_internet') {
+                    resultText = await pesquisarInternet(args.query);
+                  } else if (name === 'tocar_musica') {
+                    const r = await ytSearch(args.query);
+                    const video = r.videos[0];
+                    if (video) {
+                      musicToPlay = { videoId: video.videoId, title: video.title };
+                      resultText = `Música '${video.title}' encontrada e tocando.`;
+                    } else {
+                      resultText = `Nenhum vídeo encontrado.`;
+                    }
+                  } else if (name === 'abrir_site') {
+                    siteToOpen = args.url;
+                    resultText = `Site ${args.url} aberto.`;
+                  } else if (name === 'ler_site') {
+                    resultText = await scrapeWebsite(args.url);
+                  } else if (name === 'enviar_email') {
+                    resultText = generateEmailLink(args.to, args.cc, args.subject, args.body);
+                  } else if (name === 'salvar_memoria') {
+                    await saveAtenaMemory({ userId: 'geanderson', categoria: args.categoria, conteudo: args.conteudo });
+                    resultText = `Memória guardada com sucesso! Categoria: ${args.categoria}. Eu nunca me esquecerei disso.`;
+                  } else if (name === 'buscar_memoria') {
+                    const mems = await searchAtenaMemories('geanderson', args.termoBusca);
+                    resultText = mems.length > 0 ? JSON.stringify(mems) : "Nenhuma memória encontrada sobre isso.";
+                  } else {
+                    resultText = `Erro: Ferramenta '${name}' não encontrada.`;
+                  }
+                } catch (tErr: any) {
+                  resultText = `Erro ao executar ferramenta: ${tErr.message}`;
+                }
+
+                privateMessages.push({
+                  role: "tool",
+                  tool_call_id: call.id,
+                  name: name,
+                  content: resultText
+                });
+              }
+            } else {
+              finalAnswer = message?.content || "";
+              privateIsDone = true;
+              break;
+            }
           }
 
-          const data = await res.json();
-          finalAnswer = data.choices?.[0]?.message?.content || "";
-          if (finalAnswer) {
+          if (privateIsDone && finalAnswer) {
             isDone = true;
             break;
           }
         } catch (err: any) {
-          console.error("[ATENA_PRIVATE_LLM_ERROR]: Falha ao usar IA Proprietária. Executando fallback para Gemini...", err);
+          console.error("[ATENA_PRIVATE_LLM_ERROR]: Falha ao usar IA Proprietária com ferramentas. Executando fallback para Gemini...", err);
         }
       }
 
