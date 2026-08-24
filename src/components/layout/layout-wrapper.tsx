@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { SiteHeader } from '@/components/layout/site-header';
 import { SiteFooter } from '@/components/layout/site-footer';
@@ -14,9 +15,22 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   useNexusTracker();
   const { user } = useUser();
   const { hasAsked, saveNickname } = useNickname(user?.email);
+  const [isPwa, setIsPwa] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isStandaloneMedia = window.matchMedia('(display-mode: standalone)').matches;
+      const isNavigatorStandalone = (window.navigator as any).standalone === true;
+      const isPwaQuery = window.location.search.includes('pwa=true') || window.location.search.includes('utm_source=pwa');
+      
+      if (isStandaloneMedia || isNavigatorStandalone || isPwaQuery) {
+        setIsPwa(true);
+      }
+    }
+  }, []);
 
   // Define as rotas que NÃO devem ter Header e Footer (PWA / Standalone Apps / Live Modes)
-  const isStandalone = pathname?.startsWith('/app/') || 
+  const isStandaloneRoute = pathname?.startsWith('/app/') || 
                        pathname?.startsWith('/standalone/') || 
                        pathname?.startsWith('/dante-safra') ||
                        pathname?.startsWith('/djeny-design') ||
@@ -27,7 +41,11 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
                        pathname?.startsWith('/demo') ||
                        pathname?.includes('-live') ||
                        pathname?.includes('_live') ||
+                       pathname?.startsWith('/pactum-') ||
+                       pathname?.startsWith('/pactumlegal') ||
                        pathname?.startsWith('/gabinete/recrutamento');
+
+  const isStandalone = isStandaloneRoute || isPwa;
 
   if (isStandalone) {
     return (

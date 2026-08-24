@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { checkEmails } from '@/lib/email-reader';
 import { fetchTabelaDePrecos } from '@/lib/nexus-db';
@@ -256,9 +256,61 @@ export async function POST(req: NextRequest) {
 
     while (!isDone && loopCount < MAX_LOOPS) {
       loopCount++;
+
+      // Integração opcional com a IA Proprietária Soberana da Nexus
+      const isPrivateMode = process.env.USE_PRIVATE_LLM === 'true';
+      if (isPrivateMode && loopCount === 1) {
+        try {
+          const gatewayUrl = process.env.PRIVATE_LLM_URL || 'http://localhost:8000';
+          const apiKey = process.env.PRIVATE_LLM_KEY || 'nexus_secret_development_key';
+          const modelName = process.env.PRIVATE_LLM_MODEL || 'llama3.1';
+
+          const openaiMessages = recentMessages.map((m: any) => ({
+            role: m.role === 'assistant' ? 'assistant' : m.role === 'system' ? 'system' : 'user',
+            content: m.content || ''
+          }));
+          
+          const hasSystem = openaiMessages.some((m: any) => m.role === 'system');
+          if (!hasSystem) {
+            openaiMessages.unshift({
+              role: 'system',
+              content: systemInstruction + memoryContext
+            });
+          }
+
+          const res = await fetch(`${gatewayUrl}/v1/chat/completions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+              model: modelName,
+              messages: openaiMessages,
+              temperature: 0.7
+            })
+          });
+
+          if (!res.ok) {
+            const errTxt = await res.text();
+            throw new Error(`Erro do gateway privado: ${res.status} - ${errTxt}`);
+          }
+
+          const data = await res.json();
+          finalAnswer = data.choices?.[0]?.message?.content || "";
+          if (finalAnswer) {
+            isDone = true;
+            break;
+          }
+        } catch (err: any) {
+          console.error("[ATENA_PRIVATE_LLM_ERROR]: Falha ao usar IA Proprietária. Executando fallback para Gemini...", err);
+        }
+      }
+
       let response;
       let lastError;
       const modelsToTry = ['gemini-1.5-flash', 'gemini-3.1-flash-lite', 'gemini-3.5-flash', 'gemini-3.6-flash'];
+
 
       for (const modelName of modelsToTry) {
         try {

@@ -171,11 +171,77 @@ export default function PactumLegalUnifiedDashboard() {
   const [currentView, setCurrentView] = useState<'lobby' | 'marcas' | 'societario'>('lobby');
 
   // Branding Customization States (Interactive Header)
-  const [avatarImage, setAvatarImage] = useState<string | null>('/nexus-n-symbol.png');
-  const [monogram, setMonogram] = useState('NHG');
-  const [logoImage, setLogoImage] = useState<string | null>('/nexus-n-logo.png');
-  const [customName, setCustomName] = useState('NEXUS HOLDING GROUP');
-  const [customSubtitle, setCustomSubtitle] = useState('GESTÃO JURÍDICA DE MARCAS');
+  const [avatarImage, setAvatarImage] = useState<string | null>('/felipe-avatar.png');
+  const [monogram, setMonogram] = useState('FQ');
+  const [logoImage, setLogoImage] = useState<string | null>('/felipe-logo.png');
+  const [logoWidth, setLogoWidth] = useState<number>(320);
+  const [logoHeight, setLogoHeight] = useState<number>(120);
+  const [logoZoom, setLogoZoom] = useState<number>(100);
+  const [isResizing, setIsResizing] = useState<'se' | 'e' | 's' | null>(null);
+  const [customName, setCustomName] = useState('FELIPE QUEROL');
+  const [customSubtitle, setCustomSubtitle] = useState('CONSULTORIA JURÍDICA');
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    const items = e.clipboardData?.items;
+    if (items) {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          const file = items[i].getAsFile();
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const dataUrl = event.target?.result as string;
+              setLogoImage(dataUrl);
+              window.localStorage.setItem('pactum_custom_logo', dataUrl);
+              setLogoWidth(320);
+              setLogoHeight(120);
+              window.localStorage.setItem('pactum_custom_logo_width', '320');
+              window.localStorage.setItem('pactum_custom_logo_height', '120');
+              alert('Imagem Colada! 📋✨ Seu novo logotipo foi colado e aplicado com sucesso.');
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+      }
+    }
+  };
+
+  const startResize = (e: React.MouseEvent, type: 'se' | 'e' | 's') => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsResizing(type);
+    
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startWidth = logoWidth;
+    const startHeight = logoHeight;
+    
+    const doResize = (moveEvent: MouseEvent) => {
+      let newWidth = startWidth;
+      let newHeight = startHeight;
+      
+      if (type === 'e' || type === 'se') {
+        newWidth = Math.max(60, startWidth + (moveEvent.clientX - startX));
+      }
+      if (type === 's' || type === 'se') {
+        newHeight = Math.max(30, startHeight + (moveEvent.clientY - startY));
+      }
+      
+      setLogoWidth(newWidth);
+      setLogoHeight(newHeight);
+      window.localStorage.setItem('pactum_custom_logo_width', String(newWidth));
+      window.localStorage.setItem('pactum_custom_logo_height', String(newHeight));
+    };
+    
+    const stopResize = () => {
+      window.removeEventListener('mousemove', doResize);
+      window.removeEventListener('mouseup', stopResize);
+      setIsResizing(null);
+    };
+    
+    window.addEventListener('mousemove', doResize);
+    window.addEventListener('mouseup', stopResize);
+  };
 
   // Parse search parameters on client side to dynamically adjust the initial view and load custom branding
   useEffect(() => {
@@ -227,8 +293,23 @@ export default function PactumLegalUnifiedDashboard() {
       const savedAvatar = window.localStorage.getItem('pactum_custom_avatar');
       if (savedAvatar) setAvatarImage(savedAvatar);
 
-      const savedLogo = window.localStorage.getItem('pactum_custom_logo');
-      if (savedLogo) setLogoImage(savedLogo);
+      const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      if (!isLocal) {
+        setLogoImage('/nexus-treinamento-logo.png');
+        setLogoWidth(320);
+        setLogoHeight(120);
+      } else {
+        const savedLogo = window.localStorage.getItem('pactum_custom_logo');
+        const savedWidth = window.localStorage.getItem('pactum_custom_logo_width');
+        const savedHeight = window.localStorage.getItem('pactum_custom_logo_height');
+        if (savedLogo) {
+          setLogoImage(savedLogo);
+        } else {
+          setLogoImage('/felipe-logo.png');
+        }
+        if (savedWidth) setLogoWidth(Number(savedWidth));
+        if (savedHeight) setLogoHeight(Number(savedHeight));
+      }
     }
   }, []);
 
@@ -671,43 +752,74 @@ export default function PactumLegalUnifiedDashboard() {
               />
               
               <div 
-                className="w-full h-48 border-2 border-slate-800 hover:border-[#cca752]/40 rounded-3xl flex items-center justify-center relative overflow-hidden bg-[#0a0a0c] shadow-lg shadow-black/40 group/logo px-4 sm:px-12 py-4"
+                tabIndex={0}
+                onPaste={handlePaste}
+                className="w-full h-48 border-2 border-slate-800 hover:border-[#cca752]/40 focus:border-[#cca752]/40 rounded-3xl flex items-center justify-center relative overflow-hidden bg-[#0a0a0c] shadow-lg shadow-black/40 group/logo px-6 md:px-16 py-2 outline-none focus:ring-1 focus:ring-[#cca752]/20 cursor-pointer"
+                title="Clique aqui e aperte Ctrl+V para colar um logotipo diretamente da área de transferência!"
               >
                 {logoImage ? (
-                  <div className="w-full h-full flex items-center justify-center relative">
-                    <img src={logoImage} alt="Logo Empresa" className="w-full h-full object-contain p-0" />
+                  <div 
+                    className={`relative flex items-center justify-center border border-transparent group-hover/logo:border-dashed group-hover/logo:border-[#cca752]/50 p-2 select-none ${isResizing ? 'border-dashed border-[#cca752]' : ''}`}
+                    style={{ width: `${logoWidth}px`, height: `${logoHeight}px` }}
+                  >
+                    <img 
+                      src={logoImage} 
+                      alt="Logo Empresa" 
+                      className="w-full h-full object-contain p-0 pointer-events-none"
+                    />
+
+                    {/* Bounding Box Resize Handles on Hover */}
+                    <div className="absolute inset-0 border border-transparent group-hover/logo:border-dashed group-hover/logo:border-[#cca752]/50 pointer-events-none z-10" />
+                    
+                    {/* East Handle (Right) */}
+                    <div 
+                      onMouseDown={(e) => startResize(e, 'e')}
+                      className="absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize hover:bg-[#cca752]/40 z-30"
+                      title="Arraste para redimensionar largura"
+                    />
+                    
+                    {/* South Handle (Bottom) */}
+                    <div 
+                      onMouseDown={(e) => startResize(e, 's')}
+                      className="absolute bottom-0 left-0 right-0 h-2 cursor-ns-resize hover:bg-[#cca752]/40 z-30"
+                      title="Arraste para redimensionar altura"
+                    />
+                    
+                    {/* South-East Corner Handle */}
+                    <div 
+                      onMouseDown={(e) => startResize(e, 'se')}
+                      className="absolute bottom-1 right-1 w-3 h-3 bg-[#cca752] border border-black rounded-xs cursor-se-resize shadow-md z-30 flex items-center justify-center"
+                      title="Arraste para redimensionar proporcionalmente"
+                    >
+                      <span className="w-1.5 h-1.5 border-r border-b border-black block rotate-45 translate-x-[-0.5px] translate-y-[-0.5px]" />
+                    </div>
                   </div>
                 ) : (
                   /* Editable Vector Logo Template */
-                  <div className="flex items-center gap-8 w-full max-w-3xl justify-center font-serif text-[#cca752]">
-                    {/* Scales of Justice Icon in Gold */}
-                    <div className="shrink-0 drop-shadow-[0_0_20px_rgba(204,167,82,0.45)]">
-                      <Scale className="w-24 h-24 text-[#cca752] stroke-[1.1]" />
-                    </div>
-
+                  <div className="flex flex-col items-center justify-center w-full max-w-4xl font-serif text-[#cca752] py-4">
                     {/* Text Customizers */}
-                    <div className="flex-1 space-y-2">
+                    <div className="w-full space-y-3">
                       <input 
                         type="text"
                         value={customName}
                         onChange={(e) => { setCustomName(e.target.value); window.localStorage.setItem('pactum_custom_name', e.target.value); }}
                         placeholder="NOME DO ESCRITÓRIO"
-                        className="w-full bg-transparent border-0 border-b border-transparent hover:border-[#cca752]/20 focus:border-[#cca752] focus:ring-0 text-3xl md:text-5xl font-serif text-[#cca752] font-medium tracking-[0.2em] uppercase px-1 py-0.5 rounded transition-all focus:outline-none placeholder-slate-850"
+                        className="w-full bg-transparent border-0 border-b border-transparent hover:border-[#cca752]/20 focus:border-[#cca752] focus:ring-0 text-3xl md:text-5xl lg:text-6xl font-serif text-[#cca752] font-medium tracking-[0.25em] text-center uppercase px-2 py-1 rounded transition-all focus:outline-none placeholder-slate-850 [text-shadow:0_0_20px_rgba(204,167,82,0.45)]"
                         title="Clique para editar o nome da firma"
                       />
                       
                       {/* Divider line style like original art */}
-                      <div className="flex items-center gap-4 w-full text-[#cca752]">
-                        <span className="h-[2px] bg-[#cca752]/45 flex-1"></span>
+                      <div className="flex items-center gap-6 w-full text-[#cca752] pt-2 max-w-2xl mx-auto">
+                        <span className="h-[1px] bg-gradient-to-r from-transparent via-[#cca752]/50 to-transparent flex-1"></span>
                         <input 
                           type="text"
                           value={customSubtitle}
                           onChange={(e) => { setCustomSubtitle(e.target.value); window.localStorage.setItem('pactum_custom_subtitle', e.target.value); }}
                           placeholder="CONSULTORIA JURÍDICA"
-                          className="bg-transparent border-0 border-b border-transparent hover:border-[#cca752]/20 focus:border-[#cca752] focus:ring-0 text-xs md:text-sm tracking-[0.3em] font-sans font-bold text-center uppercase px-1 py-0 rounded focus:outline-none placeholder-slate-850 min-w-[280px]"
+                          className="bg-transparent border-0 border-b border-transparent hover:border-[#cca752]/20 focus:border-[#cca752] focus:ring-0 text-[10px] md:text-xs tracking-[0.45em] font-sans font-black text-center uppercase px-2 py-0.5 rounded focus:outline-none placeholder-slate-850 min-w-[280px]"
                           title="Clique para editar a descrição da firma"
                         />
-                        <span className="h-[2px] bg-[#cca752]/45 flex-1"></span>
+                        <span className="h-[1px] bg-gradient-to-r from-transparent via-[#cca752]/50 to-transparent flex-1"></span>
                       </div>
                     </div>
                   </div>
