@@ -3,11 +3,14 @@
  */
 
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-GFNEWTSY94';
-
+export const GA_OLD_TRACKING_ID = 'G-CS0X8XB173';
 
 export const pageview = (url: string) => {
   if (typeof window !== 'undefined' && (window as any).gtag) {
     (window as any).gtag('config', GA_TRACKING_ID, {
+      page_path: url,
+    });
+    (window as any).gtag('config', GA_OLD_TRACKING_ID, {
       page_path: url,
     });
   }

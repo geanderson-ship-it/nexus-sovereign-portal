@@ -1,6 +1,8 @@
 .env
 .env.local
 .env.*
+google-analytics.json
+
 node_modules/
 .next/
 out/

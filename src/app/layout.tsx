@@ -10,7 +10,7 @@ import { Metadata } from 'next';
 
 import AwsRumAnalytics from '@/components/analytics/aws-rum-analytics';
 import GoogleAnalytics from '@/components/analytics/google-analytics';
-import { GA_TRACKING_ID } from '@/lib/gtag';
+import { GA_TRACKING_ID, GA_OLD_TRACKING_ID } from '@/lib/gtag';
 import LanguageSwitcher from '@/components/nexus/LanguageSwitcher';
 
 export const viewport = {
@@ -107,6 +107,9 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${GA_TRACKING_ID}', {
+              send_page_view: false
+            });
+            gtag('config', '${GA_OLD_TRACKING_ID}', {
               send_page_view: false
             });
           `,
