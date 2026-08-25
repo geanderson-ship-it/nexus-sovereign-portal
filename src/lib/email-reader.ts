@@ -33,7 +33,7 @@ async function getEmailBodyPart(client: any, uid: number, partId: string) {
 }
 
 export async function checkEmails(
-  conta: 'pessoal' | 'empresarial' | 'vendas',
+  conta: 'pessoal' | 'empresarial' | 'vendas' | 'ivoni',
   pasta: 'entrada' | 'enviados' | 'spam' | 'lixeira' | 'todos' | 'rascunhos' | 'favoritos' | 'importante' = 'entrada',
   max: number = 3
 ) {
@@ -44,6 +44,9 @@ export async function checkEmails(
   } else if (conta === 'vendas') {
     email = process.env.GMAIL_VENDAS_EMAIL;
     pass = process.env.GMAIL_VENDAS_PASS;
+  } else if (conta === 'ivoni') {
+    email = process.env.GMAIL_IVONI_EMAIL;
+    pass = process.env.GMAIL_IVONI_PASS;
   } else {
     email = process.env.GMAIL_EMPRESA_EMAIL;
     pass = process.env.GMAIL_EMPRESA_PASS;

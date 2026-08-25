@@ -9,9 +9,9 @@ import { checkEmails } from '@/lib/email-reader';
 
 export const readEmailsTool = ai.defineTool({
   name: 'readEmailsTool',
-  description: 'Usa IMAP para ler as caixas de entrada, enviados, spam e lixeira das contas de e-mail conectadas no portal (vendas, empresarial, pessoal).',
+  description: 'Usa IMAP para ler as caixas de entrada, enviados, spam e lixeira das contas de e-mail conectadas no portal (vendas, empresarial, pessoal, ivoni).',
   inputSchema: z.object({
-    conta: z.enum(['vendas', 'empresarial', 'pessoal']).describe('A conta de e-mail a ser consultada.'),
+    conta: z.enum(['vendas', 'empresarial', 'pessoal', 'ivoni']).describe('A conta de e-mail a ser consultada.'),
     pasta: z.enum(['entrada', 'enviados', 'spam', 'lixeira']).describe('A pasta do e-mail para ler.'),
     quantidade: z.number().min(1).max(20).describe('Quantidade de e-mails para buscar (ex: 5).')
   }),

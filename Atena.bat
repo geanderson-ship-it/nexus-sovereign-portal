@@ -16,5 +16,5 @@ if %errorlevel% equ 0 (
     timeout /t 15 /nobreak > nul
 )
 
-start msedge --app=http://localhost:3000/atena || start chrome --app=http://localhost:3000/atena || start http://localhost:3000/atena
+start msedge --app=http://localhost:3000/gabinete/atena || start chrome --app=http://localhost:3000/gabinete/atena || start http://localhost:3000/gabinete/atena
 exit
