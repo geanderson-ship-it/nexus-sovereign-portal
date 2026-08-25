@@ -338,6 +338,8 @@ export default function AtenaTerminalPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [pendingVideoTranscript, setPendingVideoTranscript] = useState<string | null>(null);
+  const [pendingDocumentText, setPendingDocumentText] = useState<string | null>(null);
+  const [selectedDocName, setSelectedDocName] = useState<string | null>(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -412,18 +414,54 @@ export default function AtenaTerminalPage() {
               setIsTranscribing(false);
             }
           };
-        } else {
+        } else if (file.type.startsWith('image/')) {
           const reader = new FileReader();
           reader.onloadend = () => {
             setSelectedImage(reader.result as string);
           };
           reader.readAsDataURL(file);
+        } else if (file.name.endsWith('.pdf')) {
+          setSelectedDocName(file.name);
+          setMessages(prev => [...prev, { 
+            role: 'system', 
+            content: `📄 Extraindo conteúdo do PDF "${file.name}"... Por favor, aguarde.` 
+          }]);
+          
+          const formData = new FormData();
+          formData.append('file', file);
+          
+          const res = await fetch('/api/parse-document', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const data = await res.json();
+          if (res.ok && data.text) {
+            setPendingDocumentText(data.text);
+            setMessages(prev => [...prev, { 
+              role: 'system', 
+              content: `✅ PDF "${file.name}" processado com sucesso! Prontinha para responder perguntas sobre ele.` 
+            }]);
+          } else {
+            throw new Error(data.error || 'Erro ao processar PDF');
+          }
+        } else if (file.name.endsWith('.txt') || file.name.endsWith('.csv') || file.name.endsWith('.md')) {
+          setSelectedDocName(file.name);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setPendingDocumentText(reader.result as string);
+            setMessages(prev => [...prev, { 
+              role: 'system', 
+              content: `✅ Documento de texto "${file.name}" importado com sucesso!` 
+            }]);
+          };
+          reader.readAsText(file);
         }
       } catch (err: any) {
         console.error("Erro ao processar arquivo:", err);
         setMessages(prev => [...prev, { 
           role: 'system', 
-          content: '⚠️ Falha ao processar o arquivo de vídeo ou imagem.' 
+          content: `⚠️ Falha ao processar o arquivo (${err.message || err}).` 
         }]);
       } finally {
         setIsLoading(false);
@@ -578,6 +616,10 @@ export default function AtenaTerminalPage() {
       if (pendingVideoTranscript) {
         messageToSend.content = `${userMessage}\n\n[Transcrição de Áudio do Vídeo Anexado]: "${pendingVideoTranscript}"`;
         setPendingVideoTranscript(null); // reseta o estado de anexo de transcrição
+      } else if (pendingDocumentText) {
+        messageToSend.content = `${userMessage}\n\n[Texto Extraído do Documento Anexado "${selectedDocName}"]: "${pendingDocumentText}"`;
+        setPendingDocumentText(null); // reseta o estado de documento
+        setSelectedDocName(null);
       }
 
       const res = await fetch('/api/atena', {
@@ -1048,12 +1090,30 @@ export default function AtenaTerminalPage() {
               </div>
             )}
 
+            {/* Document Preview */}
+            {selectedDocName && (
+              <div className="absolute bottom-[calc(100%+10px)] left-8 px-4 py-2 rounded-lg border-2 border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.3)] bg-black/90 flex items-center gap-2 max-w-xs transition-opacity text-xs font-mono">
+                <Paperclip className="w-4 h-4 text-indigo-400 shrink-0" />
+                <span className="truncate text-slate-200 text-[11px]">{selectedDocName}</span>
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    setSelectedDocName(null);
+                    setPendingDocumentText(null);
+                  }}
+                  className="bg-slate-800/80 text-white rounded-full p-1 hover:bg-red-500 transition-colors shrink-0 ml-1"
+                >
+                  <X className="w-2.5 h-2.5" />
+                </button>
+              </div>
+            )}
+
             {/* Hidden File Input */}
             <input 
               type="file" 
               ref={fileInputRef}
               onChange={handleImageSelect}
-              accept="image/*,video/*"
+              accept="image/*,video/*,.pdf,.txt,.csv,.md"
               className="hidden" 
             />
 
