@@ -195,10 +195,11 @@ ${data.message}`.trim();
                   <div className="border-l-2 border-emerald-400/30 pl-3 flex items-start gap-4">
                     <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-emerald-400/40 flex-shrink-0 shadow-lg shadow-emerald-500/20 hover:scale-105 transition-transform duration-300">
                       <Image
-                        src="/carla-vendas.png?v=3"
+                        src="/carla-vendas.png"
                         alt="Carla C. Schuh"
                         fill
                         className="object-cover"
+                        unoptimized
                       />
                     </div>
                     <div>
