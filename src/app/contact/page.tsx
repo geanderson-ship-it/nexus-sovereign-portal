@@ -125,9 +125,9 @@ ${data.message}`.trim();
                 </div>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-xl font-semibold font-headline">Contatos Executivos</h3>
+                    <h3 className="text-xl font-semibold font-headline">Quer a tecnologia da Nexus na sua empresa?</h3>
                     <p className="text-muted-foreground font-sans text-sm mb-2">
-                        Canais diretos com a nossa alta gestão.
+                      Fale agora com a diretoria e descubra como implantar nossas soluções de Inteligência Artificial exclusivas no seu negócio. Atendimento imediato via Whats ou e-mail.
                     </p>
                   </div>
                   <div className="border-l-2 border-primary/30 pl-3 flex items-start gap-4">
