@@ -369,8 +369,8 @@ ${data.message || 'Briefing simulado na landing page.'}`.trim();
         {/* Canais Diretos da Alta Diretoria */}
         <div className="mt-24 max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-black font-headline text-white uppercase tracking-wider">Canais Diretos de Vendas</h2>
-            <p className="text-slate-400 font-sans mt-2">Deseja pular a simulação e iniciar o diálogo estratégico direto com nossos executivos?</p>
+            <h2 className="text-3xl font-black font-headline text-white uppercase tracking-wider">Quer a tecnologia da Nexus na sua empresa?</h2>
+            <p className="text-slate-400 font-sans mt-2">Fale agora com a diretoria e descubra como implantar nossas soluções de Inteligência Artificial exclusivas no seu negócio. Atendimento imediato via Whats ou e-mail.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -434,9 +434,10 @@ ${data.message || 'Briefing simulado na landing page.'}`.trim();
             <div className="border-l-2 border-emerald-400/30 pl-3 flex items-start gap-4 bg-zinc-950/30 p-4 rounded-xl border border-emerald-400/10">
               <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-emerald-400/40 flex-shrink-0 shadow-lg shadow-emerald-500/20 hover:scale-105 transition-transform duration-300">
                 <Image
-                  src="/carla-vendas.png?v=2"
+                  src="/carla-vendas.png"
                   alt="Carla C. Schuh"
                   fill
+                  unoptimized
                   className="object-cover"
                 />
               </div>
