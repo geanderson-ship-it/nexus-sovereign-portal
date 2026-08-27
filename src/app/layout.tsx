@@ -68,6 +68,13 @@ export const metadata: Metadata = {
       'ar-AE': 'https://nexus.aws/ar',
     },
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '16x16 32x32 48x48', type: 'image/x-icon' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
 };
 
 const fontHeadline = Poppins({
