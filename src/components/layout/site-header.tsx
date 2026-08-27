@@ -28,11 +28,11 @@ function TextLogo() {
       {/* Efeito sutil de Brilho Fundo */}
       <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/0 via-blue-500/25 to-blue-600/0 blur-2xl opacity-0 group-hover:opacity-100 transition duration-700 pointer-events-none" />
 
-      <div className="flex flex-col md:flex-row items-center gap-0 md:gap-3 leading-none font-headline uppercase relative z-10 transition-transform duration-300 group-hover:scale-105">
-        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_25px_rgba(37,99,235,0.9)] text-3xl sm:text-5xl tracking-[0.15em] md:tracking-[0.2em] leading-none">
+      <div className="flex flex-col md:flex-row items-center md:items-baseline gap-2 md:gap-4 leading-none font-headline uppercase relative z-10 transition-transform duration-300 group-hover:scale-105">
+        <span className="font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 drop-shadow-[0_0_35px_rgba(37,99,235,0.6)] text-5xl sm:text-7xl tracking-[0.15em] md:tracking-[0.2em] leading-none">
           Nexus
         </span>
-        <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-[11px] sm:text-3xl whitespace-nowrap drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] leading-none">
+        <span className="font-light text-white tracking-[0.15em] sm:tracking-[0.2em] text-base sm:text-5xl whitespace-nowrap drop-shadow-[0_0_25px_rgba(255,255,255,0.25)] leading-none">
           Holding Group
         </span>
       </div>
@@ -108,6 +108,7 @@ export function SiteHeader() {
     { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
     { title: 'Embaixadora', href: '/nexus-rotas' },
     { title: 'Marketing', href: '/marketing' },
+    { title: 'Websites', href: '/desenvolvimento-web' },
     { title: 'Enterprise', href: '/nexus-empresas' },
     { title: t('navPremium') || 'Exclusive', href: '/exclusive' },
     { title: t('navSocial') || 'Social', href: '/proposito' },

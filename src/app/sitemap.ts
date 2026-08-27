@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/excellence',
     '/about',
     '/contact',
+    '/desenvolvimento-web',
     '/intelligence/maga-live',
     '/intelligence/dante-safra',
     '/intelligence/djeny-design',

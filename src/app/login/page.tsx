@@ -10,6 +10,7 @@ import { signIn } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
+import * as gtag from '@/lib/gtag';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -56,6 +57,13 @@ export default function LoginPage() {
 
 
   const handleSuccessfulLogin = () => {
+    // Registra o evento de login no Google Analytics
+    gtag.event({
+      action: 'login',
+      category: 'User',
+      label: 'Cognito'
+    });
+
     toast({
         title: t('login.toast.success.title'),
         description: t('login.toast.success.description'),
@@ -100,6 +108,14 @@ export default function LoginPage() {
       const allowedEmails = ['carlaschuhrepresentante@gmail.com'];
       if (allowedEmails.includes(vendasEmail.toLowerCase().trim()) && vendasPassword === 'vendas2026') {
         localStorage.setItem('vendas_auth', 'true');
+        
+        // Registra o evento de login de vendas no Google Analytics
+        gtag.event({
+          action: 'login',
+          category: 'User',
+          label: 'Vendas_Carla'
+        });
+
         toast({ title: 'Acesso Liberado', description: 'Redirecionando para o Portal de Vendas...' });
         router.push('/gabinete-vendas');
       } else {
