@@ -113,7 +113,7 @@ export function SiteFooter() {
               <div className="border-l-2 border-emerald-400/30 pl-3 flex items-start gap-4 bg-zinc-950/40 p-4 rounded-xl border border-emerald-400/10">
                 <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-emerald-400/40 flex-shrink-0 shadow-lg shadow-emerald-500/20 hover:scale-105 transition-transform duration-300">
                   <Image
-                    src="/carla-vendas.png"
+                    src="/carla-vendas-nova.jpeg"
                     alt="Carla C. Schuh"
                     fill
                     unoptimized
