@@ -902,28 +902,23 @@ export default function MarketingPage() {
 
         {/* SECONDARY CALL TO ACTION (SOMENTE VISÍVEL NA TELA DE MACROS) */}
         {!activeModuleDetail && (
-          <div className="bg-gradient-to-br from-[#0a0a0c] to-[#111114] border border-slate-900 rounded-[32px] p-8 md:p-12 text-center relative overflow-hidden shadow-2xl max-w-5xl mx-auto">
-            <div className="absolute -top-24 -left-24 w-48 h-48 bg-orange-500/10 rounded-full blur-[90px] pointer-events-none" />
-            <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-[90px] pointer-events-none" />
+          <div className="group relative bg-gradient-to-br from-zinc-900/80 to-black/90 backdrop-blur-2xl border border-white/10 rounded-[32px] p-10 md:p-14 text-center overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.7)] max-w-4xl mx-auto transition-all duration-500 hover:border-white/20">
+            {/* Premium Glow Effects */}
+            <div className="absolute -top-32 -left-32 w-72 h-72 bg-orange-500/20 rounded-full blur-[120px] pointer-events-none group-hover:bg-orange-500/30 transition-all duration-700" />
+            <div className="absolute -bottom-32 -right-32 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px] pointer-events-none group-hover:bg-cyan-500/30 transition-all duration-700" />
 
-            <span className="inline-flex items-center gap-1.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
-              <Languages className="w-3.5 h-3.5" /> Poliglota em mais de 50 Idiomas
-            </span>
-            <h3 className="text-3xl font-black uppercase text-white tracking-tight mb-4">
-              Deseja uma arquitetura customizada?
-            </h3>
-            <p className="text-slate-400 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto mb-8">
-              Nossos engenheiros desenvolvem vozes customizadas, integrações de PMS proprietárias e personalidades únicas para o seu concierge. Solicite uma audiência comercial agora mesmo.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link 
-                href={WHATSAPP_URL}
-                target="_blank"
-                className="inline-flex items-center gap-2 px-8 py-3.5 bg-orange-600 hover:bg-orange-500 text-white font-bold uppercase tracking-widest text-xs rounded-full shadow-[0_0_20px_rgba(249,115,22,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(249,115,22,0.5)] cursor-pointer"
-              >
-                Falar com Engenharia Comercial
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+            <div className="relative z-10 flex flex-col items-center">
+              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500/10 to-orange-500/5 text-orange-400 border border-orange-500/30 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(249,115,22,0.15)] backdrop-blur-md">
+                <Languages className="w-4 h-4" /> Poliglota em mais de 50 Idiomas
+              </span>
+              
+              <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-5 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400">
+                Deseja uma arquitetura customizada?
+              </h3>
+              
+              <p className="text-slate-300 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
+                Nossos engenheiros desenvolvem vozes customizadas, integrações de PMS proprietárias e personalidades únicas para o seu concierge. Solicite uma audiência comercial agora mesmo.
+              </p>
             </div>
           </div>
         )}
