@@ -44,14 +44,14 @@ export function SiteFooter() {
 
       {/* CANAIS DIRETOS DA ALTA DIRETORIA */}
       {showExecutiveCards && (
-        <div className="container max-w-6xl mx-auto px-4 mb-12">
+        <div className="container mb-12">
           <div className="bg-gradient-to-br from-[#080b10]/95 via-[#021136]/90 to-[#080b10]/95 backdrop-blur-md border border-blue-500/40 rounded-3xl p-8 md:p-10 shadow-[0_0_50px_rgba(37,99,235,0.25)]">
             <div className="text-center mb-10">
               <h2 className="text-2xl sm:text-3xl font-black font-headline text-white uppercase tracking-wider">Quer a tecnologia da Nexus na sua empresa?</h2>
               <p className="text-slate-300 font-sans mt-2 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">Fale agora com a diretoria e descubra como implantar nossas soluções de Inteligência Artificial exclusivas no seu negócio. Atendimento imediato via Whats ou e-mail.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Geanderson Card */}
               <div className="border-l-2 border-primary/30 pl-3 flex items-start gap-4 bg-zinc-950/40 p-4 rounded-xl border border-primary/10">
                 <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-primary/40 flex-shrink-0 shadow-lg shadow-primary/20 hover:scale-105 transition-transform duration-300">
@@ -133,6 +133,35 @@ export function SiteFooter() {
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-11.98c-.12-.2-.24-.305-.449-.305h-.359c-.209 0-.54.079-.822.387-.282.308-1.077 1.051-1.077 2.562 0 1.512 1.097 2.977 1.247 3.177.151.2 2.158 3.292 5.228 4.613.73.314 1.299.502 1.742.643.733.233 1.4.2 1.928.121.588-.087 1.804-.737 2.06-1.45.256-.713.256-1.32.18-1.45-.076-.13-.277-.207-.578-.356-.301-.15-1.776-.875-2.051-.975-.275-.1-.475-.15-.675.15-.2.3-.776.975-.951 1.175-.175.2-.35.225-.651.075-.301-.15-1.27-.468-2.42-1.493-.895-.798-1.5-1.785-1.676-2.085-.176-.3-.019-.462.132-.612.135-.135.301-.35.451-.525.15-.175.2-.299.3-.5.1-.2.05-.375-.025-.525C8.032 13.12 7.153 10.97 6.647 10.02z" />
                       </svg>
                       +55 (51) 99378-3897
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Felipe Querol Card */}
+              <div className="border-l-2 border-amber-500/30 pl-3 flex items-start gap-4 bg-zinc-950/40 p-4 rounded-xl border border-amber-500/10">
+                <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-amber-500/40 flex-shrink-0 shadow-lg shadow-amber-500/20 hover:scale-105 transition-transform duration-300">
+                  <Image
+                    src="/felipe-querol.png"
+                    alt="Felipe Querol"
+                    fill
+                    unoptimized
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold tracking-wider text-amber-500 uppercase">Assessoria Jurídica</p>
+                  <p className="font-bold text-foreground text-base mt-0.5 truncate">Felipe Querol</p>
+                  <div className="flex flex-col text-xs mt-2.5 gap-2">
+                    <a href="mailto:felipe@advquerol.com" className="text-slate-300 hover:text-amber-400 hover:translate-x-1 font-medium transition-all flex items-center gap-1.5 truncate">
+                      <Mail className="w-3.5 h-3.5 flex-shrink-0" />
+                      felipe@advquerol.com
+                    </a>
+                    <a href="https://wa.me/555191219941" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-amber-400 hover:translate-x-1 font-medium transition-all flex items-center gap-1.5">
+                      <svg className="w-3.5 h-3.5 fill-current flex-shrink-0 text-amber-500" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-11.98c-.12-.2-.24-.305-.449-.305h-.359c-.209 0-.54.079-.822.387-.282.308-1.077 1.051-1.077 2.562 0 1.512 1.097 2.977 1.247 3.177.151.2 2.158 3.292 5.228 4.613.73.314 1.299.502 1.742.643.733.233 1.4.2 1.928.121.588-.087 1.804-.737 2.06-1.45.256-.713.256-1.32.18-1.45-.076-.13-.277-.207-.578-.356-.301-.15-1.776-.875-2.051-.975-.275-.1-.475-.15-.675.15-.2.3-.776.975-.951 1.175-.175.2-.35.225-.651.075-.301-.15-1.27-.468-2.42-1.493-.895-.798-1.5-1.785-1.676-2.085-.176-.3-.019-.462.132-.612.135-.135.301-.35.451-.525.15-.175.2-.299.3-.5.1-.2.05-.375-.025-.525C8.032 13.12 7.153 10.97 6.647 10.02z" />
+                      </svg>
+                      +55 (51) 9121-9941
                     </a>
                   </div>
                 </div>
