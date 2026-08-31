@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Youtube, Facebook, Mail } from 'lucide-react';
+import { Youtube, Facebook, Mail, Instagram } from 'lucide-react';
 import { useLocale } from '@/hooks/use-locale';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 import { usePathname } from 'next/navigation';
@@ -210,6 +210,15 @@ export function SiteFooter() {
             >
               <Facebook className="h-6 w-6 text-[#1877F2] drop-shadow-sm" />
               <span className="sr-only">Facebook</span>
+            </a>
+            <a
+              href="https://www.instagram.com/nexusholdinggroup/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-transform hover:scale-110"
+            >
+              <Instagram className="h-6 w-6 text-[#E1306C] drop-shadow-sm" />
+              <span className="sr-only">Instagram</span>
             </a>
             <a
               href="https://www.youtube.com/@NexusCursoseTreinamento"
