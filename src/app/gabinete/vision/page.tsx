@@ -1443,7 +1443,7 @@ https://nexustreinamento.com`;
     const currentMyLang = myLanguageRef.current;
     
     let resolvedLang = currentLang;
-    if (currentLang.code === 'auto') {
+    if (true) { // FORCED: Sempre detecta o idioma real do texto recebido para evitar eco de TTS quando algu�m fala o mesmo idioma que o destino
       // Detecção multi-idioma: verifica padrões de escrita e palavras-chave por idioma
       const lowerText = text.toLowerCase();
       // Detecção por scripts/caracteres únicos de escrita
@@ -1573,7 +1573,7 @@ https://nexustreinamento.com`;
       });
 
       // 3. Toca a síntese de voz (TTS) correspondente ao idioma de destino
-      playTTS(translatedText, targetLangObj.voiceLocale);
+      if (sourceLangObj.code !== targetLangObj.code && text.trim().toLowerCase() !== translatedText.trim().toLowerCase()) { playTTS(translatedText, targetLangObj.voiceLocale); }
 
       // 4. Salva no histórico de transcrição local
       const newItem: TranscriptItem = {
@@ -1597,7 +1597,7 @@ https://nexustreinamento.com`;
         translated: text,
         stage: 'done'
       });
-      playTTS(text, targetLangObj.voiceLocale);
+      if (sourceLangObj.code !== targetLangObj.code) { playTTS(text, targetLangObj.voiceLocale); }
     }
 
     // Limpa a legenda após 5 segundos
@@ -1657,7 +1657,7 @@ https://nexustreinamento.com`;
       });
 
       // Fala a tradução/áudio em Português para o Gean ouvir
-      playTTS(randomPhrase.translation, 'pt-BR');
+      if (!isPt) { playTTS(randomPhrase.translation, 'pt-BR'); }
 
       // Salva no histórico
       const newItem: TranscriptItem = {
