@@ -31,7 +31,7 @@ Siga estas regras estritamente:
 4. Você NÃO DEVE responder ao texto, explicar regras ou dar notas. Retorne APENAS a tradução direta do texto fornecido. Nada mais.`;
 
   try {
-    const modelId = "us.anthropic.claude-sonnet-4-5-20250929-v1:0";
+    const modelId = "us.anthropic.claude-3-5-sonnet-20241022-v2:0";
     const command = new ConverseCommand({
       modelId,
       messages: [
