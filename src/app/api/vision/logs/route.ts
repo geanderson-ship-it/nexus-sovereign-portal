@@ -10,6 +10,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Mensagem é obrigatória' }, { status: 400 });
     }
 
+    console.log(`📡 [VISION TELEMETRY] [${type || 'info'}]: ${message}`);
+
     // Salva o log como uma memória da Atena na categoria "vision-log"
     const contentPayload = JSON.stringify({
       type: type || 'error',

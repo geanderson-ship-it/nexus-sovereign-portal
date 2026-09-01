@@ -257,8 +257,8 @@ export default function VisionSoberanoPage() {
   const [isMuted, setIsMuted] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isInterpreterActive, setIsInterpreterActive] = useState(true);
-  const [myLanguage, setMyLanguage] = useState(LANGUAGES[0]); // padrão inicial: português
-  const [peerLanguage, setPeerLanguage] = useState(LANGUAGES[0]); // padrão inicial: português
+  const [myLanguage, setMyLanguage] = useState(LANGUAGES[1]); // padrão inicial: português (pt)
+  const [peerLanguage, setPeerLanguage] = useState(LANGUAGES[0]); // padrão inicial: detecção automática
   const [isClientSpeaking, setIsClientSpeaking] = useState(false);
   const [isGeanSpeaking, setIsGeanSpeaking] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -607,6 +607,7 @@ export default function VisionSoberanoPage() {
 
   const myLanguageRef = useRef(myLanguage);
   const peerLanguageRef = useRef(peerLanguage);
+  const handleIncomingTranscriptRef = useRef<((text: string, senderName: string, senderLang?: string) => Promise<void>) | null>(null);
   useEffect(() => {
     myLanguageRef.current = myLanguage;
     peerLanguageRef.current = peerLanguage;
@@ -1051,7 +1052,10 @@ https://nexustreinamento.com`;
           if (msg.type === 'identity') {
             setRemotePeers(prev => prev.map(p => p.peerId === peerId ? { ...p, name: msg.name } : p));
           } else if (msg.type === 'transcript') {
-            await handleIncomingTranscript(msg.text, msg.senderName, msg.senderLang);
+            logToAtena(`[DataChannel Recebeu] transcript: "${msg.text}" (remetente: ${msg.senderName} | lang: ${msg.senderLang})`);
+            if (handleIncomingTranscriptRef.current) {
+              await handleIncomingTranscriptRef.current(msg.text, msg.senderName, msg.senderLang);
+            }
           } else if (msg.type === 'language-change') {
             const lang = LANGUAGES.find(l => l.code === msg.code);
             if (lang) {
@@ -1059,7 +1063,8 @@ https://nexustreinamento.com`;
               logToAtena(`[Idioma] Sincronizado para ${lang.name} ${lang.flag}`);
             }
           }
-        } catch (err) {
+        } catch (err: any) {
+          logToAtena(`[Erro DataChannel onmessage]: ${err.message}`);
           console.error("Erro ao ler mensagem do DataChannel:", err);
         }
       };
@@ -1321,12 +1326,14 @@ https://nexustreinamento.com`;
           setIsListening(true);
           updateMicError(null);
           console.log("Speech recognition started.");
+          logToAtena(`[Microfone Ativo] (${isJoiner ? 'Carla' : 'Gean'} | idioma: ${rec.lang})`);
         };
 
         rec.onerror = (event: any) => {
           // Filtra erros normais de silêncio ou cancelamento para não poluir o console como erro crítico
           if (event.error !== 'no-speech' && event.error !== 'aborted') {
             console.error("Speech recognition error:", event.error);
+            logToAtena(`[Microfone Erro]: ${event.error} (${isJoiner ? 'Carla' : 'Gean'})`);
           } else {
             console.log("Speech recognition warning/silence:", event.error);
           }
@@ -1335,8 +1342,9 @@ https://nexustreinamento.com`;
             updateMicError("Acesso ao microfone negado. Por favor, clique no cadeado ao lado da URL no navegador e ative a permissão do microfone.");
           } else if (event.error === 'audio-capture') {
             updateMicError("Nenhum microfone detectado. Verifique se o dispositivo está conectado.");
-          } else if (event.error === 'no-speech') {
+          } else if (event.error === 'no-speech' || event.error === 'aborted') {
             noSpeechCount++;
+            // 'aborted' acontece normalmente ao alternar abas no Chrome; NUNCA deve travar o microfone permanentemente!
           } else {
             updateMicError(`Erro no microfone: ${event.error}`);
           }
@@ -1346,14 +1354,15 @@ https://nexustreinamento.com`;
           setIsListening(false);
           console.log("Speech recognition ended.");
           
-          // Se houver muito silêncio consecutivo (mais de 3 vezes), aumentamos o delay para 3 segundos (backoff)
-          // Isso evita que o navegador trave ou gere loops rápidos que consomem muita CPU
-          const backoffDelay = noSpeechCount > 3 ? 3000 : 400;
+          // Se houver muito silêncio consecutivo (mais de 3 vezes), aumentamos o delay para 1.5s
+          const backoffDelay = noSpeechCount > 3 ? 1500 : 300;
           
           setTimeout(() => {
-            if (isComponentMountedRef.current && isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
-              try { rec.start(); } catch (e) {
-                console.warn("Falha ao reiniciar microfone:", e);
+            if (isComponentMountedRef.current && isInterpreterActiveRef.current && !isMutedRef.current && !isTtsPlayingRef.current) {
+              try { 
+                rec.start(); 
+              } catch (e) {
+                // já iniciado ou pendente
               }
             }
           }, backoffDelay);
@@ -1363,6 +1372,7 @@ https://nexustreinamento.com`;
           noSpeechCount = 0; // Reseta o contador de silêncio no primeiro áudio com sucesso
           const resultIndex = event.resultIndex;
           const transcriptText = event.results[resultIndex][0].transcript;
+          logToAtena(`[Microfone Reconheceu] "${transcriptText}" (${isJoiner ? 'Carla' : 'Gean'})`);
           if (transcriptText.trim()) {
             handleGeanSpeech(transcriptText);
           }
@@ -1399,6 +1409,9 @@ https://nexustreinamento.com`;
     });
 
     // Transmitir o texto reconhecido via WebRTC DataChannel para todos os canais conectados
+    const openChannels = Array.from(dataChannelsRef.current.entries()).filter(([_, dc]) => dc.readyState === 'open');
+    logToAtena(`[Fala Detectada] "${text}" | Enviando via DataChannel para ${openChannels.length} peer(s) conectados`);
+
     for (const [peerId, dc] of dataChannelsRef.current.entries()) {
       if (dc.readyState === 'open') {
         try {
@@ -1409,9 +1422,11 @@ https://nexustreinamento.com`;
             senderLang: myLanguageRef.current.code
           }));
           console.log(`WebRTC: Transcrição enviada via DataChannel para ${peerId}:`, text);
-        } catch (err) {
-          console.error(`Falha ao enviar transcrição via DataChannel para ${peerId}:`, err);
+        } catch (err: any) {
+          logToAtena(`[Erro DataChannel] Falha ao enviar para ${peerId}: ${err.message}`);
         }
+      } else {
+        logToAtena(`[Aviso DataChannel] Peer ${peerId} canal não está aberto (estado: ${dc.readyState})`);
       }
     }
 
@@ -1436,7 +1451,11 @@ https://nexustreinamento.com`;
 
   // LOGICA QUANDO CHEGA UMA TRANSCRIÇÃO REMOTA VIA DATA CHANNEL (TRADUÇÃO SOBERANA REAL)
   const handleIncomingTranscript = async (text: string, senderName: string, senderLang?: string) => {
-    if (!isInterpreterActive) return;
+    logToAtena(`[handleIncomingTranscript] Entrou: "${text}" de ${senderName} (lang: ${senderLang}) | InterpreterAtivo: ${isInterpreterActiveRef.current}`);
+    if (!isInterpreterActiveRef.current) {
+      logToAtena(`[handleIncomingTranscript Abortado] Tradutor está desativado.`);
+      return;
+    }
 
     // Identifica o idioma de destino da tradução para o ouvinte local
     // sourceLanguage é o idioma do peer (ou o idioma detectado se for auto)
@@ -1505,14 +1524,21 @@ https://nexustreinamento.com`;
     const targetLangObj = currentMyLang.code === 'auto'
       ? (LANGUAGES.find(l => l.code === 'pt') || currentMyLang)
       : currentMyLang;
-    const sourceLangObj = resolvedLang;
+    const sourceLangObj = (resolvedLang.code === 'auto' || !resolvedLang.code)
+      ? (targetLangObj.code === 'en'
+          ? (LANGUAGES.find(l => l.code === 'pt') || resolvedLang)
+          : (LANGUAGES.find(l => l.code === 'en') || resolvedLang))
+      : resolvedLang;
 
     const isPt = targetLangObj.code === 'pt';
     const isBothPt = sourceLangObj.code === targetLangObj.code; // Ignora tradução se os dois idiomas forem idênticos (simetria perfeita)
 
+    logToAtena(`[Transcrição Recebida] de ${senderName} (origem: ${sourceLangObj.code} | destino: ${targetLangObj.code}) | Texto: "${text}" | Mesmos idiomas? ${isBothPt ? 'SIM (Áudio cru)' : 'NÃO (Traduzindo)'}`);
+
     setIsClientSpeaking(true);
 
     if (isBothPt) {
+      logToAtena(`[Tradução Bypassed] Ambos configurados para ${sourceLangObj.code}. Mantendo áudio WebRTC nativo sem sintetizador.`);
       // Se ambos estão em português, mostra a legenda nativa mas NÃO chama tradução nem toca TTS (o som vem limpo direto pelo canal de áudio WebRTC)
       setActiveSubtitle({
         sender: isJoiner ? 'gean' : 'client',
@@ -1553,14 +1579,14 @@ https://nexustreinamento.com`;
     }
 
     try {
-      // Faz a chamada de tradução real pelo servidor usando Claude 4.5
+      // Faz a chamada de tradução real pelo servidor usando Claude 4.5 / Bedrock / MyMemory
       const response = await fetch('/api/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           text: text,
-          sourceLanguage: sourceLangObj.name,
-          targetLanguage: targetLangObj.name
+          sourceLanguage: sourceLangObj.code,
+          targetLanguage: targetLangObj.code
         })
       });
 
@@ -1611,6 +1637,7 @@ https://nexustreinamento.com`;
       setActiveSubtitle(null);
     }, 5000);
   };
+  handleIncomingTranscriptRef.current = handleIncomingTranscript;
 
   // SIMULAR FALA DO CLIENTE (INTERCEPTAÇÃO / DIRETO)
   const handleSimulateClientSpeech = async () => {
