@@ -1050,7 +1050,7 @@ https://nexustreinamento.com`;
           if (msg.type === 'identity') {
             setRemotePeers(prev => prev.map(p => p.peerId === peerId ? { ...p, name: msg.name } : p));
           } else if (msg.type === 'transcript') {
-            await handleIncomingTranscript(msg.text, msg.senderName);
+            await handleIncomingTranscript(msg.text, msg.senderName, msg.senderLang);
           } else if (msg.type === 'language-change') {
             const lang = LANGUAGES.find(l => l.code === msg.code);
             if (lang) {
@@ -1404,7 +1404,8 @@ https://nexustreinamento.com`;
           dc.send(JSON.stringify({
             type: 'transcript',
             text: text,
-            senderName: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson')
+            senderName: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson'),
+            senderLang: myLanguageRef.current.code
           }));
           console.log(`WebRTC: Transcrição enviada via DataChannel para ${peerId}:`, text);
         } catch (err) {
@@ -1433,7 +1434,7 @@ https://nexustreinamento.com`;
   };
 
   // LOGICA QUANDO CHEGA UMA TRANSCRIÇÃO REMOTA VIA DATA CHANNEL (TRADUÇÃO SOBERANA REAL)
-  const handleIncomingTranscript = async (text: string, senderName: string) => {
+  const handleIncomingTranscript = async (text: string, senderName: string, senderLang?: string) => {
     if (!isInterpreterActive) return;
 
     // Identifica o idioma de destino da tradução para o ouvinte local
@@ -1443,7 +1444,9 @@ https://nexustreinamento.com`;
     const currentMyLang = myLanguageRef.current;
     
     let resolvedLang = currentLang;
-    if (true) { // FORCED: Sempre detecta o idioma real do texto recebido para evitar eco de TTS quando algu�m fala o mesmo idioma que o destino
+    if (senderLang && senderLang !== 'auto') {
+      resolvedLang = LANGUAGES.find(l => l.code === senderLang) || currentLang;
+    } else if (true) { // FORCED: Sempre detecta o idioma real do texto recebido para evitar eco de TTS quando algu�m fala o mesmo idioma que o destino
       // Detecção multi-idioma: verifica padrões de escrita e palavras-chave por idioma
       const lowerText = text.toLowerCase();
       // Detecção por scripts/caracteres únicos de escrita
