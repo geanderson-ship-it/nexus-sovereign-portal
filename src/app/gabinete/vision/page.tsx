@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { useUser } from '@/auth';
@@ -1593,14 +1593,14 @@ https://nexustreinamento.com`;
 
     } catch (err) {
       console.error("Erro ao traduzir transcrição remota:", err);
-      // Fallback em caso de erro na tradução
+      // Fallback: mostra legenda com erro, mas NAO toca TTS com texto nao traduzido
       setActiveSubtitle({
         sender: isJoiner ? 'gean' : 'client',
         original: text,
-        translated: text,
+        translated: `?? Tradu��o indispon�vel: "${text}"`,`
         stage: 'done'
       });
-      if (sourceLangObj.code !== targetLangObj.code) { playTTS(text, targetLangObj.voiceLocale); }
+      // Nao chama playTTS aqui - sem traducao, sem audio sintetico no idioma errado
     }
 
     // Limpa a legenda após 5 segundos
