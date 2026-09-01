@@ -1726,12 +1726,14 @@ https://nexustreinamento.com`;
         
         audio.onplay = () => {
           isTtsPlayingRef.current = true;
+          window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: true } }));
           if (recognitionRef.current) {
             try { recognitionRef.current.stop(); } catch (e) {}
           }
         };
 
         audio.onended = () => {
+          window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
           isTtsPlayingRef.current = false;
           resolve();
           // Agenda reinício do reconhecimento se ainda estiver ativo e não mudo (usando refs para evitar fechamento de estado obsoleto)
@@ -1743,11 +1745,13 @@ https://nexustreinamento.com`;
         };
 
         audio.onerror = (e) => {
+          window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
           isTtsPlayingRef.current = false;
           reject(e);
         };
 
         audio.play().catch((err) => {
+          window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
           isTtsPlayingRef.current = false;
           reject(err);
         });
@@ -2764,6 +2768,20 @@ interface RemoteVideoProps {
 
 function RemoteVideo({ peer }: RemoteVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  
+  useEffect(() => {
+    const handleTtsState = (e: any) => {
+      if (videoRef.current) {
+        if (e.detail.isPlaying) {
+          videoRef.current.volume = 0.1; /* DUCKING */
+        } else {
+          videoRef.current.volume = 1.0; /* RESTORE */
+        }
+      }
+    };
+    window.addEventListener('tts-state-change', handleTtsState);
+    return () => window.removeEventListener('tts-state-change', handleTtsState);
+  }, []);
   
   useEffect(() => {
     if (videoRef.current && peer.stream) {
