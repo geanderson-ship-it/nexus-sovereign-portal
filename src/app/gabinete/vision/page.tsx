@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { useUser } from '@/auth';
@@ -1466,7 +1466,7 @@ https://nexustreinamento.com`;
     let resolvedLang = currentLang;
     if (senderLang && senderLang !== 'auto') {
       resolvedLang = LANGUAGES.find(l => l.code === senderLang) || currentLang;
-    } else if (true) { // FORCED: Sempre detecta o idioma real do texto recebido para evitar eco de TTS quando algu�m fala o mesmo idioma que o destino
+    } else { // Fallback: detecta idioma pelo texto quando senderLang nao disponivel
       // Detecção multi-idioma: verifica padrões de escrita e palavras-chave por idioma
       const lowerText = text.toLowerCase();
       // Detecção por scripts/caracteres únicos de escrita
