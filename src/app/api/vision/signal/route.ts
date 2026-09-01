@@ -80,7 +80,7 @@ export async function GET(req: NextRequest) {
     // Ordena do mais antigo para o mais recente (importante para WebRTC offer/answer ordering)
     signals.sort((a: any, b: any) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
 
-    return NextResponse.json({ signals });
+    return NextResponse.json({ signals, serverTime: Date.now() });
   } catch (error: any) {
     console.error('[Vision Signal GET Error]', error);
     return NextResponse.json({ error: error.message || 'Erro ao buscar sinais.' }, { status: 500 });

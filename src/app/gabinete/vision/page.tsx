@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { useUser } from '@/auth';
@@ -1078,21 +1078,26 @@ https://nexustreinamento.com`;
 
         const resData = await response.json();
         const signals = resData.signals || [];
-        const now = Date.now();
+        const serverTime = resData.serverTime || Date.now(); // Usa o tempo do servidor para evitar clock drift do cliente
+
+        // Acha sinais explícitos de saída (leave)
+        const leaveSignals = signals.filter((s: any) => s.type === 'leave');
+        const leftPeerIds = new Set(leaveSignals.map((s: any) => s.payload.sender));
 
         // A. Acha todos os participantes ativos por sinal de presença recente (últimos 15s)
-        const presenceSignals = signals.filter((s: any) => s.type === 'presence' && s.payload.sender !== localPeerId);
+        const presenceSignals = signals.filter((s: any) => {
+          if (s.type !== 'presence' || s.payload.sender === localPeerId) return false;
+          if (leftPeerIds.has(s.payload.sender)) return false; // Ignora se enviou sinal de saída
+          
+          const age = serverTime - new Date(s.timestamp).getTime();
+          return age < 15000; // 15 segundos de tolerância máxima sem presença
+        });
         
         // Mantém apenas a última presença de cada remetente
         const activePeersMap = new Map<string, { name: string; timestamp: number }>();
         presenceSignals.forEach((s: any) => {
-          // Usamos uma tolerância de 10 minutos (600.000ms) com valor absoluto para evitar
-          // que descompassos de relógios locais (clock drift) descartem participantes ativos.
-          const timeDiff = Math.abs(now - new Date(s.timestamp).getTime());
-          if (timeDiff < 600000) {
-            if (!activePeersMap.has(s.payload.sender) || new Date(s.timestamp).getTime() > activePeersMap.get(s.payload.sender)!.timestamp) {
-              activePeersMap.set(s.payload.sender, { name: s.payload.data?.name || 'Convidado', timestamp: new Date(s.timestamp).getTime() });
-            }
+          if (!activePeersMap.has(s.payload.sender) || new Date(s.timestamp).getTime() > activePeersMap.get(s.payload.sender)!.timestamp) {
+            activePeersMap.set(s.payload.sender, { name: s.payload.data?.name || 'Convidado', timestamp: new Date(s.timestamp).getTime() });
           }
         });
 
@@ -1227,6 +1232,16 @@ https://nexustreinamento.com`;
     };
 
     const handleBeforeUnload = () => {
+      try {
+        const payload = JSON.stringify({
+          roomId,
+          type: 'leave',
+          sender: localPeerId,
+          data: { name: isJoiner ? guestNameRef.current : (userRef.current?.name || 'Diretor Geanderson') }
+        });
+        navigator.sendBeacon('/api/vision/signal', payload);
+      } catch (e) {}
+
       if (localStreamRef.current) {
         localStreamRef.current.getTracks().forEach(t => {
           try { t.stop(); } catch (e) {}
