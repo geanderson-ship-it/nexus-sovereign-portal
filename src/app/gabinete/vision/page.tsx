@@ -2796,7 +2796,7 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
       ref={videoRef} 
       autoPlay 
       playsInline 
-      muted={true} // Inicia mutado no DOM para passar pelas restrições de autoplay de dispositivos móveis
+      muted={false} // FORCED UNMUTE para permitir audio original
       className="w-full h-full object-cover"
     />
   );
