@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Nexus Holding Group | Concierge Virtual e Avatares de IA Soberana',
     description: 'A única desenvolvedora brasileira de Concierges Virtuais e Avatares de IA 100% personalizáveis em tempo real. Suporte a mais de 50 idiomas para hotéis, resorts e sites corporativos.',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nexusholdinggroup.com.br',
     siteName: 'Nexus Holding Group',
     images: [
       {
@@ -55,17 +55,17 @@ export const metadata: Metadata = {
     google: 'y_PGsP4GwsiDp4dNSw10FuThEOeZ_PZCheEl-CNqDaU',
   },
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://nexus.aws',
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nexusholdinggroup.com.br',
     languages: {
-      'pt-BR': 'https://nexus.aws',
-      'en-US': 'https://nexus.aws/en',
-      'es-ES': 'https://nexus.aws/es',
-      'fr-FR': 'https://nexus.aws/fr',
-      'de-DE': 'https://nexus.aws/de',
-      'ja-JP': 'https://nexus.aws/ja',
-      'ru-RU': 'https://nexus.aws/ru',
-      'zh-CN': 'https://nexus.aws/zh',
-      'ar-AE': 'https://nexus.aws/ar',
+      'pt-BR': 'https://www.nexusholdinggroup.com.br',
+      'en-US': 'https://www.nexusholdinggroup.com.br/en',
+      'es-ES': 'https://www.nexusholdinggroup.com.br/es',
+      'fr-FR': 'https://www.nexusholdinggroup.com.br/fr',
+      'de-DE': 'https://www.nexusholdinggroup.com.br/de',
+      'ja-JP': 'https://www.nexusholdinggroup.com.br/ja',
+      'ru-RU': 'https://www.nexusholdinggroup.com.br/ru',
+      'zh-CN': 'https://www.nexusholdinggroup.com.br/zh',
+      'ar-AE': 'https://www.nexusholdinggroup.com.br/ar',
     },
   },
   icons: {
