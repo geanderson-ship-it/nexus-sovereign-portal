@@ -4,11 +4,6 @@ import { DynamoDBDocumentClient, PutCommand, ScanCommand, DeleteCommand } from '
 
 export const dynamic = 'force-dynamic';
 
-// SINALIZAÇÃO WEBRTC — API DEDICADA PARA O NEXUS VISION
-// Separada da tabela Atena_Memories para evitar colisão de dados e garantir performance.
-// Usa ScanCommand com FilterExpression duplo (roomId + TTL no servidor) para máxima compatibilidade
-// com DynamoDB sem necessidade de GSI adicional.
-
 const client = new DynamoDBClient({
   region: process.env.BEDROCK_REGION || process.env.AWS_REGION || 'us-east-1',
   credentials: {
@@ -29,10 +24,9 @@ const client = new DynamoDBClient({
 
 const docClient = DynamoDBDocumentClient.from(client);
 
-// MESMA TABELA — mas com prefixo "vision#" no userId para isolar os dados
-const TABLE_NAME = 'Nexus_Atena_Memories';
-const SIGNAL_TTL_MS = 60000; // 60 segundos — sinais WebRTC devem ser efêmeros
-const VISION_PREFIX = 'vision#';
+// Nova tabela dedicada para WebRTC com PK: roomId e SK: timestamp
+const TABLE_NAME = 'Nexus_Vision_Signals';
+const SIGNAL_TTL_MS = 60000;
 
 export async function GET(req: NextRequest) {
   try {
@@ -44,17 +38,15 @@ export async function GET(req: NextRequest) {
 
     const now = Date.now();
     const cutoffIso = new Date(now - SIGNAL_TTL_MS).toISOString();
-    const scopedUserId = `${VISION_PREFIX}${roomId}`;
 
-    // Busca TODOS os sinais desta sala com filtro de userId e timestamp recente
-    const command = new ScanCommand({
+    const command = new QueryCommand({
       TableName: TABLE_NAME,
-      FilterExpression: 'userId = :uid AND #ts >= :cutoff',
+      KeyConditionExpression: 'roomId = :rid AND #ts >= :cutoff',
       ExpressionAttributeNames: {
         '#ts': 'timestamp', // "timestamp" é palavra reservada no DynamoDB
       },
       ExpressionAttributeValues: {
-        ':uid': scopedUserId,
+        ':rid': roomId,
         ':cutoff': cutoffIso,
       },
     });
@@ -67,9 +59,9 @@ export async function GET(req: NextRequest) {
         try {
           return {
             id: m.id,
-            type: m.categoria,
+            type: m.type,
             timestamp: m.timestamp,
-            payload: JSON.parse(m.conteudo),
+            payload: m.payload,
           };
         } catch (e) {
           return null;
@@ -77,7 +69,7 @@ export async function GET(req: NextRequest) {
       })
       .filter(Boolean);
 
-    // Ordena do mais antigo para o mais recente (importante para WebRTC offer/answer ordering)
+    // Ordena do mais antigo para o mais recente
     signals.sort((a: any, b: any) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
 
     return NextResponse.json({ signals, serverTime: Date.now() });
@@ -93,18 +85,18 @@ export async function POST(req: NextRequest) {
     const { roomId, type, sender, data } = body;
 
     if (!roomId || !type || !sender) {
-      return NextResponse.json({ error: 'Parâmetros incompletos: roomId, type e sender são obrigatórios.' }, { status: 400 });
+      return NextResponse.json({ error: 'Parâmetros incompletos.' }, { status: 400 });
     }
 
-    const scopedUserId = `${VISION_PREFIX}${roomId}`;
     const now = new Date().toISOString();
+    const signalId = crypto.randomUUID();
 
     const item = {
-      id: crypto.randomUUID(),
-      userId: scopedUserId,   // Chave de partição prefixada para isolamento
-      timestamp: now,         // Chave de ordenação e filtro de TTL
-      categoria: type,        // tipo do sinal: presence, webrtc-offer, webrtc-answer, webrtc-candidate
-      conteudo: JSON.stringify({ sender, data }),
+      roomId,        // Partition Key
+      timestamp: now, // Sort Key
+      id: signalId,
+      type,
+      payload: { sender, data },
     };
 
     await docClient.send(new PutCommand({
@@ -112,22 +104,21 @@ export async function POST(req: NextRequest) {
       Item: item,
     }));
 
-    // EXCLUSÃO AUTOMÁTICA DE SINAIS EXPIRADOS (AUTO-LIMPEZA DYNAMODB)
-    // Limpa registros obsoletos da sala em paralelo para manter a tabela leve (<1MB) e evitar lentidão ou paginação no Scan
+    // Auto-limpeza assíncrona (best effort)
     try {
       const cutoff = new Date(Date.now() - SIGNAL_TTL_MS).toISOString();
-      const expiredRes = await docClient.send(new ScanCommand({
+      const expiredRes = await docClient.send(new QueryCommand({
         TableName: TABLE_NAME,
-        FilterExpression: 'userId = :uid AND #ts < :cutoff',
+        KeyConditionExpression: 'roomId = :rid AND #ts < :cutoff',
         ExpressionAttributeNames: { '#ts': 'timestamp' },
-        ExpressionAttributeValues: { ':uid': scopedUserId, ':cutoff': cutoff }
+        ExpressionAttributeValues: { ':rid': roomId, ':cutoff': cutoff }
       }));
       const itemsToDelete = expiredRes.Items || [];
       if (itemsToDelete.length > 0) {
         await Promise.all(itemsToDelete.map(expiredItem => 
           docClient.send(new DeleteCommand({
             TableName: TABLE_NAME,
-            Key: { id: expiredItem.id }
+            Key: { roomId: expiredItem.roomId, timestamp: expiredItem.timestamp }
           }))
         ));
       }
@@ -135,7 +126,7 @@ export async function POST(req: NextRequest) {
       console.warn('[Vision TTL Cleanup Error]', e);
     }
 
-    return NextResponse.json({ success: true, id: item.id });
+    return NextResponse.json({ success: true, id: signalId });
   } catch (error: any) {
     console.error('[Vision Signal POST Error]', error);
     return NextResponse.json({ error: error.message || 'Erro ao salvar sinal.' }, { status: 500 });

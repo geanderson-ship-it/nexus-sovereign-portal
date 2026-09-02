@@ -105,7 +105,7 @@ async function searchAccount(config, accountLabel, searchTerm) {
 }
 
 async function startSearch() {
-    const searchTerm = 'AWS';
+    const searchTerm = 'V4';
     console.log(`\n[Atena] Iniciando busca por e-mails com "${searchTerm}"...\n`);
     await searchAccount(pIsEmpresa, 'EMPRESA (nexustreinamento)', searchTerm);
     await searchAccount(pIsPessoal, 'PESSOAL (gmail)', searchTerm);
