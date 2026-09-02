@@ -72,7 +72,10 @@ export async function GET(req: NextRequest) {
     // Ordena do mais antigo para o mais recente
     signals.sort((a: any, b: any) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
 
-    return NextResponse.json({ signals, serverTime: Date.now() });
+    return NextResponse.json(
+      { signals, serverTime: Date.now() },
+      { headers: { 'Cache-Control': 'no-store, max-age=0' } }
+    );
   } catch (error: any) {
     console.error('[Vision Signal GET Error]', error);
     return NextResponse.json({ error: error.message || 'Erro ao buscar sinais.' }, { status: 500 });

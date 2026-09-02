@@ -1073,7 +1073,7 @@ https://nexustreinamento.com`;
     // 4. Polling de sinalização de malha (Mesh Discovery & Signaling)
     const pollSignaling = async () => {
       try {
-        const response = await fetch(`/api/vision/signal?roomId=${roomId}`);
+        const response = await fetch(`/api/vision/signal?roomId=${roomId}`, { cache: 'no-store' });
         if (!response.ok) return;
 
         const resData = await response.json();
