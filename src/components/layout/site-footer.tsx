@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Youtube, Facebook, Mail, Instagram } from 'lucide-react';
+import { Youtube, Facebook, Mail, Instagram, Linkedin } from 'lucide-react';
 import { useLocale } from '@/hooks/use-locale';
 import { LegalSafeguard } from '@/components/nexus/LegalSafeguard';
 import { usePathname } from 'next/navigation';
@@ -203,7 +203,7 @@ export function SiteFooter() {
           </Link>
           <div className="flex items-center gap-5 ml-2">
             <a
-              href="https://www.facebook.com/nexustreinamento/"
+              href="https://www.facebook.com/nexusholdinggroup.com.br?locale=pt_BR"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-transform hover:scale-110"
@@ -221,7 +221,16 @@ export function SiteFooter() {
               <span className="sr-only">Instagram</span>
             </a>
             <a
-              href="https://www.youtube.com/@NexusCursoseTreinamento"
+              href="https://www.linkedin.com/in/geanderson-leandro-schuh-20175872/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-transform hover:scale-110"
+            >
+              <Linkedin className="h-6 w-6 text-[#0A66C2] drop-shadow-sm" />
+              <span className="sr-only">LinkedIn</span>
+            </a>
+            <a
+              href="https://www.youtube.com/@NexusInovacao"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-transform hover:scale-110"
@@ -229,13 +238,14 @@ export function SiteFooter() {
               <Youtube className="h-6 w-6 text-[#FF0000] drop-shadow-sm" />
               <span className="sr-only">YouTube</span>
             </a>
-            <a
-                href="mailto:geanderson@nexusholdinggroup.com.br"
-                className="transition-transform hover:scale-110 text-yellow-400 drop-shadow-md hover:text-yellow-300"
+            <Link
+              href="/contact"
+              className="transition-transform hover:scale-110 text-yellow-400 drop-shadow-md hover:text-yellow-300"
+              title="Fale Conosco / Enviar Mensagem"
             >
-                <Mail className="h-6 w-6" />
-                <span className="sr-only">E-mail</span>
-            </a>
+              <Mail className="h-6 w-6" />
+              <span className="sr-only">Contato</span>
+            </Link>
           </div>
         </div>
       </div>
