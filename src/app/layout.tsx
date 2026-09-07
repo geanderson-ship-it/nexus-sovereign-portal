@@ -30,10 +30,10 @@ export const metadata: Metadata = {
     siteName: 'Nexus Holding Group',
     images: [
       {
-        url: '/nexus-hero-hologram.png',
+        url: '/nexus-og-holding-group.jpg',
         width: 1200,
         height: 630,
-        alt: 'Nexus Holding Group - Concierge Virtual e Avatares Live',
+        alt: 'Nexus Holding Group - Infraestrutura Soberana de Inteligência Artificial',
       },
     ],
     locale: 'pt-BR',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Nexus Holding Group | Concierge Virtual e Avatares de IA',
     description: 'A única empresa brasileira de Concierge Virtual e Avatares de IA 100% personalizáveis e poliglotas (mais de 50 idiomas) em tempo real para hotéis, resorts e marketing.',
-    images: ['/nexus-hero-hologram.png'],
+    images: ['/nexus-og-holding-group.jpg'],
   },
   manifest: '/manifest.json',
   appleWebApp: {
