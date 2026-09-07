@@ -107,26 +107,30 @@ export async function POST(req: NextRequest) {
       Item: item,
     }));
 
-    // Auto-limpeza assíncrona (best effort)
-    try {
-      const cutoff = new Date(Date.now() - SIGNAL_TTL_MS).toISOString();
-      const expiredRes = await docClient.send(new QueryCommand({
-        TableName: TABLE_NAME,
-        KeyConditionExpression: 'roomId = :rid AND #ts < :cutoff',
-        ExpressionAttributeNames: { '#ts': 'timestamp' },
-        ExpressionAttributeValues: { ':rid': roomId, ':cutoff': cutoff }
-      }));
-      const itemsToDelete = expiredRes.Items || [];
-      if (itemsToDelete.length > 0) {
-        await Promise.all(itemsToDelete.map(expiredItem => 
-          docClient.send(new DeleteCommand({
+    // Auto-limpeza não-bloqueante (executa em background com amostragem de 5% para não sobrecarregar DynamoDB)
+    if (Math.random() < 0.05) {
+      (async () => {
+        try {
+          const cutoff = new Date(Date.now() - SIGNAL_TTL_MS).toISOString();
+          const expiredRes = await docClient.send(new QueryCommand({
             TableName: TABLE_NAME,
-            Key: { roomId: expiredItem.roomId, timestamp: expiredItem.timestamp }
-          }))
-        ));
-      }
-    } catch (e) {
-      console.warn('[Vision TTL Cleanup Error]', e);
+            KeyConditionExpression: 'roomId = :rid AND #ts < :cutoff',
+            ExpressionAttributeNames: { '#ts': 'timestamp' },
+            ExpressionAttributeValues: { ':rid': roomId, ':cutoff': cutoff }
+          }));
+          const itemsToDelete = expiredRes.Items || [];
+          if (itemsToDelete.length > 0) {
+            await Promise.all(itemsToDelete.map(expiredItem => 
+              docClient.send(new DeleteCommand({
+                TableName: TABLE_NAME,
+                Key: { roomId: expiredItem.roomId, timestamp: expiredItem.timestamp }
+              }))
+            ));
+          }
+        } catch (e) {
+          console.warn('[Vision TTL Cleanup Error]', e);
+        }
+      })().catch(() => {});
     }
 
     return NextResponse.json({ success: true, id: signalId });

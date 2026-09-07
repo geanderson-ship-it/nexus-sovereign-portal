@@ -900,8 +900,7 @@ https://nexustreinamento.com`;
             {
               urls: [
                 'turn:52.90.49.196:3478',           // UDP/TCP
-                'turn:52.90.49.196:3478?transport=tcp', // TCP forçado
-                'turns:52.90.49.196:5349'            // TLS
+                'turn:52.90.49.196:3478?transport=tcp' // TCP forçado
               ],
               username: process.env.NEXT_PUBLIC_TURN_USER || 'nexusvision',
               credential: process.env.NEXT_PUBLIC_TURN_PASSWORD || 'NxV!5JR00DB3ms0lhbsr'
@@ -922,27 +921,22 @@ https://nexustreinamento.com`;
           });
         }
 
-        // Handler para candidatos ICE locais (com escalonamento para evitar sobrecarregar o DynamoDB com bursts rápidos de Trickle ICE)
-        let candidateIndex = 0;
+        // Handler para candidatos ICE locais (envio imediato e veloz para conexão ultrarrápida)
         pc.onicecandidate = (event) => {
           if (event.candidate) {
-            candidateIndex++;
-            const staggerDelay = candidateIndex * 200; // 200ms de intervalo entre cada candidato
-            setTimeout(() => {
-              fetch('/api/vision/signal', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  roomId,
-                  type: 'webrtc-candidate',
-                  sender: localPeerId,
-                  data: {
-                    target: targetPeerId,
-                    candidate: event.candidate
-                  }
-                })
-              }).catch(e => console.error("Falha ao enviar ICE candidato:", e));
-            }, staggerDelay);
+            fetch('/api/vision/signal', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                roomId,
+                type: 'webrtc-candidate',
+                sender: localPeerId,
+                data: {
+                  target: targetPeerId,
+                  candidate: event.candidate
+                }
+              })
+            }).catch(e => console.error("Falha ao enviar ICE candidato:", e));
           }
         };
 
@@ -953,29 +947,32 @@ https://nexustreinamento.com`;
           }
         };
 
-        // Receber track remota do parceiro (com fallback robusto para navegadores/dispositivos sem agrupamento automático de stream)
+        // Receber track remota do parceiro (garante nova referência de MediaStream para reatividade imediata no React)
         pc.ontrack = (event) => {
-          console.log(`Recebeu track remota de ${peerName}`);
-          const remoteStream = event.streams[0] || null;
+          console.log(`Recebeu track remota de ${peerName}: kind=${event.track.kind}`);
           
           setRemotePeers(prev => {
             const existing = prev.find(p => p.peerId === targetPeerId);
-            let streamToUse = remoteStream;
-            
-            if (!streamToUse) {
-              streamToUse = existing?.stream || new MediaStream();
-              (streamToUse as MediaStream).addTrack(event.track);
+            let newStream: MediaStream;
+
+            if (existing && existing.stream) {
+              const currentTracks = existing.stream.getTracks().filter(t => t.id !== event.track.id);
+              newStream = new MediaStream([...currentTracks, event.track]);
+            } else if (event.streams && event.streams[0]) {
+              newStream = new MediaStream(event.streams[0].getTracks());
+            } else {
+              newStream = new MediaStream([event.track]);
             }
-            
+
             if (existing) {
-              return prev.map(p => p.peerId === targetPeerId ? { ...p, stream: streamToUse } : p);
+              return prev.map(p => p.peerId === targetPeerId ? { ...p, stream: newStream } : p);
             }
-            return [...prev, { peerId: targetPeerId, name: peerName, stream: streamToUse }];
+            return [...prev, { peerId: targetPeerId, name: peerName, stream: newStream }];
           });
           
           setIsRemoteConnected(true);
           setRemotePeerName(peerName);
-          logToAtena(`[WebRTC] Feed de vídeo de ${peerName} conectado.`);
+          logToAtena(`[WebRTC] Feed de ${event.track.kind} de ${peerName} conectado.`);
         };
 
         // Se fomos nós quem criamos a conexão por ter ID maior, iniciamos o DataChannel e a Oferta
@@ -2828,15 +2825,12 @@ interface RemoteVideoProps {
 
 function RemoteVideo({ peer }: RemoteVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   
   useEffect(() => {
     const handleTtsState = (e: any) => {
-      if (videoRef.current) {
-        if (e.detail.isPlaying) {
-          videoRef.current.volume = 0.1; /* DUCKING */
-        } else {
-          videoRef.current.volume = 1.0; /* RESTORE */
-        }
+      if (audioRef.current) {
+        audioRef.current.volume = e.detail.isPlaying ? 0.1 : 1.0; /* DUCKING */
       }
     };
     window.addEventListener('tts-state-change', handleTtsState);
@@ -2846,39 +2840,37 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
   useEffect(() => {
     if (videoRef.current && peer.stream) {
       videoRef.current.srcObject = peer.stream;
-      videoRef.current.volume = 1.0;
-      
-      // Tentamos dar play sem som (ou com som dependendo da permissão anterior)
-      videoRef.current.play()
-        .then(() => {
-          // Se deu play com sucesso, garante que o som está ativado
-          if (videoRef.current) videoRef.current.muted = false;
-        })
-        .catch(e => {
-          console.warn('RemoteVideo play() falhou com som, tentando modo silencioso:', e);
-          // Se o autoplay barrou por causa do som, forçamos mutar para que o vídeo pelo menos comece a rodar
-          if (videoRef.current) {
-            videoRef.current.muted = true;
-            videoRef.current.play()
-              .then(() => {
-                // Tenta desmutar logo em seguida após o início da reprodução
-                setTimeout(() => {
-                  if (videoRef.current) videoRef.current.muted = false;
-                }, 800);
-              })
-              .catch(err => console.error("Falha crítica ao dar play no vídeo remoto:", err));
-          }
-        });
+      videoRef.current.play().catch(e => {
+        console.warn('Vídeo remoto play() silenciado para conformidade com navegadores:', e);
+        if (videoRef.current) {
+          videoRef.current.muted = true;
+          videoRef.current.play().catch(err => console.error("Falha ao reproduzir vídeo remoto:", err));
+        }
+      });
+    }
+
+    if (audioRef.current && peer.stream) {
+      audioRef.current.srcObject = peer.stream;
+      audioRef.current.play().catch(e => {
+        console.warn('Áudio nativo WebRTC aguardando interação do usuário:', e);
+      });
     }
   }, [peer.stream]);
 
   return (
-    <video 
-      ref={videoRef} 
-      autoPlay 
-      playsInline 
-      muted={false} // FORCED UNMUTE para permitir audio original
-      className="w-full h-full object-cover"
-    />
+    <div className="w-full h-full relative">
+      <video 
+        ref={videoRef} 
+        autoPlay 
+        playsInline 
+        muted
+        className="w-full h-full object-cover"
+      />
+      <audio 
+        ref={audioRef} 
+        autoPlay 
+        playsInline 
+      />
+    </div>
   );
 }
