@@ -26,7 +26,8 @@ test-*.ts
 *.log
 .DS_Store
 /scratch/
-/data/
+/data/*
+!/data/atena_memory.json
 /public/uploads/
 
 # Large media files

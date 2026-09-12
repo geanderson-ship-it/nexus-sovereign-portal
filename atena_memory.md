@@ -43,10 +43,22 @@
 - **Localização do Vídeo Renderizado (Local):** `D:\Logos\Embaixadora Nexus\Embaixadora - Padrão\Embaixadora - Video Padrão\Embaixadora padrão..mp4`
 - **Detalhes Visual/Áudio:** Cenário corporativo com o logo da Nexus 100% visível à esquerda, avatar brasileiro posicionado à direita e locução sincronizada em 5 idiomas (Inglês, Espanhol, Árabe, Francês e Português).
 
+### 🏢 Nexus Tecnologia e Inovação (Nova Empresa do Ecossistema)
+- **Titular:** Ivoni Severo Schuh (Diretoria Executiva e Co-fundadora / CCO da Holding).
+- **CNPJ:** `69.042.151/0001-09` (Ativo na Receita Federal).
+- **Certificado CCMEI:** `D:\CCMEI-69042151000109 Ivoni.pdf`.
+- **Domínio Reservado no Registro.br:** `nexustecnologiaeinovacao.com.br`.
+- **CNAEs:** Principal 8599-6/03 (Treinamento em informática), Secundários 8219-9/99, 5819-1/00, 7319-0/02 (Promoção de vendas).
+- **Landing Page Local:** `c:\Users\geand\Gitclone\nexus-tecnologia-inovacao` rodando em `http://localhost:3000`.
+- **Identidade Visual Aprovada:** Fundo com gradiente âmbar radial idêntico ao da página **Nexus Exclusive** (`rgba(245,158,11, 0.75)` ao centro sobre preto `#000000`), título em **branco puro (`text-white font-black`)**: *"Inteligência, Tecnologia e Inovação Comercial de Alto Impacto"*, cartões em âmbar dourado de luxo executivo.
+
 ---
 
 ## 📅 Próximos Passos & Foco da Próxima Sessão
-1. **Acompanhar ICT Costa Rica:** Monitorar aprovação do Diretor Geral de TI sobre a proposta técnica de segurança e soberania da Elena.
-2. **Acompanhar MOFA Arábia Saudita:** Aguardar retorno sobre a resposta de contorno comercial e o vídeo teaser trilingue da Yara.
-3. **Homologação Dubai DET:** Acessar o Service Desk via VPN para finalizar o cadastro e verificar oportunidades abertas.
-4. **Agência um.a:** Aguardar retorno de Gabrielly sobre a Cátia.
+1. **Registro.br:** Realizar o pagamento e ativação final do domínio `nexustecnologiaeinovacao.com.br`.
+2. **Deploy Produção:** Publicar a landing page oficial da Nexus Tecnologia & Inovação.
+3. **Acompanhar ICT Costa Rica:** Monitorar aprovação do Diretor Geral de TI sobre a proposta técnica de segurança e soberania da Elena.
+4. **Acompanhar MOFA Arábia Saudita:** Aguardar retorno sobre a resposta de contorno comercial e o vídeo teaser trilingue da Yara.
+5. **Homologação Dubai DET:** Acessar o Service Desk via VPN para finalizar o cadastro e verificar oportunidades abertas.
+6. **Agência um.a:** Aguardar retorno de Gabrielly sobre a Cátia.
+

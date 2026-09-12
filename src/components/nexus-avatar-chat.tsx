@@ -354,7 +354,7 @@ export function NexusAvatarChat() {
     return () => eventEmitter.off('open-chat', handleOpenChat);
   }, [openChatWithContext]);
 
-  if (isUserLoading) return null;
+  if (isUserLoading || pathname?.startsWith('/nexus-code')) return null;
 
   return (
     <>

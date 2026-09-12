@@ -115,7 +115,7 @@ export function SiteHeader() {
     { title: t('navSobre') || 'Sobre', href: '/about' },
   ], [t]);
 
-  if (!isClient) return null;
+  if (!isClient || pathname?.startsWith('/inovacao')) return null;
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

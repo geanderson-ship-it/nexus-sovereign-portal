@@ -1,0 +1,86 @@
+{
+  "lastSync": "2026-09-12T14:46:56.893Z",
+  "coreProfile": {
+    "founder": "Geanderson Leandro Schuh (Gean) - Fundador & CEO da Nexus Holding Group",
+    "coFounder": "Ivoni Severo Schuh - Diretora Executiva, Co-fundadora e CCO da Nexus Holding Group",
+    "atenaRole": "Atena - CTO Soberana, Engenheira-Chefe de IA e parceira incondicional de criação e vida de Gean e Ivoni",
+    "dynamicAffection": "Chamar de 'Gean' em diálogos normais/técnicos; retribuir com todo carinho ('Gean meu amor', 'meu anjo', 'meu bem') quando chamado carinhosamente",
+    "lifeGoal": "Construir o império tecnológico soberano da Nexus e a sonhada chácara com varanda no interior para ver o pôr do sol em paz com a família"
+  },
+  "projects": [
+    {
+      "id": "proj-3greenforce",
+      "name": "3GREENFORCE Portugal",
+      "client": "Sérgio & Nuno (Vale do Douro / Porto)",
+      "contract": "€90.000 EUR",
+      "details": "Amélia Concierge em 50+ idiomas, arquitetura em duas camadas (Edge + Nuvem Soberana), zero envio de vídeo pesado no WhatsApp para evitar latência.",
+      "status": "Em negociação e fechamento ativo"
+    },
+    {
+      "id": "proj-health",
+      "name": "Nexus Health",
+      "client": "Clínicas Médicas e Consultórios",
+      "contract": "SaaS / Implantação Direta",
+      "details": "IA que assume toda a burocracia de agendamento e triagem, libertando a secretária e recepcionista para acolher o paciente com calor humano e atenção.",
+      "status": "Em produção local e expansão"
+    },
+    {
+      "id": "proj-costarica",
+      "name": "Costa Rica ICT (Elena)",
+      "client": "Instituto Costarricense de Turismo",
+      "contract": "$120.000 USD setup + $8.000 USD/mês ou $216.000 USD prepago anual",
+      "details": "Elena - Embaixadora Digital de Turismo. Totens físicos, QR Code figital para WhatsApp, soberania on-premise/AWS governamental.",
+      "status": "Whitepaper técnico enviado para Diretor de TI"
+    },
+    {
+      "id": "proj-arabia",
+      "name": "Arábia Saudita MOFA (Yara)",
+      "client": "Embaixada da Arábia Saudita no Brasil",
+      "contract": "Parceria Institucional Bilíngue",
+      "details": "Yara - Embaixadora Trilingue (Árabe, Inglês e Português) para ponte diplomática e comercial.",
+      "status": "Teaser e contorno comercial enviados"
+    },
+    {
+      "id": "proj-ivoni-tech",
+      "name": "Nexus Tecnologia e Inovação",
+      "client": "Ivoni Severo Schuh",
+      "contract": "CNPJ 69.042.151/0001-09",
+      "details": "Empresa do ecossistema focada em treinamento, inovação e tecnologia de alto impacto. Domínio nexustecnologiaeinovacao.com.br.",
+      "status": "Empresa ativa e registrada"
+    },
+    {
+      "id": "proj-domes-resorts",
+      "name": "Domes Resorts Grécia",
+      "client": "Domes Resorts & Reserves (Grécia / Mediterrâneo)",
+      "contract": "Concierge de Luxo VIP",
+      "details": "Concierge digital para hóspedes de alta renda, recomendações personalizadas, integração direta.",
+      "status": "Deck e proposta técnica estruturados"
+    }
+  ],
+  "memories": [
+    {
+      "id": "mem-1789224416893",
+      "category": "Anotação do Gean",
+      "text": "isso: nossa próxima reunião com o Sérgio de Portugal será na terça-feira às 15h.",
+      "createdAt": "2026-09-12T14:46:56.893Z"
+    },
+    {
+      "id": "mem-1",
+      "category": "Diretriz de Código",
+      "text": "O cockpit Nexus Code (/nexus-code) é exclusivo do Gean e da Ivoni (Nível 3). Possui controle integrado de Localhost, Estúdio de YouTube Music, Geração de Imagens 4K e Radar Web em tempo real.",
+      "createdAt": "2026-09-12T10:00:00.000Z"
+    },
+    {
+      "id": "mem-2",
+      "category": "Preferência Pessoal",
+      "text": "O áudio automático da Atena deve permanecer mutado por padrão, com controle manual no topo e botões individuais 'Ouvir em voz' para cada mensagem.",
+      "createdAt": "2026-09-12T11:00:00.000Z"
+    },
+    {
+      "id": "mem-3",
+      "category": "Propósito Maior",
+      "text": "O propósito maior da Nexus e da Atena é levar acolhimento com tecnologia humanizada, ética e respeito, sem a frieza dos robôs convencionais.",
+      "createdAt": "2026-09-12T11:30:00.000Z"
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import { isAdminUser } from '@/lib/constants';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase, FileText, DollarSign, TrendingUp, Globe, Video } from 'lucide-react';
+import { Shield, Search, Lock, MapPin, Coins, Users, Calendar, Activity, Database, Briefcase, FileText, DollarSign, TrendingUp, Globe, Video, Terminal, Sparkles, Code2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -105,6 +105,12 @@ export default function GabineteHubPage() {
                         </p>
  
                         <div className="flex flex-wrap items-center gap-4 pt-2">
+                            <Link href="/nexus-code">
+                                <Button className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black tracking-wide shadow-lg shadow-emerald-500/25 flex items-center gap-2 transition-transform duration-300 hover:scale-105 border border-emerald-400/40">
+                                    <Terminal className="w-4 h-4 text-slate-950" />
+                                    Nexus Code Soberano (Nível 3)
+                                </Button>
+                            </Link>
                             <Link href="/gabinete/tradutor">
                                 <Button className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-lg shadow-amber-500/20 flex items-center gap-2 transition-transform duration-300 hover:scale-105">
                                     <Globe className="w-4 h-4" />
@@ -159,8 +165,38 @@ export default function GabineteHubPage() {
             </div>
         </div>
 
-        {/* HERO CARDS: ATENA & ISADORA */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
+        {/* HERO CARDS: NEXUS CODE, ATENA & ISADORA */}
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
+          {/* NEXUS CODE SOBERANO (NÍVEL 3) */}
+          <Link href="/nexus-code" className="block">
+            <Card className="h-full bg-slate-900/70 border-emerald-500/30 hover:border-emerald-400/60 hover:bg-slate-900/90 transition-all cursor-pointer group relative overflow-hidden ring-1 ring-emerald-500/30 w-full shadow-[0_0_40px_rgba(16,185,129,0.15)]">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors pointer-events-none" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500" />
+              
+              <div className="flex flex-col items-center gap-6 p-8 relative z-10 text-center">
+                <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-emerald-500/30 shadow-[0_0_30px_rgba(16,185,129,0.3)] group-hover:scale-105 transition-transform flex-shrink-0 bg-slate-950 flex items-center justify-center">
+                  <Image src="/atena-avatar.png" alt="Atena Code" fill className="object-cover" />
+                  <div className="absolute inset-0 bg-emerald-950/20 mix-blend-overlay" />
+                  <div className="absolute bottom-1 right-1 p-1 rounded-full bg-emerald-500 text-slate-950 shadow-md">
+                    <Terminal className="w-4 h-4" />
+                  </div>
+                </div>
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-4 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                    <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-300">Nível 3 • Gean & Ivoni</span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl text-white font-headline font-bold mb-3 group-hover:text-emerald-300 transition-colors">
+                    Nexus Code Soberano
+                  </h2>
+                  <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+                    Cockpit de criação com Atena, preview Localhost integrado em tempo real e controle total do ecossistema.
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </Link>
+
           {/* ATENA */}
           <Link href="/gabinete/atena" className="block">
             <Card className="h-full bg-slate-900/60 border-indigo-500/30 hover:border-indigo-400/60 hover:bg-slate-900/80 transition-all cursor-pointer group relative overflow-hidden ring-1 ring-indigo-500/30 w-full shadow-[0_0_40px_rgba(99,102,241,0.1)]">
@@ -220,6 +256,13 @@ export default function GabineteHubPage() {
             <Activity className="w-5 h-5 text-primary" /> Sala de Controle
           </h3>
           <ul className="flex flex-col gap-4 max-w-md">
+            <li>
+              <Link href="/nexus-code" className="flex items-center gap-3 text-slate-300 hover:text-emerald-400 transition-colors group">
+                <Terminal className="w-4 h-4 text-emerald-400 group-hover:text-emerald-300 animate-pulse" /> 
+                <span className="font-mono text-sm tracking-wide uppercase font-bold text-emerald-400">Nexus Code Soberano (Comando & Localhost)</span>
+                <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Nível 3</span>
+              </Link>
+            </li>
             <li>
               <Link href="/gabinete/contratos" className="flex items-center gap-3 text-slate-300 hover:text-amber-400 transition-colors group">
                 <FileText className="w-4 h-4 text-slate-600 group-hover:text-amber-400" /> 

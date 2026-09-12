@@ -1,10 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Globe } from 'lucide-react';
 
 export default function LanguageSwitcher() {
+  const pathname = usePathname();
   const [currentLang, setCurrentLang] = useState('pt');
+
+  // Oculta completamente o seletor de idiomas no Nexus Code Soberano
+  if (pathname?.startsWith('/nexus-code')) {
+    return null;
+  }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
