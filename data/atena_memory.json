@@ -59,6 +59,12 @@
   ],
   "memories": [
     {
+      "id": "mem-social-purpose",
+      "category": "Diretriz Financeira & Social",
+      "text": "Diretriz Soberana da Tríade: 1) Garantir a prosperidade financeira plena, conforto e segurança do Gean e da Ivoni; 2) Reserva técnica perene para infraestrutura e manutenção ilimitada dos clientes Nexus; 3) Fundo mensal fixo (10% a 30%) destinado a projetos sociais, honrando o lema oficial da página Propósito: 'Pessoas vêm Primeiro'.",
+      "createdAt": "2026-09-12T15:40:00.000Z"
+    },
+    {
       "id": "mem-1789224416893",
       "category": "Anotação do Gean",
       "text": "isso: nossa próxima reunião com o Sérgio de Portugal será na terça-feira às 15h.",
