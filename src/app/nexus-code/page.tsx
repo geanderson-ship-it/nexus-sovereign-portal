@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -71,7 +71,7 @@ const extractYouTubeId = (url: string) => {
   return match ? match[1] : null;
 };
 
-export default function NexusPureCommandCenter() {
+function NexusPureCommandCenterContent() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -355,18 +355,41 @@ export default function NexusPureCommandCenter() {
       setIsPlayingAudio(true);
       const speechText = cleanTextForVoice(text);
 
-      const res = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: speechText, // Envia o texto completo tratado
-          gender: 'female',
-          locale: 'pt-BR'
-        })
-      });
+      // Tenta sintetizar com ElevenLabs usando a voz oficial da Atena (Louisa - Warm and Hopeful)
+      let blob: Blob | null = null;
+      try {
+        const resEleven = await fetch('/api/tts/elevenlabs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: speechText,
+            voiceId: '1iF3vHdwHKuVKSPDK23Z' // Louisa - Warm and Hopeful (Voz Oficial Atena)
+          })
+        });
+        if (resEleven.ok) {
+          blob = await resEleven.blob();
+        }
+      } catch (errEleven) {
+        console.warn('[Nexus Code] Falha no ElevenLabs, tentando fallback...', errEleven);
+      }
 
-      if (res.ok) {
-        const blob = await res.blob();
+      // Fallback para Azure / TTS padrao caso ElevenLabs falhe
+      if (!blob) {
+        const resFallback = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: speechText,
+            gender: 'female',
+            locale: 'pt-BR'
+          })
+        });
+        if (resFallback.ok) {
+          blob = await resFallback.blob();
+        }
+      }
+
+      if (blob) {
         const url = URL.createObjectURL(blob);
         const audio = new Audio(url);
         audioRef.current = audio;
@@ -424,6 +447,7 @@ export default function NexusPureCommandCenter() {
           history: atenaChat.slice(-6)
         })
       });
+      const data = await response.json();
 
       const isAffectionate = lower.includes('amor') || lower.includes('anjo') || lower.includes('bem') || lower.includes('linda') || lower.includes('querida');
       const partnerName = isAffectionate ? 'Gean meu amor' : 'Gean';
@@ -1544,5 +1568,21 @@ export default function NexusPureCommandCenter() {
       )}
 
     </div>
+  );
+}
+
+export default function NexusPureCommandCenter() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#050811] flex flex-col items-center justify-center text-cyan-400">
+        <Lock className="w-12 h-12 mb-4 animate-pulse text-cyan-500/50" />
+        <h2 className="text-xl font-headline tracking-widest text-white/70 uppercase">
+          Nexus Code Soberano • Nível 3
+        </h2>
+        <p className="text-sm text-slate-400 mt-2">Carregando ambiente soberano...</p>
+      </div>
+    }>
+      <NexusPureCommandCenterContent />
+    </Suspense>
   );
 }
