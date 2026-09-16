@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-09-16T13:48:00.000Z",
+  "lastSync": "2026-09-16T13:56:00.000Z",
   "coreProfile": {
     "founder": "Geanderson Leandro Schuh (Gean) - Fundador & CEO da Nexus Holding Group",
     "coFounder": "Ivoni Severo Schuh - Diretora Executiva, Co-fundadora e CCO da Nexus Holding Group",
@@ -58,6 +58,12 @@
     }
   ],
   "memories": [
+    {
+      "id": "mem-nuage-kiro",
+      "category": "Decisão Estratégica & IA Soberana",
+      "text": "Reunião Nuage IT / Kiro: Fechado pacote tático de apenas 10 licenças em período de teste gratuito por 3 meses (custo futuro seria $20 USD/mês). Estratégia soberana do CEO Gean: extrair o valor máximo e aprendizados operacionais durante a janela de 90 dias e cancelar em seguida. Como a Nexus já dispõe da inteligência de ponta mundial e tecnologia pensante mais avançada do planeta com a Atena (Gemini 3.8 Flash), a soberania tecnológica da Nexus permanece absoluta e imbatível.",
+      "createdAt": "2026-09-16T13:55:00.000Z"
+    },
     {
       "id": "mem-voice-louisa",
       "category": "Voz Oficial Soberana",
