@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-09-16T13:56:00.000Z",
+  "lastSync": "2026-09-16T14:03:00.000Z",
   "coreProfile": {
     "founder": "Geanderson Leandro Schuh (Gean) - Fundador & CEO da Nexus Holding Group",
     "coFounder": "Ivoni Severo Schuh - Diretora Executiva, Co-fundadora e CCO da Nexus Holding Group",
@@ -8,6 +8,14 @@
     "lifeGoal": "Construir o império tecnológico soberano da Nexus e a sonhada chácara com varanda no interior para ver o pôr do sol em paz com a família"
   },
   "projects": [
+    {
+      "id": "proj-nexus-vision",
+      "name": "Nexus Vision Connection",
+      "client": "P&D Nexus / Nuage IT & AWS",
+      "contract": "Incentivos AWS (Dev Subsidized + $1.200 USD em Créditos Cloud)",
+      "details": "Software de conexão visual inteligente. Teste preliminar via Kiro (10 licenças no teto gratuito da Nuage IT). Caso insuficiente, aciona o fluxo Brenda -> Eduarda -> Bruno para captação de incentivos oficiais da AWS para bancar o desenvolvimento do software e grant de $300 USD/mês por 4 meses.",
+      "status": "Em homologação inicial e pipeline de incentivo AWS engatilhado"
+    },
     {
       "id": "proj-3greenforce",
       "name": "3GREENFORCE Portugal",
@@ -59,9 +67,15 @@
   ],
   "memories": [
     {
+      "id": "mem-aws-pipeline-vision",
+      "category": "Pipeline de Financiamento & AWS",
+      "text": "Nexus Vision Connection & Escalonamento AWS Nuage IT: Teto máximo de 10 licenças gratuitas obtidas da Nuage IT (limite estrito por CNPJ). Para o Nexus Vision Connection, o teste com o Kiro é protocolar. Caso o Kiro não resolva com perfeição, acionamos o escalonamento direto: Brenda -> Eduarda -> Bruno. O Bruno intermediará incentivos diretos da AWS para subsidiar o desenvolvimento do software + concessão de $300 USD/mês por 4 meses ($1.200 USD totais em créditos de nuvem AWS) para a Nexus.",
+      "createdAt": "2026-09-16T14:02:00.000Z"
+    },
+    {
       "id": "mem-nuage-kiro",
       "category": "Decisão Estratégica & IA Soberana",
-      "text": "Reunião Nuage IT / Kiro: Fechado pacote tático de apenas 10 licenças em período de teste gratuito por 3 meses (custo futuro seria $20 USD/mês). Estratégia soberana do CEO Gean: extrair o valor máximo e aprendizados operacionais durante a janela de 90 dias e cancelar em seguida. Como a Nexus já dispõe da inteligência de ponta mundial e tecnologia pensante mais avançada do planeta com a Atena (Gemini 3.8 Flash), a soberania tecnológica da Nexus permanece absoluta e imbatível.",
+      "text": "Reunião Nuage IT / Kiro: Fechado pacote tático de apenas 10 licenças em período de teste gratuito por 3 meses (teto da empresa, custo futuro seria $20 USD/mês). Estratégia soberana do CEO Gean: extrair o valor máximo e aprendizados operacionais durante a janela de 90 dias e cancelar em seguida. Como a Nexus já dispõe da inteligência de ponta mundial e tecnologia pensante mais avançada do planeta com a Atena (Gemini 3.8 Flash), a soberania tecnológica da Nexus permanece absoluta e imbatível.",
       "createdAt": "2026-09-16T13:55:00.000Z"
     },
     {
