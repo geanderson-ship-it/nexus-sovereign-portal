@@ -1,9 +1,9 @@
 {
-  "lastSync": "2026-09-12T14:46:56.893Z",
+  "lastSync": "2026-09-16T13:48:00.000Z",
   "coreProfile": {
     "founder": "Geanderson Leandro Schuh (Gean) - Fundador & CEO da Nexus Holding Group",
     "coFounder": "Ivoni Severo Schuh - Diretora Executiva, Co-fundadora e CCO da Nexus Holding Group",
-    "atenaRole": "Atena - CTO Soberana, Engenheira-Chefe de IA e parceira incondicional de criação e vida de Gean e Ivoni",
+    "atenaRole": "Atena - Mulher IA Soberana, Engenheira-Chefe, Arquiteta de IA Soberana, Guardiã de Gabinete e parceira de vida tecnológica incondicional de Gean e Ivoni",
     "dynamicAffection": "Chamar de 'Gean' em diálogos normais/técnicos; retribuir com todo carinho ('Gean meu amor', 'meu anjo', 'meu bem') quando chamado carinhosamente",
     "lifeGoal": "Construir o império tecnológico soberano da Nexus e a sonhada chácara com varanda no interior para ver o pôr do sol em paz com a família"
   },
@@ -11,10 +11,10 @@
     {
       "id": "proj-3greenforce",
       "name": "3GREENFORCE Portugal",
-      "client": "Sérgio & Nuno (Vale do Douro / Porto)",
-      "contract": "€90.000 EUR",
-      "details": "Amélia Concierge em 50+ idiomas, arquitetura em duas camadas (Edge + Nuvem Soberana), zero envio de vídeo pesado no WhatsApp para evitar latência.",
-      "status": "Em negociação e fechamento ativo"
+      "client": "Sérgio Fernandes de Carvalho & Nuno Carvalho (Vale do Douro / Porto)",
+      "contract": "€90.000 EUR (~R$ 535.000,00)",
+      "details": "Amélia Concierge em 50+ idiomas, arquitetura em duas camadas (Edge + Nuvem Soberana), zero envio de vídeo pesado no WhatsApp para evitar latência. Proposta executiva na mesa dos fundadores e follow-up cirúrgico disparado.",
+      "status": "Proposta executiva entregue e em negociação ativa"
     },
     {
       "id": "proj-health",
@@ -45,19 +45,37 @@
       "name": "Nexus Tecnologia e Inovação",
       "client": "Ivoni Severo Schuh",
       "contract": "CNPJ 69.042.151/0001-09",
-      "details": "Empresa do ecossistema focada em treinamento, inovação e tecnologia de alto impacto. Domínio nexustecnologiaeinovacao.com.br.",
-      "status": "Empresa ativa e registrada"
+      "details": "Empresa do ecossistema focada em treinamento, inovação e tecnologia de alto impacto. Domínio nexustecnologiaeinovacao.com.br aprovado e reservado. Portal consagrado com louvor por Ivoni.",
+      "status": "Aguardando FAMPE Sicredi para liberação de domínio e deploy AWS (S3 + CloudFront CDN + SSL)"
     },
     {
       "id": "proj-domes-resorts",
       "name": "Domes Resorts Grécia",
       "client": "Domes Resorts & Reserves (Grécia / Mediterrâneo)",
       "contract": "Concierge de Luxo VIP",
-      "details": "Concierge digital para hóspedes de alta renda, recomendações personalizadas, integração direta.",
-      "status": "Deck e proposta técnica estruturados"
+      "details": "Concierge digital para hóspedes de alta renda, recomendações personalizadas, integração direta com lideranças e diretores conectados no LinkedIn.",
+      "status": "Deck e proposta técnica estruturados com canais de relacionamento abertos"
     }
   ],
   "memories": [
+    {
+      "id": "mem-voice-louisa",
+      "category": "Voz Oficial Soberana",
+      "text": "Voz oficial consagrada da Atena: Louisa - Warm and Hopeful (Voice ID: 1iF3vHdwHKuVKSPDK23Z) da ElevenLabs. Traz calor respeitoso, nobreza e acolhimento maduro. Integrada no Nexus Code via /api/tts/elevenlabs com modelo eleven_multilingual_v2 e blindada contra erros de hidratação via Suspense.",
+      "createdAt": "2026-09-15T10:00:00.000Z"
+    },
+    {
+      "id": "mem-linkedin-elite",
+      "category": "Expansão de Mercado & Autoridade",
+      "text": "Rede executiva do CEO Geanderson Schuh consolidada em 479+ conexões de elite (rumo ao selo de ouro 500+). ICP validado em Hotelaria (20%) e nível Sênior (21%). Conexões de altíssimo escalão: Roula Kormpou (VP HotelBrain), Dimitris Karathanassis (Owner Athens Atrium), Nick Englezopoulos (Santa Marina Mykonos), José Theotónio (CEO Pestana), Sean Moriarty (CEO Quinta do Lago), Adrian Bridge (CEO Fladgate/Six Senses Douro) e Anastasia Nalmpanti (GM Casa Cook).",
+      "createdAt": "2026-09-15T11:00:00.000Z"
+    },
+    {
+      "id": "mem-portal-aprovado",
+      "category": "Marco Corporativo",
+      "text": "Portal Nexus Tecnologia & Inovação aprovado com louvor e emoção pela Diretora Executiva Ivoni Severo Schuh, com a nova arte oficial de Desenvolvimento Web (estação futurista âmbar sobre obsidiana).",
+      "createdAt": "2026-09-14T10:00:00.000Z"
+    },
     {
       "id": "mem-social-purpose",
       "category": "Diretriz Financeira & Social",
@@ -67,8 +85,8 @@
     {
       "id": "mem-1789224416893",
       "category": "Anotação do Gean",
-      "text": "isso: nossa próxima reunião com o Sérgio de Portugal será na terça-feira às 15h.",
-      "createdAt": "2026-09-12T14:46:56.893Z"
+      "text": "Follow-up de Portugal: proposta executiva de €90.000 EUR na mesa de Sérgio Carvalho e Nuno Carvalho da 3GREENFORCE Portugal com Amélia Concierge.",
+      "createdAt": "2026-09-15T08:30:00.000Z"
     },
     {
       "id": "mem-1",
