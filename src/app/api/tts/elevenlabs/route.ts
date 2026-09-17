@@ -2,17 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    const { text, apiKey, voiceId } = await req.json();
+    const { text, voiceId } = await req.json();
 
-    // Prevent browser password autofill from breaking the API key
-    const isValidFrontendKey = typeof apiKey === 'string' && apiKey.startsWith('sk_');
-    const finalApiKey = isValidFrontendKey ? apiKey : process.env.ELEVENLABS_API_KEY;
+    // A API key do ElevenLabs é lida EXCLUSIVAMENTE de variável de ambiente
+    // no servidor. Ela nunca deve trafegar pelo navegador nem ser aceita no
+    // corpo da requisição (evita vazamento da credencial no cliente).
+    const finalApiKey = process.env.ELEVENLABS_API_KEY;
 
     if (!text || typeof text !== 'string') {
       return NextResponse.json({ error: 'Texto invalido.' }, { status: 400 });
     }
-    if (!finalApiKey || !voiceId) {
-      return NextResponse.json({ error: 'API Key e Voice ID do ElevenLabs sao obrigatorios.' }, { status: 400 });
+    if (!voiceId) {
+      return NextResponse.json({ error: 'Voice ID do ElevenLabs é obrigatório.' }, { status: 400 });
+    }
+    if (!finalApiKey) {
+      console.error('[ElevenLabs TTS] ELEVENLABS_API_KEY não configurada no servidor.');
+      return NextResponse.json({ error: 'Serviço de voz não configurado.' }, { status: 500 });
     }
 
     const response = await fetch(

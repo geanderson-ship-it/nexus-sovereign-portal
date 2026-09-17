@@ -291,6 +291,17 @@ export default function VisionSoberanoPage() {
       setIsJoiner(join);
       setConnectionStatus(join ? 'Aguardando convite do Host...' : 'Criando sala e aguardando Ivoni...');
 
+      // O host é sempre pt-BR (LANGUAGES[1], já é o padrão do estado). Para o CONVIDADO,
+      // o padrão inicial pt coincidiria com o idioma do host e o sistema trataria como
+      // "mesmo idioma" (isBothPt) — NÃO traduziria a fala do host para ele. Por isso,
+      // ao entrar como convidado, definimos um idioma diferente de pt por padrão (inglês),
+      // garantindo que a tradução da sua fala aconteça mesmo se ele não trocar no lobby.
+      // Ele continua livre para selecionar o idioma real dele.
+      if (join) {
+        const en = LANGUAGES.find(l => l.code === 'en');
+        if (en) setMyLanguage(en);
+      }
+
       // Telemetria em tempo real: Intercepta erros globais e rejeições de promises
       const reportError = (message: string, detail?: string) => {
         fetch('/api/vision/logs', {
@@ -321,6 +332,14 @@ export default function VisionSoberanoPage() {
   const localStreamRef = useRef<MediaStream | null>(null);
   const candidateQueuesRef = useRef<Map<string, RTCIceCandidateInit[]>>(new Map());
   const hasConnectedRef = useRef(false);
+
+  // Config de servidores ICE (STUN/TURN) obtida do servidor.
+  // As credenciais do TURN NUNCA ficam no código do cliente — são buscadas
+  // via /api/vision/ice, que as lê de variáveis de ambiente somente-servidor.
+  const iceServersRef = useRef<RTCIceServer[]>([
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' },
+  ]);
 
   // ESTADO DE PARTICIPANTES REMOTOS
   const [remotePeers, setRemotePeers] = useState<RemotePeer[]>([]);
@@ -607,11 +626,21 @@ export default function VisionSoberanoPage() {
 
   const myLanguageRef = useRef(myLanguage);
   const peerLanguageRef = useRef(peerLanguage);
-  const handleIncomingTranscriptRef = useRef<((text: string, senderName: string, senderLang?: string) => Promise<void>) | null>(null);
+  const handleIncomingTranscriptRef = useRef<((text: string, senderName: string, senderLang?: string, peerId?: string) => Promise<void>) | null>(null);
   useEffect(() => {
     myLanguageRef.current = myLanguage;
     peerLanguageRef.current = peerLanguage;
   }, [myLanguage, peerLanguage]);
+
+  // TRAVA DE IDIOMA DO HOST: do lado do Diretor (host, !isJoiner) o idioma de fala/escuta
+  // é SEMPRE Português do Brasil (pt-BR). Se qualquer caminho tentar mudá-lo, corrigimos
+  // de volta para pt automaticamente. O convidado (isJoiner) segue livre para escolher.
+  useEffect(() => {
+    if (!isJoiner && myLanguage.code !== 'pt') {
+      const pt = LANGUAGES.find(l => l.code === 'pt');
+      if (pt) setMyLanguage(pt);
+    }
+  }, [isJoiner, myLanguage]);
 
   useEffect(() => {
     isComponentMountedRef.current = true;
@@ -808,8 +837,27 @@ https://nexustreinamento.com`;
     let pollInterval: NodeJS.Timeout;
     let presenceInterval: NodeJS.Timeout;
 
+    // 0. Busca a configuração de servidores ICE (STUN/TURN) do servidor.
+    //    As credenciais do TURN ficam apenas no backend; se a busca falhar,
+    //    seguimos com o STUN padrão já presente no iceServersRef.
+    const loadIceServers = async () => {
+      try {
+        const res = await fetch('/api/vision/ice', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data?.iceServers) && data.iceServers.length > 0) {
+            iceServersRef.current = data.iceServers;
+            logToAtena(`[WebRTC] Configuração de servidores ICE carregada com segurança.`);
+          }
+        }
+      } catch (e) {
+        console.warn('Falha ao carregar config ICE do servidor; usando STUN padrão.', e);
+      }
+    };
+
     // 1. Acessa mídia local (câmera e áudio)
     const initLocalMedia = async () => {
+      await loadIceServers();
       setConnectionStatus('Acessando câmera e microfone...');
       let localStream: MediaStream;
       try {
@@ -891,21 +939,10 @@ https://nexustreinamento.com`;
 
       logToAtena(`[WebRTC] Criando conexão com ${peerName}...`);
       try {
+        // Usa a config ICE carregada do servidor (/api/vision/ice).
+        // As credenciais do TURN nunca ficam no bundle do cliente.
         const pc = new RTCPeerConnection({
-          iceServers: [
-            // STUN — descoberta de IP público
-            { urls: 'stun:stun.l.google.com:19302' },
-            { urls: 'stun:stun1.l.google.com:19302' },
-            // TURN Nexus — servidor próprio EC2 (us-east-1) — garante conectividade atrás de firewalls corporativos
-            {
-              urls: [
-                'turn:52.90.49.196:3478',           // UDP/TCP
-                'turn:52.90.49.196:3478?transport=tcp' // TCP forçado
-              ],
-              username: process.env.NEXT_PUBLIC_TURN_USER || 'nexusvision',
-              credential: process.env.NEXT_PUBLIC_TURN_PASSWORD || 'NxV!5JR00DB3ms0lhbsr'
-            }
-          ]
+          iceServers: iceServersRef.current,
         });
 
         peerConnectionsRef.current.set(targetPeerId, pc);
@@ -1051,7 +1088,9 @@ https://nexustreinamento.com`;
           } else if (msg.type === 'transcript') {
             logToAtena(`[DataChannel Recebeu] transcript: "${msg.text}" (remetente: ${msg.senderName} | lang: ${msg.senderLang})`);
             if (handleIncomingTranscriptRef.current) {
-              await handleIncomingTranscriptRef.current(msg.text, msg.senderName, msg.senderLang);
+              // Passa o peerId do remetente para que o ducking silencie APENAS o áudio
+              // desse peer (não o áudio ao vivo dos demais participantes na sala).
+              await handleIncomingTranscriptRef.current(msg.text, msg.senderName, msg.senderLang, peerId);
             }
           } else if (msg.type === 'language-change') {
             const lang = LANGUAGES.find(l => l.code === msg.code);
@@ -1462,7 +1501,7 @@ https://nexustreinamento.com`;
   };
 
   // LOGICA QUANDO CHEGA UMA TRANSCRIÇÃO REMOTA VIA DATA CHANNEL (TRADUÇÃO SOBERANA REAL)
-  const handleIncomingTranscript = async (text: string, senderName: string, senderLang?: string) => {
+  const handleIncomingTranscript = async (text: string, senderName: string, senderLang?: string, speakingPeerId?: string) => {
     logToAtena(`[handleIncomingTranscript] Entrou: "${text}" de ${senderName} (lang: ${senderLang}) | InterpreterAtivo: ${isInterpreterActiveRef.current}`);
     if (!isInterpreterActiveRef.current) {
       logToAtena(`[handleIncomingTranscript Abortado] Tradutor está desativado.`);
@@ -1590,6 +1629,12 @@ https://nexustreinamento.com`;
       playMuffledAudioEffect();
     }
 
+    // Silencia imediatamente a voz ORIGINAL do parceiro (canal WebRTC nativo) durante
+    // a janela de tradução, para que o ouvinte não escute o áudio cru sobreposto.
+    // Envia o peerId para silenciar SOMENTE esse peer (não os demais participantes).
+    // Se a tradução falhar, o volume é restaurado no catch abaixo.
+    window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: true, peerId: speakingPeerId } }));
+
     try {
       // Faz a chamada de tradução real pelo servidor usando Claude 4.5 / Bedrock / MyMemory
       const response = await fetch('/api/translate', {
@@ -1615,7 +1660,12 @@ https://nexustreinamento.com`;
       });
 
       // 3. Toca a síntese de voz (TTS) correspondente ao idioma de destino
-      if (sourceLangObj.code !== targetLangObj.code && text.trim().toLowerCase() !== translatedText.trim().toLowerCase()) { playTTS(translatedText, targetLangObj.voiceLocale); }
+      if (sourceLangObj.code !== targetLangObj.code && text.trim().toLowerCase() !== translatedText.trim().toLowerCase()) { playTTS(translatedText, targetLangObj.voiceLocale, speakingPeerId); }
+      else {
+        // Sem TTS neste caminho (tradução igual ao original): restaura o áudio do peer
+        // que havíamos silenciado no início, para não deixá-lo mudo.
+        window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false, peerId: speakingPeerId } }));
+      }
 
       // 4. Salva no histórico de transcrição local
       const newItem: TranscriptItem = {
@@ -1640,7 +1690,10 @@ https://nexustreinamento.com`;
         translated: text,
         stage: 'done'
       });
-      // NÃO chama playTTS aqui — sem tradução, sem áudio sintético no idioma errado
+      // NÃO chama playTTS aqui — sem tradução, sem áudio sintético no idioma errado.
+      // Como não haverá TTS para emitir o evento de fim, restauramos aqui o áudio
+      // original do parceiro para o ouvinte não ficar sem som algum.
+      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false, peerId: speakingPeerId } }));
     }
 
     // Limpa a legenda após 5 segundos
@@ -1751,7 +1804,10 @@ https://nexustreinamento.com`;
   };
 
   // REPRODUZIR SÍNTESE DE VOZ (TTS)
-  const playTTS = async (text: string, locale: string) => {
+  // ttsPeerId: peer cujo áudio original deve ficar silenciado enquanto esta tradução
+  // toca. Propagado em todos os eventos 'tts-state-change' para que somente o
+  // RemoteVideo desse peer faça o ducking (não os demais participantes da sala).
+  const playTTS = async (text: string, locale: string, ttsPeerId?: string) => {
     if (typeof window === 'undefined') return;
 
     // ── GUARD DE CONCORRÊNCIA: cancela áudio anterior se ainda estiver tocando ──
@@ -1762,15 +1818,28 @@ https://nexustreinamento.com`;
       currentAudioRef.current.onerror = null;
       currentAudioRef.current = null;
     }
-    // Reseta flags para o caso de ter ficado preso em estado "playing"
-    isTtsPlayingRef.current = false;
-    window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
-    
+
+    // IMPORTANTE: NÃO resetamos aqui para isPlaying:false. O ducking já pode ter
+    // sido ativado no início da tradução (handleIncomingTranscript). Zerar aqui
+    // reabriria a voz original crua na janela entre a tradução e o TTS começar,
+    // e reiniciaria o microfone bem quando o TTS vai falar (eco/microfonia).
+    // Em vez disso, marcamos "tocando" e paramos o microfone imediatamente.
+    isTtsPlayingRef.current = true;
+    window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: true } }));
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch (e) {}
+    }
+
     // Remove emojis, símbolos e dingbats para evitar que o motor de síntese de voz (TTS) os leia em voz alta
     const cleanText = text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2700}-\u{27BF}]|[\u{2600}-\u{26FF}]|[\u{2B00}-\u{2BFF}]/gu, '').trim();
     
     // Se sobrar apenas string vazia pós limpeza, cancela para evitar chamada sem conteúdo
-    if (!cleanText) return;
+    // (restaura o áudio original do parceiro, já que não haverá TTS)
+    if (!cleanText) {
+      isTtsPlayingRef.current = false;
+      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
+      return;
+    }
     
     // Função auxiliar para tocar stream de áudio com bloqueio de reconhecimento
     const playAudioStream = (audioUrl: string) => {
@@ -1808,8 +1877,11 @@ https://nexustreinamento.com`;
         };
 
         audio.play().catch((err) => {
-          window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
-          isTtsPlayingRef.current = false;
+          // NÃO restauramos isPlaying:false aqui: se o Azure for bloqueado por autoplay,
+          // o fluxo cai no fallback nativo (speechSynthesis), que assume o ducking.
+          // Zerar aqui reabriria a voz original crua entre uma tentativa e outra.
+          // Apenas soltamos a referência de áudio órfã.
+          currentAudioRef.current = null;
           reject(err);
         });
       });
@@ -1846,6 +1918,8 @@ https://nexustreinamento.com`;
     
     utterance.onstart = () => {
       isTtsPlayingRef.current = true;
+      // Mantém a voz original do parceiro silenciada durante o TTS (paridade com o ramo Azure).
+      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: true } }));
       if (recognitionRef.current) {
         try { recognitionRef.current.stop(); } catch (e) {}
       }
@@ -1853,6 +1927,9 @@ https://nexustreinamento.com`;
 
     const handleSpeechSynthesisEnded = () => {
       isTtsPlayingRef.current = false;
+      // Restaura o áudio original do parceiro ao terminar (paridade com o ramo Azure).
+      // Sem isto, uma falha do Azure deixaria o áudio nativo do parceiro mudo para sempre.
+      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
       setTimeout(() => {
         if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
           try { recognitionRef.current.start(); } catch (e) {}
@@ -1900,7 +1977,34 @@ https://nexustreinamento.com`;
     
     utterance.rate = 1.05;
     utterance.volume = 1.0;
-    
+
+    // REDE DE SEGURANÇA (WATCHDOG): se o sintetizador nativo não estiver disponível
+    // ou não disparar onstart/onend (acontece em alguns navegadores), o estado
+    // ficaria preso em "tocando" — travando o microfone e mantendo o áudio original
+    // do parceiro mudo para sempre. Este timer força a recuperação.
+    const ttsWatchdog = setTimeout(() => {
+      if (isTtsPlayingRef.current) {
+        isTtsPlayingRef.current = false;
+        window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
+        if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current) {
+          try { recognitionRef.current?.start(); } catch (e) {}
+        }
+      }
+    }, 12000);
+
+    // Garante que o watchdog seja cancelado assim que a fala terminar normalmente.
+    const clearWatchdog = () => clearTimeout(ttsWatchdog);
+    utterance.addEventListener('end', clearWatchdog);
+    utterance.addEventListener('error', clearWatchdog);
+
+    if (typeof window.speechSynthesis === 'undefined') {
+      // Navegador sem TTS nativo: recupera imediatamente em vez de esperar o watchdog.
+      clearTimeout(ttsWatchdog);
+      isTtsPlayingRef.current = false;
+      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
+      return;
+    }
+
     window.speechSynthesis.speak(utterance);
   };
 
@@ -1944,16 +2048,24 @@ https://nexustreinamento.com`;
             <label htmlFor="lang-select" className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block mb-1">
               Select your Language / Selecione seu Idioma
             </label>
+            {isJoiner && (
+              <p className="text-[10px] text-amber-300/80 leading-relaxed">
+                Choose the language you speak so we translate correctly. / Escolha o idioma que você fala para traduzirmos corretamente.
+              </p>
+            )}
             <div className="relative">
               <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <select 
                 id="lang-select"
                 value={myLanguage.code}
+                disabled={!isJoiner}
                 onChange={(e) => {
+                  if (!isJoiner) return; // Host é sempre pt-BR
                   const lang = LANGUAGES.find(l => l.code === e.target.value);
                   if (lang) setMyLanguage(lang);
                 }}
-                className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors shadow-inner appearance-none cursor-pointer"
+                title={!isJoiner ? 'Seu idioma como anfitrião é fixo em Português do Brasil' : 'Selecione seu idioma'}
+                className={`w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors shadow-inner appearance-none ${!isJoiner ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
               >
                 {LANGUAGES.map(lang => (
                   <option key={lang.code} value={lang.code} className="bg-[#090d16] text-white">
@@ -2184,7 +2296,9 @@ https://nexustreinamento.com`;
                   <Globe className="w-3.5 h-3.5 text-slate-400" />
                   <select 
                     value={myLanguage.code}
+                    disabled={!isJoiner}
                     onChange={(e) => {
+                      if (!isJoiner) return; // Host é sempre pt-BR
                       const lang = LANGUAGES.find(l => l.code === e.target.value);
                       if (lang) {
                         setMyLanguage(lang);
@@ -2205,8 +2319,8 @@ https://nexustreinamento.com`;
                         }
                       }
                     }}
-                    className="bg-transparent text-xs font-semibold text-slate-300 focus:outline-none cursor-pointer pr-1"
-                    title="Selecione o seu idioma de fala"
+                    className={`bg-transparent text-xs font-semibold text-slate-300 focus:outline-none pr-1 ${!isJoiner ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                    title={!isJoiner ? 'Seu idioma como anfitrião é fixo em Português do Brasil' : 'Selecione o seu idioma de fala'}
                   >
                     {LANGUAGES.map(lang => (
                       <option key={lang.code} value={lang.code} className="bg-slate-950 text-slate-200">
@@ -2255,6 +2369,7 @@ https://nexustreinamento.com`;
                       ref={remoteVideoRef} 
                       autoPlay 
                       playsInline 
+                      muted /* Áudio remoto sai pelo elemento <audio> do RemoteVideo (com ducking do TTS). Manter mudo evita voz original duplicada sobre a tradução. */
                       className="w-full h-full object-cover"
                     />
                   ) : isJoiner ? (
@@ -2830,7 +2945,11 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
   useEffect(() => {
     const handleTtsState = (e: any) => {
       if (audioRef.current) {
-        audioRef.current.volume = e.detail.isPlaying ? 0.1 : 1.0; /* DUCKING */
+        // Silencia por completo a voz ORIGINAL do parceiro enquanto a tradução (TTS)
+        // estiver tocando, para que o ouvinte escute apenas a versão traduzida.
+        // Ao terminar, restaura o volume nativo do canal WebRTC.
+        audioRef.current.muted = e.detail.isPlaying;
+        audioRef.current.volume = e.detail.isPlaying ? 0 : 1.0;
       }
     };
     window.addEventListener('tts-state-change', handleTtsState);

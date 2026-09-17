@@ -52,7 +52,7 @@ function normalizeLanguage(input: string | undefined | null, fallbackCode: strin
     return { code: 'auto', name: 'Detectar Automático', aliases: ['auto'] };
   }
 
-  // 3. Checagem resiliente de prefixos (blinda 100% mesmo com qualquer corrupção de encoding UTF-8 / Latin1)
+  // 3. Checagem resiliente de prefixos (blinda mesmo com corrupção de encoding UTF-8 / Latin1)
   if (clean.startsWith('ingl') || clean.startsWith('engl')) return SUPPORTED_LANGUAGES.en;
   if (clean.startsWith('port')) return SUPPORTED_LANGUAGES.pt;
   if (clean.startsWith('espa') || clean.startsWith('span')) return SUPPORTED_LANGUAGES.es;
@@ -109,7 +109,7 @@ export async function POST(req: NextRequest) {
   let text = '';
   let rawSource = 'auto';
   let rawTarget = 'pt';
-  
+
   try {
     const body = await req.json();
     text = body.text;
@@ -136,10 +136,10 @@ export async function POST(req: NextRequest) {
 
   // Se origem e destino forem idênticos e conhecidos, retorna o texto diretamente sem gastar API
   if (sourceLang.code !== 'auto' && sourceLang.code === finalTarget.code) {
-    return NextResponse.json({ 
-      translation: text, 
-      sourceLanguage: sourceLang.code, 
-      targetLanguage: finalTarget.code 
+    return NextResponse.json({
+      translation: text,
+      sourceLanguage: sourceLang.code,
+      targetLanguage: finalTarget.code
     });
   }
 
@@ -169,10 +169,10 @@ Siga estas regras estritamente:
     const translation = response.output?.message?.content?.[0]?.text || '';
     if (translation) {
       console.log(`[API /api/translate] Sucesso via Claude 3.5 Sonnet v2 (${sourceLang.code} -> ${finalTarget.code})`);
-      return NextResponse.json({ 
-        translation, 
-        sourceLanguage: sourceLang.code, 
-        targetLanguage: finalTarget.code 
+      return NextResponse.json({
+        translation,
+        sourceLanguage: sourceLang.code,
+        targetLanguage: finalTarget.code
       });
     }
   } catch (err1: any) {
@@ -197,28 +197,37 @@ Siga estas regras estritamente:
     const translation = response.output?.message?.content?.[0]?.text || '';
     if (translation) {
       console.log(`[API /api/translate] Sucesso via Claude 3.5 Sonnet v1 (${sourceLang.code} -> ${finalTarget.code})`);
-      return NextResponse.json({ 
-        translation, 
-        sourceLanguage: sourceLang.code, 
-        targetLanguage: finalTarget.code 
+      return NextResponse.json({
+        translation,
+        sourceLanguage: sourceLang.code,
+        targetLanguage: finalTarget.code
       });
     }
   } catch (err2: any) {
     console.warn('[API /api/translate] Falhou Tentativa 2 (Claude 3.5 v1):', err2?.message);
   }
 
-  // ── TENTATIVA 3: MyMemory (gratuito, sem chave, sempre disponível) ─────────
-  try {
-    console.log(`[API /api/translate] Usando fallback MyMemory (${sourceLang.code} -> ${finalTarget.code})...`);
-    const translation = await translateWithMyMemory(text, sourceLang.code, finalTarget.code);
-    console.log(`✅ [API /api/translate] Sucesso via MyMemory: "${translation}" (${sourceLang.code} -> ${finalTarget.code})`);
-    return NextResponse.json({ 
-      translation, 
-      sourceLanguage: sourceLang.code, 
-      targetLanguage: finalTarget.code 
-    });
-  } catch (err3: any) {
-    console.error('[API /api/translate] TODOS os provedores falharam:', err3?.message);
-    return NextResponse.json({ error: 'Serviço de tradução temporariamente indisponível.' }, { status: 503 });
+  // TENTATIVA 3: MyMemory (fallback externo publico) - OPT-IN
+  // ATENCAO SOBERANIA: o MyMemory e um servico PUBLICO e gratuito. Enviar o
+  // conteudo da conversa para ele contraria a promessa de sigilo/soberania.
+  // Por isso este fallback e OPT-IN: so e usado se ALLOW_MYMEMORY_FALLBACK=true.
+  const allowMyMemory = process.env.ALLOW_MYMEMORY_FALLBACK === 'true';
+  if (allowMyMemory) {
+    try {
+      console.log(`[API /api/translate] Usando fallback MyMemory (${sourceLang.code} -> ${finalTarget.code})...`);
+      const translation = await translateWithMyMemory(text, sourceLang.code, finalTarget.code);
+      return NextResponse.json({
+        translation,
+        sourceLanguage: sourceLang.code,
+        targetLanguage: finalTarget.code
+      });
+    } catch (err3: any) {
+      console.error('[API /api/translate] Fallback MyMemory falhou:', err3?.message);
+    }
+  } else {
+    console.warn('[API /api/translate] Fallback MyMemory desativado (ALLOW_MYMEMORY_FALLBACK != true). Mantendo dados soberanos.');
   }
+
+  console.error('[API /api/translate] Provedores soberanos (Bedrock/Claude) indisponiveis.');
+  return NextResponse.json({ error: 'Servico de traducao temporariamente indisponivel.' }, { status: 503 });
 }

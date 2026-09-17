@@ -287,8 +287,9 @@ export function useAnnouncer(station: StationConfig) {
   ): Promise<string> => {
     const useElevenLabs = station.voiceEngine === 'elevenlabs' && station.elevenLabsVoiceId;
     const ttsUrl  = useElevenLabs ? '/api/tts/elevenlabs' : '/api/tts';
+    // A API key do ElevenLabs é resolvida no servidor (env), nunca enviada pelo cliente.
     const ttsBody = useElevenLabs
-      ? { text, apiKey: station.elevenLabsApiKey, voiceId: station.elevenLabsVoiceId }
+      ? { text, voiceId: station.elevenLabsVoiceId }
       : { text, gender: voiceOverride || station.gender };
 
     const res = await fetch(ttsUrl, {
