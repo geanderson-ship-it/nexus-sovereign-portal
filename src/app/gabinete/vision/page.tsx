@@ -1369,8 +1369,15 @@ https://nexustreinamento.com`;
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       if (SpeechRecognition) {
         rec = new SpeechRecognition();
-        rec.continuous = false; // Configuração ideal para evitar travamentos e loops eternos
-        rec.interimResults = false;
+        // Reconhecimento CONTÍNUO: mantém o microfone escutando sem parar entre
+        // frases. Antes (continuous=false) o mic parava a cada frase e reiniciava,
+        // criando buracos de captura — a fala do usuário se perdia no intervalo,
+        // dando a impressão de "só traduz quando clica". Contínuo = conversa fluida.
+        rec.continuous = true;
+        // interimResults=true deixa o reconhecimento mais responsivo, mas só
+        // processamos os resultados FINAIS (ver onresult) para não enviar texto
+        // pela metade pelo DataChannel.
+        rec.interimResults = true;
         rec.lang = myLanguage.voiceLocale === 'auto' ? 'pt-BR' : myLanguage.voiceLocale;
 
         rec.onstart = () => {
@@ -1404,10 +1411,13 @@ https://nexustreinamento.com`;
         rec.onend = () => {
           setIsListening(false);
           console.log("Speech recognition ended.");
-          
-          // Se houver muito silêncio consecutivo (mais de 3 vezes), aumentamos o delay para 1.5s
-          const backoffDelay = noSpeechCount > 3 ? 1500 : 300;
-          
+
+          // No modo contínuo, o onend só dispara quando o navegador encerra a
+          // sessão sozinho (timeout interno, troca de aba, ou após o TTS parar o
+          // mic). Reiniciamos rápido para manter a escuta praticamente ininterrupta.
+          // Backoff curto só cresce se houver muito silêncio seguido (economia).
+          const backoffDelay = noSpeechCount > 5 ? 800 : 150;
+
           setTimeout(() => {
             if (isComponentMountedRef.current && isInterpreterActiveRef.current && !isMutedRef.current && !isTtsPlayingRef.current) {
               try { 
@@ -1421,11 +1431,17 @@ https://nexustreinamento.com`;
 
         rec.onresult = async (event: any) => {
           noSpeechCount = 0; // Reseta o contador de silêncio no primeiro áudio com sucesso
-          const resultIndex = event.resultIndex;
-          const transcriptText = event.results[resultIndex][0].transcript;
-          logToAtena(`[Microfone Reconheceu] "${transcriptText}" (${isJoiner ? 'Carla' : 'Gean'})`);
-          if (transcriptText.trim()) {
-            handleGeanSpeech(transcriptText);
+          // Com continuous+interimResults, o evento traz vários resultados.
+          // Só enviamos os FINAIS (frase concluída), ignorando os parciais para
+          // não transmitir texto pela metade pelo DataChannel.
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const result = event.results[i];
+            if (!result.isFinal) continue;
+            const transcriptText = result[0].transcript;
+            logToAtena(`[Microfone Reconheceu] "${transcriptText}" (${isJoiner ? 'Carla' : 'Gean'})`);
+            if (transcriptText.trim()) {
+              handleGeanSpeech(transcriptText);
+            }
           }
         };
 
