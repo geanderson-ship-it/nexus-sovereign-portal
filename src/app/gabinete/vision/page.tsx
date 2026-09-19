@@ -1455,7 +1455,26 @@ https://nexustreinamento.com`;
       }
     }
 
+    // VIGIA (WATCHDOG) DO MICROFONE: o Chrome encerra o reconhecimento sozinho
+    // periodicamente (timeout interno) e, às vezes, o religamento via onend falha
+    // silenciosamente — deixando o mic "morto" sem o usuário perceber (a impressão
+    // de "às vezes não capta"). Este vigia tenta religar a cada 3s quando deveria
+    // estar escutando. Se já estiver rodando, o start() lança e é ignorado (no-op).
+    const micWatchdog = setInterval(() => {
+      if (
+        isComponentMountedRef.current &&
+        isInterpreterActiveRef.current &&
+        !isMutedRef.current &&
+        !micErrorRef.current &&
+        !isTtsPlayingRef.current &&
+        recognitionRef.current
+      ) {
+        try { recognitionRef.current.start(); } catch (e) { /* já ativo: ok */ }
+      }
+    }, 3000);
+
     return () => {
+      clearInterval(micWatchdog);
       if (rec) {
         try { rec.stop(); } catch (e) {}
       }
@@ -1877,12 +1896,15 @@ https://nexustreinamento.com`;
           isTtsPlayingRef.current = false;
           currentAudioRef.current = null; // ← libera ref ao terminar
           resolve();
-          // Agenda reinício do reconhecimento se ainda estiver ativo e não mudo (usando refs para evitar fechamento de estado obsoleto)
+          // Religa o microfone quase imediatamente após o TTS terminar. Antes eram
+          // 500ms de espera, criando uma "janela morta" onde a fala do usuário se
+          // perdia (ele começava a responder e o mic ainda estava desligado).
+          // 100ms é suficiente para o áudio do TTS cessar sem reintroduzir eco.
           setTimeout(() => {
             if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
               try { recognitionRef.current.start(); } catch (e) {}
             }
-          }, 500);
+          }, 100);
         };
 
         audio.onerror = (e) => {
@@ -1950,7 +1972,7 @@ https://nexustreinamento.com`;
         if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
           try { recognitionRef.current.start(); } catch (e) {}
         }
-      }, 500);
+      }, 100);
     };
 
     utterance.onend = handleSpeechSynthesisEnded;
