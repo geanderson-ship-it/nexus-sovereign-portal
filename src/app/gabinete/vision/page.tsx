@@ -2602,9 +2602,13 @@ https://nexustreinamento.com`;
                   Sistema pronto para escuta ativa
                 </p>
                 <p className="text-xs">
-                  {isListening 
-                    ? "Comece a falar em português... Sua voz será traduzida automaticamente." 
-                    : "Ative o Intérprete para iniciar a captação de áudio."}
+                  {!isInterpreterActive
+                    ? "Tradutor pausado. Clique no botão do intérprete para retomar a tradução automática."
+                    : isMuted
+                      ? "Microfone silenciado. Reative o microfone para ser ouvido e traduzido."
+                      : (isJoiner
+                          ? "Just speak naturally — your voice is translated automatically. / Fale naturalmente, sua voz é traduzida automaticamente."
+                          : "Fale naturalmente. Sua voz é captada e traduzida automaticamente, sem precisar clicar.")}
                 </p>
               </div>
             )}
