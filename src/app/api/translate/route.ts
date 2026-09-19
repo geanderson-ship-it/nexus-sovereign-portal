@@ -217,8 +217,10 @@ Siga estas regras estritamente:
   const candidateModels = [
     process.env.BEDROCK_TRANSLATE_MODEL_ID,
     process.env.BEDROCK_TRANSLATE_MODEL_ID_FALLBACK,
-    'us.anthropic.claude-haiku-4-5-v1:0',
-    'us.anthropic.claude-sonnet-4-5-v1:0',
+    // Perfis de inferência GLOBAIS confirmados na conta (us-east-1, Bedrock).
+    // O Claude Haiku 4.5 é rápido/barato e suficiente para tradução.
+    'global.anthropic.claude-haiku-4-5-20251001-v1:0',
+    'global.anthropic.claude-sonnet-4-6-v1:0',
   ].filter(Boolean) as string[];
 
   for (const modelId of candidateModels) {
