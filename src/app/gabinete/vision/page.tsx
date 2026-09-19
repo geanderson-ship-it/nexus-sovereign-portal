@@ -594,6 +594,11 @@ export default function VisionSoberanoPage() {
   const micErrorRef = useRef<string | null>(null);
   const isTtsPlayingRef = useRef<boolean>(false);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null); // Ref para cancelar TTS anterior
+  // FILA DE TTS: cada tradução entra na fila e é falada em ordem, uma de cada vez.
+  // Evita que uma fala corte a anterior quando várias chegam em sequência rápida
+  // (era a causa de "às vezes traduz em áudio, às vezes só aparece o texto").
+  const ttsQueueRef = useRef<Array<{ text: string; locale: string; peerId?: string }>>([]);
+  const ttsProcessingRef = useRef<boolean>(false);
   const [isListening, setIsListening] = useState(false);
   const [micError, setMicError] = useState<string | null>(null);
 
@@ -1694,11 +1699,16 @@ https://nexustreinamento.com`;
         stage: 'done'
       });
 
-      // 3. Toca a síntese de voz (TTS) correspondente ao idioma de destino
-      if (sourceLangObj.code !== targetLangObj.code && text.trim().toLowerCase() !== translatedText.trim().toLowerCase()) { playTTS(translatedText, targetLangObj.voiceLocale, speakingPeerId); }
-      else {
-        // Sem TTS neste caminho (tradução igual ao original): restaura o áudio do peer
-        // que havíamos silenciado no início, para não deixá-lo mudo.
+      // 3. Toca a síntese de voz (TTS) da tradução.
+      // Regra: se os idiomas são DIFERENTES, sempre falamos a tradução — mesmo que o
+      // texto traduzido tenha saído textualmente parecido com o original (antes,
+      // comparar text !== translatedText fazia frases curtas não serem faladas,
+      // causando "às vezes só aparece o texto"). Só pulamos o TTS quando origem e
+      // destino são o MESMO idioma (aí não há tradução a falar).
+      if (sourceLangObj.code !== targetLangObj.code && translatedText.trim()) {
+        playTTS(translatedText, targetLangObj.voiceLocale, speakingPeerId);
+      } else {
+        // Mesmo idioma: sem TTS. Restaura o áudio original do peer que foi silenciado.
         window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false, peerId: speakingPeerId } }));
       }
 
@@ -1838,78 +1848,79 @@ https://nexustreinamento.com`;
     }
   };
 
-  // REPRODUZIR SÍNTESE DE VOZ (TTS)
+  // REPRODUZIR SÍNTESE DE VOZ (TTS) — ENFILEIRADOR
   // ttsPeerId: peer cujo áudio original deve ficar silenciado enquanto esta tradução
   // toca. Propagado em todos os eventos 'tts-state-change' para que somente o
   // RemoteVideo desse peer faça o ducking (não os demais participantes da sala).
-  const playTTS = async (text: string, locale: string, ttsPeerId?: string) => {
+  //
+  // Em vez de tocar imediatamente (cortando a fala anterior), enfileira a fala e
+  // deixa o processador da fila tocar uma de cada vez, em ordem. Assim nenhuma
+  // tradução é perdida quando várias chegam em sequência.
+  const playTTS = (text: string, locale: string, ttsPeerId?: string) => {
     if (typeof window === 'undefined') return;
+    ttsQueueRef.current.push({ text, locale, peerId: ttsPeerId });
+    void processTtsQueue();
+  };
 
-    // ── GUARD DE CONCORRÊNCIA: cancela áudio anterior se ainda estiver tocando ──
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current.onplay = null;
-      currentAudioRef.current.onended = null;
-      currentAudioRef.current.onerror = null;
-      currentAudioRef.current = null;
-    }
+  // Processa a fila de TTS: toca uma fala por vez até esvaziar.
+  const processTtsQueue = async () => {
+    if (ttsProcessingRef.current) return; // já há um processamento em andamento
+    ttsProcessingRef.current = true;
 
-    // IMPORTANTE: NÃO resetamos aqui para isPlaying:false. O ducking já pode ter
-    // sido ativado no início da tradução (handleIncomingTranscript). Zerar aqui
-    // reabriria a voz original crua na janela entre a tradução e o TTS começar,
-    // e reiniciaria o microfone bem quando o TTS vai falar (eco/microfonia).
-    // Em vez disso, marcamos "tocando" e paramos o microfone imediatamente.
+    // Sinaliza início: silencia a voz original do parceiro e pausa o microfone
+    // durante toda a sequência de falas (evita eco/microfonia).
     isTtsPlayingRef.current = true;
-    window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: true } }));
     if (recognitionRef.current) {
       try { recognitionRef.current.stop(); } catch (e) {}
     }
 
+    while (ttsQueueRef.current.length > 0) {
+      const item = ttsQueueRef.current.shift()!;
+      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: true, peerId: item.peerId } }));
+      try {
+        await speakOne(item.text, item.locale, item.peerId);
+      } catch (e) {
+        // Falha em uma fala não deve travar a fila; segue para a próxima.
+        console.warn('[TTS] Falha ao falar item da fila:', e);
+      }
+    }
+
+    // Fila vazia: libera o estado e religa o microfone.
+    ttsProcessingRef.current = false;
+    isTtsPlayingRef.current = false;
+    window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
+    setTimeout(() => {
+      if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
+        try { recognitionRef.current?.start(); } catch (e) {}
+      }
+    }, 100);
+  };
+
+  // Fala UMA tradução (Azure Neural, com fallback nativo). Resolve quando termina.
+  const speakOne = async (text: string, locale: string, ttsPeerId?: string) => {
+
     // Remove emojis, símbolos e dingbats para evitar que o motor de síntese de voz (TTS) os leia em voz alta
     const cleanText = text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2700}-\u{27BF}]|[\u{2600}-\u{26FF}]|[\u{2B00}-\u{2BFF}]/gu, '').trim();
     
-    // Se sobrar apenas string vazia pós limpeza, cancela para evitar chamada sem conteúdo
-    // (restaura o áudio original do parceiro, já que não haverá TTS)
+    // Se sobrar apenas string vazia pós limpeza, não há o que falar: resolve e sai.
+    // (o estado do mic/ducking é gerido pelo processTtsQueue)
     if (!cleanText) {
-      isTtsPlayingRef.current = false;
-      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
       return;
     }
     
-    // Função auxiliar para tocar stream de áudio com bloqueio de reconhecimento
+    // Função auxiliar para tocar stream de áudio. O gerenciamento de estado global
+    // (isTtsPlayingRef, mic, ducking) é feito pelo processTtsQueue; aqui só tocamos.
     const playAudioStream = (audioUrl: string) => {
       return new Promise<void>((resolve, reject) => {
         const audio = new Audio(audioUrl);
         currentAudioRef.current = audio; // ← registra para poder cancelar depois
-        
-        
-        audio.onplay = () => {
-          isTtsPlayingRef.current = true;
-          window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: true } }));
-          if (recognitionRef.current) {
-            try { recognitionRef.current.stop(); } catch (e) {}
-          }
-        };
 
         audio.onended = () => {
-          window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
-          isTtsPlayingRef.current = false;
           currentAudioRef.current = null; // ← libera ref ao terminar
           resolve();
-          // Religa o microfone quase imediatamente após o TTS terminar. Antes eram
-          // 500ms de espera, criando uma "janela morta" onde a fala do usuário se
-          // perdia (ele começava a responder e o mic ainda estava desligado).
-          // 100ms é suficiente para o áudio do TTS cessar sem reintroduzir eco.
-          setTimeout(() => {
-            if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
-              try { recognitionRef.current.start(); } catch (e) {}
-            }
-          }, 100);
         };
 
         audio.onerror = (e) => {
-          window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
-          isTtsPlayingRef.current = false;
           currentAudioRef.current = null; // ← libera ref em caso de erro
           reject(e);
         };
@@ -1949,34 +1960,29 @@ https://nexustreinamento.com`;
       console.warn("Azure TTS indisponível. Recorrendo ao sintetizador nativo de emergência...", azureErr);
     }
 
-    // FALLBACK: Sintetizador nativo do navegador
+    // FALLBACK: Sintetizador nativo do navegador.
+    // Se não houver TTS nativo, resolve e sai (o processTtsQueue segue a fila).
+    if (typeof window.speechSynthesis === 'undefined') {
+      return;
+    }
+
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = locale;
-    
-    utterance.onstart = () => {
-      isTtsPlayingRef.current = true;
-      // Mantém a voz original do parceiro silenciada durante o TTS (paridade com o ramo Azure).
-      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: true } }));
-      if (recognitionRef.current) {
-        try { recognitionRef.current.stop(); } catch (e) {}
-      }
-    };
 
-    const handleSpeechSynthesisEnded = () => {
-      isTtsPlayingRef.current = false;
-      // Restaura o áudio original do parceiro ao terminar (paridade com o ramo Azure).
-      // Sem isto, uma falha do Azure deixaria o áudio nativo do parceiro mudo para sempre.
-      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
-      setTimeout(() => {
-        if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current && !isTtsPlayingRef.current) {
-          try { recognitionRef.current.start(); } catch (e) {}
-        }
-      }, 100);
-    };
+    // Envolve o fallback numa Promise para que speakOne aguarde a fala terminar
+    // (mantendo a ordem da fila). O estado global (mic/ducking) é do processTtsQueue.
+    await new Promise<void>((resolveSpeak) => {
+      let done = false;
+      const finish = () => { if (!done) { done = true; resolveSpeak(); } };
 
-    utterance.onend = handleSpeechSynthesisEnded;
-    utterance.onerror = handleSpeechSynthesisEnded;
+      utterance.onend = finish;
+      utterance.onerror = finish;
+
+      // Watchdog: se o navegador não disparar onend/onerror, libera após 12s.
+      const ttsWatchdog = setTimeout(finish, 12000);
+      utterance.addEventListener('end', () => clearTimeout(ttsWatchdog));
+      utterance.addEventListener('error', () => clearTimeout(ttsWatchdog));
 
     const voices = window.speechSynthesis.getVoices();
     const primaryLang = locale.toLowerCase().split('-')[0];
@@ -2013,37 +2019,11 @@ https://nexustreinamento.com`;
       console.log(`TTS Fallback local selecionou: ${selectedVoice.name}`);
     }
     
-    utterance.rate = 1.05;
-    utterance.volume = 1.0;
+      utterance.rate = 1.05;
+      utterance.volume = 1.0;
 
-    // REDE DE SEGURANÇA (WATCHDOG): se o sintetizador nativo não estiver disponível
-    // ou não disparar onstart/onend (acontece em alguns navegadores), o estado
-    // ficaria preso em "tocando" — travando o microfone e mantendo o áudio original
-    // do parceiro mudo para sempre. Este timer força a recuperação.
-    const ttsWatchdog = setTimeout(() => {
-      if (isTtsPlayingRef.current) {
-        isTtsPlayingRef.current = false;
-        window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
-        if (isInterpreterActiveRef.current && !isMutedRef.current && !micErrorRef.current) {
-          try { recognitionRef.current?.start(); } catch (e) {}
-        }
-      }
-    }, 12000);
-
-    // Garante que o watchdog seja cancelado assim que a fala terminar normalmente.
-    const clearWatchdog = () => clearTimeout(ttsWatchdog);
-    utterance.addEventListener('end', clearWatchdog);
-    utterance.addEventListener('error', clearWatchdog);
-
-    if (typeof window.speechSynthesis === 'undefined') {
-      // Navegador sem TTS nativo: recupera imediatamente em vez de esperar o watchdog.
-      clearTimeout(ttsWatchdog);
-      isTtsPlayingRef.current = false;
-      window.dispatchEvent(new CustomEvent('tts-state-change', { detail: { isPlaying: false } }));
-      return;
-    }
-
-    window.speechSynthesis.speak(utterance);
+      window.speechSynthesis.speak(utterance);
+    });
   };
 
   // ATUALIZAÇÃO AUTOMÁTICA DE INSIGHTS DA ATENA (MOCK INTELIGÊNCIA)
