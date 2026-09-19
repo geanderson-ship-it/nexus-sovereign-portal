@@ -2485,7 +2485,7 @@ https://nexustreinamento.com`;
                 {/* Video container */}
                 <div className="relative flex-1 flex items-center justify-center bg-black/40 overflow-hidden">
                   {peer.stream ? (
-                    <RemoteVideo peer={peer} />
+                    <RemoteVideo peer={peer} interpreterActive={isInterpreterActive} />
                   ) : (
                     <div className="flex flex-col items-center justify-center gap-5 p-4 text-center w-full max-w-sm mx-auto">
                       {/* Logo of Nexus Holding Group (Horizontal banner format) */}
@@ -2956,25 +2956,26 @@ https://nexustreinamento.com`;
 
 interface RemoteVideoProps {
   peer: RemotePeer;
+  interpreterActive: boolean;
 }
 
-function RemoteVideo({ peer }: RemoteVideoProps) {
+function RemoteVideo({ peer, interpreterActive }: RemoteVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  
+
+  // REGRA DE ÁUDIO:
+  // Quando o INTÉRPRETE está ATIVO, a voz ORIGINAL do parceiro (canal WebRTC ao vivo)
+  // fica totalmente silenciada — o ouvinte escuta APENAS a tradução sintetizada (TTS).
+  // Isso elimina a sobreposição "voz original + tradução" (o usuário relatou ouvir
+  // "o inglês E o português ao mesmo tempo"). O ducking por evento de TTS falhava
+  // porque a voz original chega em tempo real, antes do TTS ser gerado (2-4s depois).
+  // Quando o intérprete é PAUSADO, o áudio original volta (conversa no mesmo idioma).
   useEffect(() => {
-    const handleTtsState = (e: any) => {
-      if (audioRef.current) {
-        // Silencia por completo a voz ORIGINAL do parceiro enquanto a tradução (TTS)
-        // estiver tocando, para que o ouvinte escute apenas a versão traduzida.
-        // Ao terminar, restaura o volume nativo do canal WebRTC.
-        audioRef.current.muted = e.detail.isPlaying;
-        audioRef.current.volume = e.detail.isPlaying ? 0 : 1.0;
-      }
-    };
-    window.addEventListener('tts-state-change', handleTtsState);
-    return () => window.removeEventListener('tts-state-change', handleTtsState);
-  }, []);
+    if (audioRef.current) {
+      audioRef.current.muted = interpreterActive;
+      audioRef.current.volume = interpreterActive ? 0 : 1.0;
+    }
+  }, [interpreterActive]);
   
   useEffect(() => {
     if (videoRef.current && peer.stream) {
@@ -2990,11 +2991,15 @@ function RemoteVideo({ peer }: RemoteVideoProps) {
 
     if (audioRef.current && peer.stream) {
       audioRef.current.srcObject = peer.stream;
+      // Aplica a regra de áudio já na conexão: se o intérprete está ativo, a voz
+      // original nasce silenciada (só a tradução TTS será ouvida).
+      audioRef.current.muted = interpreterActive;
+      audioRef.current.volume = interpreterActive ? 0 : 1.0;
       audioRef.current.play().catch(e => {
         console.warn('Áudio nativo WebRTC aguardando interação do usuário:', e);
       });
     }
-  }, [peer.stream]);
+  }, [peer.stream, interpreterActive]);
 
   return (
     <div className="w-full h-full relative">
