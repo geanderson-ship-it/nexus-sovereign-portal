@@ -1,8 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { bedrockClient } from '@/lib/bedrock-client';
 import { ConverseCommand } from "@aws-sdk/client-bedrock-runtime";
+import { translateClient } from '@/lib/translate-client';
+import { TranslateTextCommand } from "@aws-sdk/client-translate";
 
 export const maxDuration = 60;
+
+/**
+ * Mapeia nossos códigos ISO internos para os códigos aceitos pelo Amazon Translate.
+ * A maioria coincide; os que diferem são normalizados aqui. 'auto' é suportado
+ * nativamente pelo Translate como idioma de ORIGEM (auto-detecção).
+ */
+const AWS_TRANSLATE_LANG: Record<string, string> = {
+  pt: 'pt', en: 'en', es: 'es', fr: 'fr', de: 'de', it: 'it',
+  ar: 'ar', ja: 'ja', zh: 'zh', ru: 'ru', ko: 'ko', nl: 'nl',
+  sv: 'sv', tr: 'tr', pl: 'pl', hi: 'hi', auto: 'auto',
+};
+
+/**
+ * Traduz via Amazon Translate (rápido, dentro da própria infra AWS).
+ * Lança erro se a permissão IAM não estiver liberada ou o serviço falhar,
+ * permitindo o fallback para o Bedrock/Claude.
+ */
+async function translateWithAmazon(text: string, sourceCode: string, targetCode: string): Promise<string> {
+  const source = AWS_TRANSLATE_LANG[sourceCode] || 'auto';
+  const target = AWS_TRANSLATE_LANG[targetCode] || 'en';
+
+  const command = new TranslateTextCommand({
+    Text: text,
+    SourceLanguageCode: source,   // 'auto' aciona a auto-detecção do serviço
+    TargetLanguageCode: target,
+  });
+
+  const response = await translateClient.send(command);
+  const translated = response.TranslatedText;
+  if (!translated || !translated.trim()) {
+    throw new Error('Amazon Translate retornou tradução vazia');
+  }
+  return translated;
+}
 
 interface LanguageInfo {
   code: string;
@@ -143,6 +179,24 @@ export async function POST(req: NextRequest) {
     });
   }
 
+  // ── TENTATIVA PRIMÁRIA: Amazon Translate ──────────────────────────────────
+  // Serviço dedicado de tradução, na própria infra AWS (soberania mantida),
+  // com latência baixa (~200-500ms) e alta capacidade. É o caminho preferido
+  // por ser muito mais rápido que o LLM. Em caso de falha (ex: permissão IAM
+  // ausente ou par de idiomas não suportado), cai no fallback Claude/Bedrock.
+  try {
+    const translation = await translateWithAmazon(text, sourceLang.code, finalTarget.code);
+    console.log(`[API /api/translate] Sucesso via Amazon Translate (${sourceLang.code} -> ${finalTarget.code})`);
+    return NextResponse.json({
+      translation,
+      sourceLanguage: sourceLang.code,
+      targetLanguage: finalTarget.code,
+      provider: 'amazon-translate'
+    });
+  } catch (err0: any) {
+    console.warn('[API /api/translate] Amazon Translate indisponível, usando fallback Claude:', err0?.message);
+  }
+
   const systemPrompt = `Você é o Tradutor Soberano da Nexus, um sistema de tradução de elite com inteligência artificial de nível profissional.
 Seu papel é traduzir o texto fornecido pelo usuário para o idioma: ${finalTarget.name} (código ISO: ${finalTarget.code}).
 Siga estas regras estritamente:
@@ -151,60 +205,49 @@ Siga estas regras estritamente:
 3. Se o texto contiver termos técnicos ou jargões de negócios (como GovTech, Sandbox, B2B, On-Premise), mantenha-os como estão no mercado se for mais comum, ou traduza de forma inteligente.
 4. Você NÃO DEVE responder ao texto, explicar regras ou dar notas. Retorne APENAS a tradução direta do texto fornecido. Nada mais.`;
 
-  // ── TENTATIVA 1: Claude 3.5 Sonnet v2 via Bedrock (cross-region) ──────────
-  try {
-    const modelId = "us.anthropic.claude-3-5-sonnet-20241022-v2:0";
-    const command = new ConverseCommand({
-      modelId,
-      messages: [
-        {
-          role: "user",
-          content: [{ text: `Idioma de origem sugerido: ${sourceLang.name} (${sourceLang.code})\nIdioma de destino: ${finalTarget.name} (${finalTarget.code})\n\nTexto a traduzir:\n${text}` }]
-        }
-      ],
-      system: [{ text: systemPrompt }],
-      inferenceConfig: { maxTokens: 4000, temperature: 0.1 }
-    });
-    const response = await bedrockClient.send(command);
-    const translation = response.output?.message?.content?.[0]?.text || '';
-    if (translation) {
-      console.log(`[API /api/translate] Sucesso via Claude 3.5 Sonnet v2 (${sourceLang.code} -> ${finalTarget.code})`);
-      return NextResponse.json({
-        translation,
-        sourceLanguage: sourceLang.code,
-        targetLanguage: finalTarget.code
-      });
-    }
-  } catch (err1: any) {
-    console.warn('[API /api/translate] Falhou Tentativa 1 (Claude 3.5 v2):', err1?.message);
-  }
+  // ── FALLBACK LLM: Claude via Bedrock ──────────────────────────────────────
+  // Só é acionado se o Amazon Translate falhar. Os model IDs são configuráveis
+  // por variável de ambiente porque a AWS descontinua modelos com o tempo
+  // (ex: o Claude 3.5 Sonnet de 2024 saiu de catálogo). Assim, se o modelo
+  // mudar, basta ajustar BEDROCK_TRANSLATE_MODEL_ID no Amplify — sem novo deploy.
+  //
+  // IMPORTANTE: pegue o Model ID EXATO no console Bedrock > Model access e
+  // defina em BEDROCK_TRANSLATE_MODEL_ID. Os defaults abaixo são tentativas
+  // para a geração Claude 4.5; se não existirem na conta, defina a env.
+  const candidateModels = [
+    process.env.BEDROCK_TRANSLATE_MODEL_ID,
+    process.env.BEDROCK_TRANSLATE_MODEL_ID_FALLBACK,
+    'us.anthropic.claude-haiku-4-5-v1:0',
+    'us.anthropic.claude-sonnet-4-5-v1:0',
+  ].filter(Boolean) as string[];
 
-  // ── TENTATIVA 2: Claude 3.5 Sonnet v1 via Bedrock (region padrão) ─────────
-  try {
-    const fallbackModelId = "anthropic.claude-3-5-sonnet-20240620-v1:0";
-    const fallbackCommand = new ConverseCommand({
-      modelId: fallbackModelId,
-      messages: [
-        {
-          role: "user",
-          content: [{ text: `Idioma de origem sugerido: ${sourceLang.name} (${sourceLang.code})\nIdioma de destino: ${finalTarget.name} (${finalTarget.code})\n\nTexto a traduzir:\n${text}` }]
-        }
-      ],
-      system: [{ text: systemPrompt }],
-      inferenceConfig: { maxTokens: 4000, temperature: 0.1 }
-    });
-    const response = await bedrockClient.send(fallbackCommand);
-    const translation = response.output?.message?.content?.[0]?.text || '';
-    if (translation) {
-      console.log(`[API /api/translate] Sucesso via Claude 3.5 Sonnet v1 (${sourceLang.code} -> ${finalTarget.code})`);
-      return NextResponse.json({
-        translation,
-        sourceLanguage: sourceLang.code,
-        targetLanguage: finalTarget.code
+  for (const modelId of candidateModels) {
+    try {
+      const command = new ConverseCommand({
+        modelId,
+        messages: [
+          {
+            role: "user",
+            content: [{ text: `Idioma de origem sugerido: ${sourceLang.name} (${sourceLang.code})\nIdioma de destino: ${finalTarget.name} (${finalTarget.code})\n\nTexto a traduzir:\n${text}` }]
+          }
+        ],
+        system: [{ text: systemPrompt }],
+        inferenceConfig: { maxTokens: 4000, temperature: 0.1 }
       });
+      const response = await bedrockClient.send(command);
+      const translation = response.output?.message?.content?.[0]?.text || '';
+      if (translation) {
+        console.log(`[API /api/translate] Sucesso via Bedrock (${modelId}) (${sourceLang.code} -> ${finalTarget.code})`);
+        return NextResponse.json({
+          translation,
+          sourceLanguage: sourceLang.code,
+          targetLanguage: finalTarget.code,
+          provider: `bedrock:${modelId}`
+        });
+      }
+    } catch (errLlm: any) {
+      console.warn(`[API /api/translate] Falhou Bedrock (${modelId}):`, errLlm?.message);
     }
-  } catch (err2: any) {
-    console.warn('[API /api/translate] Falhou Tentativa 2 (Claude 3.5 v1):', err2?.message);
   }
 
   // TENTATIVA 3: MyMemory (fallback externo publico) - OPT-IN
