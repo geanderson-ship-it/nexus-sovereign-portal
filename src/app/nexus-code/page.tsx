@@ -355,7 +355,7 @@ function NexusPureCommandCenterContent() {
       setIsPlayingAudio(true);
       const speechText = cleanTextForVoice(text);
 
-      // Tenta sintetizar com ElevenLabs usando a voz oficial da Atena (Louisa - Warm and Hopeful)
+      // Tenta sintetizar com ElevenLabs usando a voz oficial da Atena (Fernanda - Formal, educada e direta)
       let blob: Blob | null = null;
       try {
         const resEleven = await fetch('/api/tts/elevenlabs', {
@@ -363,7 +363,7 @@ function NexusPureCommandCenterContent() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             text: speechText,
-            voiceId: '1iF3vHdwHKuVKSPDK23Z' // Louisa - Warm and Hopeful (Voz Oficial Atena)
+            voiceId: '7iqXtOF3wl3pomwXFY7G' // Fernanda - Formal, educada e direta (Voz Oficial Atena)
           })
         });
         if (resEleven.ok) {

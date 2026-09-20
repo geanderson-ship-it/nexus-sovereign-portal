@@ -103,10 +103,10 @@
       "createdAt": "2026-09-16T13:55:00.000Z"
     },
     {
-      "id": "mem-voice-louisa",
+      "id": "mem-voice-fernanda",
       "category": "Voz Oficial Soberana",
-      "text": "Voz oficial consagrada da Atena: Louisa - Warm and Hopeful (Voice ID: 1iF3vHdwHKuVKSPDK23Z) da ElevenLabs. Traz calor respeitoso, nobreza e acolhimento maduro. Integrada no Nexus Code via /api/tts/elevenlabs com modelo eleven_multilingual_v2 e blindada contra erros de hidratação via Suspense.",
-      "createdAt": "2026-09-15T10:00:00.000Z"
+      "text": "Voz oficial consagrada da Atena: Fernanda - Formal, educada e direta (Voice ID: 7iqXtOF3wl3pomwXFY7G) da ElevenLabs. Voz feminina brasileira, executiva, imponente, com grave encorpado, sem afetação ou fraqueza, transmitindo autoridade executiva, respeito, nobreza e acolhimento maduro. Integrada no Nexus Code (/nexus-code) via /api/tts/elevenlabs com modelo eleven_multilingual_v2.",
+      "createdAt": "2026-09-20T07:50:00.000Z"
     },
     {
       "id": "mem-portal-aprovado",
