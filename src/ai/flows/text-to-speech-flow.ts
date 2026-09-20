@@ -175,8 +175,8 @@ const textToSpeechFlow = ai.defineFlow(
       let targetElevenLabsVoiceId = null;
       if (isDante && process.env.DANTE_ELEVENLABS_VOICE_ID) {
         targetElevenLabsVoiceId = process.env.DANTE_ELEVENLABS_VOICE_ID;
-      } else if (isAtena && process.env.ATENA_ELEVENLABS_VOICE_ID) {
-        targetElevenLabsVoiceId = process.env.ATENA_ELEVENLABS_VOICE_ID;
+      } else if (isAtena) {
+        targetElevenLabsVoiceId = process.env.ATENA_ELEVENLABS_VOICE_ID || '7iqXtOF3wl3pomwXFY7G';
       } else if (isOrion && process.env.ORION_ELEVENLABS_VOICE_ID) {
         targetElevenLabsVoiceId = process.env.ORION_ELEVENLABS_VOICE_ID;
       } else if (isDjeny && process.env.DJENY_ELEVENLABS_VOICE_ID) {

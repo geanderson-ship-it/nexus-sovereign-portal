@@ -675,9 +675,11 @@ export async function POST(req: NextRequest) {
 
     let audioBase64 = null;
     try {
-      let cleanText = finalAnswer
+      let rawCleanText = finalAnswer
         .replace(/```[\s\S]*?```/g, '')
         .replace(/[*#_`~]/g, '')
+        .replace(/\[EN\]/gi, '')
+        .replace(/\[\/EN\]/gi, '')
         .replace(/[\u{1F300}-\u{1F9FF}]/gu, '')
         .replace(/[\u{1F600}-\u{1F64F}]/gu, '')
         .replace(/[\u{2700}-\u{27BF}]/gu, '')
@@ -686,38 +688,75 @@ export async function POST(req: NextRequest) {
         .replace(/[\u{1F1E0}-\u{1F1FF}]/gu, '')
         .replace(/[\u{2B00}-\u{2BFF}]/gu, '') // Estrelas, setas, etc.
         .replace(/[\u{2300}-\u{23FF}]/gu, '') // Símbolos técnicos
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&apos;')
-        .replace(/\[EN\]/gi, "<lang xml:lang='en-US'>")
-        .replace(/\[\/EN\]/gi, "</lang>");
+        .trim();
 
-      // Correções fonéticas para o Azure TTS pronunciar com som de J e acentuação correta
-      cleanText = cleanText
-        .replace(/Geânderson/gi, 'Jeânderson')
-        .replace(/Geanderson/gi, 'Jeânderson')
-        .replace(/\bGean\b/gi, 'Jeân')
-        .replace(/Nexus/gi, 'Nécsus');
+      const elevenApiKey = process.env.ELEVENLABS_API_KEY;
+      const atenaVoiceId = process.env.ATENA_ELEVENLABS_VOICE_ID || '7iqXtOF3wl3pomwXFY7G';
 
-      const azureKey = process.env.AZURE_SPEECH_KEY || "";
-      const ssml = `<speak version='1.0' xml:lang='pt-BR'><voice xml:lang='pt-BR' xml:gender='Female' name='pt-BR-FranciscaNeural'>${cleanText}</voice></speak>`;
+      // 1. Tenta sintetizar primeiro com ElevenLabs (Voz Soberana Oficial - Fernanda)
+      if (elevenApiKey && atenaVoiceId && rawCleanText) {
+        try {
+          const elevenRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${atenaVoiceId}`, {
+            method: 'POST',
+            headers: {
+              'accept': 'audio/mpeg',
+              'content-type': 'application/json',
+              'xi-api-key': elevenApiKey,
+            },
+            body: JSON.stringify({
+              text: rawCleanText,
+              model_id: 'eleven_multilingual_v2',
+              voice_settings: {
+                stability: 0.55,
+                similarity_boost: 0.80,
+                style: 0.15,
+                use_speaker_boost: true,
+              },
+            }),
+          });
 
-      const azureRes = await fetch(`https://eastus.tts.speech.microsoft.com/cognitiveservices/v1`, {
-        method: 'POST',
-        headers: {
-          'Ocp-Apim-Subscription-Key': azureKey.replace(/"/g, ''),
-          'Content-Type': 'application/ssml+xml',
-          'X-Microsoft-OutputFormat': 'audio-16khz-128kbitrate-mono-mp3',
-          'User-Agent': 'NexusSovereignPortal'
-        },
-        body: ssml
-      });
+          if (elevenRes.ok) {
+            const arrayBuffer = await elevenRes.arrayBuffer();
+            audioBase64 = Buffer.from(arrayBuffer).toString('base64');
+          } else {
+            console.warn('[Atena Voice] ElevenLabs retornou status:', elevenRes.status);
+          }
+        } catch (errEleven) {
+          console.warn('[Atena Voice] Falha ElevenLabs, acionando fallback Azure...', errEleven);
+        }
+      }
 
-      if (azureRes.ok) {
-        const arrayBuffer = await azureRes.arrayBuffer();
-        audioBase64 = Buffer.from(arrayBuffer).toString('base64');
+      // 2. Fallback para Azure TTS se ElevenLabs não gerar áudio
+      if (!audioBase64) {
+        let cleanText = rawCleanText
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&apos;')
+          .replace(/Geânderson/gi, 'Jeânderson')
+          .replace(/Geanderson/gi, 'Jeânderson')
+          .replace(/\bGean\b/gi, 'Jeân')
+          .replace(/Nexus/gi, 'Nécsus');
+
+        const azureKey = process.env.AZURE_SPEECH_KEY || "";
+        const ssml = `<speak version='1.0' xml:lang='pt-BR'><voice xml:lang='pt-BR' xml:gender='Female' name='pt-BR-FranciscaNeural'>${cleanText}</voice></speak>`;
+
+        const azureRes = await fetch(`https://eastus.tts.speech.microsoft.com/cognitiveservices/v1`, {
+          method: 'POST',
+          headers: {
+            'Ocp-Apim-Subscription-Key': azureKey.replace(/"/g, ''),
+            'Content-Type': 'application/ssml+xml',
+            'X-Microsoft-OutputFormat': 'audio-16khz-128kbitrate-mono-mp3',
+            'User-Agent': 'NexusSovereignPortal'
+          },
+          body: ssml
+        });
+
+        if (azureRes.ok) {
+          const arrayBuffer = await azureRes.arrayBuffer();
+          audioBase64 = Buffer.from(arrayBuffer).toString('base64');
+        }
       }
     } catch (voiceError) {
       console.error("[ATENA_VOICE_ERROR]:", voiceError);

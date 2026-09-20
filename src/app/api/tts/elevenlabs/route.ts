@@ -33,9 +33,9 @@ export async function POST(req: NextRequest) {
           text: text.trim(),
           model_id: 'eleven_multilingual_v2',
           voice_settings: {
-            stability: 0.25, // Baixa estabilidade para deixar ele muito mais solto e emotivo
+            stability: 0.55, // Tom firme, assentado e executivo
             similarity_boost: 0.80,
-            style: 0.85, // Estilo altíssimo para uma locução EXTREMAMENTE exagerada e animada (110%)
+            style: 0.15, // Estilo elegante e sóbrio sem distorção
             use_speaker_boost: true,
           },
         }),
