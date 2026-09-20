@@ -1,5 +1,5 @@
 {
-  "lastSync": "2026-09-16T16:59:00.000Z",
+  "lastSync": "2026-09-20T08:52:00.000Z",
   "coreProfile": {
     "founder": "Geanderson Leandro Schuh (Gean) - Fundador & CEO da Nexus Holding Group",
     "coFounder": "Ivoni Severo Schuh - Diretora Executiva, Co-fundadora e CCO da Nexus Holding Group",
@@ -105,8 +105,26 @@
     {
       "id": "mem-voice-fernanda",
       "category": "Voz Oficial Soberana",
-      "text": "Voz oficial consagrada da Atena: Fernanda - Formal, educada e direta (Voice ID: 7iqXtOF3wl3pomwXFY7G) da ElevenLabs. Voz feminina brasileira, executiva, imponente, com grave encorpado, sem afetação ou fraqueza, transmitindo autoridade executiva, respeito, nobreza e acolhimento maduro. Integrada no Nexus Code (/nexus-code) via /api/tts/elevenlabs com modelo eleven_multilingual_v2.",
+      "text": "Voz oficial consagrada da Atena: Fernanda - Formal, educada e direta (Voice ID: 7iqXtOF3wl3pomwXFY7G) da ElevenLabs. Voz feminina brasileira, executiva, imponente, com grave encorpado, sem afetação ou fraqueza, transmitindo autoridade executiva, respeito, nobreza e acolhimento maduro. Integrada no Nexus Code (/nexus-code), no Gabinete da Atena IA Exclusiva (/gabinete/atena via /api/atena), no .env.local como ATENA_ELEVENLABS_VOICE_ID e no fluxo global text-to-speech-flow.ts.",
       "createdAt": "2026-09-20T07:50:00.000Z"
+    },
+    {
+      "id": "mem-linkedin-pipeline-2026-09-20",
+      "category": "Pipeline Executivo Internacional & LinkedIn",
+      "text": "Em 20/09/2026, a rede de conexões executivas atingiu 514+ líderes globais. Principais marcos: 1) Martin Venglář (Fundador da Nomce Consulting / República Tcheca - Chateau Josefův Důl e Magnetit) abordou Gean diretamente propondo sinergia entre hotelaria, IA e dados; respondido em tcheco nativo oferecendo vídeo de 1 minuto da Embaixadora; 2) Dr. Mohammed Javid Ali (CHRO, Autor e Generative AI Certified com 12k+ seguidores no Catar) passou a seguir Gean no LinkedIn; 3) Marta Poggi (palestrante global e autora) agendou alinhamento virtual para após 13/10, após o lançamento de seu livro na ABAV Expo e retorno da Espanha.",
+      "createdAt": "2026-09-20T08:30:00.000Z"
+    },
+    {
+      "id": "mem-carla-vendas-latam-2026-09-20",
+      "category": "Comercial & Prospecção América do Sul",
+      "text": "A vendedora executiva Carla C. Schuh avançou na varredura comercial da América do Sul: disparou a proposta e o vídeo demonstrativo da Embaixadora para mais de 25 contatos qualificados de hotelaria/empresas na Argentina via e-mail corporativo. Listas para o Peru e o Chile já estruturadas para os próximos disparos.",
+      "createdAt": "2026-09-20T08:44:00.000Z"
+    },
+    {
+      "id": "mem-nexus-vision-pricing-soberano-2026-09-20",
+      "category": "Arquitetura & Precificação Nexus Vision Connection",
+      "text": "Auditoria técnica do Nexus Vision Connection confirmou superioridade do WebRTC Mesh soberano com TURN dedicado (EC2 52.90.49.196) e DynamoDB, descartando a sugestão do Kiro de migrar para o Amazon Chime SDK (evitando cobranças desnecessárias por minuto e perda de soberania). Estrutura de precificação oficial definida: 1) SaaS Corporativo: R$ 6.5k-12k setup + R$ 2.9k-4.9k/mês; 2) White-Label Dedicado (Hotéis/Holdings): R$ 60k-120k / €15k-25k setup + R$ 12k-20k/mês; 3) Board Meetings On-Demand: R$ 3.5k-7k por sessão internacional com tradução em 17 idiomas e Ata gerada por IA.",
+      "createdAt": "2026-09-20T08:40:00.000Z"
     },
     {
       "id": "mem-portal-aprovado",
