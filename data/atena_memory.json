@@ -53,8 +53,8 @@
       "name": "Nexus Tecnologia e Inovação",
       "client": "Ivoni Severo Schuh",
       "contract": "CNPJ 69.042.151/0001-09",
-      "details": "Empresa do ecossistema focada em treinamento, inovação e tecnologia de alto impacto. Domínio nexustecnologiaeinovacao.com.br PAGO e garantido em 23/09/2026. Portal completo pronto na pasta local para publicação imediata.",
-      "status": "Domínio pago em 23/09/2026. Em processo de apontamento DNS, hospedagem e deploy para colocar no ar hoje!"
+      "details": "Portal oficial 100% ONLINE e NO AR em produção definitiva tanto com www (https://www.nexustecnologiaeinovacao.com.br) quanto sem www (https://nexustecnologiaeinovacao.com.br), com certificado SSL corporativo ativo, CDN global CloudFront (EXFVK23QMIBY9), Route 53 e S3 sincronizado.",
+      "status": "CONCLUÍDO COM GLÓRIA EM 23/09/2026. 100% no ar e funcionando perfeitamente em produção mundial!"
     },
     {
       "id": "proj-domes-resorts",
@@ -66,6 +66,18 @@
     }
   ],
   "memories": [
+    {
+      "id": "mem-linkedin-630-gran-marquise-greece-2026-09-23",
+      "category": "Marco Histórico 630 Conexões & Expansão Mediterrâneo e Luxo Brasil",
+      "text": "MARCO HISTÓRICO 630 CONEXÕES DE ELITE (23/09/2026 às 13:54 BRT): A rede C-Suite de Geanderson Leandro Schuh rompeu os 630 líderes de 1º grau! Novas entradas consagradas: 1) Philippe Godefroit (General Manager do icônico Hotel Gran Marquise 5 Estrelas em Fortaleza); 2) Nikitas Zotos (General Manager do Hydra Beach Resort na Grécia / Knossians Group); 3) Nuno Braga Lopes (Executive Hotel Leader de Luxo e Lifestyle em Portugal). Aliança e reunião de 28/09 com Ketty Lopez (StrategyX) agendada com Google Meet e disparada com sucesso.",
+      "createdAt": "2026-09-23T13:54:00.000Z"
+    },
+    {
+      "id": "mem-ketty-lopez-strategyx-meeting-next-week-2026-09-23",
+      "category": "Reunião Confirmada & Ponte Estratégica Golfo-Europa",
+      "text": "REUNIÃO OFICIAL CONFIRMADA COM KETTY CAROLINA LOPEZ (Segunda-feira, 28/09/2026 às 11h00 BRT / 15h00 Lisboa via Google Meet): Ketty confirmou a data e horário diretamente no LinkedIn: 'Segunda-feira, dia 28/09, seria melhor para mim. Neste momento encontro-me em Portugal, por isso proponho as 15h00 em Portugal, 11h00 no Brasil.' Dados oficiais: 1) E-mail: ketty.lopez@strategyxarabia.com; 2) WhatsApp em Dubai: +971 52 171 8402. Pauta: Alianças e negócios de IA Soberana na conexão Arábia Saudita, Dubai e Portugal.",
+      "createdAt": "2026-09-23T13:20:00.000Z"
+    },
     {
       "id": "mem-linkedin-627-belmond-lvmh-ketty-2026-09-23",
       "category": "Marco Histórico 627 Conexões & Titãs do Luxo Mundial",
