@@ -206,11 +206,11 @@ ${data.message}`.trim();
                       <p className="text-xs font-bold tracking-wider text-emerald-400 uppercase">Executiva de Vendas</p>
                       <p className="font-bold text-foreground text-lg mt-0.5">Carla C. Schuh</p>
                       <div className="flex flex-col text-sm mt-2.5 gap-2">
-                        <a href="mailto:vendas@nexusholdinggroup.com.br" className="text-slate-200 hover:text-emerald-400 hover:translate-x-1 text-sm font-medium transition-all flex items-center gap-2">
+                        <a href="mailto:carla@nexusholdinggroup.com.br" className="text-slate-200 hover:text-emerald-400 hover:translate-x-1 text-sm font-medium transition-all flex items-center gap-2">
                           <span className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
                             <Mail className="w-3.5 h-3.5" />
                           </span>
-                          vendas@nexusholdinggroup.com.br
+                          carla@nexusholdinggroup.com.br
                         </a>
                         <a href="https://wa.me/5551993783897" target="_blank" rel="noopener noreferrer" className="text-slate-200 hover:text-emerald-400 hover:translate-x-1 text-sm font-medium transition-all flex items-center gap-2">
                           <span className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">

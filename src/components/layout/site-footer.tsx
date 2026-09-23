@@ -124,9 +124,9 @@ export function SiteFooter() {
                   <p className="text-xs font-bold tracking-wider text-emerald-400 uppercase">Executiva de Vendas</p>
                   <p className="font-bold text-foreground text-base mt-0.5 truncate">Carla C. Schuh</p>
                   <div className="flex flex-col text-xs mt-2.5 gap-2">
-                    <a href="mailto:vendas@nexusholdinggroup.com.br" className="text-slate-300 hover:text-emerald-400 hover:translate-x-1 font-medium transition-all flex items-center gap-1.5 truncate">
+                    <a href="mailto:carla@nexusholdinggroup.com.br" className="text-slate-300 hover:text-emerald-400 hover:translate-x-1 font-medium transition-all flex items-center gap-1.5 truncate">
                       <Mail className="w-3.5 h-3.5 flex-shrink-0" />
-                      vendas@nexusholdinggroup.com.br
+                      carla@nexusholdinggroup.com.br
                     </a>
                     <a href="https://wa.me/5551993783897" target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-emerald-400 hover:translate-x-1 font-medium transition-all flex items-center gap-1.5">
                       <svg className="w-3.5 h-3.5 fill-current flex-shrink-0 text-emerald-400" viewBox="0 0 24 24">
