@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documento Técnico de Arquitectura | Elena - Embajadora Digital ICT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: #e5e5e5; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    @media print {
+      body { background-color: #fff; color: #111; }
+      .no-print { display: none; }
+      .print-border { border: 1px solid #ddd !important; }
+      .bg-card { background: #f9f9f9 !important; color: #111 !important; border: 1px solid #ddd !important; }
+      .text-gold { color: #b45309 !important; }
+    }
+  </style>
+</head>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
+
+  <!-- Botão Imprimir / Salvar PDF -->
+  <div class="no-print flex justify-end mb-6">
+    <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-wider shadow-lg transition flex items-center space-x-2">
+      <span>Imprimir / Guardar como PDF</span>
+    </button>
+  </div>
+
+  <!-- Cabeçalho Oficial -->
+  <header class="border-b border-amber-500/30 pb-8 mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div>
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-400 text-xs font-mono font-semibold mb-3">
+        <span>DOCUMENTO TÉCNICO DE HOMOLOGACIÓN & VIABILIDAD</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight">
+        Elena: Embajadora Digital del Turismo de Costa Rica
+      </h1>
+      <p class="text-sm text-gray-400 mt-2">
+        Arquitectura Soberana de Inteligencia Artificial para el Instituto Costarricense de Turismo (ICT)
+      </p>
+    </div>
+    <div class="text-left md:text-right mono text-xs text-gray-400 space-y-1">
+      <div><strong>Fecha:</strong> 24 de Septiembre, 2026</div>
+      <div><strong>Destinatarios:</strong> Don Alberto López / Alexander Díaz (TI)</div>
+      <div><strong>Emisor:</strong> Geanderson Schuh | CEO Nexus Holding Group</div>
+    </div>
+  </header>
+
+  <!-- 1. Resumen Ejecutivo -->
+  <section class="mb-12">
+    <h2 class="text-xl font-bold text-amber-400 mb-4 flex items-center space-x-2">
+      <span>1. Resumen Ejecutivo</span>
+    </h2>
+    <div class="p-6 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-sm leading-relaxed text-zinc-300">
+      <p>
+        El <strong>Instituto Costarricense de Turismo (ICT)</strong> lidera la promoción y acogida turística de uno de los destinos más biodiversos y admirados del planeta. Con el objetivo de brindar una bienvenida sin precedentes a los visitantes internacionales, <strong>Nexus Holding Group</strong> presenta la viabilidad y arquitectura técnica de <strong>Elena</strong>: la Embajadora Digital Hiperrealista con Inteligencia Artificial Soberana.
+      </p>
+      <p class="mt-3">
+        Elena combina presencia visual fotorrealista, razonamiento turístico en más de <strong>50 idiomas</strong>, síntesis de voz humana con calidez "Pura Vida" y despliegue multicanal (Tótems Físicos en Aeropuertos/Centros ICT, Portal Web Oficial y WhatsApp), bajo una infraestructura privada blindada en la nube con estricta gobernanza de datos.
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. Los 4 Pilares Tecnológicos -->
+  <section class="mb-12">
+    <h2 class="text-xl font-bold text-amber-400 mb-6">
+      <span>2. Los 4 Pilares Tecnológicos de Clase Mundial</span>
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      
+      <!-- Pilar 1 -->
+      <div class="p-6 rounded-2xl bg-zinc-900/80 border border-amber-500/25 relative overflow-hidden">
+        <div class="mono text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Pilar 1: Cerebro Cognitivo</div>
+        <h3 class="text-lg font-bold text-white mb-2">Google DeepMind (Gemini Enterprise)</h3>
+        <p class="text-xs text-zinc-300 leading-relaxed">
+          Modelos fundacionales avanzados de Google DeepMind para comprensión semántica profunda, razonamiento contextual y mapeo de rutas turísticas, parques nacionales y servicios oficiales del ICT. Base de conocimiento restringida y verificada para <strong>cero alucinaciones</strong>.
+        </p>
+      </div>
+
+      <!-- Pilar 2 -->
+      <div class="p-6 rounded-2xl bg-zinc-900/80 border border-amber-500/25 relative overflow-hidden">
+        <div class="mono text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Pilar 2: Voz Ultra-Humana</div>
+        <h3 class="text-lg font-bold text-white mb-2">ElevenLabs Neural Voice</h3>
+        <p class="text-xs text-zinc-300 leading-relaxed">
+          Síntesis neural de voz con modulación emocional natural, calidez y acento propio de la hospitalidad costarricense. Capacidad nativa de alternar y conversar fluidamente en más de <strong>50 idiomas</strong> (Inglés, Francés, Alemán, Mandarín, etc.).
+        </p>
+      </div>
+
+      <!-- Pilar 3 -->
+      <div class="p-6 rounded-2xl bg-zinc-900/80 border border-amber-500/25 relative overflow-hidden">
+        <div class="mono text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Pilar 3: Presencia Hiperrealista</div>
+        <h3 class="text-lg font-bold text-white mb-2">HeyGen Interactive Streaming</h3>
+        <p class="text-xs text-zinc-300 leading-relaxed">
+          Avatar digital interactivo fotorrealista con microexpresiones faciales y sincronización labial milimétrica en tiempo real. Transmisión vía WebRTC con latencia inferior a <strong>800ms</strong> en quioscos físicos y entorno web.
+        </p>
+      </div>
+
+      <!-- Pilar 4 -->
+      <div class="p-6 rounded-2xl bg-zinc-900/80 border border-amber-500/25 relative overflow-hidden">
+        <div class="mono text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Pilar 4: Seguridad & Nube Soberana</div>
+        <h3 class="text-lg font-bold text-white mb-2">AWS Sovereign Cloud Architecture</h3>
+        <p class="text-xs text-zinc-300 leading-relaxed">
+          Infraestructura en Amazon Web Services (AWS) con cifrado de grado militar (TLS 1.3 y AES-256), protección DDoS mediante AWS Shield, WAF corporativo y aislamiento total en VPC. Cumplimiento con la <strong>Ley N° 8968</strong> y GDPR.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. Experiencia Figital y Multicanal -->
+  <section class="mb-12">
+    <h2 class="text-xl font-bold text-amber-400 mb-4">
+      <span>3. Despliegue Multicanal & Handoff "Figital"</span>
+    </h2>
+    <div class="p-6 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-sm leading-relaxed text-zinc-300 space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 rounded-xl bg-black/60 border border-zinc-700">
+          <div class="text-amber-400 font-bold text-sm mb-1">Tótems Físicos (Aeropuertos)</div>
+          <p class="text-xs text-zinc-400">Pantallas interactivas 4K en el Aeropuerto Juan Santamaría (SJO), Guanacaste (LIR) y oficinas del ICT para recepción en vivo.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-black/60 border border-zinc-700">
+          <div class="text-amber-400 font-bold text-sm mb-1">QR Code Figital Dinámico</div>
+          <p class="text-xs text-zinc-400">Elena transfiere el contexto de la charla del tótem directamente al WhatsApp del turista para guiarlo durante su viaje.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-black/60 border border-zinc-700">
+          <div class="text-amber-400 font-bold text-sm mb-1">Portal Web Oficial</div>
+          <p class="text-xs text-zinc-400">Widget ultraligero integrado en visitcostarica.com o ict.go.cr para planificación remota antes del vuelo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Privacidad y Seguridad -->
+  <section class="mb-12">
+    <h2 class="text-xl font-bold text-amber-400 mb-4">
+      <span>4. Privacidad, Seguridad y Cumplimiento de Datos</span>
+    </h2>
+    <div class="overflow-x-auto rounded-2xl border border-zinc-800">
+      <table class="w-full text-left text-xs text-zinc-300">
+        <thead class="bg-zinc-800/80 text-amber-400 uppercase font-mono">
+          <tr>
+            <th class="p-3.5">Requisito</th>
+            <th class="p-3.5">Especificación Técnica Nexus</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-800 bg-zinc-900/50">
+          <tr>
+            <td class="p-3.5 font-bold text-white">Ley de Protección de Datos</td>
+            <td class="p-3.5">Conformidad plena con la Ley N° 8968 (Protección de la Persona frente al Tratamiento de sus Datos Personales) y GDPR europeo.</td>
+          </tr>
+          <tr>
+            <td class="p-3.5 font-bold text-white">Privacidad y Entrenamiento</td>
+            <td class="p-3.5">Cero uso de datos de las consultas para entrenamiento de modelos públicos. Aislamiento total en tenant institucional del ICT.</td>
+          </tr>
+          <tr>
+            <td class="p-3.5 font-bold text-white">Cifrado Integral</td>
+            <td class="p-3.5">Cifrado de extremo a extremo en tránsito (TLS 1.3) y en reposo (AES-256) en toda la infraestructura de base de datos y APIs.</td>
+          </tr>
+          <tr>
+            <td class="p-3.5 font-bold text-white">Barreras Éticas (Guardrails)</td>
+            <td class="p-3.5">Filtros heurísticos que impiden que Elena aborde temas no pertinentes a la promoción turística, cultural y cívica de Costa Rica.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5. Próximos Pasos -->
+  <section class="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-sm">
+    <h3 class="text-base font-bold text-amber-400 mb-2">5. Próximos Pasos de Homologación con TI</h3>
+    <p class="text-xs text-zinc-200 leading-relaxed mb-3">
+      Estamos a total disposición de <strong>Alexander Díaz</strong> y de <strong>Don Alberto López</strong> para coordinar una breve sesión de demostración técnica (20 a 25 min) y definir los parámetros del entorno de prueba controlado (Sandbox) para el ICT.
+    </p>
+    <div class="mono text-xs text-amber-300">
+      Contacto Directo: geanderson@nexusholdinggroup.com.br | WhatsApp: +55 (51) 99902-9371
+    </div>
+  </section>
+
+</body>
+</html>

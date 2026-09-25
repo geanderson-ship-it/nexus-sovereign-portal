@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICT Costa Rica - Elena Virtual Brand Ambassador | Official Technical Blueprint</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0b1a13;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      position: relative;
+      page-break-after: always;
+      page-break-inside: avoid;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16mm 18mm;
+      background-color: #ffffff;
+    }
+
+    /* CAPA (PAGE 1) - ESTILO PREMIUM VERDE FLORESTA / OURO / COSTA RICA PURA VIDA */
+    .page-cover {
+      background: radial-gradient(circle at 80% 20%, #14402b 0%, #082316 50%, #04130b 100%);
+      color: #ffffff;
+    }
+
+    .cover-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .brand-logo {
+      font-size: 13pt;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: #ffffff;
+    }
+
+    .brand-logo span {
+      color: #10b981;
+      font-weight: 400;
+      font-size: 10pt;
+      letter-spacing: 0.25em;
+      margin-left: 8px;
+    }
+
+    .recipient-badge {
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08);
+      border-radius: 8px;
+      padding: 8px 14px;
+      text-align: right;
+    }
+
+    .recipient-badge .label {
+      font-size: 6.5pt;
+      letter-spacing: 0.2em;
+      color: #10b981;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .recipient-badge .name {
+      font-size: 9.5pt;
+      font-weight: 700;
+      color: #ffffff;
+      margin-top: 2px;
+    }
+
+    .cover-body {
+      margin-top: 40px;
+    }
+
+    .official-tag {
+      display: inline-block;
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+
+    .cover-title {
+      font-size: 32pt;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .cover-title span {
+      color: #34d399;
+      display: block;
+    }
+
+    .cover-subtitle {
+      font-size: 10pt;
+      line-height: 1.6;
+      color: #94a3b8;
+      margin-top: 18px;
+      max-width: 90%;
+    }
+
+    /* GRID DE 4 PILARES DA CAPA */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .pillar-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .pillar-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7pt;
+      letter-spacing: 0.2em;
+      color: #34d399;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .pillar-title {
+      font-size: 10.5pt;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .pillar-desc {
+      font-size: 7.5pt;
+      line-height: 1.45;
+      color: #cbd5e1;
+    }
+
+    .cover-quote {
+      border-left: 3px solid #10b981;
+      padding-left: 14px;
+      margin-top: 24px;
+      font-style: italic;
+      font-size: 8pt;
+      line-height: 1.5;
+      color: #94a3b8;
+    }
+
+    .cover-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6.5pt;
+      color: #64748b;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* PÁGINAS INTERNAS (PAGES 2 - 8) - ESTILO LIMPO, MODERNO E CORPORATIVO */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+    }
+
+    .page-header-logo {
+      font-size: 10pt;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      color: #0f172a;
+    }
+
+    .page-header-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6.5pt;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #059669;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: 17pt;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .section-intro {
+      font-size: 8pt;
+      line-height: 1.55;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+
+    .quote-box {
+      background: #f0fdf4;
+      border-left: 4px solid #059669;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 18px;
+      font-size: 7.5pt;
+      line-height: 1.5;
+      color: #065f46;
+      font-style: italic;
+    }
+
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .card-clean {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      background: #ffffff;
+    }
+
+    .card-clean.accent-green {
+      border-top: 3px solid #059669;
+    }
+
+    .card-clean.accent-emerald {
+      border-top: 3px solid #10b981;
+    }
+
+    .card-clean.accent-teal {
+      border-top: 3px solid #0d9488;
+    }
+
+    .card-clean .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #059669;
+      margin-bottom: 4px;
+    }
+
+    .card-clean .title {
+      font-size: 9.5pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+
+    .card-clean .text {
+      font-size: 7pt;
+      line-height: 1.45;
+      color: #475569;
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .split-col {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      background: #fafafa;
+    }
+
+    .bullet-list {
+      list-style: none;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 14px;
+      font-size: 7pt;
+      line-height: 1.45;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #059669;
+      font-weight: 900;
+      font-size: 10pt;
+      line-height: 1;
+    }
+
+    .table-modern {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      font-size: 7pt;
+    }
+
+    .table-modern th {
+      background: #0f172a;
+      color: #ffffff;
+      text-align: left;
+      padding: 6px 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .table-modern td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155;
+      line-height: 1.35;
+    }
+
+    .table-modern tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+      margin-bottom: 14px;
+    }
+
+    .kpi-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      background: #f8fafc;
+    }
+
+    .kpi-val {
+      font-size: 16pt;
+      font-weight: 900;
+      color: #059669;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .kpi-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 5.5pt;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .page-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      color: #64748b;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .sig-block .role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      font-weight: 700;
+      color: #059669;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .sig-block .name {
+      font-size: 9.5pt;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .sig-block .title {
+      font-size: 7pt;
+      color: #64748b;
+    }
+
+    .sla-banner {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 14px;
+    }
+
+    .sla-banner .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 6pt;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #34d399;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .sla-banner .quote {
+      font-size: 7.5pt;
+      line-height: 1.45;
+      font-style: italic;
+      color: #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PÁGINA 1: CAPA OFICIAL (ESTILO SAUDIA / ADAPTADO COSTA RICA) ==================== -->
+  <div class="page page-cover">
+    
+    <div class="cover-header">
+      <div class="brand-logo">NEXUS HOLDING<span>| ADVANCED AI LAB</span></div>
+      <div class="recipient-badge">
+        <div class="label">Preparado Exclusivamente Para</div>
+        <div class="name">Alberto López & Alexander Díaz | ICT Costa Rica</div>
+      </div>
+    </div>
+
+    <div class="cover-body">
+      <div class="official-tag">✦ OFFICIAL TECHNICAL BLUEPRINT ✦</div>
+      <h1 class="cover-title">
+        INSTITUTO COSTARRICENSE DE TURISMO
+        <span>ELENA: EMBAJADORA DIGITAL VIRTUAL</span>
+      </h1>
+      <p class="cover-subtitle">
+        Arquitectura Empresarial Soberana: Clon Digital Humano-Real en Calidad Cinematográfica, Soporte Nativo en más de 50 Idiomas Globales, 100% Personalizable por el ICT, Motor de Rutas y Reservas "Pura Vida", Handoff Figital (Tótem a WhatsApp) y Nube Soberana AWS bajo la Ley N° 8968.
+      </p>
+
+      <!-- OS 4 PILARES DA CAPA (EXATAMENTE COMO NA SAUDIA) -->
+      <div class="pillars-grid">
+        
+        <div class="pillar-card">
+          <div class="pillar-num">Pilar 01 // Presencia Humana Real</div>
+          <div class="pillar-title">HeyGen Enterprise Engine</div>
+          <div class="pillar-desc">
+            Gemelo digital hiperrealista con captura en estudio 4K/8K. Textura auténtica de piel, microexpresiones naturales y transmisión WebRTC ultraligera para tótems y web sin requerir GPUs locales pesadas.
+          </div>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-num">Pilar 02 // Síntesis Políglota</div>
+          <div class="pillar-title">ElevenLabs Neural Audio & 50+ Idiomas</div>
+          <div class="pillar-desc">
+            Síntesis vocal hiperrealista en más de 50 idiomas con calidez y cadencia costarricense ("Pura Vida"). Cambio de idioma instantáneo (*zero-latency code-switching*) para recepción turística internacional.
+          </div>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-num">Pilar 03 // Núcleo Cognitivo</div>
+          <div class="pillar-title">Google Gemini 3.6+ Multimodal</div>
+          <div class="pillar-desc">
+            Razonamiento operativo turístico: Parques Nacionales, biodiversidad, clima, recomendaciones certificadas CST, visados, verificación visual de pasaportes/QR y validación en tiempo real de itinerarios.
+          </div>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-num">Pilar 04 // 100% Personalizable & Soporte</div>
+          <div class="pillar-title">100% Personalizable & Soporte 24/7</div>
+          <div class="pillar-desc">
+            Gobernanza absoluta del ICT sobre guiones y contenidos, actualizaciones continuas sin tiempo de inactividad, soporte de ingeniería crítico 24/7 y estricta conformidad con la Ley N° 8968 y GDPR.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cover-quote">
+        "Arquitectura de tecnología empresarial y blueprint de integración de sistemas diseñado exclusivamente para el Instituto Costarricense de Turismo (ICT) por Nexus Holding Group."
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div>DOCUMENT ID: NHG-ICT-ELENA-2026-V1</div>
+      <div>CONFIDENCIAL & PROPIETARIO</div>
+      <div>SEPTIEMBRE 2026</div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== PÁGINA 2: ALINEACIÓN ESTRATÉGICA & VISIÓN COSTA RICA ==================== -->
+  <div class="page">
+    
+    <div>
+      <div class="page-header">
+        <div class="page-header-logo">NEXUS HOLDING</div>
+        <div class="page-header-tag">Resumen Ejecutivo & Visión Estratégica</div>
+      </div>
+
+      <h2 class="section-title">Alineación Estratégica: El Turismo del Futuro</h2>
+      <p class="section-intro">
+        Costa Rica se consolida como referente global en turismo sostenible, biodiversidad y calidez humana. Para elevar la acogida del visitante internacional a un estándar de vanguardia mundial con máxima eficiencia de capital, la Embajadora Digital <strong>Elena</strong> despliega un Gemelo Digital Humano-Real Fotorrealista, totalmente arraigado en la realidad operativa del ICT y superando los avatares sintéticos 3D de videojuegos.
+      </p>
+
+      <div class="quote-box">
+        "Con ingeniería pragmática y pies en la tierra, la Embajadora Virtual del ICT se distingue por la calidad excepcional de su Gemelo Digital Humano-Real —filmado en estudio cinematográfico—, transmitiendo la auténtica hospitalidad costarricense (Pura Vida), soporte nativo en más de 50 idiomas, 100% de personalización por el ICT, integración con guías oficiales y estricto cumplimiento con la Ley de Protección de Datos Personales N° 8968."
+      </div>
+
+      <div class="cards-row">
+        
+        <div class="card-clean accent-green">
+          <div class="tag">Calidad Fotográfica Real</div>
+          <div class="title">Sin Efecto "Valle Inquietante"</div>
+          <div class="text">
+            Captura fotográfica real de una presentadora costarricense auténtica. Elimina por completo la apariencia fría o artificial de los gráficos 3D, generando confianza, dignidad y empatía inmediata en el turista.
+          </div>
+        </div>
+
+        <div class="card-clean accent-emerald">
+          <div class="tag">50+ Idiomas & Personalización</div>
+          <div class="title">100% Personalizable & Políglota</div>
+          <div class="text">
+            Fluidez en más de 50 idiomas con alternancia de código en tiempo real. Control total del ICT sobre vestuario corporativo, fondos institucionales, tono de voz, campañas estacionales y promociones del país.
+          </div>
+        </div>
+
+        <div class="card-clean accent-teal">
+          <div class="tag">Conectividad Operativa</div>
+          <div class="title">Handoff Figital & WhatsApp</div>
+          <div class="text">
+            Conexión directa con bases de datos del ICT (hoteles CST, guías certificados, alertas de parques). Emisión de QR dinámico en tótems para continuar la asistencia 24/7 en el WhatsApp del turista.
+          </div>
+        </div>
+
+      </div>
+
+      <h3 style="font-size: 11pt; font-weight: 800; color: #0f172a; margin-bottom: 8px;">La Ventaja Estratégica de Nexus Holding</h3>
+      
+      <div class="split-grid">
+        <div class="split-col">
+          <ul class="bullet-list">
+            <li><strong>Realismo Humano Incomprometido:</strong> Grabación en estudio 4K con vestimenta oficial del ICT, microexpresiones faciales y mirada empática.</li>
+            <li><strong>Asistencia Turística 24/7 en Territorio:</strong> Consulta de horarios de parques (Manuel Antonio, Tortuguero, Arenal), carreteras, clima y recomendaciones de seguridad.</li>
+          </ul>
+        </div>
+        <div class="split-col">
+          <ul class="bullet-list">
+            <li><strong>Soporte Dedicado & Actualizaciones 24/7:</strong> Ingeniería de soporte continuo, sincronización en vivo con alertas del Sinac/CNE y cero tiempo de inactividad.</li>
+            <li><strong>Gobernanza Ley N° 8968 & GDPR:</strong> Estricta conformidad con la legislación costarricense de protección de datos, sesiones efímeras y cero almacenamiento de datos biométricos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <div>ICT COSTA RICA | PROPUESTA EMBAJADORA DIGITAL VIRTUAL</div>
+      <div>PREPARADO PARA: ALBERTO LÓPEZ & ALEXANDER DÍAZ</div>
+      <div>PÁGINA 02</div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== PÁGINA 3: GENERACIÓN NEURAL DE VIDEO (HEYGEN ENTERPRISE) ==================== -->
+  <div class="page">
+    
+    <div>
+      <div class="page-header">
+        <div class="page-header-logo">NEXUS HOLDING</div>
+        <div class="page-header-tag">Motor Visual & Avatar Humano-Real</div>
+      </div>
+
+      <h2 class="section-title">Generación Neural de Video: HeyGen Enterprise</h2>
+      <p class="section-intro">
+        Para asegurar que Elena sea percibida con el más alto estándar de sofisticación y calidez humana auténtica, Nexus implementa una arquitectura 100% fotográfica y con los pies en la tierra, impulsada por el motor <strong>HeyGen Enterprise Interactive Streaming Avatar</strong> con tomas de estudio 4K de una presentadora costarricense en uniforme oficial del ICT.
+      </p>
+
+      <div class="split-grid" style="margin-bottom: 20px;">
+        
+        <div class="card-clean accent-green">
+          <div class="tag">Gemelo Digital Fotográfico</div>
+          <div class="title">Captura en Estudio 4K / 8K</div>
+          <div class="text">
+            Filmada bajo iluminación cinematográfica controlada con una representante de marca costarricense. El motor sintetiza el clon digital conservando los poros reales de la piel, brillo en la mirada y movimiento natural de la tela.
+          </div>
+          <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #e2e8f0;">
+            <div class="tag">Streaming en Tiempo Real</div>
+            <div class="title" style="font-size: 8.5pt;">HeyGen Interactive Avatar SDK</div>
+            <div class="text">
+              La síntesis neural genera cuadros de video sobre la marcha a medida que Elena habla. Transmisión fluida vía WebRTC con latencia inferior a 800ms hacia tótems de aeropuertos, navegadores móviles y portales web.
+            </div>
+          </div>
+        </div>
+
+        <div class="card-clean accent-emerald">
+          <div class="tag">Humano Real vs Modelado 3D</div>
+          <div class="title">Por qué lo Humano Real Supera al 3D</div>
+          <ul class="bullet-list" style="margin-top: 6px;">
+            <li><strong>Humanismo Supremo:</strong> Microexpresiones y calor en la mirada que eliminan la rigidez robótica de los gráficos 3D poligonales.</li>
+            <li><strong>100% Personalizable:</strong> Actualización inmediata de vestuario, campañas temáticas (sostenibilidad, surf, cultura) sin semanas de remodelado 3D.</li>
+            <li><strong>Ingeniería con Pies en la Tierra:</strong> Sin clústeres locales de tarjetas gráficas (GPUs) costosas en cada terminal; el video fluye vía streaming ligero.</li>
+            <li><strong>Sincronización Labial Neural:</strong> Ajuste labial perfecto cuadro a cuadro en más de 50 idiomas generado directamente por redes de difusión neural.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <h3 style="font-size: 11pt; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Matriz Comparativa de Ingeniería Visual</h3>
+      
+      <table class="table-modern">
+        <thead>
+          <tr>
+            <th>Criterio de Evaluación</th>
+            <th>Arquitectura Nexus (HeyGen Real)</th>
+            <th>Modelado 3D Tradicional (CGI)</th>
+            <th>Valor Directo para el ICT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Realismo Visual</strong></td>
+            <td>Humano fotográfico real (100% natural)</td>
+            <td>Personaje 3D sintético (riesgo de valle inquietante)</td>
+            <td>Hospitalidad Pura Vida auténtica y confianza inmediata</td>
+          </tr>
+          <tr>
+            <td><strong>Personalización ICT</strong></td>
+            <td>100% modificable en días (vestuario y fondos)</td>
+            <td>Lento y costoso (requiere redibujado 3D completo)</td>
+            <td>Agilidad inmediata para campañas estacionales y eventos</td>
+          </tr>
+          <tr>
+            <td><strong>Hardware & CAPEX</strong></td>
+            <td>Streaming WebRTC ultraligero (corre en cualquier tótem)</td>
+            <td>Requiere PCs pesadas con GPUs dedicadas costosas</td>
+            <td>Ahorro masivo de CAPEX en tótems y mantenimiento</td>
+          </tr>
+          <tr>
+            <td><strong>Tiempo de Despliegue</strong></td>
+            <td>3 a 4 semanas (Avatar en vivo operativo)</td>
+            <td>16 a 24 semanas (diseño 3D manual)</td>
+            <td>Despliegue 4 veces más rápido en terminales y web</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="page-footer">
+      <div>ICT COSTA RICA | PROPUESTA EMBAJADORA DIGITAL VIRTUAL</div>
+      <div>PREPARADO PARA: ALBERTO LÓPEZ & ALEXANDER DÍAZ</div>
+      <div>PÁGINA 03</div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== PÁGINA 4: NÚCLEO COGNITIVO & RAG (GOOGLE GEMINI 3.6+) ==================== -->
+  <div class="page">
+    
+    <div>
+      <div class="page-header">
+        <div class="page-header-logo">NEXUS HOLDING</div>
+        <div class="page-header-tag">Núcleo Cognitivo & RAG Turístico</div>
+      </div>
+
+      <h2 class="section-title">Núcleo Cognitivo: Google Gemini 3.6+</h2>
+      <p class="section-intro">
+        La inteligencia de Elena está gobernada por <strong>Google Gemini (versión 3.6+ Flash & Pro)</strong>, líder global en razonamiento multimodal avanzado, procesando consultas de visitantes, normativas del ICT, rutas ecológicas y servicios turísticos con precisión determinística.
+      </p>
+
+      <div class="split-grid">
+        
+        <div class="card-clean accent-green">
+          <div class="tag">Operaciones Turísticas & RAG</div>
+          <div class="title">Cerebro Operativo & Rutas ICT</div>
+          <p class="text" style="margin-bottom: 8px;">Integración en tiempo real con las fuentes oficiales del turismo de Costa Rica:</p>
+          <ul class="bullet-list">
+            <li><strong>Guía Integral de Parques & SINAC:</strong> Estado de apertura, compra de entradas, senderos habilitados y cupos diarios en parques nacionales.</li>
+            <li><strong>Empresas Certificadas CST:</strong> Recomendación prioritaria de hoteles, operadores y transportes con Certificación para la Sostenibilidad Turística.</li>
+            <li><strong>Recomendaciones Hiper-Personalizadas:</strong> Creación de itinerarios según el perfil del turista (ecoturismo, aventura, surf, bienestar, avistamiento de aves).</li>
+            <li><strong>Asistencia Cívica y Emergencias:</strong> Conexión con números de emergencia (911), policía turística y consejos de seguridad ciudadana.</li>
+          </ul>
+        </div>
+
+        <div class="card-clean accent-emerald">
+          <div class="tag">Visión Computacional Multimodal</div>
+          <div class="title">Visión en Puntos de Atención</div>
+          <p class="text" style="margin-bottom: 8px;">Capacidad óptica en tótems y dispositivos de recepción:</p>
+          <ul class="bullet-list">
+            <li><strong>Lectura de Boletos & Pases de Abordaje:</strong> En aeropuertos, el turista muestra su pase o pasaporte y Elena le indica transporte autorizado y puntos de cambio.</li>
+            <li><strong>Reconocimiento de Códigos QR:</strong> Validación instantánea de reservaciones en parques nacionales o entradas oficiales.</li>
+            <li><strong>Detección de Presencia:</strong> Saludo proactivo automático cuando un visitante se acerca a menos de 2 metros del tótem interactivo.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="quote-box" style="margin-top: 8px; margin-bottom: 12px;">
+        <strong>Barreras Éticas Determinísticas & Cero Alucinación:</strong> Nexus aplica filtros multicapa estrictos. Si una consulta sale de las atribuciones turísticas o cae por debajo del 95% de certidumbre factual, Elena deriva cortésmente la atención al personal humano del ICT o a las líneas telefónicas oficiales.
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-box">
+          <div class="kpi-val">1M+ Tokens</div>
+          <div class="kpi-label">Ventana de Contexto Gemini</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-val">&lt;250ms</div>
+          <div class="kpi-label">Latencia de Razonamiento (TTFT)</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-val">0%</div>
+          <div class="kpi-label">Tolerancia a Alucinaciones</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="page-footer">
+      <div>ICT COSTA RICA | PROPUESTA EMBAJADORA DIGITAL VIRTUAL</div>
+      <div>PREPARADO PARA: ALBERTO LÓPEZ & ALEXANDER DÍAZ</div>
+      <div>PÁGINA 04</div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== PÁGINA 5: INGENIERÍA DE AUDIO NEURAL (ELEVENLABS) ==================== -->
+  <div class="page">
+    
+    <div>
+      <div class="page-header">
+        <div class="page-header-logo">NEXUS HOLDING</div>
+        <div class="page-header-tag">Voz Neural & Ingeniería Acústica</div>
+      </div>
+
+      <h2 class="section-title">Síntesis Neural de Voz: ElevenLabs Enterprise</h2>
+      <p class="section-intro">
+        La voz de Elena se desarrolla con <strong>ElevenLabs Enterprise</strong>, el estándar de oro mundial en síntesis de voz mediante inteligencia artificial. El resultado es una presencia vocal digna, hospitalaria y humana, con respiración natural, entonación cálida y fonética costarricense impecable.
+      </p>
+
+      <div class="split-grid">
+        
+        <div class="card-clean accent-green">
+          <div class="tag">Voz Propietaria del ICT</div>
+          <div class="title">Identidad Vocal Única & Propiedad Intelectual</div>
+          <p class="text" style="margin-bottom: 8px;">Activo de audio diseñado a medida para el Instituto Costarricense de Turismo:</p>
+          <ul class="bullet-list">
+            <li><strong>Propiedad Intelectual Total:</strong> El modelo vocal clonado pertenece exclusivamente al ICT para uso institucional.</li>
+            <li><strong>Modulación Emocional:</strong> Adapta el tono de forma dinámica: alegre y festivo al dar la bienvenida; empático y sereno ante cancelaciones de vuelos o dudas.</li>
+            <li><strong>Micro-Respiración Realista:</strong> Pausas naturales de respiración y ritmo humano que evitan la fatiga auditiva de los asistentes robóticos comunes.</li>
+          </ul>
+        </div>
+
+        <div class="card-clean accent-emerald">
+          <div class="tag">Escala Políglota Mundial</div>
+          <div class="title">Fluidez en más de 50 Idiomas Globales</div>
+          <p class="text" style="margin-bottom: 8px;">Atención multilingüe nativa para los principales mercados emisores de turistas:</p>
+          <ul class="bullet-list">
+            <li><strong>Español de Costa Rica:</strong> Fonética costarricense auténtica, amable, con la naturalidad del saludo "Pura Vida".</li>
+            <li><strong>50+ Idiomas Nativos (Expandible a 120+):</strong> Inglés (EE.UU., Reino Unido, Canadá), Francés, Alemán, Mandarín, Portugués, Italiano, etc.</li>
+            <li><strong>Detección Automática de Idioma:</strong> Detecta el idioma del turista desde la primera frase y responde en su lengua nativa al instante.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <h3 style="font-size: 10.5pt; font-weight: 800; color: #0f172a; margin-top: 12px; margin-bottom: 8px;">Procesamiento Acústico para Aeropuertos (Resiliencia al Ruido)</h3>
+
+      <div class="cards-row">
+        
+        <div class="card-clean">
+          <div class="tag">Cancelación de Ruido</div>
+          <div class="title" style="font-size: 8.5pt;">Filtrado Neural de Audio</div>
+          <div class="text">
+            Filtra hasta 90dB de ruido ambiental en terminales aéreas (anuncios de altavoces, murmullo y maletas), captando la voz del turista con nitidez.
+          </div>
+        </div>
+
+        <div class="card-clean">
+          <div class="tag">Streaming Inmediato</div>
+          <div class="title" style="font-size: 8.5pt;">Latencia de Audio &lt;150ms</div>
+          <div class="text">
+            Transmisión de audio ultrarrápida que garantiza respuestas fluidas e instantáneas, eliminando silencios incómodos en la conversación.
+          </div>
+        </div>
+
+        <div class="card-clean">
+          <div class="tag">Audio Direccional</div>
+          <div class="title" style="font-size: 8.5pt;">Foco Sonoro Paramétrico</div>
+          <div class="text">
+            Altavoces direccionales en los tótems que proyectan el sonido directamente hacia el usuario, manteniendo la privacidad y sin contaminar el entorno.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="page-footer">
+      <div>ICT COSTA RICA | PROPUESTA EMBAJADORA DIGITAL VIRTUAL</div>
+      <div>PREPARADO PARA: ALBERTO LÓPEZ & ALEXANDER DÍAZ</div>
+      <div>PÁGINA 05</div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== PÁGINA 6: PUNTOS DE CONTACTO OMNICANAL ==================== -->
+  <div class="page">
+    
+    <div>
+      <div class="page-header">
+        <div class="page-header-logo">NEXUS HOLDING</div>
+        <div class="page-header-tag">Puntos de Contacto Omnicanal</div>
+      </div>
+
+      <h2 class="section-title">Ecosistema de Despliegue Estratégico</h2>
+      <p class="section-intro">
+        La Embajadora Digital Elena actúa como una presencia de marca unificada y continua a lo largo de toda la experiencia del turista, uniendo los puntos físicos de ingreso al país con los canales digitales que lo acompañan en su estadía.
+      </p>
+
+      <div class="split-grid" style="margin-bottom: 14px;">
+        
+        <div class="card-clean accent-green">
+          <div class="tag">Punto Físico // Aeropuertos</div>
+          <div class="title">Tótems Interactivos (SJO y Guanacaste)</div>
+          <div class="text">
+            <strong>Hardware:</strong> Pantallas verticales 4K de 75" a 85" con cámara HD integrada, micrófonos direccionales y lector óptico de QR/pasaporte.<br><br>
+            <strong>Experiencia:</strong> Concierge a escala real frente a frente. Los viajeros consultan transporte oficial hacia San José, La Fortuna o Manuel Antonio, cambian divisas o validan requisitos de viaje.
+          </div>
+        </div>
+
+        <div class="card-clean accent-emerald">
+          <div class="tag">Punto Figital // En el Bolsillo</div>
+          <div class="title">Handoff Instantáneo a WhatsApp ICT</div>
+          <div class="text">
+            <strong>Tecnología:</strong> Emisión de QR dinámico al finalizar la consulta en el tótem físico.<br><br>
+            <strong>Experiencia:</strong> El turista escanea el código con su teléfono y la conversación se transfiere a su WhatsApp, manteniendo el itinerario generado y brindando un asistente 24/7 en cualquier rincón de Costa Rica.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="split-grid">
+        
+        <div class="card-clean accent-teal">
+          <div class="tag">Canal Web // Global</div>
+          <div class="title">Portal Web Oficial (visitcostarica.com)</div>
+          <div class="text">
+            <strong>Tecnología:</strong> Widget liviano de streaming WebRTC alojado en AWS, compatible con iOS, Android y escritorio sin descargas pesadas.<br><br>
+            <strong>Experiencia:</strong> Asistente en vivo que atiende a turistas de todo el mundo antes de viajar, resolviendo dudas sobre visados, mejores épocas para avistamiento de ballenas y clima.
+          </div>
+        </div>
+
+        <div class="card-clean">
+          <div class="tag">Comunicación & PR</div>
+          <div class="title">Campañas Digitales & Redes Oficiales</div>
+          <div class="text">
+            <strong>Campañas:</strong> Generación ágil de videos en 4K con Elena presentando destinos emergentes, ferias internacionales (FITUR, WTM) y campañas de sostenibilidad.<br><br>
+            <strong>Experiencia:</strong> Vocera digital activa en Instagram, YouTube y TikTok para conectar con las nuevas generaciones de viajeros.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="page-footer">
+      <div>ICT COSTA RICA | PROPUESTA EMBAJADORA DIGITAL VIRTUAL</div>
+      <div>PREPARADO PARA: ALBERTO LÓPEZ & ALEXANDER DÍAZ</div>
+      <div>PÁGINA 06</div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== PÁGINA 7: INFRAESTRUCTURA AWS, SEGURIDAD & APIS ==================== -->
+  <div class="page">
+    
+    <div>
+      <div class="page-header">
+        <div class="page-header-logo">NEXUS HOLDING</div>
+        <div class="page-header-tag">Infraestructura AWS & Seguridad</div>
+      </div>
+
+      <h2 class="section-title">Nube Soberana, Protección de Datos & APIs</h2>
+      <p class="section-intro">
+        La infraestructura central está alojada en <strong>Amazon Web Services (AWS)</strong>, combinando alta disponibilidad y redundancia con un cumplimiento estricto de la <strong>Ley de Protección de la Persona frente al Tratamiento de sus Datos Personales (Ley N° 8968 de Costa Rica)</strong> y las directrices de ciberseguridad gubernamental.
+      </p>
+
+      <div class="cards-row">
+        
+        <div class="card-clean accent-green">
+          <div class="tag">Ley N° 8968 & GDPR</div>
+          <div class="title" style="font-size: 8.5pt;">Conformidad Normativa Total</div>
+          <div class="text">
+            Alineación plena con la legislación costarricense y europea. Cero comercialización o fuga de datos de visitantes. Opción de residencia soberana de datos en zonas cloud reguladas.
+          </div>
+        </div>
+
+        <div class="card-clean accent-emerald">
+          <div class="tag">Memoria Efímera</div>
+          <div class="title" style="font-size: 8.5pt;">Cero Retención de Datos Sensibles</div>
+          <div class="text">
+            Consultas, pasaportes y audios se procesan en memoria RAM aislada y se eliminan inmediatamente al concluir la sesión (Zero Data Leakage). Cifrado KMS AES-256.
+          </div>
+        </div>
+
+        <div class="card-clean accent-teal">
+          <div class="tag">Ciberseguridad</div>
+          <div class="title" style="font-size: 8.5pt;">AWS WAF & Shield Advanced</div>
+          <div class="text">
+            Blindaje perimetral contra ataques distribuidos (DDoS), cifrado obligatorio TLS 1.3 en tránsito y arquitectura Zero-Trust en Virtual Private Cloud (VPC).
+          </div>
+        </div>
+
+      </div>
+
+      <h3 style="font-size: 10.5pt; font-weight: 800; color: #0f172a; margin-top: 10px; margin-bottom: 6px;">Ecosistema de Conectores API Empresariales</h3>
+
+      <table class="table-modern">
+        <thead>
+          <tr>
+            <th>Capa Operativa</th>
+            <th>Protocolo / Servicio</th>
+            <th>Flujo de Datos & Integración</th>
+            <th>SLA & Latencia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Parques & Reservas</strong></td>
+            <td>API SINAC / SICORE</td>
+            <td>Consulta de capacidad de carga, horarios de ingreso y emisión de alertas climáticas en parques.</td>
+            <td>&lt;150ms respuesta</td>
+          </tr>
+          <tr>
+            <td><strong>Directorio Turístico</strong></td>
+            <td>Base Oficial ICT CST</td>
+            <td>Recomendación de establecimientos formales con Certificación de Sostenibilidad Turística.</td>
+            <td>&lt;120ms respuesta</td>
+          </tr>
+          <tr>
+            <td><strong>Tráfico & Rutas</strong></td>
+            <td>MOPT / Waze for Cities</td>
+            <td>Estado en tiempo real de rutas nacionales (Ruta 27, Ruta 32, Cerro de la Muerte).</td>
+            <td>&lt;180ms respuesta</td>
+          </tr>
+          <tr>
+            <td><strong>Mensajería WhatsApp</strong></td>
+            <td>Meta Cloud API (AWS Gateway)</td>
+            <td>Transmisión segura de itinerarios, mapas offline y asistencia turística personalizada.</td>
+            <td>&lt;200ms entrega</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="page-footer">
+      <div>ICT COSTA RICA | PROPUESTA EMBAJADORA DIGITAL VIRTUAL</div>
+      <div>PREPARADO PARA: ALBERTO LÓPEZ & ALEXANDER DÍAZ</div>
+      <div>PÁGINA 07</div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================== PÁGINA 8: ROADMAP ÁGIL DE IMPLEMENTACIÓN (8 SEMANAS) ==================== -->
+  <div class="page">
+    
+    <div>
+      <div class="page-header">
+        <div class="page-header-logo">NEXUS HOLDING</div>
+        <div class="page-header-tag">Roadmap de Implementación & Gobernanza</div>
+      </div>
+
+      <h2 class="section-title">Roadmap Ágil de Implementación: 8 Semanas (~60 Días)</h2>
+      <p class="section-intro">
+        Al desplegar un Gemelo Digital Humano-Real impulsado por HeyGen Enterprise, este proyecto evita los costosos y lentos ciclos de animación 3D por computadora, logrando un despliegue institucional completo en solo 8 semanas (~60 días), con un MVP interactivo listo para validación del ICT en la Semana 4 (~30 días).
+      </p>
+
+      <div style="margin-top: 10px;">
+        
+        <div style="margin-bottom: 10px; padding: 10px 12px; border-left: 3px solid #059669; background: #f8fafc; border-radius: 0 6px 6px 0;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 6.5pt; font-weight: 700; color: #059669; text-transform: uppercase;">
+            Fase 1: Casting, Grabación en Estudio 4K & Gemelo Digital Exclusivo (Semanas 1 – 2)
+          </div>
+          <div style="font-size: 7.5pt; color: #334155; margin-top: 2px;">
+            Selección del talento costarricense, sesión de filmación 4K con indumentaria oficial del ICT, generación del Avatar Interactivo exclusivo en HeyGen Enterprise y calibración de voz en ElevenLabs.
+          </div>
+        </div>
+
+        <div style="margin-bottom: 10px; padding: 10px 12px; border-left: 3px solid #059669; background: #f8fafc; border-radius: 0 6px 6px 0;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 6.5pt; font-weight: 700; color: #059669; text-transform: uppercase;">
+            Fase 2: Gemini 3.6+, RAG Turístico del ICT & MVP Interactivo (Semanas 3 – 4 / ~30 Días)
+          </div>
+          <div style="font-size: 7.5pt; color: #334155; margin-top: 2px;">
+            Conexión de Gemini a la base de conocimiento oficial del ICT (parques, rutas, sostenibilidad, guías). Entrega del MVP interactivo para revisión de la Gerencia General y Jefatura de TI.
+          </div>
+        </div>
+
+        <div style="margin-bottom: 10px; padding: 10px 12px; border-left: 3px solid #059669; background: #f8fafc; border-radius: 0 6px 6px 0;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 6.5pt; font-weight: 700; color: #059669; text-transform: uppercase;">
+            Fase 3: Integración de APIs & Handoff a WhatsApp (Semanas 5 – 6)
+          </div>
+          <div style="font-size: 7.5pt; color: #334155; margin-top: 2px;">
+            Integración segura en AWS sandbox con servicios de información turística, generación de QR dinámicos y pasarela de atención en WhatsApp Business API.
+          </div>
+        </div>
+
+        <div style="margin-bottom: 12px; padding: 10px 12px; border-left: 3px solid #059669; background: #f8fafc; border-radius: 0 6px 6px 0;">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 6.5pt; font-weight: 700; color: #059669; text-transform: uppercase;">
+            Fase 4: Piloto en Aeropuerto Juan Santamaría & Go-Live Oficial (Semanas 7 – 8 / ~60 Días)
+          </div>
+          <div style="font-size: 7.5pt; color: #334155; margin-top: 2px;">
+            Instalación y calibración acústica del tótem interactivo en el Aeropuerto Internacional Juan Santamaría (SJO), pruebas de carga con turistas reales y lanzamiento global en visitcostarica.com.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sla-banner">
+        <div class="tag">Soporte Dedicado 24/7 & Actualizaciones Continuas</div>
+        <div class="quote">
+          "Nexus Holding Group garantiza un acuerdo de nivel de servicio (SLA) de misión crítica 24/7/365, actualizaciones continuas de modelos sin tiempo de inactividad, sincronización de la base de conocimiento en vivo y 100% de personalización para que el ICT mantenga el control absoluto de su identidad de marca país."
+        </div>
+      </div>
+
+      <div class="signature-grid">
+        <div class="sig-block">
+          <div class="role">Preparado y Emitido Por:</div>
+          <div class="name">Geanderson Leandro Schuh</div>
+          <div class="title">Fundador y CEO | Nexus Holding Group<br>Inteligencia Artificial Soberana & Tecnologías Avanzadas</div>
+        </div>
+        <div class="sig-block">
+          <div class="role">Presentado Exclusivamente A:</div>
+          <div class="name">Alberto López & Alexander Díaz</div>
+          <div class="title">Gerencia General & Tecnologías de la Información<br>Instituto Costarricense de Turismo (ICT) — San José, Costa Rica</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="page-footer">
+      <div>ICT COSTA RICA | PROPUESTA EMBAJADORA DIGITAL VIRTUAL</div>
+      <div>PREPARADO PARA: ALBERTO LÓPEZ & ALEXANDER DÍAZ</div>
+      <div>PÁGINA 08</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
