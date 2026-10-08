@@ -57,21 +57,7 @@ export default function HomePage() {
             <div className="relative z-10 text-foreground overflow-x-hidden">
                 <section className="relative min-h-[90dvh] flex flex-col items-center justify-start pt-20 md:pt-24 overflow-hidden">
                 <div className="w-full max-w-[1650px] mx-auto px-4 md:px-8 relative z-10">
-                    <div className="flex flex-col items-center justify-center mb-0 w-full">
-                        <motion.div 
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1.5, ease: "easeOut" }}
-                            className="relative w-full max-w-[1500px] group px-0"
-                        >
-                            <div className="relative w-full max-w-5xl mx-auto overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.5)] bg-black/50">
-                                <CustomVideoPlayer 
-                                    src={getVideoUrl("https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Avatar_IV_Video.mp4", "Nexus Holding Group.mp4")}
-                                    className="aspect-video" 
-                                />
-                            </div>
-                        </motion.div>
-                    </div>
+
 
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }}
@@ -82,8 +68,8 @@ export default function HomePage() {
                         {/* Nexus Logo Image (Restored) */}
                         <div className="relative w-full max-w-5xl mx-auto aspect-video mb-12 overflow-hidden rounded-[16px] md:rounded-[32px] border border-white/10 bg-black/40 shadow-[0_0_50px_rgba(37,99,235,0.4)]">
                             <Image
-                                src="/Nexus Holding Group/Nexus Holding group nova.jpg"
-                                alt="Nexus Holding Group Logo"
+                                src="/Nexus Holding Group/Nexus Simbiose.jpg"
+                                alt="Nexus Simbiose - Homem e IA"
                                 fill
                                 className="object-contain p-4"
                             />

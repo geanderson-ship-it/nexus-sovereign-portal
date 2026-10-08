@@ -35,3 +35,8 @@ public/Agro/Dante_safra.mp4
 public/Nexus Empresas/Nexus_B2B.mp4
 public/multidao.mp4
 public/visao_camera.mp4
+ 
+*.cjs
+*.mjs
+*.env
+
