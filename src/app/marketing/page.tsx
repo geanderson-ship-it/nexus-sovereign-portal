@@ -17,7 +17,10 @@ import {
   Calendar,
   ShieldCheck,
   Building2,
-  Palette
+  Palette,
+  Tv,
+  Radio,
+  Store
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -43,7 +46,7 @@ interface ModuleData {
   subtitle: string;
   description: string;
   icon: any;
-  color: 'orange' | 'emerald' | 'cyan';
+  color: 'orange' | 'emerald' | 'cyan' | 'violet' | 'rose';
   features: FeatureItem[];
   image: string;
   licenca: string;
@@ -57,10 +60,11 @@ interface PillarData {
   title: string;
   subtitle: string;
   icon: any;
-  color: 'orange' | 'emerald' | 'cyan';
+  color: 'orange' | 'emerald' | 'cyan' | 'violet' | 'rose';
   tagline: string;
   description: string;
-  video: string;
+  video?: string;
+  image?: string;
   modules: ModuleData[];
 }
 
@@ -436,7 +440,249 @@ const marketingModules: ModuleData[] = [
   }
 ];
 
+// Módulos específicos para Televisão & Telejornais
+const tvModules: ModuleData[] = [
+  {
+    id: 'tv_ancora',
+    badge: 'BROADCAST_ANCHOR_AI',
+    title: 'Arthur & Stela',
+    highlight: 'ÂNCORA DE TELEJORNAL',
+    subtitle: 'Apresentação de Notícias & Bancada Virtual 3D',
+    description: 'Solução prática de geração audiovisual para emissoras de TV, Web TVs e canais informativos. O jornalista ou redator insere o texto da matéria no painel e o sistema sintetiza o vídeo do apresentador virtual com sincronismo labial preciso, cadência de telejornal e cenário tridimensional alinhado à identidade visual da sua marca.',
+    icon: Tv,
+    color: 'violet',
+    image: '/ancora_jornalista_homem.jpg',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
+    roi: 'Reduz em até 70% o custo fixo com estúdio físico, maquiagem, iluminação pesada e operadores de câmera.',
+    features: [
+      {
+        title: 'Dicção & Cadência Jornalística',
+        description: 'Voz treinada com inflexões de bancada, pausas naturais de respiração e pronúncia exata de números, siglas e termos técnicos.',
+        image: '/ancora_jornalista_homem.jpg'
+      },
+      {
+        title: 'Bancada Virtual & Estúdio 3D',
+        description: 'Cenários digitais renderizados em alta definição, personalizados com a logomarca da emissora, videowall temático e iluminação nas cores institucionais.',
+        image: '/jornal_nexus.jpg'
+      },
+      {
+        title: 'Múltiplos Apresentadores Especialistas',
+        description: 'Modelos visuais masculinos e femininos com postura sóbria e trajes formais, ideais para telejornais gerais, blocos de economia, política ou agronegócio.',
+        image: '/multiplos_ancoras_tv.jpg'
+      },
+      {
+        title: 'Renderização em Full HD / 4K',
+        description: 'Exportação em formatos broadcast padrão (MP4 H.264/H.265 ou ProRes) prontos para importação direta em switchers como vMix, OBS Studio e TriCaster.',
+        image: '/tv_renderizacao_4k.jpg'
+      }
+    ]
+  },
+  {
+    id: 'tv_breaking',
+    badge: 'BREAKING_NEWS_AI',
+    title: 'Dante',
+    highlight: 'PLANTÃO & BREAKING NEWS 24 HORAS POR DIA',
+    subtitle: 'Cobertura Urgente de Notícias em Poucos Minutos',
+    description: 'Agilidade editorial para fatos urgentes ocorridos fora do horário comercial, madrugadas ou fins de semana. O plantonista insere a nota da matéria e gera em minutos o boletim em vídeo com vinheta de alerta, tarja informativa e locução firme, pronto para entrar no corte da programação ou ser disparado nas redes sociais.',
+    icon: Megaphone,
+    color: 'violet',
+    image: '/plantao_urgente_tv.jpg',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
+    roi: 'Garante que a emissora seja a primeira a veicular o fato urgente, multiplicando o alcance e audiência digital.',
+    features: [
+      {
+        title: 'Renderização Prioritária para Fatos Urgentes',
+        description: 'Fila de processamento acelerada no servidor para que o arquivo final de vídeo esteja disponível minutos após a inserção do texto da ocorrência.',
+        image: '/plantao_urgente_tv.jpg'
+      },
+      {
+        title: 'Gerador de Caracteres & Tarjas Dinâmicas',
+        description: 'Aplicação automatizada de tarjas inferiores (lower-thirds) com aviso de "Urgente / Plantão" e síntese da manchete para leitura dinâmica pelo telespectador.',
+        image: '/tv_tarjas_gc.jpg'
+      },
+      {
+        title: 'Distribuição Multiplataforma Integrada',
+        description: 'Exportação simultânea em formato 16:9 para a grade de exibição de TV e 9:16 vertical para canais digitais como Instagram Reels, Shorts e TikTok.',
+        image: '/tv_multiplataforma.jpg'
+      },
+      {
+        title: 'Ingestão por Pauta ou Feed de Notícias',
+        description: 'Possibilidade de monitoramento de despachos de agências e portais parceiros, permitindo ao editor revisar a pauta e autorizar a geração com um clique.',
+        image: '/tv_automacao_rss.jpg'
+      }
+    ]
+  },
+  {
+    id: 'tv_corporativa',
+    badge: 'CORPORATE_BROADCAST_AI',
+    title: 'Djeny',
+    highlight: 'TV CORPORATIVA & SETOR PÚBLICO',
+    subtitle: 'Boletins Informativos para Empresas, Câmaras e Prefeituras',
+    description: 'Transformação de relatórios, atas e comunicados em telejornais corporativos objetivos e fáceis de assimilar. Desenvolvido para Câmaras Municipais, Prefeituras, cooperativas e indústrias que necessitam prestar contas com clareza sem despender altos orçamentos com produtoras externas de vídeo.',
+    icon: Building2,
+    color: 'violet',
+    image: '/tv_corp_boletim_semanal.jpg',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
+    roi: 'Aumenta significativamente a absorção das informações institucionais em comparação a comunicados em papel ou e-mails formais.',
+    features: [
+      {
+        title: 'Boletins Semanais e Prestação de Contas',
+        description: 'Síntese das realizações públicas ou metas corporativas em edições dinâmicas de 2 a 5 minutos, apresentadas com clareza e credibilidade.',
+        image: '/tv_corp_boletim_semanal.jpg'
+      },
+      {
+        title: 'Circuito Interno de Telas (Digital Signage)',
+        description: 'Arquivos gerados em resolução ideal para exibição contínua em telas de recepções, agências de atendimento, saguões públicos e refeitórios de fábricas.',
+        image: '/tv_corp_rede_telas.jpg'
+      },
+      {
+        title: 'Acessibilidade com Legendas e Janela de Libras',
+        description: 'Inclusão automática de legendas de alto contraste e layout preparado para sobreposição de janela de intérprete de Libras, em conformidade com exigências legais.',
+        image: '/tv_corp_acessibilidade_legendas.jpg'
+      },
+      {
+        title: 'Painel Self-Service de Produção',
+        description: 'Interface web intuitiva onde a própria assessoria de comunicação digita o roteiro, revisa a fala e gera o vídeo completo de forma autônoma.',
+        image: '/tv_corp_painel_producao.jpg'
+      }
+    ]
+  }
+];
+
+// Módulos específicos para Rádios AM, FM & Web
+const radiosModules: ModuleData[] = [
+  {
+    id: 'radio_locutor',
+    badge: 'RADIO_AUTOMATION_AI',
+    title: 'Locução Virtual',
+    highlight: 'LOCUÇÃO DE RÁDIO 24 HORAS POR DIA',
+    subtitle: 'Hora Certa, Clima, Vinhetas e Saudações ao Ouvinte',
+    description: 'Automatização inteligente para preenchimento de horários sem locutor ao vivo, como madrugadas, finais de semana e feriados. O sistema gera a leitura da hora exata do disparo, a temperatura e condições do tempo da cidade e faz saudações calorosas aos ouvintes com locução natural e fluida.',
+    icon: Radio,
+    color: 'rose',
+    image: '/radio_estudio_locucao.jpg',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
+    roi: 'Mantém a emissora viva e dinâmica 24 horas por dia, reduzindo custos de escalas extraordinárias de estúdio.',
+    features: [
+      {
+        title: 'Hora Certa, Clima & Locução Humanizada',
+        description: 'Preenchimento inteligente de madrugadas, finais de semana e feriados. Geração de áudio com sincronismo ao segundo da hora oficial, temperatura local e saudações aos ouvintes com cadência natural e calorosa.',
+        image: '/radio_estudio_locucao.jpg'
+      },
+      {
+        title: 'Integração com Softwares de Automação de Rádio',
+        description: 'Gravação e entrega direta de arquivos WAV/MP3 nas pastas monitoradas de sistemas consagrados do mercado (Pulsar, Playlist Digital, ZaraRadio, InfoAudio e DStation), sem necessidade de novas instalações ou softwares complexos.',
+        image: '/radio_software_automacao.jpg'
+      }
+    ]
+  },
+  {
+    id: 'radio_noticias',
+    badge: 'RADIO_NEWS_AI',
+    title: 'Giro de Notícias',
+    highlight: 'BOLETIM DE NOTÍCIAS & AGRO',
+    subtitle: 'Informativos de Hora em Hora com Trilha Masterizada e Cotações',
+    description: 'Boletins jornalísticos compactos de 1 a 3 minutos para a virada de hora da emissora. Inclui leitura de destaques locais, trânsito e cotações agrícolas diárias essenciais para ouvintes do interior e produtores rurais, com trilha sonora de fundo profissional e controle de volume automático durante a fala.',
+    icon: Sparkles,
+    color: 'rose',
+    image: '/radio_giro_noticias.jpg',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
+    roi: 'Cria novas cotas de patrocínio comercial para blocos de notícias e indicadores agropecuários diários.',
+    features: [
+      {
+        title: 'Cotações do Agronegócio Diárias',
+        description: 'Boletins com preços atualizados de commodities agrícolas (soja, milho, arroz, trigo, café e arroba do boi gordo) direcionados aos produtores rurais da região, gerando grande apelo de patrocínio local.',
+        image: '/radio_giro_noticias.jpg'
+      },
+      {
+        title: 'Sonoplastia & Masterização com Trilha de Fundo',
+        description: 'Áudio gerado com trilha instrumental jornalística (bed musical) e efeito de ducking automático (redução suave da trilha durante a locução), masterizado no padrão acústico dos processadores de transmissão (Omnia / Orban).',
+        image: '/radio_sonoplastia_trilhas.jpg'
+      }
+    ]
+  },
+  {
+    id: 'radio_spots',
+    badge: 'RADIO_COMMERCIALS_AI',
+    title: 'Spots & Comerciais',
+    highlight: 'PRODUÇÃO DE SPOTS COMERCIAIS',
+    subtitle: 'Gravação Rápida de Propagandas para Anunciantes Locais',
+    description: 'Agilidade direta para o departamento comercial da rádio. Quando um anunciante local fecha uma campanha que precisa estrear no mesmo dia, a equipe redige o texto do anúncio e gera o spot comercial completo com voz profissional, fundo musical e efeitos em poucos minutos, sem depender de estúdios externos.',
+    icon: Megaphone,
+    color: 'rose',
+    image: '/radio_spots_varejo.jpg',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
+    roi: 'Permite fechar vendas publicitárias de última hora e veicular campanhas promocionais de varejo no mesmo dia.',
+    features: [
+      {
+        title: 'Propagandas de Varejo & Comércio Local no Mesmo Dia',
+        description: 'Elimine a espera de 48 horas por estúdios externos. Crie e aprove anúncios de alta energia para supermercados, lojas de moda, feirões e concessionárias locais com liberação imediata para a grade ou envio de prévia no WhatsApp do cliente.',
+        image: '/radio_spots_varejo.jpg'
+      },
+      {
+        title: 'Mixagem Digital, Trilhas Comerciais & Efeitos',
+        description: 'Combinação automatizada da voz publicitária com trilhas sonoras orquestradas, fundos musicais dinâmicos de varejo e efeitos sonoros sincronizados de impacto, masterizados nos padrões de processamento da sua emissora.',
+        image: '/radio_spots_comerciais.jpg'
+      }
+    ]
+  },
+  {
+    id: 'radio_indoor',
+    badge: 'INDOOR_RETAIL_AUDIO_AI',
+    title: 'Rádio Indoor & PDV',
+    highlight: 'RÁDIO INDOOR PARA VAREJO & SUPERMERCADOS',
+    subtitle: 'Locução de Ofertas no Ponto de Venda, Música Ambiente & Avisos',
+    description: 'Solução completa de sonorização comercial para supermercados, atacarejos, farmácias, shoppings e redes de lojas. A gerência ou equipe de marketing agenda chamadas automáticas de ofertas-relâmpago, avisos operacionais de caixa e comunicados institucionais com locução profissional calorosa intercalada na programação musical.',
+    icon: Store,
+    color: 'rose',
+    image: '/radio_indoor_supermercado.jpg',
+    licenca: 'Sob Consulta',
+    suporte: 'SLA Customizado',
+    roi: 'Aumenta em até 25% as vendas por impulso de produtos anunciados dinamicamente no som ambiente da loja física.',
+    features: [
+      {
+        title: 'Supermercados & Ofertas no Ponto de Venda',
+        description: 'Locução enérgica e profissional gerada na hora para anunciar descontos relâmpago nos setores da loja (açougue, hortifrúti, padaria e perfumaria), impulsionando a conversão imediata de compras.',
+        image: '/radio_indoor_supermercado.jpg'
+      },
+      {
+        title: 'Redes de Lojas, Franquias & Telas Integradas',
+        description: 'Gestão centralizada de som ambiente, avisos institucionais e campanhas promocionais para lojas de departamento, franquias e shopping centers, sincronizada com a identidade da marca.',
+        image: '/radio_indoor_lojas.jpg'
+      }
+    ]
+  }
+];
+
 const pillars: PillarData[] = [
+  {
+    id: 'tv-telejornais',
+    title: 'Televisão & Telejornais',
+    subtitle: 'Apresentadores Virtuais, Bancadas 3D & Produção Ágil de Notícias',
+    icon: Tv,
+    color: 'violet',
+    tagline: 'Geração automatizada de telejornais e plantões com qualidade broadcast e custo operacional reduzido.',
+    description: 'Infraestrutura de síntese audiovisual voltada a emissoras de TV, Web TVs, portais de notícias e canais corporativos. O sistema permite que editores e jornalistas transformem matérias escritas em vídeos de telejornal de alta definição (Full HD/4K) apresentados por âncoras virtuais em bancadas 3D, com inserção de tarjas gráficas e compatibilidade total com switchers de transmissão.',
+    image: '/jornal_nexus.jpg',
+    modules: tvModules
+  },
+  {
+    id: 'radios-audio',
+    title: 'Rádios AM, FM & Web',
+    subtitle: 'Locução Contínua 24 Horas, Hora Certa, Noticiário Agro & Spots Comerciais',
+    icon: Radio,
+    color: 'rose',
+    tagline: 'Automação inteligente de áudio broadcast integrada diretamente ao software da sua emissora.',
+    description: 'Solução técnica desenhada para emissoras de rádio AM/FM, comunitárias e web rádios que buscam manter a programação dinâmica e viva em todos os horários. Integração direta com pastas monitoradas dos automatizadores de mercado, entregando arquivos de áudio masterizados com hora certa sincronizada, boletins agropecuários, temperatura local e spots comerciais gravados em poucos minutos.',
+    image: '/radio_hero_studio.jpg',
+    modules: radiosModules
+  },
   {
     id: 'hoteis-pousadas',
     title: 'Hotéis & Pousadas',
@@ -480,6 +726,7 @@ const colorMap = {
     glow: 'shadow-[0_0_60px_rgba(249,115,22,0.15)]',
     badge: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
     btn: 'bg-orange-600 hover:bg-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.3)]',
+    hoverBorder: 'hover:border-orange-500/50',
     overlay: 'bg-orange-950/20'
   },
   emerald: {
@@ -489,6 +736,7 @@ const colorMap = {
     glow: 'shadow-[0_0_60px_rgba(16,185,129,0.15)]',
     badge: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
     btn: 'bg-emerald-600 hover:bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.3)]',
+    hoverBorder: 'hover:border-emerald-500/50',
     overlay: 'bg-emerald-950/20'
   },
   cyan: {
@@ -500,6 +748,26 @@ const colorMap = {
     btn: 'bg-cyan-600 hover:bg-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.3)]',
     hoverBorder: 'hover:border-cyan-500/50',
     overlay: 'bg-cyan-950/20'
+  },
+  violet: {
+    border: 'border-violet-500/30',
+    text: 'text-violet-400',
+    bg: 'bg-violet-500/5',
+    glow: 'shadow-[0_0_60px_rgba(139,92,246,0.15)]',
+    badge: 'bg-violet-500/20 text-violet-400 border-violet-500/30',
+    btn: 'bg-violet-600 hover:bg-violet-500 shadow-[0_0_20px_rgba(139,92,246,0.3)]',
+    hoverBorder: 'hover:border-violet-500/50',
+    overlay: 'bg-violet-950/20'
+  },
+  rose: {
+    border: 'border-rose-500/30',
+    text: 'text-rose-400',
+    bg: 'bg-rose-500/5',
+    glow: 'shadow-[0_0_60px_rgba(244,63,94,0.15)]',
+    badge: 'bg-rose-500/20 text-rose-400 border-rose-500/30',
+    btn: 'bg-rose-600 hover:bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.3)]',
+    hoverBorder: 'hover:border-rose-500/50',
+    overlay: 'bg-rose-950/20'
   }
 };
 
@@ -522,7 +790,7 @@ export default function MarketingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050506] text-slate-200 relative overflow-hidden pt-28 pb-24 font-sans">
+    <div className="min-h-screen bg-[#050506] text-slate-200 relative overflow-hidden pt-28 sm:pt-36 lg:pt-40 pb-24 font-sans">
       {/* Background Image Textures with Fade Transition */}
       <div 
         className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
@@ -542,6 +810,18 @@ export default function MarketingPage() {
         }`}
         style={{ backgroundImage: "url('/marketing-assets/mkt_bg.png')" }}
       />
+      <div 
+        className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
+          activeMacro === 'tv-telejornais' ? 'opacity-[0.35]' : 'opacity-0'
+        }`}
+        style={{ backgroundImage: "url('/marketing-assets/marketing_bg.jpg')" }}
+      />
+      <div 
+        className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
+          activeMacro === 'radios-audio' ? 'opacity-[0.35]' : 'opacity-0'
+        }`}
+        style={{ backgroundImage: "url('/marketing-assets/marketing_bg.jpg')" }}
+      />
       {/* Background Decorative Glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-orange-600/5 rounded-full blur-[130px] pointer-events-none z-0" />
       <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[100px] pointer-events-none z-0" />
@@ -551,7 +831,7 @@ export default function MarketingPage() {
         <AnimatePresence mode="wait">
           {!activeMacro ? (
             /* =========================================
-               VISTA 1: OS 3 MACRO CARDS
+               VISTA 1: OS MACRO CARDS
                ========================================= */
             <motion.div
               key="macro-view"
@@ -561,23 +841,24 @@ export default function MarketingPage() {
               transition={{ duration: 0.5 }}
             >
               {/* HERO SECTION */}
-              <div className="text-center max-w-3xl mx-auto mb-16">
-                <span className="inline-flex items-center gap-2 bg-orange-500/10 text-orange-400 border border-orange-500/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
-                  <Sparkles className="w-3.5 h-3.5 animate-pulse" /> Divisão MarTech & Hospitalidade
+              <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                <span className="inline-flex items-center gap-2 bg-orange-500/10 text-orange-400 border border-orange-500/20 px-3.5 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6">
+                  <Sparkles className="w-3.5 h-3.5 animate-pulse" /> Divisão Mídia, TV & MarTech
                 </span>
-                <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase mb-6 leading-tight">
-                  Nossos Canais de <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500">Marketing & IA</span>
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-white uppercase mb-4 sm:mb-6 leading-tight">
+                  Nossos Canais de <br className="hidden sm:inline" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-violet-400 to-rose-400 block sm:inline">Mídia & Entretenimento</span>
                 </h1>
-                <p className="text-slate-400 text-base sm:text-lg leading-relaxed font-light">
-                  Selecione uma área abaixo para descobrir as soluções de Concierges Virtuais e Avatares de IA Soberana desenhados para elevar o seu negócio.
+                <p className="text-slate-400 text-xs sm:text-base md:text-lg leading-relaxed font-light px-2 sm:px-0">
+                  Selecione uma área abaixo para descobrir as soluções de Avatares para TV, Locução para Rádios, Concierges Virtuais e MarTech desenhados para elevar o seu negócio.
                 </p>
               </div>
 
-              {/* GRID OF CINEMATIC CARD PLAYERS */}
-              <section className="mb-20">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                  {pillars.map((pillar) => {
+              {/* GRID OF CINEMATIC CARD PLAYERS (2 CARDS DE MÍDIA NO TOPO + 3 CARDS ABAIXO) */}
+              <section className="mb-20 space-y-6 max-w-7xl mx-auto">
+                {/* FILA 1: DESTAQUES BROADCAST & MÍDIA (TV & RÁDIOS) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {pillars.slice(0, 2).map((pillar) => {
                     const c = colorMap[pillar.color];
                     return (
                       <button
@@ -587,40 +868,117 @@ export default function MarketingPage() {
                           setActiveMacro(pillar.id);
                           window.history.pushState(null, '', `?macro=${pillar.id}`);
                         }}
-                        className="relative h-64 md:h-[450px] w-full rounded-[40px] overflow-hidden border border-slate-900 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl cursor-pointer"
+                        className="relative h-80 sm:h-96 md:h-[480px] w-full rounded-[24px] sm:rounded-[36px] md:rounded-[40px] overflow-hidden border border-slate-900 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.01] hover:border-white/20 hover:shadow-2xl cursor-pointer"
                       >
-                        {/* BACKGROUND VIDEO */}
-                        <div className="absolute inset-0 z-0 bg-slate-950">
-                          <video 
-                            src={pillar.video} 
-                            autoPlay 
-                            loop 
-                            muted 
-                            playsInline 
-                            className="w-full h-full object-cover opacity-35 group-hover:opacity-65 transition-opacity duration-1000" 
-                          />
+                        {/* BACKGROUND VIDEO / IMAGE */}
+                        <div className="absolute inset-0 z-0 bg-slate-950 overflow-hidden">
+                          {pillar.image ? (
+                            <img 
+                              src={pillar.image} 
+                              alt={pillar.title} 
+                              className="w-full h-full object-cover opacity-60 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" 
+                            />
+                          ) : (
+                            <video 
+                              src={pillar.video} 
+                              autoPlay 
+                              loop 
+                              muted 
+                              playsInline 
+                              className="w-full h-full object-cover opacity-35 group-hover:opacity-65 transition-opacity duration-1000" 
+                            />
+                          )}
                           <div className="absolute inset-0 bg-gradient-to-t from-[#02050b] via-[#02050b]/60 to-transparent" />
                           <div className={`absolute inset-0 ${c.overlay} mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
                         </div>
 
                         {/* CONTENT */}
-                        <div className="relative z-10 p-6 md:p-10 flex flex-col justify-end h-full w-full">
-                          <div className="flex items-center gap-4 mb-3">
-                            <div className={`p-4 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 group-hover:${c.border} group-hover:${c.bg} transition-colors duration-500`}>
-                              <pillar.icon className={`h-7 w-7 text-white group-hover:${c.text} transition-colors duration-500`} />
+                        <div className="relative z-10 p-6 sm:p-8 md:p-10 flex flex-col justify-end h-full w-full">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className={`p-3 sm:p-4 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 group-hover:${c.border} group-hover:${c.bg} transition-colors duration-500`}>
+                              <pillar.icon className={`h-5 w-5 sm:h-7 sm:w-7 text-white group-hover:${c.text} transition-colors duration-500`} />
                             </div>
+                            <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-300 bg-white/10 border border-white/15 px-2.5 sm:px-3 py-1 rounded-full backdrop-blur-md">
+                              Flagship Broadcast
+                            </span>
                           </div>
                           
-                          <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-1.5 leading-tight group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-500">
+                          <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tighter text-white mb-2 leading-tight group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-500">
                             {pillar.title}
                           </h3>
-                          <p className="text-xs md:text-sm text-slate-400 max-w-sm leading-relaxed group-hover:text-white transition-colors duration-500">
+                          <p className="text-xs sm:text-sm text-slate-300 max-w-lg leading-relaxed group-hover:text-white transition-colors duration-500">
                             {pillar.subtitle}
                           </p>
                           
-                          <div className="absolute bottom-10 right-10 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-500">
-                            <div className={`p-3 rounded-full ${c.bg} ${c.border} border`}>
-                              <ArrowRight className={`h-5 w-5 ${c.text}`} />
+                          <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 opacity-70 sm:opacity-0 group-hover:opacity-100 transform translate-x-0 sm:translate-x-4 group-hover:translate-x-0 transition-all duration-500">
+                            <div className={`p-2.5 sm:p-3 rounded-full ${c.bg} ${c.border} border`}>
+                              <ArrowRight className={`h-4 w-4 sm:h-5 sm:w-5 ${c.text}`} />
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* FILA 2: HOSPITALIDADE & MARTECH (HOTÉIS, RESORTS & MARKETING) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {pillars.slice(2).map((pillar, idx) => {
+                    const c = colorMap[pillar.color];
+                    const isThird = idx === 2;
+                    return (
+                      <button
+                        key={pillar.id}
+                        onClick={() => {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                          setActiveMacro(pillar.id);
+                          window.history.pushState(null, '', `?macro=${pillar.id}`);
+                        }}
+                        className={cn(
+                          "relative h-72 sm:h-80 md:h-[420px] w-full rounded-[24px] sm:rounded-[36px] md:rounded-[40px] overflow-hidden border border-slate-900 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl cursor-pointer",
+                          isThird ? "sm:col-span-2 lg:col-span-1" : ""
+                        )}
+                      >
+                        {/* BACKGROUND VIDEO / IMAGE */}
+                        <div className="absolute inset-0 z-0 bg-slate-950 overflow-hidden">
+                          {pillar.image ? (
+                            <img 
+                              src={pillar.image} 
+                              alt={pillar.title} 
+                              className="w-full h-full object-cover opacity-55 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700" 
+                            />
+                          ) : (
+                            <video 
+                              src={pillar.video} 
+                              autoPlay 
+                              loop 
+                              muted 
+                              playsInline 
+                              className="w-full h-full object-cover opacity-35 group-hover:opacity-65 transition-opacity duration-1000" 
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#02050b] via-[#02050b]/60 to-transparent" />
+                          <div className={`absolute inset-0 ${c.overlay} mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+                        </div>
+
+                        {/* CONTENT */}
+                        <div className="relative z-10 p-6 sm:p-7 md:p-8 flex flex-col justify-end h-full w-full">
+                          <div className="flex items-center gap-4 mb-3">
+                            <div className={`p-3 sm:p-3.5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 group-hover:${c.border} group-hover:${c.bg} transition-colors duration-500`}>
+                              <pillar.icon className={`h-5 w-5 sm:h-6 sm:w-6 text-white group-hover:${c.text} transition-colors duration-500`} />
+                            </div>
+                          </div>
+                          
+                          <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tighter text-white mb-1.5 leading-tight group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-500">
+                            {pillar.title}
+                          </h3>
+                          <p className="text-xs text-slate-400 max-w-sm leading-relaxed group-hover:text-white transition-colors duration-500">
+                            {pillar.subtitle}
+                          </p>
+                          
+                          <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 opacity-70 sm:opacity-0 group-hover:opacity-100 transform translate-x-0 sm:translate-x-4 group-hover:translate-x-0 transition-all duration-500">
+                            <div className={`p-2.5 sm:p-3 rounded-full ${c.bg} ${c.border} border`}>
+                              <ArrowRight className={`h-4 w-4 ${c.text}`} />
                             </div>
                           </div>
                         </div>
@@ -648,40 +1006,55 @@ export default function MarketingPage() {
                   setActiveMacro(null);
                   window.history.pushState(null, '', window.location.pathname);
                 }}
-                className="group flex items-center gap-2 text-slate-400 hover:text-white mb-8 transition-colors cursor-pointer"
+                className="group flex items-center gap-2 text-slate-400 hover:text-white mb-6 sm:mb-8 transition-colors cursor-pointer"
               >
                 <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
                   <ArrowLeft className="h-4 w-4" />
                 </div>
-                <span className="text-sm font-black uppercase tracking-widest">Voltar aos Canais</span>
+                <span className="text-xs sm:text-sm font-black uppercase tracking-widest">Voltar aos Canais</span>
               </button>
 
-              {/* APRESENTAÇÃO DE VÍDEO DO SETOR */}
-              {activeMacroData?.video && (
-                <div className="w-full mb-12 flex flex-col items-center">
-                  <div className={`relative w-full max-w-4xl aspect-video rounded-[32px] overflow-hidden border ${macroColor.border} bg-slate-900/50 shadow-[0_0_80px_rgba(0,0,0,0.5)] group`}>
-                    <CustomVideoPlayer src={activeMacroData.video} className="w-full h-full object-cover" />
-                    <div className={`absolute inset-0 pointer-events-none border-[2px] border-transparent group-hover:${macroColor.border} rounded-[32px] transition-colors duration-700`} />
+              {/* APRESENTAÇÃO DE DESTAQUE DO SETOR (IMAGEM OU VÍDEO) */}
+              {(activeMacroData?.video || activeMacroData?.image) && (
+                <div className="w-full mb-8 sm:mb-12 flex flex-col items-center">
+                  <div className={`relative w-full max-w-4xl aspect-video rounded-[24px] sm:rounded-[32px] overflow-hidden border ${macroColor.border} bg-slate-900/50 shadow-[0_0_80px_rgba(0,0,0,0.5)] group`}>
+                    {activeMacroData.video ? (
+                      <CustomVideoPlayer src={activeMacroData.video} className="w-full h-full object-cover" />
+                    ) : (
+                      <Image 
+                        src={activeMacroData.image!} 
+                        alt={activeMacroData.title} 
+                        fill 
+                        className="object-cover transition-transform duration-1000 group-hover:scale-105" 
+                      />
+                    )}
+                    <div className={`absolute inset-0 pointer-events-none border-[2px] border-transparent group-hover:${macroColor.border} rounded-[24px] sm:rounded-[32px] transition-colors duration-700`} />
                   </div>
-                  <div className="mt-4 flex items-center gap-2 text-slate-500">
-                    <Sparkles className="h-4 w-4 text-orange-400" />
-                    <span className="text-[10px] uppercase tracking-widest font-bold">Demonstração da Embaixadora Virtual</span>
+                  <div className="mt-4 flex items-center gap-2 text-slate-500 text-center px-4">
+                    <Sparkles className="h-4 w-4 text-orange-400 shrink-0" />
+                    <span className="text-[10px] uppercase tracking-widest font-bold">
+                      {activeMacro === 'radios-audio' 
+                        ? 'Estúdio Master de Transmissão • Nexus Radio' 
+                        : activeMacro === 'tv-telejornais'
+                        ? 'Estúdio Virtual de Telejornalismo • Jornal Nexus'
+                        : 'Demonstração da Embaixadora Virtual'}
+                    </span>
                   </div>
                 </div>
               )}
 
               {/* Cabeçalho do Setor */}
-              <div className="text-center max-w-3xl mx-auto mb-12 border-b border-slate-900 pb-8">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter text-white leading-none">
+              <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 border-b border-slate-900 pb-8 px-2">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter text-white leading-tight">
                   {activeMacroData?.title}
                 </h1>
-                <p className="text-slate-400 mt-4 text-sm sm:text-base md:text-lg leading-relaxed font-light max-w-2xl mx-auto">
+                <p className="text-slate-400 mt-4 text-xs sm:text-base md:text-lg leading-relaxed font-light max-w-2xl mx-auto">
                   {activeMacroData?.description}
                 </p>
               </div>
 
               {/* Grid dos Módulos do Canal */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
                 {activeModules.map((mod, i) => {
                   const c = colorMap[mod.color];
                   return (
@@ -691,10 +1064,10 @@ export default function MarketingPage() {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                         setActiveModuleDetail(mod);
                       }}
-                      className="relative rounded-[32px] overflow-hidden border border-slate-900 bg-[#0a0a0c]/80 backdrop-blur-xl group text-left hover:-translate-y-2 hover:border-white/10 transition-all duration-500 cursor-pointer flex flex-col h-full w-full"
+                      className="relative rounded-[24px] sm:rounded-[32px] overflow-hidden border border-slate-900 bg-[#0a0a0c]/80 backdrop-blur-xl group text-left hover:-translate-y-2 hover:border-white/10 transition-all duration-500 cursor-pointer flex flex-col h-full w-full"
                     >
                       {/* IMAGEM DE TOPO DO CARD */}
-                      <div className="relative h-48 w-full overflow-hidden bg-slate-950 shrink-0">
+                      <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-slate-950 shrink-0">
                         <Image src={mod.image} alt={mod.highlight} fill className="object-cover p-0 transition-transform duration-700 group-hover:scale-105" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-transparent to-transparent opacity-90" />
                         <div className="absolute top-4 left-4">
@@ -705,16 +1078,16 @@ export default function MarketingPage() {
                       </div>
 
                       {/* CORPO DO CARD */}
-                      <div className="p-6 flex flex-col flex-grow justify-between w-full">
+                      <div className="p-5 sm:p-6 flex flex-col flex-grow justify-between w-full">
                         <div className="space-y-3">
                           <div className="flex items-center gap-2.5">
                             <div className={`p-2 rounded-xl ${c.bg} border ${c.border}`}>
-                              <mod.icon className={`h-4.5 w-4.5 ${c.text}`} />
+                              <mod.icon className={`h-4 w-4 sm:h-4.5 sm:w-4.5 ${c.text}`} />
                             </div>
                             <span className={`text-[9px] font-black uppercase tracking-widest ${c.text}`}>{mod.title}</span>
                           </div>
                           <div>
-                            <h3 className="text-xl font-black uppercase tracking-tight text-white mb-1">
+                            <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-white mb-1">
                               {mod.highlight}
                             </h3>
                             <p className="text-xs text-slate-400 leading-relaxed font-light">{mod.subtitle}</p>
@@ -754,44 +1127,44 @@ export default function MarketingPage() {
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                   setActiveModuleDetail(null);
                 }}
-                className="group flex items-center gap-2 text-slate-400 hover:text-white mb-8 transition-colors cursor-pointer"
+                className="group flex items-center gap-2 text-slate-400 hover:text-white mb-6 sm:mb-8 transition-colors cursor-pointer"
               >
                 <div className="p-2 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
                   <ArrowLeft className="h-4 w-4" />
                 </div>
-                <span className="text-sm font-black uppercase tracking-widest">Voltar para Módulos</span>
+                <span className="text-xs sm:text-sm font-black uppercase tracking-widest">Voltar para Módulos</span>
               </button>
 
               {/* Cabeçalho do Deep Dive (Título do Módulo) */}
-              <div className="text-center max-w-4xl mx-auto mb-16">
+              <div className="text-center max-w-4xl mx-auto mb-12 sm:mb-16 px-2">
                 <span className="inline-flex items-center gap-2 bg-orange-500/10 text-orange-400 border border-orange-500/20 px-3.5 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4">
                   Detalhamento de Solução Premium
                 </span>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter text-white leading-none mb-4">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter text-white leading-tight mb-4">
                   {activeModuleDetail.highlight}
                 </h1>
-                <p className="text-slate-400 text-base md:text-xl font-light leading-relaxed max-w-3xl mx-auto">
+                <p className="text-slate-400 text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-3xl mx-auto">
                   {activeModuleDetail.description}
                 </p>
               </div>
 
               {/* APRESENTAÇÃO DOS ITENS DETALHADOS COM IMAGENS INDIVIDUAIS (ALTERNANDO) */}
-              <div className="space-y-24 max-w-6xl mx-auto mb-20">
+              <div className="space-y-16 sm:space-y-24 max-w-6xl mx-auto mb-20 px-2 sm:px-0">
                 {activeModuleDetail.features.map((feature, idx) => {
                   const isEven = idx % 2 === 0;
                   const c = colorMap[activeModuleDetail.color];
                   return (
                     <motion.div
                       key={idx}
-                      initial={{ opacity: 0, y: 50 }}
+                      initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.6 }}
-                      className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center"
+                      className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 items-center"
                     >
                       {/* Lado da Imagem (Esquerda ou Direita) */}
                       <div className={cn(
-                        "relative w-full aspect-[4/3] rounded-[32px] overflow-hidden border border-slate-900 shadow-2xl group",
+                        "relative w-full aspect-[4/3] rounded-[24px] sm:rounded-[32px] overflow-hidden border border-slate-900 shadow-2xl group",
                         isEven ? "md:col-span-6 md:order-1" : "md:col-span-6 md:order-2"
                       )}>
                         <Image 
@@ -801,12 +1174,12 @@ export default function MarketingPage() {
                           className="object-cover transition-transform duration-1000 group-hover:scale-105" 
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#02050b]/80 via-transparent to-transparent pointer-events-none" />
-                        <div className={`absolute inset-0 pointer-events-none border-[3px] border-transparent group-hover:${c.border} rounded-[32px] transition-colors duration-700`} />
+                        <div className={`absolute inset-0 pointer-events-none border-[3px] border-transparent group-hover:${c.border} rounded-[24px] sm:rounded-[32px] transition-colors duration-700`} />
                       </div>
 
                       {/* Lado do Texto */}
                       <div className={cn(
-                        "space-y-4 md:col-span-6",
+                        "space-y-3 sm:space-y-4 md:col-span-6",
                         isEven ? "md:order-2 md:pl-6" : "md:order-1 md:pr-6"
                       )}>
                         <div className="flex items-center gap-2">
@@ -814,10 +1187,10 @@ export default function MarketingPage() {
                             Recurso {idx + 1}
                           </span>
                         </div>
-                        <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white leading-none">
+                        <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight text-white leading-tight">
                           {feature.title}
                         </h2>
-                        <p className="text-slate-400 text-sm sm:text-base leading-relaxed font-light">
+                        <p className="text-slate-400 text-xs sm:text-sm md:text-base leading-relaxed font-light">
                           {feature.description}
                         </p>
                       </div>
@@ -828,70 +1201,76 @@ export default function MarketingPage() {
 
               {/* CARD DE PERSONALIZAÇÃO 100% */}
               <div className={cn(
-                "relative overflow-hidden rounded-[32px] border p-8 md:p-10 max-w-4xl mx-auto my-16 bg-gradient-to-r from-white/5 via-transparent to-transparent",
+                "relative overflow-hidden rounded-[24px] sm:rounded-[32px] border p-6 sm:p-8 md:p-10 max-w-4xl mx-auto my-12 sm:my-16 bg-gradient-to-r from-white/5 via-transparent to-transparent",
                 colorMap[activeModuleDetail.color].border
               )}>
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none" />
-                <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-8 md:gap-10">
                   <div className={cn(
-                    "p-4 rounded-3xl border shrink-0",
+                    "p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl border shrink-0",
                     colorMap[activeModuleDetail.color].bg,
                     colorMap[activeModuleDetail.color].border,
                     colorMap[activeModuleDetail.color].text
                   )}>
-                    <Palette className="h-10 w-10" />
+                    <Palette className="h-8 w-8 sm:h-10 sm:w-10" />
                   </div>
                   <div className="space-y-2 text-left">
                     <span className={cn("text-[10px] font-bold uppercase tracking-widest font-mono", colorMap[activeModuleDetail.color].text)}>
                       Customização Total
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-black uppercase text-white tracking-tight">
                       Soluções 100% Personalizáveis
                     </h3>
                     <p className="text-slate-400 text-xs sm:text-sm font-light leading-relaxed">
-                      Cada concierge é única. Personalizamos **100% do avatar visual (imagem/vídeo)**, o **tom e sotaque da voz falada**, a personalidade de atendimento e a base de conhecimento técnica para representar com total fidelidade a identidade da sua marca.
+                      Cada solução é única. Personalizamos <strong>100% do avatar visual (imagem/vídeo)</strong>, o <strong>tom e sotaque da voz falada</strong>, a personalidade de apresentação ou locução e a base de conhecimento técnica para representar com total fidelidade a identidade da sua marca ou emissora.
                     </p>
                   </div>
                 </div>
               </div>
 
               {/* BOX DE INVESTIMENTO & ROI DO MÓDULO */}
-              <div className="bg-gradient-to-br from-[#0a0a0c] to-[#111114] border border-slate-900 rounded-[40px] p-8 md:p-12 max-w-4xl mx-auto text-center space-y-8 relative overflow-hidden shadow-2xl">
+              <div className="bg-gradient-to-br from-[#0a0a0c] to-[#111114] border border-slate-900 rounded-[28px] sm:rounded-[40px] p-6 sm:p-8 md:p-12 max-w-4xl mx-auto text-center space-y-6 sm:space-y-8 relative overflow-hidden shadow-2xl">
                 <div className="absolute -top-24 -left-24 w-48 h-48 bg-orange-500/10 rounded-full blur-[90px] pointer-events-none" />
                 
-                <div className="max-w-2xl mx-auto space-y-4">
-                  <h3 className="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                <div className="max-w-2xl mx-auto space-y-3 sm:space-y-4">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-white tracking-tight">
                     Viabilidade & Implantação
                   </h3>
                   <p className="text-slate-400 text-xs sm:text-sm font-light leading-relaxed">
-                    Nossas soluções de inteligência artificial são dimensionadas individualmente para respeitar a estrutura operacional e de TI de sua rede de hotéis, pousadas ou agências corporativas.
+                    {activeMacro === 'tv-telejornais'
+                      ? 'Nossas soluções de Inteligência Artificial para TV são dimensionadas individualmente para atender a infraestrutura de transmissão, grade jornalística e rotina de produção da sua emissora.'
+                      : activeMacro === 'radios-audio'
+                      ? 'Nossas soluções de locução e áudio IA são dimensionadas para integrar com perfeição ao sistema de automação e à grade de programação da sua emissora de rádio.'
+                      : activeMacro === 'hoteis-pousadas' || activeMacro === 'resorts'
+                      ? 'Nossas soluções de inteligência artificial são dimensionadas individualmente para respeitar a estrutura operacional e de hospitalidade da sua pousada, hotel ou resort.'
+                      : 'Nossas soluções de inteligência artificial são dimensionadas individualmente para respeitar a estrutura operacional e tecnológica da sua empresa ou agência corporativa.'}
                   </p>
                 </div>
 
                 {/* Specs Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
-                  <div className="bg-slate-950/60 border border-slate-900 p-5 rounded-2xl">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto">
+                  <div className="bg-slate-950/60 border border-slate-900 p-4 sm:p-5 rounded-2xl">
                     <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest font-mono block mb-1">Licença de Uso:</span>
-                    <p className="text-base font-black text-white">{activeModuleDetail.licenca}</p>
+                    <p className="text-sm sm:text-base font-black text-white">{activeModuleDetail.licenca}</p>
                   </div>
-                  <div className="bg-slate-950/60 border border-slate-900 p-5 rounded-2xl">
+                  <div className="bg-slate-950/60 border border-slate-900 p-4 sm:p-5 rounded-2xl">
                     <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest font-mono block mb-1">Suporte Mensal:</span>
-                    <p className="text-base font-black text-white">{activeModuleDetail.suporte}</p>
+                    <p className="text-sm sm:text-base font-black text-white">{activeModuleDetail.suporte}</p>
                   </div>
-                  <div className="bg-slate-950/60 border border-slate-900 p-5 rounded-2xl col-span-1 sm:col-span-1">
+                  <div className="bg-slate-950/60 border border-slate-900 p-4 sm:p-5 rounded-2xl">
                     <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest font-mono block mb-1">ROI Projetado:</span>
                     <p className="text-xs font-bold text-white leading-tight mt-1">{activeModuleDetail.roi}</p>
                   </div>
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2 sm:pt-4">
                   <Button asChild className={cn(
-                    "px-10 h-14 text-white font-bold uppercase tracking-widest text-xs rounded-2xl transition-all hover:scale-105 cursor-pointer max-w-sm mx-auto flex items-center justify-center gap-2",
+                    "w-full sm:w-auto px-6 sm:px-10 h-12 sm:h-14 text-white font-bold uppercase tracking-widest text-[11px] sm:text-xs rounded-2xl transition-all hover:scale-105 cursor-pointer max-w-sm mx-auto flex items-center justify-center gap-2",
                     colorMap[activeModuleDetail.color].btn
                   )}>
                     <Link href={getWhatsAppMessage(activeModuleDetail.highlight)} target="_blank">
-                      <MessageSquare className="w-4 h-4" />
-                      Solicitar Implantação do Módulo
+                      <MessageSquare className="w-4 h-4 shrink-0" />
+                      <span className="truncate">Solicitar Implantação do Módulo</span>
                     </Link>
                   </Button>
                 </div>
@@ -902,22 +1281,22 @@ export default function MarketingPage() {
 
         {/* SECONDARY CALL TO ACTION (SOMENTE VISÍVEL NA TELA DE MACROS) */}
         {!activeModuleDetail && (
-          <div className="group relative bg-gradient-to-br from-zinc-900/80 to-black/90 backdrop-blur-2xl border border-white/10 rounded-[32px] p-10 md:p-14 text-center overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.7)] max-w-4xl mx-auto transition-all duration-500 hover:border-white/20">
+          <div className="group relative bg-gradient-to-br from-zinc-900/80 to-black/90 backdrop-blur-2xl border border-white/10 rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 md:p-14 text-center overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.7)] max-w-4xl mx-auto transition-all duration-500 hover:border-white/20">
             {/* Premium Glow Effects */}
             <div className="absolute -top-32 -left-32 w-72 h-72 bg-orange-500/20 rounded-full blur-[120px] pointer-events-none group-hover:bg-orange-500/30 transition-all duration-700" />
             <div className="absolute -bottom-32 -right-32 w-72 h-72 bg-cyan-500/20 rounded-full blur-[120px] pointer-events-none group-hover:bg-cyan-500/30 transition-all duration-700" />
 
             <div className="relative z-10 flex flex-col items-center">
-              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500/10 to-orange-500/5 text-orange-400 border border-orange-500/30 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(249,115,22,0.15)] backdrop-blur-md">
+              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500/10 to-orange-500/5 text-orange-400 border border-orange-500/30 px-3.5 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-widest mb-4 sm:mb-6 shadow-[0_0_20px_rgba(249,115,22,0.15)] backdrop-blur-md">
                 <Languages className="w-4 h-4" /> Poliglota em mais de 50 Idiomas
               </span>
               
-              <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-5 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight mb-3 sm:mb-5 bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400">
                 Deseja uma arquitetura customizada?
               </h3>
               
-              <p className="text-slate-300 text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
-                Nossos engenheiros desenvolvem vozes customizadas, integrações de PMS proprietárias e personalidades únicas para o seu concierge. Solicite uma audiência comercial agora mesmo.
+              <p className="text-slate-300 text-xs sm:text-sm md:text-base font-light leading-relaxed max-w-2xl mx-auto">
+                Nossos engenheiros desenvolvem vozes customizadas, estúdios virtuais 3D, integrações proprietárias e personalidades únicas de IA para o seu ecossistema. Solicite uma audiência comercial agora mesmo.
               </p>
             </div>
           </div>

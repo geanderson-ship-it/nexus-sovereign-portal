@@ -107,7 +107,7 @@ export function SiteHeader() {
     { title: 'Inova Revenda', href: '/inova-revenda' },
     { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
     { title: 'Embaixadora', href: '/nexus-rotas' },
-    { title: 'Marketing', href: '/marketing' },
+    { title: 'Mídia', href: '/marketing' },
     { title: 'Websites', href: '/desenvolvimento-web' },
     { title: 'Enterprise', href: '/nexus-empresas' },
     { title: t('navPremium') || 'Exclusive', href: '/exclusive' },
@@ -259,8 +259,8 @@ export function SiteHeader() {
                 </div>
               )}
             </div>
-            {/* Mobile Menu Trigger (Hamburger) */}
-            <div className="md:hidden flex items-center ml-2 relative z-[60]">
+            {/* Mobile / Tablet Menu Trigger (Hamburger) */}
+            <div className="lg:hidden flex items-center ml-2 relative z-[60]">
               <Button variant="outline" size="sm" className="h-10 w-10 p-0 border-white/20 bg-black/50 text-white hover:bg-white/10 hover:text-white" onClick={() => setMobileMenuOpen(true)}>
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle menu</span>
@@ -301,6 +301,8 @@ export function SiteHeader() {
                       ? 'bg-teal-500/10 border border-teal-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.15)] hover:shadow-[0_0_25px_rgba(20,184,166,0.4)] hover:bg-teal-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/marketing'
                       ? 'bg-orange-500/10 border border-orange-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(249,115,22,0.15)] hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] hover:bg-orange-500/20 text-white font-bold capitalize tracking-wide'
+                      : item.href === '/desenvolvimento-web'
+                      ? 'bg-blue-600/10 border border-blue-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(59,130,246,0.15)] hover:shadow-[0_0_25px_rgba(59,130,246,0.4)] hover:bg-blue-600/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/proposito'
                       ? 'bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/about'
@@ -333,8 +335,8 @@ export function SiteHeader() {
           </nav>
         {/* Fim da linha 2 */}
 
-        {/* Mobile Menu Sheet */}
-        <div className="md:hidden">
+        {/* Mobile / Tablet Menu Sheet */}
+        <div className="lg:hidden">
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetContent side="right" className="w-[300px] sm:w-[350px] p-0 border-primary/20 bg-background/98 backdrop-blur-xl">
                 <div className="flex flex-col h-full">
@@ -378,6 +380,8 @@ export function SiteHeader() {
                             ? 'bg-teal-500/10 text-white drop-shadow-[0_0_8px_rgba(20,184,166,0.8)] font-bold border border-teal-500/50 capitalize tracking-wide'
                             : item.href === '/marketing'
                             ? 'bg-orange-500/10 text-white drop-shadow-[0_0_8px_rgba(249,115,22,0.8)] font-bold border border-orange-500/50 capitalize tracking-wide'
+                            : item.href === '/desenvolvimento-web'
+                            ? 'bg-blue-600/10 text-white drop-shadow-[0_0_8px_rgba(59,130,246,0.8)] font-bold border border-blue-500/50 capitalize tracking-wide'
                             : item.href === '/proposito'
                             ? 'bg-amber-500/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 capitalize tracking-wide'
                             : item.href === '/about'
