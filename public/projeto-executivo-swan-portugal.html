@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Executivo • Swan Hotéis Portugal & Nexus Holding Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --swan-navy: #0f1e28;
+            --swan-navy-light: #193142;
+            --swan-navy-soft: #f0f4f8;
+            --swan-gold: #c5a059;
+            --swan-gold-dark: #9e7d38;
+            --swan-gold-light: #fbf7ee;
+            --swan-charcoal: #2a2f2c;
+            --swan-dark: #0a1118;
+            --swan-cream: #faf9f5;
+            --swan-border: #e2dbce;
+            --swan-card-border: rgba(197, 160, 89, 0.3);
+            --text-main: #1a2226;
+            --text-muted: #57646b;
+            --shadow-subtle: 0 10px 30px -10px rgba(15, 30, 40, 0.08);
+            --shadow-card: 0 4px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-main);
+            background-color: #f3f3f0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(15, 30, 40, 0.12);
+            padding: 60px 75px;
+            border: 1px solid var(--swan-border);
+            position: relative;
+        }
+
+        /* Top Action Bar */
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 25px;
+            gap: 12px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            color: var(--swan-navy);
+            border: 1px solid var(--swan-border);
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background: var(--swan-gold-light);
+            border-color: var(--swan-gold);
+            color: var(--swan-gold-dark);
+        }
+
+        .btn-action.btn-primary {
+            background: var(--swan-navy);
+            color: #ffffff;
+            border-color: var(--swan-navy);
+        }
+
+        .btn-action.btn-primary:hover {
+            background: var(--swan-gold);
+            border-color: var(--swan-gold);
+            color: var(--swan-navy);
+        }
+
+        /* Header */
+        header {
+            border-bottom: 2px solid var(--swan-border);
+            padding-bottom: 35px;
+            margin-bottom: 45px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .brand-block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .company-name {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--swan-navy);
+            letter-spacing: 0.5px;
+        }
+
+        .company-sub {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--swan-gold-dark);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .client-block {
+            text-align: right;
+        }
+
+        .client-badge {
+            display: inline-block;
+            background: var(--swan-gold-light);
+            color: var(--swan-gold-dark);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 5px 12px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(197, 160, 89, 0.35);
+        }
+
+        .client-name {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 20px;
+            color: var(--swan-navy);
+            font-weight: 600;
+        }
+
+        .client-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .document-title {
+            margin-top: 15px;
+        }
+
+        .document-title h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 34px;
+            color: var(--swan-navy);
+            line-height: 1.25;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .document-title .subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 400;
+            max-width: 820px;
+            line-height: 1.55;
+        }
+
+        .meta-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--swan-border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .meta-item strong {
+            color: var(--swan-navy);
+        }
+
+        /* Typography & Layout */
+        h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 24px;
+            color: var(--swan-navy);
+            margin: 45px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--swan-border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2 .section-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--swan-gold-light);
+            color: var(--swan-gold-dark);
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            border-radius: 50%;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 17px;
+            color: var(--swan-navy);
+            margin: 25px 0 12px 0;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-main);
+            font-size: 15px;
+            text-align: justify;
+        }
+
+        .lead-text {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-main);
+            line-height: 1.7;
+            background: var(--swan-cream);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid var(--swan-gold);
+            margin-bottom: 30px;
+        }
+
+        /* Cards Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 1px solid var(--swan-border);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow-card);
+            transition: all 0.2s ease;
+        }
+
+        .card.featured {
+            background: linear-gradient(180deg, var(--swan-gold-light) 0%, #ffffff 100%);
+            border-color: var(--swan-gold);
+        }
+
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 18px;
+            color: var(--swan-navy);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .card-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Pillars Block */
+        .pillar-box {
+            background: #ffffff;
+            border: 1px solid var(--swan-border);
+            border-radius: 12px;
+            padding: 22px 26px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-card);
+            border-left: 4px solid var(--swan-navy);
+        }
+
+        .pillar-box.gold {
+            border-left-color: var(--swan-gold);
+        }
+
+        .pillar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .pillar-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--swan-navy);
+        }
+
+        .pillar-tag {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--swan-navy-soft);
+            color: var(--swan-navy);
+        }
+
+        /* Financial Table */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--swan-border);
+        }
+
+        .pricing-table th {
+            background: var(--swan-navy);
+            color: #ffffff;
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .pricing-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--swan-border);
+            font-size: 14px;
+            color: var(--text-main);
+            vertical-align: top;
+        }
+
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-table tr:nth-child(even) td {
+            background: var(--swan-cream);
+        }
+
+        .price-tag {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--swan-gold-dark);
+            white-space: nowrap;
+        }
+
+        .price-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* Highlight Quote */
+        .quote-box {
+            background: linear-gradient(135deg, var(--swan-navy) 0%, var(--swan-navy-light) 100%);
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 30px 35px;
+            margin: 35px 0;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(15, 30, 40, 0.2);
+        }
+
+        .quote-box p {
+            color: #f0f4f8;
+            font-size: 17px;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .quote-author {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--swan-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Timeline / Weeks */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .timeline-step {
+            display: flex;
+            gap: 20px;
+            background: #ffffff;
+            border: 1px solid var(--swan-border);
+            border-radius: 10px;
+            padding: 18px 22px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .step-badge {
+            min-width: 90px;
+            height: 38px;
+            background: var(--swan-navy);
+            color: #ffffff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step-content h4 {
+            font-size: 15px;
+            color: var(--swan-navy);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        /* Signatures */
+        .signature-section {
+            margin-top: 50px;
+            padding-top: 35px;
+            border-top: 2px solid var(--swan-border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .signature-box {
+            text-align: center;
+        }
+
+        .sig-line {
+            width: 80%;
+            height: 1px;
+            background: var(--swan-border);
+            margin: 45px auto 12px auto;
+        }
+
+        .sig-name {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--swan-navy);
+        }
+
+        .sig-title {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 45px;
+            padding-top: 20px;
+            border-top: 1px solid var(--swan-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Print Style */
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 20px 30px;
+                max-width: 100%;
+            }
+            .action-bar {
+                display: none;
+            }
+            .quote-box {
+                background: #0f1e28 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .pricing-table th {
+                background: #0f1e28 !important;
+                color: #ffffff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            .grid-2, .grid-3, .signature-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .client-block {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Top Action Bar -->
+        <div class="action-bar">
+            <button onclick="window.print()" class="btn-action btn-primary">
+                🖨️ Imprimir / Guardar em PDF
+            </button>
+            <a href="mailto:geanderson@nexusholdinggroup.com.br" class="btn-action">
+                ✉️ Contactar Diretoria Nexus
+            </a>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div class="brand-block">
+                    <div class="company-name">Nexus Holding Group</div>
+                    <div class="company-sub">Sovereign Cognitive Systems & Hospitality AI</div>
+                </div>
+                <div class="client-block">
+                    <span class="client-badge">Destinatário Oficial</span>
+                    <div class="client-name">Lucas • Swan Hotéis Portugal</div>
+                    <div class="client-sub">Portugal Collection (Lisboa & Sintra)</div>
+                </div>
+            </div>
+
+            <div class="document-title">
+                <h1>Concierge Cognitivo Soberano & Embaixador Digital</h1>
+                <div class="subtitle">
+                    Projeto executivo de implantação de Inteligência Artificial Soberana, atendimento multilíngue 24/7 sem fuso horário, apoio operacional hiperlocal e desintermediação de OTAs para a <em>Swan Portugal Collection</em>.
+                </div>
+            </div>
+
+            <div class="meta-strip">
+                <div class="meta-item"><strong>Iniciativa:</strong> Parceria Estratégica Nexus & Swan Hotéis</div>
+                <div class="meta-item"><strong>Articulação:</strong> Gabriela Schwan Poltronieri (CEO GS Hospitality Advisory)</div>
+                <div class="meta-item"><strong>Âmbito:</strong> Portugal (Lisboa & Sintra)</div>
+                <div class="meta-item"><strong>Data:</strong> Outubro de 2026</div>
+                <div class="meta-item"><strong>Status:</strong> Programa Piloto & Case Internacional</div>
+            </div>
+        </header>
+
+        <!-- Contexto & Lead -->
+        <div class="lead-text">
+            <strong>O Propósito do Programa:</strong> Estabelecer o primeiro caso de sucesso europeu da hotelaria de charme independente com Inteligência Artificial Soberana. A iniciativa visa superar os dois maiores desafios das unidades em Portugal — a barreira linguística e a dispersão de fusos horários de hóspedes internacionais —, garantindo acolhimento de excelência 24 horas por dia, alívio operacional da recepção e geração direta de receita, servindo de vitrine no palco do <strong>TurisTalks</strong>.
+        </div>
+
+        <div class="quote-box">
+            <p>"Lá tem muita gente, falando todos os idiomas o tempo todo."</p>
+            <div class="quote-author">— Gabriela Schwan Poltronieri • Sintetizando a dinâmica dos hotéis em Portugal</div>
+        </div>
+
+        <!-- Sessão 1: O Diagnóstico -->
+        <h2><span class="section-num">1</span> Diagnóstico da Operação • Swan Portugal Collection</h2>
+        <p>
+            Ao contrário do perfil corporativo e de grande porte das unidades no Brasil, a presença da Rede Swan em Portugal é pautada pela <strong>Portugal Collection</strong> — um ecossistema de <em>Boutique Houses</em> e <em>Guest Houses</em> históricas de charme em localizações de prestígio:
+        </p>
+
+        <div class="grid-2">
+            <div class="card">
+                <span class="card-icon">🏛️</span>
+                <div class="card-title">Casa do Mercado • Lisboa</div>
+                <div class="card-sub">
+                    Centro Histórico de Lisboa, junto ao Elevador da Bica e ao Mercado da Ribeira (Time Out Market). Hóspedes cosmopolitas, dinâmicos, que valorizam gastronomia, cultura e vida urbana.
+                </div>
+            </div>
+            <div class="card">
+                <span class="card-icon">🏰</span>
+                <div class="card-title">Sintra Boutique Collection</div>
+                <div class="card-sub">
+                    Palácio de Sintra Boutique House, Casa do Vinho e Casa dos Santos. Zona classificada como Património Mundial da UNESCO. Hóspedes internacionais em busca de roteiros históricos, vinhos e passeios exclusivos.
+                </div>
+            </div>
+        </div>
+
+        <p>
+            Em operações de charme de pequena e média dimensão, as equipes de acolhimento físico são enxutas e focadas no afeto presencial. No entanto, o fluxo global de viajantes (EUA, Reino Unido, França, Alemanha, Espanha, Itália, Ásia e América Latina) cria pressões operacionais complexas:
+        </p>
+
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-title">🌐 Torre de Babel</div>
+                <div class="card-sub">
+                    Impossibilidade física de manter profissionais que dominem simultaneamente mais de 5 a 10 idiomas nas recepções.
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">⏰ Fuso & Madrugada</div>
+                <div class="card-sub">
+                    Hóspedes que aterrissam no Humberto Delgado de madrugada, necessitando de códigos de acesso, itinerários e auxílio pré-check-in imediato.
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">📉 Dreno de OTAs</div>
+                <div class="card-sub">
+                    Comissões entre 18% e 22% retidas por Booking.com e Expedia em extensões de diárias e reservas de retorno.
+                </div>
+            </div>
+        </div>
+
+        <!-- Sessão 2: A Arquitetura da Solução Híbrida -->
+        <h2><span class="section-num">2</span> Arquitetura da Solução • Modelo Híbrido Blindado</h2>
+        <p>
+            A Nexus desenhou uma arquitetura híbrida inovadora que une a estética audiovisual cinematográfica à robustez conversacional, garantindo custos previsíveis e altíssima fidelidade institucional:
+        </p>
+
+        <div class="pillar-box gold">
+            <div class="pillar-header">
+                <span class="pillar-name">Camada 1: Embaixadora Digital Audiovisual em 4K (Vídeos Modulares)</span>
+                <span class="pillar-tag">Hiper-Realismo HeyGen</span>
+            </div>
+            <p style="font-size: 14px; margin-bottom: 0;">
+                Gravação modular de vídeos da Embaixadora Virtual em cenários de requinte europeu, com sotaques impecáveis e dicção calorosa. Vídeos de boas-vindas institucionais, apresentação dos diferenciais de Sintra e Lisboa, instrução de serviços e orientações essenciais aos hóspedes no portal e nos canais digitais.
+            </p>
+        </div>
+
+        <div class="pillar-box">
+            <div class="pillar-header">
+                <span class="pillar-name">Camada 2: Concierge Cognitivo Soberano 24/7 (Texto & Voz)</span>
+                <span class="pillar-tag">50+ Idiomas Nativos</span>
+            </div>
+            <p style="font-size: 14px; margin-bottom: 0;">
+                Motor de inteligência artificial soberano treinado exclusivamente com a base de conhecimento oficial da Swan Hotéis e o guia cultural de Sintra e Lisboa. Sem alucinações, responde instantaneamente a dúvidas sobre horários de pequeno-almoço, bilhetes para o Palácio da Pena ou Quinta da Regaleira, melhores restaurantes de fado e transfers.
+            </p>
+        </div>
+
+        <div class="pillar-box gold">
+            <div class="pillar-header">
+                <span class="pillar-name">Camada 3: Presença Omnicanal com Transbordo para WhatsApp</span>
+                <span class="pillar-tag">Handover Humano</span>
+            </div>
+            <p style="font-size: 14px; margin-bottom: 0;">
+                O hóspede interage diretamente no WhatsApp institucional da Swan Portugal ou pelo web app no smartphone. Caso haja qualquer necessidade sensível ou solicitação que exija intervenção local, o sistema efetua o transbordo inteligente para a equipa da recepção, com histórico resumido e sem ruído.
+            </p>
+        </div>
+
+        <div class="pillar-box">
+            <div class="pillar-header">
+                <span class="pillar-name">Camada 4: Motor de Reservas Diretas & Upselling Ativo</span>
+                <span class="pillar-tag">Desintermediação de OTAs</span>
+            </div>
+            <p style="font-size: 14px; margin-bottom: 0;">
+                O Concierge identifica intenções de prolongamento de estadia (late check-out, noites adicionais), degustações na Casa do Vinho ou reservas futuras na rede, conduzindo o viajante pelo canal direto com condições especiais e capturando margem líquida total para a unidade.
+            </p>
+        </div>
+
+        <!-- Sessão 3: Cronograma de Implementação -->
+        <h2><span class="section-num">3</span> Cronograma de Implementação • Desdobramento em 3 Semanas</h2>
+        <div class="timeline">
+            <div class="timeline-step">
+                <div class="step-badge">Semana 1</div>
+                <div class="step-content">
+                    <h4>Curadoria Hiperlocal & Identidade Visual</h4>
+                    <p>Relevamento das rotinas operacionais com a liderança do Lucas em Portugal, curadoria das dicas de Lisboa e Sintra, definição da identidade visual e voz da Embaixadora Digital.</p>
+                </div>
+            </div>
+            <div class="timeline-step">
+                <div class="step-badge">Semana 2</div>
+                <div class="step-content">
+                    <h4>Produção Audiovisual & Treinamento Cognitivo</h4>
+                    <p>Renderização dos vídeos 4K modulares, calibração do motor multilíngue e blindagem de segurança para garantir zero alucinações nas respostas aos viajantes.</p>
+                </div>
+            </div>
+            <div class="timeline-step">
+                <div class="step-badge">Semana 3</div>
+                <div class="step-content">
+                    <h4>Integração Técnica, Testes com a Equipa & Go-Live</h4>
+                    <p>Conexão com os números de WhatsApp oficiais da Swan Portugal, homologação das rotinas de transbordo humano com a equipe local e ativação para os primeiros hóspedes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sessão 4: Estrutura de Investimento -->
+        <h2><span class="section-num">4</span> Estrutura de Investimento Institucional (Valores em Euros €)</h2>
+        <p>
+            Considerando o caráter estratégico da iniciativa enquanto <strong>Case de Sucesso Oficial para apresentação conjunta no TurisTalks</strong>, estruturamos uma condição de investimento prioritária e de alta acessibilidade:
+        </p>
+
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Componente do Projeto</th>
+                    <th style="width: 35%;">Escopo Detalhado</th>
+                    <th style="width: 20%;">Investimento (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>Setup de Implantação & Engenharia Cognitiva</strong>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Pagamento único / Homologação inicial</div>
+                    </td>
+                    <td>
+                        • Modelagem da Embaixadora Digital em 4K<br>
+                        • Curadoria hiperlocal (Lisboa & Sintra)<br>
+                        • Treinamento multilíngue (50+ idiomas)<br>
+                        • Conexão WhatsApp institucional e fluxo de transbordo<br>
+                        • Capacitação operacional da equipe local
+                    </td>
+                    <td>
+                        <span class="price-tag">€ 3.200</span>
+                        <span class="price-sub">Valor Único (em 2 marcos)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Sustentação Operacional, Cloud & Inteligência Contínua</strong>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Mensalidade unificada para as unidades em Portugal</div>
+                    </td>
+                    <td>
+                        • Servidores em nuvem de alta disponibilidade<br>
+                        • Processamento cognitivo ilimitado de interações<br>
+                        • Atualizações sazonais da agenda de Sintra/Lisboa<br>
+                        • Relatório C-Level com métricas de CSAT e desintermediação<br>
+                        • SLA prioritário de suporte técnico
+                    </td>
+                    <td>
+                        <span class="price-tag">€ 650</span>
+                        <span class="price-sub">Por Mês (Portugal Collection)</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="card featured" style="margin-top: 20px;">
+            <div class="card-title">💡 Payback Imediato da Operação</div>
+            <p style="font-size: 14px; margin-bottom: 0;">
+                Em Portugal, a retenção de comissão das OTAs (18% a 22%) em apenas <strong>3 a 4 noites adicionais ou upgrades capturados no canal direto por mês</strong> já cobre integralmente o custo operacional do sistema, transformando a tecnologia em um centro gerador de lucro líquido.
+            </p>
+        </div>
+
+        <!-- Sessão 5: Próximos Passos -->
+        <h2><span class="section-num">5</span> Próximos Passos Sugeridos</h2>
+        <p>
+            Para avançarmos de forma prática e alinharmos o cronograma com as prioridades do Lucas e da Gabriela:
+        </p>
+        <ol style="margin-left: 20px; font-size: 15px; line-height: 1.8; color: var(--text-main);">
+            <li><strong>Reunião de Alinhamento Técnico-Operacional (20 min):</strong> Breve videoconferência entre Geanderson Schuh e Lucas para demonstração do fluxo e definição das rotinas de transbordo.</li>
+            <li><strong>Aprovação do Escopo & Cronograma Piloto:</strong> Validação dos canais de WhatsApp a integrar (Lisboa e Sintra).</li>
+            <li><strong>Início da Fase de Curadoria:</strong> Coleta dos detalhes operacionais e recomendações exclusivas que a Swan quer compartilhar com o hóspede internacional.</li>
+        </ol>
+
+        <!-- Assinaturas -->
+        <div class="signature-section">
+            <div class="signature-box">
+                <div class="sig-line"></div>
+                <div class="sig-name">Geanderson Leandro Schuh</div>
+                <div class="sig-title">Founder & CEO • Nexus Holding Group</div>
+            </div>
+            <div class="signature-box">
+                <div class="sig-line"></div>
+                <div class="sig-name">Lucas</div>
+                <div class="sig-title">Direção Geral • Swan Hotéis Portugal</div>
+            </div>
+        </div>
+
+        <!-- Rodapé -->
+        <footer>
+            <div>Nexus Holding Group • Inovação Soberana em Inteligência Artificial</div>
+            <div>Portugal Collection • Lisboa & Sintra • Outubro 2026</div>
+        </footer>
+    </div>
+
+</body>
+</html>
