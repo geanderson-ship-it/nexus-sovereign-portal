@@ -20,6 +20,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nexusholdinggroup.com.br'),
   title: 'Nexus Holding Group | Concierge Virtual, Avatares de IA Soberana e Inovação',
   description: 'A Nexus Holding Group é a única empresa brasileira a fornecer Concierges Virtuais e Avatares de IA 100% personalizáveis, poliglotas em mais de 50 idiomas, para hotéis, resorts, pousadas, marketing e sites corporativos. Liderando IA no agro e gestão pública.',
   keywords: 'concierge virtual, avatar inteligente para site, concierge para hotel, atendente virtual 3D, avatar de IA, hotelaria inteligente, tecnologia para pousada, única empresa brasileira avatar virtual, avatar para empresas de marketing, atendente virtual para agencia de marketing, martech, concierge pousadas, tecnologia para prefeituras, IA no agronegócio, Dante Safra, cidades do futuro, inteligência artificial, inovação governamental, software agrícola',
