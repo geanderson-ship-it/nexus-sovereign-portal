@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossiê Executivo Exclusivo • Lubianca Arquitetos & Nexus Holding Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nexus-emerald:      #082F24;
+            --nexus-emerald-light:#11523F;
+            --nexus-emerald-soft: #EDF5F1;
+            --nexus-gold:         #C5A059;
+            --nexus-gold-dark:    #9E7E38;
+            --nexus-gold-light:   #FAF5EB;
+            --nexus-blue:         #0066FF;
+            --nexus-dark:         #111815;
+            --nexus-border:       #E2EBE5;
+            --text-main:          #16211C;
+            --text-muted:         #52635B;
+            --bg-page:            #FBFBFA;
+            --card-white:         #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        html, body {
+            width: 210mm;
+            margin: 0;
+            padding: 0;
+            background: #EAECEB;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            color: var(--text-main);
+            font-size: 9.6pt;
+            line-height: 1.48;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 18mm 13mm 18mm;
+            box-sizing: border-box;
+            page-break-after: always;
+            page-break-inside: avoid;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-page);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+            margin-bottom: 0;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 7px;
+            border-bottom: 1.5px solid var(--nexus-border);
+            margin-bottom: 12px;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 12.5pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text span {
+            color: var(--nexus-gold);
+            font-style: italic;
+        }
+
+        .brand-divider {
+            color: var(--nexus-border);
+            font-size: 11pt;
+        }
+
+        .doc-category {
+            font-size: 8.5pt;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .header-badge {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            background: var(--nexus-gold-light);
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 7px;
+            border-top: 1px solid var(--nexus-border);
+            font-size: 7.5pt;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--nexus-emerald);
+            line-height: 1.2;
+        }
+
+        .doc-main-title {
+            font-size: 20pt;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            margin-bottom: 4px;
+        }
+
+        .doc-main-subtitle {
+            font-size: 9.8pt;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .dedication-box {
+            background: linear-gradient(135deg, rgba(8, 47, 36, 0.04) 0%, rgba(197, 160, 89, 0.09) 100%);
+            border: 1px solid rgba(197, 160, 89, 0.35);
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin: 10px 0 14px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dedication-left strong {
+            display: block;
+            font-size: 10pt;
+            color: var(--nexus-emerald);
+            font-weight: 700;
+        }
+
+        .dedication-left span {
+            font-size: 8.2pt;
+            color: var(--text-muted);
+        }
+
+        .dedication-right {
+            text-align: right;
+            font-size: 8pt;
+            color: var(--nexus-gold-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title {
+            font-size: 11.5pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background: var(--nexus-emerald);
+            color: #ffffff;
+            border-radius: 50%;
+            font-size: 8pt;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            font-size: 8.5pt;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .cards-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cards-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .card {
+            background: var(--card-white);
+            border: 1px solid var(--nexus-border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card.featured {
+            border-color: rgba(197, 160, 89, 0.4);
+            background: linear-gradient(180deg, #FFFFFF 0%, rgba(250, 245, 235, 0.4) 100%);
+        }
+
+        .card.emerald {
+            border-color: rgba(17, 82, 63, 0.3);
+            background: linear-gradient(180deg, #FFFFFF 0%, rgba(237, 245, 241, 0.5) 100%);
+        }
+
+        .card-badge {
+            display: inline-block;
+            font-size: 7.2pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--nexus-gold-dark);
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            margin-bottom: 4px;
+            line-height: 1.25;
+        }
+
+        .card-desc {
+            font-size: 8.2pt;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin-bottom: 8px;
+        }
+
+        .card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 8.1pt;
+        }
+
+        .card-list li {
+            position: relative;
+            padding-left: 14px;
+            margin-bottom: 5px;
+            line-height: 1.35;
+            color: var(--text-main);
+        }
+
+        .card-list li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: var(--nexus-gold);
+            font-weight: bold;
+            font-size: 10pt;
+        }
+
+        .callout {
+            background: var(--nexus-emerald-soft);
+            border-left: 3px solid var(--nexus-emerald);
+            padding: 9px 12px;
+            border-radius: 0 8px 8px 0;
+            font-size: 8.2pt;
+            color: var(--nexus-emerald-light);
+            line-height: 1.4;
+            margin-top: 6px;
+        }
+
+        .callout strong {
+            color: var(--nexus-emerald);
+        }
+
+        table.exec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8pt;
+            margin-top: 6px;
+            background: var(--card-white);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--nexus-border);
+        }
+
+        table.exec-table th {
+            background: var(--nexus-emerald);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 7px 10px;
+            text-align: left;
+            font-size: 7.8pt;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+
+        table.exec-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid var(--nexus-border);
+            color: var(--text-main);
+        }
+
+        table.exec-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.exec-table tr:nth-child(even) {
+            background: rgba(245, 247, 246, 0.6);
+        }
+
+        .tag-status {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 12px;
+            font-size: 7.2pt;
+            font-weight: 700;
+            background: rgba(16, 185, 129, 0.15);
+            color: #065F46;
+        }
+
+        .closing-box {
+            background: #ffffff;
+            border: 1px solid var(--nexus-border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 8px;
+        }
+
+        .closing-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            margin-bottom: 4px;
+        }
+
+        .closing-desc {
+            font-size: 8.2pt;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin-bottom: 12px;
+        }
+
+        .sig-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding-top: 8px;
+            border-top: 1px solid var(--nexus-border);
+        }
+
+        .sig-item {
+            font-size: 8pt;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        .sig-item strong {
+            display: block;
+            font-size: 8.8pt;
+            color: var(--nexus-emerald);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== PÁGINA 1: A SIMBIOSE ENTRE ARQUITETURA & TECNOLOGIA ==================== -->
+    <div class="page">
+        <div>
+            <div class="page-header">
+                <div class="brand-group">
+                    <div class="logo-text">NEXUS <span>HOLDING GROUP</span></div>
+                    <div class="brand-divider">|</div>
+                    <div class="doc-category">Dossiê Estratégico de Especificação</div>
+                </div>
+                <div class="header-badge">Especial Lubianca Arquitetos</div>
+            </div>
+
+            <div class="dedication-box">
+                <div class="dedication-left">
+                    <strong>Marina Lubianca • Sócia &amp; Head Comercial</strong>
+                    <span>Lubianca Arquitetos &amp; Hospitality Collab • Arquitetura Estratégica para Hotelaria</span>
+                </div>
+                <div class="dedication-right">
+                    Edição Executiva 2026 / 2027
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <h1 class="doc-main-title">A Simbiose entre Arquitetura Hoteleira &amp; I.A. Soberana</h1>
+                <div class="doc-main-subtitle">
+                    Como a Nexus Hospitality Suite valoriza o traço arquitetônico, o metro quadrado construído e a experiência in-room em novos projetos, retrofits e redes hoteleiras.
+                </div>
+            </div>
+
+            <div class="section-title">
+                <span class="section-number">1</span>
+                A Morte dos Balcões Frios: A Ascensão dos "Living Lobbies"
+            </div>
+            <div class="section-subtitle">
+                A tecnologia hoteleira deve ser invisível e sofisticada. Ela não compete com o projeto arquitetônico — ela o liberta de atritos burocráticos.
+            </div>
+
+            <div class="cards-grid-2">
+                <div class="card featured">
+                    <span class="card-badge">Integração com o Design de Interiores</span>
+                    <div class="card-title">Totens de Lobby em Materiais Nobres</div>
+                    <div class="card-desc">Projetados para se fundirem à marcenaria, mármores, aço escovado ou vidro da recepção.</div>
+                    <ul class="card-list">
+                        <li><strong>Fim das Filas no Saguão:</strong> Absorve picos de check-in e check-out, permitindo transformar a recepção tradicional em lounges de acolhimento.</li>
+                        <li><strong>Voz Neural e Interface Touch 4K:</strong> O hóspede é atendido em mais de 50 idiomas com fluidez nativa sem necessidade de recepcionista poliglota na bancada.</li>
+                        <li><strong>Check-in Expresso e Validação:</strong> Entrega de cartão magnético ou token digital pareado instantaneamente ao sistema PMS.</li>
+                    </ul>
+                </div>
+
+                <div class="card emerald">
+                    <span class="card-badge">A Suíte Interativa &amp; Conectada</span>
+                    <div class="card-title">In-Room Experience sem Caixas Aparentes</div>
+                    <div class="card-desc">Sem fiações soltas, tablets proprietários pesados ou controles remotos confusos.</div>
+                    <ul class="card-list">
+                        <li><strong>Boas-Vindas Sincronizadas na Smart TV:</strong> A tela acende suavemente com o nome do hóspede e iluminação de boas-vindas no segundo em que a porta abre.</li>
+                        <li><strong>Transbordo Inteligente via QR Code:</strong> Apontou o celular para a TV ou cabeceira, o WhatsApp oficial do hotel vira o controle universal do quarto.</li>
+                        <li><strong>Zero Fricção de Download:</strong> Nenhum hóspede precisa instalar aplicativos para ficar hospedado por duas noites.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="callout">
+                <strong>O Princípio da Hospitalidade Viva:</strong> Liberar a equipe física das tarefas repetitivas (senha do Wi-Fi, horários de café, toalhas) para que os colaboradores estejam presentes no espaço físico oferecendo um sorriso caloroso, hospitalidade autêntica e relacionamento humano.
+            </div>
+            <div class="page-footer">
+                <div>Nexus Holding Group • Lubianca Arquitetos &amp; Hospitality Collab</div>
+                <div>Página 1 de 4</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 2: AS DUAS MODALIDADES NO PROJETO ARQUITETÔNICO ==================== -->
+    <div class="page">
+        <div>
+            <div class="page-header">
+                <div class="brand-group">
+                    <div class="logo-text">NEXUS <span>HOLDING GROUP</span></div>
+                    <div class="brand-divider">|</div>
+                    <div class="doc-category">Modalidades de Implantação Hoteleira</div>
+                </div>
+                <div class="header-badge">Arquitetura de Experiência</div>
+            </div>
+
+            <div class="section-title">
+                <span class="section-number">2</span>
+                Duas Dimensões de Exclusividade para Diferentes Categorias de Quarto
+            </div>
+            <div class="section-subtitle">
+                A mesma robustez de engenharia sistêmica, adaptada ao nível de sofisticação e percepção de exclusividade desenhado pelos arquitetos.
+            </div>
+
+            <div class="cards-grid-2">
+                <div class="card featured">
+                    <span class="card-badge">Ultra-Luxo • Suítes Presidenciais &amp; Penthouses</span>
+                    <div class="card-title">Live Avatar em Tempo Real</div>
+                    <div class="card-desc">Para projetos onde o investidor busca o fator "Uau" de vanguarda global.</div>
+                    <ul class="card-list">
+                        <li><strong>Conversação Fluida por Voz (&lt; 600ms):</strong> A IA ouve o hóspede e responde com microexpressões faciais e sincronia labial geradas em tempo real.</li>
+                        <li><strong>Pronúncia Viva do Nome do Hóspede:</strong> Reconhece preferências, adapta tom de formalidade e responde em mais de 50 idiomas com sotaque nativo.</li>
+                        <li><strong>Sensação de Presença Viva:</strong> A imagem de ficção científica ganha vida dentro da suíte, justificando diárias de alto tíquete.</li>
+                    </ul>
+                </div>
+
+                <div class="card emerald">
+                    <span class="card-badge">Elegância Executiva • Suítes Master &amp; Standard</span>
+                    <div class="card-title">Vídeos Gravados Dinâmicos</div>
+                    <div class="card-desc">Para operações de escala e grandes redes que priorizam estabilidade e estética cinematográfica.</div>
+                    <ul class="card-list">
+                        <li><strong>Produção Cinematográfica 4K/8K:</strong> Iluminação de estúdio nobre, figurinos impecáveis e enquadramento de cinema.</li>
+                        <li><strong>Arquitetura Edge Offline-First:</strong> Os vídeos rodam em cache local no Edge. Se o link de internet externo oscilar, as TVs e Totens não travam.</li>
+                        <li><strong>Zero Custo Contínuo de Streaming:</strong> Custo operacional fixo e altamente previsível para redes hoteleiras de dezenas ou centenas de quartos.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 10px;">
+                <span class="section-number">3</span>
+                Automação IoT Integrada à Arquitetura do Quarto
+            </div>
+            <div class="section-subtitle">
+                Controle integral pelo WhatsApp ou pela Smart TV sem necessidade de fiação pesada ou painéis complexos na parede.
+            </div>
+
+            <table class="exec-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Recurso da Suíte</th>
+                        <th style="width: 35%;">Ação do Hóspede no WhatsApp</th>
+                        <th style="width: 40%;">Integração no Projeto de Arquitetura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Iluminação Cênica</strong></td>
+                        <td><em>"Modo cinema"</em> ou <em>"luz suave de descanso"</em></td>
+                        <td>Integração com módulos IoT (dimmers, fitas de LED indiretas e cabeceiras iluminadas).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cortinas &amp; Persianas</strong></td>
+                        <td><em>"Fechar cortinas blackout"</em> ou <em>"abrir persianas às 8h"</em></td>
+                        <td>Acionamento silencioso de motores tubulares integrados ao cortineiro embutido.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clima &amp; Ar-Condicionado</strong></td>
+                        <td><em>"Colocar o quarto em 21°C"</em></td>
+                        <td>Ajuste automatizado via termostatos inteligentes integrados ao sistema VRF/Chiller.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Música &amp; Som Ambiente</strong></td>
+                        <td><em>"Tocar jazz lounge na suíte"</em></td>
+                        <td>Reprodução nas caixas de som embutidas no gesso ou direto no soundbar da Smart TV.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Room Service &amp; Copa</strong></td>
+                        <td><em>"Dois cafés expressos e água mineral"</em></td>
+                        <td>Lançamento direto no extrato da suíte via PMS e envio de comanda digital para a cozinha.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <div class="page-footer">
+                <div>Nexus Holding Group • Lubianca Arquitetos &amp; Hospitality Collab</div>
+                <div>Página 2 de 4</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 3: RETORNO SOBRE O INVESTIMENTO PARA REDES & INVESTIDORES ==================== -->
+    <div class="page">
+        <div>
+            <div class="page-header">
+                <div class="brand-group">
+                    <div class="logo-text">NEXUS <span>HOLDING GROUP</span></div>
+                    <div class="brand-divider">|</div>
+                    <div class="doc-category">Viabilidade Econômica para o Investidor</div>
+                </div>
+                <div class="header-badge">ROI &amp; Valorização do Ativo</div>
+            </div>
+
+            <div class="section-title">
+                <span class="section-number">4</span>
+                O Que Move o Investidor Hoteleiro: RevPAR &amp; Margem Direta
+            </div>
+            <div class="section-subtitle">
+                Arquitetura estratégica não é custo — é motor de valorização do metro quadrado e de aumento de faturamento hoteleiro.
+            </div>
+
+            <div class="cards-grid-3">
+                <div class="card featured">
+                    <span class="card-badge">Elevação de Diária</span>
+                    <div class="card-title">RevPAR Superior</div>
+                    <div class="card-desc">Suítes com experiência imersiva e concierge 24h cobram diárias médias <strong>20% a 35% mais altas</strong> no mercado corporativo e de luxo.</div>
+                </div>
+
+                <div class="card emerald">
+                    <span class="card-badge">Desintermediação</span>
+                    <div class="card-title">Fim das Taxas das OTAs</div>
+                    <div class="card-desc">A IA atua na captação direta de hóspedes no WhatsApp e site oficial, eliminando <strong>comissões de 15% a 25%</strong> de intermediários (Booking/Expedia).</div>
+                </div>
+
+                <div class="card">
+                    <span class="card-badge">Receitas Acessórias</span>
+                    <div class="card-title">Concierge Comissionado</div>
+                    <div class="card-desc">A indicação qualificada de traslados, passeios de lancha, vinícolas, helitour e gastronomia gera <strong>comissões ativas</strong> para o hotel.</div>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 8px;">
+                <span class="section-number">5</span>
+                Check-out Express: A Eliminação do Caos no Meio-Dia do Domingo
+            </div>
+            <div class="section-subtitle">
+                Um problema que afeta diretamente o fluxo dos lobbies e a satisfação do cliente na despedida.
+            </div>
+
+            <div class="cards-grid-2">
+                <div class="card">
+                    <div class="card-title" style="color: #B91C1C;">O Cenário Tradicional</div>
+                    <div class="card-desc">Lobby apinhado de malas, hóspedes impacientes em filas de 20 a 40 minutos para conferir consumo de frigobar, pagar e entregar cartões. O último sentimento do cliente ao sair do hotel é de estresse.</div>
+                </div>
+
+                <div class="card featured">
+                    <div class="card-title" style="color: #065F46;">A Solução Nexus Hospitality Suite</div>
+                    <div class="card-desc">Às 10h da manhã, a Concierge envia o extrato consolidado no WhatsApp. O hóspede confere, paga em 1 clique via Pix ou Cartão e sai livremente. A governança recebe no PMS a liberação imediata do quarto para faxina.</div>
+                </div>
+            </div>
+
+            <div class="callout" style="background-color: var(--nexus-gold-light); border-left-color: var(--nexus-gold-dark); color: var(--nexus-dark); margin-top: 10px;">
+                <strong>Sinergia com o Hospitality Collab:</strong> A Lubianca Arquitetos já entrega o projeto com soluções de hospitalidade que se autofinanciam. Apenas 3 a 5 reservas diretas captadas mensalmente pela IA no WhatsApp já cobrem a infraestrutura inteira do sistema no hotel.
+            </div>
+        </div>
+
+        <div>
+            <div class="page-footer">
+                <div>Nexus Holding Group • Lubianca Arquitetos &amp; Hospitality Collab</div>
+                <div>Página 3 de 4</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 4: O MODELO DE PARCERIA ESTRATÉGICA ==================== -->
+    <div class="page">
+        <div>
+            <div class="page-header">
+                <div class="brand-group">
+                    <div class="logo-text">NEXUS <span>HOLDING GROUP</span></div>
+                    <div class="brand-divider">|</div>
+                    <div class="doc-category">Aliança Estratégica &amp; Especificação</div>
+                </div>
+                <div class="header-badge">Parceria Oficial</div>
+            </div>
+
+            <div class="section-title">
+                <span class="section-number">6</span>
+                Como Funciona a Parceria: Lubianca Arquitetos + Nexus
+            </div>
+            <div class="section-subtitle">
+                A Nexus atua como seu braço de engenharia tecnológica de missão crítica, pronta para apoiar seu time em todas as fases do projeto.
+            </div>
+
+            <div class="cards-grid-2">
+                <div class="card featured">
+                    <div class="card-title">Memorial Descritivo Tecnológico Pronto</div>
+                    <div class="card-desc">Fornecemos aos arquitetos e engenheiros prediais da Lubianca os blocos de especificação técnica:</div>
+                    <ul class="card-list">
+                        <li>Pontos de energia, rede e ergonomia para os Totens de Lobby.</li>
+                        <li>Diretrizes de cabeamento invisível para Smart TVs em cabeceiras e painéis.</li>
+                        <li>Protocolos de integração com sistemas IoT e fechaduras eletrônicas homologadas.</li>
+                    </ul>
+                </div>
+
+                <div class="card emerald">
+                    <div class="card-title">Implantação Turnkey &amp; Integração PMS</div>
+                    <div class="card-desc">A equipe de engenharia da Nexus assume toda a infraestrutura de software e IA:</div>
+                    <ul class="card-list">
+                        <li>Integração direta com o PMS do hotel (Desbravador, Opera, Totvs, Cloudbeds).</li>
+                        <li>Configuração do canal oficial de WhatsApp e dos avatares personalizados.</li>
+                        <li>Homologação de segurança, LGPD/GDPR e proteção PCI em nuvem dedicada.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ENCERRAMENTO & ASSINATURAS -->
+            <div class="closing-box" style="margin-top: 14px;">
+                <div class="closing-title">Próximo Passo: Café Executivo de Alinhamento</div>
+                <div class="closing-desc">
+                    Será uma honra receber você e o time da Lubianca Arquitetos e do Hospitality Collab para um alinhamento estratégico de 20 minutos. Vamos estruturar juntos como posicionar a tecnologia nos projetos em andamento e nas próximas propostas para investidores hoteleiros.
+                </div>
+                
+                <div class="sig-row">
+                    <div class="sig-item">
+                        <strong>Geanderson Leandro Schuh</strong>
+                        Founder &amp; CEO • Nexus Holding Group
+                        <div style="font-size: 7.5pt; color: #64748b;">geanderson@nexusholdinggroup.com.br</div>
+                    </div>
+                    <div class="sig-item" style="border-left: 1px solid rgba(8, 47, 36, 0.2); padding-left: 20px;">
+                        <strong>Ivoni Severo Schuh</strong>
+                        COO &amp; Founder • Nexus Holding Group
+                        <div style="font-size: 7.5pt; color: #64748b;">ivoni@nexusholdinggroup.com.br • (51) 99902-9371</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px; padding-top: 8px; border-top: 1px dashed rgba(197, 160, 89, 0.4); display: flex; justify-content: space-between; align-items: center; font-size: 7.8pt;">
+                    <span style="color: var(--nexus-emerald); font-weight: 700;">Dedicado a: Marina Lubianca • Lubianca Arquitetos &amp; Hospitality Collab</span>
+                    <span style="color: var(--nexus-gold-dark); font-weight: 600;">nexusholdinggroup.com.br/concierges</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="page-footer">
+                <div>Nexus Holding Group • "Temos IA no sangue e humanidade no coração."</div>
+                <div>Página 4 de 4</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
