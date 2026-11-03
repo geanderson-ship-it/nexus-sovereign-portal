@@ -104,7 +104,7 @@ export function SiteHeader() {
 
   const mainNav = useMemo(() => [
     { title: 'Concierge de Luxo', href: '/concierges' },
-    { title: 'Embaixadoras IA', href: '/nexus-rotas/embaixadora' },
+    { title: 'Embaixadoras IA', href: '/embaixadoras' },
     { title: 'Inova Moda', href: '/inovamoda' },
     { title: 'Inova Revenda', href: '/inova-revenda' },
     { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
@@ -284,7 +284,7 @@ export function SiteHeader() {
                     'transition-all duration-300',
                     item.href === '/concierges'
                       ? 'bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-yellow-500/60 px-3.5 py-1.5 rounded-md shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:shadow-[0_0_30px_rgba(234,179,8,0.6)] hover:bg-yellow-500/30 text-yellow-300 font-extrabold capitalize tracking-wide'
-                      : item.href === '/nexus-rotas/embaixadora'
+                      : item.href === '/embaixadoras'
                       ? 'bg-teal-500/15 border border-teal-400/50 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.25)] hover:shadow-[0_0_25px_rgba(20,184,166,0.5)] hover:bg-teal-500/25 text-teal-300 font-bold capitalize tracking-wide'
                       : item.href === '/inovamoda'
                       ? 'bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:bg-purple-500/20 text-white font-bold capitalize tracking-wide'
@@ -367,7 +367,7 @@ export function SiteHeader() {
                             'flex items-center justify-between p-3 rounded-lg transition-all duration-200 group mb-1',
                             item.href === '/concierges'
                       ? 'bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-yellow-500/60 px-3.5 py-1.5 rounded-md shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:shadow-[0_0_30px_rgba(234,179,8,0.6)] hover:bg-yellow-500/30 text-yellow-300 font-extrabold capitalize tracking-wide'
-                      : item.href === '/nexus-rotas/embaixadora'
+                      : item.href === '/embaixadoras'
                       ? 'bg-teal-500/15 border border-teal-400/50 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.25)] hover:shadow-[0_0_25px_rgba(20,184,166,0.5)] hover:bg-teal-500/25 text-teal-300 font-bold capitalize tracking-wide'
                       : item.href === '/inovamoda'
                             ? 'bg-purple-500/10 text-white drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] font-bold border border-purple-500/50 capitalize tracking-wide'

@@ -126,7 +126,7 @@ export default function NexusRotasHubPage() {
               </div>
               <div className="mt-6">
                 <Button className="w-full bg-blue-600/95 hover:bg-blue-500 text-white font-bold h-11 transition-all shadow-lg hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]" asChild>
-                  <Link href="/nexus-rotas/embaixadora">
+                  <Link href="/embaixadoras">
                     Acessar Solução Pública
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
