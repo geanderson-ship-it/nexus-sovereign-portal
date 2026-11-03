@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossiê Técnico Executivo — Embaixadora Virtual Soberana | Nexus Holding Group</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap');
+
+        :root {
+            --primary: #0a192f;          /* Azul Soberano Cívico Profundo */
+            --primary-dark: #050d1a;     /* Azul Quase Negro */
+            --primary-light: #1e3a8a;    /* Azul Real */
+            --gold: #c5a059;             /* Dourado Nobre */
+            --gold-light: #dfc287;       /* Dourado Iluminado */
+            --gold-dark: #977636;        /* Bronze Cívico */
+            --cream: #f8fafc;            /* Fundo Claro Off-White */
+            --white: #ffffff;
+            --charcoal: #1e293b;         /* Grafite Nobre */
+            --text-muted: #64748b;       /* Texto Secundário */
+            --border-color: #cbd5e1;     /* Bordas Neutras Suaves */
+            --card-bg: rgba(255, 255, 255, 0.96);
+            --accent-blue: #0284c7;      /* Ciano Cívico */
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #e2e8f0;
+            color: var(--charcoal);
+            line-height: 1.55;
+            font-size: 12.5px;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 18mm;
+            margin: 15px auto;
+            background: var(--cream);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 13mm 16mm;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* MOLDURA GOVTECH */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 7mm;
+            left: 7mm;
+            right: 7mm;
+            bottom: 7mm;
+            border: 1px solid var(--border-color);
+            pointer-events: none;
+        }
+
+        .page::after {
+            content: '';
+            position: absolute;
+            top: 8mm;
+            left: 8mm;
+            right: 8mm;
+            bottom: 8mm;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            pointer-events: none;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            margin-bottom: 12px;
+        }
+
+        .header-brand {
+            font-family: 'Cinzel', serif;
+            font-size: 9.5px;
+            letter-spacing: 2px;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .header-doc {
+            font-size: 8.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 5px;
+            margin-top: 12px;
+            font-size: 8px;
+            color: var(--text-muted);
+        }
+
+        .page-footer strong {
+            color: var(--primary);
+        }
+
+        .page-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: var(--gold-dark);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+        }
+
+        h2.section-title {
+            font-size: 17px;
+            color: var(--primary);
+            border-left: 4px solid var(--gold);
+            padding-left: 10px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        p.section-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 11.5px;
+            color: var(--gold-dark);
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 7px;
+            text-align: justify;
+        }
+
+        .civic-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: var(--white);
+            font-family: 'Cinzel', serif;
+            font-size: 7.5px;
+            letter-spacing: 1.5px;
+            padding: 3px 8px;
+            border-radius: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .info-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--primary-light);
+            padding: 9px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+
+        .info-card h4 {
+            font-size: 11.5px;
+            margin-bottom: 3px;
+            color: var(--primary);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .feature-box {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            padding: 9px;
+            border-radius: 4px;
+        }
+
+        .feature-box .icon {
+            font-size: 15px;
+            color: var(--primary-light);
+            margin-bottom: 3px;
+        }
+
+        .feature-box h5 {
+            font-family: 'Cinzel', serif;
+            font-size: 10.5px;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .feature-box p {
+            font-size: 10.5px;
+            color: var(--charcoal);
+            line-height: 1.4;
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        table.executive-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+            margin-bottom: 10px;
+            font-size: 10px;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+        }
+
+        table.executive-table th {
+            background: var(--primary);
+            color: var(--gold-light);
+            font-family: 'Cinzel', serif;
+            padding: 7px 9px;
+            text-align: left;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-size: 9.5px;
+        }
+
+        table.executive-table td {
+            padding: 6px 9px;
+            border-bottom: 1px solid #e2e8f0;
+            color: var(--charcoal);
+            vertical-align: top;
+        }
+
+        table.executive-table tr:nth-child(even) td {
+            background: #f8fafc;
+        }
+
+        .diagram-container {
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 4px;
+            margin: 8px 0;
+            text-align: center;
+        }
+
+        .diagram-node {
+            display: inline-block;
+            background: var(--white);
+            border: 1px solid var(--primary-light);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 9.5px;
+            color: var(--primary);
+            margin: 3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .diagram-arrow {
+            display: inline-block;
+            color: var(--gold-dark);
+            font-weight: bold;
+            font-size: 11px;
+            margin: 0 3px;
+        }
+
+        /* CAPA EXECUTIVA */
+        .cover-page {
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e3a8a 0%, #0a192f 60%, #050d1a 100%);
+            color: var(--white);
+            padding: 22mm 18mm;
+        }
+
+        .cover-page::before {
+            border-color: rgba(223, 194, 135, 0.4);
+        }
+
+        .cover-page::after {
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .cover-crest {
+            font-size: 40px;
+            margin-bottom: 4px;
+        }
+
+        .cover-tagline {
+            font-family: 'Cinzel', serif;
+            font-size: 9.5px;
+            letter-spacing: 4px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .cover-divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 12px auto 20px auto;
+        }
+
+        .cover-title {
+            font-size: 24px;
+            color: var(--white);
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .cover-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 13.5px;
+            color: #93c5fd;
+            font-style: italic;
+            max-width: 490px;
+            margin: 0 auto 30px auto;
+            line-height: 1.5;
+        }
+
+        .cover-metadata {
+            background: rgba(10, 25, 47, 0.75);
+            border: 1px solid rgba(223, 194, 135, 0.35);
+            border-radius: 4px;
+            padding: 16px 22px;
+            max-width: 480px;
+            margin: 0 auto;
+            text-align: left;
+            font-size: 10.5px;
+            backdrop-filter: blur(8px);
+        }
+
+        .cover-metadata table {
+            width: 100%;
+        }
+
+        .cover-metadata td {
+            padding: 3.5px 0;
+            color: #e2e8f0;
+        }
+
+        .cover-metadata td.label {
+            color: var(--gold);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            width: 36%;
+        }
+
+        .callout-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 12.5px;
+            color: var(--primary);
+            font-style: italic;
+            border-left: 3px solid var(--gold);
+            padding: 7px 12px;
+            margin: 10px 0;
+            background: rgba(197, 160, 89, 0.08);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================== -->
+    <!-- PÁGINA 1: CAPA INSTITUCIONAL GOVTECH       -->
+    <!-- ========================================== -->
+    <div class="page cover-page">
+        <div>
+            <div class="cover-crest">🏛️🌐</div>
+            <div class="cover-tagline">GOVTECH &bull; TURISMO INTELIGENTE &bull; DESTINOS CONECTADOS</div>
+            <div class="cover-title">DOSSIÊ TÉCNICO EXECUTIVO<br>EMBAIXADORA VIRTUAL SOBERANA</div>
+            <div class="cover-divider"></div>
+            <div class="cover-subtitle">
+                A Guia Cívica e Turística Oficial com Inteligência Artificial para Municípios, Estados e Regiões Turísticas — Presença em 50+ Idiomas, Suporte 24/7 e Fomento Econômico Local.
+            </div>
+        </div>
+
+        <div class="cover-metadata">
+            <table>
+                <tr>
+                    <td class="label">ÂMBITO DE APLICAÇÃO:</td>
+                    <td><strong>Municipal, Estadual e Destinos Turísticos (DTI)</strong></td>
+                </tr>
+                <tr>
+                    <td class="label">MODELO INSTITUCIONAL:</td>
+                    <td><strong>Pública Direta ou PPP (CDL / ABIH / Abrasel / ACIs)</strong></td>
+                </tr>
+                <tr>
+                    <td class="label">DESENVOLVEDOR:</td>
+                    <td><strong>Nexus Holding Group &bull; Nexus Tecnologia e Inovação</strong></td>
+                </tr>
+                <tr>
+                    <td class="label">DIRETORIA EXECUTIVA:</td>
+                    <td><strong>Geanderson Leandro Schuh</strong> (CEO) & <strong>Ivoni Severo Schuh</strong> (COO)</td>
+                </tr>
+                <tr>
+                    <td class="label">ARQUITETURA DE IA:</td>
+                    <td><strong>Atena</strong> — Engenheira-Chefe de I.A. & Arquiteta de Soluções</td>
+                </tr>
+                <tr>
+                    <td class="label">VERSÃO DO PROJETO:</td>
+                    <td>Novembro de 2026 &bull; Dossiê de Engenharia Soberana</td>
+                </tr>
+                <tr>
+                    <td class="label">CLASSIFICAÇÃO:</td>
+                    <td>Documento Técnico Institucional &bull; Uso Executivo</td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="font-size: 8.5px; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase;">
+            "Tecnologia soberana a serviço da cidadania, do turismo inteligente e do desenvolvimento econômico."
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- PÁGINA 2: VISÃO GERAL & OS 4 EIXOS CÍVICOS -->
+    <!-- ========================================== -->
+    <div class="page">
+        <div class="page-header">
+            <span class="header-brand">Nexus Holding Group &bull; Embaixadora Virtual</span>
+            <span class="header-doc">Visão Geral & Eixos de Serviço</span>
+        </div>
+
+        <div class="page-content">
+            <span class="civic-badge">1. Fundamentos da Solução</span>
+            <h2 class="section-title">A Guia Oficial da Cidade no Século XXI</h2>
+            <p class="section-subtitle">Acolhimento contínuo, democratização da informação pública e suporte multilíngue para visitantes e munícipes.</p>
+
+            <p>
+                Os municípios e regiões turísticas contemporâneas enfrentam um desafio estrutural: como acolher milhões de turistas nacionais e estrangeiros e atender à população local de forma ágil, 24 horas por dia, 365 dias por ano, sem inflar a folha de pagamento municipal ou criar estruturas de atendimento que fecham nos finais de semana e feriados?
+            </p>
+
+            <div class="callout-quote">
+                "A Embaixadora Virtual Soberana não é um mero chatbot de respostas prontas. Trata-se de uma entidade cívica digital dotada de identidade visual própria, voz humana acolhedora e base de conhecimento homologada pelos órgãos oficiais."
+            </div>
+
+            <p>
+                A solução opera sobre <strong>4 Eixos Cívicos Fundamentais</strong>, garantindo que o visitante encontre socorro, orientação e encantamento desde o instante do seu desembarque:
+            </p>
+
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="feature-box" style="border-left: 3px solid #ef4444;">
+                    <h5 style="color: #b91c1c;">🚨 1. Segurança Pública & Apoio ao Turista</h5>
+                    <p>Orientação direta sobre localização da Delegacia de Atendimento ao Turista (DEAT), telefones de emergência (190, 193, 197), dicas de áreas seguras, suporte em casos de perda de documentos e canais imediatos de socorro.</p>
+                </div>
+                <div class="feature-box" style="border-left: 3px solid #10b981;">
+                    <h5 style="color: #047857;">🏥 2. Saúde, Emergências & SUS</h5>
+                    <p>Guia de farmácias de plantão, postos de saúde da família, UPAs 24h, hospitais de urgência, acionamento do SAMU 192 e orientações sobre atendimento de viajantes na rede pública e privada.</p>
+                </div>
+                <div class="feature-box" style="border-left: 3px solid #0284c7;">
+                    <h5 style="color: #0369a1;">🏛️ 3. Patrimônio, Cultura & Turismo</h5>
+                    <p>História e memória da cidade, monumentos históricos, museus, praias, parques naturais, arquitetura tombada e agenda oficial de festivais e eventos culturais da Secretaria de Turismo.</p>
+                </div>
+                <div class="feature-box" style="border-left: 3px solid #8b5cf6;">
+                    <h5 style="color: #6d28d9;">🌍 4. Mobilidade & 50+ Idiomas</h5>
+                    <p>Rotas de ônibus, táxis homologados, traslados aeroporto, estacionamento rotativo e atendimento em mais de 50 idiomas nativos (inglês, espanhol, alemão, mandarim, francês, italiano, árabe, etc.).</p>
+                </div>
+            </div>
+
+            <div class="info-card" style="border-left-color: var(--primary-light); background: #f0fdf4;">
+                <h4 style="color: #166534;">🌟 O Impacto no Índice de Destinos Turísticos Inteligentes (DTI)</h4>
+                <p style="font-size: 10.5px; margin-bottom: 0;">
+                    A implantação da Embaixadora Virtual cumpre diretamente as diretrizes metodológicas do <strong>Ministério do Turismo</strong> e da <strong>SEGITTUR</strong> para a certificação de Destinos Turísticos Inteligentes nos pilares de <em>Tecnologia, Acessibilidade, Governança e Sustentabilidade</em>.
+                </p>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>Nexus Holding Group &bull; Embaixadora Virtual Soberana</span>
+            <span class="page-number">Página 02</span>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- PÁGINA 3: ARQUITETURA MULTICANAL & CANAIS  -->
+    <!-- ========================================== -->
+    <div class="page">
+        <div class="page-header">
+            <span class="header-brand">Nexus Holding Group &bull; Embaixadora Virtual</span>
+            <span class="header-doc">Arquitetura Multicanal</span>
+        </div>
+
+        <div class="page-content">
+            <span class="civic-badge">2. Canais de Acolhimento</span>
+            <h2 class="section-title">Onde a Embaixadora Encontra o Cidadão</h2>
+            <p class="section-subtitle">Presença capilar e acessível em todos os pontos de contato da cidade sem necessidade de baixar novos aplicativos.</p>
+
+            <p>
+                A tecnologia cívica só é inclusiva quando alcança as pessoas onde elas já estão. A Embaixadora Virtual da Nexus adota a filosofia <strong>Zero Friction</strong>: o turista não precisa fazer download de novos aplicativos pesados que serão desinstalados ao fim da viagem. A guia atua através dos canais de uso universal:
+            </p>
+
+            <div class="grid-2">
+                <div class="info-card">
+                    <h4>📱 1. WhatsApp Oficial Verificado da Cidade</h4>
+                    <p style="font-size: 10.5px;">
+                        Operando sob a <em>WhatsApp Business Cloud API Oficial</em>, a Embaixadora atende dezenas de milhares de usuários simultaneamente. O turista envia mensagem de texto ou áudio e recebe resposta imediata com localização no mapa, fotos e itinerários.
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h4>🌐 2. Portal Institucional & Turismo</h4>
+                    <p style="font-size: 10.5px;">
+                        Widget elegante flutuante integrado ao site oficial da prefeitura, secretaria de turismo ou convention bureau, acolhendo o viajante que está planejando a viagem antes mesmo do embarque.
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h4>🖥️ 3. Totens em Aeroportos & Rodoviárias</h4>
+                    <p style="font-size: 10.5px;">
+                        Displays interativos touch instalados nos portões de entrada da cidade e nos Centros de Atendimento ao Turista (CATs), permitindo pesquisa rápida e envio das rotas direto para o celular.
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h4>📍 4. QR Codes Cívicos em Monumentos</h4>
+                    <p style="font-size: 10.5px;">
+                        Placas inteligentes instaladas em prédios históricos, praças e parques. Ao mirar a câmera do celular, a Embaixadora inicia uma narração histórica no idioma do visitante.
+                    </p>
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <p style="font-family: 'Cinzel', serif; font-size: 9.5px; font-weight: 700; color: var(--primary); margin-bottom: 6px;">FLUXO INTEGRADO DE ATENDIMENTO AO TURISTA</p>
+                <div class="diagram-node">Desembarque (Aeroporto / Rodoviária)</div>
+                <span class="diagram-arrow">➔</span>
+                <div class="diagram-node">QR Code ou WhatsApp Oficial</div>
+                <span class="diagram-arrow">➔</span>
+                <div class="diagram-node">Acolhimento no Idioma Nativo</div>
+                <span class="diagram-arrow">➔</span>
+                <div class="diagram-node" style="border-color: #16a34a; background: #f0fdf4;">Guia Completo da Cidade & Roteiro</div>
+            </div>
+
+            <div class="info-card" style="margin-top: 10px;">
+                <h4>♿ Acessibilidade Universal & Inclusão</h4>
+                <p style="font-size: 10.5px; margin-bottom: 0;">
+                    A solução contempla recursos de acessibilidade: leitura em voz alta para deficientes visuais, interface com alto contraste, reconhecimento de áudios em múltiplos idiomas e geração de roteiros com filtro específico para rotas com rampas e transporte acessível.
+                </p>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>Nexus Holding Group &bull; Embaixadora Virtual Soberana</span>
+            <span class="page-number">Página 03</span>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- PÁGINA 4: AS DUAS MODALIDADES TÉCNICAS     -->
+    <!-- ========================================== -->
+    <div class="page">
+        <div class="page-header">
+            <span class="header-brand">Nexus Holding Group &bull; Embaixadora Virtual</span>
+            <span class="header-doc">Engenharia Visual & Modos de Entrega</span>
+        </div>
+
+        <div class="page-content">
+            <span class="civic-badge">3. Modos de Operação</span>
+            <h2 class="section-title">Live Avatar vs. Vídeos Dinâmicos</h2>
+            <p class="section-subtitle">Flexibilidade técnica para atender desde conexões 5G até áreas públicas com conectividade móvel básica.</p>
+
+            <p>
+                Para garantir 100% de disponibilidade em qualquer cenário de infraestrutura urbana, a arquitetura da Embaixadora Virtual foi projetada em duas modalidades complementares que operam sob paridade de inteligência:
+            </p>
+
+            <table class="executive-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Critério</th>
+                        <th style="width: 37%;">Modalidade A: Live Avatar (Tempo Real)</th>
+                        <th style="width: 38%;">Modalidade B: Vídeos Gravados Dinâmicos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Experiência Visual</strong></td>
+                        <td>Avatar 3D com renderização fisionômica contínua e fala em tempo real.</td>
+                        <td>Pílulas cinematográficas em 4K pré-renderizadas de 15 a 60 segundos com atores virtuais.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cenário de Aplicação</strong></td>
+                        <td>Totens interativos no aeroporto, lobby de hotéis e portais com alta banda.</td>
+                        <td>WhatsApp móvel do turista, redes 4G/3G de rua e conexões variáveis.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Latência de Resposta</strong></td>
+                        <td>Instantânea (processamento cognitivo na nuvem soberana Nexus).</td>
+                        <td>Zero delay (execução local ou streaming otimizado sem travamentos).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consumo de Dados</strong></td>
+                        <td>Streaming contínuo de vídeo interativo.</td>
+                        <td>Consumo ultra-reduzido, adaptado para pacotes de dados de turistas.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout-quote" style="margin: 10px 0;">
+                "Seja no calor da rua consultando um monumento pelo WhatsApp, seja no conforto do hotel ou diante de um totem no aeroporto: o turista tem a mesma guia, o mesmo tom acolhedor e a mesma precisão de dados."
+            </div>
+
+            <div class="grid-2" style="margin-top: 10px;">
+                <div class="info-card">
+                    <h4>🎭 Identidade Visual Personalizada para a Região</h4>
+                    <p style="font-size: 10.5px;">
+                        A fisionomia, idade, vestimentas e estilo de comunicação da Embaixadora são desenhados sob medida para refletir a história, as etnias fundadoras e as tradições do município (ex: trajes típicos coloniais, praianos, históricos ou contemporâneos).
+                    </p>
+                </div>
+                <div class="info-card">
+                    <h4>🎙️ Síntese Vocal Acolhedora sem Robotização</h4>
+                    <p style="font-size: 10.5px;">
+                        Entonação calorosa, cadenciada e empática, capaz de pronunciar corretamente os nomes indígenas, históricos e culturais das ruas e monumentos da cidade em qualquer língua.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>Nexus Holding Group &bull; Embaixadora Virtual Soberana</span>
+            <span class="page-number">Página 04</span>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- PÁGINA 5: INTEGRAÇÃO MULTI-SECRETARIAS     -->
+    <!-- ========================================== -->
+    <div class="page">
+        <div class="page-header">
+            <span class="header-brand">Nexus Holding Group &bull; Embaixadora Virtual</span>
+            <span class="header-doc">Governança & Integração Aberta</span>
+        </div>
+
+        <div class="page-content">
+            <span class="civic-badge">4. Engenharia Aberta via API</span>
+            <h2 class="section-title">Integração Modular Multi-Secretarias</h2>
+            <p class="section-subtitle">Conectividade oficial com qualquer pasta da administração pública com auditoria, LGPD e rigor de dados.</p>
+
+            <p>
+                A Embaixadora Virtual não é um sistema fechado. Sua arquitetura de software possui <strong>Conectores Modulares Abertos (REST APIs e Webhooks)</strong> capazes de se integrar a qualquer base de dados oficial disponibilizada pela prefeitura ou governo estadual:
+            </p>
+
+            <div class="grid-3">
+                <div class="feature-box">
+                    <h5>🌿 Meio Ambiente & Praias</h5>
+                    <p>Balneabilidade das águas, trilhas ecológicas, regras de conservação e cronograma de coleta seletiva.</p>
+                </div>
+                <div class="feature-box">
+                    <h5>🎉 Cultura, Eventos & Lazer</h5>
+                    <p>Programação de teatros municipais, calendários de shows oficiais e feiras de artesanato.</p>
+                </div>
+                <div class="feature-box">
+                    <h5>🚧 Trânsito, Obras & Vias</h5>
+                    <p>Interdições de ruas em tempo real, obras, desvios e vagas de estacionamento rotativo.</p>
+                </div>
+                <div class="feature-box">
+                    <h5>🚨 Defesa Civil & Alertas</h5>
+                    <p>Avisos em tempo real de tempestades, ressacas marítimas e rotas de segurança em emergências.</p>
+                </div>
+                <div class="feature-box">
+                    <h5>🧾 Fazenda & Taxas Cívicas</h5>
+                    <p>Esclarecimentos sobre Taxa de Preservação Ambiental (TPA), certidões e serviços ao munícipe.</p>
+                </div>
+                <div class="feature-box">
+                    <h5>📊 Transparência & Ouvidoria</h5>
+                    <p>Horários de repartições, canais de ouvidoria e protocolo eletrônico sem filas presenciais.</p>
+                </div>
+            </div>
+
+            <div class="info-card" style="border-left-color: #2563eb; background: #eff6ff; margin-top: 8px;">
+                <h4 style="color: #1e40af;">🛡️ Princípio da Sobriedade Técnica & Blindagem Contra Alucinações</h4>
+                <p style="font-size: 10.5px; margin-bottom: 0;">
+                    A Inteligência Artificial da Nexus opera sob a diretriz de <strong>verdade documental estrita</strong>. Se uma determinada secretaria municipal não possuir uma informação homologada em sua base de dados, a Embaixadora jamais inventará respostas: ela encaminhará o cidadão com transparência para o canal de atendimento humano oficial do órgão.
+                </p>
+            </div>
+
+            <div class="info-card" style="border-left-color: #059669; background: #ecfdf5; margin-top: 8px;">
+                <h4 style="color: #065f46;">🔒 Conformidade Total com a LGPD (Lei Geral de Proteção de Dados)</h4>
+                <p style="font-size: 10.5px; margin-bottom: 0;">
+                    Não há armazenamento de dados sensíveis ou comercialização de cadastros. As consultas são anônimas e os relatórios gerados para a gestão municipal apresentam exclusivamente métricas estatísticas de fluxo turístico, dúvidas mais recorrentes e demandas de serviços.
+                </p>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>Nexus Holding Group &bull; Embaixadora Virtual Soberana</span>
+            <span class="page-number">Página 05</span>
+        </div>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- PÁGINA 6: MODELO PPP & RETORNO ECONÔMICO   -->
+    <!-- ========================================== -->
+    <div class="page">
+        <div class="page-header">
+            <span class="header-brand">Nexus Holding Group &bull; Embaixadora Virtual</span>
+            <span class="header-doc">Modelo de PPP & Viabilidade</span>
+        </div>
+
+        <div class="page-content">
+            <span class="civic-badge">5. Viabilidade & Retorno Econômico</span>
+            <h2 class="section-title">O Modelo Inovador de PPP (Custo Zero)</h2>
+            <p class="section-subtitle">Autofinanciamento através do ecossistema comercial e retorno direto em arrecadação de ISS municipal.</p>
+
+            <p>
+                Para municípios que enfrentam restrições orçamentárias ou burocracias de contratação, a Nexus desenvolveu um modelo pioneiro de <strong>Parceria Público-Privada (PPP)</strong> estruturado com entidades de classe locais (CDL, ABIH, Abrasel, Associações Comerciais e Convention Bureaus):
+            </p>
+
+            <div class="grid-2">
+                <div class="info-card">
+                    <h4>🤝 Como Funciona o Modelo PPP:</h4>
+                    <ul style="padding-left: 14px; font-size: 10px; line-height: 1.45;">
+                        <li><strong>Custo Zero para o Erário Público:</strong> A prefeitura ou estado entra com a chancela oficial e a integração dos dados públicos.</li>
+                        <li><strong>Apoio do Trade Turístico:</strong> Hotéis, pousadas, restaurantes e empresas de passeios credenciados patrocinam o projeto para figurarem nas recomendações da Embaixadora.</li>
+                        <li><strong>Fortalecimento do Comércio Local:</strong> O turista é direcionado para os estabelecimentos formais da cidade, evitando a informalidade.</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>📈 Retorno Fiscal & Arrecadação de ISS:</h4>
+                    <ul style="padding-left: 14px; font-size: 10px; line-height: 1.45;">
+                        <li><strong>Giro Financeiro no Município:</strong> O incentivo ao consumo na gastronomia e comércio local amplia diretamente a arrecadação de <strong>ISSQN</strong> da prefeitura.</li>
+                        <li><strong>Prolongamento da Estadia:</strong> Turistas bem informados descobrem novas atrações e permanecem em média 1 a 2 dias a mais na cidade.</li>
+                        <li><strong>Dashboards Estratégicos:</strong> A Secretaria de Turismo recebe dados em tempo real sobre a nacionalidade dos visitantes e preferências.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <table class="executive-table" style="margin-top: 6px;">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Etapa</th>
+                        <th style="width: 50%;">Entregáveis Técnicos</th>
+                        <th style="width: 25%;">Prazo Estimado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Fase 1: Alinhamento Cívico</strong></td>
+                        <td>Definição da identidade visual da Embaixadora e curadoria de dados oficiais.</td>
+                        <td><strong>Semanas 1 e 2</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fase 2: Conectores & WhatsApp</strong></td>
+                        <td>Ativação da linha oficial na API WhatsApp e homologação das bases de secretarias.</td>
+                        <td><strong>Semanas 3 e 4</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fase 3: Totens & QR Codes</strong></td>
+                        <td>Distribuição dos QR codes em pontos turísticos e ativação nos portais e totens.</td>
+                        <td><strong>Semanas 5 e 6</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout-quote" style="margin: 8px 0; font-size: 11px;">
+                "A iniciativa e o protagonismo partem sempre do município ou da entidade promotora; a Nexus Holding Group atua estritamente como a provedora tecnológica e garantidora da soberania digital do projeto."
+            </div>
+
+            <div style="margin-top: 18px; display: flex; justify-content: space-between; align-items: flex-end;">
+                <div style="width: 48%; text-align: center; border-top: 1px solid var(--charcoal); padding-top: 6px;">
+                    <p style="font-weight: 700; font-size: 10.5px; color: var(--primary); margin-bottom: 1px;">GEANDERSON LEANDRO SCHUH</p>
+                    <p style="font-size: 9px; color: var(--text-muted); margin-bottom: 1px;">Founder & CEO &bull; Nexus Holding Group</p>
+                    <p style="font-size: 8px; color: var(--gold-dark); margin-bottom: 0;">Brasil 🇧🇷</p>
+                </div>
+                <div style="width: 48%; text-align: center; border-top: 1px solid var(--charcoal); padding-top: 6px;">
+                    <p style="font-weight: 700; font-size: 10.5px; color: var(--primary); margin-bottom: 1px;">IVONI SEVERO SCHUH</p>
+                    <p style="font-size: 9px; color: var(--text-muted); margin-bottom: 1px;">COO & Founder &bull; Nexus Holding Group</p>
+                    <p style="font-size: 8px; color: var(--gold-dark); margin-bottom: 0;">Brasil 🇧🇷</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <span>Nexus Holding Group &bull; Embaixadora Virtual Soberana</span>
+            <span class="page-number">Página 06</span>
+        </div>
+    </div>
+
+</body>
+</html>

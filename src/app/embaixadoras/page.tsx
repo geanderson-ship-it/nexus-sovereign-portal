@@ -141,7 +141,7 @@ export default function NexusEmbaixadorasPage() {
                 <Handshake className="w-4 h-4 text-yellow-400" /> Conhecer Modelo de PPP
               </a>
               <a
-                href="/Catalogo-Solucoes-Enterprise-Nexus.pdf"
+                href="/Dossie-Executivo-Embaixadora-Virtual-Soberana.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-6 py-3 rounded-xl bg-blue-950/80 hover:bg-blue-900 text-blue-200 hover:text-white font-extrabold uppercase tracking-wider text-xs sm:text-sm border border-blue-400/50 shadow-[0_0_20px_rgba(59,130,246,0.25)] transition-all flex items-center gap-2"
@@ -906,7 +906,7 @@ export default function NexusEmbaixadorasPage() {
               </div>
             </div>
             <a
-              href="/Catalogo-Solucoes-Enterprise-Nexus.pdf"
+              href="/Dossie-Executivo-Embaixadora-Virtual-Soberana.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-500 hover:to-teal-500 text-white font-extrabold uppercase tracking-wider text-[11px] shrink-0 transition-all flex items-center gap-1.5 shadow-[0_0_15px_rgba(59,130,246,0.3)]"
