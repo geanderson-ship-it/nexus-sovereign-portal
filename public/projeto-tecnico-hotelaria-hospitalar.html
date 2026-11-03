@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Técnico • Hotelaria Hospitalar & Nexus Holding Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #0284c7;
+            --accent-dark: #0369a1;
+            --accent-light: #e0f2fe;
+            --teal: #0d9488;
+            --teal-light: #ccfbf1;
+            --gold: #d97706;
+            --gold-light: #fef3c7;
+            --slate: #475569;
+            --light-bg: #f8fafc;
+            --border: #e2e8f0;
+            --card-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1e293b;
+            background-color: #f1f5f9;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.07);
+            padding: 60px 70px;
+            border: 1px solid var(--border);
+        }
+        
+        /* Header */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-light);
+            color: var(--accent-dark);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+        }
+        .doc-code {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 11px;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.25;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: var(--slate);
+            font-weight: 400;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        /* Meta Box */
+        .meta-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 35px;
+        }
+        .meta-item span {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .meta-item strong {
+            font-size: 15px;
+            color: var(--primary);
+        }
+        .meta-item p {
+            font-size: 12.5px;
+            color: #64748b;
+            margin-top: 4px;
+            margin-bottom: 0;
+        }
+
+        /* Titles */
+        h2 {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: 36px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+        h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent-dark);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        p {
+            font-size: 14px;
+            color: #334155;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+        ul {
+            margin-left: 20px;
+            margin-bottom: 18px;
+        }
+        li {
+            font-size: 13.5px;
+            color: #334155;
+            margin-bottom: 8px;
+            line-height: 1.55;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 20px 0;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            border-top: 4px solid var(--accent);
+            box-shadow: var(--card-shadow);
+        }
+        .card.card-gold {
+            border-top-color: var(--gold);
+        }
+        .card h4 {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card p {
+            font-size: 12.8px;
+            margin-bottom: 0;
+            color: var(--slate);
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        /* Modern Visual Architecture Flow */
+        .arch-flow-wrapper {
+            background: #0f172a;
+            border-radius: 18px;
+            padding: 26px;
+            margin: 24px 0;
+            color: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
+            border: 1px solid #1e293b;
+        }
+        .arch-title {
+            text-align: center;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #38bdf8;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .flow-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        .flow-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 12px 18px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #f1f5f9;
+            flex: 1;
+            max-width: 380px;
+        }
+        .flow-card.accent {
+            border-color: #0284c7;
+            background: linear-gradient(135deg, #1e293b 0%, #0c4a6e 100%);
+        }
+        .flow-card.engine {
+            border-color: #0d9488;
+            background: linear-gradient(135deg, #0f172a 0%, #134e4a 100%);
+            max-width: 780px;
+            width: 100%;
+            padding: 16px 20px;
+            text-align: left;
+        }
+        .flow-arrow-down {
+            text-align: center;
+            color: #38bdf8;
+            font-size: 16px;
+            margin: 4px 0;
+            line-height: 1;
+        }
+        .engine-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .engine-badge {
+            background: rgba(13, 148, 136, 0.25);
+            border: 1px solid #14b8a6;
+            color: #5eead4;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .branch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 8px;
+        }
+        .branch-card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 14px 16px;
+            border-left: 4px solid var(--accent);
+        }
+        .branch-card.branch-post {
+            border-left-color: var(--gold);
+        }
+        .branch-card h5 {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 6px;
+        }
+        .branch-card ul {
+            margin-left: 16px;
+            margin-bottom: 0;
+        }
+        .branch-card li {
+            font-size: 11.5px;
+            color: #cbd5e1;
+            margin-bottom: 4px;
+        }
+
+        /* Modules Spec Box */
+        .module-spec-card {
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+        }
+        .module-spec-card h4 {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 11px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--light-bg);
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+            margin: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 6px;
+            bottom: 6px;
+            width: 2px;
+            background: var(--border);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px var(--accent-light);
+        }
+        .timeline-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+        .timeline-desc {
+            font-size: 12.8px;
+            color: var(--slate);
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        /* Signatures Block */
+        .signatures-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px dashed var(--border);
+        }
+        .sig-item {
+            text-align: center;
+        }
+        .sig-line {
+            height: 1px;
+            background: #94a3b8;
+            margin: 50px auto 12px auto;
+            width: 80%;
+        }
+        .sig-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .sig-role {
+            font-size: 11.5px;
+            color: #64748b;
+        }
+
+        /* Buttons & Footer */
+        .print-btn-bar {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .btn-print {
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 9999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-print:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+        .footer-note {
+            margin-top: 45px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 11.5px;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+        }
+
+        /* Page Breaks for High Quality Print */
+        .page-break {
+            page-break-before: always;
+            break-before: page;
+        }
+        .keep-together {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 10px 0;
+                max-width: 100%;
+            }
+            .print-btn-bar {
+                display: none;
+            }
+            .arch-flow-wrapper {
+                background: #0f172a !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .card, .meta-box, table th, .flow-card, .branch-card, .engine-badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-btn-bar">
+        <button class="btn-print" onclick="window.print()">🖨️ Salvar como PDF / Imprimir Projeto Técnico</button>
+    </div>
+
+    <div class="container">
+        
+        <!-- PÁGINA 1 -->
+        <div class="header-top">
+            <span class="header-badge">🛡️ Engenharia de IA & Arquitetura Soberana</span>
+            <span class="doc-code">DOC: NEX-HH-2026-V2</span>
+        </div>
+
+        <h1>Sistema Inteligente de Pré-Conversão e Pós-Atendimento</h1>
+        <p class="subtitle">Projeto de Engenharia para Implantação da Concierge Virtual Omnichannel com Inteligência Artificial Generativa e RAG para Hotelaria Hospitalar Comunicação e Treinamentos</p>
+
+        <div class="meta-box">
+            <div class="meta-item">
+                <span>Instituição / Cliente</span>
+                <strong>Hotelaria Hospitalar Comunicação e Treinamentos</strong>
+                <p>Profª Ana Augusta Blumer Salotti (Sócia-Fundadora)</p>
+            </div>
+            <div class="meta-item">
+                <span>Engenharia & Arquitetura de Solução</span>
+                <strong>Nexus Holding Group</strong>
+                <p>Geanderson Leandro Schuh (Fundador & CEO)</p>
+            </div>
+        </div>
+
+        <h2>1. Sumário Executivo & Diagnóstico Operacional</h2>
+        <p>A <strong>Hotelaria Hospitalar Comunicação e Treinamentos</strong> construiu mais de 15 anos de pioneirismo e autoridade na capacitação e consultoria de atendimento humanizado no Brasil. Com a expansão dos canais digitais (portal <em>hotelariahospitalar.com</em>, redes sociais e WhatsApp), dois desafios centrais foram diagnosticados no fluxo diário:</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <h4>🎯 Gargalo no Pré-Atendimento (Vendas)</h4>
+                <p>Leads interessados em Cursos Executivos e propostas de Consultoria Hospitalar chegam em horários dispersos. A ausência de triagem e resposta imediata acarreta perda de matrículas e esfriamento do contato comercial.</p>
+            </div>
+            <div class="card card-gold">
+                <h4>⏱️ Sobrecarga no Pós-Atendimento (Suporte)</h4>
+                <p>Alunos ativos demandam suporte contínuo sobre acesso à plataforma de aulas, cronogramas de turmas, critérios e emissão de certificados, notas fiscais e materiais, consumindo tempo precioso da liderança.</p>
+            </div>
+        </div>
+
+        <h2>2. Arquitetura da Solução Técnica (System Design)</h2>
+        <p>A Nexus Holding Group projeta uma infraestrutura de IA Soberana baseada no modelo <strong>RAG (Retrieval-Augmented Generation)</strong> com isolamento vetorial dedicado, garantindo respostas acolhedoras, precisas e matematicamente imunes a alucinações.</p>
+
+        <!-- Fluxograma Visual de Alta Fidelidade -->
+        <div class="arch-flow-wrapper keep-together">
+            <div class="arch-title">Arquitetura de Fluxo Cognitivo & Integração Omnichannel</div>
+            
+            <div class="flow-row">
+                <div class="flow-card accent">📱 Canal WhatsApp Business Cloud API</div>
+                <div class="flow-card accent">💻 Widget Interativo hotelariahospitalar.com</div>
+            </div>
+
+            <div class="flow-arrow-down">▼</div>
+
+            <div class="flow-row">
+                <div class="flow-card" style="max-width: 780px; width: 100%; border-color: #38bdf8;">
+                    🔒 Gateway Seguro de Mensageria & Orquestração (TLS 1.3 / Webhooks HTTPS)
+                </div>
+            </div>
+
+            <div class="flow-arrow-down">▼</div>
+
+            <div class="flow-row">
+                <div class="flow-card engine">
+                    <div style="font-weight: 800; font-size: 13px; color: #5eead4; margin-bottom: 4px;">
+                        🧠 Motor Cognitivo Nexus com RAG Híbrido
+                    </div>
+                    <div style="font-size: 11px; color: #cbd5e1;">Processamento de Linguagem Natural & Base de Conhecimento Proprietária</div>
+                    
+                    <div class="engine-features">
+                        <div class="engine-badge">Persona "Espírito de Servir"</div>
+                        <div class="engine-badge">Base Vetorial (Ementas & FAQs)</div>
+                        <div class="engine-badge">Classificador de Intenção</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow-down">▼</div>
+
+            <div class="branch-grid">
+                <div class="branch-card">
+                    <h5>📈 RAMO 1: PRÉ-VENDA & CONVERSÃO</h5>
+                    <ul>
+                        <li>Triagem de Alunos B2C (Cursos Executivos)</li>
+                        <li>Qualificação B2B (Hospitais, Clínicas, Laboratórios)</li>
+                        <li>Envio de Links de Checkout & Press Kit</li>
+                    </ul>
+                </div>
+                <div class="branch-card branch-post">
+                    <h5>🎓 RAMO 2: PÓS-VENDA & SUPORTE</h5>
+                    <ul>
+                        <li>Tira-Dúvidas 24/7 de Conteúdo & Cronogramas</li>
+                        <li>Consulta de Certificados & Regularidade</li>
+                        <li>Transbordo Humano Inteligente com Histórico</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA 2 -->
+        <div class="page-break"></div>
+
+        <h2>3. Especificação dos Módulos Operacionais</h2>
+
+        <div class="module-spec-card keep-together">
+            <h3>3.1. Módulo de Pré-Atendimento & Conversão Estratégica</h3>
+            <ul>
+                <li><strong>Perfil Aluno / Profissional de Saúde (B2C):</strong> Apresentação instantânea do Curso Executivo de Hotelaria Hospitalar, envio da ementa programática em PDF, explicação de carga horária, formato (online síncrono ou presencial), corpo docente e link de matrícula direta.</li>
+                <li><strong>Perfil Hospital / Clínica / Laboratório (B2B):</strong> Triagem estruturada com captura de nome da instituição, número de leitos, porte da equipe assistencial e necessidade específica (Treinamento In-company ou Consultoria de Processos), gerando um dossiê pronto para a reunião de alinhamento com a Profª Ana Augusta.</li>
+                <li><strong>Eventos, Congressos & Palestras:</strong> Coleta qualificada de datas, temática solicitada, público estimado e localidade, com disparo automatizado do Press Kit institucional da palestrante.</li>
+            </ul>
+        </div>
+
+        <div class="module-spec-card keep-together">
+            <h3>3.2. Módulo de Pós-Atendimento & Suporte Contínuo ao Aluno</h3>
+            <ul>
+                <li><strong>Acesso à Área de Membros:</strong> Instrução guiada passo a passo de login, links diretos para a plataforma de aulas e auxílio no fluxo de redefinição de senhas.</li>
+                <li><strong>Certificação & Validação Acadêmica:</strong> Consulta automatizada sobre requisitos de conclusão (frequência e avaliações), prazos de emissão e envio digitalizado de 2ª via.</li>
+                <li><strong>Atendimento Financeiro e Fiscal:</strong> Esclarecimento de rotinas de emissão de Notas Fiscais (Pessoa Física ou Pessoa Jurídica via hospital) e orientações sobre comprovantes de pagamento.</li>
+                <li><strong>Transbordo Humano Inteligente (Human Handoff):</strong> Caso o aluno ou cliente institucional demande uma tratativa pessoal ou apresente caso atípico, a IA pausa o fluxo autônomo e transfere a conversa para a equipe humana, com todo o histórico de mensagens resumido e contextualmente organizado.</li>
+            </ul>
+        </div>
+
+        <div class="module-spec-card keep-together">
+            <h3>3.3. Personalidade da Concierge ("O Espírito de Servir")</h3>
+            <p style="margin-bottom: 0;">A inteligência é calibrada com tom de voz <strong>acolhedor, solícito, erudito e empático</strong>, refletindo com fidelidade absoluta a filosofia humanizada desenvolvida pela Profª Ana Augusta Salotti ao longo de sua trajetória. A Concierge não soa robótica: ela acolhe o profissional de saúde e o gestor hospitalar com deferência e cordialidade.</p>
+        </div>
+
+        <!-- PÁGINA 3 -->
+        <div class="page-break"></div>
+
+        <h2>4. Segurança, Performance & Conformidade LGPD</h2>
+        <p>A arquitetura opera sob padrões rigorosos de segurança e privacidade em saúde e educação:</p>
+
+        <table class="keep-together">
+            <thead>
+                <tr>
+                    <th>Requisito Técnico</th>
+                    <th>Especificação da Engenharia</th>
+                    <th>Garantia Nexus</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Disponibilidade (SLA)</strong></td>
+                    <td>Infraestrutura redundante em nuvem soberana distribuída</td>
+                    <td>99.9% de uptime 24/7/365</td>
+                </tr>
+                <tr>
+                    <td><strong>Velocidade de Resposta</strong></td>
+                    <td>Processamento de linguagem natural em tempo real</td>
+                    <td>Latência inferior a 3 segundos</td>
+                </tr>
+                <tr>
+                    <td><strong>Privacidade & LGPD</strong></td>
+                    <td>Criptografia TLS 1.3 de ponta a ponta e anonimização</td>
+                    <td>Conformidade total com a Lei 13.709/2018</td>
+                </tr>
+                <tr>
+                    <td><strong>Isolamento de Base</strong></td>
+                    <td>Armazenamento em base vetorial privada e exclusiva</td>
+                    <td>Dados de alunos e hospitais 100% confidenciais</td>
+                </tr>
+                <tr>
+                    <td><strong>Auditoria de Sessões</strong></td>
+                    <td>Logs imutáveis de transações e diálogos para auditoria</td>
+                    <td>Rastreabilidade integral das orientações</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5. Cronograma Executivo de Implantação (30 Dias)</h2>
+        
+        <div class="timeline keep-together">
+            <div class="timeline-item">
+                <div class="timeline-title">Semana 1 (Dias 1 a 7) — Imersão, Curadoria & Ingestão de Dados</div>
+                <div class="timeline-desc">Mapeamento de ementas dos cursos, políticas de turmas, 20 maiores dúvidas recorrentes e calibração fina da persona acolhedora.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Semana 2 (Dias 8 a 15) — Integração de APIs & Base Vetorial RAG</div>
+                <div class="timeline-desc">Conexão da WhatsApp Business Cloud API e inserção do Widget responsivo no portal <em>hotelariahospitalar.com</em>.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Semana 3 (Dias 16 a 22) — Homologação Controlada & Testes de Estresse</div>
+                <div class="timeline-desc">Validação em ambiente fechado com a Profª Ana Augusta, simulação de mais de 50 casos reais de atendimento e ajuste fino de precisão.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-title">Semana 4 (Dias 23 a 30) — Entrada em Produção (Go-Live) & Monitoramento</div>
+                <div class="timeline-desc">Ativação oficial nos canais públicos, acompanhamento em tempo real das conversões e entrega de painel de métricas.</div>
+            </div>
+        </div>
+
+        <h2>6. Validação Técnica & Governança de Entrega</h2>
+        <p>Este documento consolida as premissas de engenharia e os requisitos operacionais acordados entre as partes, atestando a viabilidade técnica e a aderência aos padrões de excelência de ambas as instituições.</p>
+
+        <div class="signatures-box keep-together">
+            <div class="sig-item">
+                <div class="sig-line"></div>
+                <div class="sig-name">Geanderson Leandro Schuh</div>
+                <div class="sig-role">Fundador & CEO • Nexus Holding Group<br>Engenharia de Sistemas Soberanos de IA</div>
+            </div>
+            <div class="sig-item">
+                <div class="sig-line"></div>
+                <div class="sig-name">Profª Ana Augusta Blumer Salotti</div>
+                <div class="sig-role">Sócia-Fundadora • Hotelaria Hospitalar<br>Comunicação e Treinamentos</div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            Nexus Holding Group • Soberania Tecnológica, Inteligência Artificial & Human-AI Systems<br>
+            São Paulo • Brasil • Outubro de 2026
+        </div>
+
+    </div>
+
+</body>
+</html>

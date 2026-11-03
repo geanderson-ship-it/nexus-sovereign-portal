@@ -155,14 +155,14 @@ export default function NexusRotasHubPage() {
                   </div>
                   <span className="text-[10px] font-black uppercase tracking-widest text-emerald-300 border border-emerald-500/40 px-2.5 py-1 rounded-md bg-emerald-950/40 backdrop-blur-sm shadow-md">Hospitalidade</span>
                 </div>
-                <h3 className="text-2xl font-black uppercase tracking-wider mb-3 text-white transition-colors group-hover:text-emerald-400 drop-shadow">Guia de Hotéis</h3>
+                <h3 className="text-2xl font-black uppercase tracking-wider mb-3 text-white transition-colors group-hover:text-emerald-400 drop-shadow">Hospitality Suite</h3>
                 <p className="text-zinc-300 text-sm leading-relaxed drop-shadow">
-                  O concierge inteligente exclusivo para hotéis e resorts. Automatize em até 80% as tarefas e dúvidas repetitivas na recepção (Wi-Fi, café da manhã, toalhas) através de totens físicos de lobby de alta definição ou pelo WhatsApp do hotel.
+                  O concierge inteligente de luxo para hotéis e resorts. Disponível nas modalidades Live Avatar em Tempo Real e Vídeos Gravados Dinâmicos — integrando Smart TVs nas suítes, Totens de lobby, Room Service e PMS.
                 </p>
               </div>
               <div className="mt-6">
                 <Button className="w-full bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold h-11 transition-all shadow-lg hover:shadow-[0_0_15px_rgba(16,185,129,0.5)]" asChild>
-                  <Link href="/nexus-rotas/hoteis">
+                  <Link href="/concierges">
                     Acessar Solução Hoteleira
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>

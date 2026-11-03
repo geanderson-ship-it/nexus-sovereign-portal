@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossiê Técnico & Estratégico • Nexus Hospitality Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nexus-emerald:      #082F24;
+            --nexus-emerald-light:#11523F;
+            --nexus-emerald-soft: #EDF5F1;
+            --nexus-gold:         #C5A059;
+            --nexus-gold-dark:    #9E7E38;
+            --nexus-gold-light:   #FAF5EB;
+            --nexus-blue:         #0066FF;
+            --nexus-dark:         #111815;
+            --nexus-border:       #E2EBE5;
+            --text-main:          #16211C;
+            --text-muted:         #52635B;
+            --bg-page:            #FBFBFA;
+            --card-white:         #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        html, body {
+            width: 210mm;
+            margin: 0;
+            padding: 0;
+            background: #EAECEB;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            color: var(--text-main);
+            font-size: 9.8pt;
+            line-height: 1.5;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* PAGE CONTAINER (EXACT A4) */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            max-height: 297mm;
+            padding: 16mm 18mm 14mm 18mm;
+            box-sizing: border-box;
+            page-break-after: always;
+            page-break-inside: avoid;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-page);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+            margin-bottom: 0;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* HEADER & FOOTER */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1.5px solid var(--nexus-border);
+            margin-bottom: 14px;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 13pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text span {
+            color: var(--nexus-gold);
+            font-style: italic;
+        }
+
+        .brand-divider {
+            color: var(--nexus-border);
+            font-size: 11pt;
+        }
+
+        .doc-category {
+            font-size: 8.5pt;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .header-badge {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            background: var(--nexus-gold-light);
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--nexus-border);
+            font-size: 7.5pt;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--nexus-emerald);
+        }
+
+        .doc-main-title {
+            font-size: 24pt;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 6px;
+        }
+
+        .doc-main-subtitle {
+            font-size: 9.5pt;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: 13.5pt;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-number {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 8pt;
+            font-weight: 800;
+            background: var(--nexus-gold);
+            color: #FFFFFF;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-subtitle {
+            font-size: 8.5pt;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        /* SCOPE BANNER */
+        .scope-banner {
+            background: linear-gradient(135deg, var(--nexus-emerald) 0%, var(--nexus-emerald-light) 100%);
+            color: #FFFFFF;
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .scope-item {
+            border-left: 2px solid var(--nexus-gold);
+            padding-left: 10px;
+        }
+
+        .scope-title {
+            font-size: 8.5pt;
+            font-weight: 700;
+            color: var(--nexus-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .scope-desc {
+            font-size: 7.8pt;
+            color: #E6EFEA;
+            line-height: 1.35;
+        }
+
+        /* CARDS & GRIDS */
+        .cards-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cards-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .card {
+            background: var(--card-white);
+            border: 1px solid var(--nexus-border);
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .card.featured {
+            border-left: 3.5px solid var(--nexus-gold);
+            background: #FFFCF7;
+        }
+
+        .card.emerald {
+            border-left: 3.5px solid var(--nexus-emerald);
+        }
+
+        .card-badge {
+            display: inline-block;
+            font-size: 7pt;
+            font-weight: 800;
+            color: var(--nexus-emerald);
+            background: var(--nexus-emerald-soft);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .card-title {
+            font-size: 10.5pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            margin-bottom: 4px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .card-desc {
+            font-size: 7.8pt;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            line-height: 1.35;
+        }
+
+        .card-list {
+            list-style: none;
+            margin-top: 4px;
+        }
+
+        .card-list li {
+            font-size: 7.6pt;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            padding-left: 12px;
+            position: relative;
+            line-height: 1.35;
+        }
+
+        .card-list li::before {
+            content: "•";
+            color: var(--nexus-gold);
+            font-size: 12px;
+            line-height: 1;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .card-list li strong {
+            color: var(--nexus-emerald);
+            font-weight: 700;
+        }
+
+        /* CALLOUT */
+        .callout {
+            background-color: var(--nexus-emerald-soft);
+            border-left: 3.5px solid var(--nexus-emerald);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 8.2pt;
+            color: var(--nexus-emerald);
+            line-height: 1.45;
+            margin-top: 8px;
+        }
+
+        .callout strong {
+            font-weight: 700;
+        }
+
+        /* TWO-TIER BOX */
+        .tier-box {
+            background: #FFFFFF;
+            border: 1px solid var(--nexus-border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+        }
+
+        .tier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--nexus-border);
+            margin-bottom: 10px;
+        }
+
+        .tier-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 11.5pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+        }
+
+        .tier-badge {
+            font-size: 7pt;
+            font-weight: 800;
+            background: var(--nexus-emerald);
+            color: #FFFFFF;
+            padding: 2px 8px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+
+        /* PHASES */
+        .phase-card {
+            background: var(--card-white);
+            border: 1px solid var(--nexus-border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+        }
+
+        .phase-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--nexus-border);
+        }
+
+        .phase-tag {
+            font-size: 7.5pt;
+            font-weight: 800;
+            color: #FFFFFF;
+            padding: 3px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .phase-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 10.5pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            margin-left: 8px;
+        }
+
+        .phase-time {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: var(--nexus-gold-dark);
+            background: var(--nexus-gold-light);
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        /* ROI TABLE */
+        .exec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8pt;
+            background: var(--card-white);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--nexus-border);
+            margin: 10px 0;
+        }
+
+        .exec-table th {
+            background: var(--nexus-emerald);
+            color: #FFFFFF;
+            padding: 8px 10px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 7.2pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .exec-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--nexus-border);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        .exec-table tr:nth-child(even) {
+            background: #F8FAF9;
+        }
+
+        .exec-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag-status {
+            background: #E8F5E9;
+            color: #2E7D32;
+            font-weight: 700;
+            font-size: 7pt;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /* CLOSING BOX */
+        .closing-box {
+            background: linear-gradient(135deg, var(--card-white) 0%, var(--nexus-emerald-soft) 100%);
+            border: 1.5px solid var(--nexus-emerald);
+            border-radius: 10px;
+            padding: 14px 18px;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .closing-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 11pt;
+            font-weight: 700;
+            color: var(--nexus-emerald);
+            margin-bottom: 4px;
+        }
+
+        .closing-desc {
+            font-size: 7.8pt;
+            color: var(--text-muted);
+            max-width: 90%;
+            margin: 0 auto 10px auto;
+            line-height: 1.4;
+        }
+
+        .sig-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(8, 47, 36, 0.15);
+        }
+
+        .sig-item {
+            font-size: 7.8pt;
+            color: var(--nexus-emerald);
+            font-weight: 600;
+        }
+
+        .sig-item strong {
+            display: block;
+            font-size: 9pt;
+            color: var(--nexus-emerald);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== PÁGINA 1: CAPA & VISÃO ESTRATÉGICA ==================== -->
+    <div class="page">
+        <div>
+            <div class="page-header">
+                <div class="brand-group">
+                    <div class="logo-text">NEXUS <span>HOLDING GROUP</span></div>
+                    <div class="brand-divider">|</div>
+                    <div class="doc-category">Dossiê Técnico & Comercial Padrão</div>
+                </div>
+                <div class="header-badge">Modelo Padrão Oficial</div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <h1 class="doc-main-title">Nexus Hospitality Suite</h1>
+                <div class="doc-main-subtitle">
+                    Arquitetura de Inteligência Artificial Soberana para Hotelaria de Luxo, Resorts, Redes Corporativas e Operações de Hospedagem Inteligente.
+                </div>
+            </div>
+
+            <div class="scope-banner">
+                <div class="scope-item">
+                    <div class="scope-title">Resorts & Luxo</div>
+                    <div class="scope-desc">Concierge VIP, Guest Experience personalizada e atendimento em mais de 50 idiomas.</div>
+                </div>
+                <div class="scope-item">
+                    <div class="scope-title">Hotéis & Redes</div>
+                    <div class="scope-desc">Captação ativa de reservas diretas e redução drástica das comissões de OTAs (Booking/Expedia).</div>
+                </div>
+                <div class="scope-item">
+                    <div class="scope-title">Hospedagem Modular</div>
+                    <div class="scope-desc">Operação 100% autônoma para containers e smart pods: check-in, fechadura e check-out via WhatsApp.</div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <span class="section-number">1</span>
+                O Que Fazemos: Solução para os Desafios Críticos da Hotelaria
+            </div>
+            <div class="section-subtitle">
+                A Nexus Hospitality Suite atua nos dois pontos mais sensíveis da hotelaria moderna: margem líquida e experiência do hóspede.
+            </div>
+
+            <div class="cards-grid-2">
+                <div class="card featured">
+                    <span class="card-badge">Financeiro & Desintermediação</span>
+                    <div class="card-title">Resgate da Margem Direta</div>
+                    <div class="card-desc">As OTAs cobram entre 15% e 25% de comissão sobre cada reserva comercializada.</div>
+                    <ul class="card-list">
+                        <li><strong>Conversão Ativa no Canal Próprio:</strong> A IA atua no WhatsApp e site oficial, tirando dúvidas em tempo real e fechando a reserva direta.</li>
+                        <li><strong>Ticket Médio Superior:</strong> Dados globais (SiteMinder) comprovam que reservas diretas têm valor médio até 65% superior às de OTAs.</li>
+                        <li><strong>Custódia da Base de Clientes:</strong> Os dados do cliente (telefone, e-mail, perfil) pertencem ao hotel, e não ao intermediário.</li>
+                    </ul>
+                </div>
+
+                <div class="card emerald">
+                    <span class="card-badge">Operações & Atendimento</span>
+                    <div class="card-title">Concierge 24/7 sem Filas</div>
+                    <div class="card-desc">A recepção física frequentemente fica sobrecarregada com dúvidas repetitivas em horários de pico.</div>
+                    <ul class="card-list">
+                        <li><strong>Multilíngue Fluente:</strong> Atendimento e suporte imediato em mais de 50 idiomas para hóspedes internacionais.</li>
+                        <li><strong>Informações Instantâneas:</strong> Políticas pet, café da manhã, passeios, spa, eventos e menus com precisão absoluta.</li>
+                        <li><strong>Alívio da Equipe Física:</strong> Libera os colaboradores para o acolhimento caloroso, check-in VIP e relacionamento humano.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="callout">
+                <strong>Conceito Central da Nexus:</strong> Não substituímos a hospitalidade humana — eliminamos o atrito operacional e a perda de margem financeira, para que o hotel lucre mais e a equipe física brilhe no relacionamento com o hóspede.
+            </div>
+            <div class="page-footer">
+                <div>Nexus Holding Group • "Temos IA no código e humanidade no coração."</div>
+                <div>Página 1 de 4</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 2: ARQUITETURA & MATRIZ DE DUAS CAMADAS ==================== -->
+    <div class="page">
+        <div>
+            <div class="page-header">
+                <div class="brand-group">
+                    <div class="logo-text">NEXUS <span>HOLDING GROUP</span></div>
+                    <div class="brand-divider">|</div>
+                    <div class="doc-category">Arquitetura de Engenharia Soberana</div>
+                </div>
+                <div class="header-badge">Segurança & Governança</div>
+            </div>
+
+            <div class="section-title">
+                <span class="section-number">2</span>
+                Como Fazemos: A Engenharia Soberana por Trás do Sistema
+            </div>
+            <div class="section-subtitle">
+                Padrões corporativos de missão crítica, governança rigorosa e integração estável com o ecossistema oficial do hotel.
+            </div>
+
+            <div class="cards-grid-3">
+                <div class="card">
+                    <span class="card-badge">Conectividade Oficial</span>
+                    <div class="card-title">WhatsApp Cloud API (Meta)</div>
+                    <ul class="card-list">
+                        <li>Número corporativo verificado e homologado pela Meta.</li>
+                        <li>Sem risco de banimento de chip ou instabilidades.</li>
+                        <li>Mensagens ricas com fotos, links e botões interativos.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <span class="card-badge">Conexão Central</span>
+                    <div class="card-title">Ponte com PMS & Motor</div>
+                    <ul class="card-list">
+                        <li>Integração com Oracle OPERA, Mews, Omnibees, Desbravador e Totvs.</li>
+                        <li>Consulta de tarifário, ocupação e tipos de quartos em tempo real.</li>
+                        <li>Envio de cotação formal com link direto de pagamento.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <span class="card-badge">Governança Soberana</span>
+                    <div class="card-title">Trava Anti-Alucinação</div>
+                    <ul class="card-list">
+                        <li>A IA responde estritamente com base nos dados do hotel.</li>
+                        <li>Nunca inventa preços, gratuidades ou quartos indisponíveis.</li>
+                        <li><strong>Handover Humano:</strong> Transbordo instantâneo para a equipe.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MATRIZ DE DUAS CAMADAS -->
+            <div class="tier-box">
+                <div class="tier-header">
+                    <div class="tier-title">Arquitetura em Duas Camadas & Matriz de Responsabilidade</div>
+                    <span class="tier-badge">Governança & LGPD</span>
+                </div>
+                <div style="font-size: 8pt; color: var(--text-main); margin-bottom: 8px;">
+                    Para garantir <strong>Go-Live em 30 dias</strong>, escalabilidade operacional e <strong>blindagem total de dados</strong>, a Nexus adota uma separação clara de responsabilidades técnicas:
+                </div>
+
+                <div class="cards-grid-2" style="margin-bottom: 0;">
+                    <div style="background: #FAFDFB; border: 1px solid var(--nexus-border); border-left: 3.5px solid var(--nexus-emerald); border-radius: 6px; padding: 10px 12px;">
+                        <div style="font-size: 8.5pt; font-weight: 700; color: var(--nexus-emerald); margin-bottom: 4px;">
+                            CAMADA 1 • Escopo 100% NEXUS (Core Soberano)
+                        </div>
+                        <ul class="card-list">
+                            <li><strong>Motor de IA & Prompts Soberanos:</strong> Calibração da inteligência nas regras de negócio e políticas do hotel.</li>
+                            <li><strong>Canais Oficiais de Interação:</strong> Ativação do WhatsApp Cloud API oficial e Widget Web inteligente.</li>
+                            <li><strong>APIs & Webhooks Padronizados:</strong> Fornecimento de endpoints REST/JSON seguros e documentados.</li>
+                            <li><strong>Monitoramento Contínuo:</strong> Gestão de latência, disponibilidade 24/7 e travas de segurança.</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #FFFCF7; border: 1px solid var(--nexus-border); border-left: 3.5px solid var(--nexus-gold-dark); border-radius: 6px; padding: 10px 12px;">
+                        <div style="font-size: 8.5pt; font-weight: 700; color: var(--nexus-gold-dark); margin-bottom: 4px;">
+                            CAMADA 2 • Escopo TI do HOTEL / Contratante
+                        </div>
+                        <ul class="card-list">
+                            <li><strong>Conectividade Interna do PMS:</strong> Integração dos sistemas internos (Oracle, Totvs, Desbravador) consumindo as APIs da Nexus.</li>
+                            <li><strong>Custódia Absoluta de Dados Sensíveis:</strong> Senhas, cartões e bancos de dados permanecem no firewall do hotel. Risco zero de vazamento.</li>
+                            <li><strong>Escalabilidade Paralela:</strong> A Nexus entrega a Camada 1 sem burocracias de sistemas legados, rodando múltiplos hotéis em paralelo.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div>Nexus Holding Group • Arquitetura de Missão Crítica & Governança LGPD</div>
+            <div>Página 2 de 4</div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 3: CRONOGRAMA MODULAR DE IMPLANTAÇÃO ==================== -->
+    <div class="page">
+        <div>
+            <div class="page-header">
+                <div class="brand-group">
+                    <div class="logo-text">NEXUS <span>HOLDING GROUP</span></div>
+                    <div class="brand-divider">|</div>
+                    <div class="doc-category">Plano de Entrega Modular</div>
+                </div>
+                <div class="header-badge">Cronograma Ágil</div>
+            </div>
+
+            <div class="section-title">
+                <span class="section-number">3</span>
+                Cronograma Modular: Do Go-Live Imediato à Escala Total
+            </div>
+            <div class="section-subtitle">
+                Três fases progressivas e independentes que evitam sobrecarga técnica e geram retorno sobre o investimento desde o primeiro mês.
+            </div>
+
+            <!-- FASE 1 -->
+            <div class="phase-card" style="border-left: 3.5px solid var(--nexus-emerald);">
+                <div class="phase-top">
+                    <div>
+                        <span class="phase-tag" style="background: var(--nexus-emerald);">Fase 1 (Fast-Track)</span>
+                        <span class="phase-name">Concierge Digital no WhatsApp & Site (Conversão Direta)</span>
+                    </div>
+                    <span class="phase-time">Dias 1 a 30 • Go-Live Imediato</span>
+                </div>
+                <div class="card-desc" style="margin-bottom: 6px;">
+                    <strong>Foco:</strong> Ativar o canal direto de captação de reservas e atendimento pré-estadia, gerando receita que paga a implantação no mês 1.
+                </div>
+                <ul class="card-list">
+                    <li><strong>WhatsApp Oficial 24/7:</strong> Concierge calibrado nas regras tarifárias, fotos de acomodações, políticas e diferenciais.</li>
+                    <li><strong>Widget Web Inteligente:</strong> Atendente flutuante no site oficial que acolhe o visitante e o conduz à reserva direta.</li>
+                    <li><strong>Integração com Motor de Reservas:</strong> Consulta de disponibilidade e envio de link direto e seguro de pagamento.</li>
+                </ul>
+            </div>
+
+            <!-- FASE 2 -->
+            <div class="phase-card" style="border-left: 3.5px solid var(--nexus-gold-dark);">
+                <div class="phase-top">
+                    <div>
+                        <span class="phase-tag" style="background: var(--nexus-gold-dark);">Fase 2 (Operações)</span>
+                        <span class="phase-name">Multi-Áreas, Governança & Gastronomia (Durante a Estadia)</span>
+                    </div>
+                    <span class="phase-time">Dias 31 a 60 • Expansão Operacional</span>
+                </div>
+                <div class="card-desc" style="margin-bottom: 6px;">
+                    <strong>Foco:</strong> Estender a inteligência para dentro da operação do hotel, aumentando o consumo interno (Upsell) e a eficiência das equipes.
+                </div>
+                <ul class="card-list">
+                    <li><strong>Room Service & Restaurantes:</strong> Cardápios interativos, pedidos de refeições e reservas de mesas pelo WhatsApp.</li>
+                    <li><strong>Governança & Manutenção:</strong> Pedidos de toalhas extras, travesseiros, limpeza ou reparos despachados para a equipe.</li>
+                    <li><strong>Passeios, Lazer & Spa:</strong> Agendamento ágil de massagens, terapias e passeios da região.</li>
+                </ul>
+            </div>
+
+            <!-- FASE 3 -->
+            <div class="phase-card" style="border-left: 3.5px solid var(--nexus-blue);">
+                <div class="phase-top">
+                    <div>
+                        <span class="phase-tag" style="background: var(--nexus-blue);">Fase 3 (Avançada)</span>
+                        <span class="phase-name">Suítes Conectadas & Operações 100% Autônomas</span>
+                    </div>
+                    <span class="phase-time">Dias 61 a 90 • Inovação de Ponta</span>
+                </div>
+                <div class="cards-grid-2" style="margin-top: 6px; margin-bottom: 0;">
+                    <div style="background: #F8FAF9; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--nexus-border);">
+                        <strong style="color: var(--nexus-emerald); font-size: 8pt;">Para Resorts & Hotéis de Luxo:</strong>
+                        <div style="font-size: 7.4pt; color: var(--text-muted); margin-top: 2px;">
+                            Tablets In-Room dedicados ou integração com Smart TVs nas suítes/vilas, permitindo comandos por voz e toque de ar, iluminação e cortinas (IoT).
+                        </div>
+                    </div>
+                    <div style="background: #F8FAF9; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--nexus-border);">
+                        <strong style="color: var(--nexus-emerald); font-size: 8pt;">Para Containers & Smart Pods (Pernoite):</strong>
+                        <div style="font-size: 7.4pt; color: var(--text-muted); margin-top: 2px;">
+                            <strong>Hotel 100% Autônomo:</strong> Check-in via WhatsApp, emissão de senha de fechadura eletrônica (Smart Lock) e check-out sem recepção física.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div>Nexus Holding Group • Implantação Progressiva sem Risco Operacional</div>
+            <div>Página 3 de 4</div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 4: ROI & ENCERRAMENTO INSTITUCIONAL ==================== -->
+    <div class="page">
+        <div>
+            <div class="page-header">
+                <div class="brand-group">
+                    <div class="logo-text">NEXUS <span>HOLDING GROUP</span></div>
+                    <div class="brand-divider">|</div>
+                    <div class="doc-category">Viabilidade Econômica & Fechamento</div>
+                </div>
+                <div class="header-badge">Retorno Financeiro</div>
+            </div>
+
+            <div class="section-title">
+                <span class="section-number">4</span>
+                Demonstração de Retorno sobre Investimento (ROI Matemático)
+            </div>
+            <div class="section-subtitle">
+                O investimento na Nexus Hospitality Suite se autofinancia desde as primeiras semanas através da retenção das comissões de OTAs.
+            </div>
+
+            <table class="exec-table">
+                <thead>
+                    <tr>
+                        <th style="width: 28%;">Cenário Operacional</th>
+                        <th style="width: 26%;">Reserva via OTA (Booking/Expedia)</th>
+                        <th style="width: 26%;">Reserva Direta via IA Nexus</th>
+                        <th style="width: 20%;">Economia Líquida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Estadia Média de 3 Noites (R$ 800/noite)</strong></td>
+                        <td>R$ 2.400 (Comissão OTA 20% = R$ 480)</td>
+                        <td>R$ 2.400 (Comissão OTA = <strong>R$ 0,00</strong>)</td>
+                        <td><span class="tag-status">+ R$ 480,00 / reserva</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>10 Reservas Diretas / Mês</strong></td>
+                        <td>R$ 24.000 (Comissão perdida = R$ 4.800)</td>
+                        <td>R$ 24.000 retidos integralmente no caixa</td>
+                        <td><span class="tag-status">+ R$ 4.800,00 / mês</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>25 Reservas Diretas / Mês</strong></td>
+                        <td>R$ 60.000 (Comissão perdida = R$ 12.000)</td>
+                        <td>R$ 60.000 retidos integralmente no caixa</td>
+                        <td><span class="tag-status">+ R$ 12.000,00 / mês</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>50 Reservas Diretas / Mês</strong></td>
+                        <td>R$ 120.000 (Comissão perdida = R$ 24.000)</td>
+                        <td>R$ 120.000 retidos integralmente no caixa</td>
+                        <td><span class="tag-status">+ R$ 24.000,00 / mês</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="callout" style="background-color: var(--nexus-gold-light); border-left-color: var(--nexus-gold-dark); color: var(--nexus-dark); margin-top: 10px; margin-bottom: 14px;">
+                <strong>Conclusão Econômica:</strong> Apenas <strong>3 a 5 reservas diretas</strong> captadas mensalmente pela IA no WhatsApp já cobrem 100% da mensalidade do sistema. Todas as reservas adicionais convertidas representam lucro puro retido no caixa do hotel.
+            </div>
+
+            <!-- ENCERRAMENTO -->
+            <div class="closing-box">
+                <div class="closing-title">Próximos Passos & Alinhamento Estratégico</div>
+                <div class="closing-desc">
+                    Estamos à disposição para alinhar os parâmetros operacionais, realizar o levantamento de integrações com o sistema PMS do empreendimento e estruturar o plano de Go-Live da Fase 1.
+                </div>
+                <div class="sig-row">
+                    <div class="sig-item">
+                        <strong>Geanderson Leandro Schuh</strong>
+                        Founder & CEO • Nexus Holding Group
+                    </div>
+                    <div class="sig-item" style="border-left: 1px solid rgba(8, 47, 36, 0.2); padding-left: 20px;">
+                        <strong>Diretoria de Expansão & Parcerias</strong>
+                        Nexus Hospitality Suite • Brasil & Global
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div>Nexus Holding Group • Documento Executivo de Engenharia & Parceria</div>
+            <div>Página 4 de 4</div>
+        </div>
+    </div>
+
+</body>
+</html>

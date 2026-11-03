@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Técnico & Arquitetura Executiva — Hall Investment & Corretora Imobiliária | Nexus Holding Group</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap');
+
+        :root {
+            --hall-navy: #0A1D37;          /* Azul Marinho Institucional Hall Investment */
+            --hall-navy-dark: #051020;     /* Azul Obsidiana Profundo */
+            --hall-royal: #163560;         /* Azul Real Corporativo */
+            --hall-blue-soft: #EDF3FA;     /* Azul Gelo Suave para Cards */
+            --hall-gold: #C5A059;          /* Dourado Investimento & Real Estate */
+            --hall-gold-light: #E2C78E;    /* Champagne Iluminado */
+            --hall-gold-dark: #967332;     /* Bronze Fiduciário */
+            --hall-pearl: #F9FAFC;         /* Branco Pérola Editorial */
+            --white: #FFFFFF;
+            --charcoal: #1C2530;           /* Antracite Executivo */
+            --text-muted: #4E5D6C;         /* Cinza Azulado Secundário */
+            --border-color: #D5DFEC;       /* Borda Arquitetônica Suave */
+            --border-gold: rgba(197, 160, 89, 0.45);
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #DCE1E7;
+            color: var(--charcoal);
+            line-height: 1.5;
+            font-size: 12px;
+        }
+
+        /* CONFIGURAÇÃO DA FOLHA A4 */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            max-height: 297mm;
+            padding: 14mm 17mm 12.5mm 17mm;
+            margin: 12px auto;
+            background: var(--hall-pearl);
+            position: relative;
+            box-shadow: 0 12px 35px rgba(5, 16, 32, 0.25);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            page-break-after: always;
+            page-break-inside: avoid;
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 14mm 17mm 12.5mm 17mm;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+            .page:last-child {
+                page-break-after: avoid;
+            }
+        }
+
+        /* MOLDURA DUPLA ARQUITETÔNICA */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 6mm;
+            left: 6mm;
+            right: 6mm;
+            bottom: 6mm;
+            border: 1px solid var(--border-color);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .page::after {
+            content: '';
+            position: absolute;
+            top: 7.3mm;
+            left: 7.3mm;
+            right: 7.3mm;
+            bottom: 7.3mm;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ==================== CAPA EXECUTIVA (PÁGINA 1) ==================== */
+        .page-cover {
+            background: linear-gradient(155deg, #040C18 0%, #0A1D37 52%, #132F57 100%);
+            color: var(--white);
+            padding: 18mm 20mm 16mm 20mm;
+        }
+
+        .page-cover::before {
+            border-color: rgba(197, 160, 89, 0.38);
+        }
+
+        .page-cover::after {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .cover-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.42);
+            padding-bottom: 13px;
+            z-index: 2;
+        }
+
+        .cover-brand {
+            font-family: 'Cinzel', serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 2.2px;
+            color: var(--hall-gold);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .cover-badge {
+            font-size: 8.8px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: var(--hall-gold-light);
+            background: rgba(197, 160, 89, 0.14);
+            border: 1px solid rgba(197, 160, 89, 0.45);
+            padding: 4.5px 13px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .cover-hero {
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin: auto 0;
+        }
+
+        .cover-kicker {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.8px;
+            text-transform: uppercase;
+            color: var(--hall-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cover-kicker::before {
+            content: '';
+            display: inline-block;
+            width: 32px;
+            height: 2px;
+            background: var(--hall-gold);
+        }
+
+        .cover-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 31px;
+            line-height: 1.22;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.3px;
+        }
+
+        .cover-title span {
+            color: var(--hall-gold-light);
+            font-style: italic;
+        }
+
+        .cover-subtitle {
+            font-size: 12.8px;
+            line-height: 1.62;
+            color: #CEDBE9;
+            font-weight: 300;
+            border-left: 3px solid var(--hall-gold);
+            padding-left: 16px;
+        }
+
+        .cover-Highlight-Banner {
+            background: linear-gradient(90deg, rgba(197, 160, 89, 0.16) 0%, rgba(22, 53, 96, 0.45) 100%);
+            border: 1px solid rgba(197, 160, 89, 0.42);
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cover-Highlight-Item {
+            text-align: center;
+            flex: 1;
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0 8px;
+        }
+
+        .cover-Highlight-Item:last-child {
+            border-right: none;
+        }
+
+        .cover-Highlight-Item .val {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--hall-gold-light);
+            margin-bottom: 2px;
+        }
+
+        .cover-Highlight-Item .lbl {
+            font-size: 8.8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #C2D2E4;
+            font-weight: 600;
+        }
+
+        .cover-pillars-preview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 13px;
+        }
+
+        .cover-pillar-box {
+            background: rgba(255, 255, 255, 0.055);
+            border: 1px solid rgba(197, 160, 89, 0.34);
+            border-top: 2.5px solid var(--hall-gold);
+            border-radius: 8px;
+            padding: 13px 15px;
+        }
+
+        .cover-pillar-box .num {
+            font-family: 'Cinzel', serif;
+            font-size: 9.5px;
+            color: var(--hall-gold);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .cover-pillar-box .ttl {
+            font-size: 12.2px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .cover-pillar-box .dsc {
+            font-size: 10.4px;
+            color: #B8C9DC;
+            line-height: 1.44;
+        }
+
+        .cover-footer-meta {
+            display: grid;
+            grid-template-columns: 1.15fr 1fr;
+            gap: 18px;
+            border-top: 1px solid rgba(197, 160, 89, 0.35);
+            padding-top: 15px;
+            z-index: 2;
+        }
+
+        .meta-col .meta-label {
+            font-size: 8.5px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--hall-gold);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .meta-col .meta-val {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 2px;
+        }
+
+        .meta-col .meta-sub {
+            font-size: 10.2px;
+            color: #C2D2E4;
+        }
+
+        /* ==================== HEADER & FOOTER INTERNOS (1 LINHA LIMPA) ==================== */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1.5px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .header-brand {
+            font-family: 'Cinzel', serif;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            color: var(--hall-navy);
+            text-transform: uppercase;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .header-brand span {
+            color: var(--hall-gold-dark);
+        }
+
+        .header-doc {
+            font-size: 8px;
+            color: var(--hall-gold-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            background: #F4EFE4;
+            padding: 3.5px 11px;
+            border-radius: 12px;
+            border: 1px solid var(--border-gold);
+            white-space: nowrap;
+        }
+
+        .page-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 2;
+            padding: 2px 0;
+        }
+
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 7px;
+            margin-top: 10px;
+            font-size: 8.8px;
+            color: var(--text-muted);
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .page-footer strong {
+            color: var(--hall-navy);
+        }
+
+        .page-number {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: var(--hall-gold-dark);
+            font-size: 9.2px;
+        }
+
+        /* ==================== COMPONENTES DE LAYOUT ==================== */
+        .section-kicker {
+            font-size: 8.8px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--hall-gold-dark);
+            margin-bottom: 3px;
+        }
+
+        h2.section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18.5px;
+            color: var(--hall-navy);
+            border-left: 4px solid var(--hall-gold);
+            padding-left: 11px;
+            margin-bottom: 6px;
+            line-height: 1.22;
+            font-weight: 700;
+        }
+
+        p.lead {
+            font-size: 11px;
+            color: var(--charcoal);
+            line-height: 1.5;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 14px;
+            box-shadow: 0 2px 8px rgba(10, 29, 55, 0.03);
+        }
+
+        .card-navy {
+            background: linear-gradient(145deg, var(--hall-navy) 0%, var(--hall-royal) 100%);
+            color: var(--white);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 13px 15px;
+        }
+
+        .card-gold {
+            background: linear-gradient(to right, #FCF9F2, #FFFFFF);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--hall-gold);
+            border-radius: 8px;
+            padding: 13px 15px;
+        }
+
+        .badge-pill {
+            display: inline-block;
+            font-size: 7.8px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            background: var(--hall-blue-soft);
+            color: var(--hall-navy);
+            border: 1px solid #C5D4E8;
+        }
+
+        .badge-pill.gold {
+            background: #F6EFE0;
+            color: var(--hall-gold-dark);
+            border-color: var(--border-gold);
+        }
+
+        .badge-pill.dark {
+            background: rgba(197, 160, 89, 0.22);
+            color: var(--hall-gold-light);
+            border-color: rgba(197, 160, 89, 0.45);
+        }
+
+        .card h3, .card-gold h3 {
+            font-size: 12.2px;
+            font-weight: 700;
+            color: var(--hall-navy);
+            margin-bottom: 4px;
+        }
+
+        .card-navy h3 {
+            font-size: 12.2px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .card p, .card-gold p {
+            font-size: 10.3px;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        .card-navy p {
+            font-size: 10.3px;
+            color: #CBD8E8;
+            line-height: 1.45;
+        }
+
+        .check-list {
+            list-style: none;
+            margin-top: 6px;
+        }
+
+        .check-list li {
+            position: relative;
+            padding-left: 15px;
+            font-size: 10.1px;
+            line-height: 1.44;
+            margin-bottom: 5px;
+            color: var(--charcoal);
+        }
+
+        .check-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .check-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--hall-gold-dark);
+            font-weight: 700;
+        }
+
+        .card-navy .check-list li {
+            color: #E2ECF5;
+        }
+
+        .card-navy .check-list li::before {
+            color: var(--hall-gold-light);
+        }
+
+        /* FLUXO VISUAL (STEP BOXES) */
+        .flow-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 9px;
+        }
+
+        .flow-step {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--hall-navy);
+            border-radius: 6px;
+            padding: 10px 11px;
+        }
+
+        .flow-step.highlight {
+            border-top-color: var(--hall-gold);
+            background: #FCF9F2;
+        }
+
+        .flow-step .step-num {
+            font-family: 'Cinzel', serif;
+            font-size: 8.8px;
+            font-weight: 800;
+            color: var(--hall-gold-dark);
+            margin-bottom: 3px;
+        }
+
+        .flow-step h4 {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--hall-navy);
+            margin-bottom: 3px;
+        }
+
+        .flow-step p {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* FAIXA DE MÉTRICAS EXECUTIVAS */
+        .metrics-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 9px;
+        }
+
+        .metric-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-left: 3.5px solid var(--hall-navy);
+            border-radius: 6px;
+            padding: 8px 11px;
+        }
+
+        .metric-card.gold-accent {
+            border-left-color: var(--hall-gold);
+            background: #FCF9F2;
+        }
+
+        .metric-card .m-val {
+            font-family: 'Cinzel', serif;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--hall-navy);
+            line-height: 1.2;
+        }
+
+        .metric-card.gold-accent .m-val {
+            color: var(--hall-gold-dark);
+        }
+
+        .metric-card .m-lbl {
+            font-size: 8.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* TABELA EXECUTIVA */
+        .exec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            background: var(--white);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .exec-table th {
+            background: var(--hall-navy);
+            color: var(--white);
+            text-align: left;
+            padding: 8px 11px;
+            font-size: 9.2px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .exec-table th.gold-col {
+            background: var(--hall-royal);
+            color: var(--hall-gold-light);
+            border-left: 1px solid rgba(197, 160, 89, 0.35);
+        }
+
+        .exec-table td {
+            padding: 7.5px 11px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--charcoal);
+            vertical-align: top;
+            line-height: 1.42;
+        }
+
+        .exec-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exec-table td.highlight-cell {
+            background: #FCF9F2;
+            font-weight: 600;
+            color: var(--hall-navy);
+            border-left: 2.5px solid var(--hall-gold);
+        }
+
+        /* SIMULAÇÃO DE MÍDIA RICA WHATSAPP (SEM EMOJIS CARICATOS) */
+        .wa-mockup {
+            background: #EAE4DC;
+            border-radius: 10px;
+            padding: 12px 14px;
+            border: 1px solid #C9C1B8;
+        }
+
+        .wa-header {
+            background: var(--hall-navy);
+            border-bottom: 2px solid var(--hall-gold);
+            color: white;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 9.8px;
+            font-weight: 700;
+            margin-bottom: 9px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wa-bubble-in {
+            background: var(--white);
+            border-radius: 0 8px 8px 8px;
+            padding: 8px 11px;
+            font-size: 9.6px;
+            color: #1A2228;
+            margin-bottom: 8px;
+            max-width: 88%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+            line-height: 1.42;
+        }
+
+        .wa-bubble-out {
+            background: #E2F4DC;
+            border-radius: 8px 0 8px 8px;
+            padding: 8px 11px;
+            font-size: 9.6px;
+            color: #1A2228;
+            margin-left: auto;
+            margin-bottom: 8px;
+            max-width: 92%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+            line-height: 1.42;
+        }
+
+        .wa-bubble-out:last-child {
+            margin-bottom: 0;
+        }
+
+        .wa-btn-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 7px;
+        }
+
+        .wa-btn {
+            background: var(--hall-pearl);
+            color: var(--hall-navy);
+            border: 1px solid #BCCCE0;
+            border-radius: 4px;
+            padding: 4.5px 6px;
+            font-size: 8.5px;
+            font-weight: 700;
+            text-align: center;
+            flex: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        /* MOCKUP DO PORTAL WEB (EMBAIXADORA 4K + CARDS DE IMÓVEIS) */
+        .web-portal-mockup {
+            background: var(--hall-navy-dark);
+            border: 1px solid var(--hall-gold);
+            border-radius: 8px;
+            padding: 11px 14px;
+            color: var(--white);
+        }
+
+        .web-portal-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            padding-bottom: 6px;
+            margin-bottom: 9px;
+            font-size: 8.5px;
+            color: var(--hall-gold-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .web-portal-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.4fr;
+            gap: 11px;
+            align-items: stretch;
+        }
+
+        .ambassador-screen {
+            background: linear-gradient(160deg, #102A4C 0%, #071529 100%);
+            border: 1px solid rgba(197, 160, 89, 0.45);
+            border-radius: 6px;
+            padding: 10px 11px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .property-results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
+        }
+
+        .prop-mini-card {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-top: 2px solid var(--hall-gold);
+            border-radius: 5px;
+            padding: 7px 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .prop-mini-card .p-tag {
+            font-size: 7.2px;
+            color: var(--hall-gold-light);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 2px;
+        }
+
+        .prop-mini-card .p-title {
+            font-size: 8.8px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 3px;
+            line-height: 1.25;
+        }
+
+        .prop-mini-card .p-price {
+            font-family: 'Cinzel', serif;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--hall-gold);
+            margin-bottom: 4px;
+        }
+
+        .prop-mini-card .p-cta {
+            background: var(--hall-gold);
+            color: var(--hall-navy-dark);
+            font-size: 7.2px;
+            font-weight: 800;
+            text-align: center;
+            padding: 3px 4px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== PÁGINA 1: CAPA EXECUTIVA ==================== -->
+    <div class="page page-cover">
+        <div class="cover-top">
+            <div class="cover-brand">Nexus Holding Group • Portugal & Global</div>
+            <div class="cover-badge">Dossiê Técnico & Arquitetura Executiva</div>
+        </div>
+
+        <div class="cover-hero">
+            <div class="cover-kicker">Ecossistema Soberano de Inteligência Imobiliária & Investimentos</div>
+            <h1 class="cover-title">
+                Arquitetura de Captação Global, WhatsApp Multimodal & <span>Embaixadora 4K</span> para Hall Investment & Corretora
+            </h1>
+            <div class="cover-subtitle">
+                Infraestrutura corporativa de Inteligência Artificial Soberana desenhada sob medida para a operação de <strong>Nuno Andrade</strong>: unindo a captação internacional de investidores da <strong>Hall Investment</strong> à velocidade comercial de venda de apartamentos, moradias e terrenos da <strong>Corretora Imobiliária</strong>.
+            </div>
+
+            <div class="cover-Highlight-Banner">
+                <div class="cover-Highlight-Item">
+                    <div class="val">50+ Idiomas</div>
+                    <div class="lbl">Fluência Nativa Voz & Texto</div>
+                </div>
+                <div class="cover-Highlight-Item">
+                    <div class="val">08:30 – 18:00</div>
+                    <div class="lbl">Trava de Fuso Local Ativo</div>
+                </div>
+                <div class="cover-Highlight-Item">
+                    <div class="val">&lt; 1 Segundo</div>
+                    <div class="lbl">Busca de Imóveis na Tela</div>
+                </div>
+                <div class="cover-Highlight-Item">
+                    <div class="val">Fotos + Vídeo + PDF</div>
+                    <div class="lbl">Show-Room no WhatsApp</div>
+                </div>
+            </div>
+
+            <div class="cover-pillars-preview">
+                <div class="cover-pillar-box">
+                    <div class="num">Pilar 01 • WhatsApp Global</div>
+                    <div class="ttl">Smart Timezone Gatekeeper (50+ Idiomas)</div>
+                    <div class="dsc">Atendimento receptivo 24/7 e trava algorítmica de disparos ativos restrita às 08:30–18:00 no fuso horário de cada país.</div>
+                </div>
+                <div class="cover-pillar-box">
+                    <div class="num">Pilar 02 • LinkedIn Engine</div>
+                    <div class="ttl">Captação de Seguidores & "Ponte de Ouro"</div>
+                    <div class="dsc">Abordagem segura de seguidores e conexões no LinkedIn com migração direta do investidor qualificado para o WhatsApp.</div>
+                </div>
+                <div class="cover-pillar-box">
+                    <div class="num">Pilar 03 • Mídia Rica no WhatsApp</div>
+                    <div class="ttl">Envio de Mensagens, Fotos HD, Vídeos e PDFs</div>
+                    <div class="dsc">Apresentação automática de galerias de fotos, vídeos de tour, plantas baixas em PDF, Google Maps e agendamento.</div>
+                </div>
+                <div class="cover-pillar-box">
+                    <div class="num">Pilar 04 • Portais Web 4K &amp; QR Code</div>
+                    <div class="ttl">Embaixadora Hall Investment &amp; Corretora</div>
+                    <div class="dsc">Recepção em vídeo 4K fixo, busca semântica (&lt; 1 seg) de imóveis na tela e QR Code integrado na Embaixadora para transbordo imediato ao WhatsApp.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cover-footer-meta">
+            <div class="meta-col">
+                <div class="meta-label">Preparado Exclusivamente Para:</div>
+                <div class="meta-val">Nuno Miguel Andrade Monteiro</div>
+                <div class="meta-sub">Hall Investment & Mediação Imobiliária • Portugal (nuno@hallinvestment.pt)</div>
+            </div>
+            <div class="meta-col">
+                <div class="meta-label">Engenharia & Governança Executiva:</div>
+                <div class="meta-val">Geanderson Leandro Schuh & Ivoni Severo Schuh</div>
+                <div class="meta-sub">Founders & Diretoria Executiva — Nexus Holding Group</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 2: PILAR 1 (WHATSAPP GLOBAL) & PILAR 2 (LINKEDIN LEADS) ==================== -->
+    <div class="page">
+        <div class="page-header">
+            <div class="header-brand">Nexus Holding Group <span>| Hall Investment & Corretora</span></div>
+            <div class="header-doc">Pilar 01 & Pilar 02 • Captação Global & LinkedIn</div>
+        </div>
+
+        <div class="page-body">
+            <div>
+                <div class="section-kicker">01. Inteligência de Prospecção & Respeito Internacional ao Investidor</div>
+                <h2 class="section-title">WhatsApp com Rigor de Fuso Horário & Captação de Leads no LinkedIn</h2>
+                <p class="lead">
+                    Com seguidores, compradores e investidores distribuídos em múltiplos países e fusos horários, a operação de <strong>Nuno Andrade</strong> exige uma engenharia que combine <strong>disponibilidade imediata 24/7</strong> com <strong>etiqueta corporativa impecável</strong> nos disparos ativos.
+                </p>
+            </div>
+
+            <div class="metrics-strip">
+                <div class="metric-card gold-accent">
+                    <div class="m-val">24/7 Receptivo</div>
+                    <div class="m-lbl">Atendimento em 2 Segundos</div>
+                </div>
+                <div class="metric-card">
+                    <div class="m-val">08:30 – 18:00</div>
+                    <div class="m-lbl">Janela Comercial Local</div>
+                </div>
+                <div class="metric-card gold-accent">
+                    <div class="m-val">25 a 40 / Dia</div>
+                    <div class="m-lbl">Cadência Segura LinkedIn</div>
+                </div>
+                <div class="metric-card">
+                    <div class="m-val">98% Abertura</div>
+                    <div class="m-lbl">Conversão no WhatsApp</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- PILAR 1: WHATSAPP TIMEZONE GATEKEEPER -->
+                <div class="card-navy">
+                    <span class="badge-pill dark">Pilar 01 • Smart Timezone Gatekeeper</span>
+                    <h3>Captação Global no WhatsApp com Trava de Fuso Horário</h3>
+                    <p style="margin-bottom: 6px;">
+                        O motor da Nexus identifica automaticamente o <strong>código de país (DDI)</strong> e o <strong>idioma nativo</strong> de cada lead, operando em dois modos sincronizados:
+                    </p>
+                    <ul class="check-list">
+                        <li><strong>Modo Receptivo 24/7 (Zero Espera):</strong> Quando um investidor dos EUA, Brasil, França, Reino Unido, Suíça ou Emirados envia mensagem às 03:00 da manhã de Lisboa, a IA atende em 2 segundos no idioma nativo dele (50+ idiomas), em texto ou voz.</li>
+                        <li><strong>Modo Ativo com Trava de Horário Comercial (08:30 às 18:00 Local):</strong> Nenhum disparo ativo, prospecção ou <em>follow-up</em> é enviado fora do horário comercial do país do destinatário.</li>
+                        <li><strong>Fila Inteligente de Retenção (Smart Queue):</strong> Se uma campanha for acionada em Portugal quando ainda é madrugada em São Paulo ou Nova Iorque, o sistema retém a mensagem e dispara pontualmente às <strong>08:30 da manhã no fuso local do cliente</strong>.</li>
+                        <li><strong>Blindagem Anti-Banimento:</strong> Elimina denúncias de incómodo noturno, protege o número oficial e multiplica a taxa de resposta.</li>
+                    </ul>
+                </div>
+
+                <!-- PILAR 2: CAPTAÇÃO DE LEADS DO LINKEDIN -->
+                <div class="card-gold">
+                    <span class="badge-pill gold">Pilar 02 • LinkedIn Social Selling Engine</span>
+                    <h3>Captação de Seguidores no LinkedIn & "Ponte de Ouro"</h3>
+                    <p style="margin-bottom: 6px;">
+                        Transforma a base de seguidores, conexões e visitantes do perfil do LinkedIn de <strong>Nuno Andrade</strong> em oportunidades reais de investimento e compra no WhatsApp:
+                    </p>
+                    <ul class="check-list">
+                        <li><strong>Mapeamento e Triagem de Seguidores:</strong> Identifica investidores imobiliários, executivos expatriados, famílias em mudança para Portugal e fundos de capital na rede de Nuno.</li>
+                        <li><strong>Abordagem Segura (Algorithm-Safe Cadence):</strong> Envia mensagens personalizadas de boas-vindas e networking respeitando os limites de segurança do LinkedIn (<strong>25 a 40 abordagens diárias humanizadas</strong>), com zero risco de restrição à conta.</li>
+                        <li><strong>Gatilhos de Engajamento em Publicações:</strong> Quando um seguidor comenta ou interage num post sobre imóveis ou investimentos em Portugal, recebe uma abordagem contextualizada.</li>
+                        <li><strong>A "Ponte de Ouro" (LinkedIn → WhatsApp):</strong> A IA conduz o diálogo inicial no LinkedIn e convida o investidor a receber o dossiê/portfólio direto no WhatsApp, onde a taxa de abertura é de <strong>98%</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-kicker" style="margin-bottom: 5px;">Fluxo Operacional do Smart Timezone Gatekeeper & Ponte LinkedIn</div>
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <div class="step-num">ETAPA 01 • ORIGEM</div>
+                        <h4>Seguidor no LinkedIn ou Lead Global</h4>
+                        <p>O investidor interage no LinkedIn do Nuno ou entra via portal web/campanha internacional.</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">ETAPA 02 • LEITURA</div>
+                        <h4>Deteção de DDI, Fuso & Idioma</h4>
+                        <p>O sistema lê o código internacional (+351, +55, +1, +33, +44, +971) e calcula a hora exata no país do cliente.</p>
+                    </div>
+                    <div class="flow-step highlight">
+                        <div class="step-num">ETAPA 03 • FILTRO</div>
+                        <h4>Janela Comercial (08:30–18:00)</h4>
+                        <p>Se for horário útil no destino, envia na hora; se for noite/madrugada lá, agenda para as 08:30 locais.</p>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-num">ETAPA 04 • CONVERSÃO</div>
+                        <h4>Qualificação & Handover VIP</h4>
+                        <p>A IA qualifica orçamento e objetivo, apresenta os imóveis e aciona o Nuno para o fecho.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="background: var(--hall-blue-soft); border-color: #BBD0E9; padding: 10px 14px;">
+                <div style="font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--hall-royal); margin-bottom: 2px;">Regra do Espelho Multimodal no WhatsApp</div>
+                <h4 style="font-size: 11.2px; font-weight: 700; color: var(--hall-navy); margin-bottom: 2px;">Sintonia Natural com o Estilo de Cada Investidor</h4>
+                <p style="font-size: 9.8px; color: var(--charcoal);">
+                    Se o investidor escreve em <strong>texto</strong>, a IA responde em texto executivo estruturado. Se o investidor envia um <strong>áudio no WhatsApp</strong> (ex: dirigindo ou entre reuniões), a IA compreende a fala e responde com a <strong>voz neural ultra-realista da Embaixadora</strong> no idioma nativo do cliente.
+                </p>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div><strong>Nexus Holding Group</strong> • Engenharia de IA Soberana para Real Estate & Investimentos</div>
+            <div class="page-number">Página 02 de 05</div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 3: PILAR 3 (ENVIO DE MENSAGENS, FOTOS, VÍDEOS E PDF NO WHATSAPP) ==================== -->
+    <div class="page">
+        <div class="page-header">
+            <div class="header-brand">Nexus Holding Group <span>| Hall Investment & Corretora</span></div>
+            <div class="header-doc">Pilar 03 • Apresentação Multimodal no WhatsApp</div>
+        </div>
+
+        <div class="page-body">
+            <div>
+                <div class="section-kicker">02. Show-Room Imobiliário Completo na Palma da Mão</div>
+                <h2 class="section-title">Envio Automático de Mensagens, Fotos HD, Vídeos e PDFs no WhatsApp</h2>
+                <p class="lead">
+                    No mercado imobiliário e de investimentos, <strong>quem apresenta primeiro e com melhor qualidade visual conquista o cliente</strong>. A IA da Nexus não envia apenas textos genéricos: ela entrega uma <strong>apresentação multimídia rica e completa</strong> diretamente na conversa de WhatsApp do investidor ou comprador.
+                </p>
+            </div>
+
+            <div class="metrics-strip">
+                <div class="metric-card">
+                    <div class="m-val">Mensagens IA</div>
+                    <div class="m-lbl">Argumentação & Yield</div>
+                </div>
+                <div class="metric-card gold-accent">
+                    <div class="m-val">Fotos Full HD</div>
+                    <div class="m-lbl">Galeria Curada no Chat</div>
+                </div>
+                <div class="metric-card">
+                    <div class="m-val">Vídeos MP4</div>
+                    <div class="m-lbl">Walkthrough & Drone</div>
+                </div>
+                <div class="metric-card gold-accent">
+                    <div class="m-val">Dossiê em PDF</div>
+                    <div class="m-lbl">Plantas & Viabilidade</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 8px;">
+                    <div class="card" style="padding: 10px 13px;">
+                        <span class="badge-pill">1. Mensagens Consultivas & Argumentação de Valor</span>
+                        <h3>Copywriting Imobiliário & Financeiro de Alta Conversão</h3>
+                        <p>
+                            Envio de mensagens estruturadas destacando localização, tipologia (T1 a T5, Moradias, Lotes/Terrenos), área bruta, acabamentos, potencial de valorização e <em>Yield</em> estimado para investidores, adaptadas ao perfil de cada comprador.
+                        </p>
+                    </div>
+
+                    <div class="card" style="padding: 10px 13px;">
+                        <span class="badge-pill gold">2. Álbuns de Fotos em Alta Definição (HD)</span>
+                        <h3>Curadoria Visual Instantânea no Chat</h3>
+                        <p>
+                            A IA seleciona e envia automaticamente no WhatsApp o <strong>carrossel das melhores fotografias em alta resolução</strong> do imóvel (fachada arquitetônica, living, suíte master, cozinha equipada, piscina e vista), despertando o desejo imediato.
+                        </p>
+                    </div>
+
+                    <div class="card" style="padding: 10px 13px;">
+                        <span class="badge-pill">3. Vídeos de Apresentação & Tour Virtual</span>
+                        <h3>Imersão em Movimento sem Sair do WhatsApp</h3>
+                        <p>
+                            Disparo nativo de <strong>vídeos em MP4 otimizados</strong> (<em>walkthrough</em> pelo interior da moradia/apartamento, imagens de drone do terreno e entorno) que reproduzem diretamente no visor do telemóvel do investidor.
+                        </p>
+                    </div>
+
+                    <div class="card" style="padding: 10px 13px;">
+                        <span class="badge-pill gold">4. Dossiês Executivos & Plantas Baixas em PDF</span>
+                        <h3>Documentação Técnica Pronta para Decisão</h3>
+                        <p>
+                            Envio automático do arquivo <strong>PDF oficial do imóvel ou projeto de investimento</strong> contendo planta baixa cotada, quadro de áreas, caderno de encargos, viabilidade construtiva (para terrenos) e simulação financeira.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SIMULAÇÃO VISUAL DA CONVERSA NO WHATSAPP -->
+                <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 9px;">
+                    <div class="wa-mockup">
+                        <div class="wa-header">
+                            <span>HALL INVESTMENT & IMOBILIÁRIA • CONCIERGE IA</span>
+                            <span style="color: var(--hall-gold-light); font-size: 8.5px;">● ATIVO 24/7</span>
+                        </div>
+
+                        <div class="wa-bubble-in">
+                            <strong style="color: var(--hall-navy);">Investidor (França / Inglês ou PT):</strong><br/>
+                            "Olá! Vi o vosso contacto no LinkedIn do Nuno. Procuro uma moradia T4 moderna na Margem Sul / Grande Lisboa ou um terreno com viabilidade para investimento."
+                        </div>
+
+                        <div class="wa-bubble-out">
+                            <strong style="color: #075E54;">Embaixadora Hall Investment:</strong><br/>
+                            "Seja muito bem-vindo! Selecionei 2 oportunidades exclusivas do portfólio do Nuno Andrade que se encaixam exatamente no seu perfil. Veja abaixo as fotos, o vídeo e a planta técnica:"
+                        </div>
+
+                        <div class="wa-bubble-out" style="background: #FFFFFF; border-left: 3.5px solid var(--hall-gold);">
+                            <div style="background: var(--hall-navy); color: var(--hall-gold-light); padding: 6px 9px; border-radius: 4px; font-size: 8.6px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.4px;">
+                                ✦ [GALERIA: 6 FOTOS FULL HD] + [VÍDEO TOUR 4K — 45s]
+                            </div>
+                            <strong style="color: var(--hall-navy); font-size: 10px;">Moradia Isolada T4 Contemporânea c/ Piscina</strong><br/>
+                            • Área Útil: 285 m² | Lote: 620 m² | Suíte Master c/ Closet<br/>
+                            • Acabamentos Premium • Potencial de Valorização Prime<br/>
+                            <div style="margin-top: 6px; padding: 5.5px 8px; background: var(--hall-blue-soft); border: 1px solid #C5D4E8; border-radius: 4px; font-size: 8.8px; font-weight: 700; color: var(--hall-navy);">
+                                ▸ ANEXO PDF: Dossie_Planta_Baixa_Moradia_Hall.pdf (2.4 MB)
+                            </div>
+                            <div style="margin-top: 5px; font-size: 8.5px; color: var(--hall-gold-dark); font-weight: 700;">
+                                ◆ PIN DE LOCALIZAÇÃO GOOGLE MAPS ENVIADO
+                            </div>
+                            <div class="wa-btn-row">
+                                <div class="wa-btn">Agendar Visita</div>
+                                <div class="wa-btn">Ver Terrenos</div>
+                                <div class="wa-btn">Falar c/ Nuno</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-navy" style="padding: 11px 14px;">
+                        <div style="font-size: 8.2px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--hall-gold-light); margin-bottom: 3px;">Transbordo Executivo Inteligente (VIP Handover)</div>
+                        <h3 style="font-size: 11.5px; margin-bottom: 3px;">O Nuno Recebe o Cliente Qualificado e Pronto para Fechar</h3>
+                        <p style="font-size: 9.7px;">
+                            Assim que o cliente visualiza as fotos, o vídeo e o PDF e clica em <em>"Agendar Visita"</em> ou <em>"Falar com o Nuno"</em>, a IA envia um <strong>Alerta VIP imediato no telemóvel do Nuno</strong> com o dossiê completo do lead (Nome, País, Orçamento, Imóvel escolhido e Horário).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div><strong>Nexus Holding Group</strong> • Engenharia de IA Soberana para Real Estate & Investimentos</div>
+            <div class="page-number">Página 03 de 05</div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 4: PILAR 4 (EMBAIXADORA 4K DO SITE HALL INVESTMENT & DA CORRETORA) ==================== -->
+    <div class="page">
+        <div class="page-header">
+            <div class="header-brand">Nexus Holding Group <span>| Hall Investment &amp; Corretora</span></div>
+            <div class="header-doc">Pilar 04 • Embaixadora Web 4K, Busca &amp; QR Code WhatsApp</div>
+        </div>
+
+        <div class="page-body">
+            <div>
+                <div class="section-kicker">03. Presença Cinematográfica, Busca Semântica (&lt; 1s) &amp; Transbordo via QR Code</div>
+                <h2 class="section-title">A Embaixadora Digital no Site da Hall Investment &amp; da Corretora</h2>
+                <p class="lead">
+                    Mais de 80% dos visitantes abandonam sites imobiliários tradicionais por falta de paciência com filtros estáticos. Na <strong>Hall Investment</strong> e na <strong>Corretora</strong>, o visitante é recebido por uma <strong>Embaixadora Virtual em Vídeo 4K</strong> com busca semântica instantânea e <strong>QR Code dinâmico integrado na tela</strong> para continuar o atendimento direto no WhatsApp.
+                </p>
+            </div>
+
+            <!-- DUPLA ATUAÇÃO: HALL INVESTMENT vs CORRETORA -->
+            <div class="metrics-strip">
+                <div class="metric-card gold-accent">
+                    <div class="m-val">Vídeo 4K Studio</div>
+                    <div class="m-lbl">Recepção Cinematográfica</div>
+                </div>
+                <div class="metric-card">
+                    <div class="m-val">&lt; 1 Segundo</div>
+                    <div class="m-lbl">Filtro Semântico na Tela</div>
+                </div>
+                <div class="metric-card gold-accent">
+                    <div class="m-val">QR Code Integrado</div>
+                    <div class="m-lbl">Transbordo p/ WhatsApp</div>
+                </div>
+                <div class="metric-card">
+                    <div class="m-val">Clone 4K Opcional</div>
+                    <div class="m-lbl">Imagem &amp; Voz do Nuno</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card-navy" style="padding: 12px 15px;">
+                    <span class="badge-pill dark">Frente A • Portal Hall Investment (hallinvestment.pt)</span>
+                    <h3>Embaixadora de Investimentos &amp; Capital</h3>
+                    <p style="margin-bottom: 5px;">
+                        Postura executiva de <em>Private Wealth &amp; Real Estate Advisory</em> para investidores nacionais e estrangeiros:
+                    </p>
+                    <ul class="check-list">
+                        <li><strong>Foco em Ativos de Rendimento:</strong> Terrenos com viabilidade construtiva, prédios para reabilitação urbana, ativos comerciais, hotelaria e lotes para incorporação.</li>
+                        <li><strong>Triagem de Capital &amp; Rentabilidade:</strong> Dialoga em 50+ idiomas sobre <em>Yield</em> projetado, enquadramento fiscal em Portugal e estruturação de portfólio.</li>
+                        <li><strong>QR Code de Dossiê no WhatsApp:</strong> O investidor aponta o telemóvel para o QR Code na Embaixadora e recebe na hora o estudo de viabilidade e PDF no seu WhatsApp.</li>
+                    </ul>
+                </div>
+
+                <div class="card-gold" style="padding: 12px 15px;">
+                    <span class="badge-pill gold">Frente B • Portal da Corretora Imobiliária</span>
+                    <h3>Embaixadora de Mediação &amp; Vendas Residenciais</h3>
+                    <p style="margin-bottom: 5px;">
+                        Postura acolhedora, ágil e consultiva para compradores finais, famílias e clientes em busca do imóvel ideal:
+                    </p>
+                    <ul class="check-list">
+                        <li><strong>Foco em Imóveis Prontos e Lançamentos:</strong> Apartamentos (T1, T2, T3, Duplex), Moradias isoladas ou geminadas, condomínios fechados e quintas.</li>
+                        <li><strong>Entendimento de Estilo de Vida:</strong> Compreende pedidos naturais como <em>"perto de escolas"</em>, <em>"com terraço e piscina"</em>, <em>"vista rio/mar"</em> ou <em>"pronto a habitar"</em>.</li>
+                        <li><strong>Transbordo QR Code &amp; Visitas:</strong> Ao ler o QR Code na tela (ou clicar no botão), a conversa migra com o histórico do imóvel escolhido direto para o WhatsApp.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- MOCKUP VISUAL DA INTERFACE WEB: EMBAIXADORA 4K + QR CODE + FILTRO < 1 SEGUNDO -->
+            <div class="web-portal-mockup" style="padding: 12px 15px;">
+                <div class="web-portal-bar" style="white-space: nowrap;">
+                    <span>✦ Simulação no Site • Embaixadora 4K + QR Code WhatsApp + Filtro (&lt; 1s)</span>
+                    <span>Transbordo Web → Telemóvel</span>
+                </div>
+                <div class="web-portal-grid">
+                    <div class="ambassador-screen" style="padding: 10px 11px;">
+                        <div>
+                            <div style="font-size: 7.5px; color: var(--hall-gold-light); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px;">● Vídeo 4K Fixo + Voz/Texto IA</div>
+                            <div style="font-size: 10.5px; font-weight: 700; color: var(--white); margin-bottom: 3px;">Embaixadora Virtual Hall</div>
+                            <p style="font-size: 8.4px; color: #C5D4E8; line-height: 1.36;">
+                                "Diga-me o que procura: apartamento, moradia ou terreno? Aponte a câmara para o <strong>QR Code</strong> abaixo para levar as fotos e o PDF para o seu WhatsApp!"
+                            </p>
+                        </div>
+                        <div style="margin-top: 6px; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(197,160,89,0.5); border-radius: 5px; padding: 5px 8px;">
+                            <div style="width: 34px; height: 34px; background: #FFFFFF; border: 1.5px solid var(--hall-gold); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 2px;">
+                                <svg width="26" height="26" viewBox="0 0 24 24" fill="#0A1D37" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 3h7v7H3V3zm2 2v3h3V5H5zm9-2h7v7h-7V3zm2 2v3h3V5h-3zM3 14h7v7H3v-7zm2 2v3h3v-3H5zm11-2h2v2h-2v-2zm-2 2h2v2h-2v-2zm2 2h2v2h-2v-2zm2-2h3v2h-3v-2zm0 4h3v1h-3v-1zm-4 0h2v1h-2v-1z"/>
+                                </svg>
+                            </div>
+                            <div style="font-size: 7.8px; color: var(--hall-gold-light); line-height: 1.3;">
+                                <strong style="color: #FFFFFF; display: block;">QR CODE TRANSBORDO WHATSAPP</strong>
+                                Leva o imóvel selecionado + Fotos HD + PDF direto para o telemóvel do cliente.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="property-results-grid">
+                        <div class="prop-mini-card" style="padding: 9px 9px;">
+                            <div>
+                                <div class="p-tag">Corretora • Residencial</div>
+                                <div class="p-title">Apartamento T3 Duplex Vista Rio</div>
+                                <div style="font-size: 8px; color: #B8C9DC; margin-bottom: 5px;">168 m² • Terraço • 2 Garagens</div>
+                            </div>
+                            <div>
+                                <div class="p-price">€ 485.000</div>
+                                <div class="p-cta">QR Code / PDF no Whats</div>
+                            </div>
+                        </div>
+                        <div class="prop-mini-card" style="padding: 9px 9px;">
+                            <div>
+                                <div class="p-tag">Corretora • Premium</div>
+                                <div class="p-title">Moradia Isolada T4 c/ Piscina</div>
+                                <div style="font-size: 8px; color: #B8C9DC; margin-bottom: 5px;">285 m² • Lote 620 m² • Jardim</div>
+                            </div>
+                            <div>
+                                <div class="p-price">€ 690.000</div>
+                                <div class="p-cta">QR Code / PDF no Whats</div>
+                            </div>
+                        </div>
+                        <div class="prop-mini-card" style="padding: 9px 9px;">
+                            <div>
+                                <div class="p-tag">Hall Investment • Yield</div>
+                                <div class="p-title">Terreno Urbano p/ Construção</div>
+                                <div style="font-size: 8px; color: #B8C9DC; margin-bottom: 5px;">Viabilidade 24 Fogos • Projetos</div>
+                            </div>
+                            <div>
+                                <div class="p-price">Yield 18.5% a.a.</div>
+                                <div class="p-cta">QR Code / Dossiê Whats</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARQUITETURA DO VÍDEO 4K FIXO + BUSCA SEMÂNTICA + QR CODE -->
+            <div class="grid-3">
+                <div class="card" style="padding: 10px 12px;">
+                    <div style="font-weight: 800; font-size: 8.8px; color: var(--hall-gold-dark); margin-bottom: 3px;">1. VÍDEO 4K DE BOAS-VINDAS</div>
+                    <p style="font-size: 9.4px; color: var(--charcoal);">
+                        A Embaixadora em <strong>qualidade de cinema 4K (ou o Clone Digital 4K do Nuno)</strong> recepciona o visitante com carregamento instantâneo e zero latência.
+                    </p>
+                </div>
+                <div class="card" style="padding: 10px 12px;">
+                    <div style="font-weight: 800; font-size: 8.8px; color: var(--hall-gold-dark); margin-bottom: 3px;">2. FILTRO EM &lt; 1 SEGUNDO</div>
+                    <p style="font-size: 9.4px; color: var(--charcoal);">
+                        O cliente fala ou digita o que procura (apartamento, moradia ou terreno) e a IA abre os cards dos imóveis ideais na tela em menos de 1 segundo.
+                    </p>
+                </div>
+                <div class="card" style="padding: 10px 12px; border-left: 3px solid var(--hall-gold); background: #FCF9F2;">
+                    <div style="font-weight: 800; font-size: 8.8px; color: var(--hall-gold-dark); margin-bottom: 3px;">3. QR CODE P/ WHATSAPP</div>
+                    <p style="font-size: 9.4px; color: var(--charcoal);">
+                        Com um <strong>QR Code integrado na Embaixadora</strong>, quem navega pelo computador aponta o telemóvel e recebe as fotos, vídeo e PDF no WhatsApp na hora!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div><strong>Nexus Holding Group</strong> • Engenharia de IA Soberana para Real Estate &amp; Investimentos</div>
+            <div class="page-number">Página 04 de 05</div>
+        </div>
+    </div>
+
+    <!-- ==================== PÁGINA 5: COMPARATIVO DE ENGENHARIA, SEGURANÇA RGPD & GOVERNANÇA ==================== -->
+    <div class="page">
+        <div class="page-header">
+            <div class="header-brand">Nexus Holding Group <span>| Hall Investment &amp; Corretora</span></div>
+            <div class="header-doc">Diferenciação Soberana &amp; Governança Europeia</div>
+        </div>
+
+        <div class="page-body">
+            <div>
+                <div class="section-kicker">04. Soberania Tecnológica vs. Automação Genérica</div>
+                <h2 class="section-title">Por Que a Engenharia da Nexus Holding Group é Única no Mercado</h2>
+                <p class="lead">
+                    Ao contrário de agências locais que revendem <em>"pacotes pré-pagos de tokens"</em> em chatbots de texto básicos, a <strong>Nexus Holding Group</strong> entrega uma infraestrutura completa de captação, apresentação multimídia e conversão imobiliária.
+                </p>
+            </div>
+
+            <div class="metrics-strip">
+                <div class="metric-card">
+                    <div class="m-val">Zero Pacotes</div>
+                    <div class="m-lbl">Sem Limite Rígido de Tokens</div>
+                </div>
+                <div class="metric-card gold-accent">
+                    <div class="m-val">RGPD / GDPR</div>
+                    <div class="m-lbl">Conformidade Europeia</div>
+                </div>
+                <div class="metric-card">
+                    <div class="m-val">Motor GEO</div>
+                    <div class="m-lbl">Indexação em Buscas de IA</div>
+                </div>
+                <div class="metric-card gold-accent">
+                    <div class="m-val">Turnkey 360°</div>
+                    <div class="m-lbl">Entrega Chave na Mão</div>
+                </div>
+            </div>
+
+            <div>
+                <table class="exec-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Dimensão Estratégica</th>
+                            <th style="width: 35%; background: #4A252B;">Chatbots Comuns (Revenda de Tokens)</th>
+                            <th class="gold-col" style="width: 40%;">Ecossistema Soberano Nexus Holding Group</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Modelo de Operação</strong></td>
+                            <td>Venda de pacotes limitados de tokens (4M, 10M, 30M) que travam ou cobram excedentes.</td>
+                            <td class="highlight-cell">Infraestrutura Enterprise dedicada, dimensionada para alta performance e previsibilidade.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gestão de Fuso Horário no WhatsApp</strong></td>
+                            <td>Inexistente. Dispara mensagens de madrugada para clientes no exterior, gerando bloqueios.</td>
+                            <td class="highlight-cell"><strong>Smart Timezone Gatekeeper:</strong> Receptivo 24/7 + Ativo travado das 08:30 às 18:00 no fuso de cada país.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Captação no LinkedIn</strong></td>
+                            <td>Apenas responde passivamente a quem já entrou em contacto.</td>
+                            <td class="highlight-cell"><strong>Social Selling Seguro:</strong> Capta seguidores e conexões no LinkedIn e migra para o WhatsApp.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Apresentação no WhatsApp</strong></td>
+                            <td>Respostas secas apenas em texto simples, sem material visual rico.</td>
+                            <td class="highlight-cell"><strong>Show-Room Completo:</strong> Envia Mensagens, Álbuns de Fotos HD, Vídeos MP4, Plantas em PDF e Maps.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Presença nos Sites (Investimento &amp; Corretora)</strong></td>
+                            <td>Balãozinho de chat genérico no canto da tela que ninguém clica.</td>
+                            <td class="highlight-cell"><strong>Embaixadora 4K + Busca (&lt; 1s) + QR Code WhatsApp:</strong> Filtra imóveis na tela e transfere p/ telemóvel.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Idiomas &amp; Voz Neural</strong></td>
+                            <td>Português/Inglês básico por texto robotizado.</td>
+                            <td class="highlight-cell"><strong>50+ Idiomas Nativos (Texto e Voz Neural):</strong> Regra do Espelho automática para investidores globais.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <span class="badge-pill">Conformidade União Europeia (RGPD / GDPR)</span>
+                    <h3>Soberania de Dados &amp; Sigilo Fiduciário</h3>
+                    <p>
+                        Toda a base de investidores, contactos de LinkedIn/WhatsApp e dossiês imobiliários de <strong>Nuno Andrade</strong> permanece em ambiente isolado e criptografado (TLS 1.3 / AES-256), em estrita conformidade com o <strong>Regulamento Geral sobre a Proteção de Dados (RGPD)</strong> de Portugal e da União Europeia.
+                    </p>
+                </div>
+
+                <div class="card-gold">
+                    <span class="badge-pill gold">Posicionamento nos Motores de IA (GEO)</span>
+                    <h3>Destaque nas Buscas Globais de IA</h3>
+                    <p>
+                        Estruturamos os metadados semânticos da <strong>Hall Investment</strong> e da <strong>Corretora</strong> através de <strong>GEO (Generative Engine Optimization)</strong> para que motores globais (ChatGPT, Gemini, Perplexity) recomendem a operação de Nuno Andrade a investidores internacionais que buscam ativos em Portugal.
+                    </p>
+                </div>
+            </div>
+
+            <!-- RODAPÉ DE ASSINATURA E CONTACTO EXECUTIVO -->
+            <div class="card-navy" style="padding: 13px 16px; text-align: center;">
+                <div style="font-size: 8.2px; text-transform: uppercase; letter-spacing: 2px; color: var(--hall-gold-light); font-weight: 700; margin-bottom: 3px;">
+                    Diretoria Executiva • Parceria Estratégica Portugal &amp; Global
+                </div>
+                <div style="font-family: 'Playfair Display', serif; font-size: 15.5px; color: var(--white); font-weight: 700; margin-bottom: 2px;">
+                    Geanderson Leandro Schuh &amp; Ivoni Severo Schuh
+                </div>
+                <div style="font-size: 9.5px; color: #C9D6E6; margin-bottom: 9px;">
+                    Founders &amp; Diretoria Executiva — <strong>Nexus Holding Group &amp; Nexus Tecnologia</strong>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; font-size: 8.2px;">
+                    <span style="background: rgba(197, 160, 89, 0.16); border: 1px solid rgba(197, 160, 89, 0.45); padding: 4px 9px; border-radius: 14px; color: var(--white); white-space: nowrap;">
+                        <strong style="color: var(--hall-gold-light);">E-MAIL:</strong> geanderson@nexusholdinggroup.com.br
+                    </span>
+                    <span style="background: rgba(197, 160, 89, 0.16); border: 1px solid rgba(197, 160, 89, 0.45); padding: 4px 9px; border-radius: 14px; color: var(--white); white-space: nowrap;">
+                        <strong style="color: var(--hall-gold-light);">PORTAL:</strong> www.nexusholdinggroup.com.br
+                    </span>
+                    <span style="background: rgba(197, 160, 89, 0.16); border: 1px solid rgba(197, 160, 89, 0.45); padding: 4px 9px; border-radius: 14px; color: var(--white); white-space: nowrap;">
+                        <strong style="color: var(--hall-gold-light);">CLIENTE:</strong> Nuno Andrade (Hall Investment • PT)
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div><strong>Nexus Holding Group</strong> • Engenharia de IA Soberana para Real Estate & Investimentos</div>
+            <div class="page-number">Página 05 de 05</div>
+        </div>
+    </div>
+
+</body>
+</html>

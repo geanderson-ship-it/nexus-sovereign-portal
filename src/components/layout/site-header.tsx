@@ -103,10 +103,11 @@ export function SiteHeader() {
   const isAdmin = useMemo(() => isAdminUser(user), [user]);
 
   const mainNav = useMemo(() => [
+    { title: 'Concierge de Luxo', href: '/concierges' },
+    { title: 'Embaixadoras IA', href: '/nexus-rotas/embaixadora' },
     { title: 'Inova Moda', href: '/inovamoda' },
     { title: 'Inova Revenda', href: '/inova-revenda' },
     { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
-    { title: 'Embaixadora', href: '/nexus-rotas' },
     { title: 'Mídia', href: '/marketing' },
     { title: 'Websites', href: '/desenvolvimento-web' },
     { title: 'Enterprise', href: '/nexus-empresas' },
@@ -281,7 +282,11 @@ export function SiteHeader() {
                   rel={item.href === '/exclusive' ? 'noopener noreferrer' : undefined}
                   className={cn(
                     'transition-all duration-300',
-                    item.href === '/inovamoda'
+                    item.href === '/concierges'
+                      ? 'bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-yellow-500/60 px-3.5 py-1.5 rounded-md shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:shadow-[0_0_30px_rgba(234,179,8,0.6)] hover:bg-yellow-500/30 text-yellow-300 font-extrabold capitalize tracking-wide'
+                      : item.href === '/nexus-rotas/embaixadora'
+                      ? 'bg-teal-500/15 border border-teal-400/50 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.25)] hover:shadow-[0_0_25px_rgba(20,184,166,0.5)] hover:bg-teal-500/25 text-teal-300 font-bold capitalize tracking-wide'
+                      : item.href === '/inovamoda'
                       ? 'bg-purple-500/10 border border-purple-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:bg-purple-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/inova-revenda'
                       ? 'bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-500/20 text-white font-bold capitalize tracking-wide'
@@ -360,7 +365,11 @@ export function SiteHeader() {
                           }}
                           className={cn(
                             'flex items-center justify-between p-3 rounded-lg transition-all duration-200 group mb-1',
-                            item.href === '/inovamoda'
+                            item.href === '/concierges'
+                      ? 'bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-yellow-500/60 px-3.5 py-1.5 rounded-md shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:shadow-[0_0_30px_rgba(234,179,8,0.6)] hover:bg-yellow-500/30 text-yellow-300 font-extrabold capitalize tracking-wide'
+                      : item.href === '/nexus-rotas/embaixadora'
+                      ? 'bg-teal-500/15 border border-teal-400/50 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(20,184,166,0.25)] hover:shadow-[0_0_25px_rgba(20,184,166,0.5)] hover:bg-teal-500/25 text-teal-300 font-bold capitalize tracking-wide'
+                      : item.href === '/inovamoda'
                             ? 'bg-purple-500/10 text-white drop-shadow-[0_0_8px_rgba(168,85,247,0.8)] font-bold border border-purple-500/50 capitalize tracking-wide'
                             : item.href === '/inova-revenda'
                             ? 'bg-amber-500/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 capitalize tracking-wide'
