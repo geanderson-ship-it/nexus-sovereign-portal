@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: 'Nexus Holding Group',
     images: [
       {
-        url: '/palestras/palestra_bandeiras_hero.jpg',
+        url: '/Palestras/palestra_bandeiras_hero.jpg',
         width: 1200,
         height: 630,
         alt: 'Palestras Corporativas de IA - Dante & Djeny • Nexus Holding Group',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Palestras de IA, Liderança & Saúde Mental (NR-1) | Dante & Djeny',
     description: 'Palco oficial de Inteligência Artificial da Nexus Holding Group. Convenções, liderança e prevenção ativa ao Burnout (NR-1).',
-    images: ['/palestras/palestra_bandeiras_hero.jpg'],
+    images: ['/Palestras/palestra_bandeiras_hero.jpg'],
   },
   alternates: {
     canonical: `${SITE_URL}/palestras`,

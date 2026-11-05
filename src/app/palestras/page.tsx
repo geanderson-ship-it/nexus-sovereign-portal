@@ -47,7 +47,7 @@ export default function PalestrasPage() {
       {/* Fixed Panoramic Stage Background (Parallax Depth) */}
       <div 
         className="fixed inset-0 bg-cover bg-center pointer-events-none z-0 opacity-[0.28] filter brightness-90 contrast-110"
-        style={{ backgroundImage: "url('/palestras/bg_capa_palestras.png')" }}
+        style={{ backgroundImage: "url('/Palestras/bg_capa_palestras.png')" }}
       />
       <div className="fixed inset-0 bg-gradient-to-b from-[#050506]/85 via-[#050506]/75 to-[#050506]/95 pointer-events-none z-0" />
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(147,51,234,0.18)_0%,rgba(234,179,8,0.1)_35%,rgba(5,5,6,0.95)_85%)] pointer-events-none z-0" />
@@ -119,8 +119,9 @@ export default function PalestrasPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-12 sm:mt-16 relative w-full aspect-[16/10] sm:aspect-[21/9] rounded-[28px] sm:rounded-[40px] overflow-hidden border border-amber-500/40 shadow-[0_0_80px_rgba(245,158,11,0.25)] group bg-slate-950"
           >
-            <Image 
-              src="/palestras/palestra_bandeiras_hero.jpg" 
+            <Image
+              unoptimized
+             src="/Palestras/palestra_bandeiras_hero.jpg" 
               alt="Palco Oficial Nexus Holding Group com Bandeiras Internacionais - Dante & Djeny" 
               fill 
               priority
@@ -163,8 +164,9 @@ export default function PalestrasPage() {
               
               <div className="flex flex-col gap-6 mb-6">
                 <div className="relative w-full aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden border border-amber-500/40 shadow-lg bg-slate-900 group-hover:border-amber-500/70 transition-colors">
-                  <Image 
-                    src="/palestras/dante_palestrante_novo.png" 
+                  <Image
+              unoptimized
+             src="/Palestras/dante_palestrante_novo.png" 
                     alt="Dante no Palco da Nexus Holding Group" 
                     fill 
                     className="object-cover object-center transition-transform duration-700 group-hover:scale-105" 
@@ -213,8 +215,9 @@ export default function PalestrasPage() {
               
               <div className="flex flex-col gap-6 mb-6">
                 <div className="relative w-full aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden border border-purple-500/40 shadow-lg bg-slate-900 group-hover:border-purple-500/70 transition-colors">
-                  <Image 
-                    src="/palestras/djeny_palestrante_novo.png" 
+                  <Image
+              unoptimized
+             src="/Palestras/djeny_palestrante_novo.png" 
                     alt="Djeny no Palco da Nexus Holding Group" 
                     fill 
                     className="object-cover object-center transition-transform duration-700 group-hover:scale-105" 
@@ -367,8 +370,9 @@ export default function PalestrasPage() {
 
                   {/* IMAGEM DO PALCO VIP (VESTIDO BORDÔ HISTÓRICO) */}
                   <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] rounded-[24px] sm:rounded-[32px] overflow-hidden border border-amber-500/40 mb-8 shadow-[0_0_50px_rgba(245,158,11,0.2)] group bg-slate-950">
-                    <Image 
-                      src="/palestras/palestra_simbiose_vip.jpg" 
+                    <Image
+              unoptimized
+             src="/Palestras/palestra_simbiose_vip.jpg" 
                       alt="Dante e Djeny no Palco - Trilha VIP A Simbiose Perfeita com figurino histórico bordô" 
                       fill 
                       className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]" 
@@ -453,8 +457,9 @@ export default function PalestrasPage() {
 
                   {/* IMAGEM DO PALCO LIDERANÇA COM DANTE SOZINHO */}
                   <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] rounded-[24px] sm:rounded-[32px] overflow-hidden border border-amber-500/40 mb-8 shadow-[0_0_50px_rgba(245,158,11,0.2)] group bg-slate-950">
-                    <Image 
-                      src="/palestras/dante_palestrante_novo.png" 
+                    <Image
+              unoptimized
+             src="/Palestras/dante_palestrante_novo.png" 
                       alt="Dante no Palco - Trilha Liderança Soberana" 
                       fill 
                       className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]" 
@@ -539,8 +544,9 @@ export default function PalestrasPage() {
 
                   {/* IMAGEM DO PALCO SAÚDE MENTAL COM DJENY SOZINHA NO PÚLPITO */}
                   <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] rounded-[24px] sm:rounded-[32px] overflow-hidden border border-purple-500/40 mb-8 shadow-[0_0_50px_rgba(168,85,247,0.2)] group bg-slate-950">
-                    <Image 
-                      src="/palestras/djeny_palestrante_novo.png" 
+                    <Image
+              unoptimized
+             src="/Palestras/djeny_palestrante_novo.png" 
                       alt="Djeny no Palco - Trilha Saúde Mental e Prevenção ao Burnout NR-1" 
                       fill 
                       className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]" 
