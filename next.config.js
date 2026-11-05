@@ -93,12 +93,7 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
-      {
-        source: '/palestras',
-        destination: '/',
-        permanent: true,
-      },
-      {
+            {
         source: '/pactumlegal',
         destination: '/pactum-legal/marcas',
         permanent: true,

@@ -3,9 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Hotel, 
-  Palmtree, 
-  Megaphone, 
+Megaphone, 
   Languages, 
   Check, 
   ArrowRight, 
@@ -67,266 +65,6 @@ interface PillarData {
   image?: string;
   modules: ModuleData[];
 }
-
-// Módulos específicos para Hotéis e Pousadas
-const hoteisPousadasModules: ModuleData[] = [
-  {
-    id: 'hp_concierge',
-    badge: 'HOSPITALITY_AI',
-    title: 'Helena',
-    highlight: 'CONCIERGE VIRTUAL',
-    subtitle: 'Atendimento e Recepção Digital 24/7',
-    description: 'Sua recepção nunca dorme. A Helena acolhe seus hóspedes de forma imediata e autônoma, respondendo sobre horários de café da manhã, regras de hospedagem, voltagem das tomadas, política de pets, senha do Wi-Fi e estacionamento. Reduz drasticamente o volume de contatos repetitivos e libera sua recepção física para focar em check-ins presenciais complexos.',
-    icon: Hotel,
-    color: 'orange',
-    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=800',
-    licenca: 'Sob Consulta',
-    suporte: 'SLA Customizado',
-    roi: 'Reduz os custos operacionais de recepção e atendimento ao cliente em até 35%.',
-    features: [
-      {
-        title: 'Recepção Autônoma Poliglota',
-        description: 'Atendimento inteligente e natural com sotaque nativo em mais de 50 idiomas para hóspedes internacionais.',
-        image: '/recepcao_poliglota.jpg'
-      },
-      {
-        title: 'Check-in & Check-out Express',
-        description: 'Envio automático de instruções de entrada, chaves digitais e links de fichas cadastrais FNRH para o WhatsApp.',
-        image: '/checkin_express.jpg'
-      },
-      {
-        title: 'Tira-Dúvidas Instantâneo',
-        description: 'Respostas inmediatas em menos de 5 segundos no WhatsApp e Web sobre Wi-Fi, horários, voltagem e políticas.',
-        image: '/tira_duvidas.jpg'
-      },
-      {
-        title: 'Integração PMS de Sistemas',
-        description: 'Conexão direta com sistemas de gestão hoteleira (Desbravador, Totvs, Hospedin) para sincronia de dados.',
-        image: '/integracao_pms.jpg'
-      }
-    ]
-  },
-  {
-    id: 'hp_guialocal',
-    badge: 'LOCAL_GUIDE_AI',
-    title: 'Helena',
-    highlight: 'GUIA TURÍSTICO DIGITAL',
-    subtitle: 'Roteiros, Dicas Locais e Experiências',
-    description: 'Entregue o verdadeiro segredo local. A inteligência atua como um guia experiente, recomendando praias ideais por horário, trilhas de aventura, monumentos históricos, pontos turísticos e roteiros sob medida de acordo com o perfil do hóspede. Melhora radicalmente a experiência do visitante e fideliza clientes.',
-    icon: Compass,
-    color: 'orange',
-    image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&q=80&w=800',
-    licenca: 'Sob Consulta',
-    suporte: 'SLA Customizado',
-    roi: 'Gera receitas adicionais fechando parcerias de comissão cruzada com guias e restaurantes.',
-    features: [
-      {
-        title: 'Curadoria Turística de Elite',
-        description: 'Indicação inteligente de passeios turísticos, trilhas e segredos locais baseando-se no perfil do hóspede.',
-        image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800'
-      },
-      {
-        title: 'Recomendações Gastronômicas',
-        description: 'IA indica restaurantes, bares e cafés parceiros da pousada, com envio direto de cardápios e reservas.',
-        image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=800'
-      },
-      {
-        title: 'Rotas Integradas ao GPS',
-        description: 'Envio automático de caminhos prontos e traçados para Google Maps e Waze diretamente no WhatsApp.',
-        image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800'
-      },
-      {
-        title: 'Agenda de Eventos Locais',
-        description: 'Painel com previsão do tempo e cronograma de shows, festivais e feiras na região durante a estadia.',
-        image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=800'
-      }
-    ]
-  },
-  {
-    id: 'hp_reservas',
-    badge: 'BOOKING_INTELLIGENCE',
-    title: 'Helena',
-    highlight: 'RESERVAS INTELIGENTES',
-    subtitle: 'Cotação de Pacotes e Vendas Diretas',
-    description: 'A máquina de vendas diretas que o seu hotel precisa. O visitante insere o período e número de pessoas por WhatsApp ou site, a IA calcula as tarifas flutuantes e apresenta os quartos disponíveis em segundos. Ela faz o checkout imediato via Pix ou link de cartão e resgata orçamentos abandonados de forma proativa.',
-    icon: Calendar,
-    color: 'orange',
-    image: '/marketing-assets/hp_reservas_main.jpg',
-    licenca: 'Sob Consulta',
-    suporte: 'SLA Customizado',
-    roi: 'Zera as comissões abusivas de 15% a 22% cobradas por OTAs (Booking, Expedia).',
-    features: [
-      {
-        title: 'Orçamento Express',
-        description: 'Cálculo de tarifas flutuantes e disponibilidade de diárias gerados em menos de 10 segundos no chat.',
-        image: '/marketing-assets/hp_reservas_orcamento.jpg'
-      },
-      {
-        title: 'Checkout Instantâneo Integrado',
-        description: 'Geração imediata de chaves Pix automáticas ou links de cartão de crédito para fechar a reserva de forma segura.',
-        image: '/marketing-assets/hp_reservas_checkout.jpg'
-      },
-      {
-        title: 'Recuperação de Carrinho Abandonado',
-        description: 'Contato inteligente e ativo no WhatsApp com clientes que simularam tarifas mas não fecharam a diária.',
-        image: '/marketing-assets/hp_reservas_carrinho.jpg'
-      },
-      {
-        title: 'Venda Inteligente de Upgrades',
-        description: 'IA oferece upgrades de quarto, adicionais de espumantes, decoração ou meia-pensão antes do pagamento.',
-        image: '/marketing-assets/hp_reservas_upgrade.jpg'
-      }
-    ]
-  },
-  {
-    id: 'hp_governanca',
-    badge: 'ROOM_SERVICE_AI',
-    title: 'Helena',
-    highlight: 'ROOM SERVICE DIGITAL',
-    subtitle: 'Pedidos de Quarto e Chamados de Limpeza',
-    description: 'Leve a conveniência para o quarto do hóspede. Ele pode visualizar o cardápio completo, fazer pedidos de refeições e bebidas ou solicitar itens de frigobar diretamente pelo WhatsApp. A IA roteia o chamado automaticamente para a cozinha ou bar e permite solicitar serviços de lavanderia e manutenção.',
-    icon: MessageSquare,
-    color: 'orange',
-    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800',
-    licenca: 'Sob Consulta',
-    suporte: 'SLA Customizado',
-    roi: 'Aumenta em até 40% o ticket médio de consumo interno devido à facilidade de compra.',
-    features: [
-      {
-        title: 'Cardápio no WhatsApp',
-        description: 'Exibição completa de pratos, porções, coquetéis e reposições de frigobar direto no chat do celular.',
-        image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800'
-      },
-      {
-        title: 'Chamados Rápidos de Governança',
-        description: 'Solicitação rápida de travesseiros, toalhas, arrumação de quarto e manutenção técnica de ar-condicionado.',
-        image: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&q=80&w=800'
-      },
-      {
-        title: 'Fila Logística de Pedidos',
-        description: 'Painel administrativo centralizado para as equipes de cozinha e camareiras organizarem os chamados.',
-        image: '/fila_logistica.jpg'
-      },
-      {
-        title: 'Pesquisa NPS Automática',
-        description: 'IA dispara pesquisa rápida de satisfação logo após o chamado de serviço de quarto constar como concluído.',
-        image: '/marketing-assets/hp_governanca_nps.jpg'
-      }
-    ]
-  }
-];
-
-// Módulos específicos para Resorts
-const resortsModules: ModuleData[] = [
-  {
-    id: 'resort_spa',
-    badge: 'SPA_SCHEDULING',
-    title: 'Helena',
-    highlight: 'AGENDA DE SPA E MASSAGEM',
-    subtitle: 'Consultas de Horário e Agendamentos',
-    description: 'Aumente o faturamento de serviços complementares. Os hóspedes do resort podem consultar o menu de terapias, conferir os preços e agendar sessões de spa diretamente pelo celular de forma autônoma.',
-    icon: Sparkles,
-    color: 'emerald',
-    image: '/resort_spa.jpg',
-    licenca: 'Sob Consulta',
-    suporte: 'SLA Customizado',
-    roi: 'Aumenta em até 30% a ocupação dos spas e terapias do complexo.',
-    features: [
-      {
-        title: 'Catálogo de Terapias',
-        description: 'Menu completo de massagens, banhos aromáticos e tratamentos estéticos por áudio ou texto.',
-        image: '/resort_spa.jpg'
-      },
-      {
-        title: 'Sincronia de Agenda',
-        description: 'Verificação em tempo real dos terapeutas disponíveis e bloqueio automático de horários marcados.',
-        image: '/spa_agenda_sync.png'
-      },
-      {
-        title: 'Lembretes Automáticos',
-        description: 'Notificações de confirmação enviadas no WhatsApp do hóspede antes do horário agendado.',
-        image: '/marketing-assets/resort_lembrete_automatico.jpg'
-      },
-      {
-        title: 'Cobrança Consolidada',
-        description: 'Integração para debitar o valor da sessão direto na conta do quarto para pagamento no check-out.',
-        image: '/integracao_pms.jpg'
-      }
-    ]
-  },
-  {
-    id: 'resort_gastronomia',
-    badge: 'FINE_DINING_INTELLIGENCE',
-    title: 'Helena',
-    highlight: 'RESERVA DE RESTAURANTES',
-    subtitle: 'Otimização de Capacidade e Fila Digital',
-    description: 'Elimine filas e gargalos nos restaurantes à la carte do resort. A IA gerencia os agendamentos de mesas por horários e notifica os hóspedes quando a mesa deles estiver pronta para o jantar.',
-    icon: Hotel,
-    color: 'emerald',
-    image: '/resort_restaurante.jpg',
-    licenca: 'Sob Consulta',
-    suporte: 'SLA Customizado',
-    roi: 'Zera as reclamações de hóspedes relacionadas a filas de jantar.',
-    features: [
-      {
-        title: 'Agendamento de Jantares',
-        description: 'Reserva instantânea de mesas em restaurantes temáticos e bufês especiais do resort.',
-        image: '/resort_restaurante.jpg'
-      },
-      {
-        title: 'Menus Multilíngues',
-        description: 'Cardápios completos exibidos em mais de 50 idiomas para comodidade de turistas estrangeiros.',
-        image: '/marketing-assets/resort_menu_multilingue.jpg'
-      },
-      {
-        title: 'Notificação de Mesa Pronta',
-        description: 'Hóspedes aguardam confortavelmente no quarto e recebem alerta de mesa liberada via chat.',
-        image: '/marketing-assets/resort_mesa_pronta.jpg'
-      },
-      {
-        title: 'Controle de Lotação',
-        description: 'Regulação de turnos de refeição inteligente para evitar filas e aglomerações na recepção gastronômica.',
-        image: '/controle_lotacao.jpg'
-      }
-    ]
-  },
-  {
-    id: 'resort_lazer',
-    badge: 'ACTIVITIES_SCHEDULE',
-    title: 'Helena',
-    highlight: 'CRONOGRAMA DE LAZER',
-    subtitle: 'Programação Diária de Recreação e Quadras',
-    description: 'Mantenha os hóspedes entusiasmados. A IA divulga a agenda diária de shows, atividades infantis do Kids Club e gerencia o agendamento de quadras de tênis e beach tennis.',
-    icon: Compass,
-    color: 'emerald',
-    image: '/resort_lazer.jpg',
-    licenca: 'Sob Consulta',
-    suporte: 'SLA Customizado',
-    roi: 'Maximiza o uso das instalações de lazer sem conflito de reservas.',
-    features: [
-      {
-        title: 'Agenda Recreativa Diária',
-        description: 'Exibição dinâmica das atividades infantis, shows noturnos, hidroginástica e torneios esportivos.',
-        image: '/agenda_recreativa.jpg'
-      },
-      {
-        title: 'Agendamento de Quadras',
-        description: 'Reserva automatizada de quadras de tênis, beach tennis e empréstimo de raquetes/bolas.',
-        image: '/quadras_resort.jpg'
-      },
-      {
-        title: 'Lembretes de Atividades',
-        description: 'Envio de alertas sobre início de atrações sinalizadas como favoritas pelo hóspede no celular.',
-        image: '/marketing-assets/resort_lembrete_atividade.jpg'
-      },
-      {
-        title: 'Suporte Kids Club',
-        description: 'Canal de comunicação seguro entre pais e a equipe de recreadores infantis do resort.',
-        image: '/kids_club.jpg'
-      }
-    ]
-  }
-];
 
 // Módulos específicos para Marketing e MarTech
 const marketingModules: ModuleData[] = [
@@ -684,28 +422,6 @@ const pillars: PillarData[] = [
     modules: radiosModules
   },
   {
-    id: 'hoteis-pousadas',
-    title: 'Hotéis & Pousadas',
-    subtitle: 'Concierge Virtual, Acolhimento & Reservas Diretas',
-    icon: Hotel,
-    color: 'orange',
-    tagline: 'Eleve o padrão de hospitalidade e potencialize suas reservas diretas.',
-    description: 'Desde grandes hotéis de rede até pousadas boutique acolhedoras. Nosso Concierge Virtual responde a dúvidas frequentes sobre check-in/out, horários de café da manhã e comodidades, além de atuar como guia local sugerindo passeios turísticos e praias. Ao mesmo tempo, conduz o visitante pelo fluxo de reservas diretas, reduzindo comissões para plataformas terceiras.',
-    video: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora%20Nexus/Hoteis.mp4', 'Hoteis.mp4'),
-    modules: hoteisPousadasModules
-  },
-  {
-    id: 'resorts',
-    title: 'Resorts',
-    subtitle: 'Experiência All-Inclusive & Logística VIP',
-    icon: Palmtree,
-    color: 'emerald',
-    tagline: 'Navegação sem fricção pelo maior refúgio de lazer.',
-    description: 'Resorts possuem operações vastas e complexas. Nossa IA atua como um mordomo digital dedicado, ajudando os hóspedes a agendarem sessões de spa, reservarem mesas nos restaurantes temáticos internos, conferirem a programação de lazer infantil e se localizarem no complexo.',
-    video: getVideoUrl('https://amplify-nextn-geand-sandb-nexusmediabucketfc7a44b7-nwolydnxg4ep.s3.amazonaws.com/public/Embaixadora%20Nexus/Reorts.mp4', 'Reorts.mp4'),
-    modules: resortsModules
-  },
-  {
     id: 'marketing',
     title: 'Marketing & MarTech',
     subtitle: 'Avatares de IA Interativos para Conversão de Tráfego',
@@ -794,15 +510,9 @@ export default function MarketingPage() {
       {/* Background Image Textures with Fade Transition */}
       <div 
         className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
-          (!activeMacro || activeMacro === 'hoteis-pousadas') ? 'opacity-[0.35]' : 'opacity-0'
+          (!activeMacro || activeMacro === 'tv-telejornais') ? 'opacity-[0.35]' : 'opacity-0'
         }`}
         style={{ backgroundImage: "url('/marketing-assets/marketing_bg.jpg')" }}
-      />
-      <div 
-        className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
-          activeMacro === 'resorts' ? 'opacity-[0.35]' : 'opacity-0'
-        }`}
-        style={{ backgroundImage: "url('/marketing-assets/resort_bg.jpg')" }}
       />
       <div 
         className={`fixed inset-0 bg-cover bg-center pointer-events-none z-0 transition-opacity duration-1000 ease-in-out ${
@@ -850,15 +560,14 @@ export default function MarketingPage() {
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-violet-400 to-rose-400 block sm:inline">Mídia & Entretenimento</span>
                 </h1>
                 <p className="text-slate-400 text-xs sm:text-base md:text-lg leading-relaxed font-light px-2 sm:px-0">
-                  Selecione uma área abaixo para descobrir as soluções de Avatares para TV, Locução para Rádios, Concierges Virtuais e MarTech desenhados para elevar o seu negócio.
+                  Selecione uma área abaixo para descobrir as soluções de Avatares para TV, Locução para Rádios e MarTech desenhados para elevar o seu ecossistema de comunicação.
                 </p>
               </div>
 
-              {/* GRID OF CINEMATIC CARD PLAYERS (2 CARDS DE MÍDIA NO TOPO + 3 CARDS ABAIXO) */}
+              {/* GRID OF CINEMATIC CARD PLAYERS (3 CANAIS FLAGSHIP DE MÍDIA) */}
               <section className="mb-20 space-y-6 max-w-7xl mx-auto">
-                {/* FILA 1: DESTAQUES BROADCAST & MÍDIA (TV & RÁDIOS) */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {pillars.slice(0, 2).map((pillar) => {
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                  {pillars.map((pillar) => {
                     const c = colorMap[pillar.color];
                     return (
                       <button
@@ -868,7 +577,7 @@ export default function MarketingPage() {
                           setActiveMacro(pillar.id);
                           window.history.pushState(null, '', `?macro=${pillar.id}`);
                         }}
-                        className="relative h-80 sm:h-96 md:h-[480px] w-full rounded-[24px] sm:rounded-[36px] md:rounded-[40px] overflow-hidden border border-slate-900 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.01] hover:border-white/20 hover:shadow-2xl cursor-pointer"
+                        className="relative h-80 sm:h-96 md:h-[460px] w-full rounded-[24px] sm:rounded-[36px] md:rounded-[40px] overflow-hidden border border-slate-900 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.01] hover:border-white/20 hover:shadow-2xl cursor-pointer"
                       >
                         {/* BACKGROUND VIDEO / IMAGE */}
                         <div className="absolute inset-0 z-0 bg-slate-950 overflow-hidden">
@@ -893,92 +602,26 @@ export default function MarketingPage() {
                         </div>
 
                         {/* CONTENT */}
-                        <div className="relative z-10 p-6 sm:p-8 md:p-10 flex flex-col justify-end h-full w-full">
+                        <div className="relative z-10 p-6 sm:p-8 flex flex-col justify-end h-full w-full">
                           <div className="flex items-center gap-3 mb-3">
                             <div className={`p-3 sm:p-4 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 group-hover:${c.border} group-hover:${c.bg} transition-colors duration-500`}>
-                              <pillar.icon className={`h-5 w-5 sm:h-7 sm:w-7 text-white group-hover:${c.text} transition-colors duration-500`} />
+                              <pillar.icon className={`h-5 w-5 sm:h-6 sm:w-6 text-white group-hover:${c.text} transition-colors duration-500`} />
                             </div>
                             <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-slate-300 bg-white/10 border border-white/15 px-2.5 sm:px-3 py-1 rounded-full backdrop-blur-md">
                               Flagship Broadcast
                             </span>
                           </div>
                           
-                          <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tighter text-white mb-2 leading-tight group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-500">
+                          <h3 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tighter text-white mb-2 leading-tight group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-500">
                             {pillar.title}
                           </h3>
                           <p className="text-xs sm:text-sm text-slate-300 max-w-lg leading-relaxed group-hover:text-white transition-colors duration-500">
                             {pillar.subtitle}
                           </p>
                           
-                          <div className="absolute bottom-6 right-6 sm:bottom-10 sm:right-10 opacity-70 sm:opacity-0 group-hover:opacity-100 transform translate-x-0 sm:translate-x-4 group-hover:translate-x-0 transition-all duration-500">
-                            <div className={`p-2.5 sm:p-3 rounded-full ${c.bg} ${c.border} border`}>
-                              <ArrowRight className={`h-4 w-4 sm:h-5 sm:w-5 ${c.text}`} />
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* FILA 2: HOSPITALIDADE & MARTECH (HOTÉIS, RESORTS & MARKETING) */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {pillars.slice(2).map((pillar, idx) => {
-                    const c = colorMap[pillar.color];
-                    const isThird = idx === 2;
-                    return (
-                      <button
-                        key={pillar.id}
-                        onClick={() => {
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                          setActiveMacro(pillar.id);
-                          window.history.pushState(null, '', `?macro=${pillar.id}`);
-                        }}
-                        className={cn(
-                          "relative h-72 sm:h-80 md:h-[420px] w-full rounded-[24px] sm:rounded-[36px] md:rounded-[40px] overflow-hidden border border-slate-900 transition-all duration-700 group flex flex-col justify-end text-left hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl cursor-pointer",
-                          isThird ? "sm:col-span-2 lg:col-span-1" : ""
-                        )}
-                      >
-                        {/* BACKGROUND VIDEO / IMAGE */}
-                        <div className="absolute inset-0 z-0 bg-slate-950 overflow-hidden">
-                          {pillar.image ? (
-                            <img 
-                              src={pillar.image} 
-                              alt={pillar.title} 
-                              className="w-full h-full object-cover opacity-55 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700" 
-                            />
-                          ) : (
-                            <video 
-                              src={pillar.video} 
-                              autoPlay 
-                              loop 
-                              muted 
-                              playsInline 
-                              className="w-full h-full object-cover opacity-35 group-hover:opacity-65 transition-opacity duration-1000" 
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#02050b] via-[#02050b]/60 to-transparent" />
-                          <div className={`absolute inset-0 ${c.overlay} mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
-                        </div>
-
-                        {/* CONTENT */}
-                        <div className="relative z-10 p-6 sm:p-7 md:p-8 flex flex-col justify-end h-full w-full">
-                          <div className="flex items-center gap-4 mb-3">
-                            <div className={`p-3 sm:p-3.5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 group-hover:${c.border} group-hover:${c.bg} transition-colors duration-500`}>
-                              <pillar.icon className={`h-5 w-5 sm:h-6 sm:w-6 text-white group-hover:${c.text} transition-colors duration-500`} />
-                            </div>
-                          </div>
-                          
-                          <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tighter text-white mb-1.5 leading-tight group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] transition-all duration-500">
-                            {pillar.title}
-                          </h3>
-                          <p className="text-xs text-slate-400 max-w-sm leading-relaxed group-hover:text-white transition-colors duration-500">
-                            {pillar.subtitle}
-                          </p>
-                          
                           <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 opacity-70 sm:opacity-0 group-hover:opacity-100 transform translate-x-0 sm:translate-x-4 group-hover:translate-x-0 transition-all duration-500">
                             <div className={`p-2.5 sm:p-3 rounded-full ${c.bg} ${c.border} border`}>
-                              <ArrowRight className={`h-4 w-4 ${c.text}`} />
+                              <ArrowRight className={`h-4 w-4 sm:h-5 sm:w-5 ${c.text}`} />
                             </div>
                           </div>
                         </div>
@@ -1241,9 +884,7 @@ export default function MarketingPage() {
                       ? 'Nossas soluções de Inteligência Artificial para TV são dimensionadas individualmente para atender a infraestrutura de transmissão, grade jornalística e rotina de produção da sua emissora.'
                       : activeMacro === 'radios-audio'
                       ? 'Nossas soluções de locução e áudio IA são dimensionadas para integrar com perfeição ao sistema de automação e à grade de programação da sua emissora de rádio.'
-                      : activeMacro === 'hoteis-pousadas' || activeMacro === 'resorts'
-                      ? 'Nossas soluções de inteligência artificial são dimensionadas individualmente para respeitar a estrutura operacional e de hospitalidade da sua pousada, hotel ou resort.'
-                      : 'Nossas soluções de inteligência artificial são dimensionadas individualmente para respeitar a estrutura operacional e tecnológica da sua empresa ou agência corporativa.'}
+                                            : 'Nossas soluções de inteligência artificial são dimensionadas individualmente para respeitar a estrutura operacional e tecnológica da sua empresa ou agência corporativa.'}
                   </p>
                 </div>
 

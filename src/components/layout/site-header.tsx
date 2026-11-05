@@ -105,13 +105,12 @@ export function SiteHeader() {
   const mainNav = useMemo(() => [
     { title: 'Concierge de Luxo', href: '/concierges' },
     { title: 'Embaixadoras IA', href: '/embaixadoras' },
+    { title: 'Palestras', href: '/palestras' },
+    { title: 'Mídia', href: '/marketing' },
     { title: 'Inova Moda', href: '/inovamoda' },
     { title: 'Inova Revenda', href: '/inova-revenda' },
     { title: 'Vitrine Inovadora', href: '/vitrine-inovadora' },
-    { title: 'Mídia', href: '/marketing' },
     { title: 'Websites', href: '/desenvolvimento-web' },
-    { title: 'Enterprise', href: '/nexus-empresas' },
-    { title: t('navPremium') || 'Exclusive', href: '/exclusive' },
     { title: t('navSocial') || 'Social', href: '/proposito' },
     { title: t('navSobre') || 'Sobre', href: '/about' },
   ], [t]);
@@ -294,6 +293,8 @@ export function SiteHeader() {
                       ? 'bg-pink-500/10 border border-pink-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(236,72,153,0.15)] hover:shadow-[0_0_25px_rgba(236,72,153,0.4)] hover:bg-pink-500/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/energia'
                       ? 'bg-amber-600/10 border border-amber-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(245,158,11,0.15)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] hover:bg-amber-600/20 text-white font-bold capitalize tracking-wide'
+                      : item.href === '/palestras'
+                      ? 'bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border border-purple-400/50 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(168,85,247,0.25)] hover:shadow-[0_0_25px_rgba(168,85,247,0.5)] hover:bg-purple-600/30 text-purple-200 font-bold capitalize tracking-wide'
                       : item.href === '/nexus-empresas'
                       ? 'bg-cyan-600/10 border border-cyan-500/30 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.4)] hover:bg-cyan-600/20 text-white font-bold capitalize tracking-wide'
                       : item.href === '/nexus-health'
@@ -377,7 +378,9 @@ export function SiteHeader() {
                             ? 'bg-pink-500/10 text-white drop-shadow-[0_0_8px_rgba(236,72,153,0.8)] font-bold border border-pink-500/50 capitalize tracking-wide'
                             : item.href === '/energia'
                             ? 'bg-amber-600/10 text-white drop-shadow-[0_0_8px_rgba(245,158,11,0.8)] font-bold border border-amber-500/50 capitalize tracking-wide'
-                            : item.href === '/nexus-empresas'
+                            : item.href === '/palestras'
+                      ? 'bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border border-purple-400/50 px-3 py-1.5 rounded-md shadow-[0_0_15px_rgba(168,85,247,0.25)] hover:shadow-[0_0_25px_rgba(168,85,247,0.5)] hover:bg-purple-600/30 text-purple-200 font-bold capitalize tracking-wide'
+                      : item.href === '/nexus-empresas'
                             ? 'bg-cyan-600/10 text-white drop-shadow-[0_0_8px_rgba(6,182,212,0.8)] font-bold border border-cyan-500/50 capitalize tracking-wide'
                             : item.href === '/nexus-health'
                             ? 'bg-emerald-600/10 text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] font-bold border border-emerald-500/50 capitalize tracking-wide'
