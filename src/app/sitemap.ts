@@ -3,9 +3,12 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.nexusholdinggroup.com.br';
 
-  // Static platform sections (excluding deleted courses, gallery, consulting, palestras)
+  // Static platform sections - Flagship Products
   const staticRoutes = [
     '',
+    '/palestras',
+    '/concierges',
+    '/embaixadoras',
     '/exclusive',
     '/exclusive/magadot',
     '/exclusive/orion',
